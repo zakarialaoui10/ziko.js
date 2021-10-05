@@ -35,4 +35,18 @@
       </ul>
     </td>
   </tr>
+   <tr>
+    <td>tan</td>
+    <td>-</td>
+    <td><ul>
+      <li>tan(PI/4)</li>
+      <li>cos([PI/4,PI/3]</li>
+      </ul>
+    </td>
+     <td><ul>
+      <li>1</li>
+      <li>[1,1.7320508076]</li>
+      </ul>
+    </td>
+  </tr>
   </table>
