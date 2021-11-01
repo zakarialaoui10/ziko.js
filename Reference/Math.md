@@ -74,8 +74,8 @@
         </tr>
         </thead>
         <tr>
-            <td><ol><li>rand(a,b)</li><li>randInt(a,b)</li><li>rands(n,a,b)</li><li>randsInt(n,a,b)</li><li>randsBin(n)</li><li>randsOct(n)</li><li>randsHex(n)</li><li>choices(n,choices,p)</li><li>permutation(...arr)</li></ol></td>
-            <td><ol><li>randBin</li><li>randOct</li><li>randHex</li><li>randomHexColor</li></ol></td>
+            <td><ol><li>Random.rand(a,b)</li><li>Random.randInt(a,b)</li><li>Random.rands(n,a,b)</li><li>Random.randsInt(n,a,b)</li><li>Random.randsBin(n)</li><li>Random.randsOct(n)</li><li>Random.randsHex(n)</li><li>Random.choices(n,choices,p)</li><li>Random.permutation(...arr)</li></ol></td>
+            <td><ol><li>Random.randBin</li><li>Random.randOct</li><li>Random.randHex</li><li>Random.randomHexColor</li></ol></td>
         <tr> 
 </table>
 
