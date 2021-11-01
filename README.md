@@ -1,6 +1,6 @@
-- [Math](#math)
+- [Contents](#contents)
 
 ---
 
-### math
-[link](https://github.com/zakarialaoui10/Ziko.js/edit/main/Reference.md)
+### contents
+[Math](https://github.com/zakarialaoui10/Ziko.js/edit/main/Reference.md#)
