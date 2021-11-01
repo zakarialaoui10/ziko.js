@@ -1,5 +1,6 @@
 [//]: # (['abs','acos','acosh','asin','asinh','atan','atan2','atanh','cos','cosh','e','entier','hypot','ln','pow','sig','sign','sin','sinh','sqrt','sqrtn','tan','tanh'])
 [//]: # (['arange', 'cartesianProduct', 'clamp', 'deg2rad', 'lerp', 'linspace', 'map', 'norm', 'numbers', 'ones', 'pgcd', 'ppcm', 'produit', 'rad2deg', 'somme', 'zeros'])
+# Functions & Constants (41)
 <table>
     <thead>
         <tr>
@@ -65,7 +66,7 @@
     </tr>
 </table>
 
-# Random
+# Random (13)
  <table>
     <thead>
         <tr>
@@ -79,7 +80,7 @@
         <tr> 
 </table>
 
-# Complex
+# Complex (18)
  <table>
     <thead>
         <tr>
