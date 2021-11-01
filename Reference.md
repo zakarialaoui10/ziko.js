@@ -1,3 +1,4 @@
+[//]: # (["cos","sin","tan","acos","asin","atan","cosh","sinh","tanh","acosh","asinh","atanh","e","ln","atan2","hypo","pow","sqrt","sqrtn","abs","entier","sign","sig"])
 <ol>
     <li><span>cos</span></li>
     <li><span>sin</span></li>
