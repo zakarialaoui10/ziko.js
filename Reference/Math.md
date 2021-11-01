@@ -1,6 +1,6 @@
 [//]: # (['abs','acos','acosh','asin','asinh','atan','atan2','atanh','cos','cosh','e','entier','hypot','ln','pow','sig','sign','sin','sinh','sqrt','sqrtn','tan','tanh'])
 [//]: # (['arange', 'cartesianProduct', 'clamp', 'deg2rad', 'lerp', 'linspace', 'map', 'norm', 'numbers', 'ones', 'pgcd', 'ppcm', 'produit', 'rad2deg', 'somme', 'zeros'])
-# Functions & Constants (41)
+# Functions & Constants (49)
 <table>
     <thead>
         <tr>
@@ -61,6 +61,15 @@
                 <li><span>rad2deg</span></li>
                 <li><span>somme</span></li>
                 <li><span>zeros</span></li>
+                <li>dec2base</li>
+                <li>dec2bin</li>
+                <li>dec2oct</li>
+                <li>dec2hex</li>
+                <li>bin2base</li>
+                <li>bin2dec</li>
+                <li>bin2oct</li>
+                <li>bin2hex</li>
+                
             </ol>
         </td>
     </tr>
