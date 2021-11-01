@@ -1,4 +1,4 @@
-[//]: # (["cos","sin","tan","acos","asin","atan","cosh","sinh","tanh","acosh","asinh","atanh","e","ln","atan2","hypo","pow","sqrt","sqrtn","abs","entier","sign","sig"])
+[//]: # (['abs','acos','acosh','asin','asinh','atan','atan2','atanh','cos','cosh','e','entier','hypot','ln','pow','sig','sign','sin','sinh','sqrt','sqrtn','tan','tanh'])
 [//]: # (['arange', 'cartesianProduct', 'clamp', 'deg2rad', 'lerp', 'linspace', 'map', 'norm', 'numbers', 'ones', 'pgcd', 'ppcm', 'produit', 'rad2deg', 'somme', 'zeros'])
 <table>
     <thead>
@@ -29,7 +29,7 @@
                 <li><span>cosh</span></li>
                 <li><span>e</span></li>
                 <li><span>entier</span></li>
-                <li><span>hypo</span></li>
+                <li><span>hypot</span></li>
                 <li><span>ln</span></li>
                 <li><span>pow</span></li>
                 <li><span>sig</span></li>
