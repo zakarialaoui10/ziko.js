@@ -1,6 +1,3 @@
-- [Contents](#contents)
-
----
-
-### contents
-[Math Reference](Reference/Math.md)
+- [Reference](#reference)
+### reference
+[Math](Reference/Math.md)
