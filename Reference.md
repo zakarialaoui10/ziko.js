@@ -10,29 +10,29 @@
         </td>
         <td>
             <ol>
-                <li><span>cos</span></li>
-                <li><span>sin</span></li>
-                <li><span>tan</span></li>
+                <li><span>abs</span></li>
                 <li><span>acos</span></li>
-                <li><span>asin</span></li>
-                <li><span>atan</span></li>
-                <li><span>cosh</span></li>
-                <li><span>sinh</span></li>
-                <li><span>tanh</span></li>
                 <li><span>acosh</span></li>
+                <li><span>asin</span></li>
                 <li><span>asinh</span></li>
-                <li><span>atanh</span></li>
-                <li><span>e</span></li>
-                <li><span>ln</span></li>
+                <li><span>atan</span></li>
                 <li><span>atan2</span></li>
+                <li><span>atanh</span></li>
+                <li><span>cos</span></li>
+                <li><span>cosh</span></li>
+                <li><span>e</span></li>
+                <li><span>entier</span></li>
                 <li><span>hypo</span></li>
+                <li><span>ln</span></li>
                 <li><span>pow</span></li>
+                <li><span>sig</span></li>
+                <li><span>sign</span></li>
+                <li><span>sin</span></li>
+                <li><span>sinh</span></li>
                 <li><span>sqrt</span></li>
                 <li><span>sqrtn</span></li>
-                <li><span>abs</span></li>
-                <li><span>entier</span></li>
-                <li><span>sign</span></li>
-                <li><span>sig</span></li>
+                <li><span>tan</span></li>
+                <li><span>tanh</span></li>
             </ol>
         </td>
         <td>
@@ -57,4 +57,3 @@
         </td>
     </tr>
 </table>
-
