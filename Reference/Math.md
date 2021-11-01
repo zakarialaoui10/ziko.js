@@ -110,8 +110,11 @@
         </thead>
         <tr>
             <td><ol><li>rows</li><li>cols</li><li>arr</li></ol></td>
-            <td><ol><li>reshape(newRows,newCols)</li><li>get(row,col)</li><li>set(row,col)</li><li>map(fct)</li><li>Map(Imin,Imax,Fmin,Fmax)</li><li>Lerp(min,max)</li><li>Norm(min,max)</li><li>Clamp(min,max)</li></ol></td>
-            <td><ol><li>eye(size)</li><li>zeros(rows,cols)</li><li>ones(rows,cols)</li><li>numbers(rows,cols,number)</li><li>rands(rows,cols,a,b)</li><li>randsInt(rows,cols,a,b)</li><li>randsBin(rows,cols)</li><li>randsHex(rows,cols)</li><li>randsChoices(rows,cols,choices,p)</li><li>randPermutation(rows,cols,arr)</li><li>map(m,fct)</li><li>Map(m,Imin,Imax,Fmin,Fmax)</li><li>Lerp(m,min,max)</li><li>Norm(m,min,max)</li><li>Clamp(m,min,max)</li></ol></td>
-            <td><ol><li>clone</li><li>size</li><li>shape</li><li>reel</li><li>imag</li><li>isSquare</li><li>isSym</li><li>isAntiSym</li><li>isDiag</li><li>isOrtho</li><li>isIdemp</li><li>T</li><li>det</li><li>inv</li></ol></td>
+            
+            <td><ol><li>reshape(newRows,newCols)</li><li>get(row,col)</li><li>set(row,col)</li><li>map(fct)</li><li>Map(Imin,Imax,Fmin,Fmax)</li><li>Lerp(min,max)</li><li>Norm(min,max)</li><li>Clamp(min,max)</li><toPrecision(p)</li><li>count(n)</li><li>toBase(n)</li><li>hstack(matrix)</li><li>vstack(matrix)</li></ol></td>
+            
+            <td><ol><li>eye(size)</li><li>zeros(rows,cols)</li><li>ones(rows,cols)</li><li>numbers(rows,cols,number)</li><li>rands(rows,cols,a,b)</li><li>randsInt(rows,cols,a,b)</li><li>randsBin(rows,cols)</li><li>randsHex(rows,cols)</li><li>randsChoices(rows,cols,choices,p)</li><li>randPermutation(rows,cols,arr)</li><li>map(m,fct)</li><li>Map(m,Imin,Imax,Fmin,Fmax)</li><li>Lerp(m,min,max)</li><li>Norm(m,min,max)</li><li>Clamp(m,min,max)</li><li>hstack(m1,m2)</li><li>vstack(m1,m2)</li></ol></td>
+            
+            <td><ol><li>clone</li><li>size</li><li>shape</li><li>reel</li><li>imag</li><li>isSquare</li><li>isSym</li><li>isAntiSym</li><li>isDiag</li><li>isOrtho</li><li>isIdemp</li><li>T</li><li>det</li><li>inv</li><li>toBin</li><li>toOct</li><li>toHex</li><li>isOdd</li><li>max2min</li><li>min2max</li></ol></td>
         <tr>
 </table>
