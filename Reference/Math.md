@@ -108,7 +108,7 @@
             <th>get</th>
         </tr>
         </thead>
-        <tr>
+<tr>
     <td>
         <ol>
             <li>rows</li>
@@ -131,6 +131,16 @@
             <li>toBase(n)</li>
             <li>hstack(matrix)</li>
             <li>vstack(matrix)</li>
+            <li>slice(rowStart,colStart,rowEnd,colEnd)</li>
+            <li>gerRows(ri,rf)</li>
+            <li>gerCols(ci,cf)</li>
+            <li>add(...matr)</li>
+            <li>sub(...matr)</li>
+            <li>mul(...matr)</li>
+            <li>div(...matr)</li>
+            <li>dot(matr)</li>
+            <li>pow(n)</li>
+            <li>modulo(matr)</li>
         </ol>
     </td>
     <td>
@@ -152,6 +162,18 @@
             <li>Clamp(m,min,max)</li>
             <li>hstack(m1,m2)</li>
             <li>vstack(m1,m2)</li>
+            <li>slice(m1,rowStart,colStart,rowEnd,colEnd)</li>
+            <li>gerRows(ri,rf)</li>
+            <li>gerCols(ci,cf)</li>
+            <li>add(m1,...m2)</li>
+            <li>sub(m1,...m2)</li>
+            <li>mul(m1,...m2)</li>
+            <li>div(m1,...m2)</li>
+            <li>dot(m1,m2)</li>
+            <li>pow(m,n)</li>
+            <li>modulo(m1,m2)</li> 
+            <li>fromVector(v)</li>
+            <li>deserialize(data)</li>          
         </ol>
     </td>
     <td>
@@ -176,6 +198,16 @@
             <li>isOdd</li>
             <li>max2min</li>
             <li>min2max</li>
+            <li>somme</li>
+            <li>min</li>
+            <li>max</li>
+            <li>minRows</li>
+            <li>minCols</li>
+            <li>maxRows</li>
+            <li>maxCols</li>
+            <li>toArray</li>
+            <li>serialize</li>
+            <li>table</li>
         </ol>
     </td>
 </tr>
