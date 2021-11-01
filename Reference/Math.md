@@ -97,4 +97,20 @@
         <tr>
 </table>
 
-
+# Matrix
+ <table>
+    <thead>
+        <tr>
+            <th>Attribut</th>
+            <th>Dynamic Methods</th>
+            <th>Static Methods</th>
+            <th>get</th>
+        </tr>
+        </thead>
+        <tr>
+            <td><ol><li>rows</li><li>cols</li><li>arr</li></ol></td>
+            <td><ol><li>reshape(newRows,newCols)</li><li>get(row,col)</li><li>set(row,col)</li></ol></td>
+            <td><ol><li>eye(size)</li></ol></td>
+            <td><ol><li>clone</li><li>size</li><li>shape</li><li>reel</li><li>imag</li></ol></td>
+        <tr>
+</table>
