@@ -90,10 +90,10 @@
         </tr>
         </thead>
         <tr>
-            <td><ol></ol></td>
-            <td><ol></ol></td>
-            <td><ol></ol></td>
-            <td><ol></ol></td>
+            <td><ol><li>a</li><li>b</li><li>z</li><li>phi</li></ol></td>
+            <td><ol><li>add(...z)</li><li>sub(...z)</li><li>mul(c)</li><li>div(c)</li><li>pow(n)</li></ol></td>
+            <td><ol><li>expo(z,phi)</li><li>add(...z)</li><li>sub(...z)</li><li>mul(c)</li><li>div(c)</li><li>pow(n)</li></ol></td>
+            <td><ol><li>conj</li><li>inv</li><li>expo</li></ol></td>
         <tr>
 </table>
 
