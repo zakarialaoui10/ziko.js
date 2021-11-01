@@ -77,7 +77,9 @@
         <tr>
             <td><ol></ol></td>
             <td><ol></ol></td>
-            <td><ol></ol></td>
+            <td><ol>
+                <li>
+                </ol></td>
             <td><ol></ol></td>
         <tr>
     </thead>
@@ -108,13 +110,14 @@
             <th>Attribut</th>
             <th>Dynamic Methods</th>
             <th>Static Methods</th>
-            <th>get</th>
+            <th>Dynamic get</th>
+            <th>Static get</th>
         </tr>
         <tr>
             <td><ol></ol></td>
+            <td><ol><li>rand(a,b)</li><li>randInt(a,b)</li></ol></td>
             <td><ol></ol></td>
-            <td><ol></ol></td>
-            <td><ol></ol></td>
+            <td><ol><li>randBin</li><li>randOct</li><li>randHex</li></ol></td>
         <tr>
     </thead>
 </table>
