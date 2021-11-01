@@ -1,6 +1,13 @@
 [//]: # (["cos","sin","tan","acos","asin","atan","cosh","sinh","tanh","acosh","asinh","atanh","e","ln","atan2","hypo","pow","sqrt","sqrtn","abs","entier","sign","sig"])
 [//]: # (['arange', 'cartesianProduct', 'clamp', 'deg2rad', 'lerp', 'linspace', 'map', 'norm', 'numbers', 'ones', 'pgcd', 'ppcm', 'produit', 'rad2deg', 'somme', 'zeros'])
 <table>
+    <thead>
+        <tr>
+            <th>Constants</th>
+            <th>Fonctions</th>
+            <th>Outils</th>
+        </tr>
+    </thead>
     <tr>
         <td>
             <ol>
