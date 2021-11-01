@@ -3,4 +3,4 @@
 ---
 
 ### contents
-[Math](Reference.md)
+[Math Reference](Reference.md)
