@@ -70,8 +70,7 @@
                 <li>bin2oct</li>
                 <li>bin2hex</li>
                 <li>oct2base</li>
-                <li>hex2base</li>
-             
+                <li>hex2base</li>             
             </ol>
         </td>
     </tr>
