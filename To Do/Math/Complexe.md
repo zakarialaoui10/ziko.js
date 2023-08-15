@@ -1,4 +1,7 @@
 ## get 
-|Methode|Desciption|Verified|
+|Methode|Desctiption|isVerified|
 |-|-|-|
 | `clone`|||
+| `z`|||
+| `phi`|||
+| `conj`|||
