@@ -1,4 +1,4 @@
-## get 
+## Get 
 |Methode|Description|isVerified|
 |-|-|-|
 | `clone`||✅|
@@ -12,7 +12,7 @@
 | `cos`||✅|
 | `sin`||✅|
 | `tan`||✅|
-## static get 
+## Static get 
 |Methode|Description|isVerified|
 |-|-|-|
 | `ZERO`||✅|
