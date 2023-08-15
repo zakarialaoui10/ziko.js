@@ -12,7 +12,10 @@
 | `cos`||✅|
 | `sin`||✅|
 | `tan`||✅|
-
+## static get 
+|Methode|Description|isVerified|
+|-|-|-|
+| `ZERO`||✅|
 ## Methodes
 |Methode|Description|dynamique|static|comment|
 |-|-|-|-|-|
@@ -24,3 +27,5 @@
 | `xpowZ`|||||
 | `sqrt`|||||
 | `sqrtn`|||||
+
+
