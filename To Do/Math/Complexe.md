@@ -5,6 +5,7 @@
 | `z`|||
 | `phi`|||
 | `conj`|||
+| `inv`|||
 
 ## Methodes
 |Methode|Description|dynamique|static|comment|
