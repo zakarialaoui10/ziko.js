@@ -1,5 +1,5 @@
 ## get 
-|Methode|Desctiption|isVerified|
+|Methode|Description|isVerified|
 |-|-|-|
 | `clone`|||
 | `z`|||
