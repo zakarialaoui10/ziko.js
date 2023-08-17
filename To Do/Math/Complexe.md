@@ -6,7 +6,7 @@
 | `phi`||✅|
 | `conj`||✅|
 | `inv`||✅|
-|`expo`||name to be changed |
+|`expo`||✅|
 | `sqrt`||✅|
 | `log`||✅|
 | `cos`||✅|
