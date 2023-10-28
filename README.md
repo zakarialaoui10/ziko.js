@@ -2,9 +2,6 @@
 
 # Demo 
  
-### reference
-[Math](Markdown/Reference/Math.md)
-[UI](Markdown/Reference/)
  
 
 # License 
