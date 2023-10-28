@@ -1,0 +1,23 @@
+{
+  "name": "ziko",
+  "version": "0.0.1",
+  "description": "<img src=\"assets/ziko js.PNG\" alt=\"ziko.js\" width=\"100%\">",
+  "main": "src/index.js",
+  "type":"module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakarialaoui10/ziko.js.git"
+  },
+  "author": "zakaria elalaoui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zakarialaoui10/ziko.js/issues"
+  },
+  "homepage": "https://github.com/zakarialaoui10/ziko.js#readme"
+}
