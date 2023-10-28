@@ -1,4 +1,4 @@
-import { style , addSuffixeToNumber } from "../Utils.js";
+import { style , addSuffixeToNumber } from "../Utils/index.js";
 //import { addSuffixeToNumber } from "../Utils.js";
 export function styleComposer(){
     return {
