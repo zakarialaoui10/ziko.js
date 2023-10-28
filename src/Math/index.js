@@ -40,9 +40,8 @@ import {Random} from "./Random/index.js";
 //import { Derivation } from "./Numeric/index.js";
 import {complex,Complex} from "./Complex/index.js";
 import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./Matrix/index.js"
-//import {Logic,Permutation,Combinaison,PowerSet,subset}from "./Discret/index.js"
 import Discret from "./Discret/index.js";
-import {Logic,Base} from "./Discret/index.js";
+import {Logic,Base,Permutation,Combinaison,PowerSet,subset} from "./Discret/index.js";
 import {
     Utils,
     zeros,
@@ -141,25 +140,21 @@ const Math={
     Discret,
     Logic,
     Base,
-    /*Permutation,
+    Permutation,
     Combinaison,
     PowerSet,
-    subset,*/
+    subset,
     Signal,
-    ExtractAll:function(){
-        if(window){
+    /*ExtractAll:function(){
             for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
-                window[Object.keys(Ziko.Math)[i]] = Object.values(Ziko.Math)[i];
-            }
+                globalThis[Object.keys(Ziko.Math)[i]] = Object.values(Ziko.Math)[i];
         }
         return this;
     },
     RemoveAll:function(){
-        if(window){
-            for (let i = 0; i < Object.keys(Ziko.Math).length; i++) delete window[Object.keys(Ziko.Math)[i]];   
-        }
+            for (let i = 0; i < Object.keys(Ziko.Math).length; i++) delete globalThis[Object.keys(Ziko.Math)[i]];   
         return this;
-    }
+    }*/
 }
 export {Math};
 

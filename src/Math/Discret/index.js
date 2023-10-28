@@ -278,8 +278,8 @@ var subset = (...arr) => {
 
 //export {Logic,BaseConversion,Permutation,Combinaison,PowerSet,subset}
 
-import {Logic} from "./logic.js"
-import {Base} from "./conversion.js"
+import {Logic} from "./logic.js";
+import {Base} from "./conversion.js";
 var Discret={
     Logic,
     Base,
@@ -289,5 +289,4 @@ var Discret={
     subset
 }
 export default Discret;
-export {Logic} from "./logic.js"
-export {Base} from "./conversion.js"
+export{Logic,Base,Permutation,Combinaison,PowerSet,subset}
