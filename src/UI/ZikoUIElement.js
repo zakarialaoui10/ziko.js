@@ -1,6 +1,6 @@
 //import {waitForUIElm, waitForUIElmSync } from "./Utils.js";
 //import domComposer from "./Composer/dom.js"
-//import {styleComposer} from "./Composer/style.js"
+import styleComposer from "./Style/index.js";
 class ZikoUIElement {
     #Flip=[0,0,0];
     constructor(element=document.body) {
@@ -8,7 +8,7 @@ class ZikoUIElement {
       if(typeof element==="string")element=document.createElement(element);
       this.element = element;
       Object.assign(this,styleComposer.call(this));
-      Object.assign(this,domComposer.call(this));
+      //Object.assign(this,domComposer.call(this));
       this.cache={
         isHidden:false,
         style:{
@@ -746,40 +746,11 @@ class ZikoUIElement {
       return {parent}
     }
     exportHTML() {}
-    toPdf() {
-      var newWindow = window.open();
-      var html = document.createElement("html");
-      const head = document.head.cloneNode(true);
-      const body = document.createElement("body");
-      const section = this.element.cloneNode(true);
-      console.log(section);
-      body.appendChild(section);
-      html.appendChild(head);
-      html.appendChild(body);
-      newWindow.document.write(html.innerHTML);
-      newWindow.document.close();
-      newWindow.print();
-      newWindow.close();
-      return this;
+    toPdf(){
+      return "Install @ziko/jspdf"
     }
   }
-  class ZikoUIRoot extends ZikoUIElement {
-    constructor() {
-      super();
-      this.element = document.body;
-      window.addEventListener("resize", () => this.size());
-    }
-    size(w = window.innerWidth + "px", h = window.innerHeight + "px") {
-      this.element.style.width = w;
-      this.element.style.height = h;
-      return this;
-    }
-    append(element) {
-      this.element.appendChild(element.element);
-      return this;
-    }
-  }
-  const Root = (element) => new ZikoUIRoot().append(element);
-  window.ZikoUIElement=ZikoUIElement
-  export{Root,waitForUIElm}
+
+  //window.ZikoUIElement=ZikoUIElement
+  //export{Root,waitForUIElm}
   export default ZikoUIElement
