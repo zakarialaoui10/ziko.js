@@ -1,5 +1,5 @@
 //import Ziko from "../index.js"
-//import {PI,E,EPSILON} from "./Const.js"
+import {PI,E,EPSILON} from "./const.js"
 //import { Signal } from "./Signal/Signal.js";
 import{
     cos,
@@ -162,6 +162,5 @@ const ZikoMath={
     }
 }
 console.log(cos)
-export {AbstractZikoMath}
 export default ZikoMath;
 
