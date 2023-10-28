@@ -114,7 +114,7 @@ const ZikoMath={
     hypot,
     sig,
     atan2,
-    Derivation,
+   // Derivation,
     Utils,
     numbers,
     zeros,
@@ -145,7 +145,7 @@ const ZikoMath={
     Combinaison,
     PowerSet,
     subset,*/
-    Signal,
+    //Signal,
     ExtractAll:function(){
         if(window){
             for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
@@ -161,6 +161,5 @@ const ZikoMath={
         return this;
     }
 }
-console.log(cos)
 export default ZikoMath;
 
