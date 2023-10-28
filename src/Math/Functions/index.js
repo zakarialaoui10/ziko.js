@@ -1,6 +1,6 @@
 import { mapFun } from "./utils.js";
 //import ZikoMath from "./index.js"
-//import{Matrix} from "./Matrix.js"
+//import{Matrix} from "../Matrix/index.js"
 //import{complex, Complex} from "./Complex.js"
 // var a=complex(1,1)
 // console.log(a instanceof Complex)
