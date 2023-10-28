@@ -6,7 +6,7 @@ import{
   } from "../Functions/index.js"
 import { Utils } from "../Utils/index.js";
 import { Complex } from "../Complex/index.js";
-//import {Random} from "./Random.js"
+import {Random} from "../Random/index.js"
 //import { Logic } from "./Discret/index.js"
 //import Math from "./index.js";
 class Matrix extends AbstractZikoMath{
