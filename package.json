@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "<img src=\"assets/ziko js.PNG\" alt=\"ziko.js\" width=\"100%\">",
   "main": "src/index.js",
-  "type":"module",
+  "type": "module",
   "directories": {
     "test": "test"
   },
@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/zakarialaoui10/ziko.js/issues"
   },
-  "homepage": "https://github.com/zakarialaoui10/ziko.js#readme"
+  "homepage": "https://github.com/zakarialaoui10/ziko.js#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.1.5"
+  }
 }
