@@ -1,4 +1,3 @@
-
 import{
     cos,
     sin,
@@ -11,10 +10,11 @@ import{
     sinh,
     sqrtn,
     atan2,
-  }from "./Functions.js"
-import { Matrix } from "./Matrix.js";
-import {sum,prod,deg2rad} from "./Utils.js";
-import AbstractZikoMath from "./ZikoMath.js";
+  }from "../Functions/index.js"
+  console.log(cos)
+//import { Matrix } from "./Matrix.js";
+//import {sum,prod,deg2rad} from "./Utils.js";
+import AbstractZikoMath from "../index.js";
 //import ZMath from "./index.js";
 class Complex extends AbstractZikoMath{
     constructor(a = 0, b = 0) {
