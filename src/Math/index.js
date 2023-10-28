@@ -1,6 +1,6 @@
 //import Ziko from "../index.js"
 import {PI,E,EPSILON} from "./const.js"
-//import { Signal } from "./Signal/Signal.js";
+import { Signal } from "./Signal/index.js";
 import{
     cos,
     sin,
@@ -145,7 +145,7 @@ const Math={
     Combinaison,
     PowerSet,
     subset,*/
-    //Signal,
+    Signal,
     ExtractAll:function(){
         if(window){
             for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
