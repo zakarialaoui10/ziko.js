@@ -1,7 +1,7 @@
 import{Complex} from "../Complex/index.js";
 import{Matrix}from "../Matrix/index.js"
-import{arange}from "../Utils/index.js"
-var Logic={
+//import{arange}from "../Utils/index.js"
+const Logic={
     _mode:Number,
     _map:function(func,a,b){
         if (a instanceof Matrix)

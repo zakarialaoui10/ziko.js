@@ -1,9 +1,10 @@
 
 // Utils
 
-import{floor, sqrtn,pow}from "../Functions/index.js"
+import{floor,sqrtn,pow,abs,ln}from "../Functions/index.js"
 import{Matrix}from "../Matrix/index.js"
 import{complex,Complex}from"../Complex/index.js"
+import{PI,E} from "../const.js";
 //import ZMath from "./index.js"  
 class Utils {
     static zeros(num,n){

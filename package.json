@@ -13,6 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/*/*/*",
     "build": "rollup -c rollup.config.js"
   },
   "repository": {
@@ -29,6 +30,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "dir2tree": "^0.3.2",
+    "eslint": "^8.52.0",
     "rollup": "^4.1.5"
   }
 }

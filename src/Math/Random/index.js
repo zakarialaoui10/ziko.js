@@ -1,6 +1,7 @@
 
 import{Complex}from"../Complex/index.js"
-//import{Base}from"../Discret/index.js"
+import { Utils } from "../Utils/index.js";
+import{Base}from"../Discret/index.js"
 
 class Random {
     static rand(a = 1, b) {

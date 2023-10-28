@@ -1,3 +1,6 @@
+import { Matrix } from "../Matrix/index.js";
+import { Complex , complex } from "../Complex/index.js";
+import {ln,e,cos,sin,tan,abs,sqrt,cosh,sinh} from "./index.js"
 const mapFun=(fun,...X)=>{
     const Y=X.map(x=>{
         if(x===null)return fun(null);
@@ -9,7 +12,7 @@ const mapFun=(fun,...X)=>{
         if(x instanceof Matrix){
             return new Matrix(x.rows,x.cols,mapFun(x.arr.flat(1)))
         }
-        if(x instanceof ZikoMath.Complex){
+        if(x instanceof Complex){
             const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
             switch(fun){
                 case Math.log:return complex(ln(z),phi);

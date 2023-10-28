@@ -4,13 +4,15 @@ import{
     sin,
     tan,
     pow,
-    atan,
+    //atan,
     floor,
     hypot,
     cosh,
     sinh,
     sqrtn,
     atan2,
+    sqrt,
+    ln
   }from "../Functions/index.js"
 import { Matrix } from "../Matrix/index.js";
 import {sum,prod,deg2rad} from "../Utils/index.js";
