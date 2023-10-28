@@ -1,6 +1,8 @@
 import {Math} from "./Math/index.js";
+import UI from "./UI/index.js"
 const Ziko={
-    Math
+    Math,
+    UI
 }
 Ziko.Math.ExtractAll=function(){
     for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {

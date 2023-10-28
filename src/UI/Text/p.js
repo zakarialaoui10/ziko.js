@@ -32,3 +32,4 @@ class ZikoUIParagraphe extends ZikoUIElement {
     }
   }
   const p = (...ZikoUIElement) => new ZikoUIParagraphe(...ZikoUIElement);
+  export {p}

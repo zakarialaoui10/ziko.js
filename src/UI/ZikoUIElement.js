@@ -1,4 +1,4 @@
-//import {waitForUIElm, waitForUIElmSync } from "./Utils.js";
+import {waitForUIElm, waitForUIElmSync } from "./Utils/index.js";
 //import domComposer from "./Composer/dom.js"
 import styleComposer from "./Style/index.js";
 class ZikoUIElement {
