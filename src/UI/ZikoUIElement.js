@@ -32,13 +32,6 @@ class ZikoUIElement {
       //console.log(ele)
       //this.maintain()
     } 
-    useState(defaultValue){
-      let value=defaultValue;
-      const getValue=()=>value
-      const setValue=newValue=>value=newValue
-      Object.defineProperty(window, 'greet_get', { value: getValue })
-      return [greet_get,setValue]
-    }
     /*size(w,h){
         typeof w == "number" ? (this.w = w + "vw") : (this.w = w);
         typeof h == "number" ? (this.h = h + "vh") : (this.h = h);
