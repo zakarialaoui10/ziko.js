@@ -1,4 +1,4 @@
-import AbstractZikoMath from "../index.js";
+import {AbstractZikoMath} from "../index.js";
 import{
     pow,
     min,
