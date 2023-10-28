@@ -2,3 +2,5 @@ assets/
 docs/
 notebook/
 test/
+.eslintrc.cjs 
+rollup.config.js 
