@@ -1,4 +1,3 @@
-//import Ziko  from "./Ziko.js";
 import {Math} from "./Math/index.js";
 const Ziko={
     Math
