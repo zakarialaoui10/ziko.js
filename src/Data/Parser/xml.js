@@ -27,3 +27,21 @@ function parseXML(xmlString) {
     return obj;
   }
   export default parseXML;
+
+  // function htmlParser(element) {
+  //   const obj = {
+  //     type: element.tagName,
+  //     attributes: {},
+  //     children: [],
+  //   };
+  //   for (let i = 0; i < element.attributes.length; i++) {
+  //     const attr = element.attributes[i];
+  //     obj.attributes[attr.name] = attr.value;
+  //   }
+  //   for (let i = 0; i < element.children.length; i++) {
+  //     const child = element.children[i];
+  //     obj.children.push(htmlParser(child));
+  //   }
+  //   return obj;
+  // }
+ 
