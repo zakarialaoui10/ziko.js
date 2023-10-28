@@ -68,7 +68,7 @@ import {
     aproximatelyEqual,
     cartesianProduct
   }from "./Utils/index.js"
-const ZikoMath={
+const Math={
     PI,
     E,
     EPSILON,
@@ -161,5 +161,5 @@ const ZikoMath={
         return this;
     }
 }
-export default ZikoMath;
+export {Math};
 

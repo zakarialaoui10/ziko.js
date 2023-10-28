@@ -1,7 +1,5 @@
-import ZikoMath from "./Math/index.js";
+import {Math} from "./Math/index.js";
 const Ziko={
-    ZikoMath
+    Math
 };
-export{
-    ZikoMath
-}
+export default Ziko

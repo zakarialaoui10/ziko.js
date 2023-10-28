@@ -5,12 +5,12 @@
   "main": "src/index.js",
   "type": "module",
   "source": "src/index.js",
-    "exports": {
-        ".": {
-          "import": "./dist/index.mjs",
-          "require": "./dist/index.cjs"
-        }
-      },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c rollup.config.js"
@@ -28,6 +28,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "dir2tree": "^0.3.2",
     "rollup": "^4.1.5"
   }
 }
