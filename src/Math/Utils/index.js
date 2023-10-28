@@ -1,4 +1,6 @@
 
+// Utils
+
 import{floor, sqrtn,pow}from "../Functions/index.js"
 import{Matrix}from "../Matrix/index.js"
 import{complex,Complex}from"../Complex/index.js"
@@ -16,11 +18,11 @@ class Utils {
     static #add(a,b){
         if(typeof(a)==="number"){
             if (typeof b == "number") return a + b;
-            else if (b instanceof ZMath.Complex)return ZMath.complex(a + b.a, b.b);
+            else if (b instanceof Complex)return complex(a + b.a, b.b);
             else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).add(b);
             else if (b instanceof Array)return b.map(n=>Utils.add(n,a));                 
         }
-        else if(a instanceof ZMath.Complex||a instanceof ZMath.Matrix){
+        else if(a instanceof Complex||a instanceof Matrix){
             if(b instanceof Array)return b.map(n=>a.clone.add(n));
             return a.clone.add(b);
         }
@@ -36,11 +38,11 @@ class Utils {
     static #sub(a,b){
         if(typeof(a)==="number"){
             if (typeof b == "number") return a - b;
-            else if (b instanceof ZMath.Complex)return ZMath.complex(a - b.a, -b.b);
+            else if (b instanceof Complex)return complex(a - b.a, -b.b);
             else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).sub(b);
             else if (b instanceof Array)return b.map(n=>Utils.sub(n,a));                 
         }
-        else if(a instanceof ZMath.Complex||a instanceof ZMath.Matrix){
+        else if(a instanceof Complex||a instanceof Matrix){
             if(b instanceof Array)return b.map(n=>a.clone.sub(n));
             return a.clone.sub(b);
         }
@@ -56,11 +58,11 @@ class Utils {
     static #mul(a,b){
         if(typeof(a)==="number"){
         if (typeof b == "number") return a * b;
-            else if (b instanceof ZMath.Complex)return ZMath.complex(a * b.a,a * b.b);
+            else if (b instanceof Complex)return complex(a * b.a,a * b.b);
             else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).mul(b);
             else if (b instanceof Array)return b.map(n=>Utils.mul(a,n)); 
         }
-        else if(a instanceof ZMath.Complex||a instanceof ZMath.Matrix){
+        else if(a instanceof Complex||a instanceof Matrix){
             if(b instanceof Array)return b.map(n=>a.clone.mul(n));
             return a.clone.mul(b);
         }
@@ -76,11 +78,11 @@ class Utils {
     static #div(a,b){
         if(typeof(a)==="number"){
         if (typeof b == "number") return a / b;
-            else if (b instanceof ZMath.Complex)return ZMath.complex(a / b.a,a / b.b);
+            else if (b instanceof Complex)return complex(a / b.a,a / b.b);
             else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).div(b);
             else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
         }
-        else if(a instanceof ZMath.Complex||a instanceof ZMath.Matrix){
+        else if(a instanceof Complex||a instanceof Matrix){
             if(b instanceof Array)return b.map(n=>a.clone.div(n));
             return a.clone.div(b);
         }
@@ -96,11 +98,11 @@ class Utils {
     static #modulo(a,b){
         if(typeof(a)==="number"){
             if (typeof b == "number") return a % b;
-                else if (b instanceof ZMath.Complex)return ZMath.complex(a % b.a,a % b.b);
+                else if (b instanceof Complex)return complex(a % b.a,a % b.b);
                 else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).modulo(b);
                 else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
             }
-            else if(a instanceof ZMath.Complex||a instanceof ZMath.Matrix){
+            else if(a instanceof Complex||a instanceof Matrix){
                 if(b instanceof Array)return b.map(n=>a.clone.div(n));
                 return a.clone.div(b);
             }
@@ -149,7 +151,7 @@ class Utils {
         return p;
     }
     static deg2rad(x) {
-        if (typeof x === "number") return (x * ZMath.PI) / 180;
+        if (typeof x === "number") return (x * PI) / 180;
         else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, Utils.deg2rad(x.arr.flat(1)));
         else if (x instanceof Complex) return new Complex(Utils.deg2rad(x.a), Utils.deg2rad(x.b));
         else if (x instanceof Array) {
@@ -164,7 +166,7 @@ class Utils {
         }
     }
     static rad2deg(x) {
-        if (typeof x === "number") return (x / ZMath.PI) * 180;
+        if (typeof x === "number") return (x / PI) * 180;
         else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, Utils.rad2deg(x.arr.flat(1)));
         else if (x instanceof Complex) return new Complex(Utils.rad2deg(x.a), Utils.rad2deg(x.b));
         else if (x instanceof Array) {
@@ -199,21 +201,21 @@ class Utils {
             return ppcm;
         } else console.log("error");
     }
-    static linspace(a,b,n=ZMath.abs(b-a)+1,endpoint=true) {
-        if(a instanceof ZMath.Complex||b instanceof ZMath.Complex){
-            a=ZMath.complex(a);
-            b=ZMath.complex(b);
+    static linspace(a,b,n=abs(b-a)+1,endpoint=true) {
+        if(a instanceof Complex||b instanceof Complex){
+            a=complex(a);
+            b=complex(b);
             n=n||Math.abs(b.a-a.a)+1;
             const X=this.linspace(a.a,b.a,n,endpoint);
             const Y=this.linspace(a.b,b.b,n,endpoint);
             let Z=new Array(n).fill(null);
-            Z=Z.map((n,i)=>ZMath.complex(X[i],Y[i]));
+            Z=Z.map((n,i)=>complex(X[i],Y[i]));
             return Z;
         }
         else if(a instanceof Array){
             let Y=[]
             for(let i=0;i<a.length;i++){
-                n=n||ZMath.abs(b[i]-a[i])+1
+                n=n||abs(b[i]-a[i])+1
                 Y[i]=this.linspace(a[i],b[i],n,endpoint);
             }
             return Y;
@@ -228,24 +230,24 @@ class Utils {
         }
         return a<b?arr:arr.reverse();
     }
-    static logspace(a,b,n=b-a+1,base=ZMath.E,endpoint=true){
-        if(a instanceof ZMath.Complex||b instanceof ZMath.Complex){
-            a=ZMath.complex(a);
-            b=ZMath.complex(b);
-            n=n??ZMath.abs(b.a-a.a)
+    static logspace(a,b,n=b-a+1,base=E,endpoint=true){
+        if(a instanceof Complex||b instanceof Complex){
+            a=complex(a);
+            b=complex(b);
+            n=n??abs(b.a-a.a)
             const X=this.linspace(a.a,b.a,n,base,endpoint);
             const Y=this.linspace(a.b,b.b,n,base,endpoint);
             const Z=new Array(X.length).fill(0)
             const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
             return ZZ;
         }
-        const start=base**ZMath.min(a,b);
-        const stop=base**ZMath.max(a,b);
-        const y = Utils.linspace(ZMath.ln(start) / ZMath.ln(base), ZMath.ln(stop) / ZMath.ln(base), n, endpoint);
+        const start=base**min(a,b);
+        const stop=base**max(a,b);
+        const y = Utils.linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
         const result=y.map(n => pow(base, n));
         return a<b?result:result.reverse();
     }
-    static geomspace(a,b,n=ZMath.abs(b-a)+1){
+    static geomspace(a,b,n=abs(b-a)+1){
         var [high,low]=[a,b].sort((a,b)=>b-a);
         var step=sqrtn(high,n-low);
         var arr=[low]
@@ -304,7 +306,7 @@ class Utils {
         }
     }
     static clamp(value, min, max) {
-        if (typeof value === "number") return ZMath.min(ZMath.max(value, min), max);
+        if (typeof value === "number") return min(max(value, min), max);
         else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.clamp(value.arr.flat(1), min, max));
         else if (value instanceof Complex) return new Complex(Utils.clamp(value.a, min, max), Utils.clamp(value.b, min, max));
         else if (value instanceof Array) {
@@ -319,7 +321,7 @@ class Utils {
         }
     }
     static aproximatelyEqual(a,b,Epsilon=0.0001){
-        return ZMath.abs(a-b)<Epsilon;
+        return abs(a-b)<Epsilon;
     }
     static cartesianProduct(a, b){
         return a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
@@ -331,6 +333,7 @@ class Utils {
     }
 }
 var {zeros,ones,numbers,sum,prod,add,mul,div,sub,modulo,rad2deg,deg2rad,arange,linspace,logspace,norm,lerp,map,clamp,pgcd,ppcm,aproximatelyEqual,cartesianProduct}=Utils
+console.log(add(complex(1,1),2))
 export {
     Utils,
     zeros,

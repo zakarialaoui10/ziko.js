@@ -11,9 +11,8 @@ import{
     sqrtn,
     atan2,
   }from "../Functions/index.js"
-  console.log(cos)
-//import { Matrix } from "./Matrix.js";
-//import {sum,prod,deg2rad} from "./Utils.js";
+import { Matrix } from "../Matrix/index.js";
+import {sum,prod,deg2rad} from "../Utils/index.js";
 import AbstractZikoMath from "../index.js";
 //import ZMath from "./index.js";
 class Complex extends AbstractZikoMath{
