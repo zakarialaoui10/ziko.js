@@ -1,4 +1,3 @@
-class AbstractZikoMath {}
 //import Ziko from "../index.js"
 //import {PI,E,EPSILON} from "./Const.js"
 //import { Signal } from "./Signal/Signal.js";
