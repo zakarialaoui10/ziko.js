@@ -1,7 +1,7 @@
 class AbstractZikoMath {}
-import Ziko from "../index.js"
-import {PI,E,EPSILON} from "./Const.js"
-import { Signal } from "./Signal/Signal.js";
+//import Ziko from "../index.js"
+//import {PI,E,EPSILON} from "./Const.js"
+//import { Signal } from "./Signal/Signal.js";
 import{
     cos,
     sin,
@@ -36,11 +36,11 @@ import{
     hypot,
     sig,
     atan2,
-  } from "./Functions.js";
-import {Random} from "./Random.js";
-import { Derivation } from "./Numeric/index.js";
-import {complex,Complex} from "./complex.js";
-import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./Matrix.js"
+  } from "./Functions/index.js";
+import {Random} from "./Random/index.js";
+//import { Derivation } from "./Numeric/index.js";
+import {complex,Complex} from "./Complex/index.js";
+import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./Matrix/index.js"
 //import {Logic,Permutation,Combinaison,PowerSet,subset}from "./Discret/index.js"
 import Discret from "./Discret/index.js";
 import {Logic,Base} from "./Discret/index.js";
@@ -68,7 +68,7 @@ import {
     ppcm,
     aproximatelyEqual,
     cartesianProduct
-  }from "./Utils.js"
+  }from "./Utils/index.js"
 const ZikoMath={
     PI,
     E,
@@ -162,6 +162,7 @@ const ZikoMath={
         return this;
     }
 }
+console.log(cos)
 export {AbstractZikoMath}
 export default ZikoMath;
 

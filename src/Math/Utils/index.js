@@ -333,7 +333,6 @@ class Utils {
     }
 }
 var {zeros,ones,numbers,sum,prod,add,mul,div,sub,modulo,rad2deg,deg2rad,arange,linspace,logspace,norm,lerp,map,clamp,pgcd,ppcm,aproximatelyEqual,cartesianProduct}=Utils
-console.log(add(complex(1,1),2))
 export {
     Utils,
     zeros,
