@@ -2144,7 +2144,6 @@
           if(typeof element==="string")element=document.createElement(element);
           this.element = element;
           Object.assign(this,styleComposer.call(this));
-          //Object.assign(this,domComposer.call(this));
           this.cache={
             isHidden:false,
             style:{
@@ -2168,11 +2167,6 @@
           //console.log(ele)
           //this.maintain()
         } 
-        /*size(w,h){
-            typeof w == "number" ? (this.w = w + "vw") : (this.w = w);
-            typeof h == "number" ? (this.h = h + "vh") : (this.h = h);
-            this.style({width:this.w,height:this.h});
-          }*/
         clone() {
           //const a = new ZikoUIElement(this.element.cloneNode(true));
           //a.element.style=this.element.style
@@ -2180,29 +2174,82 @@
           a.render(true);
           return clonedUI;
         }
-       /* append(...ele) {
+        maintain(){
+          for(let i=0;i<this.items.length;i++)Object.assign(this,{[[i]]:this.items[i]});
+          return this;
+      }
+      setTarget(tg){
+          if (tg instanceof ZikoUIElement) tg = tg.element;
+          this.remove();
+          this.Target = tg;
+          this.render();
+          return this;
+      }
+      render(bool = true) {
+          if (bool) this.Target.appendChild(this.element);
+          else this.remove();
+          return this;
+      }
+      append(...ele){
           for (let i = 0; i < ele.length; i++)
           if(ele[i] instanceof ZikoUIElement){
-            this.element.appendChild(ele[i].element);
-            ele[i].Target=this.element
-            this.items.push(ele[i]);
+              this.element.appendChild(ele[i].element);
+              ele[i].Target=this.element;
+              this.items.push(ele[i]);
           }   
           else if(ele[i] instanceof Object){
-            if(ele[i]?.style)this.style(ele[i]?.style);
-            if(ele[i]?.attr){
-              Object.entries(ele[i].attr).forEach(n=>this.setAttribute(""+n[0],n[1]))
-            }
-          }     
-          for(let i=0;i<this.items.length;i++)Object.assign(this,{[[i]]:this.items[i]})
+              if(ele[i]?.style)this.style(ele[i]?.style);
+              if(ele[i]?.attr){
+                  Object.entries(ele[i].attr).forEach(n=>this.setAttribute(""+n[0],n[1]));
+              }
+          }    
+          this.maintain(); 
           return this;
-        }*/
-        // insertAt(index, ...ele) {
-        //   if (index >= this.element.children.length) this.append(...ele);
-        //   else
-        //     for (let i = 0; i < ele.length; i++)
-        //       this.element.insertBefore(ele[i].element, this.items[index].element);
-        //   return this;
-        // }
+      }
+      remove() {
+          if (this.Target.children.length) this.Target.removeChild(this.element);
+          return this;
+      }
+      removeAfter(t = 1) {
+          setTimeout(() => this.remove(), t);
+          return this;
+      }
+      removeItem(...ele){
+          const remove = (ele) => {
+              if (ele instanceof ZikoUIElement) this.element.removeChild(ele.element);
+              else if (typeof ele === "number")
+                this.element.removeChild(this.element.children[ele]);
+            };
+            for (let i = 0; i < ele.length; i++) remove(ele[i]);
+            for(let i=0;i<this.items.length;i++)Object.assign(this,{[[i]]:this.items[i]});
+            return this;
+      }
+      at(index){
+          return this.items.at(index);
+      }
+      insertAt(index, ...ele){
+          if (index >= this.element.children.length) this.append(...ele);
+          else for (let i = 0; i < ele.length; i++){
+              this.element.insertBefore(ele[i].element, this.items[index].element);
+              this.items.splice(index,0,ele[i]);
+          }
+          
+          return this;           
+      }
+      // Attributes
+      setAttribute(name, value) {
+          this.element.setAttribute(name, value);
+          Object.assign(this.cache.attributes,Object.fromEntries([[name,value]]));
+          return this;
+        }
+      removeAttribute(name) {
+          this.element.setAttribute(name);
+          return this;
+        }
+      setContentEditable(bool = true) {
+          this.setAttribute("contenteditable", bool);
+          return this;
+      }
         link(link, target = "") {
           let a = document.createElement("a");
           a.setAttribute("href", link);
@@ -2211,39 +2258,6 @@
           this.element.style.cursor = "pointer";
           return this;
         }
-        // removeItem(...ele) {
-        //   const remove = (ele) => {
-        //     if (ele instanceof ZikoUIElement) this.element.removeChild(ele.element);
-        //     else if (typeof ele === "number")
-        //       this.element.removeChild(this.element.children[ele]);
-        //   };
-        //   for (let i = 0; i < ele.length; i++) remove(ele[i]);
-        //   return this;
-        // }
-        // setTarget(tg) {
-        //   if (tg instanceof ZikoUIElement) tg = tg.element;
-        //   this.remove();
-        //   this.Target = tg;
-        //   this.render();
-        //   return this;
-        // }
-        // render(bool = true) {
-        //   if (bool) this.Target.appendChild(this.element);
-        //   else this.remove();
-        //   return this;
-        // }
-        // remove() {
-        //   if (this.Target.children.length) this.Target.removeChild(this.element);
-        //   return this;
-        // }
-        // toggle() {
-        //   this.cache.isHidden ? this.show() : this.hide();
-        //   return this;
-        // }
-        // removeAfter(t = 1) {
-        //   setTimeout(() => this.remove(), t);
-        //   return this;
-        // }
         get children() {
           return [...this.element.children];
         }
@@ -2254,20 +2268,6 @@
           this.cache.isHidden ? this.show() : this.hide();
           return this;
       }
-        /*
-        style(stl, { target = "parent", maskVector = null } = {}) {
-          if (target === "parent" || target === 0) {
-            style(this.element, stl);
-            Object.assign(this.cache.style,stl)
-          }
-          else if (target === "children" || target === 1) {
-            if (maskVector) {
-              this.items.map((n, i) => maskVector[i] == 1 && n.style(stl));
-            } else this.items.map((n) => n.style(stl));
-          }
-          return this;
-        }
-        */
         get styleObject() {
           //let borderPlus
           return Object.fromEntries(
@@ -2276,14 +2276,6 @@
             )
           );
         }
-        // setCss(css) {
-        //   this.element.style.cssText = css;
-        //   return this;
-        // }
-        // addCss(css) {
-        //   this.element.style.cssText += css;
-        //   return this;
-        // }
         backgroundColor(background = "#EEEEEE", { target, maskVector } = {}) {
           this.style({ backgroundColor: background }, { target, maskVector });
           return this;
@@ -2343,38 +2335,10 @@
           this.style({ boxShadow: "2px 2px 10px " + shadow }, { target, maskVector });
           return this;
         }
-        /*
-        clip(polygon, { target, maskVector } = {}) {
-          if (typeof polygon === "string") polygon = "polygon(" + polygon + ")";
-          this.style({ clipPath: polygon }, { target, maskVector });
-          return this;
-        }
-        
-        overflow(x, y, { target, maskVector } = {}) {
-          let value = Ziko.Math.Permutation.withDiscount(["hidden", "auto"]);
-          let index = Ziko.Math.bin2dec(+(x + "" + y));
-          //console.log(value,index)
-          let valueX = value[index][0];
-          let valueY = value[index][1];
-          this.style(
-            { overflowX: valueX, overflowY: valueY },
-            { target, maskVector }
-          );
-          return this;
-        }
-        */
-        /*display(disp, { target, maskVector } = {}) {
-          this.style({ display: disp }, { target, maskVector });
-          return this;
-        }*/
         cssFilter(filter, { target, maskVector } = {}) {
           this.style({ filter: filter }, { target, maskVector });
           return this;
         }
-        /*float(float, { target, maskVector } = {}) {
-          this.style({ float: float }, { target, maskVector });
-          return this;
-        }*/
         font(f = "italic bold 20px arial,serif", { target, maskVector } = {}) {
           this.style({ font: f }, { target, maskVector });
           return this;
@@ -2405,19 +2369,6 @@
           } else this.style({ fontFamily: n }, { target, maskVector });
           return this;
         }
-        // contenteditable(bool = true) {
-        //   this.setAttribute("contenteditable", bool);
-        //   return this;
-        // }
-        // setAttribute(name, value) {
-        //   this.element.setAttribute(name, value);
-        //   Object.assign(this.cache.attributes,Object.fromEntries([[name,value]]))
-        //   return this;
-        // }
-        // removeAttribute(name) {
-        //   this.element.setAttribute(name);
-        //   return this;
-        // }
         setClass(value) {
           this.setAttribute("class", value);
           return this;
@@ -2446,18 +2397,6 @@
             n = 0;
           }
         }
-        // filterByTextContent(value) {
-        //   let item = this.children;
-        //   let displays=this.items.map(n=>n.cache.filters.display)
-        //   item
-        //     .filter(n => !n.textContent.toLowerCase().includes((""+value).toLowerCase()))
-        //     .map(n =>n.style.display = "none");
-        //   item
-        //     .filter(n => n.textContent.toLowerCase().includes((""+value).toLowerCase()))
-        //     .map((n, i) => (n.style.display = displays[i]));
-        //   item.filter((n) => n.style.display != "none");
-        //   return this;
-        // }
         sortByTextContent(value, displays) {
           let item = this.children;
           item
