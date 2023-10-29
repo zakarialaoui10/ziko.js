@@ -2937,6 +2937,38 @@ class ZikoUIHeading extends ZikoUIElement {
   const h5 = (text = "text") => new ZikoUIHeading(5, text);
   const h6 = (text = "text") => new ZikoUIHeading(6, text);
 
+class ZikoUIBr extends ZikoUIElement {
+    constructor() {
+      super();
+        this.element = document.createElement("br");
+        this.render();
+        delete this.append;
+    }
+  }
+  class ZikoUIHr extends ZikoUIElement {
+    constructor() {
+      super();
+        this.element = document.createElement("hr");
+        this.render();
+    }
+  }
+  class ZikoUILink extends ZikoUIElement{
+    constructor(href){
+      super();
+      this.element = document.createElement("a");
+      this.setHref(href);
+      this.render();
+    }
+    setHref(href){
+      this.element.href=href;
+    }
+  }
+  const br = () => new ZikoUIBr();
+  const hr = () => new ZikoUIHr();
+  const brs = (n=1)=> new Array(n).fill(new ZikoUIBr());
+  const hrs = (n=1)=> new Array(n).fill(new ZikoUIHr());
+  const link=(href,...UIElement)=>new ZikoUILink(href).append(...UIElement);
+
 class ZikoUIBtn extends ZikoUIElement {
     constructor(value = "button") {
       super();
@@ -3312,11 +3344,176 @@ class ZikoUISelect extends ZikoUIElement {
   }
 const select=()=>new ZikoUISelect();
 
+function set_vertical(direction){
+    direction == 1
+      ? this.style({ flexDirection: "column" })
+      : direction == -1 && this.style({ flexDirection: "column-reverse" });
+    return this;
+  }
+function set_horizontal(direction){
+  direction == 1
+      ? this.style({ flexDirection: "row" })
+      : direction == -1 && this.style({ flexDirection: "row-reverse" });
+    return this;
+}
+function map_pos_x(align){
+  let pos = ["flex-start", "center", "flex-end"];
+  if (typeof align === "number") align = pos[align + 1];
+  return align;
+}
+window.map_pos_x=map_pos_x;
+function map_pos_y(align){
+  return map_pos_x(-align);
+}
+class ZikoUIFlex extends ZikoUIElement {
+  constructor(tag ="div", w = "50vw", h = "50vh") {
+    super();
+    this.element = document.createElement(tag);
+    this.direction = "cols";
+    if (typeof w == "number") w += "%";
+    if (typeof h == "number") h += "%";
+    this.style({ border: "1px solid black", width: w, height: h });
+    this.style({ display: "flex" });
+    this.render();
+  }
+  resp(px,wrap = true) {
+    this.wrap(wrap);
+    if (this.element.clientWidth < px) this.vertical();
+    else this.horizontal();
+    return this;
+  }
+  setSpaceAround() {
+    this.style({ justifyContent: "space-around" });
+    return this;
+  }
+  setSpaceBetween() {
+    this.style({ justifyContent: "space-between" });
+    return this;
+  }
+  setBaseline() {
+    this.style({ alignItems: "baseline" });
+    return this;
+  }
+  gap(g) {
+    if (this.direction === "row") this.style({ columnGap: g });
+    else if (this.direction === "column") this.style({ rowGap: g });
+    return this;
+  }
+  wrap(value = "wrap") {
+    const values = ["no-wrap", "wrap","wrap-reverse"];
+    this.style({
+      flexWrap: typeof value === "string" ? value : values[+value],
+    });
+    return this;
+  }
+  _justifyContent(align = "center") {
+    this.style({ justifyContent: align });
+    return this;
+  }
+  vertical(x, y, order=1) {
+    console.log(111111111111);
+    set_vertical.call(this,order);
+    this.style({
+      alignItems: typeof(x)==="number"?map_pos_x.call(this,x):x,
+      justifyContent: typeof(y)=="number"?map_pos_y.call(this,y):y
+    });
+    return this;
+  }
+  horizontal(x, y, order=1) {
+    set_horizontal.call(this,order);
+    this.style({
+      alignItems: typeof(y)=="number"?map_pos_y.call(this,y):y,
+      justifyContent: typeof(x)==="number"?map_pos_x.call(this,x):x
+    });
+    return this;
+  }
+  show() {
+    this.isHidden = false;
+    this.style({ display: "flex" });
+    return this;
+  }
+}
+
+class ZikoUIMain extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("main");
+      this.render();
+    }
+  }
+  class ZikoUIHeader extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("header");
+      this.render();
+    }
+  }
+  class ZikoUINav extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("nav");
+      this.render();
+    }
+  }
+  class ZikoUISection extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("section");
+      this.style({position:"relative"});
+      this.render();
+    }
+  }
+  class ZikoUIArticle extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("article");
+      this.render();
+    }
+  }
+  class ZikoUIAside extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("aside");
+      this.render();
+    }
+  }
+  class ZikoUIFooter extends ZikoUIElement{
+    constructor(){
+      super();
+      this.element=document.createElement("footer");
+      this.render();
+    }
+  }
+const Section = (...ZikoUIElement) => new ZikoUISection().append(...ZikoUIElement);
+const Article = (...ZikoUIElement) => new ZikoUIArticle().append(...ZikoUIElement);
+const Main = (...ZikoUIElement) => new ZikoUIMain().append(...ZikoUIElement);
+const Header = (...ZikoUIElement) => new ZikoUIHeader().append(...ZikoUIElement);
+const Footer = (...ZikoUIElement) => new ZikoUIFooter().append(...ZikoUIElement);
+const Nav = (...ZikoUIElement) => new ZikoUINav().append(...ZikoUIElement);
+const Aside = (...ZikoUIElement) => new ZikoUIAside().append(...ZikoUIElement);
+const FlexHeader = (...ZikoUIElement) => new ZikoUIFlex("header").append(...ZikoUIElement);
+const FlexMain = (...ZikoUIElement) => new ZikoUIFlex("main").append(...ZikoUIElement);
+const FlexArticle = (...ZikoUIElement) => new ZikoUIFlex("article").append(...ZikoUIElement);
+const FlexSection = (...ZikoUIElement) => new ZikoUIFlex("section").append(...ZikoUIElement);
+const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUIElement);
+const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
+const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
+
 const UI={
     text,
     p,
-    h1,h2,h3,h4,h5,h6,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
     btn,
+    br,
+    hr,
+    brs,
+    hrs,
+    link,
     input,
     search,
     slider,
@@ -3332,7 +3529,21 @@ const UI={
     inputPassword,
     inputTime,
     select,
-    textarea
+    textarea,
+    Header,
+    FlexHeader,
+    Main,
+    FlexMain,
+    Section,
+    FlexSection,
+    Article,
+    FlexArticle,
+    Aside,
+    FlexAside,
+    Nav,
+    FlexNav,
+    Footer,
+    FlexFooter,
 };
 
 const Ziko$1={

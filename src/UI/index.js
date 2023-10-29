@@ -1,4 +1,20 @@
-import {text,p,h1,h2,h3,h4,h5,h6} from "./Text/index.js";
+import {
+    text,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6
+} from "./Text/index.js";
+import {
+    br,
+    hr,
+    brs,
+    hrs,
+    link
+} from "./Miscellaneous/index.js";
 import {
     btn,
     input,
@@ -37,8 +53,18 @@ import{
 const UI={
     text,
     p,
-    h1,h2,h3,h4,h5,h6,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
     btn,
+    br,
+    hr,
+    brs,
+    hrs,
+    link,
     input,
     search,
     slider,
