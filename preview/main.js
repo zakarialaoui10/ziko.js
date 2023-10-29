@@ -1,4 +1,5 @@
 Ziko.UI.ExtractAll()
+Ziko.Math.ExtractAll()
 const info=p(
     text("Last triggered event :"),
     text("").color("red")
@@ -22,3 +23,4 @@ var el=FlexMain(
 sl=slider({min:20,max:100,value:50})
    .onChange(e=>el[0].style({width:`${e.target.value}%`}));
 hr();
+Table(matrix([[1,2],[1,2]]))

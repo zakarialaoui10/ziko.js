@@ -35,6 +35,9 @@ import {
     textarea,
 } from "./Inputs/index.js";
 import{
+    Flex
+} from "./Flex/index.js"
+import{
     Header,
     FlexHeader,
     Main,
@@ -82,6 +85,7 @@ const UI={
     inputTime,
     select,
     textarea,
+    Flex,
     Header,
     FlexHeader,
     Main,

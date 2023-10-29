@@ -3437,6 +3437,8 @@
       }
     }
 
+    const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
+
     class ZikoUIMain extends ZikoUIElement{
         constructor(){
           super();
@@ -3679,6 +3681,7 @@
         inputTime,
         select,
         textarea,
+        Flex,
         Header,
         FlexHeader,
         Main,
