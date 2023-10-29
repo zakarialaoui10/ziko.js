@@ -16,7 +16,6 @@ function map_pos_x(align){
   if (typeof align === "number") align = pos[align + 1];
   return align;
 }
-window.map_pos_x=map_pos_x
 function map_pos_y(align){
   return map_pos_x(-align);
 }
@@ -90,4 +89,4 @@ class ZikoUIFlex extends ZikoUIElement {
 }
 
 const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
-export{Flex,ZikoUIFlex,FlexHeader,FlexMain,FlexArticle,FlexSection,FlexAside,FlexNav,FlexFooter}
+export{Flex,ZikoUIFlex}

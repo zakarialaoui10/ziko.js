@@ -49,7 +49,8 @@ import{
     FlexNav,
     Footer,
     FlexFooter,
-    } from "./Semantic/index.js"
+    } from "./Semantic/index.js";
+import { Table } from "./Table/index.js";
 const UI={
     text,
     p,
@@ -95,5 +96,7 @@ const UI={
     FlexNav,
     Footer,
     FlexFooter,
+    Table
 }
+ console.log(Table)
 export default UI
