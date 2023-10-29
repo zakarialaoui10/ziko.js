@@ -4,14 +4,14 @@ import resolve from '@rollup/plugin-node-resolve';
 export default {
   input: 'src/index.js',
   output: [{
-    file: 'dist/index.cjs',
+    file: 'dist/ziko.cjs',
     format: 'cjs',
   },{
-    file: 'dist/index.mjs',
+    file: 'dist/ziko.mjs',
     format: 'es',
   },
   {
-    file: 'dist/index.js',
+    file: 'dist/ziko.js',
     format: 'umd',
     name:"Ziko"
   }

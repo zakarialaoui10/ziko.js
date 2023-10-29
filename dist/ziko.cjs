@@ -3550,6 +3550,13 @@ const Ziko$1={
     Math: Math$1,
     UI
 };
+function ExtractAll(obj){
+    for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
+        globalThis[Object.keys(Ziko$1.Math)[i]] = Object.values(Ziko$1.Math)[i];
+    }
+    return this;
+}
+ExtractAll.bind(Ziko$1.UI);
 Ziko$1.Math.ExtractAll=function(){
     for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
         globalThis[Object.keys(Ziko$1.Math)[i]] = Object.values(Ziko$1.Math)[i];
