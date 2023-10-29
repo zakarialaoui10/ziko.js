@@ -1,4 +1,4 @@
-import ZikoUIElement from "../Setup.js"
+import ZikoUIElement from "../ZikoUIElement.js"
 function set_vertical(direction){
     direction == 1
       ? this.style({ flexDirection: "column" })
@@ -11,7 +11,6 @@ function set_horizontal(direction){
       : direction == -1 && this.style({ flexDirection: "row-reverse" });
     return this;
 }
-
 function map_pos_x(align){
   let pos = ["flex-start", "center", "flex-end"];
   if (typeof align === "number") align = pos[align + 1];
@@ -91,12 +90,4 @@ class ZikoUIFlex extends ZikoUIElement {
 }
 
 const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
-const FlexHeader = (...ZikoUIElement) => new ZikoUIFlex("header").append(...ZikoUIElement);
-const FlexMain = (...ZikoUIElement) => new ZikoUIFlex("main").append(...ZikoUIElement);
-const FlexArticle = (...ZikoUIElement) => new ZikoUIFlex("article").append(...ZikoUIElement);
-const FlexSection = (...ZikoUIElement) => new ZikoUIFlex("section").append(...ZikoUIElement);
-const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUIElement);
-const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
-const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
-
-export{Flex,ZikoUIFlex,FlexHeader,FlexMain,FlexArticle,FlexSection,FlexAside,FlexFooter}
+export{Flex,ZikoUIFlex,FlexHeader,FlexMain,FlexArticle,FlexSection,FlexAside,FlexNav,FlexFooter}

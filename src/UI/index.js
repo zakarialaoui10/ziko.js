@@ -17,7 +17,23 @@ import {
     inputTime,
     select,
     textarea,
-} from "./Inputs/index.js"
+} from "./Inputs/index.js";
+import{
+    Header,
+    FlexHeader,
+    Main,
+    FlexMain,
+    Section,
+    FlexSection,
+    Article,
+    FlexArticle,
+    Aside,
+    FlexAside,
+    Nav,
+    FlexNav,
+    Footer,
+    FlexFooter,
+    } from "./Semantic/index.js"
 const UI={
     text,
     p,
@@ -38,6 +54,20 @@ const UI={
     inputPassword,
     inputTime,
     select,
-    textarea
+    textarea,
+    Header,
+    FlexHeader,
+    Main,
+    FlexMain,
+    Section,
+    FlexSection,
+    Article,
+    FlexArticle,
+    Aside,
+    FlexAside,
+    Nav,
+    FlexNav,
+    Footer,
+    FlexFooter,
 }
 export default UI
