@@ -2913,7 +2913,7 @@
           return this;
         }
       }
-      const p = (...ZikoUIElement) => new ZikoUIParagraphe(...ZikoUIElement);
+      const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
 
     class ZikoUIHeading extends ZikoUIElement {
         constructor(type = 1, value = "") {

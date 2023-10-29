@@ -31,5 +31,5 @@ class ZikoUIParagraphe extends ZikoUIElement {
       return this;
     }
   }
-  const p = (...ZikoUIElement) => new ZikoUIParagraphe(...ZikoUIElement);
+  const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
   export {p}
