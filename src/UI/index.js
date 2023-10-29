@@ -1,7 +1,43 @@
-import {text,p,h1,h2,h3,h4,h5,h6} from "./Text/index.js"
+import {text,p,h1,h2,h3,h4,h5,h6} from "./Text/index.js";
+import {
+    btn,
+    input,
+    search,
+    slider,
+    checkbox,
+    radio,
+    datalist,
+    inputNumber,
+    inputColor,
+    inputDate,
+    inputDateTime,
+    inputEmail,
+    inputImage,
+    inputPassword,
+    inputTime,
+    select,
+    textarea,
+} from "./Inputs/index.js"
 const UI={
     text,
     p,
-    h1,h2,h3,h4,h5,h6
+    h1,h2,h3,h4,h5,h6,
+    btn,
+    input,
+    search,
+    slider,
+    checkbox,
+    radio,
+    datalist,
+    inputNumber,
+    inputColor,
+    inputDate,
+    inputDateTime,
+    inputEmail,
+    inputImage,
+    inputPassword,
+    inputTime,
+    select,
+    textarea
 }
 export default UI
