@@ -35,7 +35,8 @@ import {
     textarea,
 } from "./Inputs/index.js";
 import{
-    Flex
+    Flex,
+    Notebook
 } from "./Flex/index.js"
 import{
     Header,
@@ -100,7 +101,8 @@ const UI={
     FlexNav,
     Footer,
     FlexFooter,
-    Table
+    Table,
+    Notebook
 }
  console.log(Table)
 export default UI

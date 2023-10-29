@@ -1,6 +1,6 @@
 Ziko.UI.ExtractAll()
 Ziko.Math.ExtractAll()
-const info=p(
+/*const info=p(
     text("Last triggered event :"),
     text("").color("red")
     ).style({fontSize:"20px"})
@@ -23,4 +23,14 @@ var el=FlexMain(
 sl=slider({min:20,max:100,value:50})
    .onChange(e=>el[0].style({width:`${e.target.value}%`}));
 hr();
-Table(matrix([[1,2],[1,2]]))
+//Table(matrix([[1,2],[1,2]]))
+*/
+a=Notebook().vertical(0,1).style({padding:"2px"}).size("80vw","auto")
+  .addSection()
+  .addSection()
+  .addSection()
+  .addSection()
+  .addSection()
+  .addSection()
+  .addSection()
+  .addSection()

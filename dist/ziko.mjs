@@ -3433,6 +3433,24 @@ class ZikoUIFlex extends ZikoUIElement {
 
 const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
 
+class ZikoUINoteBook extends ZikoUIFlex{
+    constructor(){
+        super();
+    }
+    addSection(){
+        const Input=Section().style({
+            width:"80%",
+            height:"50px",
+            margin:"5px 0px",
+            border:"1px red solid"
+        });
+        this.append(Input);
+        return this;
+    }
+}
+
+const Notebook = () => new ZikoUINoteBook();
+
 class ZikoUIMain extends ZikoUIElement{
     constructor(){
       super();
@@ -3483,7 +3501,7 @@ class ZikoUIMain extends ZikoUIElement{
       this.render();
     }
   }
-const Section = (...ZikoUIElement) => new ZikoUISection().append(...ZikoUIElement);
+const Section$1 = (...ZikoUIElement) => new ZikoUISection().append(...ZikoUIElement);
 const Article = (...ZikoUIElement) => new ZikoUIArticle().append(...ZikoUIElement);
 const Main = (...ZikoUIElement) => new ZikoUIMain().append(...ZikoUIElement);
 const Header = (...ZikoUIElement) => new ZikoUIHeader().append(...ZikoUIElement);
@@ -3680,7 +3698,7 @@ const UI$1={
     FlexHeader,
     Main,
     FlexMain,
-    Section,
+    Section: Section$1,
     FlexSection,
     Article,
     FlexArticle,
@@ -3690,7 +3708,8 @@ const UI$1={
     FlexNav,
     Footer,
     FlexFooter,
-    Table
+    Table,
+    Notebook
 };
  console.log(Table);
 
