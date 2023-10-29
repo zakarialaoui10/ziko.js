@@ -54,6 +54,17 @@ import{
     Footer,
     FlexFooter,
     } from "./Semantic/index.js";
+    import{
+        Svg,
+        svgCircle,
+        svgEllipse,
+        svgImage,
+        svgLine,
+        svgPolygon,
+        svgRect,
+        svgText,
+        svgGroupe
+    } from "../Graphics/index.js"
 import { Table } from "./Table/index.js";
 const UI={
     text,
@@ -102,6 +113,15 @@ const UI={
     Footer,
     FlexFooter,
     Table,
+    Svg,
+    svgCircle,
+    svgEllipse,
+    svgImage,
+    svgLine,
+    svgPolygon,
+    svgRect,
+    svgText,
+    svgGroupe
     Notebook
 }
  console.log(Table)
