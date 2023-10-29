@@ -3554,22 +3554,34 @@
         Math: Math$1,
         UI
     };
-    function ExtractAll(obj){
-        for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
-            globalThis[Object.keys(Ziko$1.Math)[i]] = Object.values(Ziko$1.Math)[i];
-        }
-        return this;
-    }
-    ExtractAll.bind(Ziko$1.UI);
     Ziko$1.Math.ExtractAll=function(){
         for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
             globalThis[Object.keys(Ziko$1.Math)[i]] = Object.values(Ziko$1.Math)[i];
         }
         return this;
     };
-    Ziko$1.RemoveAll=function(){
+    Ziko$1.Math.RemoveAll=function(){
         for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) delete globalThis[Object.keys(Ziko$1.Math)[i]];   
         return this;
+    };
+    Ziko$1.UI.ExtractAll=function(){
+        for (let i = 0; i < Object.keys(Ziko$1.UI).length; i++) {
+            globalThis[Object.keys(Ziko$1.UI)[i]] = Object.values(Ziko$1.UI)[i];
+        }
+        return this;
+    };
+    Ziko$1.UI.RemoveAll=function(){
+        for (let i = 0; i < Object.keys(Ziko$1.UI).length; i++) delete globalThis[Object.keys(Ziko$1.UI)[i]];   
+        return this;
+    };
+    Ziko$1.ExtractAll=function(){
+        Ziko$1.UI.ExtractAll();
+        Ziko$1.Math.ExtractAll();
+        return this;
+    };
+    Ziko$1.RemoveAll=function(){
+        Ziko$1.UI.RemoveAll();
+        Ziko$1.Math.RemoveAll();
     };
 
     return Ziko$1;
