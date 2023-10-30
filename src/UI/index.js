@@ -16,6 +16,10 @@ import {
     link
 } from "./Miscellaneous/index.js";
 import {
+    ol,
+    ul
+} from "./List/index.js"
+import {
     btn,
     input,
     search,
@@ -85,6 +89,8 @@ const UI={
     brs,
     hrs,
     link,
+    ol,
+    ul,
     input,
     search,
     slider,
