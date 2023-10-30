@@ -12,6 +12,7 @@ class ZikoUIBr extends ZikoUIElement {
       super();
         this.element = document.createElement("hr");
         this.render();
+        delete this.append
     }
   }
   class ZikoUILink extends ZikoUIElement{

@@ -1,7 +1,65 @@
-// import Ziko from "../dist/ziko.mjs"
-// Ziko.UI.ExtractAll()
-// Ziko.Math.ExtractAll()
-import A from "./scripts/Svg.js"
+import Ziko from "../src/index.js"
+Ziko.UI.ExtractAll()
+Ziko.Math.ExtractAll()
+const B=p(
+    text("f"),
+    p(),
+    h1("l"),
+    h2(),
+    h3(),
+    h4(),
+    h5(),
+    h6(),
+    btn(),
+    br(),
+    hr(),
+    ...hrs(3),
+    ...brs(3),
+    link(),
+    input(),
+    search(),
+    slider(),
+    checkbox(),
+    radio(),
+    datalist(),
+    inputNumber(),
+    inputColor(),
+    inputDate(),
+    inputDateTime(),
+    inputEmail(),
+    inputImage(),
+    inputPassword(),
+    inputTime(),
+    select(),
+    textarea(),
+    Flex(),
+    Header(),
+    FlexHeader(),
+    Main(),
+    FlexMain(),
+    Section(),
+    FlexSection(),
+    Article(),
+    FlexArticle(),
+    Aside(),
+    FlexAside(),
+    Nav(),
+    FlexNav(),
+    Footer(),
+    FlexFooter(),
+    Table(),
+    Svg(),
+    svgCircle(0,0,0),
+    svgEllipse(0,0,0,0),
+    svgImage(),
+    svgLine(0,0,0,0),
+    svgPolygon(),
+    svgRect(0,0,0,0),
+    svgText("",0,0),
+    svgGroupe(),
+    Notebook()
+)
+B.remove()
 
 
 
