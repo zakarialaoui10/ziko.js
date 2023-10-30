@@ -1,6 +1,5 @@
 import ZikoUISvgElement from "./_SvgElement.js";
-import {ZikoUISvg} from "../index.js"
-class ZikoUISvgGrpupe extends ZikoUISvgElement{
+class ZikoUISvgGroupe extends ZikoUISvgElement{
     constructor(...svgElement){
       super();
       this.items=[];
@@ -26,6 +25,5 @@ class ZikoUISvgGrpupe extends ZikoUISvgElement{
       return this;     
     }
 }
-// ZikoUISvgGrpupe.prototype.addd=(...svgElement)=>ZikoUISvg.prototype.add.apply(ZikoUISvgGrpupe,...svgElement)
-// ZikoUISvgGrpupe.prototype.remove=(...svgElement)=>ZikoUISvg.prototype.remove(...svgElement).bind(this)
-export default svgGroupe=(...svgElement)=>new ZikoUISvgGrpupe(...svgElement)
+const svgGroupe=(...svgElement)=>new ZikoUISvgGroupe(...svgElement)
+export default svgGroupe

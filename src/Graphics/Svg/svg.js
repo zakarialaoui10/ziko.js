@@ -1,7 +1,7 @@
 import ZikoUIElement from "../../UI/ZikoUIElement.js"
 import svgRect from "./Elements/rect.js";
 import svgCircle from "./Elements/circle.js";
-import svgEllipse from "./Elements/eircle.js";
+import svgEllipse from "./Elements/ellips.js";
 import svgLine from "./Elements/line.js";
 //import svgPath from "./Elements/path.js";
 import svgPolygon from "./Elements/polygon.js";
@@ -101,4 +101,16 @@ import svgGroupe from "./Elements/groupe.js";
     }
   }
 
-  const Svg =(w,h)=>new ZikoUISvg(w,h)
+  const Svg =(w,h)=>new ZikoUISvg(w,h);
+  export{
+    Svg,
+    ZikoUISvg,
+    svgCircle,
+    svgEllipse,
+    svgImage,
+    svgLine,
+    svgPolygon,
+    svgRect,
+    svgText,
+    svgGroupe
+}

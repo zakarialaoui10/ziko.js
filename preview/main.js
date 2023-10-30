@@ -1,3 +1,4 @@
+import Ziko from "../dist/ziko.mjs"
 Ziko.UI.ExtractAll()
 Ziko.Math.ExtractAll()
 /*const info=p(
@@ -25,12 +26,11 @@ sl=slider({min:20,max:100,value:50})
 hr();
 //Table(matrix([[1,2],[1,2]]))
 */
-a=Notebook().vertical(0,1).style({padding:"2px"}).size("80vw","auto")
-  .addSection()
-  .addSection()
-  .addSection()
-  .addSection()
-  .addSection()
-  .addSection()
-  .addSection()
-  .addSection()
+
+
+
+const A=Svg(500).style({
+    margin:"20px 10vw"
+})
+const B=svgCircle(100,100,20)
+A.add(B)

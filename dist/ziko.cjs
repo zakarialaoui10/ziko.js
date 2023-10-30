@@ -3518,6 +3518,371 @@ const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUI
 const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
 const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
 
+class ZikoUISvgElement{
+    color({stroke,fill}){
+      this.element.setAttribute("stroke",stroke);
+      this.element.setAttribute("fill",fill);
+      return this; 
+    }
+    fill(color="none"){
+      this.element.setAttribute('fill', color);
+      return this;
+    }
+    stroke(color="none",width){
+      this.element.setAttribute('stroke', color);
+      width && this.strokeWidth(width);
+      return this;
+    }
+    strokeWidth(width=1){
+      this.element.setAttribute('stroke-width', width);
+      return this;
+    }
+    opacity(value=1){
+      this.element.setAttribute('opacity', value);
+      return this;   
+    }
+    }
+
+class ZikoUISvgRectangle extends ZikoUISvgElement{
+    constructor(x,y,w,h,center=true){
+      super();
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect",
+      );
+      this.setX(x).setY(y).width(w).height(h);
+      this.rx=this.x+this.w/2;
+      this.ty=this.y+this.h/2;
+    }
+    setX(x){
+       this.element.x.baseVal.value=x;
+       this.x=x;
+       return this;
+    }
+    setY(y){
+       this.element.y.baseVal.value=y;
+       this.y=y;
+       return this;
+    }
+    r(rx,ry){
+      this.rx=rx;
+      this.ry=ry;
+      this.setX(this.rx-this.w/2);
+      this.setY(this.ry-this.h/2);
+      return this;
+    } 
+    width(w){
+       this.element.width.baseVal.value=w;
+       this.w=w;
+       return this;
+    } 
+    height(h){
+       this.element.height.baseVal.value=h;
+       this.h=h;
+       return this;
+    } 
+  } 
+  const svgRect=(x,y,w,h,center)=>new ZikoUISvgRectangle(x,y,w,h,center);
+
+class ZikoUISvgCircle extends ZikoUISvgElement{
+    constructor(cx,cy,r){
+      super();
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle",
+      );
+      this.cx(cx).cy(cy).r(r);
+    }
+    cx(cx){
+       this.element.cx.baseVal.value=cx;
+       return this;
+    }
+    cy(cy){
+       this.element.cy.baseVal.value=cy;
+       return this;
+    }
+    r(r){
+       this.element.r.baseVal.value=r;
+       return this;
+    }
+    get R(){
+      return this.element.r.baseVal.value;
+    }
+    get Cx(){
+      return this.element.cx.baseVal.value;
+    } 
+    get Cy(){
+      return this.element.cy.baseVal.value;
+    }  
+  } 
+const svgCircle=(x,y,r)=>new ZikoUISvgCircle(x,y,r);
+
+class ZikoUISvgEllipse extends ZikoUISvgElement{
+    constructor(cx,cy,rx,ry){
+      super();
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "ellipse",
+      );
+      this.cx(cx).cy(cy).rx(rx).ry(ry);
+    }
+    cx(cx){
+       this.element.cx.baseVal.value=cx;
+       return this;
+    }
+    cy(cy){
+       this.element.cy.baseVal.value=cy;
+       return this;
+    }
+    rx(rx){
+       this.element.rx.baseVal.value=rx;
+       return this;
+    } 
+    ry(ry){
+       this.element.ry.baseVal.value=ry;
+       return this;
+    } 
+  } 
+const svgEllipse=(x,y,rx,ry)=>new ZikoUISvgEllipse(x,y,rx,ry);
+
+class ZikoUISvgLine extends ZikoUISvgElement{
+    constructor(x1,y1,x2,y2){
+      super();
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line",
+      );
+      this.x1(x1).y1(y1).x2(x2).y2(y2).stroke("black");
+    }
+    x1(x1){
+       this.element.x1.baseVal.value=x1;
+       return this;
+    }
+    y1(y1){
+       this.element.y1.baseVal.value=y1;
+       return this;
+    }
+    x2(x2){
+       this.element.x2.baseVal.value=x2;
+       return this;
+    } 
+    y2(y2){
+       this.element.y2.baseVal.value=y2;
+       return this;
+    } 
+  } 
+const svgLine=(x1,y1,x2,y2)=>new ZikoUISvgLine(x1,y1,x2,y2);
+
+class ZikoUISvgPolygon extends ZikoUISvgElement{
+    constructor(X=[],Y=[]){
+      super();
+      this.X=X;
+      this.Y=Y;
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "polygon",
+      );
+      this.element.setAttribute("points","");
+    }
+    addPoint(x,y){
+      let p=this.element.parentElement.createSVGPoint();
+      p.x=x;
+      p.y=y;
+      this.element.points.appendItem(p);
+      return this;
+    }
+    addPoints(X,Y){
+      for(let i=0;i<X.length;i++){
+        let p=this.element.parentElement.createSVGPoint();
+        p.x=X[i];
+        p.y=Y[i];
+        this.element.points.appendItem(p);
+      }
+      return this;
+    }
+  } 
+const svgPolygon=(X,Y)=>new ZikoUISvgPolygon(X,Y);
+
+class ZikoUISvgImage extends ZikoUISvgElement{
+    constructor(src="",w="100%",h="100%",x=0,y=0){
+      super();
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "image",
+      );
+      this.setSrc(src).width(w).height(h).x(x).y(y);
+    }
+    x(x){
+       this.element.x.baseVal.value=x;
+       return this;
+    }
+    y(y){
+       this.element.y.baseVal.value=y;
+       return this;
+    }
+    width(w){
+       this.element.setAttribute("width",w);
+       return this;
+    }
+    height(h){
+       this.element.setAttribute("height",h);
+       return this;
+    }
+    setSrc(src=""){
+      this.element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', src);
+      return this;
+    }
+  } 
+const svgImage=(src,w,h,x,y)=>new ZikoUISvgImage(src,w,h,x,y);
+
+class ZikoUISvgText extends ZikoUISvgElement{
+    constructor(text,x,y){
+      super();
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text",
+      );
+      this.setText(text);
+      this.x(x).y(y);
+    }
+    x(x){
+       this.element.setAttribute("x",x);
+       return this;
+    }
+    y(y){
+       this.element.setAttribute("y",y);
+       return this;
+    }
+    setText(text=""){
+      this.element.textContent=text;
+      return this;
+    }
+  } 
+const svgText=(text,x,y)=>new ZikoUISvgText(text,x,y);
+
+class ZikoUISvgGroupe extends ZikoUISvgElement{
+    constructor(...svgElement){
+      super();
+      this.items=[];
+      this.element=document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "g",
+      );
+      this.add(...svgElement);
+    }
+    add(...svgElement){
+      for(let i=0;i<svgElement.length;i++){
+        this.element.appendChild(svgElement[i].element);
+        this.items.push(svgElement[i]);
+      }
+      if(svgElement.length===1)return svgElement[0]
+      return svgElement;
+    }
+    remove(...svgElement){
+      for(let i=0;i<svgElement.length;i++){
+        this.element.removeChild(svgElement[i].element);
+        this.items=this.items.filter(n=>!svgElement);
+      }
+      return this;     
+    }
+}
+const svgGroupe=(...svgElement)=>new ZikoUISvgGroupe(...svgElement);
+
+//import svgObject from "./Elements/foreignObject.js";
+//import svgGrid from "./Elements/grid.js";
+
+  class ZikoUISvg extends ZikoUIElement {
+    constructor(w=360,h=300) {
+      super();
+      this.element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      //this.cache={};
+      this.setAttribute("width",w);
+      this.setAttribute("height",h);
+      this.style({border:"1px black solid"});
+      //this.view(-w/2,-h/2,w/2,h/2)
+      //this.view(-10,-10,10,10);
+      this.render();
+    }
+    view(x1,y1,x2,y2){
+      let width=Math.abs(x2-x1);
+      let height=Math.abs(y2-y1);
+      //this.element.style.transform="scale("+Math.sign(x2-x1)+","+(-Math.sign(y2-y1))+")";
+      this.element.setAttribute("viewBox",[x1,y1,width,height].join(" "));
+      //console.log({width:width,height:height})
+      return this;
+  
+    }
+    add(...svgElement){
+      for(let i=0;i<svgElement.length;i++){
+        this.element.appendChild(svgElement[i].element);
+        this.items.push(svgElement[i]);
+      }
+      if(svgElement.length===1)return svgElement[0]
+      return svgElement;
+    }
+    remove(...svgElement){
+      for(let i=0;i<svgElement.length;i++){
+        this.element.removeChild(svgElement[i].element);
+        this.items=this.items.filter(n=>!svgElement);
+      }
+      return this;     
+    }
+    text(text,x,y){
+      let item=svgText(text,x,y);
+      this.element.appendChild(item.element);
+      item.x(x-item.element.getComputedTextLength()/2);
+      return item;
+    }
+    rect(x,y,w,h){
+      let item=svgRect(x,y,w,h);
+      this.add(item);
+      return item;
+    }
+    line(x1,y1,x2,y2){
+      let item=svgLine(x1,y1,x2,y2);
+      this.element.appendChild(item.element);
+      return item;
+    }
+    circle(cx,cy,r){
+      let item=svgCircle(cx,cy,r);
+      this.element.appendChild(item.element);
+      return item;
+    }
+    ellipse(cx,cy,rx,ry){
+      let item=svgEllipse(cx,cy,rx,ry);
+      this.element.appendChild(item.element);
+      return item;
+    }
+    polygon(X,Y){
+      let item=svgPolygon(X,Y);
+      this.element.appendChild(item.element);
+      item.addPoints(X,Y);
+      return item;
+    }
+    image(src,w,h,x,y){
+      let item=svgImage(src,w,h,x,y);
+      this.element.appendChild(item.element);
+      return item;
+    }
+    mask(){
+  
+    }
+    toString(){
+      return  (new XMLSerializer()).serializeToString(this.element);
+    }
+    btoa(){
+      return btoa(this.toString())
+    }
+    toImg(){
+      return 'data:image/svg+xml;base64,'+this.btoa()
+    }
+    toImg2(){
+      return "data:image/svg+xml;charset=utf8,"+this.toString().replaceAll("<","%3C").replaceAll(">","%3E").replaceAll("#","%23").replaceAll('"',"'");
+    }
+  }
+
+  const Svg =(w,h)=>new ZikoUISvg(w,h);
+
 class ZikoUITr extends ZikoUIElement{
     constructor(...ZikoUIElement){
         super();
@@ -3711,9 +4076,17 @@ const UI$1={
     Footer,
     FlexFooter,
     Table,
+    Svg,
+    svgCircle,
+    svgEllipse,
+    svgImage,
+    svgLine,
+    svgPolygon,
+    svgRect,
+    svgText,
+    svgGroupe,
     Notebook
 };
- console.log(Table);
 
 const Ziko$1={
     Math: Math$1,

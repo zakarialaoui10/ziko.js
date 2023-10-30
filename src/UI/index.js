@@ -121,8 +121,7 @@ const UI={
     svgPolygon,
     svgRect,
     svgText,
-    svgGroupe
+    svgGroupe,
     Notebook
 }
- console.log(Table)
 export default UI
