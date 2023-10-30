@@ -16,4 +16,5 @@ export {
     inputTime,
   } from "./inputs.js"
 export {textarea} from "./textarea.js";
-export {select} from "./select.js"
+export {select} from "./select.js";
+export {inputCamera} from "./camera.js"

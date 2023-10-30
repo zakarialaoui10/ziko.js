@@ -249,6 +249,15 @@ class ZikoUIInputImage extends ZikoUIElement {
   get value() {
     return this.img;
   }
+  render(bool = true) {
+    if (bool) this.Target.appendChild(this._aux_element.element);
+    else this.remove();
+    return this;
+  }
+  remove() {
+    if (this.Target.children.length) this.Target.removeChild(this._aux_element.element);
+    return this;
+  }
 }
 
 class ZikoUIInputDatalist extends ZikoUIElement {

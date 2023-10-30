@@ -33,9 +33,10 @@ import {
     inputTime,
     select,
     textarea,
+    inputCamera
 } from "./Inputs/index.js";
 import {
-    image,video,audio,webcame,figure
+    image,video,audio,figure
 } from "./Media/index.js"
 import{
     Flex,
@@ -100,10 +101,10 @@ const UI={
     inputTime,
     select,
     textarea,
+    inputCamera,
     image,
     video,
     audio,
-    webcame,
     figure,
     Flex,
     Header,

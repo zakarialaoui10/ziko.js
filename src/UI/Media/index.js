@@ -29,57 +29,8 @@ class ZikoUIImage extends ZikoUIElement {
       return this;
     }
   }
-  class ZikoUIVideo extends ZikoUIElement {
-    constructor(src="", w = "100%", h = "50vh") {
-      super();
-      this.element = document.createElement("video");
-      if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);
-      else this.element.setAttribute("src", src);
-      if (typeof w == "number") w += "%";
-      if (typeof h == "number") h += "%";
-      this.style({ width: w, height: h });
-      this.render();
-    }
-    controls(enabled = true) {
-      this.element.controls = enabled;
-      return this;
-    }
-    play() {
-      this.element.play();
-      return this;
-    }
-    pause() {
-      this.element.pause();
-      return this;
-    }
-    poster(src=""){
-      this.element.poster=src;
-      return this;
-    }
-    PIP(e){
-      this.element.requestPictureInPicture(e);
-      return this;
-    }
-  }
-  class ZikoUIWebcame extends ZikoUIVideo{
-    constructor(){
-      super()
-      this.element.setAttribute("src", "");
-      this.constraints = { audio: true, video: { width: 1280, height: 720 } };
-      //this.video=this.element
-    }
-    start(){
-      navigator.mediaDevices.getUserMedia(this.constraints).then((mediaStream)=>{
-        this.element.srcObject = mediaStream;
-        this.element.onloadedmetadata = () =>{
-          this.element.play();
-        };
-      })
-      .catch(function(err) { console.log(err.name + ": " + err.message); });
-      return this;
-    }
   
-  }
+  
   class ZikoUIAudio extends ZikoUIElement {
     constructor(src) {
       super();
@@ -115,8 +66,9 @@ class ZikoUIImage extends ZikoUIElement {
   }
 
 const image = (src, width, height) => new ZikoUIImage(src, width, height);
-const video = (src, width, height) => new ZikoUIVideo(src, width, height);
 const audio = (src) => new ZikoUIAudio(src);
-const webcame=()=>new ZikoUIWebcame();
 const figure =(image,caption) =>new ZikoUIFigure(image,caption)
-export{image,video,audio,webcame,figure,ZikoUIImage}
+export{image,audio,figure,ZikoUIImage}
+export{
+  video
+}from "./video.js";

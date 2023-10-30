@@ -1,4 +1,3 @@
-import Ziko from "../src/index.js"
 Ziko.UI.ExtractAll()
 Ziko.Math.ExtractAll()
 const B=p(
@@ -27,7 +26,6 @@ const B=p(
     inputDate(),
     inputDateTime(),
     inputEmail(),
-    inputImage(),
     inputPassword(),
     inputTime(),
     select(),
@@ -57,9 +55,16 @@ const B=p(
     svgRect(0,0,0,0),
     svgText("",0,0),
     svgGroupe(),
-    Notebook()
+    Notebook(),
+    image(""),
+    video(""),
+    audio(""),
+    
 )
 B.remove()
+C=inputImage()
+//C.remove()
+
 
 
 
