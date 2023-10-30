@@ -34,6 +34,9 @@ import {
     select,
     textarea,
 } from "./Inputs/index.js";
+import {
+    image,video,audio,webcame,figure
+} from "./Media/index.js"
 import{
     Flex,
     Notebook
@@ -97,6 +100,11 @@ const UI={
     inputTime,
     select,
     textarea,
+    image,
+    video,
+    audio,
+    webcame,
+    figure,
     Flex,
     Header,
     FlexHeader,
