@@ -3741,6 +3741,209 @@
     const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
     const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
 
+    class ZikoUITr extends ZikoUIElement{
+        constructor(...ZikoUIElement){
+            super();
+            this.element=document.createElement("Tr");
+            this.append(...ZikoUIElement);
+        }
+    }
+    class ZikoUITd extends ZikoUIElement{
+        constructor(...ZikoUIElement){
+            super();
+            this.element=document.createElement("Td");
+            this.append(...ZikoUIElement);
+        }
+    }
+    class ZikoUITbody extends ZikoUIElement{
+        constructor(...ZikoUITr){
+            super();
+            this.element=document.createElement("Tbody");
+            this.append(...ZikoUITr);
+        }
+    }
+    class ZikoUICaption extends ZikoUIElement{
+        constructor(ZikoUIElement){
+            super();
+            this.element=document.createElement("Caption");
+            this.append(ZikoUIElement);
+        }
+    }
+
+    const tr=(...ZikoUIElement)=>new ZikoUITr(...ZikoUIElement);
+    const td=(...UI)=>{
+        UI=UI.map(n=>{
+            if(!(n instanceof ZikoUIElement))n=text(n);
+            return n
+        });
+        return new ZikoUITd(...UI)
+    };
+    const thead=(...ZikoUITd)=>{
+        ZikoUITd=ZikoUITd.map(n=>{
+            if(!(n instanceof ZikoUIElement))n=td(n);
+            return n
+        });
+        return new ZikoUITd(...UI)
+    };
+    const tbody=(...ZikoUITr)=>new ZikoUITbody(...ZikoUITr);
+    const caption=(ZikoUITr)=>new ZikoUICaption(ZikoUITr);
+
+    const MatrixToTableUI=matrix=>{
+        var Tr = new Array(matrix.rows).fill(null).map(() => tr());
+        var Td = matrix.arr.map((n) => n.map(() => null));
+        for (let i = 0; i < Td.length; i++) {
+            for (let j = 0; j < Td[0].length; j++) {
+                Td[i][j] = td(matrix.arr[i][j]);
+                Tr[i].append(Td[i][j]);
+            }
+        }
+        return Tr
+    };
+
+    class ZikoUITable extends ZikoUIElement {
+        constructor(body=matrix(0,0)){
+            super();
+            this.element = document.createElement("table");
+            this.fromMatrix(body);
+            this.structure={
+                caption:null,
+                head:null,
+                body:0,
+                foot:null
+            };
+            this.render();
+        }
+        setCaption(c){
+            this.tCaption=caption(c);
+            this.append(this.tCaption);
+            return this;
+        }
+        removeCaption(){
+            this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+            return this;
+        }
+        setHeader(...c){
+            this.tHead=thead(...c);
+            this.append(this.tHead);
+            return this;
+        }
+        removeHeader(){
+            this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+            return this;
+        }
+        setFooter(c){
+            this.tCaption=caption(c);
+            this.append(this.tCaption);
+            return this;
+        }
+        removeFooter(){
+            this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+            return this;
+        }
+        fromMatrix(bodyMatrix) {
+            (bodyMatrix instanceof Array)?this.bodyMatrix=matrix(bodyMatrix):this.bodyMatrix=bodyMatrix;
+            if(this?.tbody?.items?.length)this.tbody.remove();
+            this.tbody=tbody();
+            this.append(this.tbody);
+            this.tbody.append(...MatrixToTableUI(this.bodyMatrix));
+            //this.structure.body.append(...MatrixToTableUI(matrix))
+            //this.cellStyles({ padding: "0.2rem 0.4rem", textAlign: "center" });
+            return this;
+          }
+        transpose() {
+            this.fromMatrix(this.bodyMatrix.T);
+            return this;
+          }
+        hstack(m) {
+            if(m instanceof ZikoUITable)m=m.bodyMatrix;
+            this.fromMatrix(this.bodyMatrix.clone.hstack(m));
+            return this;
+        }
+        vstack(m) {
+            if(m instanceof ZikoUITable)m=m.bodyMatrix;
+            this.fromMatrix(this.bodyMatrix.clone.vstack(m));
+            return this;
+        }
+        slice(r0=0,c0=0,r1=this.bodyMatrix.rows-1,c1=this.bodyMatrix.cols-1) {
+            this.fromMatrix(this.bodyMatrix.slice(r0,c0,r1,c1));
+            return this;
+          }
+        sortByCols(n, config = { type: "num", order: "asc" }) {
+            this.fromMatrix(this.bodyMatrix.clone.sortTable(n, config));
+            return this;
+        }
+        sortByRows(n, config = { type: "num", order: "asc" }) {
+            this.fromMatrix(this.bodyMatrix.T.clone.sortTable(n, config).T);
+            return this;
+        }
+        filterByRows(item) {
+            this.fromMatrix(this.bodyMatrix.clone.filterByRows(item));
+            return this;
+        }
+        filterByCols(item) {
+            this.fromMatrix(this.bodyMatrix.clone.filterByCols(item));
+            return this;
+          }
+    }
+    const Table=(matrix)=>new ZikoUITable(matrix);
+
+    const UI$1={
+        text,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        btn,
+        br,
+        hr,
+        brs,
+        hrs,
+        link,
+        ol,
+        ul,
+        input,
+        search,
+        slider,
+        checkbox,
+        radio,
+        datalist,
+        inputNumber,
+        inputColor,
+        inputDate,
+        inputDateTime,
+        inputEmail,
+        inputImage,
+        inputPassword,
+        inputTime,
+        select,
+        textarea,
+        inputCamera,
+        image,
+        video,
+        audio,
+        figure,
+        Flex,
+        Header,
+        FlexHeader,
+        Main,
+        FlexMain,
+        Section: Section$1,
+        FlexSection,
+        Article,
+        FlexArticle,
+        Aside,
+        FlexAside,
+        Nav,
+        FlexNav,
+        Footer,
+        FlexFooter,
+        Table,
+        Notebook
+    };
+
     class ZikoUISvgElement{
         color({stroke,fill}){
           this.element.setAttribute("stroke",stroke);
@@ -4106,207 +4309,67 @@
 
       const Svg =(w,h)=>new ZikoUISvg(w,h);
 
-    class ZikoUITr extends ZikoUIElement{
-        constructor(...ZikoUIElement){
+    class ZikoUICanvas extends ZikoUIElement{
+        constructor(w,h){
             super();
-            this.element=document.createElement("Tr");
-            this.append(...ZikoUIElement);
-        }
-    }
-    class ZikoUITd extends ZikoUIElement{
-        constructor(...ZikoUIElement){
-            super();
-            this.element=document.createElement("Td");
-            this.append(...ZikoUIElement);
-        }
-    }
-    class ZikoUITbody extends ZikoUIElement{
-        constructor(...ZikoUITr){
-            super();
-            this.element=document.createElement("Tbody");
-            this.append(...ZikoUITr);
-        }
-    }
-    class ZikoUICaption extends ZikoUIElement{
-        constructor(ZikoUIElement){
-            super();
-            this.element=document.createElement("Caption");
-            this.append(ZikoUIElement);
-        }
-    }
-
-    const tr=(...ZikoUIElement)=>new ZikoUITr(...ZikoUIElement);
-    const td=(...UI)=>{
-        UI=UI.map(n=>{
-            if(!(n instanceof ZikoUIElement))n=text(n);
-            return n
-        });
-        return new ZikoUITd(...UI)
-    };
-    const thead=(...ZikoUITd)=>{
-        ZikoUITd=ZikoUITd.map(n=>{
-            if(!(n instanceof ZikoUIElement))n=td(n);
-            return n
-        });
-        return new ZikoUITd(...UI)
-    };
-    const tbody=(...ZikoUITr)=>new ZikoUITbody(...ZikoUITr);
-    const caption=(ZikoUITr)=>new ZikoUICaption(ZikoUITr);
-
-    const MatrixToTableUI=matrix=>{
-        var Tr = new Array(matrix.rows).fill(null).map(() => tr());
-        var Td = matrix.arr.map((n) => n.map(() => null));
-        for (let i = 0; i < Td.length; i++) {
-            for (let j = 0; j < Td[0].length; j++) {
-                Td[i][j] = td(matrix.arr[i][j]);
-                Tr[i].append(Td[i][j]);
-            }
-        }
-        return Tr
-    };
-
-    class ZikoUITable extends ZikoUIElement {
-        constructor(body=matrix(0,0)){
-            super();
-            this.element = document.createElement("table");
-            this.fromMatrix(body);
-            this.structure={
-                caption:null,
-                head:null,
-                body:0,
-                foot:null
-            };
+            this.element=document.createElement("canvas");
+            this.ctx = this.element.getContext("2d");
+            this.style({
+                border:"1px red solid"
+            });
             this.render();
         }
-        setCaption(c){
-            this.tCaption=caption(c);
-            this.append(this.tCaption);
+        get Width(){
+            return this.element.width;
+        }
+        get Height(){
+            return this.element.height;
+        }
+        draw(){
+            this.clear();  
+            this.items.forEach((element) => element.call(this));
             return this;
         }
-        removeCaption(){
-            this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+        append(element){
+            this.items.push(element);
             return this;
         }
-        setHeader(...c){
-            this.tHead=thead(...c);
-            this.append(this.tHead);
-            return this;
-        }
-        removeHeader(){
-            this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
-            return this;
-        }
-        setFooter(c){
-            this.tCaption=caption(c);
-            this.append(this.tCaption);
-            return this;
-        }
-        removeFooter(){
-            this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
-            return this;
-        }
-        fromMatrix(bodyMatrix) {
-            (bodyMatrix instanceof Array)?this.bodyMatrix=matrix(bodyMatrix):this.bodyMatrix=bodyMatrix;
-            if(this?.tbody?.items?.length)this.tbody.remove();
-            this.tbody=tbody();
-            this.append(this.tbody);
-            this.tbody.append(...MatrixToTableUI(this.bodyMatrix));
-            //this.structure.body.append(...MatrixToTableUI(matrix))
-            //this.cellStyles({ padding: "0.2rem 0.4rem", textAlign: "center" });
-            return this;
-          }
-        transpose() {
-            this.fromMatrix(this.bodyMatrix.T);
-            return this;
-          }
-        hstack(m) {
-            if(m instanceof ZikoUITable)m=m.bodyMatrix;
-            this.fromMatrix(this.bodyMatrix.clone.hstack(m));
-            return this;
-        }
-        vstack(m) {
-            if(m instanceof ZikoUITable)m=m.bodyMatrix;
-            this.fromMatrix(this.bodyMatrix.clone.vstack(m));
-            return this;
-        }
-        slice(r0=0,c0=0,r1=this.bodyMatrix.rows-1,c1=this.bodyMatrix.cols-1) {
-            this.fromMatrix(this.bodyMatrix.slice(r0,c0,r1,c1));
-            return this;
-          }
-        sortByCols(n, config = { type: "num", order: "asc" }) {
-            this.fromMatrix(this.bodyMatrix.clone.sortTable(n, config));
-            return this;
-        }
-        sortByRows(n, config = { type: "num", order: "asc" }) {
-            this.fromMatrix(this.bodyMatrix.T.clone.sortTable(n, config).T);
-            return this;
-        }
-        filterByRows(item) {
-            this.fromMatrix(this.bodyMatrix.clone.filterByRows(item));
-            return this;
-        }
-        filterByCols(item) {
-            this.fromMatrix(this.bodyMatrix.clone.filterByCols(item));
-            return this;
-          }
-    }
-    const Table=(matrix)=>new ZikoUITable(matrix);
+        background(){
 
-    const UI$1={
-        text,
-        p,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        btn,
-        br,
-        hr,
-        brs,
-        hrs,
-        link,
-        ol,
-        ul,
-        input,
-        search,
-        slider,
-        checkbox,
-        radio,
-        datalist,
-        inputNumber,
-        inputColor,
-        inputDate,
-        inputDateTime,
-        inputEmail,
-        inputImage,
-        inputPassword,
-        inputTime,
-        select,
-        textarea,
-        inputCamera,
-        image,
-        video,
-        audio,
-        figure,
-        Flex,
-        Header,
-        FlexHeader,
-        Main,
-        FlexMain,
-        Section: Section$1,
-        FlexSection,
-        Article,
-        FlexArticle,
-        Aside,
-        FlexAside,
-        Nav,
-        FlexNav,
-        Footer,
-        FlexFooter,
-        Table,
+        }
+        clear(){
+            this.ctx.clearRect(0, 0, this.Width, this.Height);
+            return this;
+        }
+    }
+
+    const Canvas=(w,h)=>new ZikoUICanvas(w,h);
+
+    /*class canvasCircle{
+        constructor(x,y,r){
+            
+        }
+        draw(){
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, r, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.closePath(); 
+            return this;     
+        }
+    }*/
+    function canvasCircle(x,y,r){
+        return function(){
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, r, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.closePath(); 
+            return this;
+        }  
+    }
+
+    const Graphics={
         Svg,
+        ZikoUISvg,
         svgCircle,
         svgEllipse,
         svgImage,
@@ -4315,12 +4378,15 @@
         svgRect,
         svgText,
         svgGroupe,
-        Notebook
+        Canvas, 
+        canvasCircle 
     };
 
     const Ziko$1={
         Math: Math$1,
-        UI: UI$1
+        UI: UI$1,
+        Graphics
+
     };
     Ziko$1.Math.ExtractAll=function(){
         for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
@@ -4342,14 +4408,26 @@
         for (let i = 0; i < Object.keys(Ziko$1.UI).length; i++) delete globalThis[Object.keys(Ziko$1.UI)[i]];   
         return this;
     };
+    Ziko$1.Graphics.ExtractAll=function(){
+        for (let i = 0; i < Object.keys(Ziko$1.Graphics).length; i++) {
+            globalThis[Object.keys(Ziko$1.Graphics)[i]] = Object.values(Ziko$1.Graphics)[i];
+        }
+        return this;
+    };
+    Ziko$1.Graphics.RemoveAll=function(){
+        for (let i = 0; i < Object.keys(Ziko$1.Graphics).length; i++) delete globalThis[Object.keys(Ziko$1.Graphics)[i]];   
+        return this;
+    };
     Ziko$1.ExtractAll=function(){
         Ziko$1.UI.ExtractAll();
         Ziko$1.Math.ExtractAll();
+        Ziko$1.Graphics.ExtractAll();
         return this;
     };
     Ziko$1.RemoveAll=function(){
         Ziko$1.UI.RemoveAll();
         Ziko$1.Math.RemoveAll();
+        Ziko$1.Graphics.RemoveAll();
     };
 
     return Ziko$1;

@@ -1,5 +1,6 @@
 Ziko.UI.ExtractAll()
 Ziko.Math.ExtractAll()
+Ziko.Graphics.ExtractAll()
 const B=p(
     text("f"),
     p(),
@@ -63,8 +64,9 @@ const B=p(
 )
 B.remove()
 C=inputImage()
-//C.remove()
+C.remove()
 
+A=Canvas()
 
 
 
