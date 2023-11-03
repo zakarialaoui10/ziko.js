@@ -17,15 +17,18 @@ class ZikoUICanvas extends ZikoUIElement{
     }
     draw(){
         this.clear();  
-        this.items.forEach((element) => element.call(this));
+        this.items.forEach(element => element.draw(this.ctx));
         return this;
     }
     append(element){
         this.items.push(element);
+        this.draw();
         return this;
     }
     background(){
-
+        this.ctx.fillStyle = background;
+        this.ctx.fillRect(0, 0, this.Width, this.Height);
+        this.draw()
     }
     clear(){
         this.ctx.clearRect(0, 0, this.Width, this.Height);

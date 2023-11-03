@@ -4321,7 +4321,7 @@ class ZikoUICanvas extends ZikoUIElement{
     }
     draw(){
         this.clear();  
-        this.items.forEach((element) => element.call(this));
+        this.items.forEach(element => element.draw(this.ctx));
         return this;
     }
     append(element){
@@ -4329,7 +4329,9 @@ class ZikoUICanvas extends ZikoUIElement{
         return this;
     }
     background(){
-
+        this.ctx.fillStyle = background;
+        this.ctx.fillRect(0, 0, this.Width, this.Height);
+        this.draw();
     }
     clear(){
         this.ctx.clearRect(0, 0, this.Width, this.Height);
@@ -4339,27 +4341,29 @@ class ZikoUICanvas extends ZikoUIElement{
 
 const Canvas=(w,h)=>new ZikoUICanvas(w,h);
 
-/*class canvasCircle{
+class CanvasCircle{
     constructor(x,y,r){
-        
+        this.x=x;
+        this.y=y;
+        this.r=r;
     }
-    draw(){
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, r, 0, Math.PI * 2);
-        this.ctx.fill();
-        this.ctx.closePath(); 
-        return this;     
+    draw(ctx){
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath(); 
+        return this;   
     }
-}*/
-function canvasCircle(x,y,r){
-    return function(){
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, r, 0, Math.PI * 2);
-        this.ctx.fill();
-        this.ctx.closePath(); 
+    posX(x){
+        this.x=x;
         return this;
-    }  
+    }
+    posY(y){
+        this.y=y;
+        return this;
+    }
 }
+const canvasCircle=(x,y,r)=>new CanvasCircle(x,y,r);
 
 const Graphics={
     Svg,
