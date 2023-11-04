@@ -62,11 +62,13 @@ const B=p(
     audio(""),
     
 )
-B.remove()
-C=inputImage()
-C.remove()
+ B.remove()
+// C=inputImage()
+// C.remove()
 
-A=Canvas()
+c=Canvas()
+//a=canvasCircle(0,0,20)
+//c.append(a)
 
 
 

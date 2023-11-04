@@ -4311,8 +4311,19 @@ class ZikoUICanvas extends ZikoUIElement{
         this.element=document.createElement("canvas");
         this.ctx = this.element.getContext("2d");
         this.style({
-            border:"1px red solid"
+            border:"1px red solid",
+            width:"300px",
+            height:"300px"
         });
+        this.transformMatrix=new Matrix([
+            [1,0,0],
+            [0,1,0],
+            [0,0,1]
+        ]);
+        this.axisMatrix=new Matrix([
+            [-10,-10],
+            [10,10]
+        ]);
         this.render();
     }
     get Width(){
@@ -4326,17 +4337,48 @@ class ZikoUICanvas extends ZikoUIElement{
         this.items.forEach(element => element.draw(this.ctx));
         return this;
     }
-    append(element){
-        this.items.push(element);
+    #applyTransformMatrix(){
+        this.ctx.setTransform(
+            this.transformMatrix[0][0],
+            this.transformMatrix[1][0],
+            this.transformMatrix[0][1],
+            this.transformMatrix[1][1],
+            this.transformMatrix[0][2],
+            this.transformMatrix[1][2],
+        );
         return this;
     }
-    background(){
-        this.ctx.fillStyle = background;
+    view(xMin,yMin,xMax,yMax){
+        this.transformMatrix[0][0]=this.Width/(xMax-xMin); // scaleX
+        this.transformMatrix[1][1]=-this.Height/(yMax-yMin); // scaleY
+        this.transformMatrix[0][2]=this.Width/2;
+        this.transformMatrix[1][2]=this.Height/2;
+        
+        this.#applyTransformMatrix(); 
+        this.clear();
+        this.draw();
+        return this;
+    }
+    reset(){
+        this.ctx.setTransform(1,0,0,0,0,0);
+        return this;
+    }
+    append(element){
+        this.items.push(element);
+        this.draw();
+        return this;
+    }
+    background(color){
+        this.ctx.fillStyle = color;
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.fillRect(0, 0, this.Width, this.Height);
+        this.#applyTransformMatrix();
         this.draw();
     }
     clear(){
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.Width, this.Height);
+        this.#applyTransformMatrix(); 
         return this;
     }
 }
