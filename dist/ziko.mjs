@@ -4310,8 +4310,8 @@ class ZikoUICanvas extends ZikoUIElement{
         this.ctx = this.element.getContext("2d");
         this.style({
             border:"1px red solid",
-            width:"300px",
-            height:"300px"
+            //width:"300px",
+            //height:"300px"
         });
         this.transformMatrix=new Matrix([
             [1,0,0],
@@ -4346,6 +4346,21 @@ class ZikoUICanvas extends ZikoUIElement{
         );
         return this;
     }
+    size(w,h){
+        this.style({
+            width:w,
+            height:h
+        });
+        //this.lineWidth();
+        this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        return this;
+    }
+    adjust(){
+        this.element.width=this.element.getBoundingClientRect().width;
+        this.element.height=this.element.getBoundingClientRect().height;
+        this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        return this;
+    }
     view(xMin,yMin,xMax,yMax){
         this.transformMatrix[0][0]=this.Width/(xMax-xMin); // scaleX
         this.transformMatrix[1][1]=-this.Height/(yMax-yMin); // scaleY
@@ -4354,6 +4369,7 @@ class ZikoUICanvas extends ZikoUIElement{
         
         this.#applyTransformMatrix(); 
         this.clear();
+        this.lineWidth(1);
         this.draw();
         return this;
     }
@@ -4373,11 +4389,23 @@ class ZikoUICanvas extends ZikoUIElement{
         this.#applyTransformMatrix();
         this.draw();
     }
+    lineWidth(w){
+        this.ctx.lineWidth=w/this.transformMatrix[0][0];        return this
+    }
     clear(){
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.Width, this.Height);
         this.#applyTransformMatrix(); 
         return this;
+    }
+    undo(n){
+
+    }
+    redo(n){
+
+    }
+    stream(){
+
     }
 }
 
@@ -4392,7 +4420,7 @@ class CanvasCircle{
     draw(ctx){
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.stroke();
         ctx.closePath(); 
         return this;   
     }
