@@ -1,6 +1,5 @@
 class ZikoCanvasElement{
-    constructor(ctx,x,y){
-        this.ctx=ctx;
+    constructor(x,y){
         this.position={
             x,
             y
@@ -51,3 +50,4 @@ class ZikoCanvasElement{
 
     }
 }
+export default ZikoCanvasElement;

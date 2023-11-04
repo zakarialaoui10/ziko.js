@@ -4366,6 +4366,10 @@ class ZikoUICanvas extends ZikoUIElement{
         this.transformMatrix[1][1]=-this.Height/(yMax-yMin); // scaleY
         this.transformMatrix[0][2]=this.Width/2;
         this.transformMatrix[1][2]=this.Height/2;
+        this.axisMatrix=new Matrix([
+            [xMin,yMin],
+            [xMax,yMax]
+        ]);
         
         this.#applyTransformMatrix(); 
         this.clear();
@@ -4411,25 +4415,77 @@ class ZikoUICanvas extends ZikoUIElement{
 
 const Canvas=(w,h)=>new ZikoUICanvas(w,h);
 
-class CanvasCircle{
+class ZikoCanvasElement{
+    constructor(x,y){
+        this.position={
+            x,
+            y
+        };
+        this.cache={
+            config:{
+                draggable:false,
+                selected:false,
+                highlighted:false,
+            },
+            style:{
+                normal:{
+                    stroke:null,
+                    fill:null,
+                },
+                highlighted:{
+                    stroke:null,
+                    fill:null
+                }
+            },
+        };
+        this.history={
+            position:[],
+            styles:[]
+        };
+    }
+    isIntersectedWith(){
+
+    }
+    isPointInside(x,y){
+
+    }
+    draw(){
+
+    }
+    pos(x,y){
+        Object.assign(this.position,{x,y});
+        return this;
+    }
+    translate(dx,dy){
+        this.pos(this.position.x+dx,this.position.y+dy);
+        return;
+    }
+    stroke(color){
+
+    }
+    fill(color){
+
+    }
+}
+
+class CanvasCircle extends ZikoCanvasElement{
     constructor(x,y,r){
-        this.x=x;
-        this.y=y;
+        super(x,y);
         this.r=r;
     }
     draw(ctx){
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
         ctx.stroke();
         ctx.closePath(); 
         return this;   
     }
     posX(x){
-        this.x=x;
+        this.position.x=x;
         return this;
     }
     posY(y){
-        this.y=y;
+        this.position.y=y;
         return this;
     }
 }

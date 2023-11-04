@@ -67,8 +67,9 @@ const B=p(
 // C.remove()
 
 c=Canvas()
-//a=canvasCircle(0,0,20)
-//c.append(a)
+c.view(-10,-10,10,10)
+a=canvasCircle(0,0,5)
+c.append(a)
 
 
 

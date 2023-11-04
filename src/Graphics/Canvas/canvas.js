@@ -63,6 +63,10 @@ class ZikoUICanvas extends ZikoUIElement{
         this.transformMatrix[1][1]=-this.Height/(yMax-yMin); // scaleY
         this.transformMatrix[0][2]=this.Width/2;
         this.transformMatrix[1][2]=this.Height/2;
+        this.axisMatrix=new Matrix([
+            [xMin,yMin],
+            [xMax,yMax]
+        ])
         
         this.#applyTransformMatrix(); 
         this.clear();

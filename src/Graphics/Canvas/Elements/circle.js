@@ -1,22 +1,22 @@
-class CanvasCircle{
+import ZikoCanvasElement from "./_element.js";
+class CanvasCircle extends ZikoCanvasElement{
     constructor(x,y,r){
-        this.x=x;
-        this.y=y;
+        super(x,y);
         this.r=r;
     }
     draw(ctx){
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
         ctx.stroke();
         ctx.closePath(); 
         return this;   
     }
     posX(x){
-        this.x=x;
+        this.position.x=x;
         return this;
     }
     posY(y){
-        this.y=y;
+        this.position.y=y;
         return this;
     }
 }
