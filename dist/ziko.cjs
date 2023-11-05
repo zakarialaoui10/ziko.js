@@ -4727,29 +4727,26 @@ class ZikoCanvasElement{
     isPointInside(x,y){
 
     }
-    draw(){
-
-    }
     posX(x){
         this.position.x=x;
-        this.parent.draw();
+        if(this.parent)this.parent.draw();
         return this;
     }
     posY(y){
         this.position.y=y;
-        this.parent.draw();
+        if(this.parent)this.parent.draw();
         return this;
     }
     color({stroke=this.cache.style.normal.strokeColor,fill=this.cache.style.normal.fillColor}={stroke,fill}){
         this.cache.style.normal.strokeColor=stroke;
         this.cache.style.normal.fillColor=fill;
-        this.parent.draw();
+        if(this.parent)this.parent.draw();
         return this;
     }
-    translate(dx,dy){
-        this.posX(this.position.x+dx);
-        this.posY(this.position.y+dy);
-        this.parent.draw();
+    translate(dx=0,dy=0){
+        this.position.x+=dx;
+        this.position.y+=dy;
+        if(this.parent)this.parent.draw();
         return;
     }
     applyNormalStyle(ctx){
@@ -4788,7 +4785,7 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     radius(r){
         this.r=r;
-        this.parent.draw();
+        if(this.parent)this.parent.draw();
         return this;
     }
 }
@@ -4797,8 +4794,8 @@ const canvasCircle=(x,y,r)=>new CanvasCircle(x,y,r);
 class CanvasPoints extends ZikoCanvasElement{
     constructor(ptsX,ptsY){
         super();
-        this.fromXY(ptsX,ptsY);
         this.pointsMatrix=null;
+        this.fromXY(ptsX,ptsY);
     }
     get points(){
         return this.pointsMatrix.T.arr;
@@ -4817,6 +4814,11 @@ class CanvasPoints extends ZikoCanvasElement{
     }
     fromXY(X,Y){
         this.pointsMatrix=matrix([X,Y]);
+        return this;
+    }
+    push(ptsX,ptsY){
+        this.pointsMatrix.hstack(matrix([ptsX,ptsY]));
+        if(this.parent)this.parent.draw();
         return this;
     }
 }

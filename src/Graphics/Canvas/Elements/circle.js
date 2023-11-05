@@ -17,7 +17,7 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     radius(r){
         this.r=r;
-        this.parent.draw()
+        if(this.parent)this.parent.draw();
         return this;
     }
 }

@@ -3,8 +3,8 @@ import { matrix } from "../../../Math/Matrix/index.js";
 class CanvasPoints extends ZikoCanvasElement{
     constructor(ptsX,ptsY){
         super();
-        this.fromXY(ptsX,ptsY);
         this.pointsMatrix=null;
+        this.fromXY(ptsX,ptsY);
     }
     get points(){
         return this.pointsMatrix.T.arr;
@@ -23,6 +23,11 @@ class CanvasPoints extends ZikoCanvasElement{
     }
     fromXY(X,Y){
         this.pointsMatrix=matrix([X,Y]);
+        return this;
+    }
+    push(ptsX,ptsY){
+        this.pointsMatrix.hstack(matrix([ptsX,ptsY]))
+        if(this.parent)this.parent.draw();
         return this;
     }
 }
