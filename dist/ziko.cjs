@@ -4742,12 +4742,19 @@ class CanvasCircle extends ZikoCanvasElement{
     constructor(x,y,r){
         super(x,y);
         this.r=r;
+        this.color1=Random.randomColor;
+        this.color2=Random.randomColor;
     }
     draw(ctx){
+        ctx.save();
+        ctx.strokeStyle=this.color1;
+        ctx.fillStyle=this.color2;
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
         ctx.stroke();
+        ctx.fill();
         ctx.closePath(); 
+        ctx.restore();
         return this;   
     }
     posX(x){
