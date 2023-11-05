@@ -12,12 +12,16 @@ class ZikoCanvasElement{
             },
             style:{
                 normal:{
-                    stroke:null,
-                    fill:null,
+                    strokeEnabled:true,
+                    fillEnabled:false,
+                    strokeColor:"#111111",
+                    fillColor:"#777777",
                 },
                 highlighted:{
-                    stroke:null,
-                    fill:null
+                    strokeEnabled:true,
+                    fillEnabled:false,
+                    strokeColor:null,
+                    fillColor:null,
                 }
             },
         }
@@ -35,8 +39,17 @@ class ZikoCanvasElement{
     draw(){
 
     }
-    pos(x,y){
-        Object.assign(this.position,{x,y});
+    posX(x){
+        this.position.x=x;
+        return this;
+    }
+    posY(y){
+        this.position.y=y;
+        return this;
+    }
+    color({stroke=this.cache.style.normal.strokeColor,fill=this.cache.style.normal.fillColor}={stroke,fill}){
+        this.cache.style.normal.strokeColor=stroke;
+        this.cache.style.normal.fillColor=fill;
         return this;
     }
     translate(dx,dy){

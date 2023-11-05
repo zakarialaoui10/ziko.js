@@ -4697,12 +4697,16 @@ class ZikoCanvasElement{
             },
             style:{
                 normal:{
-                    stroke:null,
-                    fill:null,
+                    strokeEnabled:true,
+                    fillEnabled:false,
+                    strokeColor:"#111111",
+                    fillColor:"#777777",
                 },
                 highlighted:{
-                    stroke:null,
-                    fill:null
+                    strokeEnabled:true,
+                    fillEnabled:false,
+                    strokeColor:null,
+                    fillColor:null,
                 }
             },
         };
@@ -4720,8 +4724,17 @@ class ZikoCanvasElement{
     draw(){
 
     }
-    pos(x,y){
-        Object.assign(this.position,{x,y});
+    posX(x){
+        this.position.x=x;
+        return this;
+    }
+    posY(y){
+        this.position.y=y;
+        return this;
+    }
+    color({stroke=this.cache.style.normal.strokeColor,fill=this.cache.style.normal.fillColor}={stroke,fill}){
+        this.cache.style.normal.strokeColor=stroke;
+        this.cache.style.normal.fillColor=fill;
         return this;
     }
     translate(dx,dy){
@@ -4745,23 +4758,15 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     draw(ctx){
         ctx.save();
-        ctx.strokeStyle=this.color1;
-        ctx.fillStyle=this.color2;
+        ctx.strokeStyle=this.cache.style.normal.strokeColor;
+        ctx.fillStyle=this.cache.style.normal.fillColor;
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.fill();
+        if(this.cache.style.normal.strokeEnabled)ctx.stroke();
+        if(this.cache.style.normal.fillEnabled)ctx.fill();
         ctx.closePath(); 
         ctx.restore();
         return this;   
-    }
-    posX(x){
-        this.position.x=x;
-        return this;
-    }
-    posY(y){
-        this.position.y=y;
-        return this;
     }
 }
 const canvasCircle=(x,y,r)=>new CanvasCircle(x,y,r);
