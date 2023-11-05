@@ -4775,7 +4775,7 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     draw(ctx){
         ctx.save();
-        this.applyNormalStyle();
+        this.applyNormalStyle(ctx);
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
         if(this.cache.style.normal.strokeEnabled)ctx.stroke();
@@ -4803,7 +4803,7 @@ class CanvasPoints extends ZikoCanvasElement{
     }
     draw(ctx){
         ctx.save();
-        this.applyNormalStyle();
+        this.applyNormalStyle(ctx);
         ctx.beginPath();
         ctx.moveTo(...this.points[0]);
         for(let i=1;i<this.points.length;i++){
