@@ -1,4 +1,4 @@
-Ziko.UI.ExtractAll()
+Ziko.ExtractAll()
 Ziko.Math.ExtractAll()
 Ziko.Graphics.ExtractAll()
 const B=p(
@@ -66,11 +66,35 @@ const B=p(
 // C=inputImage()
 // C.remove()
 
-c=Canvas()
-c.view(-10,-10,10,10)
+c=Canvas().view(-10,-10,10,10).size(500,500).adjust()
 a=canvasCircle(0,0,5)
 c.append(a)
 
 
+pp=Pointer(c)
+pp.onDown(e=>{
+    c.ctx.beginPath()
+    c.ctx.moveTo(
+        map(e.dx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0]),
+        map(e.dy,0,c.element.offseHeight,c.axisMatrix[0][1],c.axisMatrix[1][1])
+        )
+})
+pp.onMove(e=>{
+    if(e.isDown){
+        const x=map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0])
+        const y=map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
+    /*c.ctx.lineTo(
+        map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0]),
+        map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
+        )
+    c.ctx.stroke()*/
+    c.append(canvasCircle(x,y,1))
+    }
+})
+pp.handle({
+    down:true,
+    move:true,
+    up:true
+})
 
 

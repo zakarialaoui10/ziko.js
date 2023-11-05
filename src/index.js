@@ -1,11 +1,12 @@
 import {Math} from "./Math/index.js";
 import UI from "./UI/index.js";
-import Graphics from "./Graphics/index.js"
+import Events from "./Events/index.js";
+import Graphics from "./Graphics/index.js";
 const Ziko={
     Math,
     UI,
-    Graphics
-
+    Graphics,
+    Events
 }
 Ziko.Math.ExtractAll=function(){
     for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
@@ -37,15 +38,27 @@ Ziko.Graphics.RemoveAll=function(){
     for (let i = 0; i < Object.keys(Ziko.Graphics).length; i++) delete globalThis[Object.keys(Ziko.Graphics)[i]];   
     return this;
 }
+Ziko.Events.ExtractAll=function(){
+    for (let i = 0; i < Object.keys(Ziko.Events).length; i++) {
+        globalThis[Object.keys(Ziko.Events)[i]] = Object.values(Ziko.Events)[i];
+    }
+    return this;
+}
+Ziko.Events.RemoveAll=function(){
+    for (let i = 0; i < Object.keys(Ziko.Events).length; i++) delete globalThis[Object.keys(Ziko.Events)[i]];   
+    return this;
+}
 Ziko.ExtractAll=function(){
     Ziko.UI.ExtractAll();
     Ziko.Math.ExtractAll();
+    Ziko.Events.ExtractAll();
     Ziko.Graphics.ExtractAll();
     return this;
 }
 Ziko.RemoveAll=function(){
     Ziko.UI.RemoveAll();
     Ziko.Math.RemoveAll();
+    Ziko.Events.RemoveAll();
     Ziko.Graphics.RemoveAll();
 }
 export default Ziko
