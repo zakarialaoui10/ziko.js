@@ -29,7 +29,10 @@ class ZikoUICanvas extends ZikoUIElement{
     }
     draw(){
         this.clear();  
-        this.items.forEach(element => element.draw(this.ctx));
+        this.items.forEach(element => {
+            element.parent=this;
+            element.draw(this.ctx)
+        });
         return this;
     }
     #applyTransformMatrix(){

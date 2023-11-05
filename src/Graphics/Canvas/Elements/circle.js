@@ -1,5 +1,4 @@
 import ZikoCanvasElement from "./_element.js";
-import { Random } from "../../../Math/Random/index.js";
 class CanvasCircle extends ZikoCanvasElement{
     constructor(x,y,r){
         super(x,y);
@@ -7,8 +6,7 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     draw(ctx){
         ctx.save();
-        ctx.strokeStyle=this.cache.style.normal.strokeColor
-        ctx.fillStyle=this.cache.style.normal.fillColor
+        this.applyNormalStyle();
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
         if(this.cache.style.normal.strokeEnabled)ctx.stroke();
@@ -19,6 +17,7 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     radius(r){
         this.r=r;
+        this.parent.draw()
         return this;
     }
 }

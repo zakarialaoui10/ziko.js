@@ -4606,7 +4606,10 @@
         }
         draw(){
             this.clear();  
-            this.items.forEach(element => element.draw(this.ctx));
+            this.items.forEach(element => {
+                element.parent=this;
+                element.draw(this.ctx);
+            });
             return this;
         }
         #applyTransformMatrix(){
@@ -4691,6 +4694,7 @@
 
     class ZikoCanvasElement{
         constructor(x,y){
+            this.parent=null;
             this.position={
                 x,
                 y
@@ -4732,20 +4736,35 @@
         }
         posX(x){
             this.position.x=x;
+            this.parent.draw();
             return this;
         }
         posY(y){
             this.position.y=y;
+            this.parent.draw();
             return this;
         }
         color({stroke=this.cache.style.normal.strokeColor,fill=this.cache.style.normal.fillColor}={stroke,fill}){
             this.cache.style.normal.strokeColor=stroke;
             this.cache.style.normal.fillColor=fill;
+            this.parent.draw();
             return this;
         }
         translate(dx,dy){
-            this.pos(this.position.x+dx,this.position.y+dy);
+            this.posX(this.position.x+dx);
+            this.posY(this.position.y+dy);
+            this.parent.draw();
             return;
+        }
+        applyNormalStyle(ctx){
+            ctx.strokeStyle=this.cache.style.normal.strokeColor;
+            ctx.fillStyle=this.cache.style.normal.fillColor;
+            return this;   
+        }
+        applyHighlightedStyle(ctx){
+            ctx.strokeStyle=this.cache.style.highlighted.strokeColor;
+            ctx.fillStyle=this.cache.style.highlighted.fillColor;
+            return this;
         }
         stroke(color){
 
@@ -4759,13 +4778,10 @@
         constructor(x,y,r){
             super(x,y);
             this.r=r;
-            this.color1=Random.randomColor;
-            this.color2=Random.randomColor;
         }
         draw(ctx){
             ctx.save();
-            ctx.strokeStyle=this.cache.style.normal.strokeColor;
-            ctx.fillStyle=this.cache.style.normal.fillColor;
+            this.applyNormalStyle();
             ctx.beginPath();
             ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
             if(this.cache.style.normal.strokeEnabled)ctx.stroke();
@@ -4774,8 +4790,42 @@
             ctx.restore();
             return this;   
         }
+        radius(r){
+            this.r=r;
+            this.parent.draw();
+            return this;
+        }
     }
     const canvasCircle=(x,y,r)=>new CanvasCircle(x,y,r);
+
+    class CanvasPoints extends ZikoCanvasElement{
+        constructor(ptsX,ptsY){
+            super();
+            this.fromXY(ptsX,ptsY);
+            this.pointsMatrix=null;
+        }
+        get points(){
+            return this.pointsMatrix.T.arr;
+        }
+        draw(ctx){
+            ctx.save();
+            this.applyNormalStyle();
+            ctx.beginPath();
+            ctx.moveTo(...this.points[0]);
+            for(let i=1;i<this.points.length;i++){
+                ctx.lineTo(...this.points[i]);
+            }
+            ctx.stroke();
+            ctx.restore();
+            return this;
+        }
+        fromXY(X,Y){
+            this.pointsMatrix=matrix([X,Y]);
+            return this;
+        }
+    }
+
+    const canvasPoints=(ptsX=[],ptsY=[])=>new CanvasPoints(ptsX,ptsY);
 
     const Graphics={
         Svg,
@@ -4789,7 +4839,8 @@
         svgText,
         svgGroupe,
         Canvas, 
-        canvasCircle 
+        canvasCircle,
+        canvasPoints
     };
 
     const Ziko$1={
