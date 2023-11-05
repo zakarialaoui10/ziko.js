@@ -69,11 +69,15 @@ class ZikoCanvasElement{
         ctx.fillStyle=this.cache.style.highlighted.fillColor;
         return this;
     }
-    stroke(color){
-
+    stroke(state=true){
+        this.cache.style.normal.strokeEnabled=state;
+        if(this.parent)this.parent.draw();
+        return this  
     }
-    fill(color){
-
+    fill(state=true){
+        this.cache.style.normal.fillEnabled=state;
+        if(this.parent)this.parent.draw();
+        return this      
     }
 }
 export default ZikoCanvasElement;

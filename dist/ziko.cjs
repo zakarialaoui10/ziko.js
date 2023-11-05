@@ -4759,11 +4759,15 @@ class ZikoCanvasElement{
         ctx.fillStyle=this.cache.style.highlighted.fillColor;
         return this;
     }
-    stroke(color){
-
+    stroke(state=true){
+        this.cache.style.normal.strokeEnabled=state;
+        if(this.parent)this.parent.draw();
+        return this  
     }
-    fill(color){
-
+    fill(state=true){
+        this.cache.style.normal.fillEnabled=state;
+        if(this.parent)this.parent.draw();
+        return this      
     }
 }
 
@@ -4777,8 +4781,9 @@ class CanvasCircle extends ZikoCanvasElement{
         this.applyNormalStyle(ctx);
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
-        if(this.cache.style.normal.strokeEnabled)ctx.stroke();
-        if(this.cache.style.normal.fillEnabled)ctx.fill();
+        const{strokeEnabled,fillEnabled}=this.cache.style.normal;
+        if(strokeEnabled)ctx.stroke();
+        if(fillEnabled)ctx.fill();
         ctx.closePath(); 
         ctx.restore();
         return this;   

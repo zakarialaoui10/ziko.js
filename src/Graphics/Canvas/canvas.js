@@ -103,6 +103,12 @@ class ZikoUICanvas extends ZikoUIElement{
         this.#applyTransformMatrix(); 
         return this;
     }
+    zoomIn(){
+
+    }
+    zoomOut(){
+        
+    }
     undo(n){
 
     }
