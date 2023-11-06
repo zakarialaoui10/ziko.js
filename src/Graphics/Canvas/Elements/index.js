@@ -1,12 +1,12 @@
 export {
     canvasCircle
-} from "./circle.js";
+} from "./Basic/circle.js";
 export {
     canvasPoints
-} from "./points.js";
+} from "./Basic/points.js";
 export {
     canvasLine
-}from "./line.js"
+}from "./Basic/line.js"
 export {
     canvasRect
-} from "./rect.js"
+} from "./Basic/rect.js"

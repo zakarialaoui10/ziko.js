@@ -1,4 +1,4 @@
-import ZikoCanvasElement from "./_element.js";
+import ZikoCanvasElement from "../Element.js";
 class CanvasLine extends ZikoCanvasElement{
     constructor(x0,y0,x1,y1){
         super();
