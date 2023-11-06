@@ -10,15 +10,17 @@ class CanvasPoints extends ZikoCanvasElement{
         return this.pointsMatrix.T.arr;
     }
     draw(ctx){
-        ctx.save();
-        this.applyNormalStyle(ctx);
-        ctx.beginPath();
-        ctx.moveTo(...this.points[0]);
-        for(let i=1;i<this.points.length;i++){
-            ctx.lineTo(...this.points[i])
+        if(this.cache.config.rendered){
+            ctx.save();
+            this.applyNormalStyle(ctx);
+            ctx.beginPath();
+            ctx.moveTo(...this.points[0]);
+            for(let i=1;i<this.points.length;i++){
+                ctx.lineTo(...this.points[i])
+            }
+            ctx.stroke();
+            ctx.restore();
         }
-        ctx.stroke();
-        ctx.restore();
         return this;
     }
     fromXY(X,Y){

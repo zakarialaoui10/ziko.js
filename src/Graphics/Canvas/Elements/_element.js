@@ -6,10 +6,12 @@ class ZikoCanvasElement{
             y
         }
         this.cache={
+            interact:" avoid redraw",
             config:{
                 draggable:false,
                 selected:false,
                 highlighted:false,
+                rendered:false
             },
             style:{
                 normal:{
@@ -30,6 +32,7 @@ class ZikoCanvasElement{
             position:[],
             styles:[]
         }
+        this.render();
     }
     isIntersectedWith(){
 
@@ -78,6 +81,10 @@ class ZikoCanvasElement{
         this.cache.style.normal.fillEnabled=state;
         if(this.parent)this.parent.draw();
         return this      
+    }
+    render(render=true){
+       this.cache.config.rendered=render;
+       return this;       
     }
 }
 export default ZikoCanvasElement;

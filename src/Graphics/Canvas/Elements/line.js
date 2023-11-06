@@ -6,15 +6,19 @@ class CanvasLine extends ZikoCanvasElement{
         this.x1=x1;
         this.y0=y0;
         this.y1=y1;
+        delete this.fill;
     }
     draw(ctx){
-        ctx.save();
-        this.applyNormalStyle(ctx);
-        ctx.beginPath();
-        ctx.moveTo(this.x0,this.y0);
-        ctx.lineTo(this.x1,this.y1);
-        ctx.stroke();
-        ctx.restore();
+        if(this.cache.config.rendered){
+            ctx.save();
+            this.applyNormalStyle(ctx);
+            ctx.beginPath();
+            ctx.moveTo(this.x0,this.y0);
+            ctx.lineTo(this.x1,this.y1);
+            ctx.stroke();
+            if(this.cache.style.normal.strokeEnabled)ctx.stroke();
+            ctx.restore();
+        }
         return this;   
     }
 }
