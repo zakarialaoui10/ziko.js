@@ -73,15 +73,14 @@ c.append(a1)
 c.append(a2)
 a1.ca
 
-pp=Pointer(c)
-pp.onDown(e=>{
+c.onPtrDown(e=>{
     c.ctx.beginPath()
     c.ctx.moveTo(
         map(e.dx,0,c.element.offsetWidth,c.Xmin,c.Xmax),
         map(e.dy,0,c.element.offseHeight,c.Ymin,c.Ymax)
         )
 })
-pp.onMove(e=>{
+c.onPtrMove(e=>{
     if(e.isDown){
         const x=map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0])
         const y=map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])

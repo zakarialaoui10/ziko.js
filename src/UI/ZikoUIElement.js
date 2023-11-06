@@ -1,6 +1,7 @@
 import { waitForUIElm, waitForUIElmSync } from "./Utils/index.js";
 //import domComposer from "./Composer/dom.js"
 import styleComposer from "./Style/index.js";
+import {Pointer} from "../Events/index.js"
 class ZikoUIElement {
   #Flip = [0, 0, 0];
   constructor(element = document.body) {
@@ -12,10 +13,15 @@ class ZikoUIElement {
       isHidden: false,
       style: {},
       attributes: {},
-      events: {},
+      //events: {},
       filters: {},
     };
     this.items = [];
+    this.events = {
+      ptr:null,
+      key:null,
+      drag:null
+    }
     this.style({ position: "relative" });
     this.size("auto", "auto");
     //waitForUIElm(this).then(()=>Object.assign(this.cache.filters,{display:this.element.style.display}));
@@ -293,71 +299,37 @@ class ZikoUIElement {
     this.on("dbclick", calback, { target, maskVector });
     return this;
   }
-  onMousedown(calback) {
-    this.element.addEventListener("mousedown", calback);
+  onPtrMove(...callbacks){
+    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    this.events.ptr.onMove(...callbacks);
     return this;
   }
-  onMousemove(calback) {
-    this.element.addEventListener("mousemove", calback);
+  onPtrDown(...callbacks){
+    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    this.events.ptr.onDown(...callbacks);
     return this;
   }
-  onMouseup(calback) {
-    this.element.addEventListener("mouseup", calback);
+  onPtrUp(...callbacks){
+    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    this.events.ptr.onUp(...callbacks);
     return this;
   }
-  onMouseenter(calback) {
-    this.element.addEventListener("mouseenter", calback);
+  onPtrEnter(...callbacks){
+    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    this.events.ptr.onEnter(...callbacks);
     return this;
   }
-  onMouseleave(calback) {
-    this.element.addEventListener("mouseleave", calback);
+  onPtrLeave(...callbacks){
+    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    this.events.ptr.onLeave(...callbacks);
     return this;
   }
-  onMouseout(calback) {
-    this.element.addEventListener("mouseout", calback);
+  onPtrOut(...callbacks){
+    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    this.events.ptr.onOut(...callbacks);
     return this;
   }
-  onMouseover(calback) {
-    this.element.addEventListener("mouseover", calback);
-    return this;
-  }
-  onTouchmove(calback) {
-    this.element.addEventListener("touchmove", calback);
-    return this;
-  }
-  onTouchup(calback) {
-    this.element.addEventListener("touchup", calback);
-    return this;
-  }
-  onPointermove(calback) {
-    this.element.addEventListener("pointermove", calback);
-    return this;
-  }
-  onPointerup(calback) {
-    this.element.addEventListener("pointerup", calback);
-    return this;
-  }
-  onPointerdown(calback) {
-    this.element.addEventListener("pointerdown", calback);
-    return this;
-  }
-  onPointerover(calback) {
-    this.element.addEventListener("pointerover", calback);
-    return this;
-  }
-  onPointerleave(calback) {
-    this.element.addEventListener("pointerleave", calback);
-    return this;
-  }
-  onPointerout(calback) {
-    this.element.addEventListener("pointerout", calback);
-    return this;
-  }
-  onPointerenter(calback) {
-    this.element.addEventListener("pointerenter", calback);
-    return this;
-  }
-
+  
   onKeypress(calback) {
     this.element.addEventListener("keypress", calback);
     return this;
