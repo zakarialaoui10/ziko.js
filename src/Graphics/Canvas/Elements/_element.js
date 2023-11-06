@@ -37,8 +37,23 @@ class ZikoCanvasElement{
     isIntersectedWith(){
 
     }
-    isPointInside(x,y){
-
+    isInStroke(x,y){
+        let is;
+        if(this.parent){
+            this.parent.ctx.setTransform(1,0,0,1,0,0);
+            is=this.parent.ctx.isPointInStroke(this.path,x,y);
+            this.parent.applyTransformMatrix();
+        }
+        return is;
+    }
+    isInPath(x,y){
+        let is;
+        if(this.parent){
+            this.parent.ctx.setTransform(1,0,0,1,0,0);
+            is=this.parent.ctx.isPointInPath(this.path,x,y);
+            this.parent.applyTransformMatrix();
+        }
+        return is;
     }
     posX(x){
         this.position.x=x;
