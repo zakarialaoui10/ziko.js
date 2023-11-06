@@ -4634,6 +4634,7 @@
                 this.items.at(-1).parent=this;
                 this.items.at(-1).draw(this.ctx);
             }
+            this.maintain();
             return this;
         }
         applyTransformMatrix(){
