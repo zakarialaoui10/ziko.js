@@ -4812,6 +4812,17 @@
             if(this.parent)this.parent.draw();
             return this;
         }
+        distanceFromCenter(x,y){
+            return Math.sqrt(
+                (this.position.x-x)**2-(this.position.y-y)**2
+            )
+        }
+        isPointInside(x,y){
+            return this.distanceFromCenter(x,y)<=this.r;
+        }
+        isPointInEdges(x,y){
+            return this.distanceFromCenter(x,y)===this.r;
+        }
     }
     const canvasCircle=(x,y,r)=>new CanvasCircle(x,y,r);
 
