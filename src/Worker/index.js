@@ -1,30 +1,44 @@
-class Threed{
+class Threed {
     #workerContent;
-    constructor(){
-        this.#workerContent=(
-            function (msg){
-                //console.log({Main:msg.data})
-                const func = new Function("return " + msg.data)();
-                    let a=func()
-                    //postMessage("msg from worker " + a);
-                    postMessage(a);
-                    self.close()
+    constructor() {
+        this.#workerContent = (
+            function (msg) {
+                try {
+                    const func = new Function("return " + msg.data.fun)();
+                    let result = func();
+                    postMessage({ result });
+                } catch (error) {
+                    postMessage({ error: error.message });
+                } finally {
+                    if (msg.data.close) self.close();
+                }
             }
-            ).toString()
-            this.blob = new Blob(["this.onmessage = "+this.#workerContent], { type: "text/javascript" }) 
-            this.worker = new Worker(window.URL.createObjectURL(this.blob));
+        ).toString();
+        this.blob = new Blob(["this.onmessage = " + this.#workerContent], { type: "text/javascript" });
+        this.worker = new Worker(window.URL.createObjectURL(this.blob));
     }
-    runFunc(func,callback){
-        this.worker.postMessage(func.toString());
-        this.worker.onmessage=function(e){
-            callback(e.data)
-        }
-        return this
+    call(func, callback, close = true) {
+        this.worker.postMessage({
+            fun: func.toString(),
+            close
+        });
+        this.worker.onmessage = function (e) {
+            if (e.data.error) {
+                console.error(e.data.error);
+            } else {
+                callback(e.data.result);
+            }
+        };
+        return this;
     }
 }
 
-var Multi=(func,callback)=>new Threed().runFunc(func,callback)
-
-//Multi(()=>{s=0;for(i=0;i<10000000000;i++)s+=i;return s},console.log)
+const Multi = (func, callback , close) => {
+    const T = new Threed();
+    if (func) {
+        T.call(func, callback , close);
+    }
+    return T;
+}
 
 export default Multi;
