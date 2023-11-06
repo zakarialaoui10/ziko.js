@@ -14,7 +14,8 @@ import {
     Canvas,
     canvasCircle,
     canvasPoints,
-    canvasLine
+    canvasLine,
+    canvasRect
 } from "./Canvas/index.js";
 
 const Graphics={
@@ -31,6 +32,7 @@ const Graphics={
     Canvas, 
     canvasCircle,
     canvasPoints,
-    canvasLine
+    canvasLine,
+    canvasRect,
 }
 export default Graphics;

@@ -7,3 +7,6 @@ export {
 export {
     canvasLine
 }from "./line.js"
+export {
+    canvasRect
+} from "./rect.js"
