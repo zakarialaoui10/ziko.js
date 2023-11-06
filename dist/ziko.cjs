@@ -4813,10 +4813,10 @@ class CanvasCircle extends ZikoCanvasElement{
             (this.position.x-x)**2-(this.position.y-y)**2
         )
     }
-    isPointInside(x,y){
-        return this.distanceFromCenter(x,y)<=this.r;
+    isIn(x,y,strict=false){
+        return strict?this.distanceFromCenter(x,y)<this.r:this.distanceFromCenter(x,y)<=this.r;
     }
-    isPointInEdges(x,y){
+    isInEdges(x,y){
         return this.distanceFromCenter(x,y)===this.r;
     }
 }
@@ -4826,6 +4826,7 @@ class CanvasPoints extends ZikoCanvasElement{
     constructor(ptsX,ptsY){
         super();
         this.pointsMatrix=null;
+        this.path=new Path2D();
         this.fromXY(ptsX,ptsY);
     }
     get points(){
@@ -4836,11 +4837,11 @@ class CanvasPoints extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            ctx.moveTo(...this.points[0]);
+            this.path.moveTo(...this.points[0]);
             for(let i=1;i<this.points.length;i++){
-                ctx.lineTo(...this.points[i]);
+                this.path.lineTo(...this.points[i]);
             }
-            ctx.stroke();
+            ctx.stroke(this.path);
             ctx.restore();
         }
         return this;

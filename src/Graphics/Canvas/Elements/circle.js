@@ -28,10 +28,10 @@ class CanvasCircle extends ZikoCanvasElement{
             (this.position.x-x)**2-(this.position.y-y)**2
         )
     }
-    isPointInside(x,y,strict=false){
+    isIn(x,y,strict=false){
         return strict?this.distanceFromCenter(x,y)<this.r:this.distanceFromCenter(x,y)<=this.r;
     }
-    isPointInEdges(x,y){
+    isInEdges(x,y){
         return this.distanceFromCenter(x,y)===this.r;
     }
 }
