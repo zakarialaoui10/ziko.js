@@ -187,31 +187,37 @@ class ZikoEventPointer{
      onDown(...callback){
         if(callback.length===0)return this;
         this.cache.callback.down=callback.map(n=>e=>n.call(this,e));
+        this.handleDown();
         return this;
      }
      onMove(...callback){
         if(callback.length===0)return this;
         this.cache.callback.move=callback.map(n=>e=>n.call(this,e));
+        this.handleMove();
         return this;
      }
      onUp(...callback){
         if(callback.length===0)return this;
         this.cache.callback.up=callback.map(n=>e=>n.call(this,e));
+        this.handleUp();
         return this;
      }
      onEnter(...callback){
         if(callback.length===0)return this;
         this.cache.callback.enter=callback.map(n=>e=>n.call(this,e));
+        this.handleEnter();
         return this;
      }
      onOut(...callback){
         if(callback.length===0)return this;
         this.cache.callback.out=callback.map(n=>e=>n.call(this,e));
+        this.handleOut();
         return this;
      }
      onLeave(...callback){
         if(callback.length===0)return this;
         this.cache.callback.leave=callback.map(n=>e=>n.call(this,e));
+        this.handleLeave();
         return this;
      }
 }

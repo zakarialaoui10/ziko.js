@@ -77,8 +77,8 @@ pp=Pointer(c)
 pp.onDown(e=>{
     c.ctx.beginPath()
     c.ctx.moveTo(
-        map(e.dx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0]),
-        map(e.dy,0,c.element.offseHeight,c.axisMatrix[0][1],c.axisMatrix[1][1])
+        map(e.dx,0,c.element.offsetWidth,c.Xmin,c.Xmax),
+        map(e.dy,0,c.element.offseHeight,c.Ymin,c.Ymax)
         )
 })
 pp.onMove(e=>{
@@ -93,11 +93,7 @@ pp.onMove(e=>{
     c.append(canvasCircle(x,y,1).color({fill:"#5555AA"}).fill())
     }
 })
-pp.handle({
-    down:true,
-    move:true,
-    up:true
-})
+
 
 // class Threed{
 //     #workerContent;

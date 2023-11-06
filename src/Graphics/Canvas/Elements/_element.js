@@ -87,15 +87,17 @@ class ZikoCanvasElement{
         ctx.fillStyle=this.cache.style.highlighted.fillColor;
         return this;
     }
-    stroke(state=true){
-        this.cache.style.normal.strokeEnabled=state;
+    stroke(color=this.cache.style.normal.strokeColor,enabled=true){
+        this.cache.style.normal.strokeEnabled=enabled;
+        this.cache.style.normal.strokeColor=color;
         if(this.parent)this.parent.draw();
         return this  
     }
-    fill(state=true){
-        this.cache.style.normal.fillEnabled=state;
+    fill(color=this.cache.style.normal.fillColor,enabled=true){
+        this.cache.style.normal.fillEnabled=enabled;
+        this.cache.style.normal.filleColor=color;
         if(this.parent)this.parent.draw();
-        return this      
+        return this;      
     }
     render(render=true){
        this.cache.config.rendered=render;

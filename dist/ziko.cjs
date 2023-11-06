@@ -4167,31 +4167,37 @@ class ZikoEventPointer{
      onDown(...callback){
         if(callback.length===0)return this;
         this.cache.callback.down=callback.map(n=>e=>n.call(this,e));
+        this.handleDown();
         return this;
      }
      onMove(...callback){
         if(callback.length===0)return this;
         this.cache.callback.move=callback.map(n=>e=>n.call(this,e));
+        this.handleMove();
         return this;
      }
      onUp(...callback){
         if(callback.length===0)return this;
         this.cache.callback.up=callback.map(n=>e=>n.call(this,e));
+        this.handleUp();
         return this;
      }
      onEnter(...callback){
         if(callback.length===0)return this;
         this.cache.callback.enter=callback.map(n=>e=>n.call(this,e));
+        this.handleEnter();
         return this;
      }
      onOut(...callback){
         if(callback.length===0)return this;
         this.cache.callback.out=callback.map(n=>e=>n.call(this,e));
+        this.handleOut();
         return this;
      }
      onLeave(...callback){
         if(callback.length===0)return this;
         this.cache.callback.leave=callback.map(n=>e=>n.call(this,e));
+        this.handleLeave();
         return this;
      }
 }
@@ -4801,15 +4807,17 @@ class ZikoCanvasElement{
         ctx.fillStyle=this.cache.style.highlighted.fillColor;
         return this;
     }
-    stroke(state=true){
-        this.cache.style.normal.strokeEnabled=state;
+    stroke(color=this.cache.style.normal.strokeColor,enabled=true){
+        this.cache.style.normal.strokeEnabled=enabled;
+        this.cache.style.normal.strokeColor=color;
         if(this.parent)this.parent.draw();
         return this  
     }
-    fill(state=true){
-        this.cache.style.normal.fillEnabled=state;
+    fill(color=this.cache.style.normal.fillColor,enabled=true){
+        this.cache.style.normal.fillEnabled=enabled;
+        this.cache.style.normal.filleColor=color;
         if(this.parent)this.parent.draw();
-        return this      
+        return this;      
     }
     render(render=true){
        this.cache.config.rendered=render;
