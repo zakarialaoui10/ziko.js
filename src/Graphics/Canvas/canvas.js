@@ -49,7 +49,7 @@ class ZikoUICanvas extends ZikoUIElement{
         }
         else {
             this.items.at(-1).parent=this;
-            this.items.draw();
+            this.items.at(-1).draw(this.ctx);
         }
         return this;
     }

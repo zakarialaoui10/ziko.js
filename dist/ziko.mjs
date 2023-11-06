@@ -4598,12 +4598,30 @@ class ZikoUICanvas extends ZikoUIElement{
     get Height(){
         return this.element.height;
     }
-    draw(){
-        this.clear();  
-        this.items.forEach(element => {
-            element.parent=this;
-            element.draw(this.ctx);
-        });
+    get Xmin(){
+        return this.axisMatrix[0][0];
+    }
+    get Ymin(){
+        return this.axisMatrix[0][1];
+    }
+    get Xmax(){
+        return this.axisMatrix[1][0];
+    }
+    get Ymax(){
+        return this.axisMatrix[1][1];
+    }
+    draw(all=true){
+        if(all){
+            this.clear();  
+            this.items.forEach(element => {
+                element.parent=this;
+                element.draw(this.ctx);
+            });
+        }
+        else {
+            this.items.at(-1).parent=this;
+            this.items.at(-1).draw(this.ctx);
+        }
         return this;
     }
     #applyTransformMatrix(){
@@ -4654,7 +4672,7 @@ class ZikoUICanvas extends ZikoUIElement{
     }
     append(element){
         this.items.push(element);
-        this.draw();
+        this.draw(false);
         return this;
     }
     background(color){
