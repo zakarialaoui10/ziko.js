@@ -4,3 +4,6 @@ export {
 export {
     canvasPoints
 } from "./points.js";
+export {
+    canvasLine
+}from "./line.js"

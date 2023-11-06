@@ -4675,6 +4675,12 @@ class ZikoUICanvas extends ZikoUIElement{
         this.#applyTransformMatrix(); 
         return this;
     }
+    zoomIn(){
+
+    }
+    zoomOut(){
+        
+    }
     undo(n){
 
     }
@@ -4830,6 +4836,27 @@ class CanvasPoints extends ZikoCanvasElement{
 
 const canvasPoints=(ptsX=[],ptsY=[])=>new CanvasPoints(ptsX,ptsY);
 
+class CanvasLine extends ZikoCanvasElement{
+    constructor(x0,y0,x1,y1){
+        super();
+        this.x0=x0;
+        this.x1=x1;
+        this.y0=y0;
+        this.y1=y1;
+    }
+    draw(ctx){
+        ctx.save();
+        this.applyNormalStyle(ctx);
+        ctx.beginPath();
+        ctx.moveTo(this.x0,this.y0);
+        ctx.lineTo(this.x1,this.y1);
+        ctx.stroke();
+        ctx.restore();
+        return this;   
+    }
+}
+const canvasLine=(x0,y0,x1,y1)=>new CanvasLine(x0,y0,x1,y1);
+
 const Graphics={
     Svg,
     ZikoUISvg,
@@ -4843,7 +4870,8 @@ const Graphics={
     svgGroupe,
     Canvas, 
     canvasCircle,
-    canvasPoints
+    canvasPoints,
+    canvasLine
 };
 
 const Ziko$1={

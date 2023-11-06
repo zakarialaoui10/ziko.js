@@ -13,7 +13,8 @@ import{
 import {
     Canvas,
     canvasCircle,
-    canvasPoints
+    canvasPoints,
+    canvasLine
 } from "./Canvas/index.js";
 
 const Graphics={
@@ -29,6 +30,7 @@ const Graphics={
     svgGroupe,
     Canvas, 
     canvasCircle,
-    canvasPoints
+    canvasPoints,
+    canvasLine
 }
 export default Graphics;

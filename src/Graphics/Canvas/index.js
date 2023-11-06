@@ -1,12 +1,12 @@
 import Canvas  from "./canvas.js";
 import { 
     canvasCircle,  
-} from "./Elements/circle.js";
-import { 
-    canvasPoints,  
-} from "./Elements/points.js";
+    canvasPoints,
+    canvasLine
+} from "./Elements/index.js";
 export {
     Canvas,
     canvasCircle,
-    canvasPoints
+    canvasPoints,
+    canvasLine
 }
