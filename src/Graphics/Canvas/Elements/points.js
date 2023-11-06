@@ -33,6 +33,15 @@ class CanvasPoints extends ZikoCanvasElement{
         if(this.parent)this.parent.draw();
         return this;
     }
+    isIn(x,y){
+        let is;
+        if(this.parent){
+            this.parent.ctx.setTransform(1,0,0,1,0,0);
+            is=this.parent.ctx.isPointInPath(this.path,x,y);
+            this.parent.applyTransformMatrix();
+        }
+        return is;
+    }
 }
 
 const canvasPoints=(ptsX=[],ptsY=[])=>new CanvasPoints(ptsX,ptsY);

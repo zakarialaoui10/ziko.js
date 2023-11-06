@@ -4626,7 +4626,7 @@ class ZikoUICanvas extends ZikoUIElement{
         }
         return this;
     }
-    #applyTransformMatrix(){
+    applyTransformMatrix(){
         this.ctx.setTransform(
             this.transformMatrix[0][0],
             this.transformMatrix[1][0],
@@ -4662,7 +4662,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [xMax,yMax]
         ]);
         
-        this.#applyTransformMatrix(); 
+        this.applyTransformMatrix(); 
         this.clear();
         this.lineWidth(1);
         this.draw();
@@ -4681,7 +4681,7 @@ class ZikoUICanvas extends ZikoUIElement{
         this.ctx.fillStyle = color;
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.fillRect(0, 0, this.Width, this.Height);
-        this.#applyTransformMatrix();
+        this.applyTransformMatrix();
         this.draw();
     }
     lineWidth(w){
@@ -4690,7 +4690,7 @@ class ZikoUICanvas extends ZikoUIElement{
     clear(){
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.Width, this.Height);
-        this.#applyTransformMatrix(); 
+        this.applyTransformMatrix(); 
         return this;
     }
     zoomIn(){
@@ -4872,6 +4872,15 @@ class CanvasPoints extends ZikoCanvasElement{
         this.pointsMatrix.hstack(matrix([ptsX,ptsY]));
         if(this.parent)this.parent.draw();
         return this;
+    }
+    isIn(x,y){
+        let is;
+        if(this.parent){
+            //this.parent.ctx.setTransform(1,0,0,1,0,0);
+            is=this.parent.ctx.isPointInPath(this.path,x,y);
+            //this.parent.applyTransformMatrix();
+        }
+        return is;
     }
 }
 
