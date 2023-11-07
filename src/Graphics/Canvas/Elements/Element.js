@@ -34,6 +34,12 @@ class ZikoCanvasElement{
         }
         this.render();
     }
+    get _x(){
+        return (this.position.x??0)+(this.parent.position.x??0);
+    }
+    get _y(){
+        return (this.position.y??0)+(this.parent.position.y??0);
+    }
     isIntersectedWith(){
 
     }

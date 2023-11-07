@@ -11,7 +11,7 @@ class CanvasRect extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            this.path.rect(this.position.x, this.position.y,this.w,this.h);
+            this.path.rect(this._x, this._y,this.w,this.h);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);

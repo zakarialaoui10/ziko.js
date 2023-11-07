@@ -15,9 +15,9 @@ class CanvasPoints extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            this.path.moveTo(...this.points[0]);
+            this.path.moveTo(this.points[1][0]+this._x,this.points[1][0]+this._y);
             for(let i=1;i<this.points.length;i++){
-                this.path.lineTo(...this.points[i])
+                this.path.lineTo(this.points[i][0]+this._x,this.points[i][0]+this._y)
             }
             ctx.stroke(this.path);
             ctx.restore();

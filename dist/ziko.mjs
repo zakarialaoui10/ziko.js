@@ -4724,6 +4724,12 @@ class ZikoCanvasElement{
         };
         this.render();
     }
+    get _x(){
+        return (this.position.x??0)+(this.parent.position.x??0);
+    }
+    get _y(){
+        return (this.position.y??0)+(this.parent.position.y??0);
+    }
     isIntersectedWith(){
 
     }
@@ -4799,14 +4805,15 @@ class CanvasCircle extends ZikoCanvasElement{
     constructor(x,y,r){
         super(x,y);
         this.r=r;
-        this.path=new Path2D();
+        this.path=null;
     }
     draw(ctx){
         if(this.cache.config.rendered){
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            this.path.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
+            this.path=new Path2D();
+            this.path.arc(this._x, this._y, this.r, 0, Math.PI * 2);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);
@@ -4822,7 +4829,7 @@ class CanvasCircle extends ZikoCanvasElement{
     }
     // distanceFromCenter(x,y){
     //     return Math.sqrt(
-    //         (this.position.x-x)**2-(this.position.y-y)**2
+    //         (this._x-x)**2-(this._y-y)**2
     //     )
     // }
     // isIn(x,y,strict=false){
@@ -4849,9 +4856,9 @@ class CanvasPoints extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            this.path.moveTo(...this.points[0]);
+            this.path.moveTo(this.points[1][0]+this._x,this.points[1][0]+this._y);
             for(let i=1;i<this.points.length;i++){
-                this.path.lineTo(...this.points[i]);
+                this.path.lineTo(this.points[i][0]+this._x,this.points[i][0]+this._y);
             }
             ctx.stroke(this.path);
             ctx.restore();
@@ -4894,8 +4901,8 @@ class CanvasLine extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            ctx.moveTo(this.x0,this.y0);
-            ctx.lineTo(this.x1,this.y1);
+            ctx.moveTo(this.x0+this._x,this.y0+this._y_);
+            ctx.lineTo(this.x1+this._x,this.y1+this._y);
             ctx.stroke();
             if(this.cache.style.normal.strokeEnabled)ctx.stroke();
             ctx.restore();
@@ -4917,7 +4924,7 @@ class CanvasRect extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            this.path.rect(this.position.x, this.position.y,this.w,this.h);
+            this.path.rect(this._x, this._y,this.w,this.h);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);

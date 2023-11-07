@@ -13,8 +13,8 @@ class CanvasLine extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            ctx.moveTo(this.x0,this.y0);
-            ctx.lineTo(this.x1,this.y1);
+            ctx.moveTo(this.x0+this._x,this.y0+this._y_);
+            ctx.lineTo(this.x1+this._x,this.y1+this._y);
             ctx.stroke();
             if(this.cache.style.normal.strokeEnabled)ctx.stroke();
             ctx.restore();
