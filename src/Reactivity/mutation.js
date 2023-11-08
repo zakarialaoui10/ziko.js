@@ -29,7 +29,7 @@ class ZikoMutationObserver {
     }
   
     observe(callback) {
-      if (!this.observer) {
+      if(!this.observer) {
         this.observer = new MutationObserver(this.observeCallback);
         this.observer.observe(this.UIElement, this.options);
         this.callback = callback;
@@ -64,6 +64,7 @@ class ZikoMutationObserver {
         };
       }
       this.streamingEnabled = false;
+      return this;
     }
   
     getMutationHistory() {
@@ -72,9 +73,19 @@ class ZikoMutationObserver {
   
     enableStreaming() {
       this.streamingEnabled = true;
+      return this;
     }
   
     disableStreaming() {
       this.streamingEnabled = false;
+      return this;
     }
   }
+
+const Watch=(UIElement,options,callback)=>{
+    const Observer= new ZikoMutationObserver(UIElement,options);
+    if(callback)Observer.observe(callback);
+    return Observer
+}
+
+export default Watch;
