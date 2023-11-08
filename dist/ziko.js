@@ -3126,7 +3126,7 @@
           return this;
         }
       }
-     const text = (...value) => new ZikoUIText(...value);
+     const text$1 = (...value) => new ZikoUIText(...value);
 
     class ZikoUIParagraphe extends ZikoUIElement {
         constructor(...value) {
@@ -3144,7 +3144,7 @@
             } else if (value[i] instanceof ZikoUIElement)
               this.element.appendChild(value[i].element);
             else if (value[i] instanceof Complex)
-              text(value.a + " + " + value.b + "i");
+              text$1(value.a + " + " + value.b + "i");
           }
           return this;
         }
@@ -3236,7 +3236,7 @@
         append(...arr){
           for (let i = 0; i < arr.length; i++) {
             let li = null;
-            if(["string","number"].includes(typeof arr[i]))arr[i]=text(arr[i]);
+            if(["string","number"].includes(typeof arr[i]))arr[i]=text$1(arr[i]);
             if (arr[i] instanceof ZikoUIElement)li=new ZikoUILI(arr[i]);
             li.setTarget(this.element);
             this.items.push(li[0]);
@@ -4018,7 +4018,7 @@
     const tr=(...ZikoUIElement)=>new ZikoUITr(...ZikoUIElement);
     const td=(...UI)=>{
         UI=UI.map(n=>{
-            if(!(n instanceof ZikoUIElement))n=text(n);
+            if(!(n instanceof ZikoUIElement))n=text$1(n);
             return n
         });
         return new ZikoUITd(...UI)
@@ -4133,7 +4133,7 @@
     const Table=(matrix)=>new ZikoUITable(matrix);
 
     const UI$1={
-        text,
+        text: text$1,
         p,
         h1,
         h2,
@@ -5024,12 +5024,41 @@
         return T;
     };
 
+    class ZikoSPA{
+        constructor(root_UI,routes){
+            this.root_UI=root_UI;
+            this.routes=new Map([
+                [404,text("Error 404")],
+                ...Object.entries(routes)
+            ]);
+            this.maintain();
+            window.addEventListener("popstate",()=>this.render(location.pathname));
+        }
+        set(path,wrapper){
+            this.routes.set(path,wrapper);
+            this.maintain();
+            return this;
+        }
+        maintain(){
+            this.root_UI.append(...this.routes.values());
+            [...this.routes.values()].map(n=>n.render(false));
+            return this;
+        }
+        render(path){
+            (this.routes.get(path)??this.routes.get(403)).render(true);
+            window.history.pushState({}, "", path);
+            return this;
+        }
+    }
+    const SPA=(root_UI,routes)=>new ZikoSPA(root_UI,routes);
+
     const Ziko$1={
         Math: Math$1,
         UI: UI$1,
         Graphics,
         Events,
-        Multi
+        Multi,
+        SPA
     };
     Ziko$1.Math.ExtractAll=function(){
         for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
