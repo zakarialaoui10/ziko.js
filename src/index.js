@@ -3,12 +3,14 @@ import UI from "./UI/index.js";
 import Events from "./Events/index.js";
 import Graphics from "./Graphics/index.js";
 import Multi from "./Worker/index.js";
+import {SPA} from "./Router/index.js"
 const Ziko={
     Math,
     UI,
     Graphics,
     Events,
-    Multi
+    Multi,
+    SPA
 }
 Ziko.Math.ExtractAll=function(){
     for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
