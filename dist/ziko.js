@@ -5029,7 +5029,7 @@
           this.UIElement = UIElement;
           this.options = options || { attributes: true, childList: true, subtree: true };
           this.observer = null;
-          this.streamingEnabled = false;
+          this.streamingEnabled = true;
           this.mutationHistory = {
             attributes: [],
             childList: [],
@@ -5040,7 +5040,10 @@
             if (this.streamingEnabled) {
               for (const mutation of mutationsList) {
                 if (mutation.type === 'attributes') {
-                  this.mutationHistory.attributes.push(mutation);
+                  this.mutationHistory.attributes.push({
+                    old:mutation.oldValue,
+                    new_:mutation.target.getAttribute(mutation.attributeName)
+                  });
                 } else if (mutation.type === 'childList') {
                   this.mutationHistory.childList.push(mutation);
                 } else if (mutation.type === 'subtree') {
@@ -5057,7 +5060,7 @@
         observe(callback) {
           if(!this.observer) {
             this.observer = new MutationObserver(this.observeCallback);
-            this.observer.observe(this.UIElement, this.options);
+            this.observer.observe(this.UIElement.element, this.options);
             this.callback = callback;
             this.streamingEnabled = true;
           }
@@ -5108,7 +5111,7 @@
         }
       }
 
-    const Watch=(UIElement,options,callback)=>{
+    const Watch=(UIElement,options={},callback=null)=>{
         const Observer= new ZikoMutationObserver(UIElement,options);
         if(callback)Observer.observe(callback);
         return Observer
