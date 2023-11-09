@@ -1,3 +1,6 @@
+import{
+    loop
+} from "./loop.js"
 import {
     wait,
     timeTaken,
@@ -12,6 +15,7 @@ const Time={
     throttle,
     debounce,
     Ease,
-    time_memory_Taken
+    time_memory_Taken,
+    loop
 }
 export default Time;
