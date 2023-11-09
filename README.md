@@ -1,6 +1,7 @@
+<!--
 <img src="assets/preview1.gif" alt="ziko.js" width="100%">
 <img src="assets/ziko js.PNG" alt="ziko.js" width="100%">
-
+-->
 # Demo 
  
  
