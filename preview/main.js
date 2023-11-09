@@ -67,8 +67,8 @@ const B=p(
 // C.remove()
 
 c=Canvas().view(-10,-10,10,10).size(500,500).adjust()
-a1=canvasCircle(-2,0,5).fill().color({fill:"#5555AA"})
-a2=canvasCircle(2,0,5).fill().color({fill:"#AA5555"})
+a1=canvasCircle(-2,0,0.3).fill().color({fill:"#5555AA"})
+a2=canvasCircle(2,0,0.3).fill().color({fill:"#AA5555"})
 c.append(a1)
 c.append(a2)
 a1.ca

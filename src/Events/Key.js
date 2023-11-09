@@ -1,4 +1,3 @@
-//window.KeyGarbage=[]
 import Garbage from "./Garbage.js";
 class ZikoEventKey{
     #downController

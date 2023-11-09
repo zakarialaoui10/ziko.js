@@ -4262,10 +4262,7 @@ class Loop {
     }  }
 }
 
-const loop = (callback, fps) => new Loop(callback, fps);
-
-
-  loop((e) => console.log(e.i), {step:100,fps:30,t:[500,4001],start:true});
+const loop = (callback, options) => new Loop(callback, options);
 
 const Ease={
     Linear:function(t){

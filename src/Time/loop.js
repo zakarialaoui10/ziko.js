@@ -78,8 +78,8 @@ class Loop {
   }
 }
 
-const loop = (callback, fps) => new Loop(callback, fps);
+const loop = (callback, options) => new Loop(callback, options);
 
 
-  const a = loop((e) => console.log(e.i), {step:100,fps:30,t:[500,4001],start:true});
+//const a = loop((e) => console.log(e.i), {step:100,fps:30,t:[500,4001],start:true});
 export {loop}
