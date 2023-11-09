@@ -2,6 +2,7 @@ import { waitForUIElm, waitForUIElmSync } from "./Utils/index.js";
 //import domComposer from "./Composer/dom.js"
 import styleComposer from "./Style/index.js";
 import {Pointer} from "../Events/index.js"
+import { WatchSize } from "../Reactivity/index.js";
 class ZikoUIElement {
   #Flip = [0, 0, 0];
   constructor(element = document.body) {
@@ -13,7 +14,6 @@ class ZikoUIElement {
       isHidden: false,
       style: {},
       attributes: {},
-      //events: {},
       filters: {},
     };
     this.items = [];
@@ -22,16 +22,13 @@ class ZikoUIElement {
       key:null,
       drag:null
     }
+    this.observer={
+      resize:null
+    }
     this.style({ position: "relative" });
     this.size("auto", "auto");
-    //waitForUIElm(this).then(()=>Object.assign(this.cache.filters,{display:this.element.style.display}));
-    var ele = waitForUIElmSync(this, 1000);
-    //console.log(ele)
-    //this.maintain()
   }
   clone() {
-    //const a = new ZikoUIElement(this.element.cloneNode(true));
-    //a.element.style=this.element.style
     const clonedUI = new this.constructor();
     a.render(true);
     return clonedUI;
@@ -74,7 +71,7 @@ class ZikoUIElement {
     return this;
   }
   remove() {
-    if (this.Target.children.length) this.Target.removeChild(this.element);
+    if(this.Target.children.length) this.Target.removeChild(this.element);
     return this;
   }
   removeAfter(t = 1) {
@@ -327,6 +324,17 @@ class ZikoUIElement {
   onPtrOut(...callbacks){
     if(!this.events.ptr)this.events.ptr = Pointer(this);
     this.events.ptr.onOut(...callbacks);
+    return this;
+  }
+  WatchAttributes(){
+
+  }
+  WatchChildren(){
+
+  }
+  watchSize(callback){
+    if(!this.observer.resize)this.observer.resize = WatchSize(this,callback);
+    this.observer.resize.start();
     return this;
   }
   
