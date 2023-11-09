@@ -1,5 +1,6 @@
 import {Math} from "./Math/index.js";
 import UI from "./UI/index.js";
+import Time from "./Time/index.js";
 import Events from "./Events/index.js";
 import Graphics from "./Graphics/index.js";
 import Multi from "./Worker/index.js";
@@ -8,6 +9,7 @@ import {SPA} from "./Router/index.js";
 const Ziko={
     Math,
     UI,
+    Time,
     Graphics,
     Events,
     Multi,
@@ -34,6 +36,16 @@ Ziko.UI.RemoveAll=function(){
     for (let i = 0; i < Object.keys(Ziko.UI).length; i++) delete globalThis[Object.keys(Ziko.UI)[i]];   
     return this;
 }
+Ziko.Time.ExtractAll=function(){
+    for (let i = 0; i < Object.keys(Ziko.Time).length; i++) {
+        globalThis[Object.keys(Ziko.Time)[i]] = Object.values(Ziko.Time)[i];
+    }
+    return this;
+}
+Ziko.Time.RemoveAll=function(){
+    for (let i = 0; i < Object.keys(Ziko.Time).length; i++) delete globalThis[Object.keys(Ziko.Time)[i]];   
+    return this;
+}
 Ziko.Graphics.ExtractAll=function(){
     for (let i = 0; i < Object.keys(Ziko.Graphics).length; i++) {
         globalThis[Object.keys(Ziko.Graphics)[i]] = Object.values(Ziko.Graphics)[i];
@@ -57,6 +69,7 @@ Ziko.Events.RemoveAll=function(){
 Ziko.ExtractAll=function(){
     Ziko.UI.ExtractAll();
     Ziko.Math.ExtractAll();
+    Ziko.Time.ExtractAll();
     Ziko.Events.ExtractAll();
     Ziko.Graphics.ExtractAll();
     return this;
@@ -64,6 +77,7 @@ Ziko.ExtractAll=function(){
 Ziko.RemoveAll=function(){
     Ziko.UI.RemoveAll();
     Ziko.Math.RemoveAll();
+    Ziko.Time.ExtractAll();
     Ziko.Events.RemoveAll();
     Ziko.Graphics.RemoveAll();
 }
