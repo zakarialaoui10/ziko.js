@@ -10,7 +10,7 @@ Ziko.text("hello world")
 
 ## Math
  ### Functions
-    ```
+    ``` javascript
      const a = cos(0);
      const b = sin(0,PI/2,PI)
      const c = ln([1,2,3])
