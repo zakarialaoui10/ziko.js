@@ -9,6 +9,10 @@ Ziko.text("hello world")
 ```
 
 ## Math
+ ### Functions
+ ### Matrix
+ ### Complex
+ ### Random
 ## UI
 ## Time
 ## Graphics
