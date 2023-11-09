@@ -3,6 +3,10 @@
 <img src="assets/ziko js.PNG" alt="ziko.js" width="100%">
 -->
 # Demo 
+# Get Started 
+```js
+Ziko.text("hello world")
+```
 
 ## Math
 ## UI
