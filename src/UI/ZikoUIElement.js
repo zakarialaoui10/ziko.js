@@ -3,6 +3,7 @@ import { waitForUIElm, waitForUIElmSync } from "./Utils/index.js";
 import styleComposer from "./Style/index.js";
 import {Pointer} from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
+import { text } from "./Text/index.js";
 class ZikoUIElement {
   #Flip = [0, 0, 0];
   constructor(element = document.body) {
@@ -58,7 +59,8 @@ class ZikoUIElement {
     return this;
   }
   append(...ele) {
-    for (let i = 0; i < ele.length; i++)
+    for (let i = 0; i < ele.length; i++){
+    if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
         this.element.appendChild(ele[i].element);
         ele[i].Target = this.element;
@@ -71,6 +73,7 @@ class ZikoUIElement {
           );
         }
       }
+    }
     this.maintain();
     return this;
   }
@@ -112,7 +115,6 @@ class ZikoUIElement {
         this.element.insertBefore(ele[i].element, this.items[index].element);
         this.items.splice(index, 0, ele[i]);
       }
-
     return this;
   }
   // Attributes

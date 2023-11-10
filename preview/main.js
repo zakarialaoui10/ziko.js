@@ -292,6 +292,6 @@ class ZikoIntersectionObserver{
  //WatchIntersection=(UI,callback)=>new ZikoIntersectionObserver(UI,callback)
  //a=WatchIntersection(c,e=>console.log(e.ratio)).start()
 //  c.WatchIntersection(e=>console.log(e.ratio))
-// Flex().size(2000,900)
+a=Flex(text(1),text(2),text(3)).size(400,"auto")
 
   

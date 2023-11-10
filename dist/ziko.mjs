@@ -2631,17 +2631,18 @@ class ZikoUIElement {
     this.render();
     return this;
   }
-  render(bool = true , target = this.Target) {
+  render(render = true , target = this.Target) {
     if(target instanceof ZikoUIElement)target=target.element;
     this.Target=target;
-    if(bool) {
+    if(render) {
       this.Target.appendChild(this.element);
     }
     else this.remove();
     return this;
   }
   append(...ele) {
-    for (let i = 0; i < ele.length; i++)
+    for (let i = 0; i < ele.length; i++){
+    if(["number","string"].includes(typeof ele[i]))ele[i]=text$1(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
         this.element.appendChild(ele[i].element);
         ele[i].Target = this.element;
@@ -2654,6 +2655,7 @@ class ZikoUIElement {
           );
         }
       }
+    }
     this.maintain();
     return this;
   }
@@ -2695,7 +2697,6 @@ class ZikoUIElement {
         this.element.insertBefore(ele[i].element, this.items[index].element);
         this.items.splice(index, 0, ele[i]);
       }
-
     return this;
   }
   // Attributes
