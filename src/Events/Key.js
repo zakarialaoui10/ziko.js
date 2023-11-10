@@ -1,4 +1,25 @@
 import Garbage from "./Garbage.js";
+function update_down(e){
+    if(this.cache.preventDefault.down)e.preventDefault();
+    this.kd=e.key;
+    if(this.cache.Enabled.down)this.cache.down.push({key:this.kd,t:0});
+    this.cache.callback.down.map(n=>n(this))
+    return this;
+} 
+function update_press(e){
+    if(this.cache.preventDefault.press)e.preventDefault();
+    this.kp=e.key;
+    if(this.cache.Enabled.press)this.cache.press.push({key:this.kp,t:0});
+    this.cache.callback.press.map(n=>n(this))
+    return this;
+}
+function update_up(e){
+    if(this.cache.preventDefault.up)e.preventDefault();
+    this.ku=e.key;
+    if(this.cache.Enabled.up)this.cache.up.push({key:this.ku,t:0});
+    this.cache.callback.up.map(n=>n(this))
+    return this;
+}
 class ZikoEventKey{
     #downController
     #pressController
@@ -36,9 +57,9 @@ class ZikoEventKey{
             press:[],
             up:[],
         }
-        this.#downController=this._updateDown.bind(this);
-        this.#pressController=this._updatePress.bind(this);
-        this.#upController=this._updateUp.bind(this);
+        this.#downController=update_down.bind(this);
+        this.#pressController=update_press.bind(this);
+        this.#upController=update_up.bind(this);
         this.#dispose=this.dispose.bind(this);
         this.EventIndex=Garbage.Key.data.length;
         Garbage.Key.data.push({event:this,index:this.EventIndex});
@@ -48,35 +69,15 @@ class ZikoEventKey{
         else this._Target=UI?.element||window;
         return this;
     }
-    _updateDown(e){
-        if(this.cache.preventDefault.down)e.preventDefault();
-        this.kd=e.key;
-        if(this.cache.Enabled.down)this.cache.down.push({key:this.kd,t:0});
-        this.cache.callback.down.map(n=>n(this))
-        return this;
-    } 
     handleDown(){
         this.dispose({down:true,press:false,up:false})
         this._Target.addEventListener("keydown",this.#downController);
         return this;
      }
-     _updatePress(e){
-        if(this.cache.preventDefault.press)e.preventDefault();
-        this.kp=e.key;
-        if(this.cache.Enabled.press)this.cache.press.push({key:this.kp,t:0});
-        this.cache.callback.press.map(n=>n(this))
-        return this;
-    }
+     
     handlePress(){
         this.dispose({down:false,up:false})
         this._Target.addEventListener("keypress",this.#pressController);
-        return this;
-    }
-    _updateUp(e){
-        if(this.cache.preventDefault.up)e.preventDefault();
-        this.ku=e.key;
-        if(this.cache.Enabled.up)this.cache.up.push({key:this.ku,t:0});
-        this.cache.callback.up.map(n=>n(this))
         return this;
     }
     handleUp(){
@@ -112,23 +113,25 @@ class ZikoEventKey{
      }
     onDown(...callback){
         if(callback.length===0)return this;
-        this.cache.callback.down=callback.map(n=>e=>n.call(this,e))
+        this.cache.callback.down=callback.map(n=>e=>n.call(this,e));
+        this.handleDown();
         return this;
      }
     onPress(...callback){
         if(callback.length===0)return this;
-        this.cache.callback.press=callback.map(n=>e=>n.call(this,e))
+        this.cache.callback.press=callback.map(n=>e=>n.call(this,e));
+        this.handlePress();
         return this;
      }
     onUp(...callback){
         if(callback.length===0)return this;
-        this.cache.callback.up=callback.map(n=>e=>n.call(this,e))
+        this.cache.callback.up=callback.map(n=>e=>n.call(this,e));
+        this.handleUp();
         return this;
      }
     handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
         const reversedkeys = keys.reverse();
         const newkeys = new Array(reversedkeys.length).fill(null);
-        //console.log({reversedkeys,newkeys})
         const addsub = (arr, item, length = keys.length) => {
             arr.unshift(item);
             arr.length = length;
@@ -140,7 +143,6 @@ class ZikoEventKey{
             this.cache.callback.down.push(e=>{
                 addsub(newkeys,e.kd);
                 if(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))this.cache.successifKeysCallback.down.map(n=>n(this))
-                //console.log(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))
             })        
             }       
      }

@@ -1,7 +1,7 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 //import domComposer from "./Composer/dom.js"
 import styleComposer from "./Style/index.js";
-import {Pointer} from "../Events/index.js"
+import { Pointer,Key } from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
 import { text } from "./Text/index.js";
 class ZikoUIElement {
@@ -12,6 +12,7 @@ class ZikoUIElement {
     Object.assign(this, styleComposer.call(this));
     this.cache = {
       isHidden: false,
+      isFrozzen:false,
       style: {},
       attributes: {},
       filters: {},
@@ -35,6 +36,9 @@ class ZikoUIElement {
     const clonedUI = new this.constructor();
     a.render(true);
     return clonedUI;
+  }
+  freeze(){
+
   }
   at(index) {
     return this.items.at(index);
@@ -345,6 +349,26 @@ class ZikoUIElement {
   onPtrOut(...callbacks){
     if(!this.events.ptr)this.events.ptr = Pointer(this);
     this.events.ptr.onOut(...callbacks);
+    return this;
+  }
+  onKeyDown(...callbacks){
+    if(!this.events.key)this.events.key = Key(this);
+    this.events.key.onDown(...callbacks);
+    return this;
+  }
+  onKeyPress(...callbacks){
+    if(!this.events.key)this.events.key = Key(this);
+    this.events.key.onPress(...callbacks);
+    return this;
+  }
+  onKeyUp(...callbacks){
+    if(!this.events.key)this.events.key = Key(this);
+    this.events.key.onUp(...callbacks);
+    return this;
+  }
+  onKeysDown({keys=[],callback}={}){
+    if(!this.events.key)this.events.key = Key(this);
+    this.events.key.handleSuccessifKeys({keys,callback});
     return this;
   }
   WatchAttributes(){
