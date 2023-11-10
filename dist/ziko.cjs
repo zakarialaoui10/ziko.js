@@ -2633,8 +2633,12 @@ class ZikoUIElement {
     this.render();
     return this;
   }
-  render(bool = true) {
-    if (bool) this.Target.appendChild(this.element);
+  render(bool = true , target = this.Target) {
+    if(target instanceof ZikoUIElement)target=target.element;
+    this.Target=target;
+    if(bool) {
+      this.Target.appendChild(this.element);
+    }
     else this.remove();
     return this;
   }
