@@ -2,7 +2,7 @@ import { waitForUIElm, waitForUIElmSync } from "./Utils/index.js";
 //import domComposer from "./Composer/dom.js"
 import styleComposer from "./Style/index.js";
 import {Pointer} from "../Events/index.js"
-import { WatchSize } from "../Reactivity/index.js";
+import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
 class ZikoUIElement {
   #Flip = [0, 0, 0];
   constructor(element = document.body) {
@@ -332,9 +332,14 @@ class ZikoUIElement {
   WatchChildren(){
 
   }
-  watchSize(callback){
+  WatchSize(callback){
     if(!this.observer.resize)this.observer.resize = WatchSize(this,callback);
     this.observer.resize.start();
+    return this;
+  }
+  WatchIntersection(callback,config){
+    if(!this.observer.intersection)this.observer.intersection = WatchIntersection(this,callback,config);
+    this.observer.intersection.start();
     return this;
   }
   

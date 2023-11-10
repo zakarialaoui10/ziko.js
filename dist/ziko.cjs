@@ -2448,6 +2448,46 @@ class ZikoResizeObserver{
 
 const WatchSize=(UI,callback)=>new ZikoResizeObserver(UI,callback);
 
+class ZikoIntersectionObserver{
+    constructor(UIElement,callback,{threshold=0,margin}={}){
+        this.target=UIElement;
+        this.config={
+            threshold,
+            margin
+        };
+        this.observer=new IntersectionObserver((entries)=>{
+            this.entrie=entries[0];
+            callback(this);
+        },{
+            threshold:this.threshold,
+        });
+    }
+    get ratio(){
+        return this.entrie.intersectionRatio;
+    }
+    get isIntersecting(){
+        return this.entrie.isIntersecting;
+    }
+    setThreshould(threshold){
+        this.config.threshold=threshold;
+        return this;
+    }
+    setMargin(margin){
+        margin=(typeof margin === "number")?margin+"px":margin;
+        this.config.margin=margin;
+        return this;
+    }
+    start(){
+        this.observer.observe(this.target.element);
+        return this;
+    }
+    stop(){
+        return this;
+    }
+}
+
+const WatchIntersection=(UI,callback,config)=>new ZikoIntersectionObserver(UI,callback,config);
+
 class ZikoMutationObserver {
     constructor(UIElement, options) {
       this.UIElement = UIElement;
@@ -2865,9 +2905,14 @@ class ZikoUIElement {
   WatchChildren(){
 
   }
-  watchSize(callback){
+  WatchSize(callback){
     if(!this.observer.resize)this.observer.resize = WatchSize(this,callback);
     this.observer.resize.start();
+    return this;
+  }
+  WatchIntersection(callback,config){
+    if(!this.observer.intersection)this.observer.intersection = WatchIntersection(this,callback,config);
+    this.observer.intersection.start();
     return this;
   }
   

@@ -214,49 +214,84 @@ const Multi = (func, callback , close) => {
 
 
 
-class ZikoResizeObserver{
-    constructor(UIElement,callback){
+// class ZikoResizeObserver{
+//     constructor(UIElement,callback){
+//         this.target=UIElement;
+//         this.contentRect=null;
+//         this.observer=new ResizeObserver(()=>{
+//             callback(this)
+//         })
+//     }
+//     get BoundingRect(){
+//         return this.target.element.getBoundingClientRect();
+//     }
+//     get width(){
+//         return this.BoundingRect.width;
+//     }
+//     get height(){
+//         return this.BoundingRect.height;
+//     }
+//     get top(){
+//         return this.BoundingRect.top;
+//     }
+//     get bottom(){
+//         return this.BoundingRect.bottom;
+//     }
+//     get right(){
+//         return this.BoundingRect.right;
+//     }
+//     get left(){
+//         return this.BoundingRect.left;
+//     }
+//     get x(){
+//         return this.BoundingRect.x;
+//     }
+//     get y(){
+//         return this.boundingRect.y;
+//     }
+//     start(){
+//         this.observer.observe(this.target.element);
+//         return this;
+//     }
+//     stop(){
+
+//         return this;
+//     }
+// }
+//  resizeObserver=(UI,callback)=>new ZikoResizeObserver(UI,callback)
+// a=resizeObserver(c,e=>console.log(e.width)).start()
+
+class ZikoIntersectionObserver{
+    constructor(UIElement,callback,{threshold=1}={}){
         this.target=UIElement;
-        this.contentRect=null;
-        this.observer=new ResizeObserver(()=>{
+        this.config={
+            threshold
+        }
+        this.observer=new IntersectionObserver((entries)=>{
+            this.entrie=entries[0];
             callback(this)
+        },{
+            threshold:this.threshold
         })
     }
-    get BoundingRect(){
-        return this.target.element.getBoundingClientRect();
+    get ratio(){
+        return this.entrie.intersectionRatio;
     }
-    get width(){
-        return this.BoundingRect.width;
-    }
-    get height(){
-        return this.BoundingRect.height;
-    }
-    get top(){
-        return this.BoundingRect.top;
-    }
-    get bottom(){
-        return this.BoundingRect.bottom;
-    }
-    get right(){
-        return this.BoundingRect.right;
-    }
-    get left(){
-        return this.BoundingRect.left;
-    }
-    get x(){
-        return this.BoundingRect.x;
-    }
-    get y(){
-        return this.boundingRect.y;
+    get isIntersecting(){
+        return this.entrie.isIntersecting;
     }
     start(){
         this.observer.observe(this.target.element);
         return this;
     }
     stop(){
-
         return this;
     }
 }
- resizeObserver=(UI,callback)=>new ZikoResizeObserver(UI,callback)
-// a=resizeObserver(c,e=>console.log(e.width)).start()
+
+ //WatchIntersection=(UI,callback)=>new ZikoIntersectionObserver(UI,callback)
+ //a=WatchIntersection(c,e=>console.log(e.ratio)).start()
+ c.WatchIntersection(e=>console.log(e.ratio))
+Flex().size(2000,900)
+
+  
