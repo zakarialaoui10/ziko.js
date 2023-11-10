@@ -3168,6 +3168,12 @@
       get Id() {
         return this.element.getAttribute("id");
       }
+      filterByTextContent(text,exactMatch=false){
+        this.items.map(n=>n.render());
+        exactMatch?
+         this.items.filter(n=>!(n.element.textContent==text)).map(n=>n.render(false))
+         :this.items.filter(n=>!n.element.textContent.includes(text)).map(n=>n.render(false));
+      }
       filterByClass(value) {
         let n = 0;
         for (let i = 0; i < this.children.length; i++) {

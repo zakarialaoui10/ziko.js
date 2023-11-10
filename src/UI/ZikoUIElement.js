@@ -1,5 +1,4 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
-//import domComposer from "./Composer/dom.js"
 import styleComposer from "./Style/index.js";
 import { Pointer,Key } from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
@@ -311,6 +310,12 @@ class ZikoUIElement {
   }
   get Id() {
     return this.element.getAttribute("id");
+  }
+  filterByTextContent(text,exactMatch=false){
+    this.items.map(n=>n.render());
+    exactMatch?
+     this.items.filter(n=>!(n.element.textContent==text)).map(n=>n.render(false))
+     :this.items.filter(n=>!n.element.textContent.includes(text)).map(n=>n.render(false));
   }
   filterByClass(value) {
     let n = 0;
