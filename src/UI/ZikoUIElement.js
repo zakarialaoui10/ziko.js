@@ -48,6 +48,9 @@ class ZikoUIElement {
       items
     }
   }
+  get BoundingRect(){
+    return this.element.getBoundingClientRect();
+  }
   freeze(freeze){
     this.cache.isFrozzen=freeze;
     return this;
