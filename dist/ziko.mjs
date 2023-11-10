@@ -1951,16 +1951,16 @@ const Math$1={
     PowerSet,
     subset,
     Signal,
-    /*ExtractAll:function(){
-            for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
-                globalThis[Object.keys(Ziko.Math)[i]] = Object.values(Ziko.Math)[i];
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
         }
         return this;
     },
     RemoveAll:function(){
-            for (let i = 0; i < Object.keys(Ziko.Math).length; i++) delete globalThis[Object.keys(Ziko.Math)[i]];   
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
         return this;
-    }*/
+    }
 };
 
 const addSuffixeToNumber=(value,suffixe="px")=>{
@@ -2396,7 +2396,17 @@ Pointer.handleUp()
 */
 
 const Events={
-    Pointer
+    Pointer,
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+        }
+        return this;
+    },
+    RemoveAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+        return this;
+    }
 };
 
 class ZikoResizeObserver{
@@ -2447,7 +2457,7 @@ class ZikoResizeObserver{
 const WatchSize=(UI,callback)=>new ZikoResizeObserver(UI,callback);
 
 class ZikoIntersectionObserver{
-    constructor(UIElement,callback,{threshold=0,margin}={}){
+    constructor(UIElement,callback,{threshold=0,margin=0}={}){
         this.target=UIElement;
         this.config={
             threshold,
@@ -4363,7 +4373,17 @@ const UI$1={
     Footer,
     FlexFooter,
     Table,
-    Notebook
+    Notebook,
+    ExtractAll:function(){
+        for (let i = 0; i < Object.keys(this).length; i++) {
+            globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+        }
+        return this;
+    },
+    RemoveAll:function(){
+        for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+        return this;
+    }
 };
 
 class Loop {
@@ -4635,7 +4655,17 @@ const Time={
     debounce,
     Ease,
     time_memory_Taken,
-    loop
+    loop,
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+        }
+        return this;
+    },
+    RemoveAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+        return this;
+    }
 };
 
 class ZikoUISvgElement{
@@ -5428,6 +5458,16 @@ const Graphics={
     canvasPoints,
     canvasLine,
     canvasRect,
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+        }
+        return this;
+    },
+    RemoveAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+        return this;
+    }
 };
 
 class Threed {
@@ -5510,56 +5550,6 @@ const Ziko$1={
     Multi,
     SPA,
     Watch
-};
-Ziko$1.Math.ExtractAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) {
-        globalThis[Object.keys(Ziko$1.Math)[i]] = Object.values(Ziko$1.Math)[i];
-    }
-    return this;
-};
-Ziko$1.Math.RemoveAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Math).length; i++) delete globalThis[Object.keys(Ziko$1.Math)[i]];   
-    return this;
-};
-Ziko$1.UI.ExtractAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.UI).length; i++) {
-        globalThis[Object.keys(Ziko$1.UI)[i]] = Object.values(Ziko$1.UI)[i];
-    }
-    return this;
-};
-Ziko$1.UI.RemoveAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.UI).length; i++) delete globalThis[Object.keys(Ziko$1.UI)[i]];   
-    return this;
-};
-Ziko$1.Time.ExtractAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Time).length; i++) {
-        globalThis[Object.keys(Ziko$1.Time)[i]] = Object.values(Ziko$1.Time)[i];
-    }
-    return this;
-};
-Ziko$1.Time.RemoveAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Time).length; i++) delete globalThis[Object.keys(Ziko$1.Time)[i]];   
-    return this;
-};
-Ziko$1.Graphics.ExtractAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Graphics).length; i++) {
-        globalThis[Object.keys(Ziko$1.Graphics)[i]] = Object.values(Ziko$1.Graphics)[i];
-    }
-    return this;
-};
-Ziko$1.Graphics.RemoveAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Graphics).length; i++) delete globalThis[Object.keys(Ziko$1.Graphics)[i]];   
-    return this;
-};
-Ziko$1.Events.ExtractAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Events).length; i++) {
-        globalThis[Object.keys(Ziko$1.Events)[i]] = Object.values(Ziko$1.Events)[i];
-    }
-    return this;
-};
-Ziko$1.Events.RemoveAll=function(){
-    for (let i = 0; i < Object.keys(Ziko$1.Events).length; i++) delete globalThis[Object.keys(Ziko$1.Events)[i]];   
-    return this;
 };
 Ziko$1.ExtractAll=function(){
     Ziko$1.UI.ExtractAll();

@@ -145,16 +145,16 @@ const Math={
     PowerSet,
     subset,
     Signal,
-    /*ExtractAll:function(){
-            for (let i = 0; i < Object.keys(Ziko.Math).length; i++) {
-                globalThis[Object.keys(Ziko.Math)[i]] = Object.values(Ziko.Math)[i];
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
         }
         return this;
     },
     RemoveAll:function(){
-            for (let i = 0; i < Object.keys(Ziko.Math).length; i++) delete globalThis[Object.keys(Ziko.Math)[i]];   
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
         return this;
-    }*/
+    }
 }
-export {Math};
+export default Math;
 
