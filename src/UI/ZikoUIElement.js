@@ -48,9 +48,24 @@ class ZikoUIElement {
       items
     }
   }
-  get BoundingRect(){
-    return this.element.getBoundingClientRect();
+  get Width(){
+    return this.element.getBoundingClientRect().width;
   }
+  get Height(){
+    return this.element.getBoundingClientRect().height;
+  }
+  get Top(){
+    return this.element.getBoundingClientRect().top;
+  }
+  get Right(){
+    return this.element.getBoundingClientRect().right;
+  }
+  get Bottom(){
+    return this.element.getBoundingClientRect().bottom;
+  }
+  get Left(){
+    return this.element.getBoundingClientRect().left;
+  } 
   freeze(freeze){
     this.cache.isFrozzen=freeze;
     return this;
@@ -61,6 +76,7 @@ class ZikoUIElement {
   maintain() {
     for (let i = 0; i < this.items.length; i++)
       Object.assign(this, { [[i]]: this.items[i] });
+    this.length = this.items.length;
     return this;
   }
   setTarget(tg) {
