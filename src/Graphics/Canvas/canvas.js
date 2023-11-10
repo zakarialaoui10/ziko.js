@@ -1,5 +1,6 @@
 import ZikoUIElement from "../../UI/ZikoUIElement.js";
 import {Matrix} from "../../Math/Matrix/index.js"
+import { waitForUIElm } from "../../Time/utils/index.js";
 class ZikoUICanvas extends ZikoUIElement{
     constructor(w,h){
         super();
@@ -121,6 +122,21 @@ class ZikoUICanvas extends ZikoUIElement{
         this.ctx.clearRect(0, 0, this.Width, this.Height);
         this.applyTransformMatrix(); 
         return this;
+    }
+    clone(){
+        console.log(this.Width)
+        const canvas=new ZikoUICanvas();
+        canvas.items=this.items;
+        canvas.transformMatrix=this.transformMatrix;
+        canvas.axisMatrix=this.axisMatrix;
+        Object.assign(canvas.cache,{...this.cache});
+        waitForUIElm(this)
+        console.log(element)
+        this.size(element.style.width,element.style.width);
+        this.applyTransformMatrix();
+        this.draw();
+        this.adjust();
+        return canvas;
     }
     zoomIn(){
 

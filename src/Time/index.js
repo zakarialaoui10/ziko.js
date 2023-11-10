@@ -7,7 +7,9 @@ import {
     throttle,
     debounce,
     Ease,
-    time_memory_Taken
+    time_memory_Taken,
+    waitForUIElm,
+    waitForUIElmSync
 } from "./utils/index.js"
 const Time={
     wait,
@@ -17,6 +19,8 @@ const Time={
     Ease,
     time_memory_Taken,
     loop,
+    waitForUIElm,
+    waitForUIElmSync,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];

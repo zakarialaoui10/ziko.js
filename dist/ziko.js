@@ -2883,26 +2883,26 @@
         item.filter((n) => n.style.display != "none");
         return this;
       }
-      on(event, calback, { target = "parent", maskVector = null } = {}) {
-        if (target === "parent" || target === 0)
-          this.element.addEventListener(event, calback);
-        else if (target === "children" || target === 1) {
-          if (maskVector) {
-            this.items.map(
-              (n, i) =>
-                maskVector[i] == 1 && n.element.addEventListener(event, calback),
-            );
-          } else this.items.map((n) => n.element.addEventListener(event, calback));
-        }
-      }
-      onClick(calback, { target = "parent", maskVector = null } = {}) {
-        this.on("click", calback, { target, maskVector });
-        return this;
-      }
-      onDbclick(calback, { target = "parent", maskVector = null } = {}) {
-        this.on("dbclick", calback, { target, maskVector });
-        return this;
-      }
+      // on(event, calback, { target = "parent", maskVector = null } = {}) {
+      //   if (target === "parent" || target === 0)
+      //     this.element.addEventListener(event, calback);
+      //   else if (target === "children" || target === 1) {
+      //     if (maskVector) {
+      //       this.items.map(
+      //         (n, i) =>
+      //           maskVector[i] == 1 && n.element.addEventListener(event, calback),
+      //       );
+      //     } else this.items.map((n) => n.element.addEventListener(event, calback));
+      //   }
+      // }
+      // onClick(calback, { target = "parent", maskVector = null } = {}) {
+      //   this.on("click", calback, { target, maskVector });
+      //   return this;
+      // }
+      // onDbclick(calback, { target = "parent", maskVector = null } = {}) {
+      //   this.on("dbclick", calback, { target, maskVector });
+      //   return this;
+      // }
       onPtrMove(...callbacks){
         if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onMove(...callbacks);
@@ -2950,83 +2950,83 @@
         return this;
       }
       
-      onKeypress(calback) {
-        this.element.addEventListener("keypress", calback);
-        return this;
-      }
-      onKeydown(calback) {
-        this.element.addEventListener("keydown", calback);
-        return this;
-      }
-      onKeyup(calback) {
-        this.element.addEventListener("keyup", calback);
-        return this;
-      }
-      get key() {
-        return event.key;
-      }
-      get keyCode() {
-        return event.keyCode;
-      }
-      get Event() {
-        return event;
-      }
-      handleSuccessifKeys(keys, calback) {
-        keys = keys.reverse();
-        const newkeys = new Array(keys.length).fill(null);
-        const addsub = (arr, item, length = keys.length) => {
-          arr.unshift(item);
-          arr.length = length;
-        };
-        this.keydown(() => {
-          addsub(newkeys, this.key);
-          if (newkeys.comp(keys)) {
-            this.preventDefault();
-            calback();
-            newkeys.fill(null);
-          }
-        });
-        return this;
-      }
-      preventDefault() {
-        return this.Event.preventDefault();
-      }
-      preventCopy() {
-        this.keydown(() => {
-          if (this.Event.ctrlKey && this.key == "c") this.preventDefault();
-        });
-      }
-      preventPaste() {
-        this.keydown(() => {
-          if (this.Event.ctrlKey && this.key == "v") this.preventDefault();
-        });
-      }
-      preventCut() {
-        this.keydown(() => {
-          if (this.Event.ctrlKey && this.key == "x") this.preventDefault();
-        });
-      }
-      preventSelect() {
-        this.onKeydown(() => {
-          if (this.Event.ctrlKey && this.key == "a") this.preventDefault();
-        });
-      }
-      draggable(bool = true) {
-        this.element.setAttribute("draggable", bool);
-        return this;
-      }
-      get center() {
-        this.style({
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        });
-        return this;
-      }
-      get Css_3d_obj() {
-        return null;
-        //return new THREE.CSS3DObject(this.element);
-      }
+      // onKeypress(calback) {
+      //   this.element.addEventListener("keypress", calback);
+      //   return this;
+      // }
+      // onKeydown(calback) {
+      //   this.element.addEventListener("keydown", calback);
+      //   return this;
+      // }
+      // onKeyup(calback) {
+      //   this.element.addEventListener("keyup", calback);
+      //   return this;
+      // }
+      // get key() {
+      //   return event.key;
+      // }
+      // get keyCode() {
+      //   return event.keyCode;
+      // }
+      // get Event() {
+      //   return event;
+      // }
+      // handleSuccessifKeys(keys, calback) {
+      //   keys = keys.reverse();
+      //   const newkeys = new Array(keys.length).fill(null);
+      //   const addsub = (arr, item, length = keys.length) => {
+      //     arr.unshift(item);
+      //     arr.length = length;
+      //   };
+      //   this.keydown(() => {
+      //     addsub(newkeys, this.key);
+      //     if (newkeys.comp(keys)) {
+      //       this.preventDefault();
+      //       calback();
+      //       newkeys.fill(null);
+      //     }
+      //   });
+      //   return this;
+      // }
+      // preventDefault() {
+      //   return this.Event.preventDefault();
+      // }
+      // preventCopy() {
+      //   this.keydown(() => {
+      //     if (this.Event.ctrlKey && this.key == "c") this.preventDefault();
+      //   });
+      // }
+      // preventPaste() {
+      //   this.keydown(() => {
+      //     if (this.Event.ctrlKey && this.key == "v") this.preventDefault();
+      //   });
+      // }
+      // preventCut() {
+      //   this.keydown(() => {
+      //     if (this.Event.ctrlKey && this.key == "x") this.preventDefault();
+      //   });
+      // }
+      // preventSelect() {
+      //   this.onKeydown(() => {
+      //     if (this.Event.ctrlKey && this.key == "a") this.preventDefault();
+      //   });
+      // }
+      // draggable(bool = true) {
+      //   this.element.setAttribute("draggable", bool);
+      //   return this;
+      // }
+      // get center() {
+      //   this.style({
+      //     display: "flex",
+      //     justifyContent: "center",
+      //     alignItems: "center",
+      //   });
+      //   return this;
+      // }
+      // get Css_3d_obj() {
+      //   return null;
+      //   //return new THREE.CSS3DObject(this.element);
+      // }
       //VisibleArea
       get Visible_area() {
         //let bodyCoords=document.body.getBoundingClientRect();
@@ -4664,6 +4664,32 @@
         };
       };
 
+    const waitForUIElm=(UIElement)=>{
+        return new Promise(resolve => {
+            if (UIElement.element) {
+                return resolve(UIElement.element);
+            }
+      
+            const observer = new MutationObserver(() => {
+                if (UIElement.element) {
+                    resolve(UIElement.element);
+                    observer.disconnect();
+                }
+            });
+      
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+      };
+      const waitForUIElmSync=(UIElement,timeout=2000)=>{
+        const t0=Date.now();
+        while(Date.now()-t0<timeout){
+          if(UIElement.element)return UIElement.element
+        }
+      };
+
     const wait=(delayInMS)=>{
         return new Promise((resolve) => setTimeout(resolve, delayInMS));
     };
@@ -4682,6 +4708,8 @@
         Ease,
         time_memory_Taken,
         loop,
+        waitForUIElm,
+        waitForUIElmSync,
         ExtractAll:function(){
                 for (let i = 0; i < Object.keys(this).length; i++) {
                     globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -5179,6 +5207,21 @@
             this.ctx.clearRect(0, 0, this.Width, this.Height);
             this.applyTransformMatrix(); 
             return this;
+        }
+        clone(){
+            console.log(this.Width);
+            const canvas=new ZikoUICanvas();
+            canvas.items=this.items;
+            canvas.transformMatrix=this.transformMatrix;
+            canvas.axisMatrix=this.axisMatrix;
+            Object.assign(canvas.cache,{...this.cache});
+            waitForUIElm(this);
+            console.log(element);
+            this.size(element.style.width,element.style.width);
+            this.applyTransformMatrix();
+            this.draw();
+            this.adjust();
+            return canvas;
         }
         zoomIn(){
 

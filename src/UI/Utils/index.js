@@ -36,33 +36,8 @@ const CloneElement = (UIElement) => {
 const cloneUI=UIElement=>{
   return Object.assign(Object.create(Object.getPrototypeOf(UIElement)),UIElement)
 }
-const waitForUIElm=(UIElement)=>{
-  return new Promise(resolve => {
-      if (UIElement.element) {
-          return resolve(UIElement.element);
-      }
-
-      const observer = new MutationObserver(() => {
-          if (UIElement.element) {
-              resolve(UIElement.element);
-              observer.disconnect();
-          }
-      });
-
-      observer.observe(document.body, {
-          childList: true,
-          subtree: true
-      });
-  });
-}
-var waitForUIElmSync=(UIElement,timeout=2000)=>{
-  const t0=Date.now();
-  while(Date.now()-t0<timeout){
-    if(UIElement.element)return UIElement.element
-  }
-}
 function isPrimitive(value) {
     return typeof value !== 'object' && typeof value !== 'function' || value === null;
   }
 
-export{Id,Class,style,script,linkStyle,CloneElement,cloneUI,waitForUIElm,waitForUIElmSync,isPrimitive,addSuffixeToNumber}
+export{Id,Class,style,script,linkStyle,CloneElement,cloneUI,isPrimitive,addSuffixeToNumber}

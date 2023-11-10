@@ -19,4 +19,8 @@ export{
 } from "./decorators.js";
 export {
     time_memory_Taken
-} from "./performance.js"
+} from "./performance.js";
+export{
+    waitForUIElm,
+    waitForUIElmSync
+} from "./ui.js"
