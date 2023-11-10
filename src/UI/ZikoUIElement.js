@@ -146,10 +146,10 @@ class ZikoUIElement {
   get cloneElement() {
     return this.element.cloneNode(true);
   }
-  toggle() {
-    this.cache.isHidden ? this.show() : this.hide();
-    return this;
-  }
+  // toggle() {
+  //   this.cache.isHidden ? this.show() : this.hide();
+  //   return this;
+  // }
   get styleObject() {
     //let borderPlus
     return Object.fromEntries(
@@ -158,101 +158,101 @@ class ZikoUIElement {
       ),
     );
   }
-  backgroundColor(background = "#EEEEEE", { target, maskVector } = {}) {
-    this.style({ backgroundColor: background }, { target, maskVector });
-    return this;
-  }
-  backgroundImage(
-    src,
-    { repeat = "no-repeat", blendMode = "normal", target, maskVector } = {},
-  ) {
-    if (src instanceof Array) src = src.map((n) => "url(" + n + ")").join(",");
-    else src = "url(" + src + ")";
-    //console.log(src)
-    this.style(
-      {
-        backgroundImage: src,
-        backgroundRepeat: repeat,
-        backgroundSize: "cover",
-        backgroundBlendMode: blendMode,
-      },
-      { target, maskVector },
-    );
-    return this;
-  }
-  backgroundGradient(colors, { target, maskVector, type = "linear" } = {}) {
-    if (colors instanceof Array) {
-      if (colors.length === 1) colors[1] = colors[0];
-      colors = colors.join(",");
-    }
-    this.style(
-      {
-        background: type + "-gradient(" + colors + ")",
-      },
-      { target, maskVector },
-    );
-    return this;
-  }
-  colorGradient(colors, { target, maskVector, type = "linear" } = {}) {
-    if (colors instanceof Array) {
-      if (colors.length === 1) colors[1] = colors[0];
-      colors = colors.join(",");
-    }
-    var webkit = "-webkit-" + type + "-gradient(" + colors + ")";
-    this.style(
-      {
-        background: webkit,
-        webkitBackgroundClip: "text",
-        webkitTextFillColor: "transparent",
-      },
-      { target, maskVector },
-    );
-    return this;
-  }
-  shadow(shadow = "", { target, maskVector } = {}) {
-    this.style({ textShadow: "1px 1px 1px " + shadow }, { target, maskVector });
-    return this;
-  }
-  boxShadow(shadow = "", { target, maskVector } = {}) {
-    this.style({ boxShadow: "2px 2px 10px " + shadow }, { target, maskVector });
-    return this;
-  }
-  cssFilter(filter, { target, maskVector } = {}) {
-    this.style({ filter: filter }, { target, maskVector });
-    return this;
-  }
-  font(f = "italic bold 20px arial,serif", { target, maskVector } = {}) {
-    this.style({ font: f }, { target, maskVector });
-    return this;
-  }
-  fontSize(size = "20px", { target, maskVector } = {}) {
-    this.style({ fontSize: size }, { target, maskVector });
-    return this;
-  }
-  fontFamily(n = "Serif", { target, maskVector } = {}) {
-    if (typeof n == "number") {
-      switch (n) {
-        case 0:
-          this.style({ fontFamily: "Serif" }, { target, maskVector });
-          break;
-        case 1:
-          this.style({ fontFamily: "Sans-Serif" }, { target, maskVector });
-          break;
-        case 2:
-          this.style({ fontFamily: "Monospace" }, { target, maskVector });
-          break;
-        case 3:
-          this.style({ fontFamily: "Cursive" }, { target, maskVector });
-          break;
-        case 4:
-          this.style({ fontFamily: "Fantasy" }, { target, maskVector });
-          break;
-        default:
-          break;
-      }
-    } else this.style({ fontFamily: n }, { target, maskVector });
-    return this;
-  }
+  // backgroundColor(background = "#EEEEEE", { target, maskVector } = {}) {
+  //   this.style({ backgroundColor: background }, { target, maskVector });
+  //   return this;
+  // }
+  // backgroundImage(
+  //   src,
+  //   { repeat = "no-repeat", blendMode = "normal", target, maskVector } = {},
+  // ) {
+  //   if (src instanceof Array) src = src.map((n) => "url(" + n + ")").join(",");
+  //   else src = "url(" + src + ")";
+  //   //console.log(src)
+  //   this.style(
+  //     {
+  //       backgroundImage: src,
+  //       backgroundRepeat: repeat,
+  //       backgroundSize: "cover",
+  //       backgroundBlendMode: blendMode,
+  //     },
+  //     { target, maskVector },
+  //   );
+  //   return this;
+  // }
+  // backgroundGradient(colors, { target, maskVector, type = "linear" } = {}) {
+  //   if (colors instanceof Array) {
+  //     if (colors.length === 1) colors[1] = colors[0];
+  //     colors = colors.join(",");
+  //   }
+  //   this.style(
+  //     {
+  //       background: type + "-gradient(" + colors + ")",
+  //     },
+  //     { target, maskVector },
+  //   );
+  //   return this;
+  // }
+  // colorGradient(colors, { target, maskVector, type = "linear" } = {}) {
+  //   if (colors instanceof Array) {
+  //     if (colors.length === 1) colors[1] = colors[0];
+  //     colors = colors.join(",");
+  //   }
+  //   var webkit = "-webkit-" + type + "-gradient(" + colors + ")";
+  //   this.style(
+  //     {
+  //       background: webkit,
+  //       webkitBackgroundClip: "text",
+  //       webkitTextFillColor: "transparent",
+  //     },
+  //     { target, maskVector },
+  //   );
+  //   return this;
+  // }
+  // shadow(shadow = "", { target, maskVector } = {}) {
+  //   this.style({ textShadow: "1px 1px 1px " + shadow }, { target, maskVector });
+  //   return this;
+  // }
+  // boxShadow(shadow = "", { target, maskVector } = {}) {
+  //   this.style({ boxShadow: "2px 2px 10px " + shadow }, { target, maskVector });
+  //   return this;
+  // }
+  // cssFilter(filter, { target, maskVector } = {}) {
+  //   this.style({ filter: filter }, { target, maskVector });
+  //   return this;
+  // }
+  // font(f = "italic bold 20px arial,serif", { target, maskVector } = {}) {
+  //   this.style({ font: f }, { target, maskVector });
+  //   return this;
+  // }
+  // fontSize(size = "20px", { target, maskVector } = {}) {
+  //   this.style({ fontSize: size }, { target, maskVector });
+  //   return this;
+  // }
+  // fontFamily(n = "Serif", { target, maskVector } = {}) {
+  //   if (typeof n == "number") {
+  //     switch (n) {
+  //       case 0:
+  //         this.style({ fontFamily: "Serif" }, { target, maskVector });
+  //         break;
+  //       case 1:
+  //         this.style({ fontFamily: "Sans-Serif" }, { target, maskVector });
+  //         break;
+  //       case 2:
+  //         this.style({ fontFamily: "Monospace" }, { target, maskVector });
+  //         break;
+  //       case 3:
+  //         this.style({ fontFamily: "Cursive" }, { target, maskVector });
+  //         break;
+  //       case 4:
+  //         this.style({ fontFamily: "Fantasy" }, { target, maskVector });
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   } else this.style({ fontFamily: n }, { target, maskVector });
+  //   return this;
+  // }
   setClass(value) {
     this.setAttribute("class", value);
     return this;
@@ -295,26 +295,26 @@ class ZikoUIElement {
     item.filter((n) => n.style.display != "none");
     return this;
   }
-  on(event, calback, { target = "parent", maskVector = null } = {}) {
-    if (target === "parent" || target === 0)
-      this.element.addEventListener(event, calback);
-    else if (target === "children" || target === 1) {
-      if (maskVector) {
-        this.items.map(
-          (n, i) =>
-            maskVector[i] == 1 && n.element.addEventListener(event, calback),
-        );
-      } else this.items.map((n) => n.element.addEventListener(event, calback));
-    }
-  }
-  onClick(calback, { target = "parent", maskVector = null } = {}) {
-    this.on("click", calback, { target, maskVector });
-    return this;
-  }
-  onDbclick(calback, { target = "parent", maskVector = null } = {}) {
-    this.on("dbclick", calback, { target, maskVector });
-    return this;
-  }
+  // on(event, calback, { target = "parent", maskVector = null } = {}) {
+  //   if (target === "parent" || target === 0)
+  //     this.element.addEventListener(event, calback);
+  //   else if (target === "children" || target === 1) {
+  //     if (maskVector) {
+  //       this.items.map(
+  //         (n, i) =>
+  //           maskVector[i] == 1 && n.element.addEventListener(event, calback),
+  //       );
+  //     } else this.items.map((n) => n.element.addEventListener(event, calback));
+  //   }
+  // }
+  // onClick(calback, { target = "parent", maskVector = null } = {}) {
+  //   this.on("click", calback, { target, maskVector });
+  //   return this;
+  // }
+  // onDbclick(calback, { target = "parent", maskVector = null } = {}) {
+  //   this.on("dbclick", calback, { target, maskVector });
+  //   return this;
+  // }
   onPtrMove(...callbacks){
     if(!this.events.ptr)this.events.ptr = Pointer(this);
     this.events.ptr.onMove(...callbacks);
@@ -362,83 +362,83 @@ class ZikoUIElement {
     return this;
   }
   
-  onKeypress(calback) {
-    this.element.addEventListener("keypress", calback);
-    return this;
-  }
-  onKeydown(calback) {
-    this.element.addEventListener("keydown", calback);
-    return this;
-  }
-  onKeyup(calback) {
-    this.element.addEventListener("keyup", calback);
-    return this;
-  }
-  get key() {
-    return event.key;
-  }
-  get keyCode() {
-    return event.keyCode;
-  }
-  get Event() {
-    return event;
-  }
-  handleSuccessifKeys(keys, calback) {
-    keys = keys.reverse();
-    const newkeys = new Array(keys.length).fill(null);
-    const addsub = (arr, item, length = keys.length) => {
-      arr.unshift(item);
-      arr.length = length;
-    };
-    this.keydown(() => {
-      addsub(newkeys, this.key);
-      if (newkeys.comp(keys)) {
-        this.preventDefault();
-        calback();
-        newkeys.fill(null);
-      }
-    });
-    return this;
-  }
-  preventDefault() {
-    return this.Event.preventDefault();
-  }
-  preventCopy() {
-    this.keydown(() => {
-      if (this.Event.ctrlKey && this.key == "c") this.preventDefault();
-    });
-  }
-  preventPaste() {
-    this.keydown(() => {
-      if (this.Event.ctrlKey && this.key == "v") this.preventDefault();
-    });
-  }
-  preventCut() {
-    this.keydown(() => {
-      if (this.Event.ctrlKey && this.key == "x") this.preventDefault();
-    });
-  }
-  preventSelect() {
-    this.onKeydown(() => {
-      if (this.Event.ctrlKey && this.key == "a") this.preventDefault();
-    });
-  }
-  draggable(bool = true) {
-    this.element.setAttribute("draggable", bool);
-    return this;
-  }
-  get center() {
-    this.style({
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    });
-    return this;
-  }
-  get Css_3d_obj() {
-    return null;
-    //return new THREE.CSS3DObject(this.element);
-  }
+  // onKeypress(calback) {
+  //   this.element.addEventListener("keypress", calback);
+  //   return this;
+  // }
+  // onKeydown(calback) {
+  //   this.element.addEventListener("keydown", calback);
+  //   return this;
+  // }
+  // onKeyup(calback) {
+  //   this.element.addEventListener("keyup", calback);
+  //   return this;
+  // }
+  // get key() {
+  //   return event.key;
+  // }
+  // get keyCode() {
+  //   return event.keyCode;
+  // }
+  // get Event() {
+  //   return event;
+  // }
+  // handleSuccessifKeys(keys, calback) {
+  //   keys = keys.reverse();
+  //   const newkeys = new Array(keys.length).fill(null);
+  //   const addsub = (arr, item, length = keys.length) => {
+  //     arr.unshift(item);
+  //     arr.length = length;
+  //   };
+  //   this.keydown(() => {
+  //     addsub(newkeys, this.key);
+  //     if (newkeys.comp(keys)) {
+  //       this.preventDefault();
+  //       calback();
+  //       newkeys.fill(null);
+  //     }
+  //   });
+  //   return this;
+  // }
+  // preventDefault() {
+  //   return this.Event.preventDefault();
+  // }
+  // preventCopy() {
+  //   this.keydown(() => {
+  //     if (this.Event.ctrlKey && this.key == "c") this.preventDefault();
+  //   });
+  // }
+  // preventPaste() {
+  //   this.keydown(() => {
+  //     if (this.Event.ctrlKey && this.key == "v") this.preventDefault();
+  //   });
+  // }
+  // preventCut() {
+  //   this.keydown(() => {
+  //     if (this.Event.ctrlKey && this.key == "x") this.preventDefault();
+  //   });
+  // }
+  // preventSelect() {
+  //   this.onKeydown(() => {
+  //     if (this.Event.ctrlKey && this.key == "a") this.preventDefault();
+  //   });
+  // }
+  // draggable(bool = true) {
+  //   this.element.setAttribute("draggable", bool);
+  //   return this;
+  // }
+  // get center() {
+  //   this.style({
+  //     display: "flex",
+  //     justifyContent: "center",
+  //     alignItems: "center",
+  //   });
+  //   return this;
+  // }
+  // get Css_3d_obj() {
+  //   return null;
+  //   //return new THREE.CSS3DObject(this.element);
+  // }
   //VisibleArea
   get Visible_area() {
     //let bodyCoords=document.body.getBoundingClientRect();

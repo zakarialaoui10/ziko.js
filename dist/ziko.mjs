@@ -2694,6 +2694,7 @@ class ZikoUIElement {
     if (index >= this.element.children.length) this.append(...ele);
     else
       for (let i = 0; i < ele.length; i++) {
+        if(["number","string"].includes(typeof ele[i]))ele[i]=text$1(ele[i]);
         this.element.insertBefore(ele[i].element, this.items[index].element);
         this.items.splice(index, 0, ele[i]);
       }
@@ -2727,10 +2728,10 @@ class ZikoUIElement {
   get cloneElement() {
     return this.element.cloneNode(true);
   }
-  toggle() {
-    this.cache.isHidden ? this.show() : this.hide();
-    return this;
-  }
+  // toggle() {
+  //   this.cache.isHidden ? this.show() : this.hide();
+  //   return this;
+  // }
   get styleObject() {
     //let borderPlus
     return Object.fromEntries(
@@ -2739,99 +2740,101 @@ class ZikoUIElement {
       ),
     );
   }
-  backgroundColor(background = "#EEEEEE", { target, maskVector } = {}) {
-    this.style({ backgroundColor: background }, { target, maskVector });
-    return this;
-  }
-  backgroundImage(
-    src,
-    { repeat = "no-repeat", blendMode = "normal", target, maskVector } = {},
-  ) {
-    if (src instanceof Array) src = src.map((n) => "url(" + n + ")").join(",");
-    else src = "url(" + src + ")";
-    //console.log(src)
-    this.style(
-      {
-        backgroundImage: src,
-        backgroundRepeat: repeat,
-        backgroundSize: "cover",
-        backgroundBlendMode: blendMode,
-      },
-      { target, maskVector },
-    );
-    return this;
-  }
-  backgroundGradient(colors, { target, maskVector, type = "linear" } = {}) {
-    if (colors instanceof Array) {
-      if (colors.length === 1) colors[1] = colors[0];
-      colors = colors.join(",");
-    }
-    this.style(
-      {
-        background: type + "-gradient(" + colors + ")",
-      },
-      { target, maskVector },
-    );
-    return this;
-  }
-  colorGradient(colors, { target, maskVector, type = "linear" } = {}) {
-    if (colors instanceof Array) {
-      if (colors.length === 1) colors[1] = colors[0];
-      colors = colors.join(",");
-    }
-    var webkit = "-webkit-" + type + "-gradient(" + colors + ")";
-    this.style(
-      {
-        background: webkit,
-        webkitBackgroundClip: "text",
-        webkitTextFillColor: "transparent",
-      },
-      { target, maskVector },
-    );
-    return this;
-  }
-  shadow(shadow = "", { target, maskVector } = {}) {
-    this.style({ textShadow: "1px 1px 1px " + shadow }, { target, maskVector });
-    return this;
-  }
-  boxShadow(shadow = "", { target, maskVector } = {}) {
-    this.style({ boxShadow: "2px 2px 10px " + shadow }, { target, maskVector });
-    return this;
-  }
-  cssFilter(filter, { target, maskVector } = {}) {
-    this.style({ filter: filter }, { target, maskVector });
-    return this;
-  }
-  font(f = "italic bold 20px arial,serif", { target, maskVector } = {}) {
-    this.style({ font: f }, { target, maskVector });
-    return this;
-  }
-  fontSize(size = "20px", { target, maskVector } = {}) {
-    this.style({ fontSize: size }, { target, maskVector });
-    return this;
-  }
-  fontFamily(n = "Serif", { target, maskVector } = {}) {
-    if (typeof n == "number") {
-      switch (n) {
-        case 0:
-          this.style({ fontFamily: "Serif" }, { target, maskVector });
-          break;
-        case 1:
-          this.style({ fontFamily: "Sans-Serif" }, { target, maskVector });
-          break;
-        case 2:
-          this.style({ fontFamily: "Monospace" }, { target, maskVector });
-          break;
-        case 3:
-          this.style({ fontFamily: "Cursive" }, { target, maskVector });
-          break;
-        case 4:
-          this.style({ fontFamily: "Fantasy" }, { target, maskVector });
-          break;
-      }
-    } else this.style({ fontFamily: n }, { target, maskVector });
-    return this;
-  }
+  // backgroundColor(background = "#EEEEEE", { target, maskVector } = {}) {
+  //   this.style({ backgroundColor: background }, { target, maskVector });
+  //   return this;
+  // }
+  // backgroundImage(
+  //   src,
+  //   { repeat = "no-repeat", blendMode = "normal", target, maskVector } = {},
+  // ) {
+  //   if (src instanceof Array) src = src.map((n) => "url(" + n + ")").join(",");
+  //   else src = "url(" + src + ")";
+  //   //console.log(src)
+  //   this.style(
+  //     {
+  //       backgroundImage: src,
+  //       backgroundRepeat: repeat,
+  //       backgroundSize: "cover",
+  //       backgroundBlendMode: blendMode,
+  //     },
+  //     { target, maskVector },
+  //   );
+  //   return this;
+  // }
+  // backgroundGradient(colors, { target, maskVector, type = "linear" } = {}) {
+  //   if (colors instanceof Array) {
+  //     if (colors.length === 1) colors[1] = colors[0];
+  //     colors = colors.join(",");
+  //   }
+  //   this.style(
+  //     {
+  //       background: type + "-gradient(" + colors + ")",
+  //     },
+  //     { target, maskVector },
+  //   );
+  //   return this;
+  // }
+  // colorGradient(colors, { target, maskVector, type = "linear" } = {}) {
+  //   if (colors instanceof Array) {
+  //     if (colors.length === 1) colors[1] = colors[0];
+  //     colors = colors.join(",");
+  //   }
+  //   var webkit = "-webkit-" + type + "-gradient(" + colors + ")";
+  //   this.style(
+  //     {
+  //       background: webkit,
+  //       webkitBackgroundClip: "text",
+  //       webkitTextFillColor: "transparent",
+  //     },
+  //     { target, maskVector },
+  //   );
+  //   return this;
+  // }
+  // shadow(shadow = "", { target, maskVector } = {}) {
+  //   this.style({ textShadow: "1px 1px 1px " + shadow }, { target, maskVector });
+  //   return this;
+  // }
+  // boxShadow(shadow = "", { target, maskVector } = {}) {
+  //   this.style({ boxShadow: "2px 2px 10px " + shadow }, { target, maskVector });
+  //   return this;
+  // }
+  // cssFilter(filter, { target, maskVector } = {}) {
+  //   this.style({ filter: filter }, { target, maskVector });
+  //   return this;
+  // }
+  // font(f = "italic bold 20px arial,serif", { target, maskVector } = {}) {
+  //   this.style({ font: f }, { target, maskVector });
+  //   return this;
+  // }
+  // fontSize(size = "20px", { target, maskVector } = {}) {
+  //   this.style({ fontSize: size }, { target, maskVector });
+  //   return this;
+  // }
+  // fontFamily(n = "Serif", { target, maskVector } = {}) {
+  //   if (typeof n == "number") {
+  //     switch (n) {
+  //       case 0:
+  //         this.style({ fontFamily: "Serif" }, { target, maskVector });
+  //         break;
+  //       case 1:
+  //         this.style({ fontFamily: "Sans-Serif" }, { target, maskVector });
+  //         break;
+  //       case 2:
+  //         this.style({ fontFamily: "Monospace" }, { target, maskVector });
+  //         break;
+  //       case 3:
+  //         this.style({ fontFamily: "Cursive" }, { target, maskVector });
+  //         break;
+  //       case 4:
+  //         this.style({ fontFamily: "Fantasy" }, { target, maskVector });
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   } else this.style({ fontFamily: n }, { target, maskVector });
+  //   return this;
+  // }
   setClass(value) {
     this.setAttribute("class", value);
     return this;
