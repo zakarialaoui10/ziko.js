@@ -2655,8 +2655,20 @@ class ZikoUIElement {
     this.maintain();
     return this;
   }
-  remove() {
-    if(this.Target.children.length) this.Target.removeChild(this.element);
+  remove(...ele) {
+    if(ele.length==0){
+      if(this.Target.children.length) this.Target.removeChild(this.element);
+    }
+    else {
+      const remove = (ele) => {
+        if(typeof ele === "number") ele=this.items[ele];
+        if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
+          this.items=this.items.filter(n=>n!==ele);
+      };
+      for (let i = 0; i < ele.length; i++) remove(ele[i]);
+      for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+    }
     return this;
   }
   removeAfter(t = 1) {

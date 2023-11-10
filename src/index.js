@@ -31,4 +31,4 @@ Ziko.RemoveAll=function(){
     Ziko.Events.RemoveAll();
     Ziko.Graphics.RemoveAll();
 }
-export default Ziko
+export default Ziko;
