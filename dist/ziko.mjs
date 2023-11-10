@@ -2587,7 +2587,6 @@ const Watch=(UIElement,options={},callback=null)=>{
 };
 
 class ZikoUIElement {
-  #Flip = [0, 0, 0];
   constructor(element = document.body) {
     this.Target = Ziko.Target || document.body;
     if (typeof element === "string") element = document.createElement(element);
@@ -2598,6 +2597,9 @@ class ZikoUIElement {
       style: {},
       attributes: {},
       filters: {},
+      transformation:{
+        Flip:[0,0,0]
+      }
     };
     this.items = [];
     this.events = {
@@ -3127,25 +3129,28 @@ class ZikoUIElement {
     return this;
   }
   flipeX({ t = 1 } = {}) {
-    this.#Flip[0] += 180;
+    this.cache.transformation.Flip[0] += 180;
+    this.cache.transformation.Flip[0] %= 360;
     this.style({
-      transform: "rotateX(" + this.#Flip[0] + "deg)",
+      transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
       transition: "all " + t + "s ease",
     });
     return this;
   }
   flipeY(t = 1) {
-    this.#Flip[1] += 180;
+    this.cache.transformation.Flip[1] += 180 ;
+    this.cache.transformation.Flip[1] %= 360;
     this.style({
-      transform: "rotateY(" + this.#Flip[1] + "deg)",
+      transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
       transition: "all " + t + "s ease",
     });
     return this;
   }
   flipeZ(t = 1) {
-    this.#Flip[2] += 180;
+    this.cache.transformation.Flip[2] += 180;
+    this.cache.transformation.Flip[2] %= 360;
     this.style({
-      transform: "rotateZ(" + this.#Flip[2] + "deg)",
+      transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
       transition: "all " + t + "s ease",
     });
     return this;
