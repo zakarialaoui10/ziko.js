@@ -10,11 +10,11 @@ class ZikoUIText extends ZikoUIElement {
       this.render();
     }
     clear() {
-      this.element.innerText = "";
+      this.element.textContent = "";
       return this;
     }
     get value() {
-      return this.element.innerText;
+      return this.element.textContent;
     }
     setValue(value = "", add = false) {
       if (["string", "number"].includes(typeof value)) {
@@ -37,7 +37,7 @@ class ZikoUIText extends ZikoUIElement {
           this.text = "" + string;
         } 
         */
-        else console.error("not supported yet")
+        //else console.error("not supported yet")
       if (add) this.element.innerHTML += this.text;
       else this.element.innerHTML = this.text;
       if (value instanceof Array || value instanceof Set) {

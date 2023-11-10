@@ -3146,12 +3146,13 @@ class ZikoUIElement {
   //   } else this.style({ fontFamily: n }, { target, maskVector });
   //   return this;
   // }
-  setClass(value) {
-    this.setAttribute("class", value);
+  setClasses(...value) {
+    this.setAttribute("class", value.join(" "));
     return this;
   }
-  get Classes() {
-    return this.element.getAttribute("class");
+  get Classes(){
+    const classes=this.element.getAttribute("class");
+    return classes===null?[]:classes.split(" ");
   }
   addClass() {
     /*this.setAttribute("class", value);
@@ -3166,19 +3167,16 @@ class ZikoUIElement {
   }
   filterByTextContent(text,exactMatch=false){
     this.items.map(n=>n.render());
-    exactMatch?
-     this.items.filter(n=>!(n.element.textContent==text)).map(n=>n.render(false))
-     :this.items.filter(n=>!n.element.textContent.includes(text)).map(n=>n.render(false));
+    this.items.filter(n=>{
+      const content=n.element.textContent;
+      return !(exactMatch?content===text:content.includes(text))
+    }).map(n=>n.render(false));
+     return this;
   }
   filterByClass(value) {
-    let n = 0;
-    for (let i = 0; i < this.children.length; i++) {
-      for (let j = 0; j < this.children[i].classList.length; j++) {
-        if ([...this.children[i].classList][j] == value) n++;
-      }
-      if (n == 0) this.children[i].setAttribute("hidden", true);
-      n = 0;
-    }
+    this.items.map(n=>n.render());
+    this.items.filter(n=>!n.Classes.includes(value)).map(n=>n.render(false));
+    return this; 
   }
   sortByTextContent(value, displays) {
     let item = this.children;
@@ -3516,11 +3514,11 @@ class ZikoUIText extends ZikoUIElement {
       this.render();
     }
     clear() {
-      this.element.innerText = "";
+      this.element.textContent = "";
       return this;
     }
     get value() {
-      return this.element.innerText;
+      return this.element.textContent;
     }
     setValue(value = "", add = false) {
       if (["string", "number"].includes(typeof value)) {
@@ -3543,7 +3541,7 @@ class ZikoUIText extends ZikoUIElement {
           this.text = "" + string;
         } 
         */
-        else console.error("not supported yet");
+        //else console.error("not supported yet")
       if (add) this.element.innerHTML += this.text;
       else this.element.innerHTML = this.text;
       if (value instanceof Array || value instanceof Set) {
