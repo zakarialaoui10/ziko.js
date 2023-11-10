@@ -5201,6 +5201,9 @@ class ZikoUICanvas extends ZikoUIElement{
     lineWidth(w){
         this.ctx.lineWidth=w/this.transformMatrix[0][0];        return this
     }
+    ImageData(x=0,y=0,w=this.Width,h=this.Height){
+        return this.ctx.getImageData(x,y,w,h);
+    }
     clear(){
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.Width, this.Height);
@@ -5214,13 +5217,30 @@ class ZikoUICanvas extends ZikoUIElement{
         canvas.transformMatrix=this.transformMatrix;
         canvas.axisMatrix=this.axisMatrix;
         Object.assign(canvas.cache,{...this.cache});
-        waitForUIElm(this);
-        console.log(element);
+        //waitForUIElm(this)
+        //console.log(element)
         this.size(element.style.width,element.style.width);
         this.applyTransformMatrix();
         this.draw();
         this.adjust();
         return canvas;
+    }
+    toImage() {
+        this.img = document.createElement("img");
+        this.img.src = this.element.toDataURL("image/png");
+        return this;
+    }
+    toBlob() {
+        var canvas = this.element;
+        canvas.toBlob(function (blob) {
+            var newImg = document.createElement("img"),
+                url = URL.createObjectURL(blob);
+            newImg.onload = function () {
+                URL.revokeObjectURL(url);
+            };
+            newImg.src = url;
+            console.log(newImg);
+        });
     }
     zoomIn(){
 
