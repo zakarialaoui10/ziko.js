@@ -83,7 +83,7 @@ class ZikoUIElement {
     }
     else {
       const remove = (ele) => {
-        if(typeof ele === "number") ele=this.items[ele]
+        if(typeof ele === "number") ele=this.items[ele];
         if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
           this.items=this.items.filter(n=>n!==ele);
       };
@@ -112,6 +112,7 @@ class ZikoUIElement {
     if (index >= this.element.children.length) this.append(...ele);
     else
       for (let i = 0; i < ele.length; i++) {
+        if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
         this.element.insertBefore(ele[i].element, this.items[index].element);
         this.items.splice(index, 0, ele[i]);
       }
