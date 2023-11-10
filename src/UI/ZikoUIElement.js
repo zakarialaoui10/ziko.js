@@ -27,18 +27,18 @@ class ZikoUIElement {
       drag:null
     }
     this.observer={
-      resize:null
+      resize:null,
+      intersection:null
     }
     this.style({ position: "relative" });
     this.size("auto", "auto");
   }
   clone() {
-    const clonedUI = new this.constructor();
-    a.render(true);
-    return clonedUI;
+    //
   }
-  freeze(){
-
+  freeze(freeze){
+    this.cache.isFrozzen=freeze;
+    return this;
   }
   at(index) {
     return this.items.at(index);
@@ -65,6 +65,10 @@ class ZikoUIElement {
     return this;
   }
   append(...ele) {
+    if(this.cache.isFrozzen){
+      console.warn("You can't append new item to frozzen element");
+      return this;
+    }
     for (let i = 0; i < ele.length; i++){
     if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
@@ -138,14 +142,14 @@ class ZikoUIElement {
     this.setAttribute("contenteditable", bool);
     return this;
   }
-  link(link, target = "") {
-    let a = document.createElement("a");
-    a.setAttribute("href", link);
-    if (target) a.setAttribute("target", target);
-    this.element.addEventListener("click", () => a.click());
-    this.element.style.cursor = "pointer";
-    return this;
-  }
+  // link(link, target = "") {
+  //   let a = document.createElement("a");
+  //   a.setAttribute("href", link);
+  //   if (target) a.setAttribute("target", target);
+  //   this.element.addEventListener("click", () => a.click());
+  //   this.element.style.cursor = "pointer";
+  //   return this;
+  // }
   get children() {
     return [...this.element.children];
   }
