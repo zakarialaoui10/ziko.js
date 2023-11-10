@@ -222,11 +222,4 @@ class ZikoEventPointer{
      }
 }
 var Pointer=target=>new ZikoEventPointer(target)
-export default Pointer
-
-/*
-Pointer._Target=document.querySelector(".input")
-Pointer.handleDown()
-Pointer.handleMove()
-Pointer.handleUp()
-*/
+export default Pointer;

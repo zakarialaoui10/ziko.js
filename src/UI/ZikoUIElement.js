@@ -4,6 +4,7 @@ import styleComposer from "./Style/index.js";
 import { Pointer,Key } from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
 import { text } from "./Text/index.js";
+import { matrix } from "../Math/Matrix/index.js";
 class ZikoUIElement {
   constructor(element = document.body) {
     this.Target = Ziko.Target || document.body;
@@ -13,6 +14,12 @@ class ZikoUIElement {
     this.cache = {
       isHidden: false,
       isFrozzen:false,
+      isFaddedOut:false,
+      transformMatrix:matrix([
+        [0,0,0],
+        [0,0,0],
+        [1,1,0]
+      ]),
       style: {},
       attributes: {},
       filters: {},
@@ -34,7 +41,12 @@ class ZikoUIElement {
     this.size("auto", "auto");
   }
   clone() {
-    //
+    const UI = new this.constructor();
+    const items = [...this.items]
+    return {
+      UI:UI.append(...items),
+      items
+    }
   }
   freeze(freeze){
     this.cache.isFrozzen=freeze;
@@ -490,117 +502,11 @@ class ZikoUIElement {
     };
   }
 
-  fadeOut(t = 1) {
-    this.style({ transition: t + "s", opacity: 0 });
-    return this;
-  }
-  fadeIn(t = 1) {
-    this.style({ transition: t + "s", opacity: 1 });
-    return this;
-  }
-  slideHeightIn(t = 1, h = this.h) {
-    this.style({ transition: t + "s", height: h });
-    return this;
-  }
-  slideHeightOut(t = 1) {
-    this.style({ transition: t + "s", height: 0 });
-    this.element.addEventListener("transitionend", () =>
-      this.style({ opacity: "none" }),
-    );
-    return this;
-  }
-  slideWidthIn(t = 1, w = this.w) {
-    this.style({ transition: t + "s", width: w });
-    return this;
-  }
-  slideWidthOut(t = 1) {
-    this.style({ transition: t + "s", width: 0 });
-    this.element.addEventListener("transitionend", () =>
-      this.style({ opacity: "none" }),
-    );
-    return this;
-  }
-  slideIn({ t = 1, w = "100%", h = "auto" } = {}) {
-    this.style({
-      transition: t + "s",
-      width: w,
-      height: h,
-      visibility: "visible",
-    });
-    return this;
-  }
-  slideOut({ t = 1, width = 0, height = 0 } = {}) {
-    this.style({
-      visibility: "hidden",
-      transition: t + "s",
-      opacity: "none",
-      width: width,
-      height: height,
-    });
-    this.element.addEventListener("transitionend", () => {
-      this.style({ opacity: "none" });
-      console.log(1);
-    });
-    return this;
-  }
+  
   toggleSlide() {}
-  translateX(px, t = 0) {
-    this.style({ transform: "translateX(" + px + "px)" });
-    if (t != 0) this.style({ transition: "all " + t + "s ease" });
-    return this;
-  }
-  translateY(px, t = 0) {
-    this.style({ transform: "translateY(" + px + "px)" });
-    if (t != 0) this.style({ transition: "all " + t + "s ease" });
-    return this;
-  }
-  translate(x, y = x, t = 0) {
-    console.log(t);
-    this.style({ transform: "translate(" + x + "px," + y + "px)" });
-    return this;
-  }
-  rotateX(deg, { duration = 0 } = {}) {
-    this.style({ transition: "all " + duration + "s ease" });
-    this.style({ transform: "rotateX(" + deg + "deg)" });
-    return this;
-  }
-  rotateY(deg, { duration = 0 } = {}) {
-    this.style({ transition: "all " + duration + "s ease" });
-    this.style({ transform: "rotateY(" + deg + "deg)" });
-    return this;
-  }
-  rotateZ(deg, { duration = 0 } = {}) {
-    this.style({ transition: "all " + duration + "s ease" });
-    this.style({ transform: "rotateZ(" + deg + "deg)" });
-    return this;
-  }
-  flipeX({ t = 1 } = {}) {
-    this.cache.transformation.Flip[0] += 180;
-    this.cache.transformation.Flip[0] %= 360;
-    this.style({
-      transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
-      transition: "all " + t + "s ease",
-    });
-    return this;
-  }
-  flipeY(t = 1) {
-    this.cache.transformation.Flip[1] += 180 ;
-    this.cache.transformation.Flip[1] %= 360;
-    this.style({
-      transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
-      transition: "all " + t + "s ease",
-    });
-    return this;
-  }
-  flipeZ(t = 1) {
-    this.cache.transformation.Flip[2] += 180;
-    this.cache.transformation.Flip[2] %= 360;
-    this.style({
-      transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
-      transition: "all " + t + "s ease",
-    });
-    return this;
-  }
+
+  
+  
   scaleX(sc, t = 1) {
     this.style({
       transform: "scaleX(" + sc + ")",

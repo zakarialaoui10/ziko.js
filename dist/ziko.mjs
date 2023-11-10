@@ -2120,6 +2120,129 @@ function styleComposer(){
         if (typeof polygon === "string") polygon = "polygon(" + polygon + ")";
         this.style({ clipPath: polygon }, { target, maskVector });
         return this;
+      },
+
+      fadeOut:function(t = 1) {
+        this.style({ 
+          transition: t/1000 + "s", 
+          opacity: 0 
+        });
+        this.cache.isFaddedOut=true;
+        return this;
+      },
+      fadeIn:function(t = 1) {
+        this.style({ 
+          transition: t/1000 + "s", 
+          opacity: 1 
+        });
+        this.cache.isFaddedOut=false;
+        return this;
+      },
+      toggleFade:function(t_in = 1000,t_out=t_in){
+        this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
+        return this;
+      },
+      translateX:function(px, t = 0) {
+        this.style({ transform: "translateX(" + px + "px)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        return this;
+      },
+      translateY:function(px, t = 0) {
+        this.style({ transform: "translateY(" + px + "px)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        return this;
+      },
+      translate:function(x, y = x, t = 0) {
+        this.style({ transform: `translate( ${x}px , ${y}px )`});
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        return this;
+      },
+      rotateX:function(deg, t = 0) {
+        this.style({ transform: "rotateX(" + deg + "deg)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        return this;
+      },
+      rotateY:function(deg, t = 0) {
+        this.style({ transform: "rotateY(" + deg + "deg)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        return this;
+      },
+      rotateZ:function(deg, t = 0) {
+        this.style({ transform: "rotateZ(" + deg + "deg)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        return this;
+      },
+      flipeX:function({ t = 1 } = {}) {
+        this.cache.transformation.Flip[0] += 180;
+        this.cache.transformation.Flip[0] %= 360;
+        this.style({
+          transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
+          transition: "all " + t + "s ease",
+        });
+        return this;
+      },
+      flipeY:function(t = 1) {
+        this.cache.transformation.Flip[1] += 180 ;
+        this.cache.transformation.Flip[1] %= 360;
+        this.style({
+          transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
+          transition: "all " + t + "s ease",
+        });
+        return this;
+      },
+      flipeZ:function(t = 1) {
+        this.cache.transformation.Flip[2] += 180;
+        this.cache.transformation.Flip[2] %= 360;
+        this.style({
+          transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
+          transition: "all " + t + "s ease",
+        });
+        return this;
+      },
+      slideHeightIn:function(t = 1, h = this.h) {
+        this.style({ transition: t + "s", height: h });
+        return this;
+      },
+      slideHeightOut:function(t = 1) {
+        this.style({ transition: t + "s", height: 0 });
+        this.element.addEventListener("transitionend", () =>
+          this.style({ opacity: "none" }),
+        );
+        return this;
+      },
+      slideWidthIn:function(t = 1, w = this.w) {
+        this.style({ transition: t + "s", width: w });
+        return this;
+      },
+      slideWidthOut:function(t = 1) {
+        this.style({ transition: t + "s", width: 0 });
+        this.element.addEventListener("transitionend", () =>
+          this.style({ opacity: "none" }),
+        );
+        return this;
+      },
+      slideIn:function({ t = 1, w = "100%", h = "auto" } = {}) {
+        this.style({
+          transition: t + "s",
+          width: w,
+          height: h,
+          visibility: "visible",
+        });
+        return this;
+      },
+      slideOut:function({ t = 1, width = 0, height = 0 } = {}) {
+        this.style({
+          visibility: "hidden",
+          transition: t + "s",
+          opacity: "none",
+          width: width,
+          height: height,
+        });
+        this.element.addEventListener("transitionend", () => {
+          this.style({ opacity: "none" });
+          console.log(1);
+        });
+        return this;
       }
       
     }
@@ -2387,13 +2510,6 @@ class ZikoEventPointer{
      }
 }
 var Pointer=target=>new ZikoEventPointer(target);
-
-/*
-Pointer._Target=document.querySelector(".input")
-Pointer.handleDown()
-Pointer.handleMove()
-Pointer.handleUp()
-*/
 
 function update_down(e){
     if(this.cache.preventDefault.down)e.preventDefault();
@@ -2747,6 +2863,13 @@ class ZikoUIElement {
     Object.assign(this, styleComposer.call(this));
     this.cache = {
       isHidden: false,
+      isFrozzen:false,
+      isFaddedOut:false,
+      transformMatrix:matrix([
+        [0,0,0],
+        [0,0,0],
+        [1,1,0]
+      ]),
       style: {},
       attributes: {},
       filters: {},
@@ -2761,15 +2884,23 @@ class ZikoUIElement {
       drag:null
     };
     this.observer={
-      resize:null
+      resize:null,
+      intersection:null
     };
     this.style({ position: "relative" });
     this.size("auto", "auto");
   }
   clone() {
-    const clonedUI = new this.constructor();
-    a.render(true);
-    return clonedUI;
+    const UI = new this.constructor();
+    const items = [...this.items];
+    return {
+      UI:UI.append(...items),
+      items
+    }
+  }
+  freeze(freeze){
+    this.cache.isFrozzen=freeze;
+    return this;
   }
   at(index) {
     return this.items.at(index);
@@ -2796,6 +2927,10 @@ class ZikoUIElement {
     return this;
   }
   append(...ele) {
+    if(this.cache.isFrozzen){
+      console.warn("You can't append new item to frozzen element");
+      return this;
+    }
     for (let i = 0; i < ele.length; i++){
     if(["number","string"].includes(typeof ele[i]))ele[i]=text$1(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
@@ -2869,14 +3004,14 @@ class ZikoUIElement {
     this.setAttribute("contenteditable", bool);
     return this;
   }
-  link(link, target = "") {
-    let a = document.createElement("a");
-    a.setAttribute("href", link);
-    if (target) a.setAttribute("target", target);
-    this.element.addEventListener("click", () => a.click());
-    this.element.style.cursor = "pointer";
-    return this;
-  }
+  // link(link, target = "") {
+  //   let a = document.createElement("a");
+  //   a.setAttribute("href", link);
+  //   if (target) a.setAttribute("target", target);
+  //   this.element.addEventListener("click", () => a.click());
+  //   this.element.style.cursor = "pointer";
+  //   return this;
+  // }
   get children() {
     return [...this.element.children];
   }
@@ -3217,117 +3352,11 @@ class ZikoUIElement {
     };
   }
 
-  fadeOut(t = 1) {
-    this.style({ transition: t + "s", opacity: 0 });
-    return this;
-  }
-  fadeIn(t = 1) {
-    this.style({ transition: t + "s", opacity: 1 });
-    return this;
-  }
-  slideHeightIn(t = 1, h = this.h) {
-    this.style({ transition: t + "s", height: h });
-    return this;
-  }
-  slideHeightOut(t = 1) {
-    this.style({ transition: t + "s", height: 0 });
-    this.element.addEventListener("transitionend", () =>
-      this.style({ opacity: "none" }),
-    );
-    return this;
-  }
-  slideWidthIn(t = 1, w = this.w) {
-    this.style({ transition: t + "s", width: w });
-    return this;
-  }
-  slideWidthOut(t = 1) {
-    this.style({ transition: t + "s", width: 0 });
-    this.element.addEventListener("transitionend", () =>
-      this.style({ opacity: "none" }),
-    );
-    return this;
-  }
-  slideIn({ t = 1, w = "100%", h = "auto" } = {}) {
-    this.style({
-      transition: t + "s",
-      width: w,
-      height: h,
-      visibility: "visible",
-    });
-    return this;
-  }
-  slideOut({ t = 1, width = 0, height = 0 } = {}) {
-    this.style({
-      visibility: "hidden",
-      transition: t + "s",
-      opacity: "none",
-      width: width,
-      height: height,
-    });
-    this.element.addEventListener("transitionend", () => {
-      this.style({ opacity: "none" });
-      console.log(1);
-    });
-    return this;
-  }
+  
   toggleSlide() {}
-  translateX(px, t = 0) {
-    this.style({ transform: "translateX(" + px + "px)" });
-    if (t != 0) this.style({ transition: "all " + t + "s ease" });
-    return this;
-  }
-  translateY(px, t = 0) {
-    this.style({ transform: "translateY(" + px + "px)" });
-    if (t != 0) this.style({ transition: "all " + t + "s ease" });
-    return this;
-  }
-  translate(x, y = x, t = 0) {
-    console.log(t);
-    this.style({ transform: "translate(" + x + "px," + y + "px)" });
-    return this;
-  }
-  rotateX(deg, { duration = 0 } = {}) {
-    this.style({ transition: "all " + duration + "s ease" });
-    this.style({ transform: "rotateX(" + deg + "deg)" });
-    return this;
-  }
-  rotateY(deg, { duration = 0 } = {}) {
-    this.style({ transition: "all " + duration + "s ease" });
-    this.style({ transform: "rotateY(" + deg + "deg)" });
-    return this;
-  }
-  rotateZ(deg, { duration = 0 } = {}) {
-    this.style({ transition: "all " + duration + "s ease" });
-    this.style({ transform: "rotateZ(" + deg + "deg)" });
-    return this;
-  }
-  flipeX({ t = 1 } = {}) {
-    this.cache.transformation.Flip[0] += 180;
-    this.cache.transformation.Flip[0] %= 360;
-    this.style({
-      transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
-      transition: "all " + t + "s ease",
-    });
-    return this;
-  }
-  flipeY(t = 1) {
-    this.cache.transformation.Flip[1] += 180 ;
-    this.cache.transformation.Flip[1] %= 360;
-    this.style({
-      transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
-      transition: "all " + t + "s ease",
-    });
-    return this;
-  }
-  flipeZ(t = 1) {
-    this.cache.transformation.Flip[2] += 180;
-    this.cache.transformation.Flip[2] %= 360;
-    this.style({
-      transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
-      transition: "all " + t + "s ease",
-    });
-    return this;
-  }
+
+  
+  
   scaleX(sc, t = 1) {
     this.style({
       transform: "scaleX(" + sc + ")",
