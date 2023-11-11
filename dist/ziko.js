@@ -5645,7 +5645,7 @@
         // }
     }
     const canvasArc=(x,y,r,phi)=>new CanvasArc(x,y,r,phi);
-    const canvasCircle=(x,y,z)=>new CanvasArc(x,y,r,2*Math.PI);
+    const canvasCircle=(x,y,r)=>new CanvasArc(x,y,r,2*Math.PI);
 
     class CanvasPoints extends ZikoCanvasElement{
         constructor(ptsX,ptsY){
@@ -5662,9 +5662,9 @@
                 ctx.save();
                 this.applyNormalStyle(ctx);
                 ctx.beginPath();
-                this.path.moveTo(this.points[1][0]+this._x,this.points[1][0]+this._y);
+                this.path.moveTo(this.points[1][0]+this._x,this.points[1][1]+this._y);
                 for(let i=1;i<this.points.length;i++){
-                    this.path.lineTo(this.points[i][0]+this._x,this.points[i][0]+this._y);
+                    this.path.lineTo(this.points[i][0]+this._x,this.points[i][1]+this._y);
                 }
                 ctx.stroke(this.path);
                 ctx.restore();
