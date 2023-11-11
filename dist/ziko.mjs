@@ -1039,7 +1039,7 @@ class Random {
 //import { Logic } from "./Discret/index.js"
 //import Math from "./index.js";
 class Matrix extends AbstractZikoMath{
-    constructor(rows, cols, element = []) {
+    constructor(rows, cols, element = [] , type) {
         super();
         if(rows instanceof Matrix){
             this.arr=rows.arr;
@@ -1496,7 +1496,11 @@ class Matrix extends AbstractZikoMath{
             for (var j = 0; j < matrix.arr[0].length; j++) {
                 res[i][j] = 0;
                 for (var k = 0; k < this.arr[0].length; k++) {
-                    res[i][j] = res[i][j].add(this.arr[i][k].mul(matrix.arr[k][j]));
+                    //res[i][j] = res[i][j].add(this.arr[i][k].mul(matrix.arr[k][j]));
+                    res[i][j] = Utils.add(
+                        res[i][j],
+                        Utils.mul(this.arr[i][k],matrix.arr[k][j])
+                        );
                 }
             }
         }
