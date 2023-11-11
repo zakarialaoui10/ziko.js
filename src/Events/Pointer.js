@@ -1,5 +1,6 @@
 import Garbage from "./Garbage.js"
 class ZikoEventPointer{
+        #controller
         #downController
         #moveController
         #upController
@@ -53,18 +54,20 @@ class ZikoEventPointer{
             out:[],
             leave:[]
         }
-        this.#downController=this.#updateDown.bind(this);
-        this.#moveController=this.#updateMove.bind(this);
-        this.#upController=this.#updateUp.bind(this);
-        this.#enterController=this.#updateEnter.bind(this);
-        this.#outController=this.#updateOut.bind(this);
-        this.#leaveController=this.#updateLeave.bind(this);
+        this.#controller={
+            pointrdown:this.#updateDown.bind(this),
+            pointrmove:this.#updateMove.bind(this),
+            pointrup:this.#updateUp.bind(this),
+            pointrenter:this.#updateEnter.bind(this),
+            pointrout:this.#updateOut.bind(this),
+            pointrleave:this.#updateLeave.bind(this),
+        }
         this.#dispose=this.dispose.bind(this);
         this.EventIndex=Garbage.Pointer.data.length;
         Garbage.Pointer.data.push({event:this,index:this.EventIndex});
-        this.target(target);
+        this.setTarget(target);
     }
-    target(UI){
+    setTarget(UI){
         this._Target=UI?.element||document.querySelector(UI);
         return this;
     }
@@ -79,7 +82,7 @@ class ZikoEventPointer{
         return this;
     }
     handleDown(){
-       this._Target.addEventListener("pointerdown",this.#downController);
+       this._Target.addEventListener("pointerdown",this.#controller.pointrdown);
        return this;
     }
     #updateMove(e){
@@ -94,7 +97,7 @@ class ZikoEventPointer{
         
     }
     handleMove(){
-       this._Target.addEventListener("pointermove",this.#moveController);
+       this._Target.addEventListener("pointermove",this.#controller.pointrmove);
        return this;
     }
     #updateUp(e){
@@ -108,7 +111,7 @@ class ZikoEventPointer{
         return Pointer;
     }
     handleUp(){
-       this._Target.addEventListener("pointerup",this.#upController);
+       this._Target.addEventListener("pointerup",this.#controller.pointrup);
        return this;
     }
     #updateEnter(e){
@@ -122,7 +125,7 @@ class ZikoEventPointer{
         return Pointer;
     }
     handleEnter(){
-       this._Target.addEventListener("pointerenter",this.#enterController);
+       this._Target.addEventListener("pointerenter",this.#controller.pointrenter);
        return this;
     }
     #updateOut(e){
@@ -136,7 +139,7 @@ class ZikoEventPointer{
         return Pointer;
     }
     handleOut(){
-       this._Target.addEventListener("pointerout",this.#outController);
+       this._Target.addEventListener("pointerout",this.#controller.pointrout);
        return this;
     }
     #updateLeave(e){
@@ -150,7 +153,7 @@ class ZikoEventPointer{
         return Pointer;
     }
     handleLeave(){
-       this._Target.addEventListener("pointerleave",this.#leaveController);
+       this._Target.addEventListener("pointerleave",this.#controller.pointrleave);
        return this;
     }
     handle({down=false,move=false,up=false}={}){
@@ -159,12 +162,12 @@ class ZikoEventPointer{
         if(up)this.handleUp()
     }
     dispose({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        if(down)this._Target.removeEventListener("pointerdown",this.#downController);
-        if(move)this._Target.removeEventListener("pointermove",this.#moveController);
-        if(up)this._Target.removeEventListener("pointerup",this.#upController);
-        if(enter)this._Target.removeEventListener("pointerenter",this.#enterController);
-        if(out)this._Target.removeEventListener("pointerout",this.#outController);
-        if(leave)this._Target.removeEventListener("pointerleave",this.#leaveController);
+        if(down)this._Target.removeEventListener("pointerdown",this.#controller.pointrdown);
+        if(move)this._Target.removeEventListener("pointermove",this.#controller.pointrmove);
+        if(up)this._Target.removeEventListener("pointerup",this.#controller.pointrup);
+        if(enter)this._Target.removeEventListener("pointerenter",this.#controller.pointrenter);
+        if(out)this._Target.removeEventListener("pointerout",this.#controller.pointrout);
+        if(leave)this._Target.removeEventListener("pointerleave",this.#controller.pointrleave);
         return this;
      }
     stream({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
