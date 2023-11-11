@@ -12,6 +12,7 @@ import{
 } from "./Svg/index.js";
 import {
     Canvas,
+    canvasArc,
     canvasCircle,
     canvasPoints,
     canvasLine,
@@ -30,6 +31,7 @@ const Graphics={
     svgText,
     svgGroupe,
     Canvas, 
+    canvasArc,
     canvasCircle,
     canvasPoints,
     canvasLine,

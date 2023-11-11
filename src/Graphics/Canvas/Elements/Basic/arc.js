@@ -1,8 +1,9 @@
 import ZikoCanvasElement from "../Element.js";
-class CanvasCircle extends ZikoCanvasElement{
-    constructor(x,y,r){
+class CanvasArc extends ZikoCanvasElement{
+    constructor(x,y,r,angle){
         super(x,y);
         this.r=r;
+        this.angle=angle;
         this.path=null;
     }
     draw(ctx){
@@ -11,7 +12,7 @@ class CanvasCircle extends ZikoCanvasElement{
             this.applyNormalStyle(ctx);
             ctx.beginPath();
             this.path=new Path2D();
-            this.path.arc(this._x, this._y, this.r, 0, Math.PI * 2);
+            this.path.arc(this._x, this._y, this.r, 0, this.angle);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);
@@ -37,5 +38,6 @@ class CanvasCircle extends ZikoCanvasElement{
     //     return this.distanceFromCenter(x,y)===this.r;
     // }
 }
-const canvasCircle=(x,y,r)=>new CanvasCircle(x,y,r)
-export{canvasCircle}
+const canvasArc=(x,y,r,phi)=>new CanvasArc(x,y,r,phi);
+const canvasCircle=(x,y,z)=>new CanvasArc(x,y,r,2*Math.PI);
+export{canvasArc,canvasCircle}
