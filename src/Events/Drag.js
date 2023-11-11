@@ -1,5 +1,6 @@
 import Garbage from "./Garbage.js";
-function event_controller(e,EVENT){
+function event_controller(e,EVENT,setter){
+    if(setter)setter();
     if(this.cache.preventDefault[EVENT])e.preventDefault();
     if(this.cache.Enabled[EVENT])this.cache[EVENT].push(e);
     if(this.cache.callbacks[EVENT].length>0){
