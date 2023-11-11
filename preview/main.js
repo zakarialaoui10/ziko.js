@@ -294,5 +294,5 @@ class ZikoIntersectionObserver{
  //a=WatchIntersection(c,e=>console.log(e.ratio)).start()
 //  c.WatchIntersection(e=>console.log(e.ratio))
 a=Flex(text(1),text(2),text(3)).size(400,"auto")
-
+b=Drag(a).onDrag(e=>console.log(e))
   
