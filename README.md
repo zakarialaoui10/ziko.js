@@ -1,9 +1,10 @@
-<!--
-<img src="assets/preview1.gif" alt="ziko.js" width="100%">
-<img src="assets/ziko js.PNG" alt="ziko.js" width="100%">
--->
 # Demo 
 # Get Started 
+## Extract All Methodes
+```js
+ Ziko.ExtractAll()
+ // if you want to extract only UI methodes you can use Ziko.UI.Extractll()
+```
 ```js
 text("hello world")
   .style({ color: "red" })
