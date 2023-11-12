@@ -31,7 +31,8 @@ class ZikoUIElement {
     this.events = {
       ptr:null,
       key:null,
-      drag:null
+      drag:null,
+      drop:null
     }
     this.observer={
       resize:null,
@@ -423,6 +424,11 @@ class ZikoUIElement {
   onDragEnd(...callbacks){
     if(!this.events.drag)this.events.drag = Drag(this);
     this.events.drag.onEnd(...callbacks);
+    return this;
+  }
+  onDrop(...callbacks){
+    if(!this.events.drop)this.events.drop = Drop(this);
+    this.events.drop.onDrag(...callbacks);
     return this;
   }
   WatchAttributes(){

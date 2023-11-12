@@ -2816,13 +2816,13 @@
           
     }
     const Drag=Target=>new ZikoEventDrag(Target);
-    const Drop=Target=>new ZikoEventDrop(Target);
+    const Drop$1=Target=>new ZikoEventDrop(Target);
 
     const Events={
         Pointer,
         Key,
         Drag,
-        Drop,
+        Drop: Drop$1,
         ExtractAll:function(){
                 for (let i = 0; i < Object.keys(this).length; i++) {
                     globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -3038,7 +3038,8 @@
         this.events = {
           ptr:null,
           key:null,
-          drag:null
+          drag:null,
+          drop:null
         };
         this.observer={
           resize:null,
@@ -3430,6 +3431,11 @@
       onDragEnd(...callbacks){
         if(!this.events.drag)this.events.drag = Drag(this);
         this.events.drag.onEnd(...callbacks);
+        return this;
+      }
+      onDrop(...callbacks){
+        if(!this.events.drop)this.events.drop = Drop(this);
+        this.events.drop.onDrag(...callbacks);
         return this;
       }
       WatchAttributes(){
