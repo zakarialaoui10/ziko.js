@@ -44,6 +44,24 @@ text("hello world")
  ### 3D 
 ## Events
  ### Pointer
+  #### Simple Paint sketch
+  ```js
+const Scene=Canvas().view(-10,-10,10,10).size(500,500).adjust()
+c.onPtrDown(e=>{
+    c.ctx.beginPath()
+    c.ctx.moveTo(
+        map(e.dx,0,c.element.offsetWidth,c.Xmin,c.Xmax),
+        map(e.dy,0,c.element.offseHeight,c.Ymin,c.Ymax)
+        )
+})
+c.onPtrMove(e=>{
+    if(e.isDown){
+        const x=map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0])
+        const y=map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
+        c.append(canvasCircle(x,y,1).color({fill:"#5555AA"}).fill())
+   }
+c.onPtrUp(()=>{})
+  ```
  ### Key
  ### Drag
 ## Reactivite
