@@ -2312,14 +2312,17 @@
             this.EventIndex=Garbage.Pointer.data.length;
             Garbage.Pointer.data.push({event:this,index:this.EventIndex});
         }
+        get TargetElement(){
+            return this.Target.element
+        }
         setTarget(UI){
-            this.Target=UI?.element||document.querySelector(UI);
+            this.Target=UI;
             return this;
         }
         __handle(event,handler,dispose){
             const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`;
             this.dispose(dispose);
-            this.Target.addEventListener(EVENT,handler);
+            this.TargetElement.addEventListener(EVENT,handler);
             return this;   
         }
         __onEvent(event,dispose,...callbacks){
@@ -2344,7 +2347,7 @@
             config={...all,...config};
             for(let key in config){
                 if(config[key]){
-                    this.Target.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                    this.TargetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                     this.cache.paused[`${this.cache.prefixe}${key}`]=true;
                 }
             }
@@ -2355,7 +2358,7 @@
             config={...all,...config};
             for(let key in config){
                 if(config[key]){
-                    this.Target.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                    this.TargetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                     this.cache.paused[`${this.cache.prefixe}${key}`]=false;
                 }
             }
@@ -2813,7 +2816,10 @@
                 drop:drop_controller.bind(this),
             };
         }
-          
+        onDrop(...callbacks){
+            this.__onEvent("drop",{},...callbacks);
+            return this;
+        } 
     }
     const Drag=Target=>new ZikoEventDrag(Target);
     const Drop=Target=>new ZikoEventDrop(Target);

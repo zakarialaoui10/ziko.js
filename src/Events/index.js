@@ -1,7 +1,7 @@
-import Pointer from "./Pointer.js";
-import Key from "./Key.js";
-import {Drag,Drop} from "./Drag.js"
-import {Click} from "./Click.js"
+import Pointer from "./Global/Pointer.js";
+import Key from "./Global/Key.js";
+import {Drag,Drop} from "./Global/Drag.js"
+import {Click} from "./Global/Click.js"
 const Events={
     Pointer,
     Key,

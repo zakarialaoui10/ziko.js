@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
 function dragstart_controller(e){
     EVENT_CONTROLLER(this,e,"start",null,null)
 }
@@ -127,7 +127,10 @@ class ZikoEventDrop extends ZikoEvent{
             drop:drop_controller.bind(this),
         }
     }
-      
+    onDrop(...callbacks){
+        this.__onEvent("drop",{},...callbacks);
+        return this;
+    } 
 }
 const Drag=Target=>new ZikoEventDrag(Target);
 const Drop=Target=>new ZikoEventDrop(Target);

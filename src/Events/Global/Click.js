@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
 function click_controller(e){
     EVENT_CONTROLLER(this,e,"click",null,null)
 }
