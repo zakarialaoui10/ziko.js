@@ -184,5 +184,5 @@ class ZikoEventPointer extends ZikoEvent{
     //     if(up)this.handleUp()
     // }
 }
-var Pointer=target=>new ZikoEventPointer(target)
-export default Pointer;
+var PointerEvent=target=>new ZikoEventPointer(target)
+export default PointerEvent;

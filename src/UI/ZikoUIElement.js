@@ -1,6 +1,6 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 import styleComposer from "./Style/index.js";
-import { Pointer, Key, Drag , Drop , Click } from "../Events/index.js"
+import { PointerEvent, KeyEvent, DragEvent , DropEvent, ClickEvent , ClipboardEvent } from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
 import { text } from "./Text/index.js";
 import { matrix } from "../Math/Matrix/index.js";
@@ -33,7 +33,8 @@ class ZikoUIElement {
       key:null,
       drag:null,
       drop:null,
-      click:null
+      click:null,
+      clipboard:null
     }
     this.observer={
       resize:null,
@@ -189,10 +190,6 @@ class ZikoUIElement {
   get cloneElement() {
     return this.element.cloneNode(true);
   }
-  // toggle() {
-  //   this.cache.isHidden ? this.show() : this.hide();
-  //   return this;
-  // }
   get styleObject() {
     //let borderPlus
     return Object.fromEntries(
@@ -201,101 +198,6 @@ class ZikoUIElement {
       ),
     );
   }
-  // backgroundColor(background = "#EEEEEE", { target, maskVector } = {}) {
-  //   this.style({ backgroundColor: background }, { target, maskVector });
-  //   return this;
-  // }
-  // backgroundImage(
-  //   src,
-  //   { repeat = "no-repeat", blendMode = "normal", target, maskVector } = {},
-  // ) {
-  //   if (src instanceof Array) src = src.map((n) => "url(" + n + ")").join(",");
-  //   else src = "url(" + src + ")";
-  //   //console.log(src)
-  //   this.style(
-  //     {
-  //       backgroundImage: src,
-  //       backgroundRepeat: repeat,
-  //       backgroundSize: "cover",
-  //       backgroundBlendMode: blendMode,
-  //     },
-  //     { target, maskVector },
-  //   );
-  //   return this;
-  // }
-  // backgroundGradient(colors, { target, maskVector, type = "linear" } = {}) {
-  //   if (colors instanceof Array) {
-  //     if (colors.length === 1) colors[1] = colors[0];
-  //     colors = colors.join(",");
-  //   }
-  //   this.style(
-  //     {
-  //       background: type + "-gradient(" + colors + ")",
-  //     },
-  //     { target, maskVector },
-  //   );
-  //   return this;
-  // }
-  // colorGradient(colors, { target, maskVector, type = "linear" } = {}) {
-  //   if (colors instanceof Array) {
-  //     if (colors.length === 1) colors[1] = colors[0];
-  //     colors = colors.join(",");
-  //   }
-  //   var webkit = "-webkit-" + type + "-gradient(" + colors + ")";
-  //   this.style(
-  //     {
-  //       background: webkit,
-  //       webkitBackgroundClip: "text",
-  //       webkitTextFillColor: "transparent",
-  //     },
-  //     { target, maskVector },
-  //   );
-  //   return this;
-  // }
-  // shadow(shadow = "", { target, maskVector } = {}) {
-  //   this.style({ textShadow: "1px 1px 1px " + shadow }, { target, maskVector });
-  //   return this;
-  // }
-  // boxShadow(shadow = "", { target, maskVector } = {}) {
-  //   this.style({ boxShadow: "2px 2px 10px " + shadow }, { target, maskVector });
-  //   return this;
-  // }
-  // cssFilter(filter, { target, maskVector } = {}) {
-  //   this.style({ filter: filter }, { target, maskVector });
-  //   return this;
-  // }
-  // font(f = "italic bold 20px arial,serif", { target, maskVector } = {}) {
-  //   this.style({ font: f }, { target, maskVector });
-  //   return this;
-  // }
-  // fontSize(size = "20px", { target, maskVector } = {}) {
-  //   this.style({ fontSize: size }, { target, maskVector });
-  //   return this;
-  // }
-  // fontFamily(n = "Serif", { target, maskVector } = {}) {
-  //   if (typeof n == "number") {
-  //     switch (n) {
-  //       case 0:
-  //         this.style({ fontFamily: "Serif" }, { target, maskVector });
-  //         break;
-  //       case 1:
-  //         this.style({ fontFamily: "Sans-Serif" }, { target, maskVector });
-  //         break;
-  //       case 2:
-  //         this.style({ fontFamily: "Monospace" }, { target, maskVector });
-  //         break;
-  //       case 3:
-  //         this.style({ fontFamily: "Cursive" }, { target, maskVector });
-  //         break;
-  //       case 4:
-  //         this.style({ fontFamily: "Fantasy" }, { target, maskVector });
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   } else this.style({ fontFamily: n }, { target, maskVector });
-  //   return this;
-  // }
   setClasses(...value) {
     this.setAttribute("class", value.join(" "));
     return this;
@@ -343,83 +245,103 @@ class ZikoUIElement {
     return this;
   }
   onPtrMove(...callbacks){
-    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    if(!this.events.ptr)this.events.ptr = PointerEvent(this);
     this.events.ptr.onMove(...callbacks);
     return this;
   }
   onPtrDown(...callbacks){
-    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    if(!this.events.ptr)this.events.ptr = PointerEvent(this);
     this.events.ptr.onDown(...callbacks);
     return this;
   }
   onPtrUp(...callbacks){
-    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    if(!this.events.ptr)this.events.ptr = PointerEvent(this);
     this.events.ptr.onUp(...callbacks);
     return this;
   }
   onPtrEnter(...callbacks){
-    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    if(!this.events.ptr)this.events.ptr = PointerEvent(this);
     this.events.ptr.onEnter(...callbacks);
     return this;
   }
   onPtrLeave(...callbacks){
-    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    if(!this.events.ptr)this.events.ptr = PointerEvent(this);
     this.events.ptr.onLeave(...callbacks);
     return this;
   }
   onPtrOut(...callbacks){
-    if(!this.events.ptr)this.events.ptr = Pointer(this);
+    if(!this.events.ptr)this.events.ptr = PointerEvent(this);
     this.events.ptr.onOut(...callbacks);
     return this;
   }
   onKeyDown(...callbacks){
-    if(!this.events.key)this.events.key = Key(this);
+    if(!this.events.key)this.events.key = KeyEvent(this);
     this.events.key.onDown(...callbacks);
     return this;
   }
   onKeyPress(...callbacks){
-    if(!this.events.key)this.events.key = Key(this);
+    if(!this.events.key)this.events.key = KeyEvent(this);
     this.events.key.onPress(...callbacks);
     return this;
   }
   onKeyUp(...callbacks){
-    if(!this.events.key)this.events.key = Key(this);
+    if(!this.events.key)this.events.key = KeyEvent(this);
     this.events.key.onUp(...callbacks);
     return this;
   }
   onKeysDown({keys=[],callback}={}){
-    if(!this.events.key)this.events.key = Key(this);
+    if(!this.events.key)this.events.key = KeyEvent(this);
     this.events.key.handleSuccessifKeys({keys,callback});
     return this;
   }
   onDragStart(...callbacks){
-    if(!this.events.drag)this.events.drag = Drag(this);
+    if(!this.events.drag)this.events.drag = DragEvent(this);
     this.events.drag.onStart(...callbacks);
     return this;
   }
   onDrag(...callbacks){
-    if(!this.events.drag)this.events.drag = Drag(this);
+    if(!this.events.drag)this.events.drag = DragEvent(this);
     this.events.drag.onDrag(...callbacks);
     return this;
   }
   onDragEnd(...callbacks){
-    if(!this.events.drag)this.events.drag = Drag(this);
+    if(!this.events.drag)this.events.drag = DragEvent(this);
     this.events.drag.onEnd(...callbacks);
     return this;
   }
   onDrop(...callbacks){
-    if(!this.events.drop)this.events.drop = Drop(this);
+    if(!this.events.drop)this.events.drop = DropEvent(this);
     this.events.drop.onDrop(...callbacks);
     return this;
   }
   onClick(...callbacks){
-    if(!this.events.click)this.events.click = Click(this);
+    if(!this.events.click)this.events.click = ClickEvent(this);
     this.events.click.onClick(...callbacks);
     return this;
   }
   onDbClick(...callbacks){
-    if(!this.events.click)this.events.click = Click(this);
+    if(!this.events.click)this.events.click = ClickEvent(this);
     this.events.click.onDbClick(...callbacks);
+    return this;
+  }
+  onCopy(...callbacks){
+    if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+    this.events.clipboard.onCopy(...callbacks);
+    return this;
+  }
+  onCut(...callbacks){
+    if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+    this.events.clipboard.onCut(...callbacks);
+    return this;
+  }
+  onPaste(...callbacks){
+    if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+    this.events.clipboard.onPaste(...callbacks);
+    return this;
+  }
+  onSelect(...callbacks){
+    if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+    this.events.clipboard.onSelect(...callbacks);
     return this;
   }
   WatchAttributes(){
@@ -438,68 +360,6 @@ class ZikoUIElement {
     this.observer.intersection.start();
     return this;
   }
-  
-  // onKeypress(calback) {
-  //   this.element.addEventListener("keypress", calback);
-  //   return this;
-  // }
-  // onKeydown(calback) {
-  //   this.element.addEventListener("keydown", calback);
-  //   return this;
-  // }
-  // onKeyup(calback) {
-  //   this.element.addEventListener("keyup", calback);
-  //   return this;
-  // }
-  // get key() {
-  //   return event.key;
-  // }
-  // get keyCode() {
-  //   return event.keyCode;
-  // }
-  // get Event() {
-  //   return event;
-  // }
-  // handleSuccessifKeys(keys, calback) {
-  //   keys = keys.reverse();
-  //   const newkeys = new Array(keys.length).fill(null);
-  //   const addsub = (arr, item, length = keys.length) => {
-  //     arr.unshift(item);
-  //     arr.length = length;
-  //   };
-  //   this.keydown(() => {
-  //     addsub(newkeys, this.key);
-  //     if (newkeys.comp(keys)) {
-  //       this.preventDefault();
-  //       calback();
-  //       newkeys.fill(null);
-  //     }
-  //   });
-  //   return this;
-  // }
-  // preventDefault() {
-  //   return this.Event.preventDefault();
-  // }
-  // preventCopy() {
-  //   this.keydown(() => {
-  //     if (this.Event.ctrlKey && this.key == "c") this.preventDefault();
-  //   });
-  // }
-  // preventPaste() {
-  //   this.keydown(() => {
-  //     if (this.Event.ctrlKey && this.key == "v") this.preventDefault();
-  //   });
-  // }
-  // preventCut() {
-  //   this.keydown(() => {
-  //     if (this.Event.ctrlKey && this.key == "x") this.preventDefault();
-  //   });
-  // }
-  // preventSelect() {
-  //   this.onKeydown(() => {
-  //     if (this.Event.ctrlKey && this.key == "a") this.preventDefault();
-  //   });
-  // }
   // draggable(bool = true) {
   //   this.element.setAttribute("draggable", bool);
   //   return this;
@@ -611,17 +471,6 @@ class ZikoUIElement {
     this.style({ borderRadius: r, background: bg, boxShadow: box });
     return this;
   }
-  allowDrop(ev) {
-    ev.preventDefault();
-  }
-  drag(ev) {
-    ev.dataTransfer.setData("text", ev.Target.id);
-  }
-  drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.Target.appendChild(document.getElementById(data));
-  }
 
   fullScreen(set = true, e) {
     if (set) this.element.requestFullscreen(e);
@@ -664,6 +513,4 @@ class ZikoUIElement {
   }
 }
 
-//window.ZikoUIElement=ZikoUIElement
-//export{Root,waitForUIElm}
 export default ZikoUIElement;

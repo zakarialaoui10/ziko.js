@@ -1,13 +1,15 @@
-import Pointer from "./Global/Pointer.js";
-import Key from "./Global/Key.js";
-import {Drag,Drop} from "./Global/Drag.js"
-import {Click} from "./Global/Click.js"
+import PointerEvent from "./Global/Pointer.js";
+import KeyEvent from "./Global/Key.js";
+import {DragEvent,DropEvent} from "./Global/Drag.js"
+import ClickEvent from "./Global/Click.js"
+import ClipboardEvent from "./Global/Clipboard.js"
 const Events={
-    Pointer,
-    Key,
-    Drag,
-    Drop,
-    Click,
+    PointerEvent,
+    KeyEvent,
+    DragEvent,
+    DropEvent,
+    ClickEvent,
+    ClipboardEvent,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -20,10 +22,11 @@ const Events={
     }
 }
 export {
-    Pointer,
-    Key,
-    Drag,
-    Drop,
-    Click,
+    PointerEvent,
+    KeyEvent,
+    DragEvent,
+    DropEvent,
+    ClickEvent,
+    ClipboardEvent
 }
 export default Events
