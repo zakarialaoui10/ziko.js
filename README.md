@@ -5,7 +5,7 @@
 # Demo 
 # Get Started 
 ```js
-Ziko.text("hello world")
+text("hello world")
 ```
 
 ## Math
