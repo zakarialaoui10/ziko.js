@@ -1,4 +1,4 @@
-import ZikoUIElement from "../ZikoUIElement.js";
+import ZikoUIElement from "../../ZikoUIElement.js";
 import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
 import { btn } from "./btn.js";
 //import { select } from "./select.js";

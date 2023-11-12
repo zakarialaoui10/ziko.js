@@ -1,4 +1,4 @@
-export {btn} from "./btn.js"
+export {btn} from "./Primitives/btn.js"
 export {
     input,
     search,
@@ -14,7 +14,7 @@ export {
     inputImage,
     inputPassword,
     inputTime,
-  } from "./inputs.js"
-export {textarea} from "./textarea.js";
-export {select} from "./select.js";
+  } from "./Primitives/inputs.js"
+export {textarea} from "./Primitives/textarea.js";
+export {select} from "./Primitives/select.js";
 export {inputCamera} from "./camera.js"

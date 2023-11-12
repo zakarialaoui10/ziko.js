@@ -1,4 +1,4 @@
-import ZikoUIElement from "../ZikoUIElement.js";
+import ZikoUIElement from "../../ZikoUIElement.js";
 class ZikoUIBtn extends ZikoUIElement {
     constructor(value = "button") {
       super();

@@ -1,4 +1,4 @@
-import ZikoUIElement from "../ZikoUIElement.js";
+import ZikoUIElement from "../../ZikoUIElement.js";
 class ZikoUILabel extends ZikoUIElement{
     constructor(){
       super();
