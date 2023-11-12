@@ -36,7 +36,7 @@ text("hello world")
  ### Flex 
  ### Grid 
 ## Time
- ### lopp
+ ### loop
  ### animation
 ## Graphics
  ### Canvas
