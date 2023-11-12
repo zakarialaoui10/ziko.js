@@ -1,10 +1,12 @@
-# Demo 
 # Get Started 
 ## Extract All Methodes
 ```js
  Ziko.ExtractAll()
  // if you want to extract only UI methodes you can use Ziko.UI.Extractll()
 ```
+🏷️ This method simplifies syntax by extracting all UI, Math, Time, Graphics, and other methods within the Ziko framework. Instead of writing specific namespace prefixes like `Ziko.UI.text("Hi")` or `Ziko.Math.complex(1,2)`, you can directly use simplified syntax such as `text("Hi")` and `complex(1,1)`.
+
+⚠️ Be careful with this method because it will overwrite any existing global or local variables and functions with the same names as the extracted methods. 
 ```js
 text("hello world")
   .style({ color: "red" })
