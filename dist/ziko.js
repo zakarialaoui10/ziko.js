@@ -2308,7 +2308,7 @@
         event_controller$2.call(
             this,
             e,
-            "pointerdown",
+            "down",
             ()=>{
                 this.dx=parseInt(e.offsetX);
                 this.dy=parseInt(e.offsetY);
@@ -2324,7 +2324,7 @@
         event_controller$2.call(
             this,
             e,
-            "pointermove",
+            "move",
             ()=>{
                 this.mx=parseInt(e.offsetX);
                 this.my=parseInt(e.offsetY);
@@ -2340,7 +2340,7 @@
         event_controller$2.call(
             this,
             e,
-            "pointerup",
+            "up",
             ()=>{
                 this.ux=parseInt(e.offsetX);
                 this.uy=parseInt(e.offsetY);
@@ -2356,7 +2356,7 @@
         event_controller$2.call(
             this,
             e,
-            "pointerenter",
+            "enter",
             null,
             null    
         );
@@ -2365,7 +2365,7 @@
         event_controller$2.call(
             this,
             e,
-            "pointerleave",
+            "leave",
             null,
             null    
         );
@@ -2374,7 +2374,7 @@
         event_controller$2.call(
             this,
             e,
-            "pointerout",
+            "out",
             null,
             null    
         );
@@ -2398,55 +2398,63 @@
             this.isDown=false;
             this.cache={
                 preventDefault:{
-                    pointerdown:false,
-                    pointermove:false,
-                    pointerup:false,
-                    pointerenter:false,
-                    pointerout:false,
-                    pointerleave:false,
+                    down:false,
+                    move:false,
+                    up:false,
+                    enter:false,
+                    out:false,
+                    leave:false,
                 },
                 paused:{
-                    pointerdown:false,
-                    pointermove:false,
-                    pointerup:false,
-                    pointerenter:false,
-                    pointerout:false,
-                    pointerleave:false,          
+                    down:false,
+                    move:false,
+                    up:false,
+                    enter:false,
+                    out:false,
+                    leave:false,          
                 },
                 stream:{
                     enabled:{
-                        pointerdown:false,
-                        pointermove:false,
-                        pointerup:false,
-                        pointerenter:false,
-                        pointerout:false,
-                        pointerleave:false,
+                        down:false,
+                        move:false,
+                        up:false,
+                        enter:false,
+                        out:false,
+                        leave:false,
+                    },
+                    clear:{
+                        down:false,
+                        move:false,
+                        up:false,
+                        enter:false,
+                        out:false,
+                        leave:false,            
                     },
                     history:{
-                        pointerdown:[],
-                        pointermove:[],
-                        pointerup:[],
-                        pointerenter:[],
-                        pointerout:[],
-                        pointerleave:[]
+                        down:[],
+                        move:[],
+                        up:[],
+                        enter:[],
+                        out:[],
+                        leave:[]
                     }
                 },
                 callbacks:{
-                    pointerdown:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
-                    pointermove:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
-                    pointerup:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})],
-                    pointerenter:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
-                    pointerout:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
-                    pointerleave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
+                    down:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
+                    move:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
+                    up:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})],
+                    enter:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
+                    out:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
+                    leave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
                 }
             };
             this.#controller={
-                pointerdown:pointerdown_controller.bind(this),
-                pointermove:pointermove_controller.bind(this),
-                pointerup:pointerup_controller.bind(this),
-                pointerenter:pointerenter_controller.bind(this),
-                pointerout:pointerout_controller.bind(this),
-                pointerleave:pointerleave_controller.bind(this),
+                down:pointerdown_controller.bind(this),
+                move:pointermove_controller.bind(this),
+                up:pointerup_controller.bind(this),
+                enter:pointerenter_controller.bind(this),
+                out:pointerout_controller.bind(this),
+                leave:pointerleave_controller.bind(this),
             };
             this.#dispose=this.dispose.bind(this);
             this.EventIndex=Garbage.Pointer.data.length;
@@ -2459,7 +2467,7 @@
         }
         #handle(event,handler,dispose={down:false,move:false,up:false,enter:false,out:false,leave:false}){
             this.dispose(dispose);
-            this.Target.addEventListener(event,handler);
+            this.Target.addEventListener(`pointer${event}`,handler);
             return this;   
         }
         #onEvent(event,dispose,...callbacks){
@@ -2474,27 +2482,27 @@
             return this;  
         }
         onDown(...callbacks){
-            this.#onEvent("pointerdown",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks);
+            this.#onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks);
             return this;
         }
         onMove(...callbacks){
-            this.#onEvent("pointermove",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks);
+            this.#onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks);
             return this;
         }
         onUp(...callbacks){
-            this.#onEvent("pointerup",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks);
+            this.#onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks);
             return this;
         }
         onEnter(...callbacks){
-            this.#onEvent("pointerenter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks);
+            this.#onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks);
             return this;
         }
         onOut(...callbacks){
-            this.#onEvent("pointerout",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks);
+            this.#onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks);
             return this;
         }
         onLeave(...callbacks){
-            this.#onEvent("pointerleave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks);
+            this.#onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks);
             return this;
         }
         handle({down=false,move=false,up=false}={}){
@@ -2536,10 +2544,6 @@
             }
             return this;
         }
-         preventDefault({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-            Object.assign(this.cache.preventDefault,{down,move,up,enter,out,leave});
-            return this;
-         }
     }
     var Pointer=target=>new ZikoEventPointer(target);
 
