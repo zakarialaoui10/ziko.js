@@ -1,13 +1,15 @@
-import Garbage from "./Garbage.js";
 import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 function dragstart_controller(e){
-    EVENT_CONTROLLER.call(this,e,"start",null,null)
+    EVENT_CONTROLLER(this,e,"start",null,null)
 }
 function drag_controller(e){
     EVENT_CONTROLLER.call(this,e,"drag",null,null)
 }
 function dragend_controller(e){
     EVENT_CONTROLLER.call(this,e,"end",null,null)
+}
+function drop_controller(e){
+    EVENT_CONTROLLER.call(this,e,"drop",null,null)
 }
 
 class ZikoEventDrag extends ZikoEvent{
@@ -94,6 +96,39 @@ class ZikoEventDrag extends ZikoEvent{
         return this;
     }
 }
-
+class ZikoEventDrop extends ZikoEvent{
+    constructor(target){
+        super(target);
+        this.event=null;
+        this.cache={
+            prefixe:"",
+            preventDefault:{
+                drop:false,
+            },
+            paused:{
+                drop:false,      
+            },
+            stream:{
+                enabled:{
+                    drop:false,
+                },
+                clear:{
+                    drop:false,          
+                },
+                history:{
+                    drop:[],
+                }
+            },
+            callbacks:{
+                drop:[(self)=>console.log({dx:self.dx,dy:self.dy,drop:self.drop,move:self.move,t:self.dt})],
+            }
+        }
+        this.__controller={
+            drop:drop_controller.bind(this),
+        }
+    }
+      
+}
 const Drag=Target=>new ZikoEventDrag(Target);
-export {Drag}
+const Drop=Target=>new ZikoEventDrop(Target);
+export {Drag,Drop}

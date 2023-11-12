@@ -11,7 +11,8 @@ function pointerdown_controller(e){
         },
         {
             x:this.dx,
-            y:this.dy
+            y:this.dy,
+            t:Date.now()-this.cache.stream.t0
         }  
     )
 }
@@ -27,7 +28,8 @@ function pointermove_controller(e){
         },
         {
             x:this.mx,
-            y:this.my
+            y:this.my,
+            t:Date.now()-this.cache.stream.t0
         }    
     )
 }
@@ -43,7 +45,8 @@ function pointerup_controller(e){
         },
         {
             x:this.ux,
-            y:this.uy
+            y:this.uy,
+            t:Date.now()-this.cache.stream.t0
         }    
     )
 }

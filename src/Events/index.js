@@ -1,10 +1,11 @@
 import Pointer from "./Pointer.js";
 import Key from "./Key.js";
-import {Drag} from "./Drag.js"
+import {Drag,Drop} from "./Drag.js"
 const Events={
     Pointer,
     Key,
     Drag,
+    Drop,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -19,6 +20,7 @@ const Events={
 export {
     Pointer,
     Key,
-    Drag
+    Drag,
+    Drop
 }
 export default Events

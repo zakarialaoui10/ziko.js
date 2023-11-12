@@ -2315,7 +2315,6 @@ class ZikoEvent{
     __handle(event,handler,dispose){
         const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`;
         this.dispose(dispose);
-        console.log(EVENT);
         this.Target.addEventListener(EVENT,handler);
         return this;   
     }
@@ -2363,6 +2362,7 @@ class ZikoEvent{
         return this;
      }
     stream(config={}){
+        this.cache.stream.t0=Date.now();
         const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
         config={...all,...config};
         Object.assign(this.cache.stream.enabled,config);
@@ -2392,7 +2392,8 @@ function pointerdown_controller(e){
         },
         {
             x:this.dx,
-            y:this.dy
+            y:this.dy,
+            t:Date.now()-this.cache.stream.t0
         }  
     );
 }
@@ -2408,7 +2409,8 @@ function pointermove_controller(e){
         },
         {
             x:this.mx,
-            y:this.my
+            y:this.my,
+            t:Date.now()-this.cache.stream.t0
         }    
     );
 }
@@ -2424,7 +2426,8 @@ function pointerup_controller(e){
         },
         {
             x:this.ux,
-            y:this.uy
+            y:this.uy,
+            t:Date.now()-this.cache.stream.t0
         }    
     );
 }
@@ -2679,13 +2682,16 @@ class ZikoEventKey extends ZikoEvent{
 var Key=Target=>new ZikoEventKey(Target);
 
 function dragstart_controller(e){
-    EVENT_CONTROLLER.call(this,e,"start",null,null);
+    EVENT_CONTROLLER(this,e,"start",null);
 }
 function drag_controller(e){
     EVENT_CONTROLLER.call(this,e,"drag",null,null);
 }
 function dragend_controller(e){
     EVENT_CONTROLLER.call(this,e,"end",null,null);
+}
+function drop_controller(e){
+    EVENT_CONTROLLER.call(this,e,"drop",null,null);
 }
 
 class ZikoEventDrag extends ZikoEvent{
@@ -2772,13 +2778,47 @@ class ZikoEventDrag extends ZikoEvent{
         return this;
     }
 }
-
+class ZikoEventDrop extends ZikoEvent{
+    constructor(target){
+        super(target);
+        this.event=null;
+        this.cache={
+            prefixe:"",
+            preventDefault:{
+                drop:false,
+            },
+            paused:{
+                drop:false,      
+            },
+            stream:{
+                enabled:{
+                    drop:false,
+                },
+                clear:{
+                    drop:false,          
+                },
+                history:{
+                    drop:[],
+                }
+            },
+            callbacks:{
+                drop:[(self)=>console.log({dx:self.dx,dy:self.dy,drop:self.drop,move:self.move,t:self.dt})],
+            }
+        };
+        this.__controller={
+            drop:drop_controller.bind(this),
+        };
+    }
+      
+}
 const Drag=Target=>new ZikoEventDrag(Target);
+const Drop=Target=>new ZikoEventDrop(Target);
 
 const Events={
     Pointer,
     Key,
     Drag,
+    Drop,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];

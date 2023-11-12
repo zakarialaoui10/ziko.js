@@ -22,7 +22,6 @@ class ZikoEvent{
     __handle(event,handler,dispose){
         const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`
         this.dispose(dispose);
-        console.log(EVENT)
         this.Target.addEventListener(EVENT,handler);
         return this;   
     }
@@ -70,6 +69,7 @@ class ZikoEvent{
         return this;
      }
     stream(config={}){
+        this.cache.stream.t0=Date.now();
         const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]))
         config={...all,...config}
         Object.assign(this.cache.stream.enabled,config);
