@@ -5,7 +5,10 @@
 # Demo 
 # Get Started 
 ```js
-text("hello world").style({color:"red"}).onPtrMove(throttle(()=>console.log("hi")))
+text("hello world")
+  .style({ color: "red" })
+  .onPtrMove(throttle(() => console.log("hi")));
+
 ```
 
 ## Math
@@ -86,7 +89,11 @@ S=Ziko.SPA(
  ```
 ## Multithreading
  ```js
-Ziko.Multi(()=>{s=0;for(i=0;i<10000000000;i++)s+=i;return s},console.log)
+Ziko.Multi(() => {
+  s = 0;
+  for (i = 0; i < 10000000000; i++) s += i;
+  return s;
+}, console.log);
  ```
  
  
