@@ -55,7 +55,7 @@ c.onPtrUp(()=>{})
    const inp=input().onKeyDown(throttle(e=>console.log(e.kd),1000));
    ```
  - ## Reactivity
- - ### Single Page Application
+ - ## Routing for Single Page Applications (SPA)
  ```js
 const main= Section()
 const p1=Section()
