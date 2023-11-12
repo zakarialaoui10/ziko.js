@@ -63,6 +63,9 @@ c.onPtrMove(e=>{
 c.onPtrUp(()=>{})
   ```
  ### Key
+  ```
+   const inp=input().onKeyDown(throttle(e=>console.log(e.kd),1000));
+  ```
  ### Drag
 ## Reactivite
  ### Watch Size
