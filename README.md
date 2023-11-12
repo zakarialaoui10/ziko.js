@@ -15,7 +15,8 @@ text("hello world")
 ```
 
 ## Math
- ### Functions
+The Math module serves as the fundamental building block for all UI elements, graphics, and animations in this system.
+### Functions
  ```js
  const a = cos(0);
  const b = sin(0,PI/2,PI)
