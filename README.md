@@ -53,6 +53,16 @@ text("hello world")
  ### Parser 
 ## Router 
  ### Single Page Application
+ ```js
+const main= Section()
+const p1=Section()
+const p2=Section()
+S=SPA(
+   main,{
+     "/page1":p1,
+     "/svg":P2
+ })
+ ```
  
  
 
