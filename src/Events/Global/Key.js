@@ -112,11 +112,11 @@ class ZikoEventKey extends ZikoEvent{
 
 }
 
-var KeyEvent=Target=>new ZikoEventKey(Target)
+var Key=Target=>new ZikoEventKey(Target)
 
 // handleDown(){
 //     this.dispose({down:true,press:false,up:false})
 //     this.Target.addEventListener("keydown",this.#downController);
 //     return this;
 //  }
-export default KeyEvent
+export default Key

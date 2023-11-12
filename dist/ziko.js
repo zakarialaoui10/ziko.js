@@ -2575,7 +2575,7 @@
         //     if(up)this.handleUp()
         // }
     }
-    var PointerEvent=target=>new ZikoEventPointer(target);
+    var Pointer=target=>new ZikoEventPointer(target);
 
     function keydown_controller(e){
         EVENT_CONTROLLER.call(
@@ -2689,7 +2689,7 @@
 
     }
 
-    var KeyEvent=Target=>new ZikoEventKey(Target);
+    var Key=Target=>new ZikoEventKey(Target);
 
     function dragstart_controller(e){
         EVENT_CONTROLLER(this,e,"start",null);
@@ -2824,8 +2824,8 @@
             return this;
         } 
     }
-    const DragEvent=Target=>new ZikoEventDrag(Target);
-    const DropEvent=Target=>new ZikoEventDrop(Target);
+    const Drag=Target=>new ZikoEventDrag(Target);
+    const Drop=Target=>new ZikoEventDrop(Target);
 
     function click_controller(e){
         EVENT_CONTROLLER.call(this,e,"click",null,null);
@@ -2880,7 +2880,7 @@
             return this;
          }     
     }
-    const ClickEvent=Target=>new ZikoEventClick(Target);
+    const Click=Target=>new ZikoEventClick(Target);
 
     function copy_controller(e){
         EVENT_CONTROLLER.call(this,e,"copy",null,null);
@@ -2963,15 +2963,15 @@
             return this;
          }   
     }
-    const ClipboardEvent=Target=>new ZikoEventClipboard(Target);
+    const Clipboard=Target=>new ZikoEventClipboard(Target);
 
     const Events={
-        PointerEvent,
-        KeyEvent,
-        DragEvent,
-        DropEvent,
-        ClickEvent,
-        ClipboardEvent,
+        Pointer,
+        Key,
+        Drag,
+        Drop,
+        Click,
+        Clipboard,
         ExtractAll:function(){
                 for (let i = 0; i < Object.keys(this).length; i++) {
                     globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -3401,102 +3401,102 @@
         return this;
       }
       onPtrMove(...callbacks){
-        if(!this.events.ptr)this.events.ptr = PointerEvent(this);
+        if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onMove(...callbacks);
         return this;
       }
       onPtrDown(...callbacks){
-        if(!this.events.ptr)this.events.ptr = PointerEvent(this);
+        if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onDown(...callbacks);
         return this;
       }
       onPtrUp(...callbacks){
-        if(!this.events.ptr)this.events.ptr = PointerEvent(this);
+        if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onUp(...callbacks);
         return this;
       }
       onPtrEnter(...callbacks){
-        if(!this.events.ptr)this.events.ptr = PointerEvent(this);
+        if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onEnter(...callbacks);
         return this;
       }
       onPtrLeave(...callbacks){
-        if(!this.events.ptr)this.events.ptr = PointerEvent(this);
+        if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onLeave(...callbacks);
         return this;
       }
       onPtrOut(...callbacks){
-        if(!this.events.ptr)this.events.ptr = PointerEvent(this);
+        if(!this.events.ptr)this.events.ptr = Pointer(this);
         this.events.ptr.onOut(...callbacks);
         return this;
       }
       onKeyDown(...callbacks){
-        if(!this.events.key)this.events.key = KeyEvent(this);
+        if(!this.events.key)this.events.key = Key(this);
         this.events.key.onDown(...callbacks);
         return this;
       }
       onKeyPress(...callbacks){
-        if(!this.events.key)this.events.key = KeyEvent(this);
+        if(!this.events.key)this.events.key = Key(this);
         this.events.key.onPress(...callbacks);
         return this;
       }
       onKeyUp(...callbacks){
-        if(!this.events.key)this.events.key = KeyEvent(this);
+        if(!this.events.key)this.events.key = Key(this);
         this.events.key.onUp(...callbacks);
         return this;
       }
       onKeysDown({keys=[],callback}={}){
-        if(!this.events.key)this.events.key = KeyEvent(this);
+        if(!this.events.key)this.events.key = Key(this);
         this.events.key.handleSuccessifKeys({keys,callback});
         return this;
       }
       onDragStart(...callbacks){
-        if(!this.events.drag)this.events.drag = DragEvent(this);
+        if(!this.events.drag)this.events.drag = Drag(this);
         this.events.drag.onStart(...callbacks);
         return this;
       }
       onDrag(...callbacks){
-        if(!this.events.drag)this.events.drag = DragEvent(this);
+        if(!this.events.drag)this.events.drag = Drag(this);
         this.events.drag.onDrag(...callbacks);
         return this;
       }
       onDragEnd(...callbacks){
-        if(!this.events.drag)this.events.drag = DragEvent(this);
+        if(!this.events.drag)this.events.drag = Drag(this);
         this.events.drag.onEnd(...callbacks);
         return this;
       }
       onDrop(...callbacks){
-        if(!this.events.drop)this.events.drop = DropEvent(this);
+        if(!this.events.drop)this.events.drop = Drop(this);
         this.events.drop.onDrop(...callbacks);
         return this;
       }
       onClick(...callbacks){
-        if(!this.events.click)this.events.click = ClickEvent(this);
+        if(!this.events.click)this.events.click = Click(this);
         this.events.click.onClick(...callbacks);
         return this;
       }
       onDbClick(...callbacks){
-        if(!this.events.click)this.events.click = ClickEvent(this);
+        if(!this.events.click)this.events.click = Click(this);
         this.events.click.onDbClick(...callbacks);
         return this;
       }
       onCopy(...callbacks){
-        if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+        if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
         this.events.clipboard.onCopy(...callbacks);
         return this;
       }
       onCut(...callbacks){
-        if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+        if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
         this.events.clipboard.onCut(...callbacks);
         return this;
       }
       onPaste(...callbacks){
-        if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+        if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
         this.events.clipboard.onPaste(...callbacks);
         return this;
       }
       onSelect(...callbacks){
-        if(!this.events.clipboard)this.events.clipboard = ClipboardEvent(this);
+        if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
         this.events.clipboard.onSelect(...callbacks);
         return this;
       }
