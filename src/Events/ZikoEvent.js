@@ -12,8 +12,8 @@ class ZikoEvent{
         this.Target=window;
         this.setTarget(Target);
         this.__dispose=this.dispose.bind(this);
-        this.EventIndex=Garbage.Pointer.data.length;
-        Garbage.Pointer.data.push({event:this,index:this.EventIndex});
+        // this.EventIndex=Garbage.Pointer.data.length;
+        // Garbage.Pointer.data.push({event:this,index:this.EventIndex});
     }
     get TargetElement(){
         return this.Target.element
@@ -87,6 +87,9 @@ class ZikoEvent{
             }
         }
         return this;
+    }
+    get Garbage(){
+        return Garbage
     }
 }
 export {ZikoEvent,EVENT_CONTROLLER}

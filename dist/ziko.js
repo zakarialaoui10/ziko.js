@@ -2385,6 +2385,9 @@
             }
             return this;
         }
+        get Garbage(){
+            return Garbage
+        }
     }
 
     function pointerdown_controller(e){
