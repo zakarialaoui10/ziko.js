@@ -75,11 +75,15 @@ c.onPtrUp(()=>{})
 const main= Section()
 const p1=Section()
 const p2=Section()
-S=SPA(
+S=Ziko.SPA(
    main,{
      "/page1":p1,
      "/svg":P2
  })
+ ```
+## Multithreading
+ ```js
+Ziko.Multi(()=>{s=0;for(i=0;i<10000000000;i++)s+=i;return s},console.log)
  ```
  
  
