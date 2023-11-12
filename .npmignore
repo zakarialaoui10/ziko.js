@@ -2,5 +2,7 @@ assets/
 docs/
 notebook/
 test/
+Addons/
+Interfacing/
 .eslintrc.cjs 
 rollup.config.js 
