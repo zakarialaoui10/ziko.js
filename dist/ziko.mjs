@@ -2310,9 +2310,11 @@ class ZikoEvent{
         this.Target=UI?.element||document.querySelector(UI);
         return this;
     }
-    __handle(event,handler,dispose={down:false,move:false,up:false,enter:false,out:false,leave:false}){
+    __handle(event,handler,dispose){
+        const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`;
         this.dispose(dispose);
-        this.Target.addEventListener(`${this.cache.prefixe}${event}`,handler);
+        console.log(EVENT);
+        this.Target.addEventListener(EVENT,handler);
         return this;   
     }
     __onEvent(event,dispose,...callbacks){
@@ -2320,7 +2322,9 @@ class ZikoEvent{
             if(this.cache.callbacks.length>1){
                 this.cache.callbacks.map(n=>e=>n.call(this,e));
             }   
-            else return this;
+            else {
+                return this;
+            }
         }
         else this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
         this.__handle(event,this.__controller[event],dispose);
@@ -2676,7 +2680,7 @@ function dragstart_controller(e){
     EVENT_CONTROLLER.call(this,e,"start",null,null);
 }
 function drag_controller(e){
-    EVENT_CONTROLLER.call(this,e,"",null,null);
+    EVENT_CONTROLLER.call(this,e,"drag",null,null);
 }
 function dragend_controller(e){
     EVENT_CONTROLLER.call(this,e,"end",null,null);
@@ -2705,7 +2709,7 @@ class ZikoEventDrag extends ZikoEvent{
                 over:false,
             },
             enabled:{
-                drag:true,
+                drag:false,
                 start:false,
                 end:false,
                 enter:false,
@@ -2713,12 +2717,12 @@ class ZikoEventDrag extends ZikoEvent{
                 over:false,
             },
             callbacks:{
-                drag:[(self)=>console.log(self)],
-                start:[()=>console.log("dragstart")],
-                end:[()=>console.log("dragend")],
-                enter:[(self)=>console.log(self)],
-                leave:[(self)=>console.log(self)],
-                over:[(self)=>console.log(self)]
+                drag:[],
+                start:[],
+                end:[],
+                enter:[],
+                leave:[],
+                over:[]
             },
             stream:{
                 enabled:{
@@ -2754,15 +2758,15 @@ class ZikoEventDrag extends ZikoEvent{
         };
     }
     onStart(...callbacks){
-        this.__onEvent("start",...callbacks);
+        this.__onEvent("start",{},...callbacks);
         return this;
     }
     onDrag(...callbacks){
-        this.__onEvent("",...callbacks);
+        this.__onEvent("drag",{},...callbacks);
         return this;
     }
     onEnd(...callbacks){
-        this.__onEvent("end",...callbacks);
+        this.__onEvent("end",{},...callbacks);
         return this;
     }
 }
