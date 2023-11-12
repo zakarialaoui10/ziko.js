@@ -26,7 +26,7 @@ Zikojs a versatile JavaScript library offering a rich set of UI components, adva
               e:[PI,PI/2,PI/3,PI/4,PI/6]
          }})
 ```    
- - ## Methodes Chaining 
+ - 🔰 ## Methodes Chaining 
 
 ```js
    text("hello world")
