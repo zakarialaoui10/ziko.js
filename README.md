@@ -5,7 +5,7 @@
 # Demo 
 # Get Started 
 ```js
-text("hello world")
+text("hello world").style({color:"red"}).onPtrMove(throttle(()=>console.log("hi")))
 ```
 
 ## Math
