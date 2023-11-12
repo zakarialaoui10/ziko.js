@@ -1,6 +1,6 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 import styleComposer from "./Style/index.js";
-import { Pointer, Key, Drag } from "../Events/index.js"
+import { Pointer, Key, Drag , Drop , Click } from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
 import { text } from "./Text/index.js";
 import { matrix } from "../Math/Matrix/index.js";
@@ -32,7 +32,8 @@ class ZikoUIElement {
       ptr:null,
       key:null,
       drag:null,
-      drop:null
+      drop:null,
+      click:null
     }
     this.observer={
       resize:null,
@@ -428,7 +429,17 @@ class ZikoUIElement {
   }
   onDrop(...callbacks){
     if(!this.events.drop)this.events.drop = Drop(this);
-    this.events.drop.onDrag(...callbacks);
+    this.events.drop.onDrop(...callbacks);
+    return this;
+  }
+  onClick(...callbacks){
+    if(!this.events.click)this.events.click = Click(this);
+    this.events.click.onClick(...callbacks);
+    return this;
+  }
+  onDbClick(...callbacks){
+    if(!this.events.click)this.events.click = Click(this);
+    this.events.click.onDbClick(...callbacks);
     return this;
   }
   WatchAttributes(){

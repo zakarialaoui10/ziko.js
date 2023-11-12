@@ -2810,13 +2810,69 @@ class ZikoEventDrop extends ZikoEvent{
       
 }
 const Drag=Target=>new ZikoEventDrag(Target);
-const Drop$1=Target=>new ZikoEventDrop(Target);
+const Drop=Target=>new ZikoEventDrop(Target);
+
+function click_controller(e){
+    EVENT_CONTROLLER(this,e,"click",null);
+}
+function dbclick_controller(e){
+    EVENT_CONTROLLER.call(this,e,"dbclick",null,null);
+}
+class ZikoEventClick extends ZikoEvent{
+    constructor(target){
+        super(target);
+        this.event=null;
+        this.cache={
+            prefixe:"",
+            preventDefault:{
+                click:false,
+                dbclick:false,
+            },
+            paused:{
+                click:false,
+                dbclick:false,      
+            },
+            stream:{
+                enabled:{
+                    click:false,
+                    dbclick:false,
+                },
+                clear:{
+                    click:false, 
+                    dbclick:false,         
+                },
+                history:{
+                    click:[],
+                    dbclick:[],
+                }
+            },
+            callbacks:{
+                click:[],
+                dclick:[],
+            }
+        };
+        this.__controller={
+            click:click_controller.bind(this),
+            dbclick:dbclick_controller.bind(this),
+        };
+    }
+    onClick(...callbacks){
+        this.__onEvent("click",{},...callbacks);
+        return this;
+     }
+    onDbClick(...callbacks){
+        this.__onEvent("dbclick",{},...callbacks);
+        return this;
+     }     
+}
+const Click=Target=>new ZikoEventClick(Target);
 
 const Events={
     Pointer,
     Key,
     Drag,
-    Drop: Drop$1,
+    Drop,
+    Click,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -3033,7 +3089,8 @@ class ZikoUIElement {
       ptr:null,
       key:null,
       drag:null,
-      drop:null
+      drop:null,
+      click:null
     };
     this.observer={
       resize:null,
@@ -3429,7 +3486,17 @@ class ZikoUIElement {
   }
   onDrop(...callbacks){
     if(!this.events.drop)this.events.drop = Drop(this);
-    this.events.drop.onDrag(...callbacks);
+    this.events.drop.onDrop(...callbacks);
+    return this;
+  }
+  onClick(...callbacks){
+    if(!this.events.click)this.events.click = Click(this);
+    this.events.click.onClick(...callbacks);
+    return this;
+  }
+  onDbClick(...callbacks){
+    if(!this.events.click)this.events.click = Click(this);
+    this.events.click.onDbClick(...callbacks);
     return this;
   }
   WatchAttributes(){
