@@ -3648,6 +3648,44 @@ class ZikoUIElement {
   }
 }
 
+const ALL_UI_ELEMENTS={
+    text:[],
+    p:[],
+    pre:[],
+    h1:[],
+    h2:[],
+    h3:[],
+    h4:[],
+    h5:[],
+    h6:[],
+    br:[],
+    hr:[],
+    btn:[],
+    ol:[],
+    ul:[],
+    image:[],
+    video:[],
+    audio:[],
+    Article:[],
+    Main:[],
+    Section:[],
+    Aside:[],
+    Nav:[],
+    Header:[],
+    Footer:[],
+    Flex:[],
+    FlexMain:[],
+    FlexNav:[],
+    FlexHeader:[],
+    FlexFooter:[],
+    FlexSection:[],
+    FLexArticle:[],
+    FlexAside:[],
+    Table:[],
+    Svg:[],
+    Canvas:[]
+  };
+
 class ZikoUIText extends ZikoUIElement {
     constructor(...value) {
       super();
@@ -3709,7 +3747,12 @@ class ZikoUIText extends ZikoUIElement {
       return this;
     }
   }
- const text$1 = (...value) => new ZikoUIText(...value);
+ const text$1 = (...value) => {
+  const UI=new ZikoUIText(...value);
+  ALL_UI_ELEMENTS.text.push(UI);
+  UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+  return UI
+ };
 
 class ZikoUIParagraphe extends ZikoUIElement {
     constructor(...value) {
@@ -3741,7 +3784,12 @@ class ZikoUIParagraphe extends ZikoUIElement {
       return this;
     }
   }
-  const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
+  const p = (...ZikoUIElement) => {
+    const UI=new ZikoUIParagraphe().append(...ZikoUIElement);
+    ALL_UI_ELEMENTS.p.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.p.length;  
+    return UI
+   };
 
 class ZikoUIHeading extends ZikoUIElement {
     constructor(type = 1, value = "") {
@@ -3762,12 +3810,42 @@ class ZikoUIHeading extends ZikoUIElement {
       return this;
     }
   }
-  const h1 = (text = "text") => new ZikoUIHeading(1, text);
-  const h2 = (text = "text") => new ZikoUIHeading(2, text);
-  const h3 = (text = "text") => new ZikoUIHeading(3, text);
-  const h4 = (text = "text") => new ZikoUIHeading(4, text);
-  const h5 = (text = "text") => new ZikoUIHeading(5, text);
-  const h6 = (text = "text") => new ZikoUIHeading(6, text);
+  const h1 = (text = "") => {
+    const UI=new ZikoUIHeading(1, text);
+    ALL_UI_ELEMENTS.h1.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
+  const h2 = (text = "") => {
+    const UI=new ZikoUIHeading(2, text);
+    ALL_UI_ELEMENTS.h2.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
+  const h3 = (text = "") => {
+    const UI=new ZikoUIHeading(3, text);
+    ALL_UI_ELEMENTS.h3.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
+  const h4 = (text = "") => {
+    const UI=new ZikoUIHeading(4, text);
+    ALL_UI_ELEMENTS.h4.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
+  const h5 = (text = "") => {
+    const UI=new ZikoUIHeading(5, text);
+    ALL_UI_ELEMENTS.h5.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
+   const h6 = (text = "") => {
+    const UI=new ZikoUIHeading(6, text);
+    ALL_UI_ELEMENTS.h6.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
 
 class ZikoUIBr extends ZikoUIElement {
     constructor() {
@@ -6011,7 +6089,8 @@ const Ziko$1={
     Events,
     Multi,
     SPA,
-    Watch
+    Watch,
+    ALL_UI_ELEMENTS
 };
 Ziko$1.ExtractAll=function(){
     Ziko$1.UI.ExtractAll();

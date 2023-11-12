@@ -1,6 +1,7 @@
 import ZikoUIElement from "../ZikoUIElement.js";
 import {Complex} from "../../Math/Complex/index.js"
 import { text } from "./text.js";
+import ALL_UI_ELEMENTS from "../all.js";
 class ZikoUIParagraphe extends ZikoUIElement {
     constructor(...value) {
       super();
@@ -31,5 +32,10 @@ class ZikoUIParagraphe extends ZikoUIElement {
       return this;
     }
   }
-  const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
+  const p = (...ZikoUIElement) => {
+    const UI=new ZikoUIParagraphe().append(...ZikoUIElement);
+    ALL_UI_ELEMENTS.p.push(UI)
+    UI.cache.order=ALL_UI_ELEMENTS.p.length;  
+    return UI
+   }
   export {p}
