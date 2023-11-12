@@ -1,9 +1,10 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 import styleComposer from "./Style/index.js";
-import { Pointer,Key } from "../Events/index.js"
+import { Pointer, Key, Drag } from "../Events/index.js"
 import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
 import { text } from "./Text/index.js";
 import { matrix } from "../Math/Matrix/index.js";
+
 class ZikoUIElement {
   constructor(element = document.body) {
     this.Target = Ziko.Target || document.body;
@@ -407,6 +408,21 @@ class ZikoUIElement {
   onKeysDown({keys=[],callback}={}){
     if(!this.events.key)this.events.key = Key(this);
     this.events.key.handleSuccessifKeys({keys,callback});
+    return this;
+  }
+  onDragStart(...callbacks){
+    if(!this.events.drag)this.events.drag = Drag(this);
+    this.events.drag.onStart(...callbacks);
+    return this;
+  }
+  onDrag(...callbacks){
+    if(!this.events.drag)this.events.drag = Drag(this);
+    this.events.drag.onDrag(...callbacks);
+    return this;
+  }
+  onDragEnd(...callbacks){
+    if(!this.events.drag)this.events.drag = Drag(this);
+    this.events.drag.onEnd(...callbacks);
     return this;
   }
   WatchAttributes(){

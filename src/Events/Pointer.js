@@ -82,9 +82,6 @@ function pointerout_controller(e){
         null    
     )
 }
-
-
-
 class ZikoEventPointer{
         #controller
         #dispose
@@ -211,23 +208,21 @@ class ZikoEventPointer{
     pause(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
         for(let key in config){
             if(config[key]){
-                console.log(this.#controller[`pointer${key}`])
                 this.Target.removeEventListener(`pointer${key}`,this.#controller[`pointer${key}`]);
+                this.cache.paused[`pointer${key}`]=true;
+            }
+        }
+        return this;
+     }
+    resume(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
+        for(let key in config){
+            if(config[key]){
+                this.Target.addEventListener(`pointer${key}`,this.#controller[`pointer${key}`]);
                 this.cache.paused[`pointer${key}`]=false;
             }
         }
         return this;
      }
-    resume({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        if(down)this.Target.addEventListener("pointerdown",this.#controller.pointerdown);
-        if(move)this.Target.addEventListener("pointermove",this.#controller.pointermove);
-        if(up)this.Target.addEventListener("pointerup",this.#controller.pointerup);
-        if(enter)this.Target.addEventListener("pointerenter",this.#controller.pointerenter);
-        if(out)this.Target.addEventListener("pointerout",this.#controller.pointerout);
-        if(leave)this.Target.addEventListener("pointerleave",this.#controller.pointerleave);
-        return this;
-     }
-    
     dispose({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
         this.pause({down,move,up,leave,out,enter});
         return this;
@@ -236,13 +231,12 @@ class ZikoEventPointer{
         Object.assign(this.cache.stream.enabled,{down,move,up,enter,out,leave});
         return this;
      }
-    clear({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        if(down)this.cache.down=[];
-        if(move)this.cache.move=[];
-        if(up)this.cache.up=[];
-        if(enter)this.cache.enter=[];
-        if(out)this.cache.out=[];
-        if(leave)this.cache.leave=[];
+    clear(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
+        for(let key in config){
+            if(config[key]){
+                this.cache[key]=[]
+            }
+        }
         return this;
     }
      preventDefault({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){

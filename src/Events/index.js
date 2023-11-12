@@ -18,6 +18,7 @@ const Events={
 }
 export {
     Pointer,
-    Key
+    Key,
+    Drag
 }
 export default Events
