@@ -47,6 +47,9 @@ import{
     Notebook
 } from "./Flex/index.js"
 import{
+    Grid
+} from "./Grid/index.js"
+import{
     Header,
     FlexHeader,
     Main,
@@ -102,6 +105,7 @@ const UI={
     audio,
     figure,
     Flex,
+    Grid,
     Header,
     FlexHeader,
     Main,
