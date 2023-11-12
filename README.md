@@ -78,6 +78,7 @@ Ziko.Multi(() => {
   return s;
 }, console.log);
  ```
+ - ## Responsive Design using Flex element and resize observer
  - ## Loop and animations support 
 
 
