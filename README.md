@@ -1,4 +1,4 @@
-zikojs a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities, and graphics capabilities 
+Zikojs a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities, and graphics capabilities 
 # Features 
  - ## Methodes Extracting :
    
