@@ -75,7 +75,7 @@ Ziko.Multi(() => {
   return s;
 }, console.log);
  ```
- - ## loop and animations support 
+ - ## Loop and animations support 
 
 
 
