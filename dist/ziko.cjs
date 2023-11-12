@@ -2292,7 +2292,7 @@ const Garbage={
     }
 };
 
-function event_controller$2(e,EVENT,setter,push_object){
+function EVENT_CONTROLLER(e,EVENT,setter,push_object){
     this.event=e;
     if(this.cache.preventDefault[EVENT])e.preventDefault();
     if(setter)setter();
@@ -2300,8 +2300,84 @@ function event_controller$2(e,EVENT,setter,push_object){
     this.cache.callbacks[EVENT].map(n=>n(this));
     return this;
 }
+class ZikoEvent{
+    constructor(Target){
+        this.Target=window;
+        this.setTarget(Target);
+        this.__dispose=this.dispose.bind(this);
+        this.EventIndex=Garbage.Pointer.data.length;
+        Garbage.Pointer.data.push({event:this,index:this.EventIndex});
+    }
+    setTarget(UI){
+        this.Target=UI?.element||document.querySelector(UI);
+        return this;
+    }
+    __handle(event,handler,dispose={down:false,move:false,up:false,enter:false,out:false,leave:false}){
+        this.dispose(dispose);
+        this.Target.addEventListener(`${this.cache.prefixe}${event}`,handler);
+        return this;   
+    }
+    __onEvent(event,dispose,...callbacks){
+        if(callbacks.length===0){
+            if(this.cache.callbacks.length>1){
+                this.cache.callbacks.map(n=>e=>n.call(this,e));
+            }   
+            else return this;
+        }
+        else this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
+        this.__handle(event,this.__controller[event],dispose);
+        return this;  
+    }
+    preventDefault(config={}){
+        Object.assign(this.cache.preventDefault,config);
+        return this;
+    }
+    pause(config={}){
+        const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
+        config={...all,...config};
+        for(let key in config){
+            if(config[key]){
+                this.Target.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                this.cache.paused[`${this.cache.prefixe}${key}`]=true;
+            }
+        }
+        return this;
+     }
+    resume(config={}){
+        const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
+        config={...all,...config};
+        for(let key in config){
+            if(config[key]){
+                this.Target.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                this.cache.paused[`${this.cache.prefixe}${key}`]=false;
+            }
+        }
+        return this;
+     }
+    dispose(config={}){
+        this.pause(config);
+        return this;
+     }
+    stream(config={}){
+        const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
+        config={...all,...config};
+        Object.assign(this.cache.stream.enabled,config);
+        return this;
+     }
+    clear(config={}){
+        const all=Object.fromEntries(Object.keys(this.cache.stream.clear).map(n=>[n,true]));
+        config={...all,...config};
+        for(let key in config){
+            if(config[key]){
+                this.cache.stream.history[key]=[];
+            }
+        }
+        return this;
+    }
+}
+
 function pointerdown_controller(e){
-    event_controller$2.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "down",
@@ -2317,7 +2393,7 @@ function pointerdown_controller(e){
     );
 }
 function pointermove_controller(e){
-    event_controller$2.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "move",
@@ -2333,7 +2409,7 @@ function pointermove_controller(e){
     );
 }
 function pointerup_controller(e){
-    event_controller$2.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "up",
@@ -2349,7 +2425,7 @@ function pointerup_controller(e){
     );
 }
 function pointerenter_controller(e){
-    event_controller$2.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "enter",
@@ -2358,7 +2434,7 @@ function pointerenter_controller(e){
     );
 }
 function pointerleave_controller(e){
-    event_controller$2.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "leave",
@@ -2367,7 +2443,7 @@ function pointerleave_controller(e){
     );
 }
 function pointerout_controller(e){
-    event_controller$2.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "out",
@@ -2375,11 +2451,9 @@ function pointerout_controller(e){
         null    
     );
 }
-class ZikoEventPointer{
-        #controller
-        #dispose
+class ZikoEventPointer extends ZikoEvent{
     constructor(target){
-        this.Target=window;
+        super(target);
         this.event=null;
         this.dx=0;
         this.dy=0;
@@ -2393,6 +2467,7 @@ class ZikoEventPointer{
         this.isMoving=false;
         this.isDown=false;
         this.cache={
+            prefixe:"pointer",
             preventDefault:{
                 down:false,
                 move:false,
@@ -2444,7 +2519,7 @@ class ZikoEventPointer{
                 leave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
             }
         };
-        this.#controller={
+        this.__controller={
             down:pointerdown_controller.bind(this),
             move:pointermove_controller.bind(this),
             up:pointerup_controller.bind(this),
@@ -2452,345 +2527,244 @@ class ZikoEventPointer{
             out:pointerout_controller.bind(this),
             leave:pointerleave_controller.bind(this),
         };
-        this.#dispose=this.dispose.bind(this);
-        this.EventIndex=Garbage.Pointer.data.length;
-        Garbage.Pointer.data.push({event:this,index:this.EventIndex});
-        this.setTarget(target);
-    }
-    setTarget(UI){
-        this.Target=UI?.element||document.querySelector(UI);
-        return this;
-    }
-    #handle(event,handler,dispose={down:false,move:false,up:false,enter:false,out:false,leave:false}){
-        this.dispose(dispose);
-        this.Target.addEventListener(`pointer${event}`,handler);
-        return this;   
-    }
-    #onEvent(event,dispose,...callbacks){
-        if(callbacks.length===0){
-            if(this.cache.callbacks.length>1){
-                this.cache.callbacks.map(n=>e=>n.call(this,e));
-            }   
-            else return this;
-        }
-        else this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
-        this.#handle(event,this.#controller[event],dispose);
-        return this;  
     }
     onDown(...callbacks){
-        this.#onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks);
+        this.__onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks);
         return this;
     }
     onMove(...callbacks){
-        this.#onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks);
+        this.__onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks);
         return this;
     }
     onUp(...callbacks){
-        this.#onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks);
+        this.__onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks);
         return this;
     }
     onEnter(...callbacks){
-        this.#onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks);
+        this.__onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks);
         return this;
     }
     onOut(...callbacks){
-        this.#onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks);
+        this.__onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks);
         return this;
     }
     onLeave(...callbacks){
-        this.#onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks);
+        this.__onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks);
         return this;
     }
-    handle({down=false,move=false,up=false}={}){
-        if(down)this.handleDown();
-        if(move)this.handleMove();
-        if(up)this.handleUp();
-    }
-    pause(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
-        for(let key in config){
-            if(config[key]){
-                this.Target.removeEventListener(`pointer${key}`,this.#controller[`pointer${key}`]);
-                this.cache.paused[`pointer${key}`]=true;
-            }
-        }
-        return this;
-     }
-    resume(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
-        for(let key in config){
-            if(config[key]){
-                this.Target.addEventListener(`pointer${key}`,this.#controller[`pointer${key}`]);
-                this.cache.paused[`pointer${key}`]=false;
-            }
-        }
-        return this;
-     }
-    dispose({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        this.pause({down,move,up,leave,out,enter});
-        return this;
-     }
-    stream({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        Object.assign(this.cache.stream.enabled,{down,move,up,enter,out,leave});
-        return this;
-     }
-    clear(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
-        for(let key in config){
-            if(config[key]){
-                this.cache[key]=[];
-            }
-        }
-        return this;
-    }
+    // handle({down=false,move=false,up=false}={}){
+    //     if(down)this.handleDown();
+    //     if(move)this.handleMove();
+    //     if(up)this.handleUp()
+    // }
 }
 var Pointer=target=>new ZikoEventPointer(target);
 
-// function keydown_controller(e){
-//     (()=>this.kd=e.key)();
-//     if(this.cache.preventDefault.keydown)e.preventDefault();
-//     if(this.cache.Enabled.keydown)this.cache.keydown.push({key:this.kd,t:0});
-//     this.cache.callbacks.keydown.map(n=>n(this))
-//     return this;
-// } 
-function event_controller$1(e,EVENT,setter,push_object){
-    setter();
-    if(this.cache.preventDefault[EVENT])e.preventDefault();
-    if(this.cache.Enabled[EVENT])this.cache[EVENT].push(push_object);
-    if(this.cache.callbacks[EVENT].length>0){
-        this.cache.callbacks[EVENT].map(n=>n(this));
-    }
-    return this;
-}
 function keydown_controller(e){
-    event_controller$1.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
-        "keydown",
+        "down",
         ()=>this.kd=e.key,
         {key:e.key,t:10}
         );
 }
 function keypress_controller(e){
-    event_controller$1.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
-        "keypress",
+        "press",
         ()=>this.kp=e.key,
         {key:e.key,t:10}
         );
 }
 function keyup_controller(e){
-    event_controller$1.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
-        "keyup",
+        "up",
         ()=>this.ku=e.key,
         {key:e.key,t:10}
         );
 }
-class ZikoEventKey{
-    #dispose
-    #controller
-    constructor(Target=window){ 
-        this.Target=window;
-        this.setTarget(Target);
+class ZikoEventKey extends ZikoEvent{
+    constructor(target){ 
+        super(target);
         this.kp=null;
         this.kd=null;
         this.ku=null;
         this.t=0;
         this.cache={
+            prefixe:"key",
             preventDefault:{
-                keydown:false,
-                keypress:false,
-                keyup:false,
+                down:false,
+                press:false,
+                up:false,
             },
-            Enabled:{
-                keydown:true,
-                keypress:false,
-                keyup:false,
+            paused:{
+                down:false,
+                press:false,
+                up:false,
+            },
+            stream:{
+                enabled:{
+                    down:false,
+                    press:false,
+                    up:false,
+                },
+                clear:{
+                    down:true,
+                    press:false,
+                    up:false,
+                },
+                history:{
+                    down:[],
+                    press:[],
+                    up:[],
+                }
             },
             callbacks:{
-                keydown:[(self)=>console.log({kd:self.kd})],
-                keypress:[(self)=>console.log({kp:self.kp})],
-                keyup:[(self)=>console.log({ku:self.ku})]
+                down:[(self)=>console.log({kd:self.kd})],
+                press:[(self)=>console.log({kp:self.kp})],
+                up:[(self)=>console.log({ku:self.ku})]
             },
             successifKeysCallback:{
-                keydown:[(self)=>console.log(1111)],
-                keypress:[(self)=>console.log(1112)],
+                down:[(self)=>console.log(1111)],
+                press:[(self)=>console.log(1112)],
                 kyup:[(self)=>console.log(1113)]
-            },
-            keydown:[],
-            keypress:[],
-            keyup:[],
+            }
         };
-        this.#controller={
-            keydown:keydown_controller.bind(this),
-            keypress:keypress_controller.bind(this),
-            keyup:keyup_controller.bind(this)
+        this.__controller={
+            down:keydown_controller.bind(this),
+            press:keypress_controller.bind(this),
+            up:keyup_controller.bind(this)
         };
-        this.#dispose=this.dispose.bind(this);
-        this.EventIndex=Garbage.Key.data.length;
-        Garbage.Key.data.push({event:this,index:this.EventIndex});
     }
-    setTarget(UI){
-        if(typeof UI === "string")this.Target=document.querySelector(UI);
-        else this.Target=UI?.element||window;
-        return this;
-    }
-    #handle(event,handler,dispose){
-        this.dispose(dispose);
-        this.Target.addEventListener(event,handler);
-        return this;      
-    }
-    #onEvent(event,dispose,...callbacks){
-        if(callbacks.length===0)return this;
-        this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
-        this.#handle(event,this.#controller[event],dispose);
-        return this;  
-    }
-    handle({down=true,press=true,up=true}={}){
-        if(down)this.#handle("keydown",this.#controller.keydown,{down:true});
-        if(press)this.#handle("keypress",this.#controller.keypress,{press:true});        if(up)this.#handle("keyup",this.#controller.keyup,{up:true});        return this;
-    }
-    dispose({down=true,press=true,up=true}={}){
-        if(down)this.Target.removeEventListener("keydown",this.#controller.keydown);
-        if(press)this.Target.removeEventListener("keypress",this.#controller.keypress);
-        if(up)this.Target.removeEventListener("keyup",this.#controller.keyup);
-        return this;
-    }
-    memorize({down=true,press=true,up=true}={}){
-        Object.assign(this.cache.Enabled,{down,press,up});
-        return this;
-    }
-    clear({down=true,press=true,up=true}={}){
-        if(down)this.cache.down=[];
-        if(press)this.cache.press=[];
-        if(up)this.cache.up=[];
-        return this;
-    }
-    preventDefault({down=true,press=true,up=true}={}){
-        Object.assign(this.cache.preventDefault,{down,press,up});
-        return this;
-     }
     onDown(...callbacks){
-        this.#onEvent("keydown",{down:true},...callbacks);
+        this.__onEvent("down",{down:true},...callbacks);
         return this;
      }
     onPress(...callbacks){
-        this.#onEvent("keypress",{press:true},...callbacks);
+        this.__onEvent("press",{press:true},...callbacks);
         return this;
      }
     onUp(...callbacks){
-        this.#onEvent("keyup",{up:true},...callbacks);
+        this.__onEvent("up",{up:true},...callbacks);
         return this;
      }
-    handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
-        const reversedkeys = keys.reverse();
-        const newkeys = new Array(reversedkeys.length).fill(null);
-        const addsub = (arr, item, length = keys.length) => {
-            arr.unshift(item);
-            arr.length = length;
-          };
+    // handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
+    //     const reversedkeys = keys.reverse();
+    //     const newkeys = new Array(reversedkeys.length).fill(null);
+    //     const addsub = (arr, item, length = keys.length) => {
+    //         arr.unshift(item);
+    //         arr.length = length;
+    //       };
         
-        if(event.down){
-            this.handleDown();
-            this.cache.successifKeysCallback.down=[callback];
-            this.cache.callback.down.push(e=>{
-                addsub(newkeys,e.kd);
-                if(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))this.cache.successifKeysCallback.down.map(n=>n(this));
-            });        
-            }       
-     }
+    //     if(event.down){
+    //         this.handleDown();
+    //         this.cache.successifKeysCallback.down=[callback];
+    //         this.cache.callback.down.push(e=>{
+    //             addsub(newkeys,e.kd);
+    //             if(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))this.cache.successifKeysCallback.down.map(n=>n(this))
+    //         })        
+    //         }       
+    //  }
 
 }
 
 var Key=Target=>new ZikoEventKey(Target);
 
-function event_controller(e,EVENT,setter){
-    if(setter)setter();
-    if(this.cache.preventDefault[EVENT])e.preventDefault();
-    if(this.cache.Enabled[EVENT])this.cache[EVENT].push(e);
-    if(this.cache.callbacks[EVENT].length>0){
-        this.cache.callbacks[EVENT].map(n=>n(this));
-    }
-}
 function dragstart_controller(e){
-    event_controller.call(this,e,"dragstart");
+    EVENT_CONTROLLER.call(this,e,"start",null,null);
 }
 function drag_controller(e){
-    event_controller.call(this,e,"drag");
+    EVENT_CONTROLLER.call(this,e,"",null,null);
 }
 function dragend_controller(e){
-    event_controller.call(this,e,"dragend");
+    EVENT_CONTROLLER.call(this,e,"end",null,null);
 }
 
-class ZikoEventDrag{
-    #controller;
+class ZikoEventDrag extends ZikoEvent{
     constructor(Target){
-        this._Target=window;
-        this.setTarget(Target);
-        this._Target.setAttribute("draggable",true);
+        super(Target);
+        this.Target.setAttribute("draggable",true);
         this.cache={
+            prefixe:"drag",
             preventDefault:{
                 drag:false,
-                dragstart:false,
-                dragend:false,
-                dragenter:false,
-                dragleave:false,
-                dragover:false,
+                start:false,
+                end:false,
+                enter:false,
+                leave:false,
+                over:false,
             },
-            Enabled:{
+            paused:{
+                drag:false,
+                start:false,
+                end:false,
+                enter:false,
+                leave:false,
+                over:false,
+            },
+            enabled:{
                 drag:true,
-                dragstart:false,
-                dragend:false,
-                dragenter:false,
-                dragleave:false,
-                dragover:false,
+                start:false,
+                end:false,
+                enter:false,
+                leave:false,
+                over:false,
             },
             callbacks:{
                 drag:[(self)=>console.log(self)],
-                dragstart:[()=>console.log("dragstart")],
-                dragend:[()=>console.log("dragend")],
-                dragenter:[(self)=>console.log(self)],
-                dragleave:[(self)=>console.log(self)],
-                dragover:[(self)=>console.log(self)]
+                start:[()=>console.log("dragstart")],
+                end:[()=>console.log("dragend")],
+                enter:[(self)=>console.log(self)],
+                leave:[(self)=>console.log(self)],
+                over:[(self)=>console.log(self)]
             },
-            drag:[],
-            dragstart:[],
-            dragend:[],
-            dragenter:[],
-            dragleave:[],
-            dragover:[]
+            stream:{
+                enabled:{
+                    drag:false,
+                    start:false,
+                    end:false,
+                    enter:false,
+                    leave:false,
+                    over:false,
+                },
+                clear:{
+                    drag:false,
+                    start:false,
+                    end:false,
+                    enter:false,
+                    leave:false,
+                    over:false,
+                },
+                history:{
+                    drag:[],
+                    start:[],
+                    end:[],
+                    enter:[],
+                    leave:[],
+                    over:[],
+                }
+            }
         };
-        this.#controller={
-            dragstart:dragstart_controller.bind(this),
+        this.__controller={
+            start:dragstart_controller.bind(this),
             drag:drag_controller.bind(this),
-            dragend:dragend_controller.bind(this)
+            end:dragend_controller.bind(this)
         };
-    }
-    setTarget(UI){
-        if(typeof UI === "string")this._Target=document.querySelector(UI);
-        else this._Target=UI?.element||window;
-        return this;
-    }
-    #handle(event,handler){
-        this._Target.addEventListener(event,handler);
-        return this;    
-    }
-    #onEvent(event,...callbacks){
-        if(callbacks.length===0)return this;
-        this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
-        this.#handle(event,this.#controller[event]);
-        return this;          
     }
     onStart(...callbacks){
-        this.#onEvent("dragstart",...callbacks);
+        this.__onEvent("start",...callbacks);
         return this;
     }
     onDrag(...callbacks){
-        this.#onEvent("drag",...callbacks);
+        this.__onEvent("",...callbacks);
         return this;
     }
     onEnd(...callbacks){
-        this.#onEvent("dragend",...callbacks);
+        this.__onEvent("end",...callbacks);
         return this;
     }
 }

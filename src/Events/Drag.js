@@ -1,91 +1,96 @@
 import Garbage from "./Garbage.js";
-function event_controller(e,EVENT,setter){
-    if(setter)setter();
-    if(this.cache.preventDefault[EVENT])e.preventDefault();
-    if(this.cache.Enabled[EVENT])this.cache[EVENT].push(e);
-    if(this.cache.callbacks[EVENT].length>0){
-        this.cache.callbacks[EVENT].map(n=>n(this))
-    }
-}
+import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 function dragstart_controller(e){
-    event_controller.call(this,e,"dragstart")
+    EVENT_CONTROLLER.call(this,e,"start",null,null)
 }
 function drag_controller(e){
-    event_controller.call(this,e,"drag")
+    EVENT_CONTROLLER.call(this,e,"",null,null)
 }
 function dragend_controller(e){
-    event_controller.call(this,e,"dragend")
+    EVENT_CONTROLLER.call(this,e,"end",null,null)
 }
 
-class ZikoEventDrag{
-    #controller;
+class ZikoEventDrag extends ZikoEvent{
     constructor(Target){
-        this._Target=window;
-        this.setTarget(Target);
-        this._Target.setAttribute("draggable",true);
+        super(Target)
+        this.Target.setAttribute("draggable",true);
         this.cache={
+            prefixe:"drag",
             preventDefault:{
                 drag:false,
-                dragstart:false,
-                dragend:false,
-                dragenter:false,
-                dragleave:false,
-                dragover:false,
+                start:false,
+                end:false,
+                enter:false,
+                leave:false,
+                over:false,
             },
-            Enabled:{
-                drag:true,
-                dragstart:false,
-                dragend:false,
-                dragenter:false,
-                dragleave:false,
-                dragover:false,
+            paused:{
+                drag:false,
+                start:false,
+                end:false,
+                enter:false,
+                leave:false,
+                over:false,
+            },
+            enabled:{
+                drag:false,
+                start:false,
+                end:false,
+                enter:false,
+                leave:false,
+                over:false,
             },
             callbacks:{
                 drag:[(self)=>console.log(self)],
-                dragstart:[()=>console.log("dragstart")],
-                dragend:[()=>console.log("dragend")],
-                dragenter:[(self)=>console.log(self)],
-                dragleave:[(self)=>console.log(self)],
-                dragover:[(self)=>console.log(self)]
+                start:[()=>console.log("dragstart")],
+                end:[()=>console.log("dragend")],
+                enter:[(self)=>console.log(self)],
+                leave:[(self)=>console.log(self)],
+                over:[(self)=>console.log(self)]
             },
-            drag:[],
-            dragstart:[],
-            dragend:[],
-            dragenter:[],
-            dragleave:[],
-            dragover:[]
+            stream:{
+                enabled:{
+                    drag:false,
+                    start:false,
+                    end:false,
+                    enter:false,
+                    leave:false,
+                    over:false,
+                },
+                clear:{
+                    drag:false,
+                    start:false,
+                    end:false,
+                    enter:false,
+                    leave:false,
+                    over:false,
+                },
+                history:{
+                    drag:[],
+                    start:[],
+                    end:[],
+                    enter:[],
+                    leave:[],
+                    over:[],
+                }
+            }
         }
-        this.#controller={
-            dragstart:dragstart_controller.bind(this),
+        this.__controller={
+            start:dragstart_controller.bind(this),
             drag:drag_controller.bind(this),
-            dragend:dragend_controller.bind(this)
+            end:dragend_controller.bind(this)
         }
-    }
-    setTarget(UI){
-        if(typeof UI === "string")this._Target=document.querySelector(UI)
-        else this._Target=UI?.element||window;
-        return this;
-    }
-    #handle(event,handler){
-        this._Target.addEventListener(event,handler);
-        return this;    
-    }
-    #onEvent(event,...callbacks){
-        if(callbacks.length===0)return this;
-        this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
-        this.#handle(event,this.#controller[event])
-        return this;          
     }
     onStart(...callbacks){
-        this.#onEvent("dragstart",...callbacks);
+        this.__onEvent("start",...callbacks);
         return this;
     }
     onDrag(...callbacks){
-        this.#onEvent("drag",...callbacks);
+        this.__onEvent("",...callbacks);
         return this;
     }
     onEnd(...callbacks){
-        this.#onEvent("dragend",...callbacks);
+        this.__onEvent("end",...callbacks);
         return this;
     }
 }

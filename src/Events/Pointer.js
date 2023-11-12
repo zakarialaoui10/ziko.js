@@ -1,14 +1,6 @@
-import Garbage from "./Garbage.js";
-function event_controller(e,EVENT,setter,push_object){
-    this.event=e
-    if(this.cache.preventDefault[EVENT])e.preventDefault();
-    if(setter)setter();
-    if(this.cache.stream.enabled[EVENT]&&push_object)this.cache.stream.history[EVENT].push(push_object);
-    this.cache.callbacks[EVENT].map(n=>n(this));
-    return this;
-}
+import {ZikoEvent,EVENT_CONTROLLER} from "./ZikoEvent.js";
 function pointerdown_controller(e){
-    event_controller.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "down",
@@ -24,7 +16,7 @@ function pointerdown_controller(e){
     )
 }
 function pointermove_controller(e){
-    event_controller.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "move",
@@ -40,7 +32,7 @@ function pointermove_controller(e){
     )
 }
 function pointerup_controller(e){
-    event_controller.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "up",
@@ -56,7 +48,7 @@ function pointerup_controller(e){
     )
 }
 function pointerenter_controller(e){
-    event_controller.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "enter",
@@ -65,7 +57,7 @@ function pointerenter_controller(e){
     )
 }
 function pointerleave_controller(e){
-    event_controller.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "leave",
@@ -74,7 +66,7 @@ function pointerleave_controller(e){
     )
 }
 function pointerout_controller(e){
-    event_controller.call(
+    EVENT_CONTROLLER.call(
         this,
         e,
         "out",
@@ -82,11 +74,9 @@ function pointerout_controller(e){
         null    
     )
 }
-class ZikoEventPointer{
-        #controller
-        #dispose
+class ZikoEventPointer extends ZikoEvent{
     constructor(target){
-        this.Target=window;
+        super(target);
         this.event=null;
         this.dx=0;
         this.dy=0;
@@ -100,6 +90,7 @@ class ZikoEventPointer{
         this.isMoving=false;
         this.isDown=false;
         this.cache={
+            prefixe:"pointer",
             preventDefault:{
                 down:false,
                 move:false,
@@ -151,7 +142,7 @@ class ZikoEventPointer{
                 leave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
             }
         }
-        this.#controller={
+        this.__controller={
             down:pointerdown_controller.bind(this),
             move:pointermove_controller.bind(this),
             up:pointerup_controller.bind(this),
@@ -159,94 +150,36 @@ class ZikoEventPointer{
             out:pointerout_controller.bind(this),
             leave:pointerleave_controller.bind(this),
         }
-        this.#dispose=this.dispose.bind(this);
-        this.EventIndex=Garbage.Pointer.data.length;
-        Garbage.Pointer.data.push({event:this,index:this.EventIndex});
-        this.setTarget(target);
-    }
-    setTarget(UI){
-        this.Target=UI?.element||document.querySelector(UI);
-        return this;
-    }
-    #handle(event,handler,dispose={down:false,move:false,up:false,enter:false,out:false,leave:false}){
-        this.dispose(dispose);
-        this.Target.addEventListener(`pointer${event}`,handler);
-        return this;   
-    }
-    #onEvent(event,dispose,...callbacks){
-        if(callbacks.length===0){
-            if(this.cache.callbacks.length>1){
-                this.cache.callbacks.map(n=>e=>n.call(this,e));
-            }   
-            else return this;
-        }
-        else this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
-        this.#handle(event,this.#controller[event],dispose)
-        return this;  
     }
     onDown(...callbacks){
-        this.#onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks)
+        this.__onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks)
         return this;
     }
     onMove(...callbacks){
-        this.#onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks)
+        this.__onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks)
         return this;
     }
     onUp(...callbacks){
-        this.#onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks)
+        this.__onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks)
         return this;
     }
     onEnter(...callbacks){
-        this.#onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks)
+        this.__onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks)
         return this;
     }
     onOut(...callbacks){
-        this.#onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks)
+        this.__onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks)
         return this;
     }
     onLeave(...callbacks){
-        this.#onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks)
+        this.__onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks)
         return this;
     }
-    handle({down=false,move=false,up=false}={}){
-        if(down)this.handleDown();
-        if(move)this.handleMove();
-        if(up)this.handleUp()
-    }
-    pause(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
-        for(let key in config){
-            if(config[key]){
-                this.Target.removeEventListener(`pointer${key}`,this.#controller[`pointer${key}`]);
-                this.cache.paused[`pointer${key}`]=true;
-            }
-        }
-        return this;
-     }
-    resume(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
-        for(let key in config){
-            if(config[key]){
-                this.Target.addEventListener(`pointer${key}`,this.#controller[`pointer${key}`]);
-                this.cache.paused[`pointer${key}`]=false;
-            }
-        }
-        return this;
-     }
-    dispose({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        this.pause({down,move,up,leave,out,enter});
-        return this;
-     }
-    stream({down=true,move=true,up=true,enter=true,out=true,leave=true}={}){
-        Object.assign(this.cache.stream.enabled,{down,move,up,enter,out,leave});
-        return this;
-     }
-    clear(config={down:true,move:true,up:true,enter:true,out:true,leave:true}){
-        for(let key in config){
-            if(config[key]){
-                this.cache[key]=[]
-            }
-        }
-        return this;
-    }
+    // handle({down=false,move=false,up=false}={}){
+    //     if(down)this.handleDown();
+    //     if(move)this.handleMove();
+    //     if(up)this.handleUp()
+    // }
 }
 var Pointer=target=>new ZikoEventPointer(target)
 export default Pointer;
