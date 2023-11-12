@@ -12,7 +12,7 @@ Zikojs a versatile JavaScript library offering a rich set of UI components, adva
 
 ⚠️ Be careful with this method because it will overwrite any existing global or local variables and functions with the same names as the extracted methods. 
 
- - ## Mathematical Utilities
+ - ## 🔰 Mathematical Utilities
 
 ```js
  const a = cos(0);
@@ -33,7 +33,7 @@ Zikojs a versatile JavaScript library offering a rich set of UI components, adva
   .style({ color: "red" })
   .onPtrMove(throttle(() => console.log("hi")));
 ```
- - ## Events Handling
+ - ## 🔰 Events Handling
 Example of creating simple Paint sketch using canvas and pointer events : 
 ```js
 const Scene=Canvas().view(-10,-10,10,10).size(500,500).adjust()
@@ -56,11 +56,11 @@ c.onPtrUp(()=>{})
    ```js
    const inp=input().onKeyDown(throttle(e=>console.log(e.kd),1000));
    ```
- - ## Reactivity :
+ - ## 🔰 Reactivity :
    You can watch Elements resizes , intersections , mutations ..
- - ## Rich UI Elements Based on Math modules
+ - ## 🔰 Rich UI Elements Based on Math modules
    for example in `Table` you can use methodes like `hsatck` `vstack` `transpose` ...
- - ## Routing for Single Page Applications (SPA)
+ - ## 🔰 Routing for Single Page Applications (SPA)
  ```js
 const main= Section()
 const p1=Section()
@@ -71,7 +71,7 @@ S=Ziko.SPA(
      "/svg":P2
  })
  ```
- - ## Multithreading supports
+ - ## 🔰 Multithreading supports
  
 ```js
 Ziko.Multi(() => {
@@ -80,8 +80,8 @@ Ziko.Multi(() => {
   return s;
 }, console.log);
  ```
- - ## Responsive Design using Flex element and resize observer
- - ## Loop and animations support 
+ - ## 🔰 Responsive Design using Flex element and resize observer
+ - ## 🔰 Loop and animations support 
 
 
 
