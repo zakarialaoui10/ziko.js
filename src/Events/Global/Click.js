@@ -1,6 +1,6 @@
 import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
 function click_controller(e){
-    EVENT_CONTROLLER(this,e,"click",null,null)
+    EVENT_CONTROLLER.call(this,e,"click",null,null)
 }
 function dbclick_controller(e){
     EVENT_CONTROLLER.call(this,e,"dbclick",null,null)

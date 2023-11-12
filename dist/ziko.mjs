@@ -2819,7 +2819,7 @@ const Drag=Target=>new ZikoEventDrag(Target);
 const Drop=Target=>new ZikoEventDrop(Target);
 
 function click_controller(e){
-    EVENT_CONTROLLER(this,e,"click",null);
+    EVENT_CONTROLLER.call(this,e,"click",null,null);
 }
 function dbclick_controller(e){
     EVENT_CONTROLLER.call(this,e,"dbclick",null,null);
@@ -3405,26 +3405,6 @@ class ZikoUIElement {
     item.filter((n) => n.style.display != "none");
     return this;
   }
-  // on(event, calback, { target = "parent", maskVector = null } = {}) {
-  //   if (target === "parent" || target === 0)
-  //     this.element.addEventListener(event, calback);
-  //   else if (target === "children" || target === 1) {
-  //     if (maskVector) {
-  //       this.items.map(
-  //         (n, i) =>
-  //           maskVector[i] == 1 && n.element.addEventListener(event, calback),
-  //       );
-  //     } else this.items.map((n) => n.element.addEventListener(event, calback));
-  //   }
-  // }
-  // onClick(calback, { target = "parent", maskVector = null } = {}) {
-  //   this.on("click", calback, { target, maskVector });
-  //   return this;
-  // }
-  // onDbclick(calback, { target = "parent", maskVector = null } = {}) {
-  //   this.on("dbclick", calback, { target, maskVector });
-  //   return this;
-  // }
   onPtrMove(...callbacks){
     if(!this.events.ptr)this.events.ptr = Pointer(this);
     this.events.ptr.onMove(...callbacks);
