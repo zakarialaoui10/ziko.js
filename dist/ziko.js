@@ -967,10 +967,26 @@
         static int(a, b) {
             return Math.floor(this.float(a, b));
         }
+        static char(upperCase){
+            upperCase=upperCase??this.bool();
+            const Char=String.fromCharCode(this.int(97,120));
+            return upperCase?Char.toUpperCase():Char;
+        }
+        static bool(){
+            return [false,true][Math.floor(Math.random()*2)];
+        }
+        static string(length,upperCase){
+            return length instanceof Array?
+                new Array(this.int(...length)).fill(0).map(() => this.char(upperCase)).join(""):
+                new Array(length).fill(0).map(() => this.char(upperCase)).join("");
+        }
         static bin() {
             return this.int(2);
         }
         static oct() {
+            return this.int(8);
+        }
+        static dec() {
             return this.int(8);
         }
         static hex() {
@@ -983,8 +999,12 @@
             for (let i = 1; i < choices.length; i++) newchoice.fill(choices[i], p[i - 1], p[i]);
             return newchoice[this.int(newchoice.length - 1)];
         }
-        static shuffle(arr){
-            return arr.sort(()=>0.5-Math.random())
+        static shuffleArr(arr){
+            return arr.sort(()=>0.5-Math.random())    
+        }
+        static shuffleMatrix(M){
+                const {rows,cols,arr}=M;
+                return matrix(rows,cols,arr.flat().sort(()=>0.5-Math.random()))
         }
         static floats(n, a, b) {
             return new Array(n).fill(0).map(() => this.float(a, b));
@@ -992,13 +1012,19 @@
         static ints(n, a, b) {
             return new Array(n).fill(0).map(() => this.int(a, b));
         }
+        static bools(n){
+            return  new Array(n).fill(0).map(() => this.bool());
+        }
         static bins(n) {
             return new Array(n).fill(0).map(() => this.int(2));
         }
         static octs(n) {
             return new Array(n).fill(0).map(() => this.int(8));
         }
-        static hexes(n) {
+        static decs(n) {
+            return new Array(n).fill(0).map(() => this.int(10));
+        }
+        static hexs(n) {
             return new Array(n).fill(0).map(() => this.int(16));
         }
         static choices(n, choices, p) {
@@ -1014,10 +1040,15 @@
             return new Array(n).fill(null).map(()=>this.color());
         }
         static complex(a = [0,1], b = [0,1]) {
-            return new Complex(
+            return a instanceof Array?
+            new Complex(
                 this.float(a[0], a[1]),
                 this.float(b[0], b[1])
-                );
+            ):
+            new Complex(
+                ...this.floats(2,a,b)
+            )
+            
         }
         static complexInt(a = [0,1], b = [0,1]) {
             return new Complex(
@@ -1030,6 +1061,9 @@
         }
         static complexOct() {
             return new Complex(...this.octs(2));
+        }
+        static complexDec() {
+            return new Complex(...this.decs(10));
         }
         static complexHex() {
             return new Complex(...this.octs(2));
@@ -1046,11 +1080,50 @@
         static complexesOct(n) {
             return new Array(n).fill(0).map(() => this.complexOct());
         }
+        static complexesDec(n) {
+            return new Array(n).fill(0).map(() => this.complexDec());
+        }
         static complexesHex(n) {
             return new Array(n).fill(0).map(() => this.complexHex());
         }
         static matrix(r,c,min,max){
             return matrix(r,c,this.floats(r*c,min,max))
+        }
+        static matrixInt(r,c,min,max){
+            return matrix(r,c,this.ints(r*c,min,max))
+        }
+        static matrixBin(r,c){
+            return matrix(r,c,this.bins(r*c))
+        }
+        static matrixOct(r,c){
+            return matrix(r,c,this.octs(r*c))
+        }
+        static matrixDec(r,c){
+            return matrix(r,c,this.decs(r*c))
+        }
+        static matrixHex(r,c){
+            return matrix(r,c,this.hex(r*c))
+        }
+        static matrixColor(r,c){
+            return matrix(r,c,this.colors(r*c))
+        }
+        static matrixComplex(r,c,a,b){
+            return matrix(r,c,this.complexes(r*c,a,b))
+        }
+        static matrixComplexInt(r,c,a,b){
+            return matrix(r,c,this.complexesInt(r*c,a,b))
+        }
+        static matrixComplexBin(r,c){
+            return matrix(r,c,this.complexesBin(r*c))
+        }
+        static matrixComplexOct(r,c){
+            return matrix(r,c,this.complexesBin(r*c))
+        }
+        static matrixComplexDec(r,c){
+            return matrix(r,c,this.complexesBin(r*c))
+        }
+        static matrixComplexHex(r,c){
+            return matrix(r,c,this.complexesBin(r*c))
         }
     }
 
