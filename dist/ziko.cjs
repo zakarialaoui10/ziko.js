@@ -3014,6 +3014,9 @@ class ZikoEventInput extends ZikoEvent{
             change:change_controller.bind(this),
         };
     }
+    get value(){
+        return this.Target.value;
+    }
     onInput(...callbacks){
         this.__onEvent("input",{},...callbacks);
         return this;
@@ -4185,13 +4188,6 @@ class ZikoUIInput extends ZikoUIElement {
     this.element.select();
     document.execCommand("cut");
     return this;
-  }
-  onInput(callback,{decorator=function(){},delay=null}={}) {
-    this.element.addEventListener("input",decorator(callback,delay));
-    return this;
-  }
-  onChange(callback) {
-    this.element.addEventListener("change", callback);
   }
   accept(value) {
     this.element.accept = value;

@@ -43,6 +43,9 @@ class ZikoEventInput extends ZikoEvent{
             change:change_controller.bind(this),
         }
     }
+    get value(){
+        return this.Target.value;
+    }
     onInput(...callbacks){
         this.__onEvent("input",{},...callbacks)
         return this;
