@@ -2,6 +2,7 @@
 import{Complex}from"../Complex/index.js"
 import { Utils } from "../Utils/index.js";
 import{Base}from"../Discret/index.js"
+import { matrix } from "../Matrix/index.js";
 
 class Random {
     static float(a = 1, b) {
@@ -68,29 +69,44 @@ class Random {
             this.int(b[0], b[1])
             );
     }
-    static complex2() {
+    static complexBin() {
         return new Complex(...this.bins(2));
     }
-    static complex8() {
+    static complexOct() {
         return new Complex(...this.octs(2));
     }
-    static complex16() {
+    static complexHex() {
         return new Complex(...this.octs(2));
     }
     static complexes(n, a = 0, b = 1) {
         return new Array(n).fill(0).map(() => this.complex(a, b));
     }
-    static complexesIn(n, a = 0, b = 1) {
+    static complexesInt(n, a = 0, b = 1) {
         return new Array(n).fill(0).map(() => this.complexInt(a, b));
     }
-    static complexes2(n) {
-        return new Array(n).fill(0).map(() => this.complex2());
+    static complexesBin(n) {
+        return new Array(n).fill(0).map(() => this.complexBin());
     }
-    static complexes8(n) {
-        return new Array(n).fill(0).map(() => this.complex8());
+    static complexesOct(n) {
+        return new Array(n).fill(0).map(() => this.complexOct());
     }
-    static complexes16(n) {
-        return new Array(n).fill(0).map(() => this.complex16());
+    static complexesHex(n) {
+        return new Array(n).fill(0).map(() => this.complexHex());
+    }
+    static matrix(r,c,min,max){
+        return matrix(r,c,this.floats(r*c,min,max))
+    }
+    static matrixBin(r,c){
+        return matrix(r,c,this.bins(r*c))
+    }
+    static matrixOct(r,c,min,max){
+        return matrix(r,c,this.octs(r*c))
+    }
+    static matrixHex(r,c,min,max){
+        return matrix(r,c,this.hex(r*c))
+    }
+    static matrixColor(r,c){
+        return matrix(r,c,this.colors(r*c))
     }
 }
 export{Random}
