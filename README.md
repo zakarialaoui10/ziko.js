@@ -52,7 +52,7 @@ c.onPtrMove(e=>{
    }
 c.onPtrUp(()=>{})
   ```
- - Functions decorators
+ - ## 🔰 Functions decorators
    ```js
    const inp=input().onKeyDown(throttle(e=>console.log(e.kd),1000));
    ```
