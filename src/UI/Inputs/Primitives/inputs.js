@@ -1,4 +1,5 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
+import { Input } from "../../../Events/index.js";
 import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
 import { btn } from "./btn.js";
 //import { select } from "./select.js";
@@ -8,9 +9,20 @@ class ZikoUIInput extends ZikoUIElement {
   constructor(value = "",datalist) {
     super();
     this.element = document.createElement("input");
+    Object.assign(this.events,{input:null})
     this.setValue(value);
     if(datalist)this.linkDatalist(datalist)
     this.render();
+  }
+  onInput(...callbacks){
+    if(!this.events.input)this.events.input = Input(this);
+    this.events.input.onInput(...callbacks);
+    return this;
+  }
+  onChange(...callbacks){
+    if(!this.events.input)this.events.input = Input(this);
+    this.events.input.onChange(...callbacks);
+    return this;
   }
   linkDatalist(datalist) {
     let id;

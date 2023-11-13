@@ -3,6 +3,7 @@ import Key from "./Global/Key.js";
 import {Drag,Drop} from "./Global/Drag.js"
 import Click from "./Global/Click.js"
 import Clipboard from "./Global/Clipboard.js"
+import Input from "./Partiel/Input.js";
 const Events={
     Pointer,
     Key,
@@ -10,6 +11,7 @@ const Events={
     Drop,
     Click,
     Clipboard,
+    Input,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -27,6 +29,7 @@ export {
     Drag,
     Drop,
     Click,
-    Clipboard
+    Clipboard,
+    Input
 }
 export default Events

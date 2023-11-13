@@ -2866,7 +2866,7 @@ class ZikoEventClick extends ZikoEvent{
             },
             callbacks:{
                 click:[],
-                dclick:[],
+                dbclick:[],
             }
         };
         this.__controller={
@@ -2968,6 +2968,61 @@ class ZikoEventClipboard extends ZikoEvent{
 }
 const Clipboard=Target=>new ZikoEventClipboard(Target);
 
+function input_controller(e){
+    EVENT_CONTROLLER.call(this,e,"input",null,null);
+}
+function change_controller(e){
+    EVENT_CONTROLLER.call(this,e,"change",null,null);
+}
+class ZikoEventInput extends ZikoEvent{
+    constructor(target){
+        super(target);
+        this.event=null;
+        this.cache={
+            prefixe:"",
+            preventDefault:{
+                input:false,
+                change:false,
+            },
+            paused:{
+                input:false,
+                change:false,      
+            },
+            stream:{
+                enabled:{
+                    input:false,
+                    change:false,
+                },
+                clear:{
+                    input:false, 
+                    change:false,         
+                },
+                history:{
+                    input:[],
+                    change:[],
+                }
+            },
+            callbacks:{
+                input:[],
+                change:[],
+            }
+        };
+        this.__controller={
+            input:input_controller.bind(this),
+            change:change_controller.bind(this),
+        };
+    }
+    onInput(...callbacks){
+        this.__onEvent("input",{},...callbacks);
+        return this;
+     }
+    onChange(...callbacks){
+        this.__onEvent("change",{},...callbacks);
+        return this;
+     }     
+}
+const Input=Target=>new ZikoEventInput(Target);
+
 const Events={
     Pointer,
     Key,
@@ -2975,6 +3030,7 @@ const Events={
     Drop,
     Click,
     Clipboard,
+    Input,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -4061,9 +4117,20 @@ class ZikoUIInput extends ZikoUIElement {
   constructor(value = "",datalist) {
     super();
     this.element = document.createElement("input");
+    Object.assign(this.events,{input:null});
     this.setValue(value);
     if(datalist)this.linkDatalist(datalist);
     this.render();
+  }
+  onInput(...callbacks){
+    if(!this.events.input)this.events.input = Input(this);
+    this.events.input.onInput(...callbacks);
+    return this;
+  }
+  onChange(...callbacks){
+    if(!this.events.input)this.events.input = Input(this);
+    this.events.input.onChange(...callbacks);
+    return this;
   }
   linkDatalist(datalist) {
     let id;
@@ -4620,10 +4687,10 @@ class ZikoUIGrid extends ZikoUIElement {
     columns(n) {
         let temp = "";
         for (let i = 0; i < n; i++) temp = temp.concat(" auto");
-        this.templateColumns(temp);
+        this.#templateColumns(temp);
         return this;
     }
-    templateColumns(temp = "auto auto") {
+    #templateColumns(temp = "auto auto") {
         this.style({ gridTemplateColumns: temp });
         return this;
     }

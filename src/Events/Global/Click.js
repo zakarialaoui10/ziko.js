@@ -35,7 +35,7 @@ class ZikoEventClick extends ZikoEvent{
             },
             callbacks:{
                 click:[],
-                dclick:[],
+                dbclick:[],
             }
         }
         this.__controller={
