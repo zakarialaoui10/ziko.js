@@ -13,10 +13,10 @@ class ZikoUIGrid extends ZikoUIElement {
     columns(n) {
         let temp = "";
         for (let i = 0; i < n; i++) temp = temp.concat(" auto");
-        this.templateColumns(temp);
+        this.#templateColumns(temp);
         return this;
     }
-    templateColumns(temp = "auto auto") {
+    #templateColumns(temp = "auto auto") {
         this.style({ gridTemplateColumns: temp });
         return this;
     }
