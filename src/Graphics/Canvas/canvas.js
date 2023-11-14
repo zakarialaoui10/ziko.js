@@ -40,7 +40,7 @@ class ZikoUICanvas extends ZikoUIElement{
         return this.axisMatrix[1][1];
     }
     get ImageData(){
-        return this.ctx.getImageData(0,0,c.Width,c.Height)
+        return this.ctx.getImageData(0,0,c.Width,c.Height);
     }
     draw(all=true){
         if(all){

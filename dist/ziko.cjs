@@ -5735,7 +5735,9 @@ class ZikoUICanvas extends ZikoUIElement{
     constructor(w,h){
         super();
         this.element=document.createElement("canvas");
-        this.ctx = this.element.getContext("2d");
+        this.offscreen=new OffscreenCanvas(w,h);
+        this.ctx = this.offscreen.getContext("2d");
+        this.ctx2 = this.element.getContext("2d");
         this.style({
             border:"1px red solid",
             //width:"300px",
@@ -5751,6 +5753,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [10,10]
         ]);
         this.render();
+        //this.size(w,h)
     }
     get Width(){
         return this.element.width;
@@ -5770,6 +5773,9 @@ class ZikoUICanvas extends ZikoUIElement{
     get Ymax(){
         return this.axisMatrix[1][1];
     }
+    get ImageData(){
+        return this.ctx.getImageData(0,0,c.Width,c.Height)
+    }
     draw(all=true){
         if(all){
             this.clear();  
@@ -5783,6 +5789,7 @@ class ZikoUICanvas extends ZikoUIElement{
             this.items.at(-1).draw(this.ctx);
         }
         this.maintain();
+        this.ctx2.drawImage(this.offscreen,0,0);
         return this;
     }
     applyTransformMatrix(){

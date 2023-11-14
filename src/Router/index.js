@@ -6,7 +6,7 @@ class ZikoSPA{
             ...Object.entries(routes)
         ]);
         this.maintain();
-        window.addEventListener("popstate",()=>this.render(location.pathname));
+        window.onpopstate = this.render(location.pathname);
     }
     set(path,wrapper){
         this.routes.set(path,wrapper);
