@@ -76,7 +76,7 @@ S=Ziko.SPA(
 // You can use regex to define routes
 S.get(
  pattern,
- (path)=>handler(path)
+ path=>handler(path)
 )
  ```
 
