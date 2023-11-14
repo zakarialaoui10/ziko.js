@@ -1,4 +1,4 @@
-💡 Zikojs a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities 
+*💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities*
 
 
 # Features 
@@ -71,8 +71,10 @@ S=Ziko.SPA(
      "/svg":P2
  })
  ```
-*** Ensure that your server serves only the index page for all incoming requests, Example using expressjs :***
-```
+
+***Ensure that your server serves only the index page for all incoming requests, Example using expressjs :***
+
+```js
  app.get('*', (req , res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
