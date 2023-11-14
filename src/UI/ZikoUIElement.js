@@ -106,6 +106,7 @@ class ZikoUIElement {
     for (let i = 0; i < ele.length; i++){
     if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
+        ele[i].parent=this;
         this.element.appendChild(ele[i].element);
         ele[i].Target = this.element;
         this.items.push(ele[i]);

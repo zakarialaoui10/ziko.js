@@ -76,14 +76,14 @@ a1.ca
 c.onPtrDown(e=>{
     c.ctx.beginPath()
     c.ctx.moveTo(
-        map(e.dx,0,c.element.offsetWidth,c.Xmin,c.Xmax),
-        map(e.dy,0,c.element.offseHeight,c.Ymin,c.Ymax)
+        map(e.dx,0,c.Width,c.Xmin,c.Xmax),
+        map(e.dy,0,c.Height,c.Ymin,c.Ymax)
         )
 })
 c.onPtrMove(e=>{
     if(e.isDown){
-        const x=map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0])
-        const y=map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
+        const x=map(e.mx,0,c.Width,c.axisMatrix[0][0],c.axisMatrix[1][0])
+        const y=map(e.my,0,c.Height,c.axisMatrix[1][1],c.axisMatrix[0][1])
     // c.ctx.lineTo(
     //     map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0]),
     //     map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
@@ -95,172 +95,6 @@ c.onPtrMove(e=>{
 c.onPtrUp(()=>{})
 
 
-// class Threed{
-//     #workerContent;
-//     constructor(){
-//         this.#workerContent=(
-//             function (msg){
-//                 console.log({Main:msg.data})
-//                 const func = new Function("return " + msg.data.fun)();
-//                     let a=func()
-//                     //postMessage("msg from worker " + a);
-//                     postMessage(a);
-//                     if(msg.data.close)self.close()
-//             }
-//             ).toString()
-//             this.blob = new Blob(["this.onmessage = "+this.#workerContent], { type: "text/javascript" }) 
-//             this.worker = new Worker(window.URL.createObjectURL(this.blob));
-//     }
-//     call(func,callback,close=true){
-//         this.worker.postMessage({
-//             fun:func.toString(),
-//             close
-//         });
-//         this.worker.onmessage=function(e){
-//             callback(e.data)
-//         }
-//         return this
-//     }
-// }
-
-// const Multi=(func,callback)=>{
-//     const T=new Threed()
-//     if(func){
-//         T.call(func,callback)
-//     }
-//     return T;
-// }
-
-//Multi(()=>{s=0;for(i=0;i<10000000000;i++)s+=i;return s},console.log)
-
-
-class Threed {
-    #workerContent;
-    constructor() {
-        this.#workerContent = (
-            function (msg) {
-                try {
-                    const func = new Function("return " + msg.data.fun)();
-                    let result = func();
-                    postMessage({ result });
-                } catch (error) {
-                    postMessage({ error: error.message });
-                } finally {
-                    if (msg.data.close) self.close();
-                }
-            }
-        ).toString();
-        this.blob = new Blob(["this.onmessage = " + this.#workerContent], { type: "text/javascript" });
-        this.worker = new Worker(window.URL.createObjectURL(this.blob));
-    }
-    call(func, callback, close = true) {
-        this.worker.postMessage({
-            fun: func.toString(),
-            close
-        });
-        this.worker.onmessage = function (e) {
-            if (e.data.error) {
-                console.error(e.data.error);
-            } else {
-                callback(e.data.result);
-            }
-        };
-        return this;
-    }
-}
-
-const Multi = (func, callback , close) => {
-    const T = new Threed();
-    if (func) {
-        T.call(func, callback , close);
-    }
-    return T;
-}
-
-// class ZikoSPA{
-//     constructor(root_UI,routes){
-//         this.root_UI=root_UI;
-//         this.routes=new Map([
-//             [404,text("Error 404")],
-//             ...Object.entries(routes)
-//         ]);
-//         this.maintain();
-//         window.addEventListener("popstate",()=>this.render(location.pathname));
-//     }
-//     set(path,wrapper){
-//         this.routes.set(path,wrapper);
-//         this.maintain();
-//         return this;
-//     }
-//     maintain(){
-//         this.root_UI.append(...this.routes.values());
-//         [...this.routes.values()].map(n=>n.render(false));
-//         return this;
-//     }
-//     render(path){
-//         (this.routes.get(path)??this.routes.get(403)).render(true);
-//         window.history.pushState({}, "", path);
-//         return this;
-//     }
-// }
-// const SPA=(root_UI,routes)=>new ZikoSPA(root_UI,routes);
-// //export default SPA;
-  
-// S=SPA(
-//     Section(),{
-//     "/canvas":Canvas(),
-//     "/svg":Canvas()
-// })
-  
-
-
-
-// class ZikoResizeObserver{
-//     constructor(UIElement,callback){
-//         this.target=UIElement;
-//         this.contentRect=null;
-//         this.observer=new ResizeObserver(()=>{
-//             callback(this)
-//         })
-//     }
-//     get BoundingRect(){
-//         return this.target.element.getBoundingClientRect();
-//     }
-//     get width(){
-//         return this.BoundingRect.width;
-//     }
-//     get height(){
-//         return this.BoundingRect.height;
-//     }
-//     get top(){
-//         return this.BoundingRect.top;
-//     }
-//     get bottom(){
-//         return this.BoundingRect.bottom;
-//     }
-//     get right(){
-//         return this.BoundingRect.right;
-//     }
-//     get left(){
-//         return this.BoundingRect.left;
-//     }
-//     get x(){
-//         return this.BoundingRect.x;
-//     }
-//     get y(){
-//         return this.boundingRect.y;
-//     }
-//     start(){
-//         this.observer.observe(this.target.element);
-//         return this;
-//     }
-//     stop(){
-
-//         return this;
-//     }
-// }
-//  resizeObserver=(UI,callback)=>new ZikoResizeObserver(UI,callback)
-// a=resizeObserver(c,e=>console.log(e.width)).start()
 
 class ZikoIntersectionObserver{
     constructor(UIElement,callback,{threshold=1}={}){
