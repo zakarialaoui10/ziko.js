@@ -72,7 +72,8 @@ S=Ziko.SPA(
  })
  ```
 
-***Ensure that your server serves only the index page for all incoming requests, Example using expressjs :***
+***Ensure that your server serves only the index page for all incoming requests.*** 
+***Example using expressjs :***
 
 ```js
  app.get('*', (req , res) => {
