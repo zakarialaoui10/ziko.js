@@ -26,7 +26,7 @@
               e:[PI,PI/2,PI/3,PI/4,PI/6]
          }})
 ```    
- - 🔰 ## Methodes Chaining 
+ - ## 🔰 Methodes Chaining 
 
 ```js
    text("hello world")
@@ -52,7 +52,7 @@ c.onPtrMove(e=>{
    }
 c.onPtrUp(()=>{})
   ```
- - Functions decorators
+ - ## 🔰 Functions decorators
    ```js
    const inp=input().onKeyDown(throttle(e=>console.log(e.kd),1000));
    ```
