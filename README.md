@@ -71,7 +71,7 @@ const p2=Section()
 S=Ziko.SPA(
    main,{
      "/page1":p1,
-     "/svg":P2
+     "/page2":p2
  })
  ```
 
