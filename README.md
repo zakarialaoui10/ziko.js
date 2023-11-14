@@ -1,5 +1,8 @@
-*💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities*
+<img src="https://github.com/zakarialaoui10/ziko.js/blob/50c43efd6bb1567c289440516b87f60e23ac20c4/assets/ziko%20js.PNG" width="250px" align="left">
 
+*💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities* 
+
+<br>
 
 # Features 
  - ## 🔰 Methodes Extracting :
