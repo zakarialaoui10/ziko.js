@@ -73,6 +73,11 @@ S=Ziko.SPA(
      "/page1":p1,
      "/page2":p2
  })
+// You can use regex to define routes
+S.get(
+ pattern,
+ (path)=>handler(path)
+)
  ```
 
 ***⚠️ Ensure that your server serves only the index page for all incoming requests.*** 
