@@ -71,6 +71,12 @@ S=Ziko.SPA(
      "/svg":P2
  })
  ```
+*** Ensure that your server serves only the index page for all incoming requests, Example using expressjs :***
+```
+ app.get('*', (req , res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+```
  - ## 🔰 Multithreading supports
  
 ```js
