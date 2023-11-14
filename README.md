@@ -1,4 +1,4 @@
-<img src="assets/ziko%20js.PNG" width="250px" align="right">
+<img src="assets/zikojs.png" width="200" align="right" alt="zikojs logo">
 
 *💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities* 
 
@@ -71,7 +71,7 @@ const p2=Section()
 S=Ziko.SPA(
    main,{
      "/page1":p1,
-     "/svg":P2
+     "/page2":p2
  })
  ```
 
@@ -102,8 +102,8 @@ Ziko.Multi(() => {
  
 
 # License 
-This projet is licensed under the terms of MIT License .<br>
-<img src="https://img.shields.io/github/license/zakarialaoui10/zikojs?color=rgb%2820%2C21%2C169%29">
+This projet is licensed under the terms of MIT License 
+<img src="https://img.shields.io/github/license/zakarialaoui10/zikojs?color=rgb%2820%2C21%2C169%29" width="100" align="right">
 
  
 
