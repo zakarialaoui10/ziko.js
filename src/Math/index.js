@@ -64,7 +64,8 @@ import {
     clamp,
     pgcd,
     ppcm,
-    aproximatelyEqual,
+    isApproximatlyEqual,
+    isInRange,
     cartesianProduct
   }from "./Utils/index.js"
 const Math={
@@ -135,7 +136,8 @@ const Math={
     clamp,
     pgcd,
     ppcm,
-    aproximatelyEqual,
+    isApproximatlyEqual,
+    isInRange,
     cartesianProduct,
     Discret,
     Logic,

@@ -2,6 +2,28 @@ import { Complex , complex } from "../Complex";
 const zeros=(n)=>new Array(n).fill(0);
 const ones=(n)=>new Array(n).fill(1);
 const nums=(num,n)=>new Array(n).fill(num);
+const norm=(values,min,max)=>{
+    return (typeof values==="number")
+    ?min !== max ? (values - min) / (max - min) : 0
+    :mapfun(n=>min !== max ? (n - min) / (max - min) : 0,...values)
+}
+const lerp=(values,min,max)=>{
+    return (typeof values==="number")
+    ?(max - min) * values + min
+    :mapfun(n=>min !== max ? (n - min) / (max - min) : 0,...values)
+}
+const map=(values,a,b,c,d)=>{
+    return (typeof values==="number")
+    ?lerp(norm(values, a, b), c, d)
+    :mapfun(n=>lerp(norm(n, a, b)),...values)
+}
+const clamp=(values,min,max)=>{
+    return (typeof values==="number")
+    ?Math.min(Math.max(values, min), max)
+    :mapfun(n=>Math.min(Math.max(n, min)),...values)  
+}
+
+window._map=map
 const arange=(a, b, step , include = false)=>{
     let tab = [];
     if(a<b){
@@ -70,8 +92,13 @@ export {
     zeros,
     ones,
     nums,
+    norm,
+    lerp,
+    map,
+    clamp,
     arange,
     linspace,
     logspace,
-    geomspace
+    geomspace,
+
 }

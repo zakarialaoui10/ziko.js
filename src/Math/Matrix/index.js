@@ -7,8 +7,6 @@ import{
 import { Utils } from "../Utils/index.js";
 import { Complex } from "../Complex/index.js";
 import {Random} from "../Random/index.js"
-//import { Logic } from "./Discret/index.js"
-//import Math from "./index.js";
 class Matrix extends AbstractZikoMath{
     constructor(rows, cols, element = [] , type) {
         super()
@@ -185,7 +183,7 @@ class Matrix extends AbstractZikoMath{
         for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = 1;
         return result;
     }
-    static numbers(rows, cols, number) {
+    static nums(rows, cols, number) {
         let result = new Matrix(rows, cols);
         for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = number;
         return result;
@@ -412,14 +410,14 @@ class Matrix extends AbstractZikoMath{
     }
     add(...matr) {
         for (let k = 0; k < matr.length; k++) {
-            if (typeof matr[k] == "number"||matr[k] instanceof Math.Complex) matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
+            if (typeof matr[k] == "number"||matr[k] instanceof Complex) matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
             for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.add(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
     sub(...matr) {
         for (let k = 0; k < matr.length; k++) {
-            if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
+            if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
             for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.sub(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
@@ -432,14 +430,14 @@ class Matrix extends AbstractZikoMath{
     }
     mul(...matr) {
         for (let k = 0; k < matr.length; k++) {
-            if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
+            if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
             for (var i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.mul(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
     div(...matr) {
         for (let k = 0; k < matr.length; k++) {
-            if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
+            if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
             for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.div(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
@@ -452,7 +450,7 @@ class Matrix extends AbstractZikoMath{
     }
     modulo(...matr) {
         for (let k = 0; k < matr.length; k++) {
-            if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
+            if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
             for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++)this.arr[i][j]=Utils.modulo(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
