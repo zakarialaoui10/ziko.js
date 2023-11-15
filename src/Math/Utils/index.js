@@ -1,8 +1,9 @@
 import { mapfun } from "./mapfun.js";
-import{floor,sqrtn,pow,abs,ln}from "../Functions/index.js"
+import{abs}from "../Functions/index.js"
 import{Matrix}from "../Matrix/index.js"
 import{complex,Complex}from"../Complex/index.js"
-import{PI,E} from "../const.js";
+import{E} from "../const.js";
+import { AddNumberTo } from "./numerical.js";
 import {
     zeros,
     ones,
