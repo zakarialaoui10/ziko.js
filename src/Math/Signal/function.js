@@ -2,28 +2,66 @@ import { Complex , complex } from "../Complex";
 const zeros=(n)=>new Array(n).fill(0);
 const ones=(n)=>new Array(n).fill(1);
 const nums=(num,n)=>new Array(n).fill(num);
-const norm=(values,min,max)=>{
-    return (typeof values==="number")
-    ?min !== max ? (values - min) / (max - min) : 0
-    :mapfun(n=>min !== max ? (n - min) / (max - min) : 0,...values)
+const norm=(value, min, max)=>{
+    if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, norm(value.arr.flat(1), min, max));
+    else if (value instanceof Complex) return new Complex(norm(value.a, min, max), norm(value.b, min, max));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => norm(n, min, max));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = norm(value[i]);
+            }
+        }
+    }
 }
-const lerp=(values,min,max)=>{
-    return (typeof values==="number")
-    ?(max - min) * values + min
-    :mapfun(n=>min !== max ? (n - min) / (max - min) : 0,...values)
+const lerp=(value, min, max)=>{
+    if (typeof value === "number") return (max - min) * value + min;
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, lerp(value.arr.flat(1), min, max));
+    else if (value instanceof Complex) return new Complex(lerp(value.a, min, max), lerp(value.b, min, max));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => lerp(n, min, max));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = lerp(value[i]);
+            }
+        }
+    }
 }
-const map=(values,a,b,c,d)=>{
-    return (typeof values==="number")
-    ?lerp(norm(values, a, b), c, d)
-    :mapfun(n=>lerp(norm(n, a, b)),...values)
+const map=(value, a, b, c, d)=>{
+    if (typeof value === "number") return lerp(norm(value, a, b), c, d);
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, map(value.arr.flat(1), a, b, c, d));
+    else if (value instanceof Complex) return new Complex(map(value.a, b, c, d), map(value.b, a, b, c, d));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => map(n, a, b, c, d));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = map(value[i], a, b, c, d);
+            }
+        }
+    }
 }
-const clamp=(values,min,max)=>{
-    return (typeof values==="number")
-    ?Math.min(Math.max(values, min), max)
-    :mapfun(n=>Math.min(Math.max(n, min)),...values)  
+const clamp=(value, min, max)=>{
+    if (typeof value === "number") return min(max(value, min), max);
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp(value.arr.flat(1), min, max));
+    else if (value instanceof Complex) return new Complex(clamp(value.a, min, max), clamp(value.b, min, max));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => clamp(n, min, max));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = clamp(value[i], min, max);
+            }
+        }
+    }
 }
-
-window._map=map
 const arange=(a, b, step , include = false)=>{
     let tab = [];
     if(a<b){
@@ -76,7 +114,7 @@ const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
     }
     const start=base**min(a,b);
     const stop=base**max(a,b);
-    const y = Utils.linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
+    const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
     const result=y.map(n => pow(base, n));
     return a<b?result:result.reverse();
 }

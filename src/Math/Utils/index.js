@@ -132,66 +132,66 @@ const Utils={
 //     static arange(a, b, step, include) {
 //         return arange(a,b,step,include)
 //     }
-//     // static norm(value, min, max) {
-//     //     if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
-//     //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.norm(value.arr.flat(1), min, max));
-//     //     else if (value instanceof Complex) return new Complex(Utils.norm(value.a, min, max), Utils.norm(value.b, min, max));
-//     //     else if (value instanceof Array) {
-//     //         if (value.every((n) => typeof (n === "number"))) {
-//     //             return value.map((n) => Utils.norm(n, min, max));
-//     //         } else {
-//     //             let y = new Array(value.length);
-//     //             for (let i = 0; i < value.length; i++) {
-//     //                 y[i] = this.norm(value[i]);
-//     //             }
-//     //         }
-//     //     }
-//     // }
-//     // static lerp(value, min, max) {
-//     //     if (typeof value === "number") return (max - min) * value + min;
-//     //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.lerp(value.arr.flat(1), min, max));
-//     //     else if (value instanceof Complex) return new Complex(Utils.lerp(value.a, min, max), Utils.lerp(value.b, min, max));
-//     //     else if (value instanceof Array) {
-//     //         if (value.every((n) => typeof (n === "number"))) {
-//     //             return value.map((n) => Utils.lerp(n, min, max));
-//     //         } else {
-//     //             let y = new Array(value.length);
-//     //             for (let i = 0; i < value.length; i++) {
-//     //                 y[i] = Utils.lerp(value[i]);
-//     //             }
-//     //         }
-//     //     }
-//     // }
-//     // static map(value, a, b, c, d) {
-//     //     if (typeof value === "number") return Utils.lerp(Utils.norm(value, a, b), c, d);
-//     //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.map(value.arr.flat(1), a, b, c, d));
-//     //     else if (value instanceof Complex) return new Complex(Utils.map(value.a, b, c, d), Utils.map(value.b, a, b, c, d));
-//     //     else if (value instanceof Array) {
-//     //         if (value.every((n) => typeof (n === "number"))) {
-//     //             return value.map((n) => Utils.map(n, a, b, c, d));
-//     //         } else {
-//     //             let y = new Array(value.length);
-//     //             for (let i = 0; i < value.length; i++) {
-//     //                 y[i] = Utils.map(value[i], a, b, c, d);
-//     //             }
-//     //         }
-//     //     }
-//     // }
-//     // static clamp(value, min, max) {
-//     //     if (typeof value === "number") return min(max(value, min), max);
-//     //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.clamp(value.arr.flat(1), min, max));
-//     //     else if (value instanceof Complex) return new Complex(Utils.clamp(value.a, min, max), Utils.clamp(value.b, min, max));
-//     //     else if (value instanceof Array) {
-//     //         if (value.every((n) => typeof (n === "number"))) {
-//     //             return value.map((n) => Utils.clamp(n, min, max));
-//     //         } else {
-//     //             let y = new Array(value.length);
-//     //             for (let i = 0; i < value.length; i++) {
-//     //                 y[i] = Utils.clamp(value[i], min, max);
-//     //             }
-//     //         }
-//     //     }
-//     // }
+    // static norm(value, min, max) {
+    //     if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
+    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.norm(value.arr.flat(1), min, max));
+    //     else if (value instanceof Complex) return new Complex(Utils.norm(value.a, min, max), Utils.norm(value.b, min, max));
+    //     else if (value instanceof Array) {
+    //         if (value.every((n) => typeof (n === "number"))) {
+    //             return value.map((n) => Utils.norm(n, min, max));
+    //         } else {
+    //             let y = new Array(value.length);
+    //             for (let i = 0; i < value.length; i++) {
+    //                 y[i] = this.norm(value[i]);
+    //             }
+    //         }
+    //     }
+    // }
+    // static lerp(value, min, max) {
+    //     if (typeof value === "number") return (max - min) * value + min;
+    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.lerp(value.arr.flat(1), min, max));
+    //     else if (value instanceof Complex) return new Complex(Utils.lerp(value.a, min, max), Utils.lerp(value.b, min, max));
+    //     else if (value instanceof Array) {
+    //         if (value.every((n) => typeof (n === "number"))) {
+    //             return value.map((n) => Utils.lerp(n, min, max));
+    //         } else {
+    //             let y = new Array(value.length);
+    //             for (let i = 0; i < value.length; i++) {
+    //                 y[i] = Utils.lerp(value[i]);
+    //             }
+    //         }
+    //     }
+    // }
+    // static map(value, a, b, c, d) {
+    //     if (typeof value === "number") return Utils.lerp(Utils.norm(value, a, b), c, d);
+    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.map(value.arr.flat(1), a, b, c, d));
+    //     else if (value instanceof Complex) return new Complex(Utils.map(value.a, b, c, d), Utils.map(value.b, a, b, c, d));
+    //     else if (value instanceof Array) {
+    //         if (value.every((n) => typeof (n === "number"))) {
+    //             return value.map((n) => Utils.map(n, a, b, c, d));
+    //         } else {
+    //             let y = new Array(value.length);
+    //             for (let i = 0; i < value.length; i++) {
+    //                 y[i] = Utils.map(value[i], a, b, c, d);
+    //             }
+    //         }
+    //     }
+    // }
+    // static clamp(value, min, max) {
+    //     if (typeof value === "number") return min(max(value, min), max);
+    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.clamp(value.arr.flat(1), min, max));
+    //     else if (value instanceof Complex) return new Complex(Utils.clamp(value.a, min, max), Utils.clamp(value.b, min, max));
+    //     else if (value instanceof Array) {
+    //         if (value.every((n) => typeof (n === "number"))) {
+    //             return value.map((n) => Utils.clamp(n, min, max));
+    //         } else {
+    //             let y = new Array(value.length);
+    //             for (let i = 0; i < value.length; i++) {
+    //                 y[i] = Utils.clamp(value[i], min, max);
+    //             }
+    //         }
+    //     }
+    // }
 //     static aproximatelyEqual(a,b,Epsilon=0.0001){
 //         return abs(a-b)<Epsilon;
 //     }

@@ -350,28 +350,66 @@
     const zeros=(n)=>new Array(n).fill(0);
     const ones=(n)=>new Array(n).fill(1);
     const nums=(num,n)=>new Array(n).fill(num);
-    const norm=(values,min,max)=>{
-        return (typeof values==="number")
-        ?min !== max ? (values - min) / (max - min) : 0
-        :mapfun(n=>min !== max ? (n - min) / (max - min) : 0,...values)
+    const norm=(value, min, max)=>{
+        if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
+        else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, norm(value.arr.flat(1), min, max));
+        else if (value instanceof Complex$1) return new Complex$1(norm(value.a, min, max), norm(value.b, min, max));
+        else if (value instanceof Array) {
+            if (value.every((n) => typeof (n === "number"))) {
+                return value.map((n) => norm(n, min, max));
+            } else {
+                let y = new Array(value.length);
+                for (let i = 0; i < value.length; i++) {
+                    y[i] = norm(value[i]);
+                }
+            }
+        }
     };
-    const lerp=(values,min,max)=>{
-        return (typeof values==="number")
-        ?(max - min) * values + min
-        :mapfun(n=>min !== max ? (n - min) / (max - min) : 0,...values)
+    const lerp=(value, min, max)=>{
+        if (typeof value === "number") return (max - min) * value + min;
+        else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, lerp(value.arr.flat(1), min, max));
+        else if (value instanceof Complex$1) return new Complex$1(lerp(value.a, min, max), lerp(value.b, min, max));
+        else if (value instanceof Array) {
+            if (value.every((n) => typeof (n === "number"))) {
+                return value.map((n) => lerp(n, min, max));
+            } else {
+                let y = new Array(value.length);
+                for (let i = 0; i < value.length; i++) {
+                    y[i] = lerp(value[i]);
+                }
+            }
+        }
     };
-    const map=(values,a,b,c,d)=>{
-        return (typeof values==="number")
-        ?lerp(norm(values, a, b), c, d)
-        :mapfun(n=>lerp(norm(n, a, b)),...values)
+    const map=(value, a, b, c, d)=>{
+        if (typeof value === "number") return lerp(norm(value, a, b), c, d);
+        else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, map(value.arr.flat(1), a, b, c, d));
+        else if (value instanceof Complex$1) return new Complex$1(map(value.a, b, c, d), map(value.b, a, b, c, d));
+        else if (value instanceof Array) {
+            if (value.every((n) => typeof (n === "number"))) {
+                return value.map((n) => map(n, a, b, c, d));
+            } else {
+                let y = new Array(value.length);
+                for (let i = 0; i < value.length; i++) {
+                    y[i] = map(value[i], a, b, c, d);
+                }
+            }
+        }
     };
-    const clamp=(values,min,max)=>{
-        return (typeof values==="number")
-        ?Math.min(Math.max(values, min), max)
-        :mapfun(n=>Math.min(Math.max(n, min)),...values)  
+    const clamp=(value, min, max)=>{
+        if (typeof value === "number") return min(max(value, min), max);
+        else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp(value.arr.flat(1), min, max));
+        else if (value instanceof Complex$1) return new Complex$1(clamp(value.a, min, max), clamp(value.b, min, max));
+        else if (value instanceof Array) {
+            if (value.every((n) => typeof (n === "number"))) {
+                return value.map((n) => clamp(n, min, max));
+            } else {
+                let y = new Array(value.length);
+                for (let i = 0; i < value.length; i++) {
+                    y[i] = clamp(value[i], min, max);
+                }
+            }
+        }
     };
-
-    window._map=map;
     const arange=(a, b, step , include = false)=>{
         let tab = [];
         if(a<b){
@@ -424,7 +462,7 @@
         }
         const start=base**min(a,b);
         const stop=base**max(a,b);
-        const y = Utils.linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
+        const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
         const result=y.map(n => pow(base, n));
         return a<b?result:result.reverse();
     };
@@ -437,8 +475,8 @@
         return a<b?arr:arr.reverse()
     };
 
-    const deg2rad=(...deg)=>mapfun$1(x=>x*Math.PI/180,...deg);
-    const rad2deg=(...rad)=>mapfun$1(x=>x/Math.PI*180,...rad);
+    const deg2rad=(...deg)=>mapfun(x=>x*Math.PI/180,...deg);
+    const rad2deg=(...rad)=>mapfun(x=>x/Math.PI*180,...rad);
 
     const sum=(...x)=>{
         let s = x[0];
@@ -1814,16 +1852,16 @@
     var matrix3=(...element)=>new Matrix$1(3, 3, element);
     var matrix4=(...element)=>new Matrix$1(4, 4, element);
 
-    const mapfun$1=(fun,...X)=>{
+    const mapfun=(fun,...X)=>{
         const Y=X.map(x=>{
             if(x===null)return fun(null);
             if(["number","string","boolean","bigint","undefined"].includes(typeof x))return fun(x);
-            if(x instanceof Array)return x.map(n=>mapfun$1(fun,n));
+            if(x instanceof Array)return x.map(n=>mapfun(fun,n));
             if(ArrayBuffer.isView(x))return x.map(n=>fun(n));
-            if(x instanceof Set)return new Set(mapfun$1(fun,...[...x]));
-            if(x instanceof Map)return new Map([...x].map(n=>[n[0],mapfun$1(fun,n[1])]));
+            if(x instanceof Set)return new Set(mapfun(fun,...[...x]));
+            if(x instanceof Map)return new Map([...x].map(n=>[n[0],mapfun(fun,n[1])]));
             if(x instanceof Matrix$1){
-                return new Matrix$1(x.rows,x.cols,mapfun$1(x.arr.flat(1)))
+                return new Matrix$1(x.rows,x.cols,mapfun(x.arr.flat(1)))
             }
             if(x instanceof Complex$1){
                 const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
@@ -1847,99 +1885,99 @@
                     //default : return fun(x)
                 }
             }
-            if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun$1(fun,n[1])]))
+            if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
 
         });
        return Y.length==1?Y[0]:Y; 
     };
-    window.mapfun=mapfun$1;
+    window.mapfun=mapfun;
 
     function abs$1(...x){
-        return mapfun$1(Math.abs,...x);
+        return mapfun(Math.abs,...x);
     }
     function sqrt(...x){
-        return mapfun$1(Math.sqrt,...x);
+        return mapfun(Math.sqrt,...x);
     }
     function pow$1(...x){
         const n=x.pop();
-        return mapfun$1(a=>Math.pow(a,n),...x)
+        return mapfun(a=>Math.pow(a,n),...x)
     }
     function sqrtn$1(...x){
         const n=x.pop();
-        return mapfun$1(a=>e(ln$1(a) / n),...x)
+        return mapfun(a=>e(ln$1(a) / n),...x)
     }
     function e(...x){
-        return mapfun$1(Math.exp,...x);
+        return mapfun(Math.exp,...x);
     }
     function ln$1(...x){
-        return mapfun$1(Math.log,...x);
+        return mapfun(Math.log,...x);
     }
     function cos(...x){
-        return mapfun$1(a=>+Math.cos(a).toFixed(15),...x);
+        return mapfun(a=>+Math.cos(a).toFixed(15),...x);
     }
     function sin(...x){
-        return mapfun$1(a=>+Math.sin(a).toFixed(15),...x);
+        return mapfun(a=>+Math.sin(a).toFixed(15),...x);
     }
     function tan(...x){
-        return mapfun$1(a=>+Math.tan(a).toFixed(15),...x);
+        return mapfun(a=>+Math.tan(a).toFixed(15),...x);
     }
     function sec(...x){
-        return mapfun$1(a=>+1/Math.cos(a).toFixed(15),...x);
+        return mapfun(a=>+1/Math.cos(a).toFixed(15),...x);
     }
     function csc(...x){
-        return mapfun$1(a=>+1/Math.sin(a).toFixed(15),...x);
+        return mapfun(a=>+1/Math.sin(a).toFixed(15),...x);
     }
     function cot(...x){
-        return mapfun$1(a=>+1/Math.tan(a).toFixed(15),...x);
+        return mapfun(a=>+1/Math.tan(a).toFixed(15),...x);
     }
     function acos(...x){
-        return mapfun$1(a=>+Math.acos(a).toFixed(15),...x);
+        return mapfun(a=>+Math.acos(a).toFixed(15),...x);
     }
     function asin(...x){
-        return mapfun$1(a=>+Math.asin(a).toFixed(15),...x);
+        return mapfun(a=>+Math.asin(a).toFixed(15),...x);
     }
     function atan(...x){
-        return mapfun$1(a=>+Math.atan(a).toFixed(15),...x);
+        return mapfun(a=>+Math.atan(a).toFixed(15),...x);
     }
     function acot(...x){
-        return mapfun$1(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
+        return mapfun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
     }
     function cosh(...x){
-        return mapfun$1(a=>+Math.cosh(a).toFixed(15),...x);
+        return mapfun(a=>+Math.cosh(a).toFixed(15),...x);
     }
     function sinh(...x){
-        return mapfun$1(a=>+Math.sinh(a).toFixed(15),...x);
+        return mapfun(a=>+Math.sinh(a).toFixed(15),...x);
     }
     function tanh(...x){
-        return mapfun$1(a=>+Math.tanh(a).toFixed(15),...x);
+        return mapfun(a=>+Math.tanh(a).toFixed(15),...x);
     }
     function coth(...x){
-        return mapfun$1(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
+        return mapfun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
     }
     function acosh(...x){
-        return mapfun$1(a=>+Math.acosh(a).toFixed(15),...x);
+        return mapfun(a=>+Math.acosh(a).toFixed(15),...x);
     }
     function asinh(...x){
-        return mapfun$1(a=>+Math.asinh(a).toFixed(15),...x);
+        return mapfun(a=>+Math.asinh(a).toFixed(15),...x);
     }
     function atanh(...x){
-        return mapfun$1(a=>+Math.atanh(a).toFixed(15),...x);
+        return mapfun(a=>+Math.atanh(a).toFixed(15),...x);
     }
     function ceil(...x){
-        return mapfun$1(Math.ceil,...x);
+        return mapfun(Math.ceil,...x);
     }
     function floor$1(...x){
-        return mapfun$1(Math.floor,...x);
+        return mapfun(Math.floor,...x);
     }
     function round(...x){
-        return mapfun$1(Math.round,...x);
+        return mapfun(Math.round,...x);
     }
     function atan2(...x){
         const n=x.pop();
-        return mapfun$1(a=>Math.atan2(a,n),...x)
+        return mapfun(a=>Math.atan2(a,n),...x)
     }
     function fact(...x){
-        return mapfun$1(n=> {
+        return mapfun(n=> {
             let i,
             y = 1;
             if (n == 0) y = 1;
@@ -1949,10 +1987,10 @@
         },...x);
     } 
     function sign(...x){
-        return mapfun$1(Math.sign,...x);
+        return mapfun(Math.sign,...x);
     }
     function sig(...x){
-        return mapfun$1(n=>1/(1+e(-n)),...x);
+        return mapfun(n=>1/(1+e(-n)),...x);
     }
 
     var hypot = Math.hypot;
