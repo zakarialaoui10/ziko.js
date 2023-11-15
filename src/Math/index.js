@@ -1,6 +1,10 @@
 //import Ziko from "../index.js"
+import { __NumberProto__ } from "../__proto__/Number.js";
+import { __ArrayProto__ } from "../__proto__/Array.js";
 import {PI,E,EPSILON} from "./const.js"
 import { Signal } from "./Signal/index.js";
+__NumberProto__()
+__ArrayProto__()
 import{
     cos,
     sin,
@@ -65,7 +69,7 @@ import {
     pgcd,
     ppcm,
     isApproximatlyEqual,
-    isInRange,
+    inRange,
     cartesianProduct
   }from "./Utils/index.js"
 const Math={
@@ -137,7 +141,7 @@ const Math={
     pgcd,
     ppcm,
     isApproximatlyEqual,
-    isInRange,
+    inRange,
     cartesianProduct,
     Discret,
     Logic,

@@ -3,7 +3,7 @@ const _add=(a,b)=>{
         if (typeof b == "number") return a + b;
         else if (b instanceof Complex)return complex(a + b.a, b.b);
         else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).add(b);
-        else if (b instanceof Array)return b.map(n=>Utils.add(n,a));                 
+        else if (b instanceof Array)return b.map(n=>add(n,a));                 
     }
     else if(a instanceof Complex||a instanceof Matrix){
         if(b instanceof Array)return b.map(n=>a.clone.add(n));
@@ -14,7 +14,7 @@ const _add=(a,b)=>{
 
         }
         else {
-            return a.map(n=>Utils.add(n,b));
+            return a.map(n=>add(n,b));
         }
     }
 }
@@ -23,7 +23,7 @@ const _sub=(a,b)=>{
         if (typeof b == "number") return a - b;
         else if (b instanceof Complex)return complex(a - b.a, -b.b);
         else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).sub(b);
-        else if (b instanceof Array)return b.map(n=>Utils.sub(n,a));                 
+        else if (b instanceof Array)return b.map(n=>sub(n,a));                 
     }
     else if(a instanceof Complex||a instanceof Matrix){
         if(b instanceof Array)return b.map(n=>a.clone.sub(n));
@@ -34,7 +34,7 @@ const _sub=(a,b)=>{
 
         }
         else {
-            return a.map(n=>Utils.add(n,b));
+            return a.map(n=>sub(n,b));
         }
     }
 }
@@ -43,7 +43,7 @@ const _mul=(a,b)=>{
     if (typeof b == "number") return a * b;
         else if (b instanceof Complex)return complex(a * b.a,a * b.b);
         else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
-        else if (b instanceof Array)return b.map(n=>Utils.mul(a,n)); 
+        else if (b instanceof Array)return b.map(n=>mul(a,n)); 
     }
     else if(a instanceof Complex||a instanceof Matrix){
         if(b instanceof Array)return b.map(n=>a.clone.mul(n));
@@ -54,7 +54,7 @@ const _mul=(a,b)=>{
 
         }
         else {
-            return a.map(n=>Utils.mul(n,b));
+            return a.map(n=>mul(n,b));
         }
     }
 }
@@ -63,7 +63,7 @@ const _div=(a,b)=>{
     if (typeof b == "number") return a / b;
         else if (b instanceof Complex)return complex(a / b.a,a / b.b);
         else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).div(b);
-        else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
+        else if (b instanceof Array)return b.map(n=>div(a,n));
     }
     else if(a instanceof Complex||a instanceof Matrix){
         if(b instanceof Array)return b.map(n=>a.clone.div(n));
@@ -74,7 +74,7 @@ const _div=(a,b)=>{
 
         }
         else {
-            return a.map(n=>Utils.add(n,b));
+            return a.map(n=>div(n,b));
         }
     }
 }
@@ -83,7 +83,7 @@ const _modulo=(a,b)=>{
         if (typeof b == "number") return a % b;
             else if (b instanceof Complex)return complex(a % b.a,a % b.b);
             else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).modulo(b);
-            else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
+            else if (b instanceof Array)return b.map(n=>div(a,n));
         }
         else if(a instanceof Complex||a instanceof Matrix){
             if(b instanceof Array)return b.map(n=>a.clone.div(n));
@@ -94,7 +94,7 @@ const _modulo=(a,b)=>{
 
             }
             else {
-                return a.map(n=>Utils.add(n,b));
+                return a.map(n=>add(n,b));
             }
         }
 }

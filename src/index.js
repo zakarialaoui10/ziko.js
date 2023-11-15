@@ -7,7 +7,9 @@ import Multi from "./Worker/index.js";
 import {Watch} from "./Reactivity/index.js"
 import {SPA} from "./Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
+import { parseXML } from "./Data/index.js";
 const Ziko={
+    parseXML,
     Math,
     UI,
     Time,

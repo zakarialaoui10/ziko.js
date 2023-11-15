@@ -35,7 +35,7 @@ import{
     accum
 } from "./statistics.js"
 import{
-    isInRange,
+    inRange,
     isApproximatlyEqual
 } from "./checkers.js"
 import{
@@ -73,135 +73,9 @@ const Utils={
     deg2rad,
     rad2deg,
 
-    isInRange,
+    inRange,
     isApproximatlyEqual
 }
-// class Utils {
-//     static zeros(n){
-//         return zeros(n)
-//     }
-//     static ones(n){
-//         return ones(n)
-//     }
-//     static nums(num,n){
-//         return nums(num,n)
-//     }
-    
-//     static add(a,...b){
-//         return add(a,...b)
-//     }
-//     static sub(a,...b){
-//         return sub(a,...b)
-//     }
-//     static mul(a,...b){
-//         return mul(a,...b)
-//     }
-//     static div(a,...b){
-//         return div(a,...b)
-//     }
-//     static modulo(a,...b){
-//         return modulo(a,...b)
-//     }
-//     static sum(...x) {
-//         return sum(...x)
-//     }
-//     static prod(...x) {
-//         return prod(...x)
-//     }
-//     static deg2rad(...x) {
-//         return deg2rad(...x)
-//     }
-//     static rad2deg(...x) {
-//         return rad2deg(...x)
-//     }
-//     static pgcd(n1, n2) {
-//         return pgcd(n1,n2)
-//     }
-//     static ppcm(n1, n2) {
-//         return ppcm(n1,n2)
-//     }
-//     static linspace(a,b,n=abs(b-a)+1,endpoint=true) {
-//         return linspace(a,b,n,endpoint)
-//     }
-//     static logspace(a,b,n=b-a+1,base=E,endpoint=true){
-//         return logspace(a,b,n,base)
-//     }
-//     static geomspace(a,b,n=abs(b-a)+1){
-//         return geomspace(a,b,n)
-//     }
-//     static arange(a, b, step, include) {
-//         return arange(a,b,step,include)
-//     }
-    // static norm(value, min, max) {
-    //     if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
-    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.norm(value.arr.flat(1), min, max));
-    //     else if (value instanceof Complex) return new Complex(Utils.norm(value.a, min, max), Utils.norm(value.b, min, max));
-    //     else if (value instanceof Array) {
-    //         if (value.every((n) => typeof (n === "number"))) {
-    //             return value.map((n) => Utils.norm(n, min, max));
-    //         } else {
-    //             let y = new Array(value.length);
-    //             for (let i = 0; i < value.length; i++) {
-    //                 y[i] = this.norm(value[i]);
-    //             }
-    //         }
-    //     }
-    // }
-    // static lerp(value, min, max) {
-    //     if (typeof value === "number") return (max - min) * value + min;
-    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.lerp(value.arr.flat(1), min, max));
-    //     else if (value instanceof Complex) return new Complex(Utils.lerp(value.a, min, max), Utils.lerp(value.b, min, max));
-    //     else if (value instanceof Array) {
-    //         if (value.every((n) => typeof (n === "number"))) {
-    //             return value.map((n) => Utils.lerp(n, min, max));
-    //         } else {
-    //             let y = new Array(value.length);
-    //             for (let i = 0; i < value.length; i++) {
-    //                 y[i] = Utils.lerp(value[i]);
-    //             }
-    //         }
-    //     }
-    // }
-    // static map(value, a, b, c, d) {
-    //     if (typeof value === "number") return Utils.lerp(Utils.norm(value, a, b), c, d);
-    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.map(value.arr.flat(1), a, b, c, d));
-    //     else if (value instanceof Complex) return new Complex(Utils.map(value.a, b, c, d), Utils.map(value.b, a, b, c, d));
-    //     else if (value instanceof Array) {
-    //         if (value.every((n) => typeof (n === "number"))) {
-    //             return value.map((n) => Utils.map(n, a, b, c, d));
-    //         } else {
-    //             let y = new Array(value.length);
-    //             for (let i = 0; i < value.length; i++) {
-    //                 y[i] = Utils.map(value[i], a, b, c, d);
-    //             }
-    //         }
-    //     }
-    // }
-    // static clamp(value, min, max) {
-    //     if (typeof value === "number") return min(max(value, min), max);
-    //     else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, Utils.clamp(value.arr.flat(1), min, max));
-    //     else if (value instanceof Complex) return new Complex(Utils.clamp(value.a, min, max), Utils.clamp(value.b, min, max));
-    //     else if (value instanceof Array) {
-    //         if (value.every((n) => typeof (n === "number"))) {
-    //             return value.map((n) => Utils.clamp(n, min, max));
-    //         } else {
-    //             let y = new Array(value.length);
-    //             for (let i = 0; i < value.length; i++) {
-    //                 y[i] = Utils.clamp(value[i], min, max);
-    //             }
-    //         }
-    //     }
-    // }
-//     static aproximatelyEqual(a,b,Epsilon=0.0001){
-//         return abs(a-b)<Epsilon;
-//     }
-//     static cartesianProduct(a, b){
-//         return cartesianProduct(a,b)
-//     }
-//     static accum(...arr){
-//         return accum(...arr)
-//     }
-// }
 export {
     mapfun,
     Utils,
@@ -227,7 +101,7 @@ export {
     pgcd,
     ppcm,
     isApproximatlyEqual,
-    isInRange,
+    inRange,
     cartesianProduct,
   };
  

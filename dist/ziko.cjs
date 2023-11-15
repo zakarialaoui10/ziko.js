@@ -1,59 +1,159 @@
 'use strict';
 
-const { PI, E: E$1 } = Math;
-const EPSILON=Number.EPSILON;
+class AbstractZikoMath {}
 
-var Signal={
-    _map(func){
-
-    },
-    linspace(){
-
-    },
-    logspace(){
-
-    },
-    arange(){
-
-    },
-    echelon(t,t0=0){
-        if(typeof t==="number")return +(t>=t0);
-    },
-    rampe(t,t0=0){
-        if(typeof t==="number")return (t>=t0)?t-t0:0;
-    },
-    sign(t,t0=0){
-        if(typeof t==="number")return Math.sign(t-t0);
-    },
-    rect(t,T,t0=0){
-        if(typeof t==="number")return this.echelon(t,t0-T/2)-(this.echelon(t,t0+T/2));
-    },
-    tri(t,T,t0){
-        if(typeof t==="number"){
-            if(Math.abs(t)>T/2)return 0;
-            else if(t<t0)return this.rampe(t,t0)
-            else return -this.rampe(t,t0)
+const sum=(...x)=>{
+    let s = x[0];
+    for (let i = 1; i < x.length; i++) s += x[i];
+    return s;
+};
+const prod=(...x)=> {
+    let p = x[0];
+    for (let i = 1; i < x.length; i++) p *= x[i];
+    return p;
+};
+const min$1=(...num)=>{
+    if(num.every(n=>typeof n==="number"))return Math.min(...num);
+    const Y=[];
+    for(let i=0;i<num.length;i++){
+        if(num[i] instanceof Array)Y.push(min$1(...num[i]));
+        else if(num[i] instanceof Object){
+            Y.push(
+                    Object.fromEntries(
+                        [Object.entries(num[i]).sort((a,b)=>a[1]-b[1])[0]]
+                    )
+                );
         }
-    },
-    dirac(){
-
-    },
-    lorentz(t,t0=0){
-        if(typeof t==="number")return 1/(1+(t-t0)**2);
-    },
-    sinc(){
-
-    },
-    square(){
-
-    },
-    sawtooth(){
-
     }
-    
+    return Y
+};
+const max$1=(...num)=>{
+    if(num.every(n=>typeof n==="number"))return Math.max(...num);
+    const Y=[];
+    for(let i=0;i<num.length;i++){
+        if(num[i] instanceof Array)Y.push(min$1(...num[i]));
+        else if(num[i] instanceof Object){
+            Y.push(
+                    Object.fromEntries(
+                        [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
+                    )
+                );
+        }
+    }
+    return Y
+};
+const accum=(...arr)=>{
+    let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
+        acc.shift();
+        return acc;
 };
 
-class AbstractZikoMath {}
+// sort
+
+console.log(min$1({a:2,c:3}));
+
+function abs$1(...x){
+    return mapfun(Math.abs,...x);
+}
+function sqrt(...x){
+    return mapfun(Math.sqrt,...x);
+}
+function pow$1(...x){
+    const n=x.pop();
+    return mapfun(a=>Math.pow(a,n),...x)
+}
+function sqrtn$1(...x){
+    const n=x.pop();
+    return mapfun(a=>e(ln$1(a) / n),...x)
+}
+function e(...x){
+    return mapfun(Math.exp,...x);
+}
+function ln$1(...x){
+    return mapfun(Math.log,...x);
+}
+function cos(...x){
+    return mapfun(a=>+Math.cos(a).toFixed(15),...x);
+}
+function sin(...x){
+    return mapfun(a=>+Math.sin(a).toFixed(15),...x);
+}
+function tan(...x){
+    return mapfun(a=>+Math.tan(a).toFixed(15),...x);
+}
+function sec(...x){
+    return mapfun(a=>+1/Math.cos(a).toFixed(15),...x);
+}
+function csc(...x){
+    return mapfun(a=>+1/Math.sin(a).toFixed(15),...x);
+}
+function cot(...x){
+    return mapfun(a=>+1/Math.tan(a).toFixed(15),...x);
+}
+function acos(...x){
+    return mapfun(a=>+Math.acos(a).toFixed(15),...x);
+}
+function asin(...x){
+    return mapfun(a=>+Math.asin(a).toFixed(15),...x);
+}
+function atan(...x){
+    return mapfun(a=>+Math.atan(a).toFixed(15),...x);
+}
+function acot(...x){
+    return mapfun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
+}
+function cosh(...x){
+    return mapfun(a=>+Math.cosh(a).toFixed(15),...x);
+}
+function sinh(...x){
+    return mapfun(a=>+Math.sinh(a).toFixed(15),...x);
+}
+function tanh(...x){
+    return mapfun(a=>+Math.tanh(a).toFixed(15),...x);
+}
+function coth(...x){
+    return mapfun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
+}
+function acosh(...x){
+    return mapfun(a=>+Math.acosh(a).toFixed(15),...x);
+}
+function asinh(...x){
+    return mapfun(a=>+Math.asinh(a).toFixed(15),...x);
+}
+function atanh(...x){
+    return mapfun(a=>+Math.atanh(a).toFixed(15),...x);
+}
+function ceil(...x){
+    return mapfun(Math.ceil,...x);
+}
+function floor$1(...x){
+    return mapfun(Math.floor,...x);
+}
+function round(...x){
+    return mapfun(Math.round,...x);
+}
+function atan2(...x){
+    const n=x.pop();
+    return mapfun(a=>Math.atan2(a,n),...x)
+}
+function fact(...x){
+    return mapfun(n=> {
+        let i,
+        y = 1;
+        if (n == 0) y = 1;
+        else if (n > 0) for (i = 1; i <= n; i++) y *= i;
+        else y = NaN;
+        return y;
+    },...x);
+} 
+function sign(...x){
+    return mapfun(Math.sign,...x);
+}
+function sig(...x){
+    return mapfun(n=>1/(1+e(-n)),...x);
+}
+
+var hypot = Math.hypot;
 
 //import ZMath from "./index.js";
 let Complex$1 = class Complex extends AbstractZikoMath{
@@ -225,367 +325,6 @@ const complex$1=(a,b)=>{
         return new Matrix$1(a.rows,a.cols,...arr)
     }
     return new Complex$1(a,b)
-};
-
-const _add=(a,b)=>{
-    if(typeof(a)==="number"){
-        if (typeof b == "number") return a + b;
-        else if (b instanceof Complex)return complex(a + b.a, b.b);
-        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).add(b);
-        else if (b instanceof Array)return b.map(n=>Utils.add(n,a));                 
-    }
-    else if(a instanceof Complex||a instanceof Matrix){
-        if(b instanceof Array)return b.map(n=>a.clone.add(n));
-        return a.clone.add(b);
-    }
-    else if(a instanceof Array){
-        if(b instanceof Array);
-        else {
-            return a.map(n=>Utils.add(n,b));
-        }
-    }
-};
-const _sub=(a,b)=>{
-    if(typeof(a)==="number"){
-        if (typeof b == "number") return a - b;
-        else if (b instanceof Complex)return complex(a - b.a, -b.b);
-        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).sub(b);
-        else if (b instanceof Array)return b.map(n=>Utils.sub(n,a));                 
-    }
-    else if(a instanceof Complex||a instanceof Matrix){
-        if(b instanceof Array)return b.map(n=>a.clone.sub(n));
-        return a.clone.sub(b);
-    }
-    else if(a instanceof Array){
-        if(b instanceof Array);
-        else {
-            return a.map(n=>Utils.add(n,b));
-        }
-    }
-};
-const _mul=(a,b)=>{
-    if(typeof(a)==="number"){
-    if (typeof b == "number") return a * b;
-        else if (b instanceof Complex)return complex(a * b.a,a * b.b);
-        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
-        else if (b instanceof Array)return b.map(n=>Utils.mul(a,n)); 
-    }
-    else if(a instanceof Complex||a instanceof Matrix){
-        if(b instanceof Array)return b.map(n=>a.clone.mul(n));
-        return a.clone.mul(b);
-    }
-    else if(a instanceof Array){
-        if(b instanceof Array);
-        else {
-            return a.map(n=>Utils.mul(n,b));
-        }
-    }
-};
-const _div=(a,b)=>{
-    if(typeof(a)==="number"){
-    if (typeof b == "number") return a / b;
-        else if (b instanceof Complex)return complex(a / b.a,a / b.b);
-        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).div(b);
-        else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
-    }
-    else if(a instanceof Complex||a instanceof Matrix){
-        if(b instanceof Array)return b.map(n=>a.clone.div(n));
-        return a.clone.div(b);
-    }
-    else if(a instanceof Array){
-        if(b instanceof Array);
-        else {
-            return a.map(n=>Utils.add(n,b));
-        }
-    }
-};
-const _modulo=(a,b)=>{
-    if(typeof(a)==="number"){
-        if (typeof b == "number") return a % b;
-            else if (b instanceof Complex)return complex(a % b.a,a % b.b);
-            else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).modulo(b);
-            else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
-        }
-        else if(a instanceof Complex||a instanceof Matrix){
-            if(b instanceof Array)return b.map(n=>a.clone.div(n));
-            return a.clone.div(b);
-        }
-        else if(a instanceof Array){
-            if(b instanceof Array);
-            else {
-                return a.map(n=>Utils.add(n,b));
-            }
-        }
-};
-const add=(a,...b)=>{
-    var res=a;
-    for(let i=0;i<b.length;i++)res=_add(res,b[i]);
-    return res;
-};
-const sub=(a,...b)=>{
-    var res=a;
-    for(let i=0;i<b.length;i++)res=_sub(res,b[i]);
-    return res;
-};
-const mul=(a,...b)=>{
-    var res=a;
-    for(let i=0;i<b.length;i++)res=_mul(res,b[i]);
-    return res;
-};
-const div=(a,...b)=>{
-    var res=a;
-    for(let i=0;i<b.length;i++)res=_div(res,b[i]);
-    return res;
-};
-const modulo=(a,...b)=>{
-    var res=a;
-    for(let i=0;i<b.length;i++)res=_modulo(res,b[i]);
-    return res;
-};
-
-const zeros=(n)=>new Array(n).fill(0);
-const ones=(n)=>new Array(n).fill(1);
-const nums=(num,n)=>new Array(n).fill(num);
-const norm=(value, min, max)=>{
-    if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
-    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, norm(value.arr.flat(1), min, max));
-    else if (value instanceof Complex$1) return new Complex$1(norm(value.a, min, max), norm(value.b, min, max));
-    else if (value instanceof Array) {
-        if (value.every((n) => typeof (n === "number"))) {
-            return value.map((n) => norm(n, min, max));
-        } else {
-            let y = new Array(value.length);
-            for (let i = 0; i < value.length; i++) {
-                y[i] = norm(value[i]);
-            }
-        }
-    }
-};
-const lerp=(value, min, max)=>{
-    if (typeof value === "number") return (max - min) * value + min;
-    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, lerp(value.arr.flat(1), min, max));
-    else if (value instanceof Complex$1) return new Complex$1(lerp(value.a, min, max), lerp(value.b, min, max));
-    else if (value instanceof Array) {
-        if (value.every((n) => typeof (n === "number"))) {
-            return value.map((n) => lerp(n, min, max));
-        } else {
-            let y = new Array(value.length);
-            for (let i = 0; i < value.length; i++) {
-                y[i] = lerp(value[i]);
-            }
-        }
-    }
-};
-const map=(value, a, b, c, d)=>{
-    if (typeof value === "number") return lerp(norm(value, a, b), c, d);
-    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, map(value.arr.flat(1), a, b, c, d));
-    else if (value instanceof Complex$1) return new Complex$1(map(value.a, b, c, d), map(value.b, a, b, c, d));
-    else if (value instanceof Array) {
-        if (value.every((n) => typeof (n === "number"))) {
-            return value.map((n) => map(n, a, b, c, d));
-        } else {
-            let y = new Array(value.length);
-            for (let i = 0; i < value.length; i++) {
-                y[i] = map(value[i], a, b, c, d);
-            }
-        }
-    }
-};
-const clamp=(value, min, max)=>{
-    if (typeof value === "number") return min(max(value, min), max);
-    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp(value.arr.flat(1), min, max));
-    else if (value instanceof Complex$1) return new Complex$1(clamp(value.a, min, max), clamp(value.b, min, max));
-    else if (value instanceof Array) {
-        if (value.every((n) => typeof (n === "number"))) {
-            return value.map((n) => clamp(n, min, max));
-        } else {
-            let y = new Array(value.length);
-            for (let i = 0; i < value.length; i++) {
-                y[i] = clamp(value[i], min, max);
-            }
-        }
-    }
-};
-const arange=(a, b, step , include = false)=>{
-    let tab = [];
-    if(a<b){
-        for (let i = a; include?i<=b:i<b; i += step) tab.push((i * 10) / 10);
-    }
-    else {
-        for(let i = a; include?i>=b:i>b; i -= step) tab.push((i * 10) / 10);
-    }
-    return tab;
-};
-const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
-    if(a instanceof Complex$1||b instanceof Complex$1){
-        a=complex$1(a);
-        b=complex$1(b);
-        n=n||Math.abs(b.a-a.a)+1;
-        const X=linspace(a.a,b.a,n,endpoint);
-        const Y=linspace(a.b,b.b,n,endpoint);
-        let Z=new Array(n).fill(null);
-        Z=Z.map((n,i)=>complex$1(X[i],Y[i]));
-        return Z;
-    }
-    else if(a instanceof Array){
-        let Y=[];
-        for(let i=0;i<a.length;i++){
-            n=n||abs(b[i]-a[i])+1;
-            Y[i]=linspace(a[i],b[i],n,endpoint);
-        }
-        return Y;
-    }
-    const [high,low]=[a,b].sort((a,b)=>b-a);
-    if (floor(n) !== n) return;
-    var arr = [];
-    let step = (high - low) / (n - 1);
-    if(!endpoint)step = (high - low) / n;
-    for (var i = 0; i < n; i++) {
-        arr.push(low+step*i);
-    }
-    return a<b?arr:arr.reverse();
-};
-const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
-    if(a instanceof Complex$1||b instanceof Complex$1){
-        a=complex$1(a);
-        b=complex$1(b);
-        n=n??abs(b.a-a.a);
-        const X=linspace(a.a,b.a,n,base);
-        const Y=linspace(a.b,b.b,n,base);
-        const Z=new Array(X.length).fill(0);
-        const ZZ=Z.map((n,i) => pow(base,complex$1(X[i],Y[i])));
-        return ZZ;
-    }
-    const start=base**min(a,b);
-    const stop=base**max(a,b);
-    const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
-    const result=y.map(n => pow(base, n));
-    return a<b?result:result.reverse();
-};
-const geomspace=(a,b,n=abs(b-a)+1)=>{
-    var [high,low]=[a,b].sort((a,b)=>b-a);
-    var step=sqrtn(high,n-low);
-    var arr=[low];
-    for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
-    arr=arr.map(n=>+n.toFixed(8));
-    return a<b?arr:arr.reverse()
-};
-
-const deg2rad=(...deg)=>mapfun(x=>x*Math.PI/180,...deg);
-const rad2deg=(...rad)=>mapfun(x=>x/Math.PI*180,...rad);
-
-const sum=(...x)=>{
-    let s = x[0];
-    for (let i = 1; i < x.length; i++) s += x[i];
-    return s;
-};
-const prod=(...x)=> {
-    let p = x[0];
-    for (let i = 1; i < x.length; i++) p *= x[i];
-    return p;
-};
-const min$1=(...num)=>{
-    if(num.every(n=>typeof n==="number"))return Math.min(...num);
-    const Y=[];
-    for(let i=0;i<num.length;i++){
-        if(num[i] instanceof Array)Y.push(min$1(...num[i]));
-        else if(num[i] instanceof Object){
-            Y.push(
-                    Object.fromEntries(
-                        [Object.entries(num[i]).sort((a,b)=>a[1]-b[1])[0]]
-                    )
-                );
-        }
-    }
-    return Y
-};
-const max$1=(...num)=>{
-    if(num.every(n=>typeof n==="number"))return Math.max(...num);
-    const Y=[];
-    for(let i=0;i<num.length;i++){
-        if(num[i] instanceof Array)Y.push(min$1(...num[i]));
-        else if(num[i] instanceof Object){
-            Y.push(
-                    Object.fromEntries(
-                        [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
-                    )
-                );
-        }
-    }
-    return Y
-};
-const accum=(...arr)=>{
-    let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
-        acc.shift();
-        return acc;
-};
-
-// sort
-
-console.log(min$1({a:2,c:3}));
-
-const isInRange=(x,min,max)=>{
-    return x>=min && x<=max
-};
-const isApproximatlyEqual=(a,b,Err=0.0001)=>{
-    return Math.abs(a-b)<=Err;
-};
-
-const cartesianProduct=(a, b)=>a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
-const pgcd=(n1, n2)=>{
-    let i,
-        pgcd = 1;
-    if (n1 == floor(n1) && n2 == floor(n2)) {
-        for (i = 2; i <= n1 && i <= n2; ++i) {
-            if (n1 % i == 0 && n2 % i == 0) pgcd = i;
-        }
-        return pgcd;
-    } else console.log("error");
-};
-const ppcm=(n1, n2)=>{
-    let ppcm;
-    if (n1 == floor(n1) && n2 == floor(n2)) {
-        ppcm = n1 > n2 ? n1 : n2;
-        while (true) {
-            if (ppcm % n1 == 0 && ppcm % n2 == 0) break;
-            ++ppcm;
-        }
-        return ppcm;
-    } else console.log("error");
-};
-
-const Utils$1={
-    add,
-    sub,
-    mul,
-    div,
-    modulo,
-
-    zeros,
-    ones,
-    nums,
-    norm,
-    lerp,
-    map,
-    clamp,
-    arange,
-    linspace,
-    logspace,
-    geomspace,
-
-    sum,
-    prod,
-    accum,
-
-    cartesianProduct,
-    ppcm,
-    pgcd,
-
-    deg2rad,
-    rad2deg,
-
-    isInRange,
-    isApproximatlyEqual
 };
 
 //import{arange}from "../Utils/index.js"
@@ -1031,7 +770,7 @@ class Random {
     }
     static choice(choices = [1, 2, 3], p = new Array(choices.length).fill(1 / choices.length)) {
         let newchoice = new Array(100);
-        p=Utils$1.accum(...p).map(n=>n*100);
+        p=Utils.accum(...p).map(n=>n*100);
         newchoice.fill(choices[0], 0, p[0]);
         for (let i = 1; i < choices.length; i++) newchoice.fill(choices[i], p[i - 1], p[i]);
         return newchoice[this.int(newchoice.length - 1)];
@@ -1299,7 +1038,7 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
                     console.warn("Tensors are not completely supported yet ...");
                     return;
                 }
-                return Utils$1.sub(Utils$1.mul(M[0][0],M[1][1]),Utils$1.mul(M[0][1],M[1][0]))
+                return Utils.sub(Utils.mul(M[0][0],M[1][1]),Utils.mul(M[0][1],M[1][0]))
             }
             var answer = 0;
             for (var i = 0; i < M.length; i++) {
@@ -1310,8 +1049,8 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
                         .mul(determinat(deleteRowAndColumn(M, i)))
                 );*/
                 //const to_be_added=Utils.add(Utils.mul(pow(-1, i),Utils.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
-                const to_be_added=Utils$1.add(Utils$1.mul(pow$1(-1, i),Utils$1.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
-                answer=Utils$1.add(answer,to_be_added);
+                const to_be_added=Utils.add(Utils.mul(pow$1(-1, i),Utils.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
+                answer=Utils.add(answer,to_be_added);
             }
             return answer;
         }
@@ -1409,28 +1148,28 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
         );
     }*/
     map(Imin, Imax, Fmin, Fmax) {
-        return Utils$1.map(this, Imin, Imax, Fmin, Fmax);
+        return Utils.map(this, Imin, Imax, Fmin, Fmax);
     }
     lerp(min, max) {
-        return Utils$1.lerp(this, min, max);
+        return Utils.lerp(this, min, max);
     }
     norm(min, max) {
-        return Utils$1.norm(this, min, max);
+        return Utils.norm(this, min, max);
     }
     clamp(min, max) {
-        return Utils$1.clamp(this, min, max);
+        return Utils.clamp(this, min, max);
     }
     static map(matrix, Imin, Imax, Fmin, Fmax) {
-        return Utils$1.map(matrix, Imin, Imax, Fmin, Fmax);
+        return Utils.map(matrix, Imin, Imax, Fmin, Fmax);
     }
     static lerp(matrix, min, max) {
-        return Utils$1.lerp(matrix, min, max);
+        return Utils.lerp(matrix, min, max);
     }
     static norm(matrix, min, max) {
-        return Utils$1.norm(matrix, min, max);
+        return Utils.norm(matrix, min, max);
     }
     static clamp(m, min, max) {
-        return Utils$1.clamp(matrix, min, max);
+        return Utils.clamp(matrix, min, max);
     }
     toPrecision(p) {
         for (let i = 0; i < this.cols; i++) for (let j = 0; j < this.rows; j++) this.arr[i][j] = +this.arr[i][j].toPrecision(p);
@@ -1568,14 +1307,14 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
     add(...matr) {
         for (let k = 0; k < matr.length; k++) {
             if (typeof matr[k] == "number"||matr[k] instanceof Complex$1) matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
-            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.add(this.arr[i][j],matr[k].arr[i][j]);
+            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.add(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
     sub(...matr) {
         for (let k = 0; k < matr.length; k++) {
             if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
-            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.sub(this.arr[i][j],matr[k].arr[i][j]);
+            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.sub(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
@@ -1588,14 +1327,14 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
     mul(...matr) {
         for (let k = 0; k < matr.length; k++) {
             if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
-            for (var i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.mul(this.arr[i][j],matr[k].arr[i][j]);
+            for (var i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.mul(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
     div(...matr) {
         for (let k = 0; k < matr.length; k++) {
             if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
-            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.div(this.arr[i][j],matr[k].arr[i][j]);
+            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.div(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
@@ -1608,7 +1347,7 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
     modulo(...matr) {
         for (let k = 0; k < matr.length; k++) {
             if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
-            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++)this.arr[i][j]=Utils$1.modulo(this.arr[i][j],matr[k].arr[i][j]);
+            for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++)this.arr[i][j]=Utils.modulo(this.arr[i][j],matr[k].arr[i][j]);
         }
         return new Matrix(this.rows, this.cols, this.arr.flat(1));
     }
@@ -1622,9 +1361,9 @@ let Matrix$1 = class Matrix extends AbstractZikoMath{
             for (var j = 0; j < matrix.arr[0].length; j++) {
                 res[i][j] = 0;
                 for (var k = 0; k < this.arr[0].length; k++) {
-                    res[i][j] = Utils$1.add(
+                    res[i][j] = Utils.add(
                         res[i][j],
-                        Utils$1.mul(this.arr[i][k],matrix.arr[k][j])
+                        Utils.mul(this.arr[i][k],matrix.arr[k][j])
                         );
                 }
             }
@@ -1888,110 +1627,496 @@ const mapfun=(fun,...X)=>{
 };
 window.mapfun=mapfun;
 
-function abs$1(...x){
-    return mapfun(Math.abs,...x);
-}
-function sqrt(...x){
-    return mapfun(Math.sqrt,...x);
-}
-function pow$1(...x){
-    const n=x.pop();
-    return mapfun(a=>Math.pow(a,n),...x)
-}
-function sqrtn$1(...x){
-    const n=x.pop();
-    return mapfun(a=>e(ln$1(a) / n),...x)
-}
-function e(...x){
-    return mapfun(Math.exp,...x);
-}
-function ln$1(...x){
-    return mapfun(Math.log,...x);
-}
-function cos(...x){
-    return mapfun(a=>+Math.cos(a).toFixed(15),...x);
-}
-function sin(...x){
-    return mapfun(a=>+Math.sin(a).toFixed(15),...x);
-}
-function tan(...x){
-    return mapfun(a=>+Math.tan(a).toFixed(15),...x);
-}
-function sec(...x){
-    return mapfun(a=>+1/Math.cos(a).toFixed(15),...x);
-}
-function csc(...x){
-    return mapfun(a=>+1/Math.sin(a).toFixed(15),...x);
-}
-function cot(...x){
-    return mapfun(a=>+1/Math.tan(a).toFixed(15),...x);
-}
-function acos(...x){
-    return mapfun(a=>+Math.acos(a).toFixed(15),...x);
-}
-function asin(...x){
-    return mapfun(a=>+Math.asin(a).toFixed(15),...x);
-}
-function atan(...x){
-    return mapfun(a=>+Math.atan(a).toFixed(15),...x);
-}
-function acot(...x){
-    return mapfun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
-}
-function cosh(...x){
-    return mapfun(a=>+Math.cosh(a).toFixed(15),...x);
-}
-function sinh(...x){
-    return mapfun(a=>+Math.sinh(a).toFixed(15),...x);
-}
-function tanh(...x){
-    return mapfun(a=>+Math.tanh(a).toFixed(15),...x);
-}
-function coth(...x){
-    return mapfun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
-}
-function acosh(...x){
-    return mapfun(a=>+Math.acosh(a).toFixed(15),...x);
-}
-function asinh(...x){
-    return mapfun(a=>+Math.asinh(a).toFixed(15),...x);
-}
-function atanh(...x){
-    return mapfun(a=>+Math.atanh(a).toFixed(15),...x);
-}
-function ceil(...x){
-    return mapfun(Math.ceil,...x);
-}
-function floor$1(...x){
-    return mapfun(Math.floor,...x);
-}
-function round(...x){
-    return mapfun(Math.round,...x);
-}
-function atan2(...x){
-    const n=x.pop();
-    return mapfun(a=>Math.atan2(a,n),...x)
-}
-function fact(...x){
-    return mapfun(n=> {
-        let i,
-        y = 1;
-        if (n == 0) y = 1;
-        else if (n > 0) for (i = 1; i <= n; i++) y *= i;
-        else y = NaN;
-        return y;
-    },...x);
-} 
-function sign(...x){
-    return mapfun(Math.sign,...x);
-}
-function sig(...x){
-    return mapfun(n=>1/(1+e(-n)),...x);
+const { PI, E: E$1 } = Math;
+const EPSILON=Number.EPSILON;
+
+const _add=(a,b)=>{
+    if(typeof(a)==="number"){
+        if (typeof b == "number") return a + b;
+        else if (b instanceof Complex)return complex(a + b.a, b.b);
+        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).add(b);
+        else if (b instanceof Array)return b.map(n=>add(n,a));                 
+    }
+    else if(a instanceof Complex||a instanceof Matrix){
+        if(b instanceof Array)return b.map(n=>a.clone.add(n));
+        return a.clone.add(b);
+    }
+    else if(a instanceof Array){
+        if(b instanceof Array);
+        else {
+            return a.map(n=>add(n,b));
+        }
+    }
+};
+const _sub=(a,b)=>{
+    if(typeof(a)==="number"){
+        if (typeof b == "number") return a - b;
+        else if (b instanceof Complex)return complex(a - b.a, -b.b);
+        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).sub(b);
+        else if (b instanceof Array)return b.map(n=>sub(n,a));                 
+    }
+    else if(a instanceof Complex||a instanceof Matrix){
+        if(b instanceof Array)return b.map(n=>a.clone.sub(n));
+        return a.clone.sub(b);
+    }
+    else if(a instanceof Array){
+        if(b instanceof Array);
+        else {
+            return a.map(n=>sub(n,b));
+        }
+    }
+};
+const _mul=(a,b)=>{
+    if(typeof(a)==="number"){
+    if (typeof b == "number") return a * b;
+        else if (b instanceof Complex)return complex(a * b.a,a * b.b);
+        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
+        else if (b instanceof Array)return b.map(n=>mul(a,n)); 
+    }
+    else if(a instanceof Complex||a instanceof Matrix){
+        if(b instanceof Array)return b.map(n=>a.clone.mul(n));
+        return a.clone.mul(b);
+    }
+    else if(a instanceof Array){
+        if(b instanceof Array);
+        else {
+            return a.map(n=>mul(n,b));
+        }
+    }
+};
+const _div=(a,b)=>{
+    if(typeof(a)==="number"){
+    if (typeof b == "number") return a / b;
+        else if (b instanceof Complex)return complex(a / b.a,a / b.b);
+        else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).div(b);
+        else if (b instanceof Array)return b.map(n=>div(a,n));
+    }
+    else if(a instanceof Complex||a instanceof Matrix){
+        if(b instanceof Array)return b.map(n=>a.clone.div(n));
+        return a.clone.div(b);
+    }
+    else if(a instanceof Array){
+        if(b instanceof Array);
+        else {
+            return a.map(n=>div(n,b));
+        }
+    }
+};
+const _modulo=(a,b)=>{
+    if(typeof(a)==="number"){
+        if (typeof b == "number") return a % b;
+            else if (b instanceof Complex)return complex(a % b.a,a % b.b);
+            else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).modulo(b);
+            else if (b instanceof Array)return b.map(n=>div(a,n));
+        }
+        else if(a instanceof Complex||a instanceof Matrix){
+            if(b instanceof Array)return b.map(n=>a.clone.div(n));
+            return a.clone.div(b);
+        }
+        else if(a instanceof Array){
+            if(b instanceof Array);
+            else {
+                return a.map(n=>add(n,b));
+            }
+        }
+};
+const add=(a,...b)=>{
+    var res=a;
+    for(let i=0;i<b.length;i++)res=_add(res,b[i]);
+    return res;
+};
+const sub=(a,...b)=>{
+    var res=a;
+    for(let i=0;i<b.length;i++)res=_sub(res,b[i]);
+    return res;
+};
+const mul=(a,...b)=>{
+    var res=a;
+    for(let i=0;i<b.length;i++)res=_mul(res,b[i]);
+    return res;
+};
+const div=(a,...b)=>{
+    var res=a;
+    for(let i=0;i<b.length;i++)res=_div(res,b[i]);
+    return res;
+};
+const modulo=(a,...b)=>{
+    var res=a;
+    for(let i=0;i<b.length;i++)res=_modulo(res,b[i]);
+    return res;
+};
+
+const zeros=(n)=>new Array(n).fill(0);
+const ones=(n)=>new Array(n).fill(1);
+const nums=(num,n)=>new Array(n).fill(num);
+const norm$1=(value, min, max)=>{
+    if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, norm$1(value.arr.flat(1), min, max));
+    else if (value instanceof Complex$1) return new Complex$1(norm$1(value.a, min, max), norm$1(value.b, min, max));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => norm$1(n, min, max));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = norm$1(value[i]);
+            }
+        }
+    }
+};
+const lerp$1=(value, min, max)=>{
+    if (typeof value === "number") return (max - min) * value + min;
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, lerp$1(value.arr.flat(1), min, max));
+    else if (value instanceof Complex$1) return new Complex$1(lerp$1(value.a, min, max), lerp$1(value.b, min, max));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => lerp$1(n, min, max));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = lerp$1(value[i]);
+            }
+        }
+    }
+};
+const map$1=(value, a, b, c, d)=>{
+    if (typeof value === "number") return lerp$1(norm$1(value, a, b), c, d);
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, map$1(value.arr.flat(1), a, b, c, d));
+    else if (value instanceof Complex$1) return new Complex$1(map$1(value.a, b, c, d), map$1(value.b, a, b, c, d));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => map$1(n, a, b, c, d));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = map$1(value[i], a, b, c, d);
+            }
+        }
+    }
+};
+const clamp$1=(value, min, max)=>{
+    if (typeof value === "number") return min(max(value, min), max);
+    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp$1(value.arr.flat(1), min, max));
+    else if (value instanceof Complex$1) return new Complex$1(clamp$1(value.a, min, max), clamp$1(value.b, min, max));
+    else if (value instanceof Array) {
+        if (value.every((n) => typeof (n === "number"))) {
+            return value.map((n) => clamp$1(n, min, max));
+        } else {
+            let y = new Array(value.length);
+            for (let i = 0; i < value.length; i++) {
+                y[i] = clamp$1(value[i], min, max);
+            }
+        }
+    }
+};
+const arange=(a, b, step , include = false)=>{
+    let tab = [];
+    if(a<b){
+        for (let i = a; include?i<=b:i<b; i += step) tab.push((i * 10) / 10);
+    }
+    else {
+        for(let i = a; include?i>=b:i>b; i -= step) tab.push((i * 10) / 10);
+    }
+    return tab;
+};
+const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+    if(a instanceof Complex$1||b instanceof Complex$1){
+        a=complex$1(a);
+        b=complex$1(b);
+        n=n||Math.abs(b.a-a.a)+1;
+        const X=linspace(a.a,b.a,n,endpoint);
+        const Y=linspace(a.b,b.b,n,endpoint);
+        let Z=new Array(n).fill(null);
+        Z=Z.map((n,i)=>complex$1(X[i],Y[i]));
+        return Z;
+    }
+    else if(a instanceof Array){
+        let Y=[];
+        for(let i=0;i<a.length;i++){
+            n=n||abs(b[i]-a[i])+1;
+            Y[i]=linspace(a[i],b[i],n,endpoint);
+        }
+        return Y;
+    }
+    const [high,low]=[a,b].sort((a,b)=>b-a);
+    if (floor(n) !== n) return;
+    var arr = [];
+    let step = (high - low) / (n - 1);
+    if(!endpoint)step = (high - low) / n;
+    for (var i = 0; i < n; i++) {
+        arr.push(low+step*i);
+    }
+    return a<b?arr:arr.reverse();
+};
+const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
+    if(a instanceof Complex$1||b instanceof Complex$1){
+        a=complex$1(a);
+        b=complex$1(b);
+        n=n??abs(b.a-a.a);
+        const X=linspace(a.a,b.a,n,base);
+        const Y=linspace(a.b,b.b,n,base);
+        const Z=new Array(X.length).fill(0);
+        const ZZ=Z.map((n,i) => pow(base,complex$1(X[i],Y[i])));
+        return ZZ;
+    }
+    const start=base**min(a,b);
+    const stop=base**max(a,b);
+    const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
+    const result=y.map(n => pow(base, n));
+    return a<b?result:result.reverse();
+};
+const geomspace=(a,b,n=abs(b-a)+1)=>{
+    var [high,low]=[a,b].sort((a,b)=>b-a);
+    var step=sqrtn(high,n-low);
+    var arr=[low];
+    for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
+    arr=arr.map(n=>+n.toFixed(8));
+    return a<b?arr:arr.reverse()
+};
+
+const deg2rad=(...deg)=>mapfun(x=>x*Math.PI/180,...deg);
+const rad2deg=(...rad)=>mapfun(x=>x/Math.PI*180,...rad);
+
+const inRange=(x,a,b)=>{
+    const [min,max]=[Math.min(a,b),Math.max(a,b)];
+    return x>=min && x<=max
+};
+const isApproximatlyEqual=(a,b,Err=0.0001)=>{
+    return Math.abs(a-b)<=Err;
+};
+
+const cartesianProduct=(a, b)=>a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
+const pgcd=(n1, n2)=>{
+    let i,
+        pgcd = 1;
+    if (n1 == floor(n1) && n2 == floor(n2)) {
+        for (i = 2; i <= n1 && i <= n2; ++i) {
+            if (n1 % i == 0 && n2 % i == 0) pgcd = i;
+        }
+        return pgcd;
+    } else console.log("error");
+};
+const ppcm=(n1, n2)=>{
+    let ppcm;
+    if (n1 == floor(n1) && n2 == floor(n2)) {
+        ppcm = n1 > n2 ? n1 : n2;
+        while (true) {
+            if (ppcm % n1 == 0 && ppcm % n2 == 0) break;
+            ++ppcm;
+        }
+        return ppcm;
+    } else console.log("error");
+};
+
+const Utils={
+    add,
+    sub,
+    mul,
+    div,
+    modulo,
+
+    zeros,
+    ones,
+    nums,
+    norm: norm$1,
+    lerp: lerp$1,
+    map: map$1,
+    clamp: clamp$1,
+    arange,
+    linspace,
+    logspace,
+    geomspace,
+
+    sum,
+    prod,
+    accum,
+
+    cartesianProduct,
+    ppcm,
+    pgcd,
+
+    deg2rad,
+    rad2deg,
+
+    inRange,
+    isApproximatlyEqual
+};
+
+function __NumberProto__(){
+    Object.defineProperties(Number.prototype,{
+        inRange:{
+            value: function(a,b) {
+                return inRange(this.valueOf(),a,b)
+            }
+        },
+        add:{
+            value: function(...n) {
+                return add(this.valueOf(),...n)
+            }
+        },
+        sub:{
+            value: function(...n) {
+                return sub(this.valueOf(),...n)
+            }
+        },
+        mul:{
+            value: function(...n) {
+                return mul(this.valueOf(),...n)
+            }
+        },
+        div:{
+            value: function(...n) {
+                return div(this.valueOf(),...n)
+            }
+        },
+        modulo:{
+            value: function(...n) {
+                return modulo(this.valueOf(),...n)
+            }
+        },
+        norm:{
+            value: function(min,max) {
+                return norm(this.valueOf(),min,max)
+            }
+        },
+        lerp:{
+            value: function(min,max) {
+                return lerp(this.valueOf(),min,max)
+            }
+        },
+        map:{
+            value: function(a,b,c,d) {
+                return map(this.valueOf(),a,b,c,d)
+            }
+        },
+        clamp:{
+            value: function(min,max) {
+                return clamp(this.valueOf(),min,max)
+            }
+        },
+        toDeg:{
+            value: function() {
+                return rad2deg(this.valueOf())
+            }
+        },
+        toRad:{
+            value: function() {
+                return deg2rad(this.valueOf())
+            }
+        },
+    
+    });
 }
 
-var hypot = Math.hypot;
+function __ArrayProto__(){
+    Object.defineProperties(Array.prototype,{
+        inRange:{
+            value: function(a,b) {
+                return inRange(this.valueOf(),a,b)
+            }
+        },
+        add:{
+            value: function(...n) {
+                return add(this.valueOf(),...n)
+            }
+        },
+        sub:{
+            value: function(...n) {
+                return sub(this.valueOf(),...n)
+            }
+        },
+        mul:{
+            value: function(...n) {
+                return mul(this.valueOf(),...n)
+            }
+        },
+        div:{
+            value: function(...n) {
+                return div(this.valueOf(),...n)
+            }
+        },
+        modulo:{
+            value: function(...n) {
+                return modulo(this.valueOf(),...n)
+            }
+        },
+        norm:{
+            value: function(min,max) {
+                return norm(this.valueOf(),min,max)
+            }
+        },
+        lerp:{
+            value: function(min,max) {
+                return lerp(this.valueOf(),min,max)
+            }
+        },
+        _map:{
+            value: function(a,b,c,d) {
+                return map(this.valueOf(),a,b,c,d)
+            }
+        },
+        clamp:{
+            value: function(min,max) {
+                return clamp(this.valueOf(),min,max)
+            }
+        },
+    
+    });
+}
+
+var Signal={
+    _map(func){
+
+    },
+    linspace(){
+
+    },
+    logspace(){
+
+    },
+    arange(){
+
+    },
+    echelon(t,t0=0){
+        if(typeof t==="number")return +(t>=t0);
+    },
+    rampe(t,t0=0){
+        if(typeof t==="number")return (t>=t0)?t-t0:0;
+    },
+    sign(t,t0=0){
+        if(typeof t==="number")return Math.sign(t-t0);
+    },
+    rect(t,T,t0=0){
+        if(typeof t==="number")return this.echelon(t,t0-T/2)-(this.echelon(t,t0+T/2));
+    },
+    tri(t,T,t0){
+        if(typeof t==="number"){
+            if(Math.abs(t)>T/2)return 0;
+            else if(t<t0)return this.rampe(t,t0)
+            else return -this.rampe(t,t0)
+        }
+    },
+    dirac(){
+
+    },
+    lorentz(t,t0=0){
+        if(typeof t==="number")return 1/(1+(t-t0)**2);
+    },
+    sinc(){
+
+    },
+    square(){
+
+    },
+    sawtooth(){
+
+    }
+    
+};
 
 //import Ziko from "../index.js"
+__NumberProto__();
+__ArrayProto__();
 const Math$1={
     PI,
     E: E$1,
@@ -2039,7 +2164,7 @@ const Math$1={
     sig,
     atan2,
    // Derivation,
-    Utils: Utils$1,
+    Utils,
     nums,
     zeros,
     ones,
@@ -2054,14 +2179,14 @@ const Math$1={
     deg2rad,
     arange,
     linspace,
-    norm,
-    lerp,
-    map,
-    clamp,
+    norm: norm$1,
+    lerp: lerp$1,
+    map: map$1,
+    clamp: clamp$1,
     pgcd,
     ppcm,
     isApproximatlyEqual,
-    isInRange,
+    inRange,
     cartesianProduct,
     Discret,
     Logic: Logic$1,
@@ -6363,7 +6488,54 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
+function parseXML(xmlString) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+    const rootNode = xmlDoc.documentElement;
+    const result = parseNode(rootNode);
+    return result;
+  }
+  
+  function parseNode(node) {
+    const obj = {
+      type: node.nodeName,
+      attributes: {},
+      children: []
+    };
+    for (let i = 0; i < node.attributes.length; i++) {
+      const attr = node.attributes[i];
+      obj.attributes[attr.name] = attr.value;
+    }
+    for (let i = 0; i < node.childNodes.length; i++) {
+      const child = node.childNodes[i];
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        obj.children.push(parseNode(child));
+      } else if (child.nodeType === Node.TEXT_NODE) {
+        obj.text = child.textContent.trim();
+      }
+    }
+    return obj;
+  }
+
+  // function htmlParser(element) {
+  //   const obj = {
+  //     type: element.tagName,
+  //     attributes: {},
+  //     children: [],
+  //   };
+  //   for (let i = 0; i < element.attributes.length; i++) {
+  //     const attr = element.attributes[i];
+  //     obj.attributes[attr.name] = attr.value;
+  //   }
+  //   for (let i = 0; i < element.children.length; i++) {
+  //     const child = element.children[i];
+  //     obj.children.push(htmlParser(child));
+  //   }
+  //   return obj;
+  // }
+
 const Ziko$1={
+    parseXML,
     Math: Math$1,
     UI: UI$1,
     Time,
