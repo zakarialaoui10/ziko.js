@@ -1,0 +1,3 @@
+// min
+// max
+// mean

@@ -1,6 +1,7 @@
 
 // Utils
 
+import { mapfun } from "./mapfun.js";
 import{floor,sqrtn,pow,abs,ln}from "../Functions/index.js"
 import{Matrix}from "../Matrix/index.js"
 import{complex,Complex}from"../Complex/index.js"
@@ -335,6 +336,7 @@ class Utils {
 }
 var {zeros,ones,numbers,sum,prod,add,mul,div,sub,modulo,rad2deg,deg2rad,arange,linspace,logspace,norm,lerp,map,clamp,pgcd,ppcm,aproximatelyEqual,cartesianProduct}=Utils
 export {
+    mapfun,
     Utils,
     zeros,
     ones,

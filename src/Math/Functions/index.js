@@ -1,4 +1,4 @@
-import { mapFun } from "./utils.js";
+import { mapfun } from "../Utils/mapfun.js";
 //import ZikoMath from "./index.js"
 //import{Matrix} from "../Matrix/index.js"
 //import{complex, Complex} from "./Complex.js"
@@ -7,92 +7,92 @@ import { mapFun } from "./utils.js";
 //mapArgs=(fun,...args1)=>(...args2)=>new Array(args1.length).fill(null).map((n,i)=>fun(args1[i],args2[i]))
 
 function abs(...x){
-    return mapFun(Math.abs,...x);
+    return mapfun(Math.abs,...x);
 }
 function sqrt(...x){
-    return mapFun(Math.sqrt,...x);
+    return mapfun(Math.sqrt,...x);
 }
 function pow(...x){
-    //return n=>mapFun(a=>Math.pow(a,n),...x)
+    //return n=>mapfun(a=>Math.pow(a,n),...x)
     const n=x.pop();
-    return mapFun(a=>Math.pow(a,n),...x)
+    return mapfun(a=>Math.pow(a,n),...x)
 }
 function sqrtn(...x){
     const n=x.pop();
-    return mapFun(a=>e(ln(a) / n),...x)
+    return mapfun(a=>e(ln(a) / n),...x)
 }
 function e(...x){
-    return mapFun(Math.exp,...x);
+    return mapfun(Math.exp,...x);
 }
 function ln(...x){
-    return mapFun(Math.log,...x);
+    return mapfun(Math.log,...x);
 }
 function cos(...x){
-    return mapFun(a=>+Math.cos(a).toFixed(15),...x);
+    return mapfun(a=>+Math.cos(a).toFixed(15),...x);
 }
 function sin(...x){
-    return mapFun(a=>+Math.sin(a).toFixed(15),...x);
+    return mapfun(a=>+Math.sin(a).toFixed(15),...x);
 }
 function tan(...x){
-    return mapFun(a=>+Math.tan(a).toFixed(15),...x);
+    return mapfun(a=>+Math.tan(a).toFixed(15),...x);
 }
 function sec(...x){
-    return mapFun(a=>+1/Math.cos(a).toFixed(15),...x);
+    return mapfun(a=>+1/Math.cos(a).toFixed(15),...x);
 }
 function csc(...x){
-    return mapFun(a=>+1/Math.sin(a).toFixed(15),...x);
+    return mapfun(a=>+1/Math.sin(a).toFixed(15),...x);
 }
 function cot(...x){
-    return mapFun(a=>+1/Math.tan(a).toFixed(15),...x);
+    return mapfun(a=>+1/Math.tan(a).toFixed(15),...x);
 }
 function acos(...x){
-    return mapFun(a=>+Math.acos(a).toFixed(15),...x);
+    return mapfun(a=>+Math.acos(a).toFixed(15),...x);
 }
 function asin(...x){
-    return mapFun(a=>+Math.asin(a).toFixed(15),...x);
+    return mapfun(a=>+Math.asin(a).toFixed(15),...x);
 }
 function atan(...x){
-    return mapFun(a=>+Math.atan(a).toFixed(15),...x);
+    return mapfun(a=>+Math.atan(a).toFixed(15),...x);
 }
 function acot(...x){
-    return mapFun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
+    return mapfun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
 }
 function cosh(...x){
-    return mapFun(a=>+Math.cosh(a).toFixed(15),...x);
+    return mapfun(a=>+Math.cosh(a).toFixed(15),...x);
 }
 function sinh(...x){
-    return mapFun(a=>+Math.sinh(a).toFixed(15),...x);
+    return mapfun(a=>+Math.sinh(a).toFixed(15),...x);
 }
 function tanh(...x){
-    return mapFun(a=>+Math.tanh(a).toFixed(15),...x);
+    return mapfun(a=>+Math.tanh(a).toFixed(15),...x);
 }
 function coth(...x){
-    return mapFun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
+    return mapfun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
 }
 function acosh(...x){
-    return mapFun(a=>+Math.acosh(a).toFixed(15),...x);
+    return mapfun(a=>+Math.acosh(a).toFixed(15),...x);
 }
 function asinh(...x){
-    return mapFun(a=>+Math.asinh(a).toFixed(15),...x);
+    return mapfun(a=>+Math.asinh(a).toFixed(15),...x);
 }
 function atanh(...x){
-    return mapFun(a=>+Math.atanh(a).toFixed(15),...x);
+    return mapfun(a=>+Math.atanh(a).toFixed(15),...x);
 }
 function ceil(...x){
-    return mapFun(Math.ceil,...x);
+    return mapfun(Math.ceil,...x);
 }
 function floor(...x){
-    return mapFun(Math.floor,...x);
+    return mapfun(Math.floor,...x);
 }
 function round(...x){
-    return mapFun(Math.round,...x);
+    return mapfun(Math.round,...x);
 }
 function atan2(...x){
     const n=x.pop();
-    return mapFun(a=>Math.atan2(a,n),...x)
+    return mapfun(a=>Math.atan2(a,n),...x)
 }
 function fact(...x){
-    return mapFun(n=> {
+    return mapfun(n=> {
         let i,
         y = 1;
         if (n == 0) y = 1;
@@ -102,10 +102,10 @@ function fact(...x){
     },...x);
 } 
 function sign(...x){
-    return mapFun(Math.sign,...x);
+    return mapfun(Math.sign,...x);
 }
 function sig(...x){
-    return mapFun(n=>1/(1+e(-n)),...x);
+    return mapfun(n=>1/(1+e(-n)),...x);
 }
 
 
