@@ -1,27 +1,48 @@
-
-// Utils
-
 import { mapfun } from "./mapfun.js";
 import{floor,sqrtn,pow,abs,ln}from "../Functions/index.js"
 import{Matrix}from "../Matrix/index.js"
 import{complex,Complex}from"../Complex/index.js"
 import{PI,E} from "../const.js";
-//import ZMath from "./index.js"  
+import {
+    zeros,
+    ones,
+    nums,
+    arange,
+    linspace,
+    logspace,
+    geomspace
+} from "../Signal/function.js"
+import {
+    deg2rad,
+    rad2deg
+} from "./conversions.js"
+import{
+    sum,
+    prod,
+    min,
+    max,
+    accum
+} from "./statistics.js"
+import{
+    cartesianProduct,
+    ppcm,
+    pgcd
+} from "./discret.js"
 class Utils {
-    static zeros(num,n){
-        return new Array(n).fill(0);
+    static zeros(n){
+        return zeros(n)
     }
-    static ones(num,n){
-        return new Array(n).fill(1);
+    static ones(n){
+        return ones(n)
     }
-    static numbers(num,n){
-        return new Array(n).fill(num);
+    static nums(num,n){
+        return nums(num,n)
     }
     static #add(a,b){
         if(typeof(a)==="number"){
             if (typeof b == "number") return a + b;
             else if (b instanceof Complex)return complex(a + b.a, b.b);
-            else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).add(b);
+            else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).add(b);
             else if (b instanceof Array)return b.map(n=>Utils.add(n,a));                 
         }
         else if(a instanceof Complex||a instanceof Matrix){
@@ -41,7 +62,7 @@ class Utils {
         if(typeof(a)==="number"){
             if (typeof b == "number") return a - b;
             else if (b instanceof Complex)return complex(a - b.a, -b.b);
-            else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).sub(b);
+            else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).sub(b);
             else if (b instanceof Array)return b.map(n=>Utils.sub(n,a));                 
         }
         else if(a instanceof Complex||a instanceof Matrix){
@@ -61,7 +82,7 @@ class Utils {
         if(typeof(a)==="number"){
         if (typeof b == "number") return a * b;
             else if (b instanceof Complex)return complex(a * b.a,a * b.b);
-            else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).mul(b);
+            else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
             else if (b instanceof Array)return b.map(n=>Utils.mul(a,n)); 
         }
         else if(a instanceof Complex||a instanceof Matrix){
@@ -81,7 +102,7 @@ class Utils {
         if(typeof(a)==="number"){
         if (typeof b == "number") return a / b;
             else if (b instanceof Complex)return complex(a / b.a,a / b.b);
-            else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).div(b);
+            else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).div(b);
             else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
         }
         else if(a instanceof Complex||a instanceof Matrix){
@@ -101,7 +122,7 @@ class Utils {
         if(typeof(a)==="number"){
             if (typeof b == "number") return a % b;
                 else if (b instanceof Complex)return complex(a % b.a,a % b.b);
-                else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).modulo(b);
+                else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).modulo(b);
                 else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
             }
             else if(a instanceof Complex||a instanceof Matrix){
@@ -143,124 +164,34 @@ class Utils {
         return res;
     }
     static sum(...x) {
-        let s = x[0];
-        for (let i = 1; i < x.length; i++) s += x[i];
-        return s;
+        return sum(...x)
     }
     static prod(...x) {
-        let p = x[0];
-        for (let i = 1; i < x.length; i++) p *= x[i];
-        return p;
+        return prod(...x)
     }
-    static deg2rad(x) {
-        if (typeof x === "number") return (x * PI) / 180;
-        else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, Utils.deg2rad(x.arr.flat(1)));
-        else if (x instanceof Complex) return new Complex(Utils.deg2rad(x.a), Utils.deg2rad(x.b));
-        else if (x instanceof Array) {
-            if (x.every((n) => typeof (n === "number"))) {
-                return x.map((n) => Utils.deg2rad(n));
-            } else {
-                let y = new Array(x.length);
-                for (let i = 0; i < x.length; i++) {
-                    y[i] = this.deg2rad(x[i]);
-                }
-            }
-        }
+    static deg2rad(...x) {
+        return deg2rad(...x)
     }
-    static rad2deg(x) {
-        if (typeof x === "number") return (x / PI) * 180;
-        else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, Utils.rad2deg(x.arr.flat(1)));
-        else if (x instanceof Complex) return new Complex(Utils.rad2deg(x.a), Utils.rad2deg(x.b));
-        else if (x instanceof Array) {
-            if (x.every((n) => typeof (n === "number"))) {
-                return x.map((n) => Utils.rad2deg(n));
-            } else {
-                let y = new Array(x.length);
-                for (let i = 0; i < x.length; i++) {
-                    y[i] = this.rad2deg(x[i]);
-                }
-            }
-        }
+    static rad2deg(...x) {
+        return rad2deg(...x)
     }
     static pgcd(n1, n2) {
-        let i,
-            pgcd = 1;
-        if (n1 == floor(n1) && n2 == floor(n2)) {
-            for (i = 2; i <= n1 && i <= n2; ++i) {
-                if (n1 % i == 0 && n2 % i == 0) pgcd = i;
-            }
-            return pgcd;
-        } else console.log("error");
+        return pgcd(n1,n2)
     }
     static ppcm(n1, n2) {
-        let ppcm;
-        if (n1 == floor(n1) && n2 == floor(n2)) {
-            ppcm = n1 > n2 ? n1 : n2;
-            while (true) {
-                if (ppcm % n1 == 0 && ppcm % n2 == 0) break;
-                ++ppcm;
-            }
-            return ppcm;
-        } else console.log("error");
+        return ppcm(n1,n2)
     }
     static linspace(a,b,n=abs(b-a)+1,endpoint=true) {
-        if(a instanceof Complex||b instanceof Complex){
-            a=complex(a);
-            b=complex(b);
-            n=n||Math.abs(b.a-a.a)+1;
-            const X=this.linspace(a.a,b.a,n,endpoint);
-            const Y=this.linspace(a.b,b.b,n,endpoint);
-            let Z=new Array(n).fill(null);
-            Z=Z.map((n,i)=>complex(X[i],Y[i]));
-            return Z;
-        }
-        else if(a instanceof Array){
-            let Y=[]
-            for(let i=0;i<a.length;i++){
-                n=n||abs(b[i]-a[i])+1
-                Y[i]=this.linspace(a[i],b[i],n,endpoint);
-            }
-            return Y;
-        }
-        const [high,low]=[a,b].sort((a,b)=>b-a);
-        if (floor(n) !== n) return;
-        var arr = [];
-        let step = (high - low) / (n - 1);
-        if(!endpoint)step = (high - low) / n;
-        for (var i = 0; i < n; i++) {
-            arr.push(low+step*i);
-        }
-        return a<b?arr:arr.reverse();
+        return linspace(a,b,n,endpoint)
     }
     static logspace(a,b,n=b-a+1,base=E,endpoint=true){
-        if(a instanceof Complex||b instanceof Complex){
-            a=complex(a);
-            b=complex(b);
-            n=n??abs(b.a-a.a)
-            const X=this.linspace(a.a,b.a,n,base,endpoint);
-            const Y=this.linspace(a.b,b.b,n,base,endpoint);
-            const Z=new Array(X.length).fill(0)
-            const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
-            return ZZ;
-        }
-        const start=base**min(a,b);
-        const stop=base**max(a,b);
-        const y = Utils.linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
-        const result=y.map(n => pow(base, n));
-        return a<b?result:result.reverse();
+        return logspace(a,b,n,base)
     }
     static geomspace(a,b,n=abs(b-a)+1){
-        var [high,low]=[a,b].sort((a,b)=>b-a);
-        var step=sqrtn(high,n-low);
-        var arr=[low]
-        for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
-        arr=arr.map(n=>+n.toFixed(8))
-        return a<b?arr:arr.reverse()
+        return geomspace(a,b,n)
     }
-    static arange(a, b, pas) {
-        let tab = [];
-        for (let i = a; i < b; i += pas) tab.push((i * 10) / 10);
-        return tab;
+    static arange(a, b, step, include) {
+        return arange(a,b,step,include)
     }
     static norm(value, min, max) {
         if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
@@ -326,21 +257,19 @@ class Utils {
         return abs(a-b)<Epsilon;
     }
     static cartesianProduct(a, b){
-        return a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
+        return cartesianProduct(a,b)
     }
     static accum(...arr){
-        let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
-            acc.shift();
-            return acc;
+        return accum(...arr)
     }
 }
-var {zeros,ones,numbers,sum,prod,add,mul,div,sub,modulo,rad2deg,deg2rad,arange,linspace,logspace,norm,lerp,map,clamp,pgcd,ppcm,aproximatelyEqual,cartesianProduct}=Utils
+var {add,mul,div,sub,modulo,norm,lerp,map,clamp,aproximatelyEqual}=Utils
 export {
     mapfun,
     Utils,
     zeros,
     ones,
-    numbers,
+    nums,
     sum,
     prod,
     add,

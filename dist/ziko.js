@@ -4,7 +4,7 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Ziko = factory());
 })(this, (function () { 'use strict';
 
-    const { PI, E } = Math;
+    const { PI, E: E$1 } = Math;
     const EPSILON=Number.EPSILON;
 
     var Signal={
@@ -114,7 +114,7 @@
             return new Complex(this.a, -this.b);
         }
         get inv() {
-            return new Complex(this.a / (pow(this.a, 2) + pow(this.b, 2)), -this.b / (pow(this.a, 2) + pow(this.b, 2)));
+            return new Complex(this.a / (pow$1(this.a, 2) + pow$1(this.b, 2)), -this.b / (pow$1(this.a, 2) + pow$1(this.b, 2)));
         }
         add(...z) {
             for (let i = 0; i < z.length; i++) {
@@ -157,7 +157,7 @@
             return this;
         }
         pow(n) {
-            if (floor(n) === n && n > 0) {
+            if (floor$1(n) === n && n > 0) {
                 let z=+(this.z**n).toFixed(15);
                 let phi=+(this.phi*n).toFixed(15);
                 this.a=+(z*cos(phi).toFixed(15)).toFixed(15);
@@ -187,10 +187,10 @@
             return z.clone.pow(n);
         }
         static xpowZ(x){
-            return complex((x**this.a)*cos(this.b*ln(x)),(x**this.a)*sin(this.b*ln(x)));
+            return complex((x**this.a)*cos(this.b*ln$1(x)),(x**this.a)*sin(this.b*ln$1(x)));
         }
         sqrtn(n=2){
-            return complex(sqrtn(this.z,n)*cos(this.phi/n),sqrtn(this.z,n)*sin(this.phi/n));
+            return complex(sqrtn$1(this.z,n)*cos(this.phi/n),sqrtn$1(this.z,n)*sin(this.phi/n));
         }
         get sqrt(){
             return this.sqrtn(2);
@@ -231,22 +231,167 @@
         return new Complex(a,b)
     };
 
-    //import ZMath from "./index.js"  
-    class Utils {
-        static zeros(num,n){
-            return new Array(n).fill(0);
+    const zeros=(n)=>new Array(n).fill(0);
+    const ones=(n)=>new Array(n).fill(1);
+    const nums=(num,n)=>new Array(n).fill(num);
+    const arange=(a, b, step , include = false)=>{
+        let tab = [];
+        if(a<b){
+            for (let i = a; include?i<=b:i<b; i += step) tab.push((i * 10) / 10);
         }
-        static ones(num,n){
-            return new Array(n).fill(1);
+        else {
+            for(let i = a; include?i>=b:i>b; i -= step) tab.push((i * 10) / 10);
         }
-        static numbers(num,n){
-            return new Array(n).fill(num);
+        return tab;
+    };
+    const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+        if(a instanceof Complex||b instanceof Complex){
+            a=complex(a);
+            b=complex(b);
+            n=n||Math.abs(b.a-a.a)+1;
+            const X=linspace(a.a,b.a,n,endpoint);
+            const Y=linspace(a.b,b.b,n,endpoint);
+            let Z=new Array(n).fill(null);
+            Z=Z.map((n,i)=>complex(X[i],Y[i]));
+            return Z;
+        }
+        else if(a instanceof Array){
+            let Y=[];
+            for(let i=0;i<a.length;i++){
+                n=n||abs(b[i]-a[i])+1;
+                Y[i]=linspace(a[i],b[i],n,endpoint);
+            }
+            return Y;
+        }
+        const [high,low]=[a,b].sort((a,b)=>b-a);
+        if (floor(n) !== n) return;
+        var arr = [];
+        let step = (high - low) / (n - 1);
+        if(!endpoint)step = (high - low) / n;
+        for (var i = 0; i < n; i++) {
+            arr.push(low+step*i);
+        }
+        return a<b?arr:arr.reverse();
+    };
+    const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
+        if(a instanceof Complex||b instanceof Complex){
+            a=complex(a);
+            b=complex(b);
+            n=n??abs(b.a-a.a);
+            const X=linspace(a.a,b.a,n,base);
+            const Y=linspace(a.b,b.b,n,base);
+            const Z=new Array(X.length).fill(0);
+            const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
+            return ZZ;
+        }
+        const start=base**min(a,b);
+        const stop=base**max(a,b);
+        const y = Utils.linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
+        const result=y.map(n => pow(base, n));
+        return a<b?result:result.reverse();
+    };
+    const geomspace=(a,b,n=abs(b-a)+1)=>{
+        var [high,low]=[a,b].sort((a,b)=>b-a);
+        var step=sqrtn(high,n-low);
+        var arr=[low];
+        for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
+        arr=arr.map(n=>+n.toFixed(8));
+        return a<b?arr:arr.reverse()
+    };
+
+    //deg2rad
+    //rad2deg
+    const deg2rad=(...deg)=>mapfun(x=>x*Math.PI/180,...deg);
+    const rad2deg=(...rad)=>mapfun(x=>x/Math.PI*180,...rad);
+
+    const sum=(...x)=>{
+        let s = x[0];
+        for (let i = 1; i < x.length; i++) s += x[i];
+        return s;
+    };
+    const prod=(...x)=> {
+        let p = x[0];
+        for (let i = 1; i < x.length; i++) p *= x[i];
+        return p;
+    };
+    const min$1=(...num)=>{
+        if(num.every(n=>typeof n==="number"))return Math.min(...num);
+        const Y=[];
+        for(let i=0;i<num.length;i++){
+            if(num[i] instanceof Array)Y.push(min$1(...num[i]));
+            else if(num[i] instanceof Object){
+                Y.push(
+                        Object.fromEntries(
+                            [Object.entries(num[i]).sort((a,b)=>a[1]-b[1])[0]]
+                        )
+                    );
+            }
+        }
+        return Y
+    };
+    const max$1=(...num)=>{
+        if(num.every(n=>typeof n==="number"))return Math.max(...num);
+        const Y=[];
+        for(let i=0;i<num.length;i++){
+            if(num[i] instanceof Array)Y.push(min$1(...num[i]));
+            else if(num[i] instanceof Object){
+                Y.push(
+                        Object.fromEntries(
+                            [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
+                        )
+                    );
+            }
+        }
+        return Y
+    };
+    const accum=(...arr)=>{
+        let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
+            acc.shift();
+            return acc;
+    };
+
+    // sort
+
+    console.log(min$1({a:2,c:3}));
+
+    const cartesianProduct=(a, b)=>a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
+    const pgcd=(n1, n2)=>{
+        let i,
+            pgcd = 1;
+        if (n1 == floor(n1) && n2 == floor(n2)) {
+            for (i = 2; i <= n1 && i <= n2; ++i) {
+                if (n1 % i == 0 && n2 % i == 0) pgcd = i;
+            }
+            return pgcd;
+        } else console.log("error");
+    };
+    const ppcm=(n1, n2)=>{
+        let ppcm;
+        if (n1 == floor(n1) && n2 == floor(n2)) {
+            ppcm = n1 > n2 ? n1 : n2;
+            while (true) {
+                if (ppcm % n1 == 0 && ppcm % n2 == 0) break;
+                ++ppcm;
+            }
+            return ppcm;
+        } else console.log("error");
+    };
+
+    let Utils$1 = class Utils {
+        static zeros(n){
+            return zeros(n)
+        }
+        static ones(n){
+            return ones(n)
+        }
+        static nums(num,n){
+            return nums(num,n)
         }
         static #add(a,b){
             if(typeof(a)==="number"){
                 if (typeof b == "number") return a + b;
                 else if (b instanceof Complex)return complex(a + b.a, b.b);
-                else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).add(b);
+                else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).add(b);
                 else if (b instanceof Array)return b.map(n=>Utils.add(n,a));                 
             }
             else if(a instanceof Complex||a instanceof Matrix){
@@ -264,7 +409,7 @@
             if(typeof(a)==="number"){
                 if (typeof b == "number") return a - b;
                 else if (b instanceof Complex)return complex(a - b.a, -b.b);
-                else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).sub(b);
+                else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).sub(b);
                 else if (b instanceof Array)return b.map(n=>Utils.sub(n,a));                 
             }
             else if(a instanceof Complex||a instanceof Matrix){
@@ -282,7 +427,7 @@
             if(typeof(a)==="number"){
             if (typeof b == "number") return a * b;
                 else if (b instanceof Complex)return complex(a * b.a,a * b.b);
-                else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).mul(b);
+                else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
                 else if (b instanceof Array)return b.map(n=>Utils.mul(a,n)); 
             }
             else if(a instanceof Complex||a instanceof Matrix){
@@ -300,7 +445,7 @@
             if(typeof(a)==="number"){
             if (typeof b == "number") return a / b;
                 else if (b instanceof Complex)return complex(a / b.a,a / b.b);
-                else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).div(b);
+                else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).div(b);
                 else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
             }
             else if(a instanceof Complex||a instanceof Matrix){
@@ -318,7 +463,7 @@
             if(typeof(a)==="number"){
                 if (typeof b == "number") return a % b;
                     else if (b instanceof Complex)return complex(a % b.a,a % b.b);
-                    else if (b instanceof Matrix) return Matrix.numbers(b.rows, b.cols, a).modulo(b);
+                    else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).modulo(b);
                     else if (b instanceof Array)return b.map(n=>Utils.div(a,n));
                 }
                 else if(a instanceof Complex||a instanceof Matrix){
@@ -358,124 +503,34 @@
             return res;
         }
         static sum(...x) {
-            let s = x[0];
-            for (let i = 1; i < x.length; i++) s += x[i];
-            return s;
+            return sum(...x)
         }
         static prod(...x) {
-            let p = x[0];
-            for (let i = 1; i < x.length; i++) p *= x[i];
-            return p;
+            return prod(...x)
         }
-        static deg2rad(x) {
-            if (typeof x === "number") return (x * PI) / 180;
-            else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, Utils.deg2rad(x.arr.flat(1)));
-            else if (x instanceof Complex) return new Complex(Utils.deg2rad(x.a), Utils.deg2rad(x.b));
-            else if (x instanceof Array) {
-                if (x.every((n) => typeof (n === "number"))) {
-                    return x.map((n) => Utils.deg2rad(n));
-                } else {
-                    let y = new Array(x.length);
-                    for (let i = 0; i < x.length; i++) {
-                        y[i] = this.deg2rad(x[i]);
-                    }
-                }
-            }
+        static deg2rad(...x) {
+            return deg2rad(...x)
         }
-        static rad2deg(x) {
-            if (typeof x === "number") return (x / PI) * 180;
-            else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, Utils.rad2deg(x.arr.flat(1)));
-            else if (x instanceof Complex) return new Complex(Utils.rad2deg(x.a), Utils.rad2deg(x.b));
-            else if (x instanceof Array) {
-                if (x.every((n) => typeof (n === "number"))) {
-                    return x.map((n) => Utils.rad2deg(n));
-                } else {
-                    let y = new Array(x.length);
-                    for (let i = 0; i < x.length; i++) {
-                        y[i] = this.rad2deg(x[i]);
-                    }
-                }
-            }
+        static rad2deg(...x) {
+            return rad2deg(...x)
         }
         static pgcd(n1, n2) {
-            let i,
-                pgcd = 1;
-            if (n1 == floor(n1) && n2 == floor(n2)) {
-                for (i = 2; i <= n1 && i <= n2; ++i) {
-                    if (n1 % i == 0 && n2 % i == 0) pgcd = i;
-                }
-                return pgcd;
-            } else console.log("error");
+            return pgcd(n1,n2)
         }
         static ppcm(n1, n2) {
-            let ppcm;
-            if (n1 == floor(n1) && n2 == floor(n2)) {
-                ppcm = n1 > n2 ? n1 : n2;
-                while (true) {
-                    if (ppcm % n1 == 0 && ppcm % n2 == 0) break;
-                    ++ppcm;
-                }
-                return ppcm;
-            } else console.log("error");
+            return ppcm(n1,n2)
         }
-        static linspace(a,b,n=abs(b-a)+1,endpoint=true) {
-            if(a instanceof Complex||b instanceof Complex){
-                a=complex(a);
-                b=complex(b);
-                n=n||Math.abs(b.a-a.a)+1;
-                const X=this.linspace(a.a,b.a,n,endpoint);
-                const Y=this.linspace(a.b,b.b,n,endpoint);
-                let Z=new Array(n).fill(null);
-                Z=Z.map((n,i)=>complex(X[i],Y[i]));
-                return Z;
-            }
-            else if(a instanceof Array){
-                let Y=[];
-                for(let i=0;i<a.length;i++){
-                    n=n||abs(b[i]-a[i])+1;
-                    Y[i]=this.linspace(a[i],b[i],n,endpoint);
-                }
-                return Y;
-            }
-            const [high,low]=[a,b].sort((a,b)=>b-a);
-            if (floor(n) !== n) return;
-            var arr = [];
-            let step = (high - low) / (n - 1);
-            if(!endpoint)step = (high - low) / n;
-            for (var i = 0; i < n; i++) {
-                arr.push(low+step*i);
-            }
-            return a<b?arr:arr.reverse();
+        static linspace(a,b,n=abs$1(b-a)+1,endpoint=true) {
+            return linspace(a,b,n,endpoint)
         }
-        static logspace(a,b,n=b-a+1,base=E,endpoint=true){
-            if(a instanceof Complex||b instanceof Complex){
-                a=complex(a);
-                b=complex(b);
-                n=n??abs(b.a-a.a);
-                const X=this.linspace(a.a,b.a,n,base,endpoint);
-                const Y=this.linspace(a.b,b.b,n,base,endpoint);
-                const Z=new Array(X.length).fill(0);
-                const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
-                return ZZ;
-            }
-            const start=base**min(a,b);
-            const stop=base**max(a,b);
-            const y = Utils.linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
-            const result=y.map(n => pow(base, n));
-            return a<b?result:result.reverse();
+        static logspace(a,b,n=b-a+1,base=E$1,endpoint=true){
+            return logspace(a,b,n,base)
         }
-        static geomspace(a,b,n=abs(b-a)+1){
-            var [high,low]=[a,b].sort((a,b)=>b-a);
-            var step=sqrtn(high,n-low);
-            var arr=[low];
-            for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
-            arr=arr.map(n=>+n.toFixed(8));
-            return a<b?arr:arr.reverse()
+        static geomspace(a,b,n=abs$1(b-a)+1){
+            return geomspace(a,b,n)
         }
-        static arange(a, b, pas) {
-            let tab = [];
-            for (let i = a; i < b; i += pas) tab.push((i * 10) / 10);
-            return tab;
+        static arange(a, b, step, include) {
+            return arange(a,b,step,include)
         }
         static norm(value, min, max) {
             if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
@@ -538,18 +593,16 @@
             }
         }
         static aproximatelyEqual(a,b,Epsilon=0.0001){
-            return abs(a-b)<Epsilon;
+            return abs$1(a-b)<Epsilon;
         }
         static cartesianProduct(a, b){
-            return a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
+            return cartesianProduct(a,b)
         }
         static accum(...arr){
-            let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
-                acc.shift();
-                return acc;
+            return accum(...arr)
         }
-    }
-    var {zeros,ones,numbers,sum,prod,add,mul,div,sub,modulo,rad2deg,deg2rad,arange,linspace,logspace,norm,lerp,map,clamp,pgcd,ppcm,aproximatelyEqual,cartesianProduct}=Utils;
+    };
+    var {add,mul,div,sub,modulo,norm,lerp,map,clamp,aproximatelyEqual}=Utils$1;
 
     //import{arange}from "../Utils/index.js"
     const Logic$1={
@@ -994,7 +1047,7 @@
         }
         static choice(choices = [1, 2, 3], p = new Array(choices.length).fill(1 / choices.length)) {
             let newchoice = new Array(100);
-            p=Utils.accum(...p).map(n=>n*100);
+            p=Utils$1.accum(...p).map(n=>n*100);
             newchoice.fill(choices[0], 0, p[0]);
             for (let i = 1; i < choices.length; i++) newchoice.fill(choices[i], p[i - 1], p[i]);
             return newchoice[this.int(newchoice.length - 1)];
@@ -1264,7 +1317,7 @@
                         console.warn("Tensors are not completely supported yet ...");
                         return;
                     }
-                    return Utils.sub(Utils.mul(M[0][0],M[1][1]),Utils.mul(M[0][1],M[1][0]))
+                    return Utils$1.sub(Utils$1.mul(M[0][0],M[1][1]),Utils$1.mul(M[0][1],M[1][0]))
                 }
                 var answer = 0;
                 for (var i = 0; i < M.length; i++) {
@@ -1275,8 +1328,8 @@
                             .mul(determinat(deleteRowAndColumn(M, i)))
                     );*/
                     //const to_be_added=Utils.add(Utils.mul(pow(-1, i),Utils.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
-                    const to_be_added=Utils.add(Utils.mul(pow(-1, i),Utils.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
-                    answer=Utils.add(answer,to_be_added);
+                    const to_be_added=Utils$1.add(Utils$1.mul(pow$1(-1, i),Utils$1.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
+                    answer=Utils$1.add(answer,to_be_added);
                 }
                 return answer;
             }
@@ -1374,28 +1427,28 @@
             );
         }*/
         map(Imin, Imax, Fmin, Fmax) {
-            return Utils.map(this, Imin, Imax, Fmin, Fmax);
+            return Utils$1.map(this, Imin, Imax, Fmin, Fmax);
         }
         lerp(min, max) {
-            return Utils.lerp(this, min, max);
+            return Utils$1.lerp(this, min, max);
         }
         norm(min, max) {
-            return Utils.norm(this, min, max);
+            return Utils$1.norm(this, min, max);
         }
         clamp(min, max) {
-            return Utils.clamp(this, min, max);
+            return Utils$1.clamp(this, min, max);
         }
         static map(matrix, Imin, Imax, Fmin, Fmax) {
-            return Utils.map(matrix, Imin, Imax, Fmin, Fmax);
+            return Utils$1.map(matrix, Imin, Imax, Fmin, Fmax);
         }
         static lerp(matrix, min, max) {
-            return Utils.lerp(matrix, min, max);
+            return Utils$1.lerp(matrix, min, max);
         }
         static norm(matrix, min, max) {
-            return Utils.norm(matrix, min, max);
+            return Utils$1.norm(matrix, min, max);
         }
         static clamp(m, min, max) {
-            return Utils.clamp(matrix, min, max);
+            return Utils$1.clamp(matrix, min, max);
         }
         toPrecision(p) {
             for (let i = 0; i < this.cols; i++) for (let j = 0; j < this.rows; j++) this.arr[i][j] = +this.arr[i][j].toPrecision(p);
@@ -1533,14 +1586,14 @@
         add(...matr) {
             for (let k = 0; k < matr.length; k++) {
                 if (typeof matr[k] == "number"||matr[k] instanceof Math.Complex) matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
-                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.add(this.arr[i][j],matr[k].arr[i][j]);
+                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.add(this.arr[i][j],matr[k].arr[i][j]);
             }
             return new Matrix(this.rows, this.cols, this.arr.flat(1));
         }
         sub(...matr) {
             for (let k = 0; k < matr.length; k++) {
                 if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
-                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.sub(this.arr[i][j],matr[k].arr[i][j]);
+                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.sub(this.arr[i][j],matr[k].arr[i][j]);
             }
             return new Matrix(this.rows, this.cols, this.arr.flat(1));
         }
@@ -1553,14 +1606,14 @@
         mul(...matr) {
             for (let k = 0; k < matr.length; k++) {
                 if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
-                for (var i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.mul(this.arr[i][j],matr[k].arr[i][j]);
+                for (var i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.mul(this.arr[i][j],matr[k].arr[i][j]);
             }
             return new Matrix(this.rows, this.cols, this.arr.flat(1));
         }
         div(...matr) {
             for (let k = 0; k < matr.length; k++) {
                 if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
-                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.div(this.arr[i][j],matr[k].arr[i][j]);
+                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils$1.div(this.arr[i][j],matr[k].arr[i][j]);
             }
             return new Matrix(this.rows, this.cols, this.arr.flat(1));
         }
@@ -1573,7 +1626,7 @@
         modulo(...matr) {
             for (let k = 0; k < matr.length; k++) {
                 if (typeof matr[k] == "number") matr[k] = Matrix.numbers(this.rows, this.cols, matr[k]);
-                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++)this.arr[i][j]=Utils.modulo(this.arr[i][j],matr[k].arr[i][j]);
+                for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++)this.arr[i][j]=Utils$1.modulo(this.arr[i][j],matr[k].arr[i][j]);
             }
             return new Matrix(this.rows, this.cols, this.arr.flat(1));
         }
@@ -1587,9 +1640,9 @@
                 for (var j = 0; j < matrix.arr[0].length; j++) {
                     res[i][j] = 0;
                     for (var k = 0; k < this.arr[0].length; k++) {
-                        res[i][j] = Utils.add(
+                        res[i][j] = Utils$1.add(
                             res[i][j],
-                            Utils.mul(this.arr[i][k],matrix.arr[k][j])
+                            Utils$1.mul(this.arr[i][k],matrix.arr[k][j])
                             );
                     }
                 }
@@ -1827,7 +1880,7 @@
             if(x instanceof Complex){
                 const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
                 switch(fun){
-                    case Math.log:return complex(ln(z),phi);
+                    case Math.log:return complex(ln$1(z),phi);
                     case Math.exp:return complex(e(a)*cos(b),e(a)*sin(b));
                     case Math.abs:return z;
                     case Math.sqrt:return complex(sqrt(z)*cos(phi/2),sqrt(z)*sin(phi/2));
@@ -1851,33 +1904,26 @@
         });
        return Y.length==1?Y[0]:Y; 
     };
+    window.mapfun=mapfun;
 
-    //import ZikoMath from "./index.js"
-    //import{Matrix} from "../Matrix/index.js"
-    //import{complex, Complex} from "./Complex.js"
-    // var a=complex(1,1)
-    // console.log(a instanceof Complex)
-    //mapArgs=(fun,...args1)=>(...args2)=>new Array(args1.length).fill(null).map((n,i)=>fun(args1[i],args2[i]))
-
-    function abs(...x){
+    function abs$1(...x){
         return mapfun(Math.abs,...x);
     }
     function sqrt(...x){
         return mapfun(Math.sqrt,...x);
     }
-    function pow(...x){
-        //return n=>mapfun(a=>Math.pow(a,n),...x)
+    function pow$1(...x){
         const n=x.pop();
         return mapfun(a=>Math.pow(a,n),...x)
     }
-    function sqrtn(...x){
+    function sqrtn$1(...x){
         const n=x.pop();
-        return mapfun(a=>e(ln(a) / n),...x)
+        return mapfun(a=>e(ln$1(a) / n),...x)
     }
     function e(...x){
         return mapfun(Math.exp,...x);
     }
-    function ln(...x){
+    function ln$1(...x){
         return mapfun(Math.log,...x);
     }
     function cos(...x){
@@ -1934,7 +1980,7 @@
     function ceil(...x){
         return mapfun(Math.ceil,...x);
     }
-    function floor(...x){
+    function floor$1(...x){
         return mapfun(Math.floor,...x);
     }
     function round(...x){
@@ -1961,15 +2007,12 @@
         return mapfun(n=>1/(1+e(-n)),...x);
     }
 
-
-    var min$1 = (...x) => Math.min(...x);
-    var max$1 = (...x) => Math.max(...x);
     var hypot = Math.hypot;
 
     //import Ziko from "../index.js"
     const Math$1={
         PI,
-        E,
+        E: E$1,
         EPSILON,
         Random,
         complex,
@@ -1986,12 +2029,12 @@
         sec,
         csc,
         cot,
-        abs,
+        abs: abs$1,
         sqrt,
-        pow,
-        sqrtn,
+        pow: pow$1,
+        sqrtn: sqrtn$1,
         e,
-        ln,
+        ln: ln$1,
         acos,
         asin,
         atan,
@@ -2006,7 +2049,7 @@
         min: min$1,
         max: max$1,
         sign,
-        floor,
+        floor: floor$1,
         ceil,
         round,
         fact,
@@ -2014,8 +2057,8 @@
         sig,
         atan2,
        // Derivation,
-        Utils,
-        numbers,
+        Utils: Utils$1,
+        nums,
         zeros,
         ones,
         sum,

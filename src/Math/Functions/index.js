@@ -1,11 +1,5 @@
 import { mapfun } from "../Utils/mapfun.js";
-//import ZikoMath from "./index.js"
-//import{Matrix} from "../Matrix/index.js"
-//import{complex, Complex} from "./Complex.js"
-// var a=complex(1,1)
-// console.log(a instanceof Complex)
-//mapArgs=(fun,...args1)=>(...args2)=>new Array(args1.length).fill(null).map((n,i)=>fun(args1[i],args2[i]))
-
+import { min,max }from "../Utils/statistics.js"
 function abs(...x){
     return mapfun(Math.abs,...x);
 }
@@ -13,7 +7,6 @@ function sqrt(...x){
     return mapfun(Math.sqrt,...x);
 }
 function pow(...x){
-    //return n=>mapfun(a=>Math.pow(a,n),...x)
     const n=x.pop();
     return mapfun(a=>Math.pow(a,n),...x)
 }
@@ -108,9 +101,6 @@ function sig(...x){
     return mapfun(n=>1/(1+e(-n)),...x);
 }
 
-
-var min = (...x) => Math.min(...x);
-var max = (...x) => Math.max(...x);
 var hypot = Math.hypot;
 export{
     cos,

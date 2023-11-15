@@ -1,6 +1,6 @@
 
 import{Complex}from"../Complex/index.js"
-import { Utils, numbers } from "../Utils/index.js";
+import { Utils, nums } from "../Utils/index.js";
 import{Base}from"../Discret/index.js"
 import { Matrix, matrix } from "../Matrix/index.js";
 class Random {
