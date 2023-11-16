@@ -1,5 +1,26 @@
 import { mapfun } from "../Utils/mapfun.js";
-import { min,max }from "../Utils/statistics.js"
+import { min,max }from "../Utils/statistics.js";
+export const Fixed={
+    cos:x=>+Math.cos(x).toFixed(15),
+    sin:x=>+Math.sin(x).toFixed(15),
+    tan:x=>+Math.tan(x).toFixed(31),
+    sec:x=>+1/Math.cos(x).toFixed(15),
+    csc:x=>+1/Math.sin(x).toFixed(15),
+    cot:x=>+1/Math.tan(x).toFixed(15),
+    acos:x=>+Math.acos(x).toFixed(15),
+    asin:x=>+Math.asin(x).toFixed(15),
+    atan:x=>+Math.atan(x).toFixed(15),
+    acot:x=>+Math.PI/2-Math.atan(x).toFixed(15),
+    cosh:x=>+Math.cosh(x).toFixed(15),
+    sinh:x=>+Math.sinh(x).toFixed(15),
+    tanh:x=>+Math.tanh(x).toFixed(15),
+    coth:n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),
+    acosh:x=>+Math.acosh(x).toFixed(15),
+    asinh:x=>+Math.asinh(x).toFixed(15),
+    atanh:x=>+Math.atanh(x).toFixed(15),
+
+
+}
 function abs(...x){
     return mapfun(Math.abs,...x);
 }
@@ -21,55 +42,55 @@ function ln(...x){
     return mapfun(Math.log,...x);
 }
 function cos(...x){
-    return mapfun(a=>+Math.cos(a).toFixed(15),...x);
+    return mapfun(Fixed.cos,...x);
 }
 function sin(...x){
-    return mapfun(a=>+Math.sin(a).toFixed(15),...x);
+    return mapfun(Fixed.sin,...x);
 }
 function tan(...x){
-    return mapfun(a=>+Math.tan(a).toFixed(15),...x);
+    return mapfun(Fixed.tan,...x);
 }
 function sec(...x){
-    return mapfun(a=>+1/Math.cos(a).toFixed(15),...x);
+    return mapfun(Fixed.sec,...x);
 }
 function csc(...x){
-    return mapfun(a=>+1/Math.sin(a).toFixed(15),...x);
+    return mapfun(Fixed.csc,...x);
 }
 function cot(...x){
-    return mapfun(a=>+1/Math.tan(a).toFixed(15),...x);
+    return mapfun(Fixed.cot,...x);
 }
 function acos(...x){
-    return mapfun(a=>+Math.acos(a).toFixed(15),...x);
+    return mapfun(Fixed.acos,...x);
 }
 function asin(...x){
-    return mapfun(a=>+Math.asin(a).toFixed(15),...x);
+    return mapfun(Fixed.asin,...x);
 }
 function atan(...x){
-    return mapfun(a=>+Math.atan(a).toFixed(15),...x);
+    return mapfun(Fixed.atan,...x);
 }
 function acot(...x){
-    return mapfun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
+    return mapfun(Fixed.acot,...x);
 }
 function cosh(...x){
-    return mapfun(a=>+Math.cosh(a).toFixed(15),...x);
+    return mapfun(Fixed.cosh,...x);
 }
 function sinh(...x){
-    return mapfun(a=>+Math.sinh(a).toFixed(15),...x);
+    return mapfun(Fixed.sinh,...x);
 }
 function tanh(...x){
-    return mapfun(a=>+Math.tanh(a).toFixed(15),...x);
+    return mapfun(Fixed.tanh,...x);
 }
 function coth(...x){
-    return mapfun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
+    return mapfun(Fixed.coth,...x);
 }
 function acosh(...x){
-    return mapfun(a=>+Math.acosh(a).toFixed(15),...x);
+    return mapfun(Fixed.acosh,...x);
 }
 function asinh(...x){
-    return mapfun(a=>+Math.asinh(a).toFixed(15),...x);
+    return mapfun(Fixed.asinh,...x);
 }
 function atanh(...x){
-    return mapfun(a=>+Math.atanh(a).toFixed(15),...x);
+    return mapfun(Fixed.atanh,...x);
 }
 function ceil(...x){
     return mapfun(Math.ceil,...x);

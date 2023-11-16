@@ -24,7 +24,7 @@ class Complex extends AbstractZikoMath{
             this.a=a.a;
             this.b=a.b;
         }
-        if(typeof(a)==="object"){
+        else if(typeof(a)==="object"){
             if(("a" in b && "b" in a)){
                 this.a=a.a;
                 this.b=a.b;

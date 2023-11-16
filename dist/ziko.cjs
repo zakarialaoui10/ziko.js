@@ -52,10 +52,31 @@ const accum=(...arr)=>{
 
 console.log(min$1({a:2,c:3}));
 
+const Fixed={
+    cos:x=>+Math.cos(x).toFixed(15),
+    sin:x=>+Math.sin(x).toFixed(15),
+    tan:x=>+Math.tan(x).toFixed(31),
+    sec:x=>+1/Math.cos(x).toFixed(15),
+    csc:x=>+1/Math.sin(x).toFixed(15),
+    cot:x=>+1/Math.tan(x).toFixed(15),
+    acos:x=>+Math.acos(x).toFixed(15),
+    asin:x=>+Math.asin(x).toFixed(15),
+    atan:x=>+Math.atan(x).toFixed(15),
+    acot:x=>+Math.PI/2-Math.atan(x).toFixed(15),
+    cosh:x=>+Math.cosh(x).toFixed(15),
+    sinh:x=>+Math.sinh(x).toFixed(15),
+    tanh:x=>+Math.tanh(x).toFixed(15),
+    coth:n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),
+    acosh:x=>+Math.acosh(x).toFixed(15),
+    asinh:x=>+Math.asinh(x).toFixed(15),
+    atanh:x=>+Math.atanh(x).toFixed(15),
+
+
+};
 function abs$1(...x){
     return mapfun(Math.abs,...x);
 }
-function sqrt(...x){
+function sqrt$1(...x){
     return mapfun(Math.sqrt,...x);
 }
 function pow$1(...x){
@@ -73,55 +94,55 @@ function ln$1(...x){
     return mapfun(Math.log,...x);
 }
 function cos(...x){
-    return mapfun(a=>+Math.cos(a).toFixed(15),...x);
+    return mapfun(Fixed.cos,...x);
 }
 function sin(...x){
-    return mapfun(a=>+Math.sin(a).toFixed(15),...x);
+    return mapfun(Fixed.sin,...x);
 }
 function tan(...x){
-    return mapfun(a=>+Math.tan(a).toFixed(15),...x);
+    return mapfun(Fixed.tan,...x);
 }
 function sec(...x){
-    return mapfun(a=>+1/Math.cos(a).toFixed(15),...x);
+    return mapfun(Fixed.sec,...x);
 }
 function csc(...x){
-    return mapfun(a=>+1/Math.sin(a).toFixed(15),...x);
+    return mapfun(Fixed.csc,...x);
 }
 function cot(...x){
-    return mapfun(a=>+1/Math.tan(a).toFixed(15),...x);
+    return mapfun(Fixed.cot,...x);
 }
 function acos(...x){
-    return mapfun(a=>+Math.acos(a).toFixed(15),...x);
+    return mapfun(Fixed.acos,...x);
 }
 function asin(...x){
-    return mapfun(a=>+Math.asin(a).toFixed(15),...x);
+    return mapfun(Fixed.asin,...x);
 }
 function atan(...x){
-    return mapfun(a=>+Math.atan(a).toFixed(15),...x);
+    return mapfun(Fixed.atan,...x);
 }
 function acot(...x){
-    return mapfun(a=>+Math.PI/2-Math.atan(a).toFixed(15),...x);
+    return mapfun(Fixed.acot,...x);
 }
 function cosh(...x){
-    return mapfun(a=>+Math.cosh(a).toFixed(15),...x);
+    return mapfun(Fixed.cosh,...x);
 }
 function sinh(...x){
-    return mapfun(a=>+Math.sinh(a).toFixed(15),...x);
+    return mapfun(Fixed.sinh,...x);
 }
 function tanh(...x){
-    return mapfun(a=>+Math.tanh(a).toFixed(15),...x);
+    return mapfun(Fixed.tanh,...x);
 }
 function coth(...x){
-    return mapfun(n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),...x);
+    return mapfun(Fixed.coth,...x);
 }
 function acosh(...x){
-    return mapfun(a=>+Math.acosh(a).toFixed(15),...x);
+    return mapfun(Fixed.acosh,...x);
 }
 function asinh(...x){
-    return mapfun(a=>+Math.asinh(a).toFixed(15),...x);
+    return mapfun(Fixed.asinh,...x);
 }
 function atanh(...x){
-    return mapfun(a=>+Math.atanh(a).toFixed(15),...x);
+    return mapfun(Fixed.atanh,...x);
 }
 function ceil(...x){
     return mapfun(Math.ceil,...x);
@@ -163,14 +184,14 @@ let Complex$1 = class Complex extends AbstractZikoMath{
             this.a=a.a;
             this.b=a.b;
         }
-        if(typeof(a)==="object"){
+        else if(typeof(a)==="object"){
             if(("a" in b && "b" in a)){
                 this.a=a.a;
                 this.b=a.b;
             }
             else if(("a" in b && "z" in a)){
                 this.a=a.a;
-                this.b=sqrt((a.z**2)-(a.a**2));
+                this.b=sqrt$1((a.z**2)-(a.a**2));
             }
             else if(("a" in b && "phi" in a)){
                 this.a=a.a;
@@ -178,7 +199,7 @@ let Complex$1 = class Complex extends AbstractZikoMath{
             }
             else if(("b" in b && "z" in a)){
                 this.b=a.b;
-                this.a=sqrt((a.z**2)-(a.b**2));
+                this.a=sqrt$1((a.z**2)-(a.b**2));
             }
             else if(("b" in b && "phi" in a)){
                 this.b=b;
@@ -1601,26 +1622,26 @@ const mapfun=(fun,...X)=>{
         if(x instanceof Complex$1){
             const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
             switch(fun){
-                case Math.log:return complex$1(ln$1(z),phi);
-                case Math.exp:return complex$1(e(a)*cos(b),e(a)*sin(b));
-                case Math.abs:return z;
-                case Math.sqrt:return complex$1(sqrt(z)*cos(phi/2),sqrt(z)*sin(phi/2));
-                case Math.cos:return complex$1(cos(a)*cosh(b),-(sin(a)*sinh(b)));
-                case Math.sin:return complex$1(sin(a)*cosh(b),cos(a)*sinh(b));
-                case Math.tan:{
+                case Math.log:return complex$1(ln$1(z),phi); // Done
+                case Math.exp:return complex$1(e(a)*cos(b),e(a)*sin(b)); // Done
+                case Math.abs:return z; // Done
+                case Math.sqrt:return complex$1(sqrt$1(z)*cos(phi/2),sqrt$1(z)*sin(phi/2)); // Done
+                case Fixed.cos:return complex$1(cos(a)*cosh(b),-(sin(a)*sinh(b)));
+                case Fixed.sin:return complex$1(sin(a)*cosh(b),cos(a)*sinh(b));
+                case Fixed.tan:{
                     const DEN=cos(2*a)+cosh(2*b);
                     return complex$1(sin(2*a)/DEN,sinh(2*b)/DEN);
                 }
-                case Math.cosh:return complex$1(cosh(a)*cos(b),sinh(a)*sin(b));
-                case Math.sinh:return complex$1(sinh(a)*cos(b),cosh(a)*sin(b));
-                case Math.tanh:{
+                case Fixed.cosh:return complex$1(cosh(a)*cos(b),sinh(a)*sin(b));
+                case Fixed.sinh:return complex$1(sinh(a)*cos(b),cosh(a)*sin(b));
+                case Fixed.tanh:{
                     const DEN=cosh(2*a)+cos(2*b);
                     return complex$1(sinh(2*a)/DEN,sin(2*b)/DEN)
                 }
                 //default : return fun(x)
             }
         }
-        if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
+        else if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
 
     });
    return Y.length==1?Y[0]:Y; 
@@ -1819,34 +1840,58 @@ const arange=(a, b, step , include = false)=>{
     }
     return tab;
 };
+// const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+//     if(a instanceof Complex||b instanceof Complex){
+//         const A=complex(a);
+//         const B=complex(b);
+//         n=n||Math.abs(B.a-A.a)+1;
+//         const X=linspace(A.a,B.a,n,endpoint);
+//         const Y=linspace(A.b,B.b,n,endpoint);
+//         let Z=new Array(n).fill(null);
+//         Z=Z.map((n,i)=>complex(X[i],Y[i]));
+//         return Z;
+//     }
+//     else if(a instanceof Array){
+//         let Y=[]
+//         for(let i=0;i<a.length;i++){
+//             n=n||abs(b[i]-a[i])+1
+//             Y[i]=linspace(a[i],b[i],n,endpoint);
+//         }
+//         return Y;
+//     }
+    // const [high,low]=[a,b].sort((a,b)=>b-a);
+    // if (floor(n) !== n) return;
+    // var arr = [];
+    // let step = (high - low) / (n - 1);
+    // if(!endpoint)step = (high - low) / n;
+    // for (var i = 0; i < n; i++) {
+    //     a<b?arr.push(low+step*i):arr.push(high-step*i);
+    // }
+    // return arr
+// }
 const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
-    if(a instanceof Complex$1||b instanceof Complex$1){
-        a=complex$1(a);
-        b=complex$1(b);
-        n=n||Math.abs(b.a-a.a)+1;
-        const X=linspace(a.a,b.a,n,endpoint);
-        const Y=linspace(a.b,b.b,n,endpoint);
+    if(Math.floor(n)!==n)return;
+    if([a,b].every(n=>typeof n==="number")){
+        const [max,min]=[a,b].sort((a,b)=>b-a);
+        var Y = [];
+        let step ;
+        endpoint ? step = (max - min) / (n - 1) : step = (max - min) / n;
+        for (var i = 0; i < n; i++) {
+            a<b?Y.push(min+step*i):Y.push(max-step*i);
+        }
+        return Y
+    }
+
+    if([a,b].some(n=>n instanceof Complex$1)){
+        const z1=complex$1(a);
+        const z2=complex$1(b);
+        n=n||Math.abs(z1.a-z2.a)+1;
+        const X=linspace(z1.a,z2.a,n,endpoint);
+        const Y=linspace(z1.b,z2.b,n,endpoint);
         let Z=new Array(n).fill(null);
         Z=Z.map((n,i)=>complex$1(X[i],Y[i]));
         return Z;
     }
-    else if(a instanceof Array){
-        let Y=[];
-        for(let i=0;i<a.length;i++){
-            n=n||abs(b[i]-a[i])+1;
-            Y[i]=linspace(a[i],b[i],n,endpoint);
-        }
-        return Y;
-    }
-    const [high,low]=[a,b].sort((a,b)=>b-a);
-    if (floor(n) !== n) return;
-    var arr = [];
-    let step = (high - low) / (n - 1);
-    if(!endpoint)step = (high - low) / n;
-    for (var i = 0; i < n; i++) {
-        arr.push(low+step*i);
-    }
-    return a<b?arr:arr.reverse();
 };
 const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
     if(a instanceof Complex$1||b instanceof Complex$1){
@@ -2137,7 +2182,7 @@ const Math$1={
     csc,
     cot,
     abs: abs$1,
-    sqrt,
+    sqrt: sqrt$1,
     pow: pow$1,
     sqrtn: sqrtn$1,
     e,
@@ -5928,6 +5973,105 @@ const svgGroupe=(...svgElement)=>new ZikoUISvgGroupe(...svgElement);
   }
 
   const Svg =(w,h)=>new ZikoUISvg(w,h);
+
+var convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
+    if(kernel instanceof Matrix)kernel=kernel.arr.flat(1);
+    var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
+    var side = Math.round(sqrt(kernel.length));
+    var halfSide = Math.floor(side / 2);
+    var src = pixels.data;
+    var sw = pixels.width;
+    var sh = pixels.height;
+    // pad output by the convolution matrix
+    var w = sw;
+    var h = sh;
+    var output = parent.ctx.createImageData(w, h);
+    var dst = output.data;
+    // go through the destination image pixels
+    var alphaFac = 1 ;
+    for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+            var sy = y;
+            var sx = x;
+            var dstOff = (y * w + x) * 4;
+            // calculate the weighed sum of the source image pixels that
+            // fall under the convolution matrix
+            var r = 0,
+                g = 0,
+                b = 0,
+                a = 0;
+            for (var cy = 0; cy < side; cy++) {
+                for (var cx = 0; cx < side; cx++) {
+                    var scy = sy + cy - halfSide;
+                    var scx = sx + cx - halfSide;
+                    if (scy >= 0 && scy < sh && scx >= 0 && scx < sw) {
+                        var srcOff = (scy * sw + scx) * 4;
+                        var wt = kernel[cy * side + cx];
+                        r += src[srcOff] * wt;
+                        g += src[srcOff + 1] * wt;
+                        b += src[srcOff + 2] * wt;
+                        a += src[srcOff + 3] * wt;
+                    }
+                }
+            }
+            dst[dstOff] = r;
+            dst[dstOff + 1] = g;
+            dst[dstOff + 2] = b;
+            dst[dstOff + 3] = a + alphaFac * (255 - a);
+        }
+    }
+    return output;
+};
+
+convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
+    if(kernel instanceof Matrix)kernel=kernel.arr.flat(1);
+    var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
+    var side = Math.round(sqrt(kernel.length));
+    var halfSide = Math.floor(side / 2);
+    var src = pixels.data;
+    var sw = pixels.width;
+    var sh = pixels.height;
+    // pad output by the convolution matrix
+    var w = sw;
+    var h = sh;
+    var output = parent.ctx.createImageData(w, h);
+    var dst = output.data;
+    // go through the destination image pixels
+    var alphaFac = 1 ;
+    for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+            var sy = y;
+            var sx = x;
+            var dstOff = (y * w + x) * 4;
+            // calculate the weighed sum of the source image pixels that
+            // fall under the convolution matrix
+            var r = 0,
+                g = 0,
+                b = 0,
+                a = 0;
+            for (var cy = 0; cy < side; cy++) {
+                for (var cx = 0; cx < side; cx++) {
+                    var scy = sy + cy - halfSide;
+                    var scx = sx + cx - halfSide;
+                    if (scy >= 0 && scy < sh && scx >= 0 && scx < sw) {
+                        var srcOff = (scy * sw + scx) * 4;
+                        var wt = kernel[cy * side + cx];
+                        r += src[srcOff] * wt;
+                        g += src[srcOff + 1] * wt;
+                        b += src[srcOff + 2] * wt;
+                        a += src[srcOff + 3] * wt;
+                    }
+                }
+            }
+            dst[dstOff] = r;
+            dst[dstOff + 1] = g;
+            dst[dstOff + 2] = b;
+            dst[dstOff + 3] = a + alphaFac * (255 - a);
+        }
+    }
+    return output;
+};
+window.convolute=convolute;
 
 class ZikoUICanvas extends ZikoUIElement{
     constructor(w,h){

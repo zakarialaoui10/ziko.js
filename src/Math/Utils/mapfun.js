@@ -1,6 +1,7 @@
 import { Matrix } from "../Matrix";
 import { Complex , complex } from "../Complex/index.js";
-import {ln,e,cos,sin,tan,abs,sqrt,cosh,sinh} from "../Functions/index.js"
+import {ln,e,cos,sin,tan,abs,sqrt,cosh,sinh} from "../Functions/index.js";
+import { Fixed } from "../Functions/index.js";
 const mapfun=(fun,...X)=>{
     const Y=X.map(x=>{
         if(x===null)return fun(null);
@@ -15,26 +16,26 @@ const mapfun=(fun,...X)=>{
         if(x instanceof Complex){
             const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
             switch(fun){
-                case Math.log:return complex(ln(z),phi);
-                case Math.exp:return complex(e(a)*cos(b),e(a)*sin(b));
-                case Math.abs:return z;
-                case Math.sqrt:return complex(sqrt(z)*cos(phi/2),sqrt(z)*sin(phi/2));
-                case Math.cos:return complex(cos(a)*cosh(b),-(sin(a)*sinh(b)));
-                case Math.sin:return complex(sin(a)*cosh(b),cos(a)*sinh(b));
-                case Math.tan:{
+                case Math.log:return complex(ln(z),phi); // Done
+                case Math.exp:return complex(e(a)*cos(b),e(a)*sin(b)); // Done
+                case Math.abs:return z; // Done
+                case Math.sqrt:return complex(sqrt(z)*cos(phi/2),sqrt(z)*sin(phi/2)); // Done
+                case Fixed.cos:return complex(cos(a)*cosh(b),-(sin(a)*sinh(b)));
+                case Fixed.sin:return complex(sin(a)*cosh(b),cos(a)*sinh(b));
+                case Fixed.tan:{
                     const DEN=cos(2*a)+cosh(2*b);
                     return complex(sin(2*a)/DEN,sinh(2*b)/DEN);
                 }
-                case Math.cosh:return complex(cosh(a)*cos(b),sinh(a)*sin(b));
-                case Math.sinh:return complex(sinh(a)*cos(b),cosh(a)*sin(b));
-                case Math.tanh:{
+                case Fixed.cosh:return complex(cosh(a)*cos(b),sinh(a)*sin(b));
+                case Fixed.sinh:return complex(sinh(a)*cos(b),cosh(a)*sin(b));
+                case Fixed.tanh:{
                     const DEN=cosh(2*a)+cos(2*b);
                     return complex(sinh(2*a)/DEN,sin(2*b)/DEN)
                 }
                 //default : return fun(x)
             }
         }
-        if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
+        else if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
 
     });
    return Y.length==1?Y[0]:Y; 

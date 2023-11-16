@@ -72,34 +72,58 @@ const arange=(a, b, step , include = false)=>{
     }
     return tab;
 }
+// const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+//     if(a instanceof Complex||b instanceof Complex){
+//         const A=complex(a);
+//         const B=complex(b);
+//         n=n||Math.abs(B.a-A.a)+1;
+//         const X=linspace(A.a,B.a,n,endpoint);
+//         const Y=linspace(A.b,B.b,n,endpoint);
+//         let Z=new Array(n).fill(null);
+//         Z=Z.map((n,i)=>complex(X[i],Y[i]));
+//         return Z;
+//     }
+//     else if(a instanceof Array){
+//         let Y=[]
+//         for(let i=0;i<a.length;i++){
+//             n=n||abs(b[i]-a[i])+1
+//             Y[i]=linspace(a[i],b[i],n,endpoint);
+//         }
+//         return Y;
+//     }
+    // const [high,low]=[a,b].sort((a,b)=>b-a);
+    // if (floor(n) !== n) return;
+    // var arr = [];
+    // let step = (high - low) / (n - 1);
+    // if(!endpoint)step = (high - low) / n;
+    // for (var i = 0; i < n; i++) {
+    //     a<b?arr.push(low+step*i):arr.push(high-step*i);
+    // }
+    // return arr
+// }
 const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
-    if(a instanceof Complex||b instanceof Complex){
-        a=complex(a);
-        b=complex(b);
-        n=n||Math.abs(b.a-a.a)+1;
-        const X=linspace(a.a,b.a,n,endpoint);
-        const Y=linspace(a.b,b.b,n,endpoint);
+    if(Math.floor(n)!==n)return;
+    if([a,b].every(n=>typeof n==="number")){
+        const [max,min]=[a,b].sort((a,b)=>b-a);
+        var Y = [];
+        let step ;
+        endpoint ? step = (max - min) / (n - 1) : step = (max - min) / n;
+        for (var i = 0; i < n; i++) {
+            a<b?Y.push(min+step*i):Y.push(max-step*i);
+        }
+        return Y
+    }
+
+    if([a,b].some(n=>n instanceof Complex)){
+        const z1=complex(a)
+        const z2=complex(b)
+        n=n||Math.abs(z1.a-z2.a)+1;
+        const X=linspace(z1.a,z2.a,n,endpoint);
+        const Y=linspace(z1.b,z2.b,n,endpoint);
         let Z=new Array(n).fill(null);
         Z=Z.map((n,i)=>complex(X[i],Y[i]));
         return Z;
     }
-    else if(a instanceof Array){
-        let Y=[]
-        for(let i=0;i<a.length;i++){
-            n=n||abs(b[i]-a[i])+1
-            Y[i]=linspace(a[i],b[i],n,endpoint);
-        }
-        return Y;
-    }
-    const [high,low]=[a,b].sort((a,b)=>b-a);
-    if (floor(n) !== n) return;
-    var arr = [];
-    let step = (high - low) / (n - 1);
-    if(!endpoint)step = (high - low) / n;
-    for (var i = 0; i < n; i++) {
-        arr.push(low+step*i);
-    }
-    return a<b?arr:arr.reverse();
 }
 const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
     if(a instanceof Complex||b instanceof Complex){
