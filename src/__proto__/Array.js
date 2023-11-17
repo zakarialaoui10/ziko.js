@@ -64,7 +64,7 @@ function __ArrayProto__(){
                 return mapfun(callback,...this.valueOf())
             }
         },
-    
+        
     })
 }
 export {__ArrayProto__} 
