@@ -128,23 +128,6 @@ const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
 const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
     return linspace(a,b,n,endpoint).map(n=>pow(base,n))
 }
-// const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
-//     if(a instanceof Complex||b instanceof Complex){
-//         a=complex(a);
-//         b=complex(b);
-//         n=n??abs(b.a-a.a)
-//         const X=linspace(a.a,b.a,n,base,endpoint);
-//         const Y=linspace(a.b,b.b,n,base,endpoint);
-//         const Z=new Array(X.length).fill(0)
-//         const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
-//         return ZZ;
-//     }
-//     const start=base**min(a,b);
-//     const stop=base**max(a,b);
-//     const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
-//     const result=y.map(n => pow(base, n));
-//     return a<b?result:result.reverse();
-// }
 const geomspace=(a,b,n=abs(b-a)+1)=>{
     var [high,low]=[a,b].sort((a,b)=>b-a);
     var step=sqrtn(high,n-low);
