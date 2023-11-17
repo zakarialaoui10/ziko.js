@@ -94,6 +94,7 @@ export {
     arange,
     linspace,
     logspace,
+    geomspace,
     norm,
     lerp,
     map,

@@ -113,7 +113,10 @@
           return this;
       }
       static fromExpo(z, phi) {
-          return new Complex(z * cos(phi), z * sin(phi));
+          return new Complex(
+              +(z * cos(phi)).toFixed(13), 
+              +(z * sin(phi)).toFixed(13)
+              );
       }
       get expo() {
           return [this.z, this.phi];
@@ -134,7 +137,7 @@
           return z.clone.pow(n);
       }
       static xpowZ(x){
-          return complex$1((x**this.a)*cos(this.b*ln$1(x)),(x**this.a)*sin(this.b*ln$1(x)));
+          return complex$1((x**this.a)*cos(this.b*ln(x)),(x**this.a)*sin(this.b*ln(x)));
       }
       sqrtn(n=2){
           return complex$1(sqrtn$1(this.z,n)*cos(this.phi/n),sqrtn$1(this.z,n)*sin(this.phi/n));
@@ -188,11 +191,11 @@
       for (let i = 1; i < x.length; i++) p *= x[i];
       return p;
   };
-  const min$1=(...num)=>{
+  const min=(...num)=>{
       if(num.every(n=>typeof n==="number"))return Math.min(...num);
       const Y=[];
       for(let i=0;i<num.length;i++){
-          if(num[i] instanceof Array)Y.push(min$1(...num[i]));
+          if(num[i] instanceof Array)Y.push(min(...num[i]));
           else if(num[i] instanceof Object){
               Y.push(
                       Object.fromEntries(
@@ -203,11 +206,11 @@
       }
       return Y
   };
-  const max$1=(...num)=>{
+  const max=(...num)=>{
       if(num.every(n=>typeof n==="number"))return Math.max(...num);
       const Y=[];
       for(let i=0;i<num.length;i++){
-          if(num[i] instanceof Array)Y.push(min$1(...num[i]));
+          if(num[i] instanceof Array)Y.push(min(...num[i]));
           else if(num[i] instanceof Object){
               Y.push(
                       Object.fromEntries(
@@ -226,7 +229,7 @@
 
   // sort
 
-  console.log(min$1({a:2,c:3}));
+  console.log(min({a:2,c:3}));
 
   const Fixed={
       cos:x=>+Math.cos(x).toFixed(15),
@@ -258,6 +261,7 @@
   function pow$1(x,n){
       if(typeof x === "number"){
           if(typeof n === "number")return Math.pow(x,n);
+          else if(n instanceof Complex$1)return Complex$1.fromExpo(x**n.a,n.b*ln(x))
           else return mapfun(a=>pow$1(x,a),...n);
       }
       else if(x instanceof Complex$1){
@@ -298,7 +302,7 @@
   function e(...x){
       return mapfun(Math.exp,...x);
   }
-  function ln$1(...x){
+  function ln(...x){
       return mapfun(Math.log,...x);
   }
   function cos(...x){
@@ -1475,25 +1479,25 @@
       get min() {
           if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
           let minRow = [];
-          for (let i = 0; i < this.rows; i++) minRow.push(min$1(...this.arr[i]));
-          return min$1(...minRow);
+          for (let i = 0; i < this.rows; i++) minRow.push(min(...this.arr[i]));
+          return min(...minRow);
       }
       get max() {
           if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
           let maxRow = [];
-          for (let i = 0; i < this.rows; i++) maxRow.push(max$1(...this.arr[i]));
-          return max$1(...maxRow);
+          for (let i = 0; i < this.rows; i++) maxRow.push(max(...this.arr[i]));
+          return max(...maxRow);
       }
       get minRows() {
           if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
           let minRow = [];
-          for (let i = 0; i < this.rows; i++) minRow.push(min$1(...this.arr[i]));
+          for (let i = 0; i < this.rows; i++) minRow.push(min(...this.arr[i]));
           return minRow;
       }
       get maxRows() {
           if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
           let maxRow = [];
-          for (let i = 0; i < this.rows; i++) maxRow.push(max$1(...this.arr[i]));
+          for (let i = 0; i < this.rows; i++) maxRow.push(max(...this.arr[i]));
           return maxRow;
       }
       get minCols() {
@@ -1683,7 +1687,7 @@
           if(x instanceof Complex$1){
               const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
               switch(fun){
-                  case Math.log:return complex$1(ln$1(z),phi); // Done
+                  case Math.log:return complex$1(ln(z),phi); // Done
                   case Math.exp:return complex$1(e(a)*cos(b),e(a)*sin(b)); // Done
                   case Math.abs:return z; // Done
                   case Math.sqrt:return complex$1(sqrt$1(z)*cos(phi/2),sqrt$1(z)*sin(phi/2)); // Done
@@ -1955,22 +1959,25 @@
       }
   };
   const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
-      if(a instanceof Complex$1||b instanceof Complex$1){
-          a=complex$1(a);
-          b=complex$1(b);
-          n=n??abs(b.a-a.a);
-          const X=linspace(a.a,b.a,n,base);
-          const Y=linspace(a.b,b.b,n,base);
-          const Z=new Array(X.length).fill(0);
-          const ZZ=Z.map((n,i) => pow(base,complex$1(X[i],Y[i])));
-          return ZZ;
-      }
-      const start=base**min(a,b);
-      const stop=base**max(a,b);
-      const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
-      const result=y.map(n => pow(base, n));
-      return a<b?result:result.reverse();
+      return linspace(a,b,n,endpoint).map(n=>pow(base,n))
   };
+  // const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
+  //     if(a instanceof Complex||b instanceof Complex){
+  //         a=complex(a);
+  //         b=complex(b);
+  //         n=n??abs(b.a-a.a)
+  //         const X=linspace(a.a,b.a,n,base,endpoint);
+  //         const Y=linspace(a.b,b.b,n,base,endpoint);
+  //         const Z=new Array(X.length).fill(0)
+  //         const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
+  //         return ZZ;
+  //     }
+  //     const start=base**min(a,b);
+  //     const stop=base**max(a,b);
+  //     const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
+  //     const result=y.map(n => pow(base, n));
+  //     return a<b?result:result.reverse();
+  // }
   const geomspace=(a,b,n=abs(b-a)+1)=>{
       var [high,low]=[a,b].sort((a,b)=>b-a);
       var step=sqrtn(high,n-low);
@@ -2171,7 +2178,11 @@
                   return mapfun(callback,...this.valueOf())
               }
           },
-          
+          // chunk:{
+          //     value: function() {
+          //     }
+          // },
+
       });
   }
 
@@ -2252,7 +2263,7 @@
       pow: pow$1,
       sqrtn: sqrtn$1,
       e,
-      ln: ln$1,
+      ln,
       acos,
       asin,
       atan,
@@ -2264,8 +2275,8 @@
       acosh,
       asinh,
       atanh,
-      min: min$1,
-      max: max$1,
+      min,
+      max,
       sign,
       floor: floor$1,
       ceil,
@@ -2290,6 +2301,8 @@
       deg2rad,
       arange,
       linspace,
+      logspace,
+      geomspace,
       norm: norm$1,
       lerp: lerp$1,
       map: map$1,

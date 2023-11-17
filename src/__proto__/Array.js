@@ -64,7 +64,11 @@ function __ArrayProto__(){
                 return mapfun(callback,...this.valueOf())
             }
         },
-        
+        // chunk:{
+        //     value: function() {
+        //     }
+        // },
+
     })
 }
 export {__ArrayProto__} 

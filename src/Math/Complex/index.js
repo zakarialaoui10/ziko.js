@@ -123,7 +123,10 @@ class Complex extends AbstractZikoMath{
         return this;
     }
     static fromExpo(z, phi) {
-        return new Complex(z * cos(phi), z * sin(phi));
+        return new Complex(
+            +(z * cos(phi)).toFixed(13), 
+            +(z * sin(phi)).toFixed(13)
+            );
     }
     get expo() {
         return [this.z, this.phi];

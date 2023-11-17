@@ -31,6 +31,7 @@ function sqrt(...x){
 function pow(x,n){
     if(typeof x === "number"){
         if(typeof n === "number")return Math.pow(x,n);
+        else if(n instanceof Complex)return Complex.fromExpo(x**n.a,n.b*ln(x))
         else return mapfun(a=>pow(x,a),...n);
     }
     else if(x instanceof Complex){
