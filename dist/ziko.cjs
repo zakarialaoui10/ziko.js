@@ -262,6 +262,10 @@ function pow$1(x,n){
     }
     else if(x instanceof Complex$1){
         if(typeof n === "number")return Complex$1.fromExpo(x.z**n,x.phi*n);
+        else if(n instanceof Complex$1)return Complex$1.fromExpo(
+            x.z**n.a*e(-x.phi*n.b),
+            ln(x.z)*n.b+n.a*x.phi
+        )
         else return mapfun(a=>pow$1(x,a),...n);
     }
     else if(x instanceof Array){

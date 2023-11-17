@@ -36,6 +36,10 @@ function pow(x,n){
     }
     else if(x instanceof Complex){
         if(typeof n === "number")return Complex.fromExpo(x.z**n,x.phi*n);
+        else if(n instanceof Complex)return Complex.fromExpo(
+            x.z**n.a*e(-x.phi*n.b),
+            ln(x.z)*n.b+n.a*x.phi
+        )
         else return mapfun(a=>pow(x,a),...n);
     }
     else if(x instanceof Array){
