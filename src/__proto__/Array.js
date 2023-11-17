@@ -4,7 +4,8 @@ import {
     mul,
     div,
     modulo,
-    inRange
+    inRange,
+    mapfun
  } from "../Math/Utils";
 function __ArrayProto__(){
     Object.defineProperties(Array.prototype,{
@@ -56,6 +57,11 @@ function __ArrayProto__(){
         clamp:{
             value: function(min,max) {
                 return clamp(this.valueOf(),min,max)
+            }
+        },
+        deepMap:{
+            value: function(callback) {
+                return mapfun(callback,...this.valueOf())
             }
         },
     

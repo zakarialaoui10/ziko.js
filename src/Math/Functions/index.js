@@ -1,3 +1,4 @@
+import { Complex } from "../Complex/index.js";
 import { mapfun } from "../Utils/mapfun.js";
 import { min,max }from "../Utils/statistics.js";
 export const Fixed={
@@ -27,13 +28,45 @@ function abs(...x){
 function sqrt(...x){
     return mapfun(Math.sqrt,...x);
 }
-function pow(...x){
-    const n=x.pop();
-    return mapfun(a=>Math.pow(a,n),...x)
+function pow(x,n){
+    if(typeof x === "number"){
+        if(typeof n === "number")return Math.pow(x,n);
+        else return mapfun(a=>pow(x,a),...n);
+    }
+    else if(x instanceof Complex){
+        if(typeof n === "number")return Complex.fromExpo(x.z**n,x.phi*n);
+        else return mapfun(a=>pow(x,a),...n);
+    }
+    else if(x instanceof Array){
+        if(typeof n === "number") return mapfun(a=>pow(a,n),...x);
+        else if(n instanceof Array){
+            const Y=[];
+            for(let i=0;i<x.length;i++){
+                Y.push(mapfun(a=>pow(x[i],a),...n))
+            }
+            return Y;
+        }
+    }
 }
-function sqrtn(...x){
-    const n=x.pop();
-    return mapfun(a=>e(ln(a) / n),...x)
+function sqrtn(x,n){
+    if(typeof x === "number"){
+        if(typeof n === "number")return Math.pow(x,1/n);
+        else return mapfun(a=>sqrtn(x,a),...n);
+    }
+    else if(x instanceof Complex){
+        if(typeof n === "number")return Complex.fromExpo(sqrtn(x.z,n),x.phi/n);
+        else return mapfun(a=>sqrtn(x,a),...n);
+    }
+    else if(x instanceof Array){
+        if(typeof n === "number") return mapfun(a=>sqrtn(a,n),...x);
+        else if(n instanceof Array){
+            const Y=[];
+            for(let i=0;i<x.length;i++){
+                Y.push(mapfun(a=>sqrtn(x[i],a),...n))
+            }
+            return Y;
+        }
+    }
 }
 function e(...x){
     return mapfun(Math.exp,...x);
@@ -101,9 +134,29 @@ function floor(...x){
 function round(...x){
     return mapfun(Math.round,...x);
 }
-function atan2(...x){
-    const n=x.pop();
-    return mapfun(a=>Math.atan2(a,n),...x)
+// function atan2(...x){
+//     const n=x.pop();
+//     return mapfun(a=>Math.atan2(a,n),...x)
+// }
+function atan2(x,y,rad=true){
+    if(typeof x === "number"){
+        if(typeof y === "number")return rad?Math.atan2(x,y):Math.atan2(x,y)*180/Math.PI;
+        else return mapfun(a=>atan2(x,a,rad),...y);
+    }
+    // else if(x instanceof Complex){
+    //     if(typeof n === "number")return Complex.fromExpo(x.z**n,x.phi*n);
+    //     else return mapfun(a=>pow(x,a),...n);
+    // }
+    else if(x instanceof Array){
+        if(typeof y === "number") return mapfun(a=>atan2(a,y,rad),...x);
+        else if(y instanceof Array){
+            const Y=[];
+            for(let i=0;i<x.length;i++){
+                Y.push(mapfun(a=>pow(x[i],a,rad),...y))
+            }
+            return Y;
+        }
+    }
 }
 function fact(...x){
     return mapfun(n=> {
@@ -121,8 +174,14 @@ function sign(...x){
 function sig(...x){
     return mapfun(n=>1/(1+e(-n)),...x);
 }
+const hypot=(...x)=>{
+    if(x.every(n=>typeof n === "number"))return Math.hypot(...x);
+    if(x.every(n=>n instanceof Array))return mapfun(
+        Math.hypot,
+        ...x
+    )
+}
 
-var hypot = Math.hypot;
 export{
     cos,
     sin,
