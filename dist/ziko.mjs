@@ -2323,8 +2323,16 @@ convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 =
     }
     return output;
 };
-
-
+const conv=(input,kernel,circular)=>{
+    if(input instanceof Matrix$1 || (input instanceof Array && input[0][0]))return conv2d(input,kernel,circular);
+    return conv1d(input,kernel,circular)
+};
+const circularConv=(input,kernel)=>conv(input,kernel,true);
+const linearConv=(input,kernel)=>conv(input,kernel,false);
+const circularConv1d=(input,kernel)=>conv1d(input,kernel,true);
+const circularConv2d=(input,kernel)=>conv2d(input,kernel,true);
+const linearConv1d=(input,kernel)=>conv1d(input,kernel,false);
+const linearConv2d=(input,kernel)=>conv2d(input,kernel,false);
 
 window.convolute=convolute;
 window.conv1d=conv1d;
@@ -2390,21 +2398,15 @@ const Signal={
     sawtooth(){
 
     },
+    conv,
     conv1d,
     conv2d,
-    circularConv1d(input,kernel){
-        return conv1d(input,kernel,true)
-    },
-    LinearConv1d(input,kernel){
-        return conv1d(input,kernel,false)
-    },
-    circularConv2d(input,kernel){
-        return conv2d(input,kernel,true)
-    },
-    LinearConv2d(input,kernel){
-        return conv2d(input,kernel,false)
-    }
-    
+    circularConv,
+    linearConv,
+    circularConv1d,
+    linearConv1d,
+    circularConv2d,
+    linearConv2d
 };
 
 //import Ziko from "../index.js"

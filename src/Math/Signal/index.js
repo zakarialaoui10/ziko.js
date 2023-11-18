@@ -14,7 +14,18 @@ import {
     lerp,
     clamp,
 } from "./functions.js";
-import { conv1d, conv2d } from "./conv.js";
+import { 
+    conv,
+    conv1d, 
+    conv2d,
+    circularConv,
+    linearConv,
+    circularConv1d,
+    linearConv1d,
+    circularConv2d,
+    linearConv2d
+} from "./conv.js";
+import { Matrix } from "../Matrix/index.js";
 const Signal={
     zeros,
     ones,
@@ -76,20 +87,14 @@ const Signal={
     sawtooth(){
 
     },
+    conv,
     conv1d,
     conv2d,
-    circularConv1d(input,kernel){
-        return conv1d(input,kernel,true)
-    },
-    LinearConv1d(input,kernel){
-        return conv1d(input,kernel,false)
-    },
-    circularConv2d(input,kernel){
-        return conv2d(input,kernel,true)
-    },
-    LinearConv2d(input,kernel){
-        return conv2d(input,kernel,false)
-    }
-    
+    circularConv,
+    linearConv,
+    circularConv1d,
+    linearConv1d,
+    circularConv2d,
+    linearConv2d
 }
 export{Signal}
