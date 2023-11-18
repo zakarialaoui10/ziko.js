@@ -22,7 +22,7 @@ import {
     linspace,
     logspace,
     geomspace
-} from "../Signal/function.js"
+} from "../Signal/functions.js"
 import {
     deg2rad,
     rad2deg

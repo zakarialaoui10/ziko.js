@@ -2166,16 +2166,18 @@
       });
   }
 
-  var Signal={
-      linspace(){
-
-      },
-      logspace(){
-
-      },
-      arange(){
-
-      },
+  const Signal={
+      zeros,
+      ones,
+      nums,
+      arange,
+      linspace,
+      logspace,
+      geomspace,
+      map: map$1,
+      norm: norm$1,
+      lerp: lerp$1,
+      clamp: clamp$1,
       echelon(t,t0 = 0 , A = 1){
           if(!(t instanceof Array))t=[t];
           const Y = mapfun(n=>n>=t0?1:0,...t);
@@ -2185,7 +2187,6 @@
           if(!(t instanceof Array))t=[t];
           const Y = mapfun(n=>n>=t0?n-t0:0,...t);
           return Y instanceof Array ? Y.map(n=>n*A) : Y*A
-
       },
       sign(t,t0 = 0 , A = 1){
           if(!(t instanceof Array))t=[t];
@@ -2210,13 +2211,15 @@
           const Y = mapfun(n => 1/(1+(n-t0)**2),...t);
           return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
       },
-      sinc(t , t0 , A){
+      sinc(t , t0 , A = 1){
           if(!(t instanceof Array))t=[t]; 
           const Y = mapfun(n=>sinc(n-t0),...t);
           return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
       },
-      square(){
-
+      square(t,T=1,A=1){
+          if(!(t instanceof Array))t=[t]; 
+          const Y = mapfun(n=>sign(sin(n*2*Math.PI/T)),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
       },
       sawtooth(){
 

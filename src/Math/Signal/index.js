@@ -1,16 +1,30 @@
 import { mapfun } from "../Utils";
-import { abs , sinc } from "../Functions/index.js"
-
-var Signal={
-    linspace(){
-
-    },
-    logspace(){
-
-    },
-    arange(){
-
-    },
+import { abs , sinc , sign , sin } from "../Functions/index.js"
+import { 
+    zeros,
+    ones,
+    nums,
+    arange,
+    linspace,
+    logspace,
+    geomspace,
+    map,
+    norm,
+    lerp,
+    clamp,
+} from "./functions.js";
+const Signal={
+    zeros,
+    ones,
+    nums,
+    arange,
+    linspace,
+    logspace,
+    geomspace,
+    map,
+    norm,
+    lerp,
+    clamp,
     echelon(t,t0 = 0 , A = 1){
         if(!(t instanceof Array))t=[t];
         const Y = mapfun(n=>n>=t0?1:0,...t);
@@ -20,7 +34,6 @@ var Signal={
         if(!(t instanceof Array))t=[t]
         const Y = mapfun(n=>n>=t0?n-t0:0,...t);
         return Y instanceof Array ? Y.map(n=>n*A) : Y*A
-
     },
     sign(t,t0 = 0 , A = 1){
         if(!(t instanceof Array))t=[t]
@@ -45,13 +58,15 @@ var Signal={
         const Y = mapfun(n => 1/(1+(n-t0)**2),...t);
         return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
     },
-    sinc(t , t0 , A){
+    sinc(t , t0 , A = 1){
         if(!(t instanceof Array))t=[t] 
         const Y = mapfun(n=>sinc(n-t0),...t);
         return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
     },
-    square(){
-
+    square(t,T=1,A=1){
+        if(!(t instanceof Array))t=[t] 
+        const Y = mapfun(n=>sign(sin(n*2*Math.PI/T)),...t);
+        return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
     },
     sawtooth(){
 
