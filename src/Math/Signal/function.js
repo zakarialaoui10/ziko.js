@@ -1,4 +1,5 @@
 import { Complex , complex } from "../Complex";
+import { sqrtn } from "../Functions";
 const zeros=(n)=>new Array(n).fill(0);
 const ones=(n)=>new Array(n).fill(1);
 const nums=(num,n)=>new Array(n).fill(num);
@@ -72,35 +73,6 @@ const arange=(a, b, step , include = false)=>{
     }
     return tab;
 }
-// const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
-//     if(a instanceof Complex||b instanceof Complex){
-//         const A=complex(a);
-//         const B=complex(b);
-//         n=n||Math.abs(B.a-A.a)+1;
-//         const X=linspace(A.a,B.a,n,endpoint);
-//         const Y=linspace(A.b,B.b,n,endpoint);
-//         let Z=new Array(n).fill(null);
-//         Z=Z.map((n,i)=>complex(X[i],Y[i]));
-//         return Z;
-//     }
-//     else if(a instanceof Array){
-//         let Y=[]
-//         for(let i=0;i<a.length;i++){
-//             n=n||abs(b[i]-a[i])+1
-//             Y[i]=linspace(a[i],b[i],n,endpoint);
-//         }
-//         return Y;
-//     }
-    // const [high,low]=[a,b].sort((a,b)=>b-a);
-    // if (floor(n) !== n) return;
-    // var arr = [];
-    // let step = (high - low) / (n - 1);
-    // if(!endpoint)step = (high - low) / n;
-    // for (var i = 0; i < n; i++) {
-    //     a<b?arr.push(low+step*i):arr.push(high-step*i);
-    // }
-    // return arr
-// }
 const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
     if(Math.floor(n)!==n)return;
     if([a,b].every(n=>typeof n==="number")){
@@ -128,13 +100,31 @@ const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
 const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
     return linspace(a,b,n,endpoint).map(n=>pow(base,n))
 }
-const geomspace=(a,b,n=abs(b-a)+1)=>{
-    var [high,low]=[a,b].sort((a,b)=>b-a);
-    var step=sqrtn(high,n-low);
-    var arr=[low]
-    for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
-    arr=arr.map(n=>+n.toFixed(8))
-    return a<b?arr:arr.reverse()
+const geomspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+    if(Math.floor(n)!==n)return;
+    if([a,b].every(n=>typeof n==="number")){
+        const [max,min]=[a,b].sort((a,b)=>b-a);
+        let base;
+        endpoint ? base = sqrtn(max/min,n-1) : base = sqrtn(max/min,n) ;
+        const Y = [min];
+        for (let i = 1; i < n; i++) {
+            Y.push(Y[i-1]*base)
+        }
+        return a<b?Y:Y.reverse()
+    }
+
+    if([a,b].some(n=>n instanceof Complex)){
+        const z1=complex(a)
+        const z2=complex(b)
+        n=n||Math.abs(z1.a-z2.a)+1;
+        let base;
+        endpoint ? base = sqrtn(z2.div(z1),n-1) : base = sqrtn(z2.div(z1),n) ;
+        const Y = [z1];
+        for (let i = 1; i < n; i++) {
+            Y.push(mul(Y[i-1],base))
+        } 
+        return Y;
+    }
 }
 export {
     zeros,

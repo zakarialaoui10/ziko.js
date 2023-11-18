@@ -136,7 +136,7 @@ let Complex$1 = class Complex extends AbstractZikoMath{
         return complex$1((x**this.a)*cos(this.b*ln(x)),(x**this.a)*sin(this.b*ln(x)));
     }
     sqrtn(n=2){
-        return complex$1(sqrtn$1(this.z,n)*cos(this.phi/n),sqrtn$1(this.z,n)*sin(this.phi/n));
+        return complex$1(sqrtn(this.z,n)*cos(this.phi/n),sqrtn(this.z,n)*sin(this.phi/n));
     }
     get sqrt(){
         return this.sqrtn(2);
@@ -279,21 +279,21 @@ function pow$1(x,n){
         }
     }
 }
-function sqrtn$1(x,n){
+function sqrtn(x,n){
     if(typeof x === "number"){
         if(typeof n === "number")return Math.pow(x,1/n);
-        else return mapfun(a=>sqrtn$1(x,a),...n);
+        else return mapfun(a=>sqrtn(x,a),...n);
     }
     else if(x instanceof Complex$1){
-        if(typeof n === "number")return Complex$1.fromExpo(sqrtn$1(x.z,n),x.phi/n);
-        else return mapfun(a=>sqrtn$1(x,a),...n);
+        if(typeof n === "number")return Complex$1.fromExpo(sqrtn(x.z,n),x.phi/n);
+        else return mapfun(a=>sqrtn(x,a),...n);
     }
     else if(x instanceof Array){
-        if(typeof n === "number") return mapfun(a=>sqrtn$1(a,n),...x);
+        if(typeof n === "number") return mapfun(a=>sqrtn(a,n),...x);
         else if(n instanceof Array){
             const Y=[];
             for(let i=0;i<x.length;i++){
-                Y.push(mapfun(a=>sqrtn$1(x[i],a),...n));
+                Y.push(mapfun(a=>sqrtn(x[i],a),...n));
             }
             return Y;
         }
@@ -1757,7 +1757,7 @@ const _mul=(a,b)=>{
     if (typeof b == "number") return a * b;
         else if (b instanceof Complex)return complex(a * b.a,a * b.b);
         else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
-        else if (b instanceof Array)return b.map(n=>mul(a,n)); 
+        else if (b instanceof Array)return b.map(n=>mul$1(a,n)); 
     }
     else if(a instanceof Complex||a instanceof Matrix){
         if(b instanceof Array)return b.map(n=>a.clone.mul(n));
@@ -1766,7 +1766,7 @@ const _mul=(a,b)=>{
     else if(a instanceof Array){
         if(b instanceof Array);
         else {
-            return a.map(n=>mul(n,b));
+            return a.map(n=>mul$1(n,b));
         }
     }
 };
@@ -1816,7 +1816,7 @@ const sub=(a,...b)=>{
     for(let i=0;i<b.length;i++)res=_sub(res,b[i]);
     return res;
 };
-const mul=(a,...b)=>{
+const mul$1=(a,...b)=>{
     var res=a;
     for(let i=0;i<b.length;i++)res=_mul(res,b[i]);
     return res;
@@ -1905,35 +1905,6 @@ const arange=(a, b, step , include = false)=>{
     }
     return tab;
 };
-// const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
-//     if(a instanceof Complex||b instanceof Complex){
-//         const A=complex(a);
-//         const B=complex(b);
-//         n=n||Math.abs(B.a-A.a)+1;
-//         const X=linspace(A.a,B.a,n,endpoint);
-//         const Y=linspace(A.b,B.b,n,endpoint);
-//         let Z=new Array(n).fill(null);
-//         Z=Z.map((n,i)=>complex(X[i],Y[i]));
-//         return Z;
-//     }
-//     else if(a instanceof Array){
-//         let Y=[]
-//         for(let i=0;i<a.length;i++){
-//             n=n||abs(b[i]-a[i])+1
-//             Y[i]=linspace(a[i],b[i],n,endpoint);
-//         }
-//         return Y;
-//     }
-    // const [high,low]=[a,b].sort((a,b)=>b-a);
-    // if (floor(n) !== n) return;
-    // var arr = [];
-    // let step = (high - low) / (n - 1);
-    // if(!endpoint)step = (high - low) / n;
-    // for (var i = 0; i < n; i++) {
-    //     a<b?arr.push(low+step*i):arr.push(high-step*i);
-    // }
-    // return arr
-// }
 const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
     if(Math.floor(n)!==n)return;
     if([a,b].every(n=>typeof n==="number")){
@@ -1961,30 +1932,31 @@ const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
 const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
     return linspace(a,b,n,endpoint).map(n=>pow(base,n))
 };
-// const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
-//     if(a instanceof Complex||b instanceof Complex){
-//         a=complex(a);
-//         b=complex(b);
-//         n=n??abs(b.a-a.a)
-//         const X=linspace(a.a,b.a,n,base,endpoint);
-//         const Y=linspace(a.b,b.b,n,base,endpoint);
-//         const Z=new Array(X.length).fill(0)
-//         const ZZ=Z.map((n,i) => pow(base,complex(X[i],Y[i])));
-//         return ZZ;
-//     }
-//     const start=base**min(a,b);
-//     const stop=base**max(a,b);
-//     const y = linspace(ln(start) / ln(base), ln(stop) / ln(base), n, endpoint);
-//     const result=y.map(n => pow(base, n));
-//     return a<b?result:result.reverse();
-// }
-const geomspace=(a,b,n=abs(b-a)+1)=>{
-    var [high,low]=[a,b].sort((a,b)=>b-a);
-    var step=sqrtn(high,n-low);
-    var arr=[low];
-    for(let i=1;i<n;i++)arr[i]=arr[i-1]*step;
-    arr=arr.map(n=>+n.toFixed(8));
-    return a<b?arr:arr.reverse()
+const geomspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+    if(Math.floor(n)!==n)return;
+    if([a,b].every(n=>typeof n==="number")){
+        const [max,min]=[a,b].sort((a,b)=>b-a);
+        let base;
+        endpoint ? base = sqrtn(max/min,n-1) : base = sqrtn(max/min,n) ;
+        const Y = [min];
+        for (let i = 1; i < n; i++) {
+            Y.push(Y[i-1]*base);
+        }
+        return a<b?Y:Y.reverse()
+    }
+
+    if([a,b].some(n=>n instanceof Complex$1)){
+        const z1=complex$1(a);
+        const z2=complex$1(b);
+        n=n||Math.abs(z1.a-z2.a)+1;
+        let base;
+        endpoint ? base = sqrtn(z2.div(z1),n-1) : base = sqrtn(z2.div(z1),n) ;
+        const Y = [z1];
+        for (let i = 1; i < n; i++) {
+            Y.push(mul(Y[i-1],base));
+        } 
+        return Y;
+    }
 };
 
 const deg2rad=(...deg)=>mapfun(x=>x*Math.PI/180,...deg);
@@ -2024,7 +1996,7 @@ const ppcm=(n1, n2)=>{
 const Utils={
     add,
     sub,
-    mul,
+    mul: mul$1,
     div,
     modulo,
 
@@ -2074,7 +2046,7 @@ function __NumberProto__(){
         },
         mul:{
             value: function(...n) {
-                return mul(this.valueOf(),...n)
+                return mul$1(this.valueOf(),...n)
             }
         },
         div:{
@@ -2140,7 +2112,7 @@ function __ArrayProto__(){
         },
         mul:{
             value: function(...n) {
-                return mul(this.valueOf(),...n)
+                return mul$1(this.valueOf(),...n)
             }
         },
         div:{
@@ -2261,7 +2233,7 @@ const Math$1={
     abs: abs$1,
     sqrt: sqrt$1,
     pow: pow$1,
-    sqrtn: sqrtn$1,
+    sqrtn,
     e,
     ln,
     acos,
@@ -2293,7 +2265,7 @@ const Math$1={
     sum,
     prod,
     add,
-    mul,
+    mul: mul$1,
     div,
     sub,
     modulo,
