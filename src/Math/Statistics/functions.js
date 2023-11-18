@@ -1,3 +1,4 @@
+import { mapfun } from "../Utils";
 const sum=(...x)=>{
     let s = x[0];
     for (let i = 1; i < x.length; i++) s += x[i];
@@ -55,3 +56,13 @@ export{
     max,
     accum
 }
+
+//moy
+//med
+//variance
+//std
+//mode
+//acccum
+//min2max
+//max2min
+//percentile

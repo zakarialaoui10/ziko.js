@@ -14,6 +14,10 @@ import {
     lerp,
     clamp,
 } from "./functions.js";
+import{
+    fft,
+    ifft
+} from "./fft.js"
 import { 
     conv,
     conv1d, 
@@ -95,6 +99,8 @@ const Signal={
     circularConv1d,
     linearConv1d,
     circularConv2d,
-    linearConv2d
+    linearConv2d,
+    fft,
+    ifft,
 }
 export{Signal}

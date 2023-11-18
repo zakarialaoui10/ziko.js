@@ -33,7 +33,7 @@ import{
     min,
     max,
     accum
-} from "./statistics.js"
+} from "../Statistics/functions.js"
 import{
     inRange,
     isApproximatlyEqual

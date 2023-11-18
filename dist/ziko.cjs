@@ -227,6 +227,16 @@ const accum=(...arr)=>{
 
 console.log(min({a:2,c:3}));
 
+//moy
+//med
+//variance
+//std
+//mode
+//acccum
+//min2max
+//max2min
+//percentile
+
 const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),
@@ -2176,6 +2186,9 @@ function __ArrayProto__(){
     });
 }
 
+const fft=null;
+const ifft=null;
+
 const conv1d=(input, kernel , circular = true)=>{
     const INPUT_LENGTH = input.length;
     const KERNEL_LENGTH = kernel.length;
@@ -2408,7 +2421,9 @@ const Signal={
     circularConv1d,
     linearConv1d,
     circularConv2d,
-    linearConv2d
+    linearConv2d,
+    fft,
+    ifft,
 };
 
 //import Ziko from "../index.js"

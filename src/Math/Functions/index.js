@@ -1,6 +1,6 @@
 import { Complex } from "../Complex/index.js";
 import { mapfun } from "../Utils/mapfun.js";
-import { min,max }from "../Utils/statistics.js";
+import { min,max }from "../Statistics/functions.js";
 export const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),
