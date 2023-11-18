@@ -14,7 +14,7 @@ import {
     lerp,
     clamp,
 } from "./functions.js";
-import { conv1d } from "./conv.js";
+import { conv1d, conv2d } from "./conv.js";
 const Signal={
     zeros,
     ones,
@@ -76,9 +76,8 @@ const Signal={
     sawtooth(){
 
     },
-    conv1d(input,kernel,circular = true){
-        return conv1d(input ,kernel ,circular)
-    }
+    conv1d,
+    conv2d,
     
 }
 export{Signal}

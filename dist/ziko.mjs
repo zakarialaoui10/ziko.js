@@ -2161,16 +2161,16 @@ function __ArrayProto__(){
 }
 
 const conv1d=(input, kernel , circular = true)=>{
-    const LENGTH_INP = input.length;
-    const LENGTH_KER = kernel.length;
+    const INPUT_LENGTH = input.length;
+    const KERNEL_LENGTH = kernel.length;
     const output = [];
-    const LENGTH_OUT = circular ? Math.max(LENGTH_INP,LENGTH_KER) : LENGTH_INP + LENGTH_KER - 1;
+    const LENGTH_OUT = circular ? Math.max(INPUT_LENGTH,KERNEL_LENGTH) : INPUT_LENGTH + KERNEL_LENGTH - 1;
     for (let i = 0; i < LENGTH_OUT; i++) {
         let sum = 0;
-        for (let j = 0; j < LENGTH_KER; j++) {
-            const inputIndex = i + j - Math.floor(LENGTH_KER / 2);
+        for (let j = 0; j < KERNEL_LENGTH; j++) {
+            const inputIndex = i + j - Math.floor(KERNEL_LENGTH / 2);
             // Apply zero-padding for out-of-bounds indices
-            const inputValue = inputIndex >= 0 && inputIndex < LENGTH_INP
+            const inputValue = inputIndex >= 0 && inputIndex < INPUT_LENGTH
                 ? input[inputIndex]
                 : 0;
             sum += inputValue * kernel[j];
@@ -2180,8 +2180,40 @@ const conv1d=(input, kernel , circular = true)=>{
     return output;
 };
 
+const conv2d = (input, kernel, circular = true) => {
+    if(!(input instanceof Matrix$1)) input = matrix(input);
+    if(!(kernel instanceof Matrix$1)) kernel = matrix(kernel);
+    const INPUT_ROWS=input.rows;
+    const INPUT_COLS=input.cols;
+    const OUTPUT_ROWS = circular ? Math.max(input.rows,kernel.rows) : input.rows + kernel.rows-1;
+    const OUTPUT_COLS = circular ? Math.max(input.cols,kernel.cols) : input.cols + kernel.cols-1;
+    const KERNEL_SIZE = kernel.rows;
+    const output = [];
+    for (let i = 0; i < OUTPUT_ROWS ; i++) {
+        const row = [];
+        for (let j = 0; j < OUTPUT_COLS ; j++) {
+            let sum = 0;
+            for (let k = 0; k < KERNEL_SIZE; k++) {
+                for (let l = 0; l < KERNEL_SIZE; l++) {
+                    const rowIndex = i + k - Math.floor(KERNEL_SIZE / 2);
+                    const colIndex = j + l - Math.floor(KERNEL_SIZE / 2);
+                    // Apply zero-padding for out-of-bounds indices
+                    const inputValue = (rowIndex >= 0 && rowIndex < INPUT_ROWS &&
+                                        colIndex >= 0 && colIndex < INPUT_COLS)
+                        ? input[rowIndex][colIndex]
+                        : 0;
+                    sum += inputValue * kernel[k][l];
+                }
+            }
+            row.push(sum);
+        }
+        output.push(row);
+    }
+    return output;
+};
+
 var convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
-    if(kernel instanceof Matrix)kernel=kernel.arr.flat(1);
+    if(kernel instanceof Matrix$1)kernel=kernel.arr.flat(1);
     var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
     var side = Math.round(sqrt(kernel.length));
     var halfSide = Math.floor(side / 2);
@@ -2230,7 +2262,7 @@ var convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, 
 };
 
 convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
-    if(kernel instanceof Matrix)kernel=kernel.arr.flat(1);
+    if(kernel instanceof Matrix$1)kernel=kernel.arr.flat(1);
     var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
     var side = Math.round(sqrt(kernel.length));
     var halfSide = Math.floor(side / 2);
@@ -2277,6 +2309,9 @@ convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 =
     }
     return output;
 };
+
+
+
 window.convolute=convolute;
 window.conv1d=conv1d;
 
@@ -2341,9 +2376,8 @@ const Signal={
     sawtooth(){
 
     },
-    conv1d(input,kernel,circular = true){
-        return conv1d(input ,kernel ,circular)
-    }
+    conv1d,
+    conv2d,
     
 };
 
