@@ -5,6 +5,7 @@ export const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),
     tan:x=>+Math.tan(x).toFixed(31),
+    sinc:x=>+Math.sin(Math.PI*x)/(Math.PI*x),
     sec:x=>+1/Math.cos(x).toFixed(15),
     csc:x=>+1/Math.sin(x).toFixed(15),
     cot:x=>+1/Math.tan(x).toFixed(15),
@@ -90,6 +91,9 @@ function tan(...x){
 }
 function sec(...x){
     return mapfun(Fixed.sec,...x);
+}
+function sinc(...x){
+    return mapfun(Fixed.sinc,...x)
 }
 function csc(...x){
     return mapfun(Fixed.csc,...x);
@@ -191,6 +195,7 @@ export{
     cos,
     sin,
     tan,
+    sinc,
     cot,
     sec,
     csc,

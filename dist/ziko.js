@@ -235,6 +235,7 @@
       cos:x=>+Math.cos(x).toFixed(15),
       sin:x=>+Math.sin(x).toFixed(15),
       tan:x=>+Math.tan(x).toFixed(31),
+      sinc:x=>+Math.sin(Math.PI*x)/(Math.PI*x),
       sec:x=>+1/Math.cos(x).toFixed(15),
       csc:x=>+1/Math.sin(x).toFixed(15),
       cot:x=>+1/Math.tan(x).toFixed(15),
@@ -320,6 +321,9 @@
   }
   function sec(...x){
       return mapfun(Fixed.sec,...x);
+  }
+  function sinc(...x){
+      return mapfun(Fixed.sinc,...x)
   }
   function csc(...x){
       return mapfun(Fixed.csc,...x);
@@ -2196,7 +2200,7 @@
       tri(t,T,t0 = 0 , A = 1){
           if(!(t instanceof Array))t=[t]; 
           const Y = mapfun(n=>((t0-T/2 < n) && (t0+T/2 > n)? 1 - 2 * abs$1(n/T) : 0),...t);
-          return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
       },
       dirac(t,t0){
           return mapfun(n=>n===t0?Infinity:0,...t);
@@ -2204,10 +2208,12 @@
       lorentz(t , t0 = 0 , A = 1){
           if(!(t instanceof Array))t=[t]; 
           const Y = mapfun(n => 1/(1+(n-t0)**2),...t);
-          return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
       },
-      sinc(){
-
+      sinc(t , t0 , A){
+          if(!(t instanceof Array))t=[t]; 
+          const Y = mapfun(n=>sinc(n-t0),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
       },
       square(){
 
@@ -2237,6 +2243,7 @@
       cos,
       sin,
       tan,
+      sinc,
       sec,
       csc,
       cot,
