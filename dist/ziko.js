@@ -1736,7 +1736,9 @@
           return a.clone.add(b);
       }
       else if(a instanceof Array){
-          if(b instanceof Array);
+          if(b instanceof Array){
+              if(a.length === b.length)return a.map((n,i)=>add(n,b[i]))
+          }
           else {
               return a.map(n=>add(n,b));
           }
@@ -1754,7 +1756,11 @@
           return a.clone.sub(b);
       }
       else if(a instanceof Array){
-          if(b instanceof Array);
+          if(b instanceof Array){
+              if(b instanceof Array){
+                  if(a.length === b.length)return a.map((n,i)=>sub(n,b[i]))
+              }
+          }
           else {
               return a.map(n=>sub(n,b));
           }
@@ -1772,7 +1778,11 @@
           return a.clone.mul(b);
       }
       else if(a instanceof Array){
-          if(b instanceof Array);
+          if(b instanceof Array){
+              if(b instanceof Array){
+                  if(a.length === b.length)return a.map((n,i)=>mul$1(n,b[i]))
+              }
+          }
           else {
               return a.map(n=>mul$1(n,b));
           }
@@ -1790,7 +1800,11 @@
           return a.clone.div(b);
       }
       else if(a instanceof Array){
-          if(b instanceof Array);
+          if(b instanceof Array){
+              if(b instanceof Array){
+                  if(a.length === b.length)return a.map((n,i)=>div(n,b[i]))
+              }
+          }
           else {
               return a.map(n=>div(n,b));
           }
@@ -2384,6 +2398,18 @@
       },
       conv1d,
       conv2d,
+      circularConv1d(input,kernel){
+          return conv1d(input,kernel,true)
+      },
+      LinearConv1d(input,kernel){
+          return conv1d(input,kernel,false)
+      },
+      circularConv2d(input,kernel){
+          return conv2d(input,kernel,true)
+      },
+      LinearConv2d(input,kernel){
+          return conv2d(input,kernel,false)
+      }
       
   };
 

@@ -51,7 +51,7 @@ const conv2d = (input, kernel, circular = true) => {
     return output;
 };
 
-var convoluteCanvas=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
+var convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
     if(kernel instanceof Matrix)kernel=kernel.arr.flat(1)
     var opaque = 1;
     var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
@@ -101,7 +101,7 @@ var convoluteCanvas=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1
     return output;
 }
 
-convoluteCanvas=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
+convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
     if(kernel instanceof Matrix)kernel=kernel.arr.flat(1)
     var opaque = 1;
     var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
@@ -153,10 +153,10 @@ convoluteCanvas=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0
 
 
 
-window.convoluteCanvas=convoluteCanvas
+window.convolute=convolute
 window.conv1d=conv1d;
 export{
     conv1d,
     conv2d,
-    convoluteCanvas
+    convolute
 }

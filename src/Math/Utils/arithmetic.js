@@ -11,7 +11,7 @@ const _add=(a,b)=>{
     }
     else if(a instanceof Array){
         if(b instanceof Array){
-
+            if(a.length === b.length)return a.map((n,i)=>add(n,b[i]))
         }
         else {
             return a.map(n=>add(n,b));
@@ -31,7 +31,9 @@ const _sub=(a,b)=>{
     }
     else if(a instanceof Array){
         if(b instanceof Array){
-
+            if(b instanceof Array){
+                if(a.length === b.length)return a.map((n,i)=>sub(n,b[i]))
+            }
         }
         else {
             return a.map(n=>sub(n,b));
@@ -51,7 +53,9 @@ const _mul=(a,b)=>{
     }
     else if(a instanceof Array){
         if(b instanceof Array){
-
+            if(b instanceof Array){
+                if(a.length === b.length)return a.map((n,i)=>mul(n,b[i]))
+            }
         }
         else {
             return a.map(n=>mul(n,b));
@@ -71,7 +75,9 @@ const _div=(a,b)=>{
     }
     else if(a instanceof Array){
         if(b instanceof Array){
-
+            if(b instanceof Array){
+                if(a.length === b.length)return a.map((n,i)=>div(n,b[i]))
+            }
         }
         else {
             return a.map(n=>div(n,b));

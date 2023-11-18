@@ -78,6 +78,18 @@ const Signal={
     },
     conv1d,
     conv2d,
+    circularConv1d(input,kernel){
+        return conv1d(input,kernel,true)
+    },
+    LinearConv1d(input,kernel){
+        return conv1d(input,kernel,false)
+    },
+    circularConv2d(input,kernel){
+        return conv2d(input,kernel,true)
+    },
+    LinearConv2d(input,kernel){
+        return conv2d(input,kernel,false)
+    }
     
 }
 export{Signal}
