@@ -2166,19 +2166,17 @@ var Signal={
     arange(){
 
     },
-    echelon(t0,t){
-        if(typeof t==="number")return +(t>=t0);
+    echelon(t,t0 = 0){
         return mapfun(n=>n>=t0?1:0,...t);
     },
-    rampe(t0,...t){
-        //if(typeof t==="number")return (t>=t0)?t-t0:0;
+    rampe(t,t0 = 0){
         return mapfun(n=>n>=t0?n-t0:0,...t);
     },
-    sign(t,t0=0){
+    sign(t,t0 = 0){
         if(typeof t==="number")return Math.sign(t-t0);
     },
-    rect(t,T,t0=0){
-        if(typeof t==="number")return this.echelon(t,t0-T/2)-(this.echelon(t,t0+T/2));
+    rect(t,T,t0 = 0){
+        return mapfun(n=>((t0-T/2 < n) && (t0+T/2 > n)? 1 : 0),...t)
     },
     tri(t,T,t0){
         if(typeof t==="number"){
@@ -2187,8 +2185,8 @@ var Signal={
             else return -this.rampe(t,t0)
         }
     },
-    dirac(){
-
+    dirac(t0,...t){
+        return mapfun(n=>n===t0?Infinity:0,...t);
     },
     lorentz(t,t0=0){
         if(typeof t==="number")return 1/(1+(t-t0)**2);
