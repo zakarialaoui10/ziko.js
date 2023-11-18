@@ -2159,9 +2159,6 @@ function __ArrayProto__(){
 }
 
 var Signal={
-    _map(func){
-
-    },
     linspace(){
 
     },
@@ -2171,11 +2168,13 @@ var Signal={
     arange(){
 
     },
-    echelon(t,t0=0){
+    echelon(t0,t){
         if(typeof t==="number")return +(t>=t0);
+        return mapfun(n=>n>=t0?1:0,...t);
     },
-    rampe(t,t0=0){
-        if(typeof t==="number")return (t>=t0)?t-t0:0;
+    rampe(t0,...t){
+        //if(typeof t==="number")return (t>=t0)?t-t0:0;
+        return mapfun(n=>n>=t0?n-t0:0,...t);
     },
     sign(t,t0=0){
         if(typeof t==="number")return Math.sign(t-t0);
