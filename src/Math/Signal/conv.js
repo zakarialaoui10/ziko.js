@@ -1,30 +1,20 @@
-function convolution1D(inputArray, kernel) {
-    const inputLength = inputArray.length;
-    const kernelLength = kernel.length;
+const conv1d=(input, kernel , circular = true)=>{
+    const LENGTH_INP = input.length;
+    const LENGTH_KER = kernel.length;
     const output = [];
-
-    // Iterate over each element in the input array
-    for (let i = 0; i < inputLength; i++) {
+    const LENGTH_OUT = circular ? Math.max(LENGTH_INP,LENGTH_KER) : LENGTH_INP + LENGTH_KER - 1;
+    for (let i = 0; i < LENGTH_OUT; i++) {
         let sum = 0;
-
-        // Iterate over each element in the kernel
-        for (let j = 0; j < kernelLength; j++) {
-            // Calculate the index in the input array, considering the kernel position
-            const inputIndex = i + j - Math.floor(kernelLength / 2);
-
+        for (let j = 0; j < LENGTH_KER; j++) {
+            const inputIndex = i + j - Math.floor(LENGTH_KER / 2);
             // Apply zero-padding for out-of-bounds indices
-            const inputValue = inputIndex >= 0 && inputIndex < inputLength
-                ? inputArray[inputIndex]
+            const inputValue = inputIndex >= 0 && inputIndex < LENGTH_INP
+                ? input[inputIndex]
                 : 0;
-
-            // Multiply the input value by the corresponding kernel weight
             sum += inputValue * kernel[j];
         }
-
-        // Store the result in the output array
         output.push(sum);
     }
-
     return output;
 }
 
@@ -128,4 +118,5 @@ convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 =
     return output;
 }
 window.convolute=convolute
-export{convolute}
+window.conv1d=conv1d;
+export{conv1d,convolute}

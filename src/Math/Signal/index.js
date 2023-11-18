@@ -1,5 +1,6 @@
 import { mapfun } from "../Utils";
 import { abs , sinc , sign , sin } from "../Functions/index.js"
+import { Random } from "../Random/index.js";
 import { 
     zeros,
     ones,
@@ -13,6 +14,7 @@ import {
     lerp,
     clamp,
 } from "./functions.js";
+import { conv1d } from "./conv.js";
 const Signal={
     zeros,
     ones,
@@ -25,6 +27,9 @@ const Signal={
     norm,
     lerp,
     clamp,
+    noise(n,min = 0,max = 1){
+        return Random.floats(n,min,max);
+    },
     echelon(t,t0 = 0 , A = 1){
         if(!(t instanceof Array))t=[t];
         const Y = mapfun(n=>n>=t0?1:0,...t);
@@ -70,6 +75,9 @@ const Signal={
     },
     sawtooth(){
 
+    },
+    conv1d(input,kernel,circular = true){
+        return conv1d(input ,kernel ,circular)
     }
     
 }
