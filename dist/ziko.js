@@ -182,14 +182,27 @@
   };
 
   const sum=(...x)=>{
-      let s = x[0];
-      for (let i = 1; i < x.length; i++) s += x[i];
-      return s;
+      if(x.every(n=>typeof n==="number")){
+          let s = x[0];
+          for (let i = 1; i < x.length; i++) s += x[i];
+          return s;
+      }
+      const Y=[];
+      for(let i=0;i<x.length;i++){
+          if(x[i] instanceof Array)Y.push(sum(...x[i]));
+          else if(x[i] instanceof Object){
+              Y.push(sum(...Object.values(x[i])));
+          }
+      }
+      return Y.length===1?Y[0]:Y;
   };
   const prod=(...x)=> {
-      let p = x[0];
-      for (let i = 1; i < x.length; i++) p *= x[i];
-      return p;
+      if(x.every(n=>typeof n==="number")){
+          let p = x[0];
+          for (let i = 1; i < x.length; i++) p *= x[i];
+          return p;
+      }
+      if(x.every(n=>n instanceof Array))return mapfun(sum,...x);
   };
   const min=(...num)=>{
       if(num.every(n=>typeof n==="number"))return Math.min(...num);
@@ -226,10 +239,6 @@
           acc.shift();
           return acc;
   };
-
-  // sort
-
-  console.log(min({a:2,c:3}));
 
   //moy
   //med
@@ -5943,6 +5952,16 @@
   const Data={
       preload,
       parseXML,
+      ExtractAll:function(){
+          for (let i = 0; i < Object.keys(this).length; i++) {
+              globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+          for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
   };
 
   class ZikoUISvgElement{
