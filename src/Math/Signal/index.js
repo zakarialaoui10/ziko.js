@@ -40,8 +40,10 @@ var Signal={
     dirac(t,t0){
         return mapfun(n=>n===t0?Infinity:0,...t);
     },
-    lorentz(t,t0=0){
-        if(typeof t==="number")return 1/(1+(t-t0)**2);
+    lorentz(t , t0 = 0 , A = 1){
+        if(!(t instanceof Array))t=[t] 
+        const Y = mapfun(n => 1/(1+(n-t0)**2),...t);
+        return Y instanceof Array ? Y.map(n=>n*A) : Y*A
     },
     sinc(){
 
