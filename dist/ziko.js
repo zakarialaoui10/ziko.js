@@ -5883,6 +5883,68 @@
       }
   };
 
+  function parseXML(xmlString) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+      const rootNode = xmlDoc.documentElement;
+      const result = parseNode(rootNode);
+      return result;
+    }
+    
+    function parseNode(node) {
+      const obj = {
+        type: node.nodeName,
+        attributes: {},
+        children: []
+      };
+      for (let i = 0; i < node.attributes.length; i++) {
+        const attr = node.attributes[i];
+        obj.attributes[attr.name] = attr.value;
+      }
+      for (let i = 0; i < node.childNodes.length; i++) {
+        const child = node.childNodes[i];
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          obj.children.push(parseNode(child));
+        } else if (child.nodeType === Node.TEXT_NODE) {
+          obj.text = child.textContent.trim();
+        }
+      }
+      return obj;
+    }
+
+    // function htmlParser(element) {
+    //   const obj = {
+    //     type: element.tagName,
+    //     attributes: {},
+    //     children: [],
+    //   };
+    //   for (let i = 0; i < element.attributes.length; i++) {
+    //     const attr = element.attributes[i];
+    //     obj.attributes[attr.name] = attr.value;
+    //   }
+    //   for (let i = 0; i < element.children.length; i++) {
+    //     const child = element.children[i];
+    //     obj.children.push(htmlParser(child));
+    //   }
+    //   return obj;
+    // }
+
+  const preload=(url)=>{
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", url, false); 
+      xhr.send();
+      if (xhr.status === 200) {
+        return JSON.parse(xhr.responseText);
+      } else {
+        throw new Error(`Failed to fetch data from ${url}. Status: ${xhr.status}`);
+      }
+  };
+
+  const Data={
+      preload,
+      parseXML,
+  };
+
   class ZikoUISvgElement{
       color({stroke,fill}){
         this.element.setAttribute("stroke",stroke);
@@ -6807,59 +6869,13 @@
   }
   const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
-  function parseXML(xmlString) {
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-      const rootNode = xmlDoc.documentElement;
-      const result = parseNode(rootNode);
-      return result;
-    }
-    
-    function parseNode(node) {
-      const obj = {
-        type: node.nodeName,
-        attributes: {},
-        children: []
-      };
-      for (let i = 0; i < node.attributes.length; i++) {
-        const attr = node.attributes[i];
-        obj.attributes[attr.name] = attr.value;
-      }
-      for (let i = 0; i < node.childNodes.length; i++) {
-        const child = node.childNodes[i];
-        if (child.nodeType === Node.ELEMENT_NODE) {
-          obj.children.push(parseNode(child));
-        } else if (child.nodeType === Node.TEXT_NODE) {
-          obj.text = child.textContent.trim();
-        }
-      }
-      return obj;
-    }
-
-    // function htmlParser(element) {
-    //   const obj = {
-    //     type: element.tagName,
-    //     attributes: {},
-    //     children: [],
-    //   };
-    //   for (let i = 0; i < element.attributes.length; i++) {
-    //     const attr = element.attributes[i];
-    //     obj.attributes[attr.name] = attr.value;
-    //   }
-    //   for (let i = 0; i < element.children.length; i++) {
-    //     const child = element.children[i];
-    //     obj.children.push(htmlParser(child));
-    //   }
-    //   return obj;
-    // }
-
   const Ziko$1={
-      parseXML,
       Math: Math$1,
       UI: UI$1,
       Time,
       Graphics,
       Events,
+      Data,
       Multi,
       SPA,
       Watch,

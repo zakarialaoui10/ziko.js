@@ -1,4 +1,11 @@
 import parseXML from "./Parser/xml";
-export{
-    parseXML
+import { preload } from "./preload";
+const Data={
+    preload,
+    parseXML,
 }
+export{
+    parseXML,
+    preload
+}
+export default Data
