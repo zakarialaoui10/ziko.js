@@ -11,16 +11,21 @@ var Signal={
     arange(){
 
     },
-    echelon(t,t0 = 0){
-        if(!(t instanceof Array))t=[t]
-        return mapfun(n=>n>=t0?1:0,...t);
+    echelon(t,t0 = 0 , A = 1){
+        if(!(t instanceof Array))t=[t];
+        const Y = mapfun(n=>n>=t0?1:0,...t);
+        return Y instanceof Array ? Y.map(n=>n*A) : Y*A
     },
-    rampe(t,t0 = 0){
+    rampe(t,t0 = 0 , A = 1){
         if(!(t instanceof Array))t=[t]
-        return mapfun(n=>n>=t0?n-t0:0,...t);
+        const Y = mapfun(n=>n>=t0?n-t0:0,...t);
+        return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+
     },
-    sign(t,t0 = 0){
-        if(typeof t==="number")return Math.sign(t-t0);
+    sign(t,t0 = 0 , A = 1){
+        if(!(t instanceof Array))t=[t]
+        const Y = mapfun(n=>Math.sign(n-t0),...t);
+        return Y instanceof Array ? Y.map(n=>n*A) : Y*A
     },
     rect(t,T,t0 = 0){
         if(!(t instanceof Array))t=[t];
