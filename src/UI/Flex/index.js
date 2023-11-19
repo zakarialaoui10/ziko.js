@@ -1,7 +1,10 @@
 export{
     Flex,
     ZikoUIFlex,
-} from "./flex.js"
+} from "./flex.js";
+export{
+    carousel
+} from "./carousel.js"
 export {
     Notebook
-} from "./Notebook.js"
+} from "./Notebook.js";
