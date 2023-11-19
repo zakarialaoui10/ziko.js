@@ -3610,6 +3610,61 @@
   }
   const Clipboard=Target=>new ZikoEventClipboard(Target);
 
+  function focus_controller(e){
+      EVENT_CONTROLLER.call(this,e,"focus",null,null);
+  }
+  function blur_controller(e){
+      EVENT_CONTROLLER.call(this,e,"blur",null,null);
+  }
+  class ZikoEventFocus extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.cache={
+              prefixe:"",
+              preventDefault:{
+                  focus:false,
+                  blur:false,
+              },
+              paused:{
+                  focus:false,
+                  blur:false,      
+              },
+              stream:{
+                  enabled:{
+                      focus:false,
+                      blur:false,
+                  },
+                  clear:{
+                      focus:false, 
+                      blur:false,         
+                  },
+                  history:{
+                      focus:[],
+                      blur:[],
+                  }
+              },
+              callbacks:{
+                  focus:[],
+                  blur:[],
+              }
+          };
+          this.__controller={
+              focus:focus_controller.bind(this),
+              blur:blur_controller.bind(this),
+          };
+      }
+      onFocus(...callbacks){
+          this.__onEvent("focus",{},...callbacks);
+          return this;
+       }
+      onBlur(...callbacks){
+          this.__onEvent("blur",{},...callbacks);
+          return this;
+       }     
+  }
+  const Focus=Target=>new ZikoEventFocus(Target);
+
   function input_controller(e){
       EVENT_CONTROLLER.call(this,e,"input",null,null);
   }
@@ -3894,7 +3949,8 @@
         drag:null,
         drop:null,
         click:null,
-        clipboard:null
+        clipboard:null,
+        focus:null,
       };
       this.observer={
         resize:null,
@@ -4203,6 +4259,16 @@
     onSelect(...callbacks){
       if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
       this.events.clipboard.onSelect(...callbacks);
+      return this;
+    }
+    onFocus(...callbacks){
+      if(!this.events.focus)this.events.focus = Focus(this);
+      this.events.focus.onFocus(...callbacks);
+      return this;
+    }
+    onBlur(...callbacks){
+      if(!this.events.focus)this.events.focus = Focus(this);
+      this.events.focus.onFocus(...callbacks);
       return this;
     }
     WatchAttributes(){
@@ -5372,6 +5438,7 @@
                 }
           });
           this.onPtrDown(e=>{
+              console.log(e.event);
               this.x0 = e.event.pageX;
               const transformMatrix = window
                 .getComputedStyle(this.track.element)
@@ -5380,7 +5447,10 @@
                 this.tx = +transformMatrix.split(",")[4];
               }            
           });
-          this.onPtrUp();
+          this.onPtrUp(e=>console.log(e.isDown));
+          this.onPtrLeave(e=>{
+              // Handle outside up 
+          });
       }
   }
   const Carousel=(...ZikoUIElement)=>new ZikoUICarousel(...ZikoUIElement);

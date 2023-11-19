@@ -1,8 +1,9 @@
 import Pointer from "./Global/Pointer.js";
 import Key from "./Global/Key.js";
-import {Drag,Drop} from "./Global/Drag.js"
-import Click from "./Global/Click.js"
-import Clipboard from "./Global/Clipboard.js"
+import {Drag,Drop} from "./Global/Drag.js";
+import Click from "./Global/Click.js";
+import Clipboard from "./Global/Clipboard.js";
+import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
 const Events={
     Pointer,
@@ -30,6 +31,7 @@ export {
     Drop,
     Click,
     Clipboard,
+    Focus,
     Input
 }
 export default Events

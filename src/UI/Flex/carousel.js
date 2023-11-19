@@ -28,6 +28,7 @@ class ZikoUICarousel extends ZikoUIFlex{
               }
         })
         this.onPtrDown(e=>{
+            console.log(e.event)
             this.x0 = e.event.pageX;
             const transformMatrix = window
               .getComputedStyle(this.track.element)
@@ -36,7 +37,10 @@ class ZikoUICarousel extends ZikoUIFlex{
               this.tx = +transformMatrix.split(",")[4];
             }            
         })
-        this.onPtrUp();
+        this.onPtrUp(e=>console.log(e.isDown));
+        this.onPtrLeave(e=>{
+            // Handle outside up 
+        });
     }
 }
 const Carousel=(...ZikoUIElement)=>new ZikoUICarousel(...ZikoUIElement);

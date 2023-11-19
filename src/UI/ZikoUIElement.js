@@ -1,7 +1,18 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 import styleComposer from "./Style/index.js";
-import { Pointer, Key, Drag , Drop, Click , Clipboard } from "../Events/index.js"
-import { WatchIntersection, WatchSize } from "../Reactivity/index.js";
+import { 
+  Pointer, 
+  Key, 
+  Drag , 
+  Drop, 
+  Click , 
+  Clipboard ,
+  Focus 
+} from "../Events/index.js"
+import { 
+  WatchIntersection, 
+  WatchSize 
+} from "../Reactivity/index.js";
 import { text } from "./Text/index.js";
 import { matrix } from "../Math/Matrix/index.js";
 
@@ -34,7 +45,8 @@ class ZikoUIElement {
       drag:null,
       drop:null,
       click:null,
-      clipboard:null
+      clipboard:null,
+      focus:null,
     }
     this.observer={
       resize:null,
@@ -343,6 +355,16 @@ class ZikoUIElement {
   onSelect(...callbacks){
     if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
     this.events.clipboard.onSelect(...callbacks);
+    return this;
+  }
+  onFocus(...callbacks){
+    if(!this.events.focus)this.events.focus = Focus(this);
+    this.events.focus.onFocus(...callbacks);
+    return this;
+  }
+  onBlur(...callbacks){
+    if(!this.events.focus)this.events.focus = Focus(this);
+    this.events.focus.onFocus(...callbacks);
     return this;
   }
   WatchAttributes(){
