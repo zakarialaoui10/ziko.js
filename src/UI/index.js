@@ -15,7 +15,7 @@ import {
     hrs,
     link,
     ZikoHtml
-} from "./Miscellaneous/index.js";
+} from "./Misc/index.js";
 import {
     ol,
     ul

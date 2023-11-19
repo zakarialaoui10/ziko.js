@@ -4494,10 +4494,8 @@
 
   class ZikoHtmlTag extends ZikoUIElement {
     constructor(element) {
-      super();
-        this.element = document.createElement(element);
+      super(element);
         this.render();
-        //delete this.append
     }
   }
   class ZikoUIBr extends ZikoUIElement {
