@@ -12,6 +12,7 @@ const Events={
     Drop,
     Click,
     Clipboard,
+    Focus,
     Input,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {

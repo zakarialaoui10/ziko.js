@@ -14,13 +14,20 @@ const sum=(...x)=>{
     }
     return Y.length===1?Y[0]:Y;
 }
-const prod=(...x)=> {
+const prod=(...x)=>{
     if(x.every(n=>typeof n==="number")){
         let p = x[0];
         for (let i = 1; i < x.length; i++) p *= x[i];
         return p;
     }
-    if(x.every(n=>n instanceof Array))return mapfun(sum,...x);
+    const Y=[];
+    for(let i=0;i<x.length;i++){
+        if(x[i] instanceof Array)Y.push(prod(...x[i]));
+        else if(x[i] instanceof Object){
+            Y.push(prod(...Object.values(x[i])))
+        }
+    }
+    return Y.length===1?Y[0]:Y;
 }
 const min=(...num)=>{
     if(num.every(n=>typeof n==="number"))return Math.min(...num);
