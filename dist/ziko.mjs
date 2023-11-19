@@ -30,8 +30,8 @@ let Complex$1 = class Complex extends AbstractZikoMath{
                 this.a=a.b/tan(a.phi);
             }
             else if(("z" in b && "phi" in a)){
-                this.a=a.z*cos(a.phi);
-                this.a=a.z*sin(a.phi);
+                this.a=a.z*cos$1(a.phi);
+                this.a=a.z*sin$1(a.phi);
             }
         }
         else if(typeof(a)==="number"&&typeof(b)==="number"){
@@ -83,8 +83,8 @@ let Complex$1 = class Complex extends AbstractZikoMath{
         }
         let Z=+prod(this.z,...z.map(n=>n.z)).toFixed(15);
         let phi=+sum(this.phi,...z.map(n=>n.phi)).toFixed(15);
-        this.a=+(Z*cos(phi).toFixed(15)).toFixed(14);
-        this.b=+(Z*sin(phi).toFixed(15)).toFixed(14);    
+        this.a=+(Z*cos$1(phi).toFixed(15)).toFixed(14);
+        this.b=+(Z*sin$1(phi).toFixed(15)).toFixed(14);    
         return this;
     }
     div(...z) {
@@ -93,23 +93,23 @@ let Complex$1 = class Complex extends AbstractZikoMath{
         }
         let Z=+(this.z/prod(...z.map(n=>n.z))).toFixed(15);
         let phi=+(this.phi-sum(...z.map(n=>n.phi))).toFixed(15);
-        this.a=+(Z*cos(phi).toFixed(15)).toFixed(15);
-        this.b=+(Z*sin(phi).toFixed(15)).toFixed(15);
+        this.a=+(Z*cos$1(phi).toFixed(15)).toFixed(15);
+        this.b=+(Z*sin$1(phi).toFixed(15)).toFixed(15);
         return this;
     }
     pow(n) {
         if (floor$1(n) === n && n > 0) {
             let z=+(this.z**n).toFixed(15);
             let phi=+(this.phi*n).toFixed(15);
-            this.a=+(z*cos(phi).toFixed(15)).toFixed(15);
-            this.b=+(z*sin(phi).toFixed(15)).toFixed(15);
+            this.a=+(z*cos$1(phi).toFixed(15)).toFixed(15);
+            this.b=+(z*sin$1(phi).toFixed(15)).toFixed(15);
         }
         return this;
     }
     static fromExpo(z, phi) {
         return new Complex(
-            +(z * cos(phi)).toFixed(13), 
-            +(z * sin(phi)).toFixed(13)
+            +(z * cos$1(phi)).toFixed(13), 
+            +(z * sin$1(phi)).toFixed(13)
             );
     }
     get expo() {
@@ -131,10 +131,10 @@ let Complex$1 = class Complex extends AbstractZikoMath{
         return z.clone.pow(n);
     }
     static xpowZ(x){
-        return complex$1((x**this.a)*cos(this.b*ln(x)),(x**this.a)*sin(this.b*ln(x)));
+        return complex$1((x**this.a)*cos$1(this.b*ln(x)),(x**this.a)*sin$1(this.b*ln(x)));
     }
     sqrtn(n=2){
-        return complex$1(sqrtn(this.z,n)*cos(this.phi/n),sqrtn(this.z,n)*sin(this.phi/n));
+        return complex$1(sqrtn(this.z,n)*cos$1(this.phi/n),sqrtn(this.z,n)*sin$1(this.phi/n));
     }
     get sqrt(){
         return this.sqrtn(2);
@@ -143,14 +143,14 @@ let Complex$1 = class Complex extends AbstractZikoMath{
         return complex$1(this.z,this.phi);
     }
     get cos(){
-        return complex$1(cos(this.a)*cosh(this.b),sin(this.a)*sinh(this.b))
+        return complex$1(cos$1(this.a)*cosh(this.b),sin$1(this.a)*sinh(this.b))
     }
     get sin(){
-        return complex$1(sin(this.a)*cosh(this.b),cos(this.a)*sinh(this.b))
+        return complex$1(sin$1(this.a)*cosh(this.b),cos$1(this.a)*sinh(this.b))
     }
     get tan(){
-        const de=cos(this.a*2)+cosh(this.b*2);
-        return complex$1(sin(2*this.a)/de,sinh(2*this.b)/de);
+        const de=cos$1(this.a*2)+cosh(this.b*2);
+        return complex$1(sin$1(2*this.a)/de,sinh(2*this.b)/de);
     }
     printInConsole() {
         let string = this.a + " + " + this.b + " * i";
@@ -323,10 +323,10 @@ function e(...x){
 function ln(...x){
     return mapfun(Math.log,...x);
 }
-function cos(...x){
+function cos$1(...x){
     return mapfun(Fixed.cos,...x);
 }
-function sin(...x){
+function sin$1(...x){
     return mapfun(Fixed.sin,...x);
 }
 function tan(...x){
@@ -1709,20 +1709,20 @@ const mapfun=(fun,...X)=>{
             const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
             switch(fun){
                 case Math.log:return complex$1(ln(z),phi); // Done
-                case Math.exp:return complex$1(e(a)*cos(b),e(a)*sin(b)); // Done
+                case Math.exp:return complex$1(e(a)*cos$1(b),e(a)*sin$1(b)); // Done
                 case Math.abs:return z; // Done
-                case Math.sqrt:return complex$1(sqrt$1(z)*cos(phi/2),sqrt$1(z)*sin(phi/2)); // Done
-                case Fixed.cos:return complex$1(cos(a)*cosh(b),-(sin(a)*sinh(b)));
-                case Fixed.sin:return complex$1(sin(a)*cosh(b),cos(a)*sinh(b));
+                case Math.sqrt:return complex$1(sqrt$1(z)*cos$1(phi/2),sqrt$1(z)*sin$1(phi/2)); // Done
+                case Fixed.cos:return complex$1(cos$1(a)*cosh(b),-(sin$1(a)*sinh(b)));
+                case Fixed.sin:return complex$1(sin$1(a)*cosh(b),cos$1(a)*sinh(b));
                 case Fixed.tan:{
-                    const DEN=cos(2*a)+cosh(2*b);
-                    return complex$1(sin(2*a)/DEN,sinh(2*b)/DEN);
+                    const DEN=cos$1(2*a)+cosh(2*b);
+                    return complex$1(sin$1(2*a)/DEN,sinh(2*b)/DEN);
                 }
-                case Fixed.cosh:return complex$1(cosh(a)*cos(b),sinh(a)*sin(b));
-                case Fixed.sinh:return complex$1(sinh(a)*cos(b),cosh(a)*sin(b));
+                case Fixed.cosh:return complex$1(cosh(a)*cos$1(b),sinh(a)*sin$1(b));
+                case Fixed.sinh:return complex$1(sinh(a)*cos$1(b),cosh(a)*sin$1(b));
                 case Fixed.tanh:{
-                    const DEN=cosh(2*a)+cos(2*b);
-                    return complex$1(sinh(2*a)/DEN,sin(2*b)/DEN)
+                    const DEN=cosh(2*a)+cos$1(2*b);
+                    return complex$1(sinh(2*a)/DEN,sin$1(2*b)/DEN)
                 }
                 //default : return fun(x)
             }
@@ -1734,7 +1734,7 @@ const mapfun=(fun,...X)=>{
 };
 window.mapfun=mapfun;
 
-const { PI, E: E$1 } = Math;
+const { PI: PI$1, E: E$1 } = Math;
 const EPSILON=Number.EPSILON;
 
 const _add=(a,b)=>{
@@ -2193,8 +2193,43 @@ function __ArrayProto__(){
     });
 }
 
-const fft=null;
-const ifft=null;
+const fft=x=>{
+    const X = [];
+    const N = x.length;
+    if(!(x[0]instanceof Complex$1))x=x.map((n)=>complex$1(n,0));
+    for (let k = 0; k < N; k++) {
+      let re = 0,im=0;
+      for (let n = 0; n < N; n++) {
+        const phi = (2*PI * k * n) / N;
+        re += x[n].a*cos(phi)+x[n].b*sin(phi);
+        im += -x[n].a*sin(phi)+x[n].b*cos(phi);
+      }
+      re = re / N;
+      im = im / N;
+      //let amp = sqrt(re * re + im * im);
+      //let phase = atan2(im, re);
+      X[k] = complex$1(re,im);
+    }
+    return X;
+  };
+  const ifft=x=>{
+    const X = [];
+    const N = x.length;
+      if(!(x[0]instanceof Complex$1))x=x.map((n)=>complex$1(n,0));
+    for (let k = 0; k < N; k++) {
+      let re=0,im=0;
+      for (let n = 0; n < N; n++) {
+        const phi = (2*PI * k * n) / N;
+        re += x[n].a*cos(phi)+x[n].b*sin(phi);
+        im += x[n].a*sin(phi)+x[n].b*cos(phi);
+      }
+      re = re / N;
+      im = im / N;
+  
+      X[k] = complex$1(re,im);
+    }
+    return X;
+  };
 
 const conv1d=(input, kernel , circular = true)=>{
     const INPUT_LENGTH = input.length;
@@ -2414,7 +2449,7 @@ const Signal={
     },
     square(t,T=1,A=1){
         if(!(t instanceof Array))t=[t]; 
-        const Y = mapfun(n=>sign(sin(n*2*Math.PI/T)),...t);
+        const Y = mapfun(n=>sign(sin$1(n*2*Math.PI/T)),...t);
         return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
     },
     sawtooth(){
@@ -2437,7 +2472,7 @@ const Signal={
 __NumberProto__();
 __ArrayProto__();
 const Math$1={
-    PI,
+    PI: PI$1,
     E: E$1,
     EPSILON,
     Random,
@@ -2449,8 +2484,8 @@ const Math$1={
     matrix2,
     matrix3,
     matrix4,
-    cos,
-    sin,
+    cos: cos$1,
+    sin: sin$1,
     tan,
     sinc,
     sec,

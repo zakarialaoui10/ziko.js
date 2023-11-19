@@ -1,6 +1,39 @@
 import { Complex , complex } from "../Complex";
-const fft=null
-const ifft=null;
+const fft=x=>{
+    const X = [];
+    const N = x.length;
+    if(!(x[0]instanceof Complex))x=x.map((n)=>complex(n,0));
+    for (let k = 0; k < N; k++) {
+      let re = 0,im=0;
+      for (let n = 0; n < N; n++) {
+        const phi = (2*PI * k * n) / N;
+        re += x[n].a*cos(phi)+x[n].b*sin(phi);
+        im += -x[n].a*sin(phi)+x[n].b*cos(phi);
+      }
+      re = re / N;
+      im = im / N;
+      X[k] = complex(re,im);
+    }
+    return X;
+  }
+  const ifft=x=>{
+    const X = [];
+    const N = x.length;
+      if(!(x[0]instanceof Complex))x=x.map((n)=>complex(n,0));
+    for (let k = 0; k < N; k++) {
+      let re=0,im=0;
+      for (let n = 0; n < N; n++) {
+        const phi = (2*PI * k * n) / N;
+        re += x[n].a*cos(phi)+x[n].b*sin(phi);
+        im += x[n].a*sin(phi)+x[n].b*cos(phi);
+      }
+      re = re / N;
+      im = im / N;
+  
+      X[k] = complex(re,im);
+    }
+    return X;
+  }
 
 export{
     fft,
