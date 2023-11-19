@@ -13,7 +13,8 @@ import {
     hr,
     brs,
     hrs,
-    link
+    link,
+    ZikoHtml
 } from "./Miscellaneous/index.js";
 import {
     ol,
@@ -40,7 +41,10 @@ import {
     inputCamera
 } from "./Inputs/index.js";
 import {
-    image,video,audio,figure
+    image,
+    video,
+    audio,
+    figure
 } from "./Media/index.js"
 import{
     Flex,
@@ -67,6 +71,7 @@ import{
     } from "./Semantic/index.js";
 import { Table } from "./Table/index.js";
 const UI={
+    ZikoHtml,
     text,
     p,
     h1,

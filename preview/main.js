@@ -67,11 +67,11 @@ const B=p(
 // C.remove()
 
 c=Canvas(500,500).view(-10,-10,10,10).size(500,500).adjust()
-a1=canvasCircle(-2,0,2.3).fill().color({fill:"#5555AA"})
-a2=canvasCircle(2,0,2.3).fill().color({fill:"#AA5555"})
-c.append(a1)
-c.append(a2)
-a1.ca
+// a1=canvasCircle(-2,0,2.3).fill().color({fill:"#5555AA"})
+// a2=canvasCircle(2,0,2.3).fill().color({fill:"#AA5555"})
+// c.append(a1)
+// c.append(a2)
+// a1.ca
 
 c.onPtrDown(e=>{
     c.ctx.beginPath()

@@ -4488,6 +4488,14 @@ class ZikoUIHeading extends ZikoUIElement {
     return UI
    };
 
+class ZikoHtmlTag extends ZikoUIElement {
+  constructor(element) {
+    super();
+      this.element = document.createElement(element);
+      this.render();
+      //delete this.append
+  }
+}
 class ZikoUIBr extends ZikoUIElement {
     constructor() {
       super();
@@ -4520,6 +4528,7 @@ class ZikoUIBr extends ZikoUIElement {
   const brs = (n=1)=> new Array(n).fill(new ZikoUIBr());
   const hrs = (n=1)=> new Array(n).fill(new ZikoUIHr());
   const link=(href,...UIElement)=>new ZikoUILink(href).append(...UIElement);
+  const ZikoHtml=(tag,...UIElement)=>new ZikoHtmlTag(tag).append(...UIElement);
 
 class ZikoUILI extends ZikoUIElement{
   constructor(UI){
@@ -5511,6 +5520,7 @@ class ZikoUITable extends ZikoUIElement {
 const Table=(matrix)=>new ZikoUITable(matrix);
 
 const UI$1={
+    ZikoHtml,
     text: text$1,
     p,
     h1,
