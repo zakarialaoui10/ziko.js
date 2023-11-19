@@ -48,6 +48,7 @@ import {
 } from "./Media/index.js"
 import{
     Flex,
+    Carousel,
     Notebook
 } from "./Flex/index.js"
 import{
@@ -110,6 +111,7 @@ const UI={
     audio,
     figure,
     Flex,
+    Carousel,
     Grid,
     Header,
     FlexHeader,

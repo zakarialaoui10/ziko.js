@@ -3,7 +3,7 @@ export{
     ZikoUIFlex,
 } from "./flex.js";
 export{
-    carousel
+    Carousel
 } from "./carousel.js"
 export {
     Notebook

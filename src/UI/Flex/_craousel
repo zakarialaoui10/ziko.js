@@ -16,24 +16,30 @@ class ZikoUICarousel extends ZikoUIFlex{
           n.style({ pointerEvents: "none", margin: "auto 10px" })
         );
         this.x0 = null;
+        this.y0 = null;
         this.tx = 0;
+        this.ty = 0;
         this.onPtrMove(e=>{
             if(e.isDown){
                 let x = e.event.pageX;
+                let y = e.event.pageY;
                 let dx = x - this.x0;
-                this.track.translateX(
+                let dy = y - this.y0;
+                this.track.translate(
                     this.tx + dx, 
-                    0
+                    this.ty + dy
                     );
               }
         })
         this.onPtrDown(e=>{
             this.x0 = e.event.pageX;
+            this.y0 = e.event.pageY;
             const transformMatrix = window
               .getComputedStyle(this.track.element)
               .getPropertyValue("transform");
             if (transformMatrix !== "none") {
               this.tx = +transformMatrix.split(",")[4];
+              this.ty = +transformMatrix.split(",")[5];
             }            
         })
         this.onPtrUp();
