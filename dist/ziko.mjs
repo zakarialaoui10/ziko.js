@@ -2194,7 +2194,7 @@ function __ArrayProto__(){
 }
 
 const fft=x=>{
-    const X = [];
+    const output = [];
     const N = x.length;
     if(!(x[0]instanceof Complex$1))x=x.map((n)=>complex$1(n,0));
     for (let k = 0; k < N; k++) {
@@ -2206,16 +2206,18 @@ const fft=x=>{
       }
       re = re / N;
       im = im / N;
-      X[k] = complex$1(re,im);
+      output[k] = complex$1(re,im);
     }
     return {
-        X,
-        re:X.map(n=>n.a),
-        im:X.map(n=>N.b)
+        output,
+        re:output.map(n=>n.a),
+        im:output.map(n=>n.b),
+        z:output.map(n=>n.z),
+        phi:output.map(n=>n.phi)
     }
   };
   const ifft=x=>{
-    const X = [];
+    const output = [];
     const N = x.length;
       if(!(x[0]instanceof Complex$1))x=x.map((n)=>complex$1(n,0));
     for (let k = 0; k < N; k++) {
@@ -2228,12 +2230,14 @@ const fft=x=>{
       re = re / N;
       im = im / N;
   
-      X[k] = complex$1(re,im);
+      output[k] = complex$1(re,im);
     }
     return {
-        X,
-        re:X.map(n=>n.a),
-        im:X.map(n=>n.b)
+        output,
+        re:output.map(n=>n.a),
+        im:output.map(n=>n.b),
+        z:output.map(n=>n.z),
+        phi:output.map(n=>n.phi)
     };
   };
 
@@ -2400,6 +2404,41 @@ const linearConv2d=(input,kernel)=>conv2d(input,kernel,false);
 window.convolute=convolute;
 window.conv1d=conv1d;
 
+// should be processed in other thread
+class Filter{
+    constructor(input){
+        this.input=input;
+        this.input_fft=fft(this.input);
+        this.output_fft=[];
+    }
+    // get length(){
+    //     return this.input.length;
+    // }
+    lowPass(fc){
+        this.input_fft.output.forEach((n,i)=>{
+            n=n.z<fc
+            ? this.output_fft[i]=this.input_fft.output[i]
+            : this.output_fft[i]=complex$1(0,0);
+        });
+        return ifft(this.output_fft).re;
+    }
+    highPass(fc){
+        this.input_fft.output.forEach((n,i)=>{
+            n=n.z>fc
+            ? this.output_fft[i]=this.input_fft.output[i]
+            : this.output_fft[i]=complex$1(0,0);
+        });
+        return ifft(this.output_fft).re;
+    }
+    bandePass(){
+
+    }
+    bandeCoupe(){
+
+    }
+}
+const filter=input=>new Filter(input);
+
 const Signal={
     zeros,
     ones,
@@ -2472,6 +2511,7 @@ const Signal={
     linearConv2d,
     fft,
     ifft,
+    filter,
 };
 
 //import Ziko from "../index.js"

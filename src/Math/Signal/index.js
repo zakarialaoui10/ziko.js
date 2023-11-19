@@ -29,6 +29,9 @@ import {
     circularConv2d,
     linearConv2d
 } from "./conv.js";
+import { 
+    filter
+ } from "./filter.js";
 import { Matrix } from "../Matrix/index.js";
 const Signal={
     zeros,
@@ -102,5 +105,6 @@ const Signal={
     linearConv2d,
     fft,
     ifft,
+    filter,
 }
 export{Signal}

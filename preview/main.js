@@ -130,3 +130,10 @@ class ZikoIntersectionObserver{
 a=Flex(text(1),text(2),text(3)).size(400,"auto")
 //b=DragEvent(a).onDrag(e=>console.log(e))
   
+
+// SIGNAL
+t=linspace(-2*PI,2*PI,400)
+s1=sin(t.mul(2*PI*50)).mul(5)
+s2=sin(t).mul(4)
+s=s1.add(s2)
+f=Signal.filter(s)

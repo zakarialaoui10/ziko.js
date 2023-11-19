@@ -1,6 +1,6 @@
 import { Complex , complex } from "../Complex";
 const fft=x=>{
-    const X = [];
+    const output = [];
     const N = x.length;
     if(!(x[0]instanceof Complex))x=x.map((n)=>complex(n,0));
     for (let k = 0; k < N; k++) {
@@ -12,16 +12,18 @@ const fft=x=>{
       }
       re = re / N;
       im = im / N;
-      X[k] = complex(re,im);
+      output[k] = complex(re,im);
     }
     return {
-        X,
-        re:X.map(n=>n.a),
-        im:X.map(n=>N.b)
+        output,
+        re:output.map(n=>n.a),
+        im:output.map(n=>n.b),
+        z:output.map(n=>n.z),
+        phi:output.map(n=>n.phi)
     }
   }
   const ifft=x=>{
-    const X = [];
+    const output = [];
     const N = x.length;
       if(!(x[0]instanceof Complex))x=x.map((n)=>complex(n,0));
     for (let k = 0; k < N; k++) {
@@ -34,12 +36,14 @@ const fft=x=>{
       re = re / N;
       im = im / N;
   
-      X[k] = complex(re,im);
+      output[k] = complex(re,im);
     }
     return {
-        X,
-        re:X.map(n=>n.a),
-        im:X.map(n=>n.b)
+        output,
+        re:output.map(n=>n.a),
+        im:output.map(n=>n.b),
+        z:output.map(n=>n.z),
+        phi:output.map(n=>n.phi)
     };
   }
 
