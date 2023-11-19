@@ -14,7 +14,11 @@ const fft=x=>{
       im = im / N;
       X[k] = complex(re,im);
     }
-    return X;
+    return {
+        X,
+        re:X.map(n=>n.a),
+        im:X.map(n=>N.b)
+    }
   }
   const ifft=x=>{
     const X = [];
@@ -32,7 +36,11 @@ const fft=x=>{
   
       X[k] = complex(re,im);
     }
-    return X;
+    return {
+        X,
+        re:X.map(n=>n.a),
+        im:X.map(n=>n.b)
+    };
   }
 
 export{

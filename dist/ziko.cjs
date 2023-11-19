@@ -2208,11 +2208,13 @@ const fft=x=>{
       }
       re = re / N;
       im = im / N;
-      //let amp = sqrt(re * re + im * im);
-      //let phase = atan2(im, re);
       X[k] = complex$1(re,im);
     }
-    return X;
+    return {
+        X,
+        re:X.map(n=>n.a),
+        im:X.map(n=>N.b)
+    }
   };
   const ifft=x=>{
     const X = [];
@@ -2230,7 +2232,11 @@ const fft=x=>{
   
       X[k] = complex$1(re,im);
     }
-    return X;
+    return {
+        X,
+        re:X.map(n=>n.a),
+        im:X.map(n=>n.b)
+    };
   };
 
 const conv1d=(input, kernel , circular = true)=>{
