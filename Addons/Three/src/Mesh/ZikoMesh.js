@@ -3,41 +3,70 @@ import {
     MaterialComposer
 } from "./Composer/index.js"
 class ZikoMesh{
-    constructor(){
-        this.geometry=null;
-        this.material=null;
-        this.mesh=null;
-        this.parent=null;
+    constructor(Geometry,Material){
+        this._cache={
+            Mouse:new THREE.Vector2(),
+		    Raycaster:new THREE.Raycaster()
+        }
+        this.parent=null; // Scene
+        this.mesh=new THREE.Mesh(Geometry,Material);
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
     }
-    _Maitain(){
-
+    _Maintain(){
+        this.mesh=new THREE.Mesh(this.geometry,this.material);
+        return this;
     }
     render(){
-
+        if(this.parent)this.parent.renderGl();
+        return this;
     }
     remove(){
 
     }
-    get Xpos(){
-
+    get Geometry(){
+        return this.mesh.geometry;
     }
-    get Ypos(){
-
+    get Material(){
+        return this.mesh.material;
     }
-    get Zpos(){
-
+    get XPOS(){
+        return this.mesh.position.x;
     }
-    get Xrot(){
-
+    get YPOS(){
+        return this.mesh.position.y;
     }
-    get Yrot(){
-
+    get ZPOS(){
+        return this.mesh.position.z;
     }
-    get Zrot(){
-
+    get XROT(){
+        return this.mesh.rotation.x;
     }
+    get YROT(){
+        return this.mesh.rotation.y;
+    }
+    get ZROT(){
+        return this.mesh.rotation.z;
+    }
+    get X(){
+        return {
+            pos:this.XPOS,
+            rot:this.XROT
+        }
+    }
+    get Y(){
+        return {
+            pos:this.YPOS,
+            rot:this.YROT
+        }
+    }
+    get Z(){
+        return {
+            pos:this.ZPOS,
+            rot:this.ZROT
+        }
+    }
+
 }
 
 const Mesh=()=>new ZikoMesh()
