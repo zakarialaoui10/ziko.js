@@ -2,7 +2,7 @@ import {
     GeometryComposer,
     MaterialComposer
 } from "./Composer/index.js"
-class ZikoMesh{
+class ZikoThreeMesh{
     constructor(Geometry,Material){
         this._cache={
             Mouse:new THREE.Vector2(),
@@ -69,7 +69,7 @@ class ZikoMesh{
 
 }
 
-const Mesh=()=>new ZikoMesh()
+const Mesh=()=>new ZikoThreeMesh()
 const m1=Mesh()
 console.log(m1)
 export default Mesh
