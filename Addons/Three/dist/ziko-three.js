@@ -12069,8 +12069,25 @@
 				this.mesh.position.z=z;
 				return this;
 	        },
-	        pos:function(){
-
+	        pos:function(x,y,z){
+				this.mesh.rotation.set(x,y,z);
+				return this;
+	        },
+			tarnslateX:function(dx=0){
+				this.mesh.position.x=this.POSX+dx;
+				return this;
+	        },
+	        translateY:function(dy=0){
+				this.mesh.position.y=this.POSY+dy;
+				return this;
+	        },
+	        translateZ:function(dz=0){
+				this.mesh.position.z=this.POSZ+dz;
+				return this;
+	        },
+	        pos:function(x,y,z){
+				this.mesh.rotation.set(x,y,z);
+				return this;
 	        },
 	        rotX:function(x=this.ROTX){
 				this.mesh.rotation.x=x;
@@ -12084,8 +12101,25 @@
 				this.mesh.rotation.z=z;
 				return this;            
 	        },
-	        rot:function(){
-
+	        rot:function(x,y,z){
+				this.mesh.rotation.set(x,y,z);
+				return this;
+	        },
+			scaleX:function(x){
+				this.mesh.scale.x=x;
+				return this;
+	        },
+	        scaleY:function(y){
+				this.mesh.scale.y=y;
+				return this;            
+	        },
+	        scaleZ:function(z){
+				this.mesh.scale.z=z;
+				return this;            
+	        },
+	        scale:function(x,y,z){
+				this.mesh.scale.set(x,y,z);
+				return this;
 	        },
 	    }
 	}
@@ -12246,17 +12280,18 @@
 	    icosahedron3,
 	    octahedron3,
 	    groupe3,
-	    ExtractAll:function(){
-	            for (let i = 0; i < Object.keys(this).length; i++) {
-	                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
-	        }
-	        return this;
-	    },
-	    RemoveAll:function(){
-	            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
-	        return this;
-	    }
+	    // ExtractAll:function(){
+	    //         for (let i = 0; i < Object.keys(this).length; i++) {
+	    //             globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+	    //     }
+	    //     return this;
+	    // },
+	    // RemoveAll:function(){
+	    //         for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+	    //     return this;
+	    // }
 	};
+	if(Ziko)Object.assign(Ziko.Graphics,{...ZikoThree});
 
 	return ZikoThree;
 

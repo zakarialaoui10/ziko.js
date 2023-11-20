@@ -15,8 +15,25 @@ export function GeometryComposer(){
 			this.mesh.position.z=z;
 			return this;
         },
-        pos:function(){
-
+        pos:function(x,y,z){
+			this.mesh.rotation.set(x,y,z);
+			return this;
+        },
+		tarnslateX:function(dx=0){
+			this.mesh.position.x=this.POSX+dx;
+			return this;
+        },
+        translateY:function(dy=0){
+			this.mesh.position.y=this.POSY+dy;
+			return this;
+        },
+        translateZ:function(dz=0){
+			this.mesh.position.z=this.POSZ+dz;
+			return this;
+        },
+        pos:function(x,y,z){
+			this.mesh.rotation.set(x,y,z);
+			return this;
         },
         rotX:function(x=this.ROTX){
 			this.mesh.rotation.x=x;
@@ -30,8 +47,25 @@ export function GeometryComposer(){
 			this.mesh.rotation.z=z;
 			return this;            
         },
-        rot:function(){
-
+        rot:function(x,y,z){
+			this.mesh.rotation.set(x,y,z);
+			return this;
+        },
+		scaleX:function(x){
+			this.mesh.scale.x=x;
+			return this;
+        },
+        scaleY:function(y){
+			this.mesh.scale.y=y;
+			return this;            
+        },
+        scaleZ:function(z){
+			this.mesh.scale.z=z;
+			return this;            
+        },
+        scale:function(x,y,z){
+			this.mesh.scale.set(x,y,z);
+			return this;
         },
     }
 }
