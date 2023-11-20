@@ -192,13 +192,20 @@ const sum=(...x)=>{
     }
     return Y.length===1?Y[0]:Y;
 };
-const prod=(...x)=> {
+const prod=(...x)=>{
     if(x.every(n=>typeof n==="number")){
         let p = x[0];
         for (let i = 1; i < x.length; i++) p *= x[i];
         return p;
     }
-    if(x.every(n=>n instanceof Array))return mapfun(sum,...x);
+    const Y=[];
+    for(let i=0;i<x.length;i++){
+        if(x[i] instanceof Array)Y.push(prod(...x[i]));
+        else if(x[i] instanceof Object){
+            Y.push(prod(...Object.values(x[i])));
+        }
+    }
+    return Y.length===1?Y[0]:Y;
 };
 const min=(...num)=>{
     if(num.every(n=>typeof n==="number"))return Math.min(...num);
@@ -213,7 +220,7 @@ const min=(...num)=>{
                 );
         }
     }
-    return Y
+    return Y.length===1?Y[0]:Y;
 };
 const max=(...num)=>{
     if(num.every(n=>typeof n==="number"))return Math.max(...num);
@@ -228,12 +235,26 @@ const max=(...num)=>{
                 );
         }
     }
-    return Y
+    return Y.length===1?Y[0]:Y;
 };
-const accum=(...arr)=>{
-    let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
+const accum=(...num)=>{
+    if(num.every(n=>typeof n==="number")){
+        let acc = num.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
         acc.shift();
         return acc;
+    }
+    const Y=[];
+    for(let i=0;i<num.length;i++){
+        if(num[i] instanceof Array)Y.push(accum(...num[i]));
+        else if(num[i] instanceof Object){
+            Y.push(null
+                    // Object.fromEntries(
+                    //     [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
+                    // )
+                );
+        }
+    }
+    return Y.length===1?Y[0]:Y;
 };
 
 //moy
@@ -3726,6 +3747,7 @@ const Events={
     Drop,
     Click,
     Clipboard,
+    Focus,
     Input,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {

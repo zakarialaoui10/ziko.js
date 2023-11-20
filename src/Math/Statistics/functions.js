@@ -1,3 +1,5 @@
+// Mixed calcul
+
 import { mapfun } from "../Utils";
 const sum=(...x)=>{
     if(x.every(n=>typeof n==="number")){
@@ -42,7 +44,7 @@ const min=(...num)=>{
                 )
         }
     }
-    return Y
+    return Y.length===1?Y[0]:Y;
 }
 const max=(...num)=>{
     if(num.every(n=>typeof n==="number"))return Math.max(...num);
@@ -57,12 +59,26 @@ const max=(...num)=>{
                 )
         }
     }
-    return Y
+    return Y.length===1?Y[0]:Y;
 }
-const accum=(...arr)=>{
-    let acc = arr.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
+const accum=(...num)=>{
+    if(num.every(n=>typeof n==="number")){
+        let acc = num.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
         acc.shift();
         return acc;
+    }
+    const Y=[];
+    for(let i=0;i<num.length;i++){
+        if(num[i] instanceof Array)Y.push(accum(...num[i]));
+        else if(num[i] instanceof Object){
+            Y.push(null
+                    // Object.fromEntries(
+                    //     [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
+                    // )
+                )
+        }
+    }
+    return Y.length===1?Y[0]:Y;
 }
 
 // sort
