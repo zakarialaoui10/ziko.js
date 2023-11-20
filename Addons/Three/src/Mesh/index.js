@@ -16,4 +16,4 @@ export{
 } from "./Meshes/primitives.js";
 export{
     groupe3
-} from "./Meshes./groupe.js"
+} from "./Meshes/groupe.js"
