@@ -1,4 +1,5 @@
 
+import * as THREE from "three"
 import ZikoThreeMesh from "../ZikoThreeMesh"
 class ZikoThreeGroupe extends ZikoThreeMesh{
 	constructor(){

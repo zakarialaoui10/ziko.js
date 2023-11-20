@@ -7,11 +7,13 @@
  */
 const REVISION = '158';
 const FrontSide = 0;
+const BackSide = 1;
 const NormalBlending = 1;
 const AddEquation = 100;
 const SrcAlphaFactor = 204;
 const OneMinusSrcAlphaFactor = 205;
 const LessEqualDepth = 3;
+const MultiplyOperation = 0;
 
 const UVMapping = 300;
 const RepeatWrapping = 1000;
@@ -6755,6 +6757,332 @@ Object3D.DEFAULT_UP = /*@__PURE__*/ new Vector3( 0, 1, 0 );
 Object3D.DEFAULT_MATRIX_AUTO_UPDATE = true;
 Object3D.DEFAULT_MATRIX_WORLD_AUTO_UPDATE = true;
 
+const _v0$1 = /*@__PURE__*/ new Vector3();
+const _v1$3 = /*@__PURE__*/ new Vector3();
+const _v2$2 = /*@__PURE__*/ new Vector3();
+const _v3$1 = /*@__PURE__*/ new Vector3();
+
+const _vab = /*@__PURE__*/ new Vector3();
+const _vac = /*@__PURE__*/ new Vector3();
+const _vbc = /*@__PURE__*/ new Vector3();
+const _vap = /*@__PURE__*/ new Vector3();
+const _vbp = /*@__PURE__*/ new Vector3();
+const _vcp = /*@__PURE__*/ new Vector3();
+
+let warnedGetUV = false;
+
+class Triangle {
+
+	constructor( a = new Vector3(), b = new Vector3(), c = new Vector3() ) {
+
+		this.a = a;
+		this.b = b;
+		this.c = c;
+
+	}
+
+	static getNormal( a, b, c, target ) {
+
+		target.subVectors( c, b );
+		_v0$1.subVectors( a, b );
+		target.cross( _v0$1 );
+
+		const targetLengthSq = target.lengthSq();
+		if ( targetLengthSq > 0 ) {
+
+			return target.multiplyScalar( 1 / Math.sqrt( targetLengthSq ) );
+
+		}
+
+		return target.set( 0, 0, 0 );
+
+	}
+
+	// static/instance method to calculate barycentric coordinates
+	// based on: http://www.blackpawn.com/texts/pointinpoly/default.html
+	static getBarycoord( point, a, b, c, target ) {
+
+		_v0$1.subVectors( c, a );
+		_v1$3.subVectors( b, a );
+		_v2$2.subVectors( point, a );
+
+		const dot00 = _v0$1.dot( _v0$1 );
+		const dot01 = _v0$1.dot( _v1$3 );
+		const dot02 = _v0$1.dot( _v2$2 );
+		const dot11 = _v1$3.dot( _v1$3 );
+		const dot12 = _v1$3.dot( _v2$2 );
+
+		const denom = ( dot00 * dot11 - dot01 * dot01 );
+
+		// collinear or singular triangle
+		if ( denom === 0 ) {
+
+			// arbitrary location outside of triangle?
+			// not sure if this is the best idea, maybe should be returning undefined
+			return target.set( - 2, - 1, - 1 );
+
+		}
+
+		const invDenom = 1 / denom;
+		const u = ( dot11 * dot02 - dot01 * dot12 ) * invDenom;
+		const v = ( dot00 * dot12 - dot01 * dot02 ) * invDenom;
+
+		// barycentric coordinates must always sum to 1
+		return target.set( 1 - u - v, v, u );
+
+	}
+
+	static containsPoint( point, a, b, c ) {
+
+		this.getBarycoord( point, a, b, c, _v3$1 );
+
+		return ( _v3$1.x >= 0 ) && ( _v3$1.y >= 0 ) && ( ( _v3$1.x + _v3$1.y ) <= 1 );
+
+	}
+
+	static getUV( point, p1, p2, p3, uv1, uv2, uv3, target ) { // @deprecated, r151
+
+		if ( warnedGetUV === false ) {
+
+			console.warn( 'THREE.Triangle.getUV() has been renamed to THREE.Triangle.getInterpolation().' );
+
+			warnedGetUV = true;
+
+		}
+
+		return this.getInterpolation( point, p1, p2, p3, uv1, uv2, uv3, target );
+
+	}
+
+	static getInterpolation( point, p1, p2, p3, v1, v2, v3, target ) {
+
+		this.getBarycoord( point, p1, p2, p3, _v3$1 );
+
+		target.setScalar( 0 );
+		target.addScaledVector( v1, _v3$1.x );
+		target.addScaledVector( v2, _v3$1.y );
+		target.addScaledVector( v3, _v3$1.z );
+
+		return target;
+
+	}
+
+	static isFrontFacing( a, b, c, direction ) {
+
+		_v0$1.subVectors( c, b );
+		_v1$3.subVectors( a, b );
+
+		// strictly front facing
+		return ( _v0$1.cross( _v1$3 ).dot( direction ) < 0 ) ? true : false;
+
+	}
+
+	set( a, b, c ) {
+
+		this.a.copy( a );
+		this.b.copy( b );
+		this.c.copy( c );
+
+		return this;
+
+	}
+
+	setFromPointsAndIndices( points, i0, i1, i2 ) {
+
+		this.a.copy( points[ i0 ] );
+		this.b.copy( points[ i1 ] );
+		this.c.copy( points[ i2 ] );
+
+		return this;
+
+	}
+
+	setFromAttributeAndIndices( attribute, i0, i1, i2 ) {
+
+		this.a.fromBufferAttribute( attribute, i0 );
+		this.b.fromBufferAttribute( attribute, i1 );
+		this.c.fromBufferAttribute( attribute, i2 );
+
+		return this;
+
+	}
+
+	clone() {
+
+		return new this.constructor().copy( this );
+
+	}
+
+	copy( triangle ) {
+
+		this.a.copy( triangle.a );
+		this.b.copy( triangle.b );
+		this.c.copy( triangle.c );
+
+		return this;
+
+	}
+
+	getArea() {
+
+		_v0$1.subVectors( this.c, this.b );
+		_v1$3.subVectors( this.a, this.b );
+
+		return _v0$1.cross( _v1$3 ).length() * 0.5;
+
+	}
+
+	getMidpoint( target ) {
+
+		return target.addVectors( this.a, this.b ).add( this.c ).multiplyScalar( 1 / 3 );
+
+	}
+
+	getNormal( target ) {
+
+		return Triangle.getNormal( this.a, this.b, this.c, target );
+
+	}
+
+	getPlane( target ) {
+
+		return target.setFromCoplanarPoints( this.a, this.b, this.c );
+
+	}
+
+	getBarycoord( point, target ) {
+
+		return Triangle.getBarycoord( point, this.a, this.b, this.c, target );
+
+	}
+
+	getUV( point, uv1, uv2, uv3, target ) { // @deprecated, r151
+
+		if ( warnedGetUV === false ) {
+
+			console.warn( 'THREE.Triangle.getUV() has been renamed to THREE.Triangle.getInterpolation().' );
+
+			warnedGetUV = true;
+
+		}
+
+		return Triangle.getInterpolation( point, this.a, this.b, this.c, uv1, uv2, uv3, target );
+
+	}
+
+	getInterpolation( point, v1, v2, v3, target ) {
+
+		return Triangle.getInterpolation( point, this.a, this.b, this.c, v1, v2, v3, target );
+
+	}
+
+	containsPoint( point ) {
+
+		return Triangle.containsPoint( point, this.a, this.b, this.c );
+
+	}
+
+	isFrontFacing( direction ) {
+
+		return Triangle.isFrontFacing( this.a, this.b, this.c, direction );
+
+	}
+
+	intersectsBox( box ) {
+
+		return box.intersectsTriangle( this );
+
+	}
+
+	closestPointToPoint( p, target ) {
+
+		const a = this.a, b = this.b, c = this.c;
+		let v, w;
+
+		// algorithm thanks to Real-Time Collision Detection by Christer Ericson,
+		// published by Morgan Kaufmann Publishers, (c) 2005 Elsevier Inc.,
+		// under the accompanying license; see chapter 5.1.5 for detailed explanation.
+		// basically, we're distinguishing which of the voronoi regions of the triangle
+		// the point lies in with the minimum amount of redundant computation.
+
+		_vab.subVectors( b, a );
+		_vac.subVectors( c, a );
+		_vap.subVectors( p, a );
+		const d1 = _vab.dot( _vap );
+		const d2 = _vac.dot( _vap );
+		if ( d1 <= 0 && d2 <= 0 ) {
+
+			// vertex region of A; barycentric coords (1, 0, 0)
+			return target.copy( a );
+
+		}
+
+		_vbp.subVectors( p, b );
+		const d3 = _vab.dot( _vbp );
+		const d4 = _vac.dot( _vbp );
+		if ( d3 >= 0 && d4 <= d3 ) {
+
+			// vertex region of B; barycentric coords (0, 1, 0)
+			return target.copy( b );
+
+		}
+
+		const vc = d1 * d4 - d3 * d2;
+		if ( vc <= 0 && d1 >= 0 && d3 <= 0 ) {
+
+			v = d1 / ( d1 - d3 );
+			// edge region of AB; barycentric coords (1-v, v, 0)
+			return target.copy( a ).addScaledVector( _vab, v );
+
+		}
+
+		_vcp.subVectors( p, c );
+		const d5 = _vab.dot( _vcp );
+		const d6 = _vac.dot( _vcp );
+		if ( d6 >= 0 && d5 <= d6 ) {
+
+			// vertex region of C; barycentric coords (0, 0, 1)
+			return target.copy( c );
+
+		}
+
+		const vb = d5 * d2 - d1 * d6;
+		if ( vb <= 0 && d2 >= 0 && d6 <= 0 ) {
+
+			w = d2 / ( d2 - d6 );
+			// edge region of AC; barycentric coords (1-w, 0, w)
+			return target.copy( a ).addScaledVector( _vac, w );
+
+		}
+
+		const va = d3 * d6 - d5 * d4;
+		if ( va <= 0 && ( d4 - d3 ) >= 0 && ( d5 - d6 ) >= 0 ) {
+
+			_vbc.subVectors( c, b );
+			w = ( d4 - d3 ) / ( ( d4 - d3 ) + ( d5 - d6 ) );
+			// edge region of BC; barycentric coords (0, 1-w, w)
+			return target.copy( b ).addScaledVector( _vbc, w ); // edge region of BC
+
+		}
+
+		// face region
+		const denom = 1 / ( va + vb + vc );
+		// u = va * denom
+		v = vb * denom;
+		w = vc * denom;
+
+		return target.copy( a ).addScaledVector( _vab, v ).addScaledVector( _vac, w );
+
+	}
+
+	equals( triangle ) {
+
+		return triangle.a.equals( this.a ) && triangle.b.equals( this.b ) && triangle.c.equals( this.c );
+
+	}
+
+}
+
 const _colorKeywords = { 'aliceblue': 0xF0F8FF, 'antiquewhite': 0xFAEBD7, 'aqua': 0x00FFFF, 'aquamarine': 0x7FFFD4, 'azure': 0xF0FFFF,
 	'beige': 0xF5F5DC, 'bisque': 0xFFE4C4, 'black': 0x000000, 'blanchedalmond': 0xFFEBCD, 'blue': 0x0000FF, 'blueviolet': 0x8A2BE2,
 	'brown': 0xA52A2A, 'burlywood': 0xDEB887, 'cadetblue': 0x5F9EA0, 'chartreuse': 0x7FFF00, 'chocolate': 0xD2691E, 'coral': 0xFF7F50,
@@ -7884,6 +8212,82 @@ class Material extends EventDispatcher {
 	set needsUpdate( value ) {
 
 		if ( value === true ) this.version ++;
+
+	}
+
+}
+
+class MeshBasicMaterial extends Material {
+
+	constructor( parameters ) {
+
+		super();
+
+		this.isMeshBasicMaterial = true;
+
+		this.type = 'MeshBasicMaterial';
+
+		this.color = new Color( 0xffffff ); // emissive
+
+		this.map = null;
+
+		this.lightMap = null;
+		this.lightMapIntensity = 1.0;
+
+		this.aoMap = null;
+		this.aoMapIntensity = 1.0;
+
+		this.specularMap = null;
+
+		this.alphaMap = null;
+
+		this.envMap = null;
+		this.combine = MultiplyOperation;
+		this.reflectivity = 1;
+		this.refractionRatio = 0.98;
+
+		this.wireframe = false;
+		this.wireframeLinewidth = 1;
+		this.wireframeLinecap = 'round';
+		this.wireframeLinejoin = 'round';
+
+		this.fog = true;
+
+		this.setValues( parameters );
+
+	}
+
+	copy( source ) {
+
+		super.copy( source );
+
+		this.color.copy( source.color );
+
+		this.map = source.map;
+
+		this.lightMap = source.lightMap;
+		this.lightMapIntensity = source.lightMapIntensity;
+
+		this.aoMap = source.aoMap;
+		this.aoMapIntensity = source.aoMapIntensity;
+
+		this.specularMap = source.specularMap;
+
+		this.alphaMap = source.alphaMap;
+
+		this.envMap = source.envMap;
+		this.combine = source.combine;
+		this.reflectivity = source.reflectivity;
+		this.refractionRatio = source.refractionRatio;
+
+		this.wireframe = source.wireframe;
+		this.wireframeLinewidth = source.wireframeLinewidth;
+		this.wireframeLinecap = source.wireframeLinecap;
+		this.wireframeLinejoin = source.wireframeLinejoin;
+
+		this.fog = source.fog;
+
+		return this;
 
 	}
 
@@ -9350,6 +9754,423 @@ class BufferGeometry extends EventDispatcher {
 
 }
 
+const _inverseMatrix$3 = /*@__PURE__*/ new Matrix4();
+const _ray$3 = /*@__PURE__*/ new Ray();
+const _sphere$5 = /*@__PURE__*/ new Sphere();
+const _sphereHitAt = /*@__PURE__*/ new Vector3();
+
+const _vA$1 = /*@__PURE__*/ new Vector3();
+const _vB$1 = /*@__PURE__*/ new Vector3();
+const _vC$1 = /*@__PURE__*/ new Vector3();
+
+const _tempA = /*@__PURE__*/ new Vector3();
+const _morphA = /*@__PURE__*/ new Vector3();
+
+const _uvA$1 = /*@__PURE__*/ new Vector2();
+const _uvB$1 = /*@__PURE__*/ new Vector2();
+const _uvC$1 = /*@__PURE__*/ new Vector2();
+
+const _normalA = /*@__PURE__*/ new Vector3();
+const _normalB = /*@__PURE__*/ new Vector3();
+const _normalC = /*@__PURE__*/ new Vector3();
+
+const _intersectionPoint = /*@__PURE__*/ new Vector3();
+const _intersectionPointWorld = /*@__PURE__*/ new Vector3();
+
+class Mesh extends Object3D {
+
+	constructor( geometry = new BufferGeometry(), material = new MeshBasicMaterial() ) {
+
+		super();
+
+		this.isMesh = true;
+
+		this.type = 'Mesh';
+
+		this.geometry = geometry;
+		this.material = material;
+
+		this.updateMorphTargets();
+
+	}
+
+	copy( source, recursive ) {
+
+		super.copy( source, recursive );
+
+		if ( source.morphTargetInfluences !== undefined ) {
+
+			this.morphTargetInfluences = source.morphTargetInfluences.slice();
+
+		}
+
+		if ( source.morphTargetDictionary !== undefined ) {
+
+			this.morphTargetDictionary = Object.assign( {}, source.morphTargetDictionary );
+
+		}
+
+		this.material = Array.isArray( source.material ) ? source.material.slice() : source.material;
+		this.geometry = source.geometry;
+
+		return this;
+
+	}
+
+	updateMorphTargets() {
+
+		const geometry = this.geometry;
+
+		const morphAttributes = geometry.morphAttributes;
+		const keys = Object.keys( morphAttributes );
+
+		if ( keys.length > 0 ) {
+
+			const morphAttribute = morphAttributes[ keys[ 0 ] ];
+
+			if ( morphAttribute !== undefined ) {
+
+				this.morphTargetInfluences = [];
+				this.morphTargetDictionary = {};
+
+				for ( let m = 0, ml = morphAttribute.length; m < ml; m ++ ) {
+
+					const name = morphAttribute[ m ].name || String( m );
+
+					this.morphTargetInfluences.push( 0 );
+					this.morphTargetDictionary[ name ] = m;
+
+				}
+
+			}
+
+		}
+
+	}
+
+	getVertexPosition( index, target ) {
+
+		const geometry = this.geometry;
+		const position = geometry.attributes.position;
+		const morphPosition = geometry.morphAttributes.position;
+		const morphTargetsRelative = geometry.morphTargetsRelative;
+
+		target.fromBufferAttribute( position, index );
+
+		const morphInfluences = this.morphTargetInfluences;
+
+		if ( morphPosition && morphInfluences ) {
+
+			_morphA.set( 0, 0, 0 );
+
+			for ( let i = 0, il = morphPosition.length; i < il; i ++ ) {
+
+				const influence = morphInfluences[ i ];
+				const morphAttribute = morphPosition[ i ];
+
+				if ( influence === 0 ) continue;
+
+				_tempA.fromBufferAttribute( morphAttribute, index );
+
+				if ( morphTargetsRelative ) {
+
+					_morphA.addScaledVector( _tempA, influence );
+
+				} else {
+
+					_morphA.addScaledVector( _tempA.sub( target ), influence );
+
+				}
+
+			}
+
+			target.add( _morphA );
+
+		}
+
+		return target;
+
+	}
+
+	raycast( raycaster, intersects ) {
+
+		const geometry = this.geometry;
+		const material = this.material;
+		const matrixWorld = this.matrixWorld;
+
+		if ( material === undefined ) return;
+
+		// test with bounding sphere in world space
+
+		if ( geometry.boundingSphere === null ) geometry.computeBoundingSphere();
+
+		_sphere$5.copy( geometry.boundingSphere );
+		_sphere$5.applyMatrix4( matrixWorld );
+
+		// check distance from ray origin to bounding sphere
+
+		_ray$3.copy( raycaster.ray ).recast( raycaster.near );
+
+		if ( _sphere$5.containsPoint( _ray$3.origin ) === false ) {
+
+			if ( _ray$3.intersectSphere( _sphere$5, _sphereHitAt ) === null ) return;
+
+			if ( _ray$3.origin.distanceToSquared( _sphereHitAt ) > ( raycaster.far - raycaster.near ) ** 2 ) return;
+
+		}
+
+		// convert ray to local space of mesh
+
+		_inverseMatrix$3.copy( matrixWorld ).invert();
+		_ray$3.copy( raycaster.ray ).applyMatrix4( _inverseMatrix$3 );
+
+		// test with bounding box in local space
+
+		if ( geometry.boundingBox !== null ) {
+
+			if ( _ray$3.intersectsBox( geometry.boundingBox ) === false ) return;
+
+		}
+
+		// test for intersections with geometry
+
+		this._computeIntersections( raycaster, intersects, _ray$3 );
+
+	}
+
+	_computeIntersections( raycaster, intersects, rayLocalSpace ) {
+
+		let intersection;
+
+		const geometry = this.geometry;
+		const material = this.material;
+
+		const index = geometry.index;
+		const position = geometry.attributes.position;
+		const uv = geometry.attributes.uv;
+		const uv1 = geometry.attributes.uv1;
+		const normal = geometry.attributes.normal;
+		const groups = geometry.groups;
+		const drawRange = geometry.drawRange;
+
+		if ( index !== null ) {
+
+			// indexed buffer geometry
+
+			if ( Array.isArray( material ) ) {
+
+				for ( let i = 0, il = groups.length; i < il; i ++ ) {
+
+					const group = groups[ i ];
+					const groupMaterial = material[ group.materialIndex ];
+
+					const start = Math.max( group.start, drawRange.start );
+					const end = Math.min( index.count, Math.min( ( group.start + group.count ), ( drawRange.start + drawRange.count ) ) );
+
+					for ( let j = start, jl = end; j < jl; j += 3 ) {
+
+						const a = index.getX( j );
+						const b = index.getX( j + 1 );
+						const c = index.getX( j + 2 );
+
+						intersection = checkGeometryIntersection( this, groupMaterial, raycaster, rayLocalSpace, uv, uv1, normal, a, b, c );
+
+						if ( intersection ) {
+
+							intersection.faceIndex = Math.floor( j / 3 ); // triangle number in indexed buffer semantics
+							intersection.face.materialIndex = group.materialIndex;
+							intersects.push( intersection );
+
+						}
+
+					}
+
+				}
+
+			} else {
+
+				const start = Math.max( 0, drawRange.start );
+				const end = Math.min( index.count, ( drawRange.start + drawRange.count ) );
+
+				for ( let i = start, il = end; i < il; i += 3 ) {
+
+					const a = index.getX( i );
+					const b = index.getX( i + 1 );
+					const c = index.getX( i + 2 );
+
+					intersection = checkGeometryIntersection( this, material, raycaster, rayLocalSpace, uv, uv1, normal, a, b, c );
+
+					if ( intersection ) {
+
+						intersection.faceIndex = Math.floor( i / 3 ); // triangle number in indexed buffer semantics
+						intersects.push( intersection );
+
+					}
+
+				}
+
+			}
+
+		} else if ( position !== undefined ) {
+
+			// non-indexed buffer geometry
+
+			if ( Array.isArray( material ) ) {
+
+				for ( let i = 0, il = groups.length; i < il; i ++ ) {
+
+					const group = groups[ i ];
+					const groupMaterial = material[ group.materialIndex ];
+
+					const start = Math.max( group.start, drawRange.start );
+					const end = Math.min( position.count, Math.min( ( group.start + group.count ), ( drawRange.start + drawRange.count ) ) );
+
+					for ( let j = start, jl = end; j < jl; j += 3 ) {
+
+						const a = j;
+						const b = j + 1;
+						const c = j + 2;
+
+						intersection = checkGeometryIntersection( this, groupMaterial, raycaster, rayLocalSpace, uv, uv1, normal, a, b, c );
+
+						if ( intersection ) {
+
+							intersection.faceIndex = Math.floor( j / 3 ); // triangle number in non-indexed buffer semantics
+							intersection.face.materialIndex = group.materialIndex;
+							intersects.push( intersection );
+
+						}
+
+					}
+
+				}
+
+			} else {
+
+				const start = Math.max( 0, drawRange.start );
+				const end = Math.min( position.count, ( drawRange.start + drawRange.count ) );
+
+				for ( let i = start, il = end; i < il; i += 3 ) {
+
+					const a = i;
+					const b = i + 1;
+					const c = i + 2;
+
+					intersection = checkGeometryIntersection( this, material, raycaster, rayLocalSpace, uv, uv1, normal, a, b, c );
+
+					if ( intersection ) {
+
+						intersection.faceIndex = Math.floor( i / 3 ); // triangle number in non-indexed buffer semantics
+						intersects.push( intersection );
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+function checkIntersection( object, material, raycaster, ray, pA, pB, pC, point ) {
+
+	let intersect;
+
+	if ( material.side === BackSide ) {
+
+		intersect = ray.intersectTriangle( pC, pB, pA, true, point );
+
+	} else {
+
+		intersect = ray.intersectTriangle( pA, pB, pC, ( material.side === FrontSide ), point );
+
+	}
+
+	if ( intersect === null ) return null;
+
+	_intersectionPointWorld.copy( point );
+	_intersectionPointWorld.applyMatrix4( object.matrixWorld );
+
+	const distance = raycaster.ray.origin.distanceTo( _intersectionPointWorld );
+
+	if ( distance < raycaster.near || distance > raycaster.far ) return null;
+
+	return {
+		distance: distance,
+		point: _intersectionPointWorld.clone(),
+		object: object
+	};
+
+}
+
+function checkGeometryIntersection( object, material, raycaster, ray, uv, uv1, normal, a, b, c ) {
+
+	object.getVertexPosition( a, _vA$1 );
+	object.getVertexPosition( b, _vB$1 );
+	object.getVertexPosition( c, _vC$1 );
+
+	const intersection = checkIntersection( object, material, raycaster, ray, _vA$1, _vB$1, _vC$1, _intersectionPoint );
+
+	if ( intersection ) {
+
+		if ( uv ) {
+
+			_uvA$1.fromBufferAttribute( uv, a );
+			_uvB$1.fromBufferAttribute( uv, b );
+			_uvC$1.fromBufferAttribute( uv, c );
+
+			intersection.uv = Triangle.getInterpolation( _intersectionPoint, _vA$1, _vB$1, _vC$1, _uvA$1, _uvB$1, _uvC$1, new Vector2() );
+
+		}
+
+		if ( uv1 ) {
+
+			_uvA$1.fromBufferAttribute( uv1, a );
+			_uvB$1.fromBufferAttribute( uv1, b );
+			_uvC$1.fromBufferAttribute( uv1, c );
+
+			intersection.uv1 = Triangle.getInterpolation( _intersectionPoint, _vA$1, _vB$1, _vC$1, _uvA$1, _uvB$1, _uvC$1, new Vector2() );
+			intersection.uv2 = intersection.uv1; // @deprecated, r152
+
+		}
+
+		if ( normal ) {
+
+			_normalA.fromBufferAttribute( normal, a );
+			_normalB.fromBufferAttribute( normal, b );
+			_normalC.fromBufferAttribute( normal, c );
+
+			intersection.normal = Triangle.getInterpolation( _intersectionPoint, _vA$1, _vB$1, _vC$1, _normalA, _normalB, _normalC, new Vector3() );
+
+			if ( intersection.normal.dot( ray.direction ) > 0 ) {
+
+				intersection.normal.multiplyScalar( - 1 );
+
+			}
+
+		}
+
+		const face = {
+			a: a,
+			b: b,
+			c: c,
+			normal: new Vector3(),
+			materialIndex: 0
+		};
+
+		Triangle.getNormal( _vA$1, _vB$1, _vC$1, face.normal );
+
+		intersection.face = face;
+
+	}
+
+	return intersection;
+
+}
+
 class BoxGeometry extends BufferGeometry {
 
 	constructor( width = 1, height = 1, depth = 1, widthSegments = 1, heightSegments = 1, depthSegments = 1 ) {
@@ -9614,6 +10435,20 @@ class PlaneGeometry extends BufferGeometry {
 	static fromJSON( data ) {
 
 		return new PlaneGeometry( data.width, data.height, data.widthSegments, data.heightSegments );
+
+	}
+
+}
+
+class Group extends Object3D {
+
+	constructor() {
+
+		super();
+
+		this.isGroup = true;
+
+		this.type = 'Group';
 
 	}
 
@@ -11218,33 +12053,36 @@ function GeometryComposer(){
         _setGeometry:function(){
 
         },
-        posX:function(){
-
+        posX:function(x=this.POSX){
+			this.mesh.position.x=x;
+			return this;
         },
-        posY:function(){
-
+        posY:function(y=this.POSY){
+			this.mesh.position.y=y;
+			return this;
         },
-        posZ:function(){
-
+        posZ:function(z=this.POSZ){
+			this.mesh.position.z=z;
+			return this;
         },
         pos:function(){
 
         },
-        rotX:function(){
-
+        rotX:function(x=this.ROTX){
+			this.mesh.rotation.x=x;
+			return this;
         },
-        rotY:function(){
-            
+        rotY:function(y=this.ROTY){
+			this.mesh.rotation.y=y;
+			return this;            
         },
-        rotZ:function(){
-            
+        rotZ:function(z=this.ROTZ){
+			this.mesh.rotation.z=z;
+			return this;            
         },
         rot:function(){
 
         },
-        X:function(){
-
-        } 
     }
 }
 
@@ -11277,16 +12115,16 @@ function MaterialComposer(){
 class ZikoThreeMesh{
     constructor(Geometry,Material){
         this._cache={
-            Mouse:new THREE.Vector2(),
-		    Raycaster:new THREE.Raycaster()
+            // Mouse:new THREE.Vector2(),
+		    // Raycaster:new THREE.Raycaster()
         };
         this.parent=null; // Scene
-        this.mesh=new THREE.Mesh(Geometry,Material);
+        this.mesh=new Mesh(Geometry,Material);
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
     }
     _Maintain(){
-        this.mesh=new THREE.Mesh(this.geometry,this.material);
+        this.mesh=new Mesh(this.geometry,this.material);
         return this;
     }
     render(){
@@ -11341,38 +12179,34 @@ class ZikoThreeMesh{
 
 }
 
-const Mesh=()=>new ZikoThreeMesh();
-const m1=Mesh();
-console.log(m1);
-
-const cube3=(l)=>new Mesh(new BoxGeometry(l,l,l));
-const plan3=(w,h)=>new Mesh(new PlaneGeometry(w,h,100,100));
+const cube3=(l)=>new ZikoThreeMesh(new BoxGeometry(l,l,l));
+const plan3=(w,h)=>new ZikoThreeMesh(new PlaneGeometry(w,h,100,100));
 const line3=(p0,p1)=>{
 	var points = [p0,p1].map(pts=>new Vector3(...pts));
 	var geometry = new BufferGeometry().setFromPoints(points);
 	return new Line(geometry);
 };
-const cuboid3=(l,L,h)=>new Mesh(new BoxGeometry(l,L,h));
-const cylindre3=(rT,rB,h)=>new Mesh(new CylinderGeometry(rT,rB,h,100));
+const cuboid3=(l,L,h)=>new ZikoThreeMesh(new BoxGeometry(l,L,h));
+const cylindre3=(rT,rB,h)=>new ZikoThreeMesh(new CylinderGeometry(rT,rB,h,100));
 const sphere3=(r,config={})=>{
 	const parameters={width:50,height:50,phi:[0,2*PI],theta:[0,2*PI]};
 	Object.assign(parameters,config);
 	const {width,height,phi,theta}=parameters;
-	return new Mesh(new SphereGeometry(r,width,height,phi[0],phi[1],theta[0],theta[1]));
+	return new ZikoThreeMesh(new SphereGeometry(r,width,height,phi[0],phi[1],theta[0],theta[1]));
 };  
-const cone3=(r,h)=>new Mesh(new ConeGeometry(r,h,100));
-const torus3=(r,tubeRadius)=>new Mesh(new TorusGeometry(r,tubeRadius,100,100,2*PI));  
-const ring=(innerRadius=1, outerRadius=2, thetaSegments=20)=>new Mesh(new RingGeometry(innerRadius, outerRadius, thetaSegments));
-const torusKnot3=(r,tube,tubularSegments,radialSegments,p,q)=>new Mesh(new TorusKnotGeometry(r,tube,tubularSegments,radialSegments,p,q));
-const tetradron3=(r)=>new Mesh(new TetrahedronGeometry(r));
-const dodecahedron3=(r)=>new Mesh(new DodecahedronGeometry(r));
-const icosahedron3=(r)=>new Mesh(new IcosahedronGeometry(r));
-const octahedron3=(r)=>new Mesh(new OctahedronGeometry(r));
+const cone3=(r,h)=>new ZikoThreeMesh(new ConeGeometry(r,h,100));
+const torus3=(r,tubeRadius)=>new ZikoThreeMesh(new TorusGeometry(r,tubeRadius,100,100,2*PI));  
+const ring=(innerRadius=1, outerRadius=2, thetaSegments=20)=>new ZikoThreeMesh(new RingGeometry(innerRadius, outerRadius, thetaSegments));
+const torusKnot3=(r,tube,tubularSegments,radialSegments,p,q)=>new ZikoThreeMesh(new TorusKnotGeometry(r,tube,tubularSegments,radialSegments,p,q));
+const tetradron3=(r)=>new ZikoThreeMesh(new TetrahedronGeometry(r));
+const dodecahedron3=(r)=>new ZikoThreeMesh(new DodecahedronGeometry(r));
+const icosahedron3=(r)=>new ZikoThreeMesh(new IcosahedronGeometry(r));
+const octahedron3=(r)=>new ZikoThreeMesh(new OctahedronGeometry(r));
 
-class ZikoThreeGroupe extends Mesh{
+class ZikoThreeGroupe extends ZikoThreeMesh{
 	constructor(){
 		super();
-		this.mesh=new THREE.Group();
+		this.mesh=new Group();
 	}
 	add(...obj){
 		for(let i=0;i<obj.length;i++){
@@ -11390,6 +12224,8 @@ class ZikoThreeGroupe extends Mesh{
 }
 const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
 
+// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+// console.log(OrbitControls)
 const ZikoThree={
     cube3,
     plan3,
@@ -11406,6 +12242,16 @@ const ZikoThree={
     icosahedron3,
     octahedron3,
     groupe3,
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+        }
+        return this;
+    },
+    RemoveAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+        return this;
+    }
 };
 
 module.exports = ZikoThree;

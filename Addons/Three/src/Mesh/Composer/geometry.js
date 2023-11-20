@@ -3,33 +3,36 @@ export function GeometryComposer(){
         _setGeometry:function(){
 
         },
-        posX:function(){
-
+        posX:function(x=this.POSX){
+			this.mesh.position.x=x;
+			return this;
         },
-        posY:function(){
-
+        posY:function(y=this.POSY){
+			this.mesh.position.y=y;
+			return this;
         },
-        posZ:function(){
-
+        posZ:function(z=this.POSZ){
+			this.mesh.position.z=z;
+			return this;
         },
         pos:function(){
 
         },
-        rotX:function(){
-
+        rotX:function(x=this.ROTX){
+			this.mesh.rotation.x=x;
+			return this;
         },
-        rotY:function(){
-            
+        rotY:function(y=this.ROTY){
+			this.mesh.rotation.y=y;
+			return this;            
         },
-        rotZ:function(){
-            
+        rotZ:function(z=this.ROTZ){
+			this.mesh.rotation.z=z;
+			return this;            
         },
         rot:function(){
 
         },
-        X:function(){
-
-        } 
     }
 }
 class ZikoTHREEGeometry{

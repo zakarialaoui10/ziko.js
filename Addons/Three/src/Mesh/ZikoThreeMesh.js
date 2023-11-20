@@ -1,3 +1,4 @@
+import * as THREE from "three"
 import {
     GeometryComposer,
     MaterialComposer
@@ -5,8 +6,8 @@ import {
 class ZikoThreeMesh{
     constructor(Geometry,Material){
         this._cache={
-            Mouse:new THREE.Vector2(),
-		    Raycaster:new THREE.Raycaster()
+            // Mouse:new THREE.Vector2(),
+		    // Raycaster:new THREE.Raycaster()
         }
         this.parent=null; // Scene
         this.mesh=new THREE.Mesh(Geometry,Material);
@@ -69,7 +70,5 @@ class ZikoThreeMesh{
 
 }
 
-const Mesh=()=>new ZikoThreeMesh()
-const m1=Mesh()
-console.log(m1)
-export default Mesh
+const ZikoMesh=()=>new ZikoThreeMesh()
+export default ZikoThreeMesh
