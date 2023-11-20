@@ -1,3 +1,37 @@
+export function GeometryComposer(){
+    return {
+        _setGeometry:function(){
+
+        },
+        posX:function(){
+
+        },
+        posY:function(){
+
+        },
+        posZ:function(){
+
+        },
+        pos:function(){
+
+        },
+        rotX:function(){
+
+        },
+        rotY:function(){
+            
+        },
+        rotZ:function(){
+            
+        },
+        rot:function(){
+
+        },
+        X:function(){
+
+        } 
+    }
+}
 class ZikoTHREEGeometry{
 	setGeometry(Geometry){
 		this.Geometry=Geometry;
@@ -66,4 +100,3 @@ class ZikoTHREEGeometry{
 		return this;
 	}
 }
-export {ZikoTHREEGeometry}
