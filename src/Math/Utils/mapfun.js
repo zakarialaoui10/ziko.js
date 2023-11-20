@@ -40,5 +40,4 @@ const mapfun=(fun,...X)=>{
     });
    return Y.length==1?Y[0]:Y; 
 }
-window.mapfun=mapfun
 export {mapfun}

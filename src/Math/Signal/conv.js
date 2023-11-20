@@ -160,9 +160,6 @@ const circularConv1d=(input,kernel)=>conv1d(input,kernel,true);
 const circularConv2d=(input,kernel)=>conv2d(input,kernel,true);
 const linearConv1d=(input,kernel)=>conv1d(input,kernel,false);
 const linearConv2d=(input,kernel)=>conv2d(input,kernel,false);
-
-window.convolute=convolute
-window.conv1d=conv1d;
 export{
     conv1d,
     conv2d,

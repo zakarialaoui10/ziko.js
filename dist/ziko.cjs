@@ -17,7 +17,7 @@ let Complex$1 = class Complex extends AbstractZikoMath{
             }
             else if(("a" in b && "z" in a)){
                 this.a=a.a;
-                this.b=sqrt$1((a.z**2)-(a.a**2));
+                this.b=sqrt((a.z**2)-(a.a**2));
             }
             else if(("a" in b && "phi" in a)){
                 this.a=a.a;
@@ -25,7 +25,7 @@ let Complex$1 = class Complex extends AbstractZikoMath{
             }
             else if(("b" in b && "z" in a)){
                 this.b=a.b;
-                this.a=sqrt$1((a.z**2)-(a.b**2));
+                this.a=sqrt((a.z**2)-(a.b**2));
             }
             else if(("b" in b && "phi" in a)){
                 this.b=b;
@@ -177,6 +177,8 @@ const complex$1=(a,b)=>{
     return new Complex$1(a,b)
 };
 
+// Mixed calcul
+
 const sum=(...x)=>{
     if(x.every(n=>typeof n==="number")){
         let s = x[0];
@@ -292,7 +294,7 @@ const Fixed={
 function abs$1(...x){
     return mapfun(Math.abs,...x);
 }
-function sqrt$1(...x){
+function sqrt(...x){
     return mapfun(Math.sqrt,...x);
 }
 function pow$1(x,n){
@@ -1734,7 +1736,7 @@ const mapfun=(fun,...X)=>{
                 case Math.log:return complex$1(ln(z),phi); // Done
                 case Math.exp:return complex$1(e(a)*cos$1(b),e(a)*sin$1(b)); // Done
                 case Math.abs:return z; // Done
-                case Math.sqrt:return complex$1(sqrt$1(z)*cos$1(phi/2),sqrt$1(z)*sin$1(phi/2)); // Done
+                case Math.sqrt:return complex$1(sqrt(z)*cos$1(phi/2),sqrt(z)*sin$1(phi/2)); // Done
                 case Fixed.cos:return complex$1(cos$1(a)*cosh(b),-(sin$1(a)*sinh(b)));
                 case Fixed.sin:return complex$1(sin$1(a)*cosh(b),cos$1(a)*sinh(b));
                 case Fixed.tan:{
@@ -1755,7 +1757,6 @@ const mapfun=(fun,...X)=>{
     });
    return Y.length==1?Y[0]:Y; 
 };
-window.mapfun=mapfun;
 
 const { PI: PI$1, E: E$1 } = Math;
 const EPSILON=Number.EPSILON;
@@ -2315,104 +2316,6 @@ const conv2d = (input, kernel, circular = true) => {
     }
     return output;
 };
-
-var convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
-    if(kernel instanceof Matrix$1)kernel=kernel.arr.flat(1);
-    var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
-    var side = Math.round(sqrt(kernel.length));
-    var halfSide = Math.floor(side / 2);
-    var src = pixels.data;
-    var sw = pixels.width;
-    var sh = pixels.height;
-    // pad output by the convolution matrix
-    var w = sw;
-    var h = sh;
-    var output = parent.ctx.createImageData(w, h);
-    var dst = output.data;
-    // go through the destination image pixels
-    var alphaFac = 1 ;
-    for (var y = 0; y < h; y++) {
-        for (var x = 0; x < w; x++) {
-            var sy = y;
-            var sx = x;
-            var dstOff = (y * w + x) * 4;
-            // calculate the weighed sum of the source image pixels that
-            // fall under the convolution matrix
-            var r = 0,
-                g = 0,
-                b = 0,
-                a = 0;
-            for (var cy = 0; cy < side; cy++) {
-                for (var cx = 0; cx < side; cx++) {
-                    var scy = sy + cy - halfSide;
-                    var scx = sx + cx - halfSide;
-                    if (scy >= 0 && scy < sh && scx >= 0 && scx < sw) {
-                        var srcOff = (scy * sw + scx) * 4;
-                        var wt = kernel[cy * side + cx];
-                        r += src[srcOff] * wt;
-                        g += src[srcOff + 1] * wt;
-                        b += src[srcOff + 2] * wt;
-                        a += src[srcOff + 3] * wt;
-                    }
-                }
-            }
-            dst[dstOff] = r;
-            dst[dstOff + 1] = g;
-            dst[dstOff + 2] = b;
-            dst[dstOff + 3] = a + alphaFac * (255 - a);
-        }
-    }
-    return output;
-};
-
-convolute=(parent,kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0], x1 = 0, y1 = 0, x2 = parent.element.width, y2 = parent.element.height)=>{
-    if(kernel instanceof Matrix$1)kernel=kernel.arr.flat(1);
-    var pixels = parent.ctx.getImageData(x1, y1, x2, y2);
-    var side = Math.round(sqrt(kernel.length));
-    var halfSide = Math.floor(side / 2);
-    var src = pixels.data;
-    var sw = pixels.width;
-    var sh = pixels.height;
-    // pad output by the convolution matrix
-    var w = sw;
-    var h = sh;
-    var output = parent.ctx.createImageData(w, h);
-    var dst = output.data;
-    // go through the destination image pixels
-    var alphaFac = 1 ;
-    for (var y = 0; y < h; y++) {
-        for (var x = 0; x < w; x++) {
-            var sy = y;
-            var sx = x;
-            var dstOff = (y * w + x) * 4;
-            // calculate the weighed sum of the source image pixels that
-            // fall under the convolution matrix
-            var r = 0,
-                g = 0,
-                b = 0,
-                a = 0;
-            for (var cy = 0; cy < side; cy++) {
-                for (var cx = 0; cx < side; cx++) {
-                    var scy = sy + cy - halfSide;
-                    var scx = sx + cx - halfSide;
-                    if (scy >= 0 && scy < sh && scx >= 0 && scx < sw) {
-                        var srcOff = (scy * sw + scx) * 4;
-                        var wt = kernel[cy * side + cx];
-                        r += src[srcOff] * wt;
-                        g += src[srcOff + 1] * wt;
-                        b += src[srcOff + 2] * wt;
-                        a += src[srcOff + 3] * wt;
-                    }
-                }
-            }
-            dst[dstOff] = r;
-            dst[dstOff + 1] = g;
-            dst[dstOff + 2] = b;
-            dst[dstOff + 3] = a + alphaFac * (255 - a);
-        }
-    }
-    return output;
-};
 const conv=(input,kernel,circular)=>{
     if(input instanceof Matrix$1 || (input instanceof Array && input[0][0]))return conv2d(input,kernel,circular);
     return conv1d(input,kernel,circular)
@@ -2423,9 +2326,6 @@ const circularConv1d=(input,kernel)=>conv1d(input,kernel,true);
 const circularConv2d=(input,kernel)=>conv2d(input,kernel,true);
 const linearConv1d=(input,kernel)=>conv1d(input,kernel,false);
 const linearConv2d=(input,kernel)=>conv2d(input,kernel,false);
-
-window.convolute=convolute;
-window.conv1d=conv1d;
 
 // should be processed in other thread
 class Filter{
@@ -2561,7 +2461,7 @@ const Math$1={
     csc,
     cot,
     abs: abs$1,
-    sqrt: sqrt$1,
+    sqrt,
     pow: pow$1,
     sqrtn,
     e,
