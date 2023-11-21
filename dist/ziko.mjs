@@ -2537,7 +2537,7 @@ const addSuffixeToNumber=(value,suffixe="px")=>{
   if(value instanceof Array)value=value.map(n=>typeof n==="number"?n+=suffixe:n).join(" ");
   return value;
 };
-const style = (el, styles) => Object.assign(el.style, styles);
+const style = (el, styles) => {if(el)Object.assign(el.style, styles);};
 
 //import { addSuffixeToNumber } from "../Utils.js";
 function styleComposer(){
@@ -2599,11 +2599,7 @@ function styleComposer(){
         }
         return this
       },
-      size:function(w,h,{ target, maskVector } = {}){
-        this.width(w,{ target, maskVector });
-        this.height(h,{ target, maskVector });
-        return this;
-      },
+      
       // Box Model 
       border:function(border = "1px solid red", { target, maskVector } = {}){
         this.style({border}, { target, maskVector });
@@ -3837,7 +3833,7 @@ const Watch=(UIElement,options={},callback=null)=>{
 };
 
 class ZikoUIElement {
-  constructor(element = document.body) {
+  constructor(element ) {
     this.Target = document.body;
     if (typeof element === "string") element = document.createElement(element);
     this.element = element;
@@ -3874,6 +3870,11 @@ class ZikoUIElement {
     };
     this.style({ position: "relative" });
     this.size("auto", "auto");
+  }
+  size(w,h,{ target, maskVector } = {}){
+    this.width(w,{ target, maskVector });
+    this.height(h,{ target, maskVector });
+    return this;
   }
   clone() {
     const UI = new this.constructor();
@@ -6521,7 +6522,7 @@ class ZikoUICanvas extends ZikoUIElement{
             height:h
         });
         //this.lineWidth();
-        this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        //this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
         return this;
     }
     adjust(){

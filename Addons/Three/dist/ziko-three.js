@@ -261,6 +261,8 @@
 
 	const _lut = [ '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '0a', '0b', '0c', '0d', '0e', '0f', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '1a', '1b', '1c', '1d', '1e', '1f', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '2a', '2b', '2c', '2d', '2e', '2f', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '3a', '3b', '3c', '3d', '3e', '3f', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '4a', '4b', '4c', '4d', '4e', '4f', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '5a', '5b', '5c', '5d', '5e', '5f', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '6a', '6b', '6c', '6d', '6e', '6f', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '7a', '7b', '7c', '7d', '7e', '7f', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '8a', '8b', '8c', '8d', '8e', '8f', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '9a', '9b', '9c', '9d', '9e', '9f', 'a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'aa', 'ab', 'ac', 'ad', 'ae', 'af', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'ba', 'bb', 'bc', 'bd', 'be', 'bf', 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'ca', 'cb', 'cc', 'cd', 'ce', 'cf', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'da', 'db', 'dc', 'dd', 'de', 'df', 'e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'ea', 'eb', 'ec', 'ed', 'ee', 'ef', 'f0', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'fa', 'fb', 'fc', 'fd', 'fe', 'ff' ];
 
+	let _seed = 1234567;
+
 
 	const DEG2RAD = Math.PI / 180;
 	const RAD2DEG = 180 / Math.PI;
@@ -296,10 +298,119 @@
 
 	}
 
+	// Linear mapping from range <a1, a2> to range <b1, b2>
+	function mapLinear( x, a1, a2, b1, b2 ) {
+
+		return b1 + ( x - a1 ) * ( b2 - b1 ) / ( a2 - a1 );
+
+	}
+
+	// https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/inverse-lerp-a-super-useful-yet-often-overlooked-function-r5230/
+	function inverseLerp( x, y, value ) {
+
+		if ( x !== y ) {
+
+			return ( value - x ) / ( y - x );
+
+		} else {
+
+			return 0;
+
+		}
+
+	}
+
 	// https://en.wikipedia.org/wiki/Linear_interpolation
 	function lerp( x, y, t ) {
 
 		return ( 1 - t ) * x + t * y;
+
+	}
+
+	// http://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
+	function damp( x, y, lambda, dt ) {
+
+		return lerp( x, y, 1 - Math.exp( - lambda * dt ) );
+
+	}
+
+	// https://www.desmos.com/calculator/vcsjnyz7x4
+	function pingpong( x, length = 1 ) {
+
+		return length - Math.abs( euclideanModulo( x, length * 2 ) - length );
+
+	}
+
+	// http://en.wikipedia.org/wiki/Smoothstep
+	function smoothstep( x, min, max ) {
+
+		if ( x <= min ) return 0;
+		if ( x >= max ) return 1;
+
+		x = ( x - min ) / ( max - min );
+
+		return x * x * ( 3 - 2 * x );
+
+	}
+
+	function smootherstep( x, min, max ) {
+
+		if ( x <= min ) return 0;
+		if ( x >= max ) return 1;
+
+		x = ( x - min ) / ( max - min );
+
+		return x * x * x * ( x * ( x * 6 - 15 ) + 10 );
+
+	}
+
+	// Random integer from <low, high> interval
+	function randInt( low, high ) {
+
+		return low + Math.floor( Math.random() * ( high - low + 1 ) );
+
+	}
+
+	// Random float from <low, high> interval
+	function randFloat( low, high ) {
+
+		return low + Math.random() * ( high - low );
+
+	}
+
+	// Random float from <-range/2, range/2> interval
+	function randFloatSpread( range ) {
+
+		return range * ( 0.5 - Math.random() );
+
+	}
+
+	// Deterministic pseudo-random float in the interval [ 0, 1 ]
+	function seededRandom( s ) {
+
+		if ( s !== undefined ) _seed = s;
+
+		// Mulberry32 generator
+
+		let t = _seed += 0x6D2B79F5;
+
+		t = Math.imul( t ^ t >>> 15, t | 1 );
+
+		t ^= t + Math.imul( t ^ t >>> 7, t | 61 );
+
+		return ( ( t ^ t >>> 14 ) >>> 0 ) / 4294967296;
+
+	}
+
+	function degToRad( degrees ) {
+
+		return degrees * DEG2RAD;
+
+	}
+
+	function radToDeg( radians ) {
+
+		return radians * RAD2DEG;
 
 	}
 
@@ -309,9 +420,71 @@
 
 	}
 
+	function ceilPowerOfTwo( value ) {
+
+		return Math.pow( 2, Math.ceil( Math.log( value ) / Math.LN2 ) );
+
+	}
+
 	function floorPowerOfTwo( value ) {
 
 		return Math.pow( 2, Math.floor( Math.log( value ) / Math.LN2 ) );
+
+	}
+
+	function setQuaternionFromProperEuler( q, a, b, c, order ) {
+
+		// Intrinsic Proper Euler Angles - see https://en.wikipedia.org/wiki/Euler_angles
+
+		// rotations are applied to the axes in the order specified by 'order'
+		// rotation by angle 'a' is applied first, then by angle 'b', then by angle 'c'
+		// angles are in radians
+
+		const cos = Math.cos;
+		const sin = Math.sin;
+
+		const c2 = cos( b / 2 );
+		const s2 = sin( b / 2 );
+
+		const c13 = cos( ( a + c ) / 2 );
+		const s13 = sin( ( a + c ) / 2 );
+
+		const c1_3 = cos( ( a - c ) / 2 );
+		const s1_3 = sin( ( a - c ) / 2 );
+
+		const c3_1 = cos( ( c - a ) / 2 );
+		const s3_1 = sin( ( c - a ) / 2 );
+
+		switch ( order ) {
+
+			case 'XYX':
+				q.set( c2 * s13, s2 * c1_3, s2 * s1_3, c2 * c13 );
+				break;
+
+			case 'YZY':
+				q.set( s2 * s1_3, c2 * s13, s2 * c1_3, c2 * c13 );
+				break;
+
+			case 'ZXZ':
+				q.set( s2 * c1_3, s2 * s1_3, c2 * s13, c2 * c13 );
+				break;
+
+			case 'XZX':
+				q.set( c2 * s13, s2 * s3_1, s2 * c3_1, c2 * c13 );
+				break;
+
+			case 'YXY':
+				q.set( s2 * c3_1, c2 * s13, s2 * s3_1, c2 * c13 );
+				break;
+
+			case 'ZYZ':
+				q.set( s2 * s3_1, s2 * c3_1, c2 * s13, c2 * c13 );
+				break;
+
+			default:
+				console.warn( 'THREE.MathUtils: .setQuaternionFromProperEuler() encountered an unknown order: ' + order );
+
+		}
 
 	}
 
@@ -394,6 +567,33 @@
 		}
 
 	}
+
+	const MathUtils = {
+		DEG2RAD: DEG2RAD,
+		RAD2DEG: RAD2DEG,
+		generateUUID: generateUUID,
+		clamp: clamp,
+		euclideanModulo: euclideanModulo,
+		mapLinear: mapLinear,
+		inverseLerp: inverseLerp,
+		lerp: lerp,
+		damp: damp,
+		pingpong: pingpong,
+		smoothstep: smoothstep,
+		smootherstep: smootherstep,
+		randInt: randInt,
+		randFloat: randFloat,
+		randFloatSpread: randFloatSpread,
+		seededRandom: seededRandom,
+		degToRad: degToRad,
+		radToDeg: radToDeg,
+		isPowerOfTwo: isPowerOfTwo,
+		ceilPowerOfTwo: ceilPowerOfTwo,
+		floorPowerOfTwo: floorPowerOfTwo,
+		setQuaternionFromProperEuler: setQuaternionFromProperEuler,
+		normalize: normalize,
+		denormalize: denormalize
+	};
 
 	class Vector2 {
 
@@ -30312,6 +30512,56 @@
 
 	}
 
+	const _start = /*@__PURE__*/ new Vector3();
+	const _end = /*@__PURE__*/ new Vector3();
+
+	class LineSegments extends Line {
+
+		constructor( geometry, material ) {
+
+			super( geometry, material );
+
+			this.isLineSegments = true;
+
+			this.type = 'LineSegments';
+
+		}
+
+		computeLineDistances() {
+
+			const geometry = this.geometry;
+
+			// we assume non-indexed geometry
+
+			if ( geometry.index === null ) {
+
+				const positionAttribute = geometry.attributes.position;
+				const lineDistances = [];
+
+				for ( let i = 0, l = positionAttribute.count; i < l; i += 2 ) {
+
+					_start.fromBufferAttribute( positionAttribute, i );
+					_end.fromBufferAttribute( positionAttribute, i + 1 );
+
+					lineDistances[ i ] = ( i === 0 ) ? 0 : lineDistances[ i - 1 ];
+					lineDistances[ i + 1 ] = lineDistances[ i ] + _start.distanceTo( _end );
+
+				}
+
+				geometry.setAttribute( 'lineDistance', new Float32BufferAttribute( lineDistances, 1 ) );
+
+			} else {
+
+				console.warn( 'THREE.LineSegments.computeLineDistances(): Computation only possible with non-indexed BufferGeometry.' );
+
+			}
+
+			return this;
+
+		}
+
+	}
+
 	class CylinderGeometry extends BufferGeometry {
 
 		constructor( radiusTop = 1, radiusBottom = 1, height = 1, radialSegments = 32, heightSegments = 1, openEnded = false, thetaStart = 0, thetaLength = Math.PI * 2 ) {
@@ -31627,6 +31877,266 @@
 
 	}
 
+	const _vector = /*@__PURE__*/ new Vector3();
+	const _camera = /*@__PURE__*/ new Camera();
+
+	/**
+	 *	- shows frustum, line of sight and up of the camera
+	 *	- suitable for fast updates
+	 * 	- based on frustum visualization in lightgl.js shadowmap example
+	 *		https://github.com/evanw/lightgl.js/blob/master/tests/shadowmap.html
+	 */
+
+	class CameraHelper extends LineSegments {
+
+		constructor( camera ) {
+
+			const geometry = new BufferGeometry();
+			const material = new LineBasicMaterial( { color: 0xffffff, vertexColors: true, toneMapped: false } );
+
+			const vertices = [];
+			const colors = [];
+
+			const pointMap = {};
+
+			// near
+
+			addLine( 'n1', 'n2' );
+			addLine( 'n2', 'n4' );
+			addLine( 'n4', 'n3' );
+			addLine( 'n3', 'n1' );
+
+			// far
+
+			addLine( 'f1', 'f2' );
+			addLine( 'f2', 'f4' );
+			addLine( 'f4', 'f3' );
+			addLine( 'f3', 'f1' );
+
+			// sides
+
+			addLine( 'n1', 'f1' );
+			addLine( 'n2', 'f2' );
+			addLine( 'n3', 'f3' );
+			addLine( 'n4', 'f4' );
+
+			// cone
+
+			addLine( 'p', 'n1' );
+			addLine( 'p', 'n2' );
+			addLine( 'p', 'n3' );
+			addLine( 'p', 'n4' );
+
+			// up
+
+			addLine( 'u1', 'u2' );
+			addLine( 'u2', 'u3' );
+			addLine( 'u3', 'u1' );
+
+			// target
+
+			addLine( 'c', 't' );
+			addLine( 'p', 'c' );
+
+			// cross
+
+			addLine( 'cn1', 'cn2' );
+			addLine( 'cn3', 'cn4' );
+
+			addLine( 'cf1', 'cf2' );
+			addLine( 'cf3', 'cf4' );
+
+			function addLine( a, b ) {
+
+				addPoint( a );
+				addPoint( b );
+
+			}
+
+			function addPoint( id ) {
+
+				vertices.push( 0, 0, 0 );
+				colors.push( 0, 0, 0 );
+
+				if ( pointMap[ id ] === undefined ) {
+
+					pointMap[ id ] = [];
+
+				}
+
+				pointMap[ id ].push( ( vertices.length / 3 ) - 1 );
+
+			}
+
+			geometry.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
+			geometry.setAttribute( 'color', new Float32BufferAttribute( colors, 3 ) );
+
+			super( geometry, material );
+
+			this.type = 'CameraHelper';
+
+			this.camera = camera;
+			if ( this.camera.updateProjectionMatrix ) this.camera.updateProjectionMatrix();
+
+			this.matrix = camera.matrixWorld;
+			this.matrixAutoUpdate = false;
+
+			this.pointMap = pointMap;
+
+			this.update();
+
+			// colors
+
+			const colorFrustum = new Color( 0xffaa00 );
+			const colorCone = new Color( 0xff0000 );
+			const colorUp = new Color( 0x00aaff );
+			const colorTarget = new Color( 0xffffff );
+			const colorCross = new Color( 0x333333 );
+
+			this.setColors( colorFrustum, colorCone, colorUp, colorTarget, colorCross );
+
+		}
+
+		setColors( frustum, cone, up, target, cross ) {
+
+			const geometry = this.geometry;
+
+			const colorAttribute = geometry.getAttribute( 'color' );
+
+			// near
+
+			colorAttribute.setXYZ( 0, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 1, frustum.r, frustum.g, frustum.b ); // n1, n2
+			colorAttribute.setXYZ( 2, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 3, frustum.r, frustum.g, frustum.b ); // n2, n4
+			colorAttribute.setXYZ( 4, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 5, frustum.r, frustum.g, frustum.b ); // n4, n3
+			colorAttribute.setXYZ( 6, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 7, frustum.r, frustum.g, frustum.b ); // n3, n1
+
+			// far
+
+			colorAttribute.setXYZ( 8, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 9, frustum.r, frustum.g, frustum.b ); // f1, f2
+			colorAttribute.setXYZ( 10, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 11, frustum.r, frustum.g, frustum.b ); // f2, f4
+			colorAttribute.setXYZ( 12, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 13, frustum.r, frustum.g, frustum.b ); // f4, f3
+			colorAttribute.setXYZ( 14, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 15, frustum.r, frustum.g, frustum.b ); // f3, f1
+
+			// sides
+
+			colorAttribute.setXYZ( 16, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 17, frustum.r, frustum.g, frustum.b ); // n1, f1
+			colorAttribute.setXYZ( 18, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 19, frustum.r, frustum.g, frustum.b ); // n2, f2
+			colorAttribute.setXYZ( 20, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 21, frustum.r, frustum.g, frustum.b ); // n3, f3
+			colorAttribute.setXYZ( 22, frustum.r, frustum.g, frustum.b ); colorAttribute.setXYZ( 23, frustum.r, frustum.g, frustum.b ); // n4, f4
+
+			// cone
+
+			colorAttribute.setXYZ( 24, cone.r, cone.g, cone.b ); colorAttribute.setXYZ( 25, cone.r, cone.g, cone.b ); // p, n1
+			colorAttribute.setXYZ( 26, cone.r, cone.g, cone.b ); colorAttribute.setXYZ( 27, cone.r, cone.g, cone.b ); // p, n2
+			colorAttribute.setXYZ( 28, cone.r, cone.g, cone.b ); colorAttribute.setXYZ( 29, cone.r, cone.g, cone.b ); // p, n3
+			colorAttribute.setXYZ( 30, cone.r, cone.g, cone.b ); colorAttribute.setXYZ( 31, cone.r, cone.g, cone.b ); // p, n4
+
+			// up
+
+			colorAttribute.setXYZ( 32, up.r, up.g, up.b ); colorAttribute.setXYZ( 33, up.r, up.g, up.b ); // u1, u2
+			colorAttribute.setXYZ( 34, up.r, up.g, up.b ); colorAttribute.setXYZ( 35, up.r, up.g, up.b ); // u2, u3
+			colorAttribute.setXYZ( 36, up.r, up.g, up.b ); colorAttribute.setXYZ( 37, up.r, up.g, up.b ); // u3, u1
+
+			// target
+
+			colorAttribute.setXYZ( 38, target.r, target.g, target.b ); colorAttribute.setXYZ( 39, target.r, target.g, target.b ); // c, t
+			colorAttribute.setXYZ( 40, cross.r, cross.g, cross.b ); colorAttribute.setXYZ( 41, cross.r, cross.g, cross.b ); // p, c
+
+			// cross
+
+			colorAttribute.setXYZ( 42, cross.r, cross.g, cross.b ); colorAttribute.setXYZ( 43, cross.r, cross.g, cross.b ); // cn1, cn2
+			colorAttribute.setXYZ( 44, cross.r, cross.g, cross.b ); colorAttribute.setXYZ( 45, cross.r, cross.g, cross.b ); // cn3, cn4
+
+			colorAttribute.setXYZ( 46, cross.r, cross.g, cross.b ); colorAttribute.setXYZ( 47, cross.r, cross.g, cross.b ); // cf1, cf2
+			colorAttribute.setXYZ( 48, cross.r, cross.g, cross.b ); colorAttribute.setXYZ( 49, cross.r, cross.g, cross.b ); // cf3, cf4
+
+			colorAttribute.needsUpdate = true;
+
+		}
+
+		update() {
+
+			const geometry = this.geometry;
+			const pointMap = this.pointMap;
+
+			const w = 1, h = 1;
+
+			// we need just camera projection matrix inverse
+			// world matrix must be identity
+
+			_camera.projectionMatrixInverse.copy( this.camera.projectionMatrixInverse );
+
+			// center / target
+
+			setPoint( 'c', pointMap, geometry, _camera, 0, 0, - 1 );
+			setPoint( 't', pointMap, geometry, _camera, 0, 0, 1 );
+
+			// near
+
+			setPoint( 'n1', pointMap, geometry, _camera, - w, - h, - 1 );
+			setPoint( 'n2', pointMap, geometry, _camera, w, - h, - 1 );
+			setPoint( 'n3', pointMap, geometry, _camera, - w, h, - 1 );
+			setPoint( 'n4', pointMap, geometry, _camera, w, h, - 1 );
+
+			// far
+
+			setPoint( 'f1', pointMap, geometry, _camera, - w, - h, 1 );
+			setPoint( 'f2', pointMap, geometry, _camera, w, - h, 1 );
+			setPoint( 'f3', pointMap, geometry, _camera, - w, h, 1 );
+			setPoint( 'f4', pointMap, geometry, _camera, w, h, 1 );
+
+			// up
+
+			setPoint( 'u1', pointMap, geometry, _camera, w * 0.7, h * 1.1, - 1 );
+			setPoint( 'u2', pointMap, geometry, _camera, - w * 0.7, h * 1.1, - 1 );
+			setPoint( 'u3', pointMap, geometry, _camera, 0, h * 2, - 1 );
+
+			// cross
+
+			setPoint( 'cf1', pointMap, geometry, _camera, - w, 0, 1 );
+			setPoint( 'cf2', pointMap, geometry, _camera, w, 0, 1 );
+			setPoint( 'cf3', pointMap, geometry, _camera, 0, - h, 1 );
+			setPoint( 'cf4', pointMap, geometry, _camera, 0, h, 1 );
+
+			setPoint( 'cn1', pointMap, geometry, _camera, - w, 0, - 1 );
+			setPoint( 'cn2', pointMap, geometry, _camera, w, 0, - 1 );
+			setPoint( 'cn3', pointMap, geometry, _camera, 0, - h, - 1 );
+			setPoint( 'cn4', pointMap, geometry, _camera, 0, h, - 1 );
+
+			geometry.getAttribute( 'position' ).needsUpdate = true;
+
+		}
+
+		dispose() {
+
+			this.geometry.dispose();
+			this.material.dispose();
+
+		}
+
+	}
+
+
+	function setPoint( point, pointMap, geometry, camera, x, y, z ) {
+
+		_vector.set( x, y, z ).unproject( camera );
+
+		const points = pointMap[ point ];
+
+		if ( points !== undefined ) {
+
+			const position = geometry.getAttribute( 'position' );
+
+			for ( let i = 0, l = points.length; i < l; i ++ ) {
+
+				position.setXYZ( points[ i ], _vector.x, _vector.y, _vector.z );
+
+			}
+
+		}
+
+	}
+
 	if ( typeof __THREE_DEVTOOLS__ !== 'undefined' ) {
 
 		__THREE_DEVTOOLS__.dispatchEvent( new CustomEvent( 'register', { detail: {
@@ -31649,6 +32159,129 @@
 
 	}
 
+	class ZikoTHREECamera{
+		constructor(width,height,near=0.1,far=1000){
+			this.currentCamera=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);		this.width=width;
+			this.height=height;
+			this.near=near;
+			this.far=far;
+			this.fov=100;
+			this.pD=10;
+			this.oD=120;
+		}
+		get left(){
+			return -this.pD*Math.tan(this.halfFovH);
+		}
+		get right(){
+			return this.pD*Math.tan(this.halfFovH);
+		}
+		get top(){
+			return this.pD*Math.tan(this.halfFovV);
+		}
+		get bottom(){
+			return -this.pD*Math.tan(this.halfFovV);
+		}
+		get aspect(){
+			return this.width/this.height;
+		}
+		get halfFovV(){
+			return MathUtils.DEG2RAD * this.fov * 0.5;
+		}
+		get halfFovH(){
+			return Math.atan((this.width/this.height) * Math.tan( this.halfFovV ) );
+		}
+		get halfH(){
+			return this.pD*Math.tan(this.halfFovH)
+		}
+		get halfV(){
+			return this.pD*Math.tan(this.halfFovV)
+		}
+		posX(x=this.POSX){
+			this.currentCamera.position.x=x;
+			return this;
+		}
+		posY(y=this.POSY){
+			this.currentCamera.position.y=y;
+			return this;
+		}
+		posZ(z=this.POSZ){
+			this.currentCamera.position.z=z;
+			return this;
+		}
+		get POSX(){
+			return this.currentCamera.position.x;
+		}
+		get POSY(){
+			return this.currentCamera.position.y;
+		}
+		get POSZ(){
+			return this.currentCamera.position.z;
+		}
+		pos(x=this.POSX,y=this.POSY,z=this.POSZ){
+			this.currentCamera.position.set(x,y,z);
+			return this;
+		}
+		rotX(x=this.ROTX){
+			this.currentCamera.rotation.x=x;
+			return this;
+		}
+		rotY(y=this.ROTY){
+			this.currentCamera.rotation.y=y;
+			return this;
+		}
+		rotZ(z=this.ROTZ){
+			this.currentCamera.rotation.z=z;
+			return this;
+		}
+		get ROTX(){
+			return this.currentCamera.rotation.x;
+		}
+		get ROTY(){
+			return this.currentCamera.rotation.y;
+		}
+		get ROTZ(){
+			return this.currentCamera.rotation.z;
+		}
+		rot(x=this.ROTX,y=this.ROTY,z=this.ROTZ){
+			this.currentCamera.rotation.set(x,y,z);
+			return this;
+		}
+		Perspective(){
+			this.currentCamera=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
+			this.currentCamera.position.set(0,0,this.pD);
+			return this;
+		}
+		Orthographic(){
+			this.currentCamera= new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+			this.currentCamera.position.set(0,0,this.oD);
+			return this;
+		}
+		get Helper(){
+			return new CameraHelper(this.currentCamera)
+		}
+	}
+
+	const camera=(w,h,n,f)=>new ZikoTHREECamera(w,h,n,f);
+
+	const waitForUIElm=(UIElement)=>{
+	    return new Promise(resolve => {
+	        if (UIElement) {
+	            return resolve(UIElement);
+	        }
+	  
+	        const observer = new MutationObserver(() => {
+	            if (UIElement) {
+	                resolve(UIElement);
+	                observer.disconnect();
+	            }
+	        });
+	  
+	        observer.observe(document.body, {
+	            childList: true,
+	            subtree: true
+	        });
+	    });
+	  };
 	class SceneGl extends ziko.ZikoUIElement{
 	    constructor(w,h){
 	        super();
@@ -31657,6 +32290,7 @@
 	        this.element.appendChild(this.canvas);
 	        this.rendererGl=new WebGLRenderer({canvas:this.canvas});
 			this.sceneGl=new Scene();
+	        this.cam=camera(w,h,0.1,1000);
 		    this.camera=new PerspectiveCamera(100,w/h,0.1,1000);
 	        this.camera.position.z=10;
 	        this.sceneGl.background=new Color("#ff0000");
@@ -31666,14 +32300,17 @@
 	    // setup(){
 	    //     this.camera
 	    // }
-	    size(w = "100%", h = "100%",{target,maskVector}={}) {
+	    size(w = "100%", h = "100%") {
 			if(typeof(w)==="number")w=w+"px";
 			if(typeof(h)==="number")h=h+"px";
-			this.style({ width: w, height: h },{target,maskVector});
-	        this.camera.aspect=(this.element.clientWidth)/(this.element.clientHeight);
-	        this.camera.updateProjectionMatrix();
-			this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-			this.renderGl();
+	        waitForUIElm(this.element).then((e)=>{
+	            this.element.style.width=w;
+	            this.element.style.height=h;
+	            this.camera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+	            this.camera.updateProjectionMatrix();
+	            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+	            this.renderGl();
+	        });
 			return this;
 	    }
 	    setSize(){

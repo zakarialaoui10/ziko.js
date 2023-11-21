@@ -59,11 +59,7 @@ export function styleComposer(){
         }
         return this
       },
-      size:function(w,h,{ target, maskVector } = {}){
-        this.width(w,{ target, maskVector });
-        this.height(h,{ target, maskVector });
-        return this;
-      },
+      
       // Box Model 
       border:function(border = "1px solid red", { target, maskVector } = {}){
         this.style({border}, { target, maskVector });

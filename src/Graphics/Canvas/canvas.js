@@ -75,7 +75,7 @@ class ZikoUICanvas extends ZikoUIElement{
             height:h
         })
         //this.lineWidth();
-        this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        //this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
         return this;
     }
     adjust(){

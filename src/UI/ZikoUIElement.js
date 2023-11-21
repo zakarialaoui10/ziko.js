@@ -17,7 +17,7 @@ import { text } from "./Text/index.js";
 import { matrix } from "../Math/Matrix/index.js";
 
 class ZikoUIElement {
-  constructor(element = document.body) {
+  constructor(element ) {
     this.Target = document.body;
     if (typeof element === "string") element = document.createElement(element);
     this.element = element;
@@ -54,6 +54,11 @@ class ZikoUIElement {
     }
     this.style({ position: "relative" });
     this.size("auto", "auto");
+  }
+  size(w,h,{ target, maskVector } = {}){
+    this.width(w,{ target, maskVector });
+    this.height(h,{ target, maskVector });
+    return this;
   }
   clone() {
     const UI = new this.constructor();

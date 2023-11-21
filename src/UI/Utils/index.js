@@ -14,7 +14,7 @@ const addSuffixeToNumber=(value,suffixe="px")=>{
   if(value instanceof Array)value=value.map(n=>typeof n==="number"?n+=suffixe:n).join(" ");
   return value;
 }
-const style = (el, styles) => Object.assign(el.style, styles);
+const style = (el, styles) => {if(el)Object.assign(el.style, styles)};
 
 function script(src) {
   const Script = document.createElement("script");
