@@ -32158,14 +32158,24 @@ if ( typeof window !== 'undefined' ) {
 }
 
 class ZikoTHREECamera{
+	#PERSPECTIVE_CAMERA
+	#ORTHOGRAPHIC_CAMERA
 	constructor(width,height,near=0.1,far=1000){
-		this.currentCamera=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);		this.width=width;
+		this.parent=null;
+		this.width=width;
 		this.height=height;
 		this.near=near;
 		this.far=far;
-		this.fov=100;
+		this.#PERSPECTIVE_CAMERA=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
+		this.currentCamera=this.#PERSPECTIVE_CAMERA;
+		this.fov=50;
 		this.pD=10;
 		this.oD=120;
+		this.#ORTHOGRAPHIC_CAMERA=new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+	}
+	#maintain(){
+		if(this.parent)this.parent.renderGl();
+		return this;
 	}
 	get left(){
 		return -this.pD*Math.tan(this.halfFovH);
@@ -32196,14 +32206,17 @@ class ZikoTHREECamera{
 	}
 	posX(x=this.POSX){
 		this.currentCamera.position.x=x;
+		this.#maintain();
 		return this;
 	}
 	posY(y=this.POSY){
 		this.currentCamera.position.y=y;
+		this.#maintain();
 		return this;
 	}
 	posZ(z=this.POSZ){
 		this.currentCamera.position.z=z;
+		this.#maintain();
 		return this;
 	}
 	get POSX(){
@@ -32217,18 +32230,22 @@ class ZikoTHREECamera{
 	}
 	pos(x=this.POSX,y=this.POSY,z=this.POSZ){
 		this.currentCamera.position.set(x,y,z);
+		this.#maintain();
 		return this;
 	}
 	rotX(x=this.ROTX){
 		this.currentCamera.rotation.x=x;
+		this.#maintain();
 		return this;
 	}
 	rotY(y=this.ROTY){
 		this.currentCamera.rotation.y=y;
+		this.#maintain();
 		return this;
 	}
 	rotZ(z=this.ROTZ){
 		this.currentCamera.rotation.z=z;
+		this.#maintain();
 		return this;
 	}
 	get ROTX(){
@@ -32242,16 +32259,19 @@ class ZikoTHREECamera{
 	}
 	rot(x=this.ROTX,y=this.ROTY,z=this.ROTZ){
 		this.currentCamera.rotation.set(x,y,z);
+		this.#maintain();
 		return this;
 	}
 	Perspective(){
-		this.currentCamera=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
+		this.currentCamera=this.#PERSPECTIVE_CAMERA;
 		this.currentCamera.position.set(0,0,this.pD);
+		this.#maintain();
 		return this;
 	}
 	Orthographic(){
-		this.currentCamera= new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+		this.currentCamera= this.#ORTHOGRAPHIC_CAMERA;
 		this.currentCamera.position.set(0,0,this.oD);
+		this.#maintain();
 		return this;
 	}
 	get Helper(){
@@ -32259,70 +32279,7 @@ class ZikoTHREECamera{
 	}
 }
 
-const camera=(w,h,n,f)=>new ZikoTHREECamera(w,h,n,f);
-
-const waitForUIElm=(UIElement)=>{
-    return new Promise(resolve => {
-        if (UIElement) {
-            return resolve(UIElement);
-        }
-  
-        const observer = new MutationObserver(() => {
-            if (UIElement) {
-                resolve(UIElement);
-                observer.disconnect();
-            }
-        });
-  
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
-  };
-class SceneGl extends ziko.ZikoUIElement{
-    constructor(w,h){
-        super();
-        this.element=document.createElement("figure");
-        this.canvas=document.createElement("canvas");
-        this.element.appendChild(this.canvas);
-        this.rendererGl=new WebGLRenderer({canvas:this.canvas});
-		this.sceneGl=new Scene();
-        this.cam=camera(w,h,0.1,1000);
-	    this.camera=new PerspectiveCamera(100,w/h,0.1,1000);
-        this.camera.position.z=10;
-        this.sceneGl.background=new Color("#ff0000");
-        this.renderGl();
-        this.render();
-    }
-    // setup(){
-    //     this.camera
-    // }
-    size(w = "100%", h = "100%") {
-		if(typeof(w)==="number")w=w+"px";
-		if(typeof(h)==="number")h=h+"px";
-        waitForUIElm(this.element).then((e)=>{
-            this.element.style.width=w;
-            this.element.style.height=h;
-            this.camera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
-            this.camera.updateProjectionMatrix();
-            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-            this.renderGl();
-        });
-		return this;
-    }
-    setSize(){
-		this.camera.aspect=(this.element.clientWidth)/(this.element.clientHeight);
-        this.camera.updateProjectionMatrix();
-		this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-		this.renderGl();
-		return this;
-	}
-    renderGl(){
-		this.rendererGl.render(this.sceneGl,this.camera);
-		return this;
-	}
-}
+const ZikoCamera=(w,h,n,f)=>new ZikoTHREECamera(w,h,n,f);
 
 function GeometryComposer(){
     return {
@@ -32487,6 +32444,81 @@ class ZikoThreeMesh{
         }
     }
 
+}
+
+const waitElm=(UIElement)=>{
+    return new Promise(resolve => {
+        if (UIElement) {
+            return resolve(UIElement);
+        }
+        const observer = new MutationObserver(() => {
+            if (UIElement) {
+                resolve(UIElement);
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+  };
+
+class SceneGl extends ziko.ZikoUIElement{
+    constructor(w,h){
+        super();
+        this.element=document.createElement("figure");
+        this.canvas=document.createElement("canvas");
+        this.element.appendChild(this.canvas);
+        this.rendererGl=new WebGLRenderer({canvas:this.canvas});
+		this.sceneGl=new Scene();
+        this.camera=ZikoCamera(w,h,0.1,1000);
+        this.camera.currentCamera.position.z=10;
+        this.camera.parent=this;
+        this.sceneGl.background=new Color("#ff0000");
+        this.renderGl();
+        this.render();
+        this.size(w,h);
+    }
+    renderGl(){
+		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
+		return this;
+	}
+    maintain(){
+        return this;
+    }
+    size(w = "100%", h = "100%") {
+		if(typeof(w)==="number")w=w+"px";
+		if(typeof(h)==="number")h=h+"px";
+        waitElm(this.element).then((e)=>{
+            this.element.style.width=w;
+            this.element.style.height=h;
+            this.canvas.style.margin=0;
+            this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+            this.camera.currentCamera.updateProjectionMatrix();
+            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+            this.renderGl();
+        });
+		return this;
+    }
+    addGl(...obj){
+		obj.map((n,i)=>{
+			if(n instanceof ZikoThreeMesh){
+				this.sceneGl.add(obj[i].mesh);
+				this.items.push(obj[i]);
+				n.parent=this;
+			}
+			else this.sceneGl.add(obj[i]);
+		});
+		this.renderGl();
+		return this;
+	}
+    removeGl(...obj){
+		obj.map((n,i)=>this.sceneGl.remove(obj[i].mesh));
+        this.items=this.items.filter(n=>!obj.includes(n));
+		this.renderGl();
+		return this;
+    }
 }
 
 const cube3=(l)=>new ZikoThreeMesh(new BoxGeometry(l,l,l));

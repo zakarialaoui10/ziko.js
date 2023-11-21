@@ -1,15 +1,24 @@
 import {PerspectiveCamera,OrthographicCamera,CameraHelper} from "three";
 import * as THREE from "three"
 class ZikoTHREECamera{
+	#PERSPECTIVE_CAMERA
+	#ORTHOGRAPHIC_CAMERA
 	constructor(width,height,near=0.1,far=1000){
-		this.currentCamera=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);;
+		this.parent=null;
 		this.width=width;
 		this.height=height;
 		this.near=near;
 		this.far=far;
-		this.fov=100;
+		this.#PERSPECTIVE_CAMERA=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
+		this.currentCamera=this.#PERSPECTIVE_CAMERA;
+		this.fov=50;
 		this.pD=10;
 		this.oD=120;
+		this.#ORTHOGRAPHIC_CAMERA=new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+	}
+	#maintain(){
+		if(this.parent)this.parent.renderGl()
+		return this;
 	}
 	get left(){
 		return -this.pD*Math.tan(this.halfFovH);
@@ -40,14 +49,17 @@ class ZikoTHREECamera{
 	}
 	posX(x=this.POSX){
 		this.currentCamera.position.x=x;
+		this.#maintain()
 		return this;
 	}
 	posY(y=this.POSY){
 		this.currentCamera.position.y=y;
+		this.#maintain()
 		return this;
 	}
 	posZ(z=this.POSZ){
 		this.currentCamera.position.z=z;
+		this.#maintain()
 		return this;
 	}
 	get POSX(){
@@ -61,18 +73,22 @@ class ZikoTHREECamera{
 	}
 	pos(x=this.POSX,y=this.POSY,z=this.POSZ){
 		this.currentCamera.position.set(x,y,z);
+		this.#maintain()
 		return this;
 	}
 	rotX(x=this.ROTX){
 		this.currentCamera.rotation.x=x;
+		this.#maintain()
 		return this;
 	}
 	rotY(y=this.ROTY){
 		this.currentCamera.rotation.y=y;
+		this.#maintain()
 		return this;
 	}
 	rotZ(z=this.ROTZ){
 		this.currentCamera.rotation.z=z;
+		this.#maintain()
 		return this;
 	}
 	get ROTX(){
@@ -86,16 +102,19 @@ class ZikoTHREECamera{
 	}
 	rot(x=this.ROTX,y=this.ROTY,z=this.ROTZ){
 		this.currentCamera.rotation.set(x,y,z);
+		this.#maintain()
 		return this;
 	}
 	Perspective(){
-		this.currentCamera=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
-		this.currentCamera.position.set(0,0,this.pD)
+		this.currentCamera=this.#PERSPECTIVE_CAMERA;
+		this.currentCamera.position.set(0,0,this.pD);
+		this.#maintain()
 		return this;
 	}
 	Orthographic(){
-		this.currentCamera= new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+		this.currentCamera= this.#ORTHOGRAPHIC_CAMERA
 		this.currentCamera.position.set(0,0,this.oD);
+		this.#maintain()
 		return this;
 	}
 	get Helper(){
@@ -103,4 +122,4 @@ class ZikoTHREECamera{
 	}
 }
 
-export const camera=(w,h,n,f)=>new ZikoTHREECamera(w,h,n,f)
+export const ZikoCamera=(w,h,n,f)=>new ZikoTHREECamera(w,h,n,f)

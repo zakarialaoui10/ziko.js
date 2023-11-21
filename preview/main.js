@@ -145,4 +145,4 @@ Car=Carousel(
     )
 a=new SceneGl(400,400)
 b=cube3(2)
-a.sceneGL.add(b.mesh)
+a.addGl(b)
