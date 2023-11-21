@@ -3840,7 +3840,7 @@ const Watch=(UIElement,options={},callback=null)=>{
 
 class ZikoUIElement {
   constructor(element = document.body) {
-    this.Target = Ziko.Target || document.body;
+    this.Target = document.body;
     if (typeof element === "string") element = document.createElement(element);
     this.element = element;
     Object.assign(this, styleComposer.call(this));
@@ -7008,7 +7008,7 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
-const Ziko$1={
+const Ziko={
     Math: Math$1,
     UI: UI$1,
     Time,
@@ -7018,22 +7018,34 @@ const Ziko$1={
     Multi,
     SPA,
     Watch,
-    ALL_UI_ELEMENTS
+    ALL_UI_ELEMENTS,
 };
-Ziko$1.ExtractAll=function(){
-    Ziko$1.UI.ExtractAll();
-    Ziko$1.Math.ExtractAll();
-    Ziko$1.Time.ExtractAll();
-    Ziko$1.Events.ExtractAll();
-    Ziko$1.Graphics.ExtractAll();
+function ExtractAll(){
+    UI$1.ExtractAll();
+    Math$1.ExtractAll();
+    Time.ExtractAll();
+    Events.ExtractAll();
+    Graphics.ExtractAll();
     return this;
-};
-Ziko$1.RemoveAll=function(){
-    Ziko$1.UI.RemoveAll();
-    Ziko$1.Math.RemoveAll();
-    Ziko$1.Time.ExtractAll();
-    Ziko$1.Events.RemoveAll();
-    Ziko$1.Graphics.RemoveAll();
-};
+}
+function RemoveAll(){
+    UI$1.RemoveAll();
+    Math$1.RemoveAll();
+    Time.ExtractAll();
+    Events.RemoveAll();
+    Graphics.RemoveAll();
+}
 
-module.exports = Ziko$1;
+exports.Data = Data;
+exports.Events = Events;
+exports.ExtractAll = ExtractAll;
+exports.Graphics = Graphics;
+exports.Math = Math$1;
+exports.Multi = Multi;
+exports.RemoveAll = RemoveAll;
+exports.SPA = SPA;
+exports.Time = Time;
+exports.UI = UI$1;
+exports.Watch = Watch;
+exports.Ziko = Ziko;
+exports.ZikoUIElement = ZikoUIElement;

@@ -1,6 +1,6 @@
+
 Ziko.ExtractAll()
-Ziko.Math.ExtractAll()
-Ziko.Graphics.ExtractAll()
+ZikoThree.ExtractAll()
 const B=p(
     text("f"),
     p(),
@@ -143,3 +143,6 @@ Car=Carousel(
     Flex().size("100px","80px"),
     Flex().size("100px","80px")
     )
+a=new SceneGl(400,400)
+b=cube3(2)
+a.sceneGL.add(b.mesh)

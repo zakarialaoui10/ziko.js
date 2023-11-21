@@ -6,15 +6,25 @@ export default {
   output: [{
     file: 'dist/ziko-three.cjs',
     format: 'cjs',
+    globals: {
+      ziko: 'Ziko'
+    }
   },{
     file: 'dist/ziko-three.mjs',
     format: 'es',
+    globals: {
+      ziko: 'Ziko'
+    }
   },
   {
     file: 'dist/ziko-three.js',
     format: 'umd',
-    name:"ZikoThree"
+    name:"ZikoThree",
+    globals: {
+      ziko: 'Ziko'
+    }
   }
 ],
+  external: ["ziko"],
   plugins: [resolve(), commonjs()],
 };

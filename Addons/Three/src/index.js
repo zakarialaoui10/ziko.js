@@ -1,5 +1,6 @@
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // console.log(OrbitControls)
+import { SceneGl } from "./Scene/gl.js";
 import{
     cube3,
     plan3,
@@ -18,6 +19,7 @@ import{
     groupe3,
 } from "./Mesh/index.js";
 const ZikoThree={
+    SceneGl,
     cube3,
     plan3,
     line3,
@@ -33,16 +35,16 @@ const ZikoThree={
     icosahedron3,
     octahedron3,
     groupe3,
-    // ExtractAll:function(){
-    //         for (let i = 0; i < Object.keys(this).length; i++) {
-    //             globalThis[Object.keys(this)[i]] = Object.values(this)[i];
-    //     }
-    //     return this;
-    // },
-    // RemoveAll:function(){
-    //         for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
-    //     return this;
-    // }
+    ExtractAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) {
+                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+        }
+        return this;
+    },
+    RemoveAll:function(){
+            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+        return this;
+    }
 }
-if(Ziko)Object.assign(Ziko.Graphics,{...ZikoThree})
+//if(Ziko)Object.assign(Ziko.Graphics,{...ZikoThree})
 export default ZikoThree

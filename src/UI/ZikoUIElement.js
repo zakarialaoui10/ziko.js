@@ -18,7 +18,7 @@ import { matrix } from "../Math/Matrix/index.js";
 
 class ZikoUIElement {
   constructor(element = document.body) {
-    this.Target = Ziko.Target || document.body;
+    this.Target = document.body;
     if (typeof element === "string") element = document.createElement(element);
     this.element = element;
     Object.assign(this, styleComposer.call(this));

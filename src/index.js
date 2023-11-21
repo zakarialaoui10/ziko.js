@@ -8,7 +8,7 @@ import Multi from "./Worker/index.js";
 import {Watch} from "./Reactivity/index.js"
 import {SPA} from "./Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
-import { parseXML } from "./Data/index.js";
+import ZikoUIElement from "./UI/ZikoUIElement.js";
 const Ziko={
     Math,
     UI,
@@ -19,21 +19,36 @@ const Ziko={
     Multi,
     SPA,
     Watch,
-    ALL_UI_ELEMENTS
+    ALL_UI_ELEMENTS,
 }
-Ziko.ExtractAll=function(){
-    Ziko.UI.ExtractAll();
-    Ziko.Math.ExtractAll();
-    Ziko.Time.ExtractAll();
-    Ziko.Events.ExtractAll();
-    Ziko.Graphics.ExtractAll();
+function ExtractAll(){
+    UI.ExtractAll();
+    Math.ExtractAll();
+    Time.ExtractAll();
+    Events.ExtractAll();
+    Graphics.ExtractAll();
     return this;
 }
-Ziko.RemoveAll=function(){
-    Ziko.UI.RemoveAll();
-    Ziko.Math.RemoveAll();
-    Ziko.Time.ExtractAll();
-    Ziko.Events.RemoveAll();
-    Ziko.Graphics.RemoveAll();
+function RemoveAll(){
+    UI.RemoveAll();
+    Math.RemoveAll();
+    Time.ExtractAll();
+    Events.RemoveAll();
+    Graphics.RemoveAll();
 }
-export default Ziko;
+export {
+    Ziko,
+    ZikoUIElement,
+    Math,
+    UI,
+    Time,
+    Graphics,
+    Events,
+    Data,
+    Multi,
+    SPA,
+    Watch,
+    ExtractAll,
+    RemoveAll
+};
+
