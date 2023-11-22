@@ -1,10 +1,8 @@
 import * as THREE from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-console.log(OrbitControls)
 import {ZikoUIElement} from "ziko"
 import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
-import { waitElm } from "../Utils";
 import { SceneComposer } from "../Composer/scene";
 class SceneGl extends ZikoUIElement{
     constructor(w,h){
@@ -38,12 +36,6 @@ class SceneGl extends ZikoUIElement{
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 		return this;
 	}
-    maintain(){
-        for (let i = 0; i < this.items.length; i++)
-        Object.assign(this, { [[i]]: this.items[i] });
-        this.length = this.items.length;
-        return this;
-    }
     addGl(...obj){
 		obj.map((n,i)=>{
 			if(n instanceof ZikoThreeMesh){

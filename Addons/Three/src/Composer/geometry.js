@@ -42,8 +42,12 @@ export function GeometryComposer(){
 			maintain.call(this);
 			return this;
         },
-        pos:function(x,y,z){
-			this.mesh.rotation.set(x,y,z);
+        translate:function(dx=0,dy=0,dz=0){
+			this.mesh.rotation.set(
+				this.POSX+dx,
+				this.POSY+dy,
+				this.POSZ+dz,
+				);
 			maintain.call(this);
 			return this;
         },

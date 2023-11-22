@@ -55,11 +55,6 @@ class ZikoUIElement {
     this.style({ position: "relative" });
     this.size("auto", "auto");
   }
-  size(w,h,{ target, maskVector } = {}){
-    this.width(w,{ target, maskVector });
-    this.height(h,{ target, maskVector });
-    return this;
-  }
   clone() {
     const UI = new this.constructor();
     const items = [...this.items]

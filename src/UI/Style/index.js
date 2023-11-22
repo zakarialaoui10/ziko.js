@@ -25,6 +25,11 @@ export function styleComposer(){
         return this;
       },
       // Dimensions
+      size:function(w,h,{ target, maskVector } = {}){
+        this.width(w,{ target, maskVector });
+        this.height(h,{ target, maskVector });
+        return this;
+      },
       width:function(w,{ target, maskVector } = {}){
         if(w instanceof Object){
           if(w instanceof Array)w={min:w[0],max:w[1]}
