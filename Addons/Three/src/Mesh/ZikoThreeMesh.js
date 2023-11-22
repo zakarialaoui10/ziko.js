@@ -2,7 +2,7 @@ import * as THREE from "three"
 import {
     GeometryComposer,
     MaterialComposer
-} from "./Composer/index.js"
+} from "../Composer/index.js"
 class ZikoThreeMesh{
     constructor(Geometry,Material){
         this._cache={

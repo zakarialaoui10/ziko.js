@@ -33964,18 +33964,27 @@ const waitElm=(UIElement)=>{
     });
   };
 
+function SceneComposer(){
+    return {
+        background:function(){
+
+        },
+    }
+}
+
 console.log(OrbitControls);
 class SceneGl extends ziko.ZikoUIElement{
     constructor(w,h){
         super();
         Object.assign(this.cache,{
             control:{
-                config:{
+                enabled:{
                     orbit:false
                 },
                 orbit:null
             }
         });
+        Object.assign(this,SceneComposer.call(this));
         this.element=document.createElement("figure");
         this.canvas=document.createElement("canvas");
         this.element.appendChild(this.canvas);
@@ -33986,10 +33995,11 @@ class SceneGl extends ziko.ZikoUIElement{
         this.camera.parent=this;
         this.sceneGl.background=new Color("#ff0000");
         this.cache.control.orbit=new OrbitControls(this.camera.currentCamera,this.rendererGl.domElement);
-		this.cache.control.orbit.addEventListener("change",()=>{if(this.cache.control.config.orbit)this.renderGl();});
+		this.cache.control.orbit.addEventListener("change",()=>{if(this.cache.control.enabled.orbit)this.renderGl();});
         this.renderGl();
         this.render();
         this.size(w,h);
+        
     }
     renderGl(){
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
@@ -34000,6 +34010,9 @@ class SceneGl extends ziko.ZikoUIElement{
         Object.assign(this, { [[i]]: this.items[i] });
         this.length = this.items.length;
         return this;
+    }
+    background(){
+
     }
     size(w = "100%", h = "100%") {
 		if(typeof(w)==="number")w=w+"px";

@@ -5,17 +5,19 @@ import {ZikoUIElement} from "ziko"
 import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 import { waitElm } from "../Utils";
+import { SceneComposer } from "../Composer/scene";
 class SceneGl extends ZikoUIElement{
     constructor(w,h){
         super()
         Object.assign(this.cache,{
             control:{
-                config:{
+                enabled:{
                     orbit:false
                 },
                 orbit:null
             }
         })
+        Object.assign(this,SceneComposer.call(this))
         this.element=document.createElement("figure");
         this.canvas=document.createElement("canvas");
         this.element.appendChild(this.canvas);
@@ -26,10 +28,11 @@ class SceneGl extends ZikoUIElement{
         this.camera.parent=this;
         this.sceneGl.background=new THREE.Color("#ff0000");
         this.cache.control.orbit=new OrbitControls(this.camera.currentCamera,this.rendererGl.domElement);
-		this.cache.control.orbit.addEventListener("change",()=>{if(this.cache.control.config.orbit)this.renderGl()});
+		this.cache.control.orbit.addEventListener("change",()=>{if(this.cache.control.enabled.orbit)this.renderGl()});
         this.renderGl()
         this.render();
-        this.size(w,h)
+        this.size(w,h);
+        
     }
     renderGl(){
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
@@ -40,20 +43,6 @@ class SceneGl extends ZikoUIElement{
         Object.assign(this, { [[i]]: this.items[i] });
         this.length = this.items.length;
         return this;
-    }
-    size(w = "100%", h = "100%") {
-		if(typeof(w)==="number")w=w+"px";
-		if(typeof(h)==="number")h=h+"px";
-        waitElm(this.element).then((e)=>{
-            this.element.style.width=w;
-            this.element.style.height=h;
-            this.canvas.style.margin=0;
-            this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
-            this.camera.currentCamera.updateProjectionMatrix();
-            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-            this.renderGl();
-        })
-		return this;
     }
     addGl(...obj){
 		obj.map((n,i)=>{
