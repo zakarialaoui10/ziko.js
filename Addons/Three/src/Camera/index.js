@@ -105,13 +105,13 @@ class ZikoTHREECamera{
 		this.#maintain()
 		return this;
 	}
-	Perspective(){
+	usePerspective(){
 		this.currentCamera=this.#PERSPECTIVE_CAMERA;
 		this.currentCamera.position.set(0,0,this.pD);
 		this.#maintain()
 		return this;
 	}
-	Orthographic(){
+	useOrthographic(){
 		this.currentCamera= this.#ORTHOGRAPHIC_CAMERA
 		this.currentCamera.position.set(0,0,this.oD);
 		this.#maintain()
