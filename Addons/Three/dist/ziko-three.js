@@ -32486,9 +32486,9 @@
 			this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 			return this;
 		}
-	    maintain(){
-	        return this;
-	    }
+	    // maintain(){
+	    //     return this;
+	    // }
 	    size(w = "100%", h = "100%") {
 			if(typeof(w)==="number")w=w+"px";
 			if(typeof(h)==="number")h=h+"px";

@@ -24,6 +24,9 @@ class SceneGl extends ZikoUIElement{
 		return this;
 	}
     maintain(){
+        for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+        this.length = this.items.length;
         return this;
     }
     size(w = "100%", h = "100%") {
@@ -49,12 +52,14 @@ class SceneGl extends ZikoUIElement{
 			}
 			else this.sceneGl.add(obj[i])
 		});
+        this.maintain();
 		this.renderGl();
 		return this;
 	}
     removeGl(...obj){
 		obj.map((n,i)=>this.sceneGl.remove(obj[i].mesh));
-        this.items=this.items.filter(n=>!obj.includes(n))
+        this.items=this.items.filter(n=>!obj.includes(n));
+        this.maintain();
 		this.renderGl();
 		return this;
     }
