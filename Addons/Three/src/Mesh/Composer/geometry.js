@@ -1,3 +1,7 @@
+function maintain(){
+	if(this.parent)this.parent.renderGl();
+	return this;
+}
 export function GeometryComposer(){
     return {
         _setGeometry:function(){
@@ -5,135 +9,83 @@ export function GeometryComposer(){
         },
         posX:function(x=this.POSX){
 			this.mesh.position.x=x;
+			maintain.call(this);
 			return this;
         },
         posY:function(y=this.POSY){
 			this.mesh.position.y=y;
+			maintain.call(this);
 			return this;
         },
         posZ:function(z=this.POSZ){
 			this.mesh.position.z=z;
+			maintain.call(this);
 			return this;
         },
         pos:function(x,y,z){
 			this.mesh.rotation.set(x,y,z);
+			maintain.call(this);
 			return this;
         },
 		tarnslateX:function(dx=0){
 			this.mesh.position.x=this.POSX+dx;
+			maintain.call(this);
 			return this;
         },
         translateY:function(dy=0){
 			this.mesh.position.y=this.POSY+dy;
+			maintain.call(this);
 			return this;
         },
         translateZ:function(dz=0){
 			this.mesh.position.z=this.POSZ+dz;
+			maintain.call(this);
 			return this;
         },
         pos:function(x,y,z){
 			this.mesh.rotation.set(x,y,z);
+			maintain.call(this);
 			return this;
         },
         rotX:function(x=this.ROTX){
 			this.mesh.rotation.x=x;
+			maintain.call(this);
 			return this;
         },
         rotY:function(y=this.ROTY){
 			this.mesh.rotation.y=y;
+			maintain.call(this);
 			return this;            
         },
         rotZ:function(z=this.ROTZ){
 			this.mesh.rotation.z=z;
+			maintain.call(this);
 			return this;            
         },
         rot:function(x,y,z){
 			this.mesh.rotation.set(x,y,z);
+			maintain.call(this);
 			return this;
         },
 		scaleX:function(x){
 			this.mesh.scale.x=x;
+			maintain.call(this);
 			return this;
         },
         scaleY:function(y){
 			this.mesh.scale.y=y;
+			maintain.call(this);
 			return this;            
         },
         scaleZ:function(z){
 			this.mesh.scale.z=z;
+			maintain.call(this);
 			return this;            
         },
         scale:function(x,y,z){
 			this.mesh.scale.set(x,y,z);
+			maintain.call(this);
 			return this;
         },
     }
-}
-class ZikoTHREEGeometry{
-	setGeometry(Geometry){
-		this.Geometry=Geometry;
-		this.mesh.geometry=this.Geometry;
-		return this;
-	}
-	render(){
-		if(this.parent)this.parent.renderGl()
-	}
-	posX(x=this.POSX){
-		this.mesh.position.x=x;
-		this.render();
-		return this;
-	}
-	posY(y=this.POSY){
-		this.mesh.position.y=y;
-		this.render();
-		return this;
-	}
-	posZ(z=this.POSZ){
-		this.mesh.position.z=z;
-		this.render();
-		return this;
-	}
-	get POSX(){
-		return this.mesh.position.x;
-	}
-	get POSY(){
-		return this.mesh.position.y;
-	}
-	get POSZ(){
-		return this.mesh.position.z;
-	}
-	pos(x=this.POSX,y=this.POSY,z=this.POSZ){
-		this.mesh.position.set(x,y,z);
-		this.render();
-		return this;
-	}
-	rotX(x=this.ROTX){
-		this.mesh.rotation.x=x;
-		this.render();
-		return this;
-	}
-	rotY(y=this.ROTY){
-		this.mesh.rotation.y=y;
-		this.render();
-		return this;
-	}
-	rotZ(z=this.ROTZ){
-		this.mesh.rotation.z=z;
-		this.render();
-		return this;
-	}
-	get ROTX(){
-		return this.mesh.rotation.x;
-	}
-	get ROTY(){
-		return this.mesh.rotation.y;
-	}
-	get ROTZ(){
-		return this.mesh.rotation.z;
-	}
-	rot(x=this.ROTX,y=this.ROTY,z=this.ROTZ){
-		this.mesh.rotation.set(x,y,z);
-		this.render();
-		return this;
-	}
 }
