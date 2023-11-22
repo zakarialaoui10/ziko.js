@@ -1,5 +1,6 @@
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // console.log(OrbitControls)
+import * as THREE from "three"
 import { SceneGl } from "./Scene/gl.js";
 import{
     cube3,
@@ -19,6 +20,7 @@ import{
     groupe3,
 } from "./Mesh/index.js";
 const ZikoThree={
+    THREE,
     SceneGl,
     cube3,
     plan3,

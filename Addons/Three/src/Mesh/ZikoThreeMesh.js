@@ -3,6 +3,7 @@ import {
     GeometryComposer,
     MaterialComposer
 } from "../Composer/index.js"
+import { ZikoMaterial } from "./Materials/index.js";
 class ZikoThreeMesh{
     constructor(Geometry,Material){
         this._cache={
@@ -11,11 +12,14 @@ class ZikoThreeMesh{
         }
         this.parent=null; // Scene
         this.mesh=new THREE.Mesh(Geometry,Material);
+        this.material=ZikoMaterial(this.mesh,{});
+
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
     }
     _Maintain(){
-        this.mesh=new THREE.Mesh(this.geometry,this.material);
+        this.mesh=new THREE.Mesh(this.geometry,this.material.currentMaterial);
+        if(this.parent)this.parent.renderGl();
         return this;
     }
     render(){
