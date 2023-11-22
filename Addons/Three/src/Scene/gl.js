@@ -1,11 +1,21 @@
 import * as THREE from "three"
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+console.log(OrbitControls)
 import {ZikoUIElement} from "ziko"
 import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
-import { waitElm } from "../Utils/wait";
+import { waitElm } from "../Utils";
 class SceneGl extends ZikoUIElement{
     constructor(w,h){
         super()
+        Object.assign(this.cache,{
+            control:{
+                config:{
+                    orbit:false
+                },
+                orbit:null
+            }
+        })
         this.element=document.createElement("figure");
         this.canvas=document.createElement("canvas");
         this.element.appendChild(this.canvas);
@@ -14,7 +24,9 @@ class SceneGl extends ZikoUIElement{
         this.camera=ZikoCamera(w,h,0.1,1000);
         this.camera.currentCamera.position.z=10;
         this.camera.parent=this;
-        this.sceneGl.background=new THREE.Color("#ff0000")
+        this.sceneGl.background=new THREE.Color("#ff0000");
+        this.cache.control.orbit=new OrbitControls(this.camera.currentCamera,this.rendererGl.domElement);
+		this.cache.control.orbit.addEventListener("change",()=>{if(this.cache.control.config.orbit)this.renderGl()});
         this.renderGl()
         this.render();
         this.size(w,h)
