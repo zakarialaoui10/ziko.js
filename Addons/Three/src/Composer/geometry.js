@@ -4,9 +4,6 @@ function maintain(){
 }
 export function GeometryComposer(){
     return {
-        _setGeometry:function(){
-
-        },
         posX:function(x=this.POSX){
 			this.mesh.position.x=x;
 			maintain.call(this);

@@ -13,6 +13,8 @@ class ZikoTHREEMaterial{
     
     #LINE_BASIC_MATERIAL=null;
     #LINE_DASHED_MATERIAL=null;
+
+    #POINTS_MATERIAL
     constructor(mesh){
         this.mesh=mesh;
         this.attributes={}
@@ -80,6 +82,11 @@ class ZikoTHREEMaterial{
         this.mesh.material=this.#LINE_DASHED_MATERIAL;
         return this;
     }
+    usePointsMaterial(){
+        if(!this.#POINTS_MATERIAL)this.#POINTS_MATERIAL=new THREE.PointsMaterial(this.attributes);
+        this.mesh.material=this.#POINTS_MATERIAL;
+        return this;      
+    }
 }
-const ZikoMaterial=(mesh,attributes={})=>new ZikoTHREEMaterial(mesh,attributes={});
+const ZikoMaterial=(mesh,attributes={})=>new ZikoTHREEMaterial(mesh,attributes);
 export {ZikoMaterial}

@@ -53802,6 +53802,11 @@
 	            this._Maintain();
 	            return this;
 	        },
+	        usePoints(){
+	            this.material.usePointsMaterial();
+	            this._Maintain();
+	            return this;
+	        },
 
 	        color:function(color){
 	            this.mesh.material.color=new Color(color);
@@ -53844,6 +53849,8 @@
 	    
 	    #LINE_BASIC_MATERIAL=null;
 	    #LINE_DASHED_MATERIAL=null;
+
+	    #POINTS_MATERIAL
 	    constructor(mesh){
 	        this.mesh=mesh;
 	        this.attributes={};
@@ -53911,8 +53918,13 @@
 	        this.mesh.material=this.#LINE_DASHED_MATERIAL;
 	        return this;
 	    }
+	    usePointsMaterial(){
+	        if(!this.#POINTS_MATERIAL)this.#POINTS_MATERIAL=new PointsMaterial(this.attributes);
+	        this.mesh.material=this.#POINTS_MATERIAL;
+	        return this;      
+	    }
 	}
-	const ZikoMaterial=(mesh,attributes={})=>new ZikoTHREEMaterial(mesh,attributes={});
+	const ZikoMaterial=(mesh,attributes={})=>new ZikoTHREEMaterial(mesh,attributes);
 
 	class ZikoThreeMesh{
 	    constructor(Geometry,Material){

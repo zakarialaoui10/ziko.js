@@ -61,6 +61,11 @@ export function MaterialComposer(){
             this._Maintain();
             return this;
         },
+        usePoints(){
+            this.material.usePointsMaterial();
+            this._Maintain();
+            return this;
+        },
 
         color:function(color){
             this.mesh.material.color=new THREE.Color(color);
