@@ -23,6 +23,9 @@ export function SceneComposer(){
             this.renderGl()
             return this;
         },
+        clone:function(){
+
+        },
         background:function(texture){
             if(typeof texture === "string"){
                 if((texture.length===7||texture.length===4)&&texture[0]==="#")this.sceneGl.background=new THREE.Color(texture);
@@ -94,5 +97,20 @@ export function SceneComposer(){
 			this.renderGl();
 			return this;
         },
+        fog:function(color,near,far){
+
+        },
+        toImage(){
+
+        },
+        toVideo(){
+
+        },
+        fromJson:function(color,near,far){
+
+        },
+        toJson:function(){
+
+        }
     }
 }
