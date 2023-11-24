@@ -163,10 +163,10 @@ btn("Update Mesh Color").onClick(()=>{
 c.on("update_mesh_color",e=>Scene.background(e))
 c.on("orbit_change",e=>Scene.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
 Scene.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
-    rx:Scene.camera.ROTX,
-    ry:Scene.camera.ROTY,
-    rz:Scene.camera.ROTZ,
-    px:Scene.camera.POSX,
-    py:Scene.camera.POSY,
-    pz:Scene.camera.POSZ
+    rx:Scene.camera.rx,
+    ry:Scene.camera.ry,
+    rz:Scene.camera.rz,
+    px:Scene.camera.px,
+    py:Scene.camera.py,
+    pz:Scene.camera.pz
 }))

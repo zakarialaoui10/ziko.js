@@ -3639,31 +3639,6 @@ class ZikoEventInput extends ZikoEvent{
 }
 const Input=Target=>new ZikoEventInput(Target);
 
-// class ZikoChannel{
-//     constructor(name=""){
-//         this.channel=new BroadcastChannel(name);
-//         this.history=new Map();
-//     }
-//     on(event,handler=console.log){
-//         this.channel.onmessage = (e) => {
-//             const {emit_event,data}=e.data
-//             if(emit_event===event)handler(data);
-//           };
-//           return this;
-//     }
-//     emit(event, data){
-//         this.channel.postMessage({
-//             emit_event:event,
-//             data
-//         });
-//         return this;
-//     }
-//     close(){
-//         this.channel.close();
-//         return this;
-//     }
-// }
-
 class ZikoChannel{
     constructor(name=""){
         this.channel=new BroadcastChannel(name);
@@ -3673,12 +3648,12 @@ class ZikoChannel{
     }
     emit(event, data){
         this.EVENTS_DATAS_PAIRS.set(event,data);
-        this.maintainEmit(event);
+        this.#maintainEmit(event);
         return this;
     }
     on(event,handler=console.log){
         this.EVENTS_HANDLERS_PAIRS.set(event,handler);
-        this.maintainOn();
+        this.#maintainOn();
         return this;
     }
     onAll(){
@@ -3686,7 +3661,7 @@ class ZikoChannel{
             console.log(e.data);
           };   
     }
-    maintainOn(){
+    #maintainOn(){
         this.channel.onmessage = (e) => {
             this.LAST_RECEIVED_EVENT=e.data.last_sended_event;
             const Data=e.data.EVENTS_DATAS_PAIRS.get(this.LAST_RECEIVED_EVENT);
@@ -3695,7 +3670,7 @@ class ZikoChannel{
           };
           return this;
     }
-    maintainEmit(event){
+    #maintainEmit(event){
         this.channel.postMessage({
             EVENTS_DATAS_PAIRS:this.EVENTS_DATAS_PAIRS,
             last_sended_event:event
