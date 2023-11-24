@@ -53520,6 +53520,59 @@
 
 	}
 
+	// Enable
+	// Disable
+	// Pause
+	// Resume
+	// Dispose
+	// Link 
+
+	class ZikoThreeOrbitControls{
+	    _CONTROL
+	    #TARGET
+	    constructor(target){
+	        this.#TARGET=target;
+	        this._CONTROL=new OrbitControls(target.camera.currentCamera,target.rendererGl.domElement);
+	        this.isPaused=false;
+	        this.onChange();
+
+	    }
+	    ctrl(){
+	        return this._CONTROL
+	    }
+	    enable(){
+	        this._CONTROL.enabled=true;
+	        return this;
+	    }
+	    disable(){
+	        this._CONTROL.enabled=true;
+	        return this;
+	    }
+	    pause(){
+	        this.isPaused=true;
+	        return this;
+	    }
+	    resume(){
+	        this.isPaused=false;
+	        return this;
+	    }
+	    dispose(){
+	        this._CONTROL.dispose();
+	        return this;
+	    }
+	    onChange(handler){
+	        this._CONTROL.addEventListener("change",()=>{
+	            if(!this.isPaused){
+	                this.#TARGET.renderGl();
+	                if(handler)handler();
+	            }
+	        });
+	        return this;
+	    }
+	}
+
+	const ZikoOrbitControls=target=>new ZikoThreeOrbitControls(target);
+
 	class ZikoTHREECamera{
 		#PERSPECTIVE_CAMERA
 		#ORTHOGRAPHIC_CAMERA
@@ -53650,9 +53703,6 @@
 	}
 	function GeometryComposer(){
 	    return {
-	        _setGeometry:function(){
-
-	        },
 	        posX:function(x=this.POSX){
 				this.mesh.position.x=x;
 				maintain.call(this);
@@ -54037,6 +54087,9 @@
 	            this.renderGl();
 	            return this;
 	        },
+	        clone:function(){
+
+	        },
 	        background:function(texture){
 	            if(typeof texture === "string"){
 	                if((texture.length===7||texture.length===4)&&texture[0]==="#")this.sceneGl.background=new Color(texture);
@@ -54108,6 +54161,21 @@
 				this.renderGl();
 				return this;
 	        },
+	        fog:function(color,near,far){
+
+	        },
+	        toImage(){
+
+	        },
+	        toVideo(){
+
+	        },
+	        fromJson:function(color,near,far){
+
+	        },
+	        toJson:function(){
+
+	        }
 	    }
 	}
 
@@ -54116,9 +54184,6 @@
 	        super();
 	        Object.assign(this.cache,{
 	            control:{
-	                enabled:{
-	                    orbit:false
-	                },
 	                orbit:null
 	            }
 	        });
@@ -54132,8 +54197,7 @@
 	        this.camera.currentCamera.position.z=10;
 	        this.camera.parent=this;
 	        this.sceneGl.background=new Color("#ff0000");
-	        this.cache.control.orbit=new OrbitControls(this.camera.currentCamera,this.rendererGl.domElement);
-			this.cache.control.orbit.addEventListener("change",()=>{if(this.cache.control.enabled.orbit)this.renderGl();});
+	        this.cache.control.orbit=ZikoOrbitControls(this);
 	        this.renderGl();
 	        this.render();
 	        this.size(w,h);

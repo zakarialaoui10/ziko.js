@@ -158,4 +158,16 @@ c=Ziko.Events.Channel("test")
 
 c.on("change_background",e=>a.background(e))
 
+c.on("change_background",e=>console.log(e))
+//c.on("orbit_change",e=>a.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
+//c.on("orbit_change",e=>console.log(e))
+
 btn("Set Random Background").onClick(()=>c.emit("change_background",Random.color()))
+a.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
+    rx:a.camera.ROTX,
+    ry:a.camera.ROTY,
+    rz:a.camera.ROTZ,
+    px:a.camera.POSX,
+    py:a.camera.POSY,
+    pz:a.camera.POSZ
+}))
