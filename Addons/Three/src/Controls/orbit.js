@@ -1,4 +1,3 @@
-import * as THREE from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 class ZikoThreeOrbitControls{
     #TARGET
@@ -8,9 +7,6 @@ class ZikoThreeOrbitControls{
         this.isPaused=false;
         this.onChange()
 
-    }
-    ctrl(){
-        return this.control
     }
     enable(){
         this.control.enabled=true;
@@ -42,6 +38,5 @@ class ZikoThreeOrbitControls{
         return this;
     }
 }
-
 const ZikoOrbitControls=target=>new ZikoThreeOrbitControls(target);
 export {ZikoOrbitControls}

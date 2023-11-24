@@ -54133,9 +54133,6 @@ class ZikoThreeOrbitControls{
         this.onChange();
 
     }
-    ctrl(){
-        return this.control
-    }
     enable(){
         this.control.enabled=true;
         return this;
@@ -54166,7 +54163,6 @@ class ZikoThreeOrbitControls{
         return this;
     }
 }
-
 const ZikoOrbitControls=target=>new ZikoThreeOrbitControls(target);
 
 const _raycaster = new Raycaster();
