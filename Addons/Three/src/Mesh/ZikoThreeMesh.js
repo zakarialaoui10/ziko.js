@@ -35,40 +35,40 @@ class ZikoThreeMesh{
     get Material(){
         return this.mesh.material;
     }
-    get XPOS(){
+    get px(){
         return this.mesh.position.x;
     }
-    get YPOS(){
+    get py(){
         return this.mesh.position.y;
     }
-    get ZPOS(){
+    get pz(){
         return this.mesh.position.z;
     }
-    get XROT(){
+    get rx(){
         return this.mesh.rotation.x;
     }
-    get YROT(){
+    get ry(){
         return this.mesh.rotation.y;
     }
-    get ZROT(){
+    get rz(){
         return this.mesh.rotation.z;
     }
-    get X(){
+    get x(){
         return {
-            pos:this.XPOS,
-            rot:this.XROT
+            pos:this.px,
+            rot:this.rx
         }
     }
-    get Y(){
+    get y(){
         return {
-            pos:this.YPOS,
-            rot:this.YROT
+            pos:this.py,
+            rot:this.ry
         }
     }
-    get Z(){
+    get z(){
         return {
-            pos:this.ZPOS,
-            rot:this.ZROT
+            pos:this.pz,
+            rot:this.rz
         }
     }
 
