@@ -5,6 +5,7 @@ import Click from "./Global/Click.js";
 import Clipboard from "./Global/Clipboard.js";
 import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
+import { Channel } from "./Channel.js";
 const Events={
     Pointer,
     Key,
@@ -14,6 +15,7 @@ const Events={
     Clipboard,
     Focus,
     Input,
+    Channel,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];

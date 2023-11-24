@@ -127,7 +127,7 @@ class ZikoIntersectionObserver{
  //WatchIntersection=(UI,callback)=>new ZikoIntersectionObserver(UI,callback)
  //a=WatchIntersection(c,e=>console.log(e.ratio)).start()
 //  c.WatchIntersection(e=>console.log(e.ratio))
-a=Flex(text(1),text(2),text(3)).size(400,"auto")
+// a=Flex(text(1),text(2),text(3)).size(400,"auto")
 //b=DragEvent(a).onDrag(e=>console.log(e))
   
 
@@ -139,10 +139,23 @@ a=Flex(text(1),text(2),text(3)).size(400,"auto")
 // f=Signal.filter(s)
 
 c.remove()
-Car=Carousel(
-    Flex().size("100px","80px"),
-    Flex().size("100px","80px")
-    )
+// Car=Carousel(
+//     Flex().size("100px","80px"),
+//     Flex().size("100px","80px")
+//     )
 a=new SceneGl(400,400)
 b=cube3(2)
 a.addGl(b)
+
+// bc = new BroadcastChannel("test_channel");
+
+// bc.postMessage("This is a test message.");
+
+// bc.onmessage = (event) => {
+//     console.log(event);
+//   };
+c=Ziko.Events.Channel("test")
+
+c.on("change_background",e=>a.background(e))
+
+btn("Set Random Background").onClick(()=>c.emit("change_background",Random.color()))
