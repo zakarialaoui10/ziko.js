@@ -1,16 +1,20 @@
-import * as THREE from "three"
-//import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { ZikoOrbitControls } from "../Controls";
+import * as THREE from "three";
 import {ZikoUIElement} from "ziko"
 import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
+import { 
+    ZikoOrbitControls,
+    ZikoTransformControls
+ } from "../Controls";
+
 class SceneGl extends ZikoUIElement{
     constructor(w,h){
         super()
         Object.assign(this.cache,{
-            control:{
-                orbit:null
+            controls:{
+                orbit:null,
+                transfrom:null
             }
         })
         Object.assign(this,SceneComposer.call(this))
@@ -23,7 +27,8 @@ class SceneGl extends ZikoUIElement{
         this.camera.currentCamera.position.z=10;
         this.camera.parent=this;
         this.sceneGl.background=new THREE.Color("#ff0000");
-        this.cache.control.orbit=ZikoOrbitControls(this)
+        this.cache.controls.orbit=ZikoOrbitControls(this)
+        this.cache.controls.transfrom=ZikoTransformControls(this)
         this.renderGl()
         this.render();
         this.size(w,h);
