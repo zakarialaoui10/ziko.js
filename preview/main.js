@@ -143,29 +143,30 @@ c.remove()
 //     Flex().size("100px","80px"),
 //     Flex().size("100px","80px")
 //     )
-a=new SceneGl(400,400)
+
+
+Scene=new SceneGl(400,400)
 b=cube3(2)
-a.addGl(b)
-
-// bc = new BroadcastChannel("test_channel");
-
-// bc.postMessage("This is a test message.");
-
-// bc.onmessage = (event) => {
-//     console.log(event);
-//   };
+Scene.addGl(b)
 c=Ziko.Events.Channel("test")
-
-btn("Set Random Background").onClick(()=>c.emit("change_background",Random.color()))
-c.on("change_background",e=>a.background(e))
-
-
-c.on("orbit_change",e=>a.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
-a.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
-    rx:a.camera.ROTX,
-    ry:a.camera.ROTY,
-    rz:a.camera.ROTZ,
-    px:a.camera.POSX,
-    py:a.camera.POSY,
-    pz:a.camera.POSZ
+btn("Update Scene Color").onClick(()=>{
+    const Color=Random.color()
+    Scene.background(Color)
+    c.emit("update_scene_color",Color)
+})
+c.on("update_scene_color",e=>Scene[0].color(e))
+btn("Update Mesh Color").onClick(()=>{
+    const Color=Random.color()
+    Scene[0].color(Color)
+    c.emit("update_mesh_color",Color)
+})
+c.on("update_mesh_color",e=>Scene.background(e))
+c.on("orbit_change",e=>Scene.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
+Scene.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
+    rx:Scene.camera.ROTX,
+    ry:Scene.camera.ROTY,
+    rz:Scene.camera.ROTZ,
+    px:Scene.camera.POSX,
+    py:Scene.camera.POSY,
+    pz:Scene.camera.POSZ
 }))

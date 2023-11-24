@@ -53618,60 +53618,60 @@ class ZikoTHREECamera{
 	get halfV(){
 		return this.pD*Math.tan(this.halfFovV)
 	}
-	posX(x=this.POSX){
+	posX(x=this.px){
 		this.currentCamera.position.x=x;
 		this.#maintain();
 		return this;
 	}
-	posY(y=this.POSY){
+	posY(y=this.py){
 		this.currentCamera.position.y=y;
 		this.#maintain();
 		return this;
 	}
-	posZ(z=this.POSZ){
+	posZ(z=this.pz){
 		this.currentCamera.position.z=z;
 		this.#maintain();
 		return this;
 	}
-	get POSX(){
+	get px(){
 		return this.currentCamera.position.x;
 	}
-	get POSY(){
+	get py(){
 		return this.currentCamera.position.y;
 	}
-	get POSZ(){
+	get pz(){
 		return this.currentCamera.position.z;
 	}
-	pos(x=this.POSX,y=this.POSY,z=this.POSZ){
+	pos(x=this.px,y=this.py,z=this.pz){
 		this.currentCamera.position.set(x,y,z);
 		this.#maintain();
 		return this;
 	}
-	rotX(x=this.ROTX){
+	rotX(x=this.rx){
 		this.currentCamera.rotation.x=x;
 		this.#maintain();
 		return this;
 	}
-	rotY(y=this.ROTY){
+	rotY(y=this.ry){
 		this.currentCamera.rotation.y=y;
 		this.#maintain();
 		return this;
 	}
-	rotZ(z=this.ROTZ){
+	rotZ(z=this.rz){
 		this.currentCamera.rotation.z=z;
 		this.#maintain();
 		return this;
 	}
-	get ROTX(){
+	get rx(){
 		return this.currentCamera.rotation.x;
 	}
-	get ROTY(){
+	get ry(){
 		return this.currentCamera.rotation.y;
 	}
-	get ROTZ(){
+	get rz(){
 		return this.currentCamera.rotation.z;
 	}
-	rot(x=this.ROTX,y=this.ROTY,z=this.ROTZ){
+	rot(x=this.rx,y=this.ry,z=this.rz){
 		this.currentCamera.rotation.set(x,y,z);
 		this.#maintain();
 		return this;
