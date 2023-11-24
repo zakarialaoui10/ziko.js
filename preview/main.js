@@ -156,13 +156,11 @@ a.addGl(b)
 //   };
 c=Ziko.Events.Channel("test")
 
+btn("Set Random Background").onClick(()=>c.emit("change_background",Random.color()))
 c.on("change_background",e=>a.background(e))
 
-c.on("change_background",e=>console.log(e))
-//c.on("orbit_change",e=>a.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
-//c.on("orbit_change",e=>console.log(e))
 
-btn("Set Random Background").onClick(()=>c.emit("change_background",Random.color()))
+c.on("orbit_change",e=>a.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
 a.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
     rx:a.camera.ROTX,
     ry:a.camera.ROTY,
