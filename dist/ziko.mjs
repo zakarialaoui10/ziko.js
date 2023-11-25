@@ -3645,6 +3645,12 @@ class ZikoChannel{
         this.EVENTS_DATAS_PAIRS=new Map();
         this.EVENTS_HANDLERS_PAIRS=new Map();
         this.LAST_RECEIVED_EVENT="";
+        this.UUID=crypto.randomUUID();
+        this.SUBSCRIBERS=new Set([this.UUID]);
+    }
+    get broadcast(){
+        // update receiver
+        return this;
     }
     emit(event, data){
         this.EVENTS_DATAS_PAIRS.set(event,data);
@@ -3656,14 +3662,11 @@ class ZikoChannel{
         this.#maintainOn();
         return this;
     }
-    onAll(){
-        this.channel.onmessage = (e) => {
-            console.log(e.data);
-          };   
-    }
     #maintainOn(){
         this.channel.onmessage = (e) => {
             this.LAST_RECEIVED_EVENT=e.data.last_sended_event;
+            const USER_ID=e.data.userId;
+            this.SUBSCRIBERS.add(USER_ID);
             const Data=e.data.EVENTS_DATAS_PAIRS.get(this.LAST_RECEIVED_EVENT);
             const Handler=this.EVENTS_HANDLERS_PAIRS.get(this.LAST_RECEIVED_EVENT);
             if(Data && Handler)Handler(Data);
@@ -3673,7 +3676,8 @@ class ZikoChannel{
     #maintainEmit(event){
         this.channel.postMessage({
             EVENTS_DATAS_PAIRS:this.EVENTS_DATAS_PAIRS,
-            last_sended_event:event
+            last_sended_event:event,
+            userId:this.UUID
         });
         return this;
     }

@@ -16,6 +16,11 @@ class ZikoThreeMesh{
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
     }
+    get isHovered(){
+        //this.parent.renderGl()
+
+        return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
+    }
     _Maintain(){
         this.mesh=new THREE.Mesh(this.geometry,this.material.currentMaterial);
         if(this.parent)this.parent.renderGl();

@@ -17,7 +17,8 @@ class SceneGl extends ZikoUIElement{
                 transfrom:null
             },
             pointer:new THREE.Vector2(),
-		    raycaster:new THREE.Raycaster()
+		    raycaster:new THREE.Raycaster(),
+            last_intersected_uuid:null
         })
         Object.assign(this,SceneComposer.call(this))
         this.element=document.createElement("figure");
@@ -36,19 +37,27 @@ class SceneGl extends ZikoUIElement{
         this.size(w,h);
         
     }
-    renderGl(){
-
+    updateLastIntersected(){
         this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
-        // calculate objects intersecting the picking ray
-        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children );
-        for ( let i = 0; i < intersects.length; i ++ ) {
-            //intersects[ i ].object.material.color.set( 0x0000ff );
-            if(intersects[i].object.uuid==this[0].mesh.uuid){
-                this[0].mesh.color=new THREE.Color(0,0,1)
+        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children ).filter(n=>{
+            return !(
+                (n.object.type.includes("Controls"))||
+                (n.object.tag==="helper")||
+                ["X","Y","Z","XYZ","XYZE","E"].includes(n.object.name)
+            )
+        });
+        if(intersects.length===0)this.cache.last_intersected_uuid=null;
+        else{
+            for ( let i = 0; i < intersects.length; i ++ ) {
+                this.cache.last_intersected_uuid=intersects[i].object.uuid;
+                //return this.items
             }
-            else this[0].mesh.color=new THREE.Color(0,1,1) 
+            //return []
         }
-
+        
+    }
+    renderGl(callback){
+        this.updateLastIntersected()
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 		return this;
 	}

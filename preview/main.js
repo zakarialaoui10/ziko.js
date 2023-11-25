@@ -145,7 +145,7 @@ c.remove()
 //     )
 
 
-Scene=new SceneGl("100vw","90vh").style({
+Scene=new SceneGl("400px","400px").style({
     margin:0,
     overfflow:"hidden"
 })
@@ -165,7 +165,7 @@ btn("Update Mesh Color").onClick(()=>{
 })
 c.on("update_mesh_color",e=>Scene.background(e))
 c.on("orbit_change",e=>Scene.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
-Scene.cache.controls.orbit.onChange(()=>c.emit("orbit_change",{
+Scene.cache.controls.orbit.onChange(()=>c.broadcast.emit("orbit_change",{
     rx:Scene.camera.rx,
     ry:Scene.camera.ry,
     rz:Scene.camera.rz,
