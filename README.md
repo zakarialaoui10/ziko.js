@@ -5,7 +5,7 @@
 <br>
 
 
-**⏳ It will be released soon ⏳**
+**⏳ It will be released soon ... ⏳**
 
 
 # Features 
