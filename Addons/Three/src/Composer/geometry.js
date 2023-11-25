@@ -20,7 +20,7 @@ export function GeometryComposer(){
 			return this;
         },
         pos:function(x,y,z){
-			this.mesh.rotation.set(x,y,z);
+			this.mesh.position.set(x,y,z);
 			maintain.call(this);
 			return this;
         },

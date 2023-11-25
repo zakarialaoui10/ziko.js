@@ -15,7 +15,9 @@ class SceneGl extends ZikoUIElement{
             controls:{
                 orbit:null,
                 transfrom:null
-            }
+            },
+            pointer:new THREE.Vector2(),
+		    raycaster:new THREE.Raycaster()
         })
         Object.assign(this,SceneComposer.call(this))
         this.element=document.createElement("figure");
@@ -35,6 +37,18 @@ class SceneGl extends ZikoUIElement{
         
     }
     renderGl(){
+
+        this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
+        // calculate objects intersecting the picking ray
+        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children );
+        for ( let i = 0; i < intersects.length; i ++ ) {
+            //intersects[ i ].object.material.color.set( 0x0000ff );
+            if(intersects[i].object.uuid==this[0].mesh.uuid){
+                this[0].mesh.color=new THREE.Color(0,0,1)
+            }
+            else this[0].mesh.color=new THREE.Color(0,1,1) 
+        }
+
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 		return this;
 	}

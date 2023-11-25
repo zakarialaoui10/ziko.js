@@ -6,9 +6,8 @@ import {
 import { ZikoMaterial } from "./Materials/index.js";
 class ZikoThreeMesh{
     constructor(Geometry,Material){
-        this._cache={
-            // Mouse:new THREE.Vector2(),
-		    // Raycaster:new THREE.Raycaster()
+        this.cache={
+            
         }
         this.parent=null; // Scene
         this.mesh=new THREE.Mesh(Geometry,Material);

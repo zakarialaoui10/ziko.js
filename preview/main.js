@@ -145,8 +145,11 @@ c.remove()
 //     )
 
 
-Scene=new SceneGl(400,400)
-b=cube3(2)
+Scene=new SceneGl("100vw","90vh").style({
+    margin:0,
+    overfflow:"hidden"
+})
+b=cube3(2).pos(0.7,0.6,-1)
 Scene.addGl(b)
 c=Ziko.Events.Channel("test")
 btn("Update Scene Color").onClick(()=>{
@@ -162,7 +165,7 @@ btn("Update Mesh Color").onClick(()=>{
 })
 c.on("update_mesh_color",e=>Scene.background(e))
 c.on("orbit_change",e=>Scene.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
-Scene.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
+Scene.cache.controls.orbit.onChange(()=>c.emit("orbit_change",{
     rx:Scene.camera.rx,
     ry:Scene.camera.ry,
     rz:Scene.camera.rz,
@@ -170,3 +173,9 @@ Scene.cache.control.orbit.onChange(()=>c.emit("orbit_change",{
     py:Scene.camera.py,
     pz:Scene.camera.pz
 }))
+
+Scene.onPtrMove((e)=>{
+    Scene.cache.pointer.x = ( e.mx / Scene.Width ) * 2 - 1;
+	Scene.cache.pointer.y = - ( e.my / Scene.Height ) * 2 + 1;
+    Scene.renderGl()
+})

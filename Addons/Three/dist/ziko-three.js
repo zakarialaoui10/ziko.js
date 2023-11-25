@@ -52273,7 +52273,7 @@
 				return this;
 	        },
 	        pos:function(x,y,z){
-				this.mesh.rotation.set(x,y,z);
+				this.mesh.position.set(x,y,z);
 				maintain.call(this);
 				return this;
 	        },
@@ -52532,9 +52532,8 @@
 
 	class ZikoThreeMesh{
 	    constructor(Geometry,Material){
-	        this._cache={
-	            // Mouse:new THREE.Vector2(),
-			    // Raycaster:new THREE.Raycaster()
+	        this.cache={
+	            
 	        };
 	        this.parent=null; // Scene
 	        this.mesh=new Mesh(Geometry,Material);
@@ -55787,7 +55786,9 @@
 	            controls:{
 	                orbit:null,
 	                transfrom:null
-	            }
+	            },
+	            pointer:new Vector2(),
+			    raycaster:new Raycaster()
 	        });
 	        Object.assign(this,SceneComposer.call(this));
 	        this.element=document.createElement("figure");
@@ -55807,6 +55808,18 @@
 	        
 	    }
 	    renderGl(){
+
+	        this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
+	        // calculate objects intersecting the picking ray
+	        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children );
+	        for ( let i = 0; i < intersects.length; i ++ ) {
+	            //intersects[ i ].object.material.color.set( 0x0000ff );
+	            if(intersects[i].object.uuid==this[0].mesh.uuid){
+	                this[0].mesh.color=new Color(0,0,1);
+	            }
+	            else this[0].mesh.color=new Color(0,1,1); 
+	        }
+
 			this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 			return this;
 		}
