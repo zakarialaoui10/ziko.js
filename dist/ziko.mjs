@@ -7086,4 +7086,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Time, UI$1 as UI, Watch, Ziko, ZikoUIAudio, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUIVideo };
+export { Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Time, UI$1 as UI, Watch, Ziko, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUIVideo };

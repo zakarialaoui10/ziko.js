@@ -52350,6 +52350,13 @@ const image2texture=Image=>{
 
 };
 
+const canvas2texture=Canvas=>{
+    let element=null;
+    if(Canvas instanceof ziko.ZikoUICanvas)element = Canvas.element;
+    return new CanvasTexture(element)
+
+};
+
 function MaterialComposer(){
     return {
         useBasic(){
@@ -52445,6 +52452,9 @@ function MaterialComposer(){
             }
             if(texture instanceof ziko.ZikoUIImage){
                 this.mesh.material.map=image2texture(texture);
+            }
+            if(texture instanceof ziko.ZikoUICanvas){
+                this.mesh.material.map=canvas2texture(texture);
             }
             this.mesh.material.needsUpdate=true;
             this?.parent.renderGl();
@@ -55703,7 +55713,6 @@ function SceneComposer(){
             this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
             this.camera.currentCamera.updateProjectionMatrix();
             this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-            
             for (let i = 0; i < this.items.length; i++)
             Object.assign(this, { [[i]]: this.items[i] });
             this.length = this.items.length;

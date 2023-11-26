@@ -1,6 +1,12 @@
 import * as THREE from "three"
-import { ZikoUIImage } from "ziko";
-import { image2texture } from "../Loaders/image";
+import { 
+    ZikoUIImage,
+    ZikoUICanvas
+ } from "ziko";
+import { 
+    image2texture,
+    canvas2texture
+ } from "../Loaders/index";
 export function MaterialComposer(){
     return {
         useBasic(){
@@ -96,6 +102,9 @@ export function MaterialComposer(){
             }
             if(texture instanceof ZikoUIImage){
                 this.mesh.material.map=image2texture(texture);
+            }
+            if(texture instanceof ZikoUICanvas){
+                this.mesh.material.map=canvas2texture(texture);
             }
             this.mesh.material.needsUpdate=true;
             this?.parent.renderGl()

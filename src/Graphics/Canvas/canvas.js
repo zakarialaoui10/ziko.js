@@ -179,4 +179,7 @@ class ZikoUICanvas extends ZikoUIElement{
 }
 
 const Canvas=(w,h)=>new ZikoUICanvas(w,h);
+export{
+    ZikoUICanvas
+}
 export default Canvas;

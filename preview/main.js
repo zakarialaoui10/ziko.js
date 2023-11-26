@@ -144,7 +144,7 @@ class ZikoIntersectionObserver{
 //     )
 
 
-Scene=new SceneGl("100vw","100vh").style({
+Scene=new SceneGl(500,500).style({
     margin:0,
     overfflow:"hidden"
 })
@@ -190,3 +190,4 @@ c.on("transfrom_change",e=>Scene[0].pos(e.x.pos,e.y.pos,e.z.pos))
 img=image("zikojs.png").hide()
 texture=ZikoThree.image2texture(img)
 cnv.remove()
+Scene.camera.posX((screenLeft/screen.width)*4.663076581549986)

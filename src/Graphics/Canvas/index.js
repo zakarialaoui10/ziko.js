@@ -1,4 +1,5 @@
 import Canvas  from "./canvas.js";
+import { ZikoUICanvas } from "./canvas.js";
 import { 
     canvasArc,
     canvasCircle,  
@@ -7,6 +8,7 @@ import {
     canvasRect,
 } from "./Elements/index.js";
 export {
+    ZikoUICanvas,
     Canvas,
     canvasArc,
     canvasCircle,

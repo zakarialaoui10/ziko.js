@@ -7105,6 +7105,7 @@
   exports.Watch = Watch;
   exports.Ziko = Ziko;
   exports.ZikoUIAudio = ZikoUIAudio;
+  exports.ZikoUICanvas = ZikoUICanvas;
   exports.ZikoUIElement = ZikoUIElement;
   exports.ZikoUIFigure = ZikoUIFigure;
   exports.ZikoUIImage = ZikoUIImage;

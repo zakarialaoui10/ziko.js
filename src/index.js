@@ -9,6 +9,7 @@ import {Watch} from "./Reactivity/index.js"
 import {SPA} from "./Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
+import { ZikoUICanvas } from "./Graphics/Canvas/canvas.js";
 const Ziko={
     Math,
     UI,
@@ -55,6 +56,8 @@ export {
     ZikoUIImage,
     ZikoUIAudio,
     ZikoUIVideo,
-    ZikoUIFigure
+    ZikoUIFigure,
  } from "./UI/index";
-
+export {
+    ZikoUICanvas
+}
