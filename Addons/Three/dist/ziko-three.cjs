@@ -52342,6 +52342,14 @@ function GeometryComposer(){
     }
 }
 
+const image2texture=Image=>{
+    let img=null;
+    if(Image instanceof ziko.ZikoUIImage)img = Image.element.src;
+    else if(Image instanceof HTMLElement)img = Image.src;
+    return new TextureLoader().load(img)
+
+};
+
 function MaterialComposer(){
     return {
         useBasic(){
@@ -52431,8 +52439,16 @@ function MaterialComposer(){
             this.mesh.material.transparent=bool;
             this.render();          
         },
-        texture:function(){
-            
+        texture:function(texture){
+            if(texture instanceof Texture){
+                this.mesh.material.map=texture;
+            }
+            if(texture instanceof ziko.ZikoUIImage){
+                this.mesh.material.map=image2texture(texture);
+            }
+            this.mesh.material.needsUpdate=true;
+            this?.parent.renderGl();
+            return this;
         }
     }
 }
@@ -52602,7 +52618,6 @@ class ZikoThreeMesh{
 
 }
 
-console.log(ziko.ZikoUIImage);
 const waitElm=(UIElement)=>{
     return new Promise(resolve => {
         if (UIElement) {
@@ -55903,9 +55918,8 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
 }
 const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
 
-// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-// console.log(OrbitControls)
 const ZikoThree={
+    image2texture,
     THREE,
     SceneGl,
     cube3,

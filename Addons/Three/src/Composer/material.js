@@ -1,4 +1,6 @@
 import * as THREE from "three"
+import { ZikoUIImage } from "ziko";
+import { image2texture } from "../Loaders/image";
 export function MaterialComposer(){
     return {
         useBasic(){
@@ -88,8 +90,16 @@ export function MaterialComposer(){
             this.mesh.material.transparent=bool;
             this.render();          
         },
-        texture:function(){
-            
+        texture:function(texture){
+            if(texture instanceof THREE.Texture){
+                this.mesh.material.map=texture;
+            }
+            if(texture instanceof ZikoUIImage){
+                this.mesh.material.map=image2texture(texture);
+            }
+            this.mesh.material.needsUpdate=true;
+            this?.parent.renderGl()
+            return this;
         }
     }
 }

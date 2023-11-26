@@ -66,33 +66,33 @@ const B=p(
 // C=inputImage()
 // C.remove()
 
-c=Canvas(500,500).view(-10,-10,10,10).size(500,500).adjust()
+cnv=Canvas(500,500).view(-10,-10,10,10).size(500,500).adjust()
 // a1=canvasCircle(-2,0,2.3).fill().color({fill:"#5555AA"})
 // a2=canvasCircle(2,0,2.3).fill().color({fill:"#AA5555"})
 // c.append(a1)
 // c.append(a2)
 // a1.ca
 
-c.onPtrDown(e=>{
-    c.ctx.beginPath()
-    c.ctx.moveTo(
-        map(e.dx,0,c.Width,c.Xmin,c.Xmax),
-        map(e.dy,0,c.Height,c.Ymin,c.Ymax)
+cnv.onPtrDown(e=>{
+    cnv.ctx.beginPath()
+    cnv.ctx.moveTo(
+        map(e.dx,0,cnv.Width,cnv.Xmin,cnv.Xmax),
+        map(e.dy,0,cnv.Height,cnv.Ymin,cnv.Ymax)
         )
 })
-c.onPtrMove(e=>{
+cnv.onPtrMove(e=>{
     if(e.isDown){
-        const x=map(e.mx,0,c.Width,c.axisMatrix[0][0],c.axisMatrix[1][0])
-        const y=map(e.my,0,c.Height,c.axisMatrix[1][1],c.axisMatrix[0][1])
-    // c.ctx.lineTo(
-    //     map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0]),
-    //     map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
+        const x=map(e.mx,0,cnv.Width,cnv.axisMatrix[0][0],cnv.axisMatrix[1][0])
+        const y=map(e.my,0,cnv.Height,cnv.axisMatrix[1][1],cnv.axisMatrix[0][1])
+    // cnv.ctx.lineTo(
+    //     map(e.mx,0,cnv.element.offsetWidth,cnv.axisMatrix[0][0],cnv.axisMatrix[1][0]),
+    //     map(e.my,0,cnv.element.offsetHeight,cnv.axisMatrix[1][1],cnv.axisMatrix[0][1])
     //     )
-    c.ctx.stroke()
-    c.append(canvasCircle(x,y,1).color({fill:"#5555AA"}).fill())
+    cnv.ctx.stroke()
+    cnv.append(canvasCircle(x,y,1).color({fill:"#5555AA"}).fill())
     }
 })
-c.onPtrUp(()=>{})
+cnv.onPtrUp(()=>{})
 
 
 
@@ -126,7 +126,7 @@ class ZikoIntersectionObserver{
 
  //WatchIntersection=(UI,callback)=>new ZikoIntersectionObserver(UI,callback)
  //a=WatchIntersection(c,e=>console.log(e.ratio)).start()
-//  c.WatchIntersection(e=>console.log(e.ratio))
+//  cnv.WatchIntersection(e=>console.log(e.ratio))
 // a=Flex(text(1),text(2),text(3)).size(400,"auto")
 //b=DragEvent(a).onDrag(e=>console.log(e))
   
@@ -138,7 +138,6 @@ class ZikoIntersectionObserver{
 // s=s1.add(s2)
 // f=Signal.filter(s)
 
-c.remove()
 // Car=Carousel(
 //     Flex().size("100px","80px"),
 //     Flex().size("100px","80px")
@@ -149,7 +148,7 @@ Scene=new SceneGl("400px","400px").style({
     margin:0,
     overfflow:"hidden"
 })
-b=cube3(2).pos(0.7,0.6,-1)
+b=cube3(2)
 Scene.addGl(b)
 c=Ziko.Events.Channel("test")
 btn("Update Scene Color").onClick(()=>{
@@ -179,3 +178,6 @@ Scene.onPtrMove((e)=>{
 	Scene.cache.pointer.y = - ( e.my / Scene.Height ) * 2 + 1;
     Scene.renderGl()
 })
+
+img=image("zikojs.png").hide()
+texture=ZikoThree.image2texture(img)

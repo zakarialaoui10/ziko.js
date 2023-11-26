@@ -1,7 +1,6 @@
-// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-// console.log(OrbitControls)
 import * as THREE from "three"
 import { SceneGl } from "./Scene/gl.js";
+import { image2texture } from "./Loaders/image.js";
 import{
     cube3,
     plan3,
@@ -20,6 +19,7 @@ import{
     groupe3,
 } from "./Mesh/index.js";
 const ZikoThree={
+    image2texture,
     THREE,
     SceneGl,
     cube3,
