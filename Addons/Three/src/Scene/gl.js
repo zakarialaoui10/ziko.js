@@ -3,10 +3,6 @@ import {ZikoUIElement} from "ziko"
 import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
-import { 
-    ZikoOrbitControls,
-    ZikoTransformControls
- } from "../Controls";
 
 class SceneGl extends ZikoUIElement{
     constructor(w,h){
@@ -30,11 +26,12 @@ class SceneGl extends ZikoUIElement{
         this.camera.currentCamera.position.z=10;
         this.camera.parent=this;
         this.sceneGl.background=new THREE.Color("#ff0000");
-        this.cache.controls.orbit=ZikoOrbitControls(this)
-        this.cache.controls.transfrom=ZikoTransformControls(this)
+        //this.cache.controls.orbit=ZikoOrbitControls(this)
+        //this.cache.controls.transfrom=ZikoTransformControls(this)
         this.renderGl()
         this.render();
         this.size(w,h);
+        this.WatchSize(()=>this.maintain())
         
     }
     updateLastIntersected(){

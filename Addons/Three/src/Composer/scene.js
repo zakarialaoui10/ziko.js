@@ -1,5 +1,11 @@
 import * as THREE from "three"
 import { waitElm } from "../Utils";
+import { image2texture } from "../Loaders/image";
+import { ZikoUIImage } from "ziko";
+import { 
+    ZikoOrbitControls, 
+    ZikoTransformControls 
+} from "../Controls";
 export function SceneComposer(){
     return {
         size:function(w = "100%", h = "100%") {
@@ -17,6 +23,10 @@ export function SceneComposer(){
             return this;
         },
         maintain:function(){
+            this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+            this.camera.currentCamera.updateProjectionMatrix();
+            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+            
             for (let i = 0; i < this.items.length; i++)
             Object.assign(this, { [[i]]: this.items[i] });
             this.length = this.items.length;
@@ -29,6 +39,12 @@ export function SceneComposer(){
         background:function(texture){
             if(typeof texture === "string"){
                 if((texture.length===7||texture.length===4)&&texture[0]==="#")this.sceneGl.background=new THREE.Color(texture);
+            }
+            if(texture instanceof THREE.Texture){
+                this.sceneGl.background=texture;
+            }
+            if(texture instanceof ZikoUIImage){
+                this.sceneGl.background=image2texture(texture);
             }
             this.renderGl();
             return this;
@@ -111,6 +127,14 @@ export function SceneComposer(){
         },
         toJson:function(){
 
+        },
+        useOrbitControls(){
+            if(!this.cache.controls.orbit)this.cache.controls.orbit=ZikoOrbitControls(this);
+            return this;
+        },
+        useTransformControls(){
+            if(!this.cache.controls.orbit)this.cache.controls.transform=ZikoTransformControls(this);
+            return this;
         }
     }
 }

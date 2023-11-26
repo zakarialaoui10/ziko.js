@@ -144,7 +144,7 @@ class ZikoIntersectionObserver{
 //     )
 
 
-Scene=new SceneGl("400px","400px").style({
+Scene=new SceneGl("100vw","100vh").style({
     margin:0,
     overfflow:"hidden"
 })
@@ -164,20 +164,29 @@ btn("Update Mesh Color").onClick(()=>{
 })
 c.on("update_mesh_color",e=>Scene.background(e))
 c.on("orbit_change",e=>Scene.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz))
-Scene.cache.controls.orbit.onChange(()=>c.broadcast.emit("orbit_change",{
-    rx:Scene.camera.rx,
-    ry:Scene.camera.ry,
-    rz:Scene.camera.rz,
-    px:Scene.camera.px,
-    py:Scene.camera.py,
-    pz:Scene.camera.pz
+// Scene.cache.controls.orbit.onChange(()=>c.broadcast.emit("orbit_change",{
+//     rx:Scene.camera.rx,
+//     ry:Scene.camera.ry,
+//     rz:Scene.camera.rz,
+//     px:Scene.camera.px,
+//     py:Scene.camera.py,
+//     pz:Scene.camera.pz
+// }))
+Scene.useTransformControls()
+Scene.cache.controls.transform.attach(Scene[0])
+Scene.cache.controls.transform.onChange(()=>c.broadcast.emit("transfrom_change",{
+    x:Scene[0].x,
+    y:Scene[0].y,
+    z:Scene[0].z
 }))
+c.on("transfrom_change",e=>Scene[0].pos(e.x.pos,e.y.pos,e.z.pos))
 
-Scene.onPtrMove((e)=>{
-    Scene.cache.pointer.x = ( e.mx / Scene.Width ) * 2 - 1;
-	Scene.cache.pointer.y = - ( e.my / Scene.Height ) * 2 + 1;
-    Scene.renderGl()
-})
+// Scene.onPtrMove((e)=>{
+//     Scene.cache.pointer.x = ( e.mx / Scene.Width ) * 2 - 1;
+// 	Scene.cache.pointer.y = - ( e.my / Scene.Height ) * 2 + 1;
+//     Scene.renderGl()
+// })
 
 img=image("zikojs.png").hide()
 texture=ZikoThree.image2texture(img)
+cnv.remove()
