@@ -38,17 +38,23 @@ function RemoveAll(){
 }
 export {
     Ziko,
-    ZikoUIElement,
     Math,
     UI,
     Time,
     Graphics,
     Events,
     Data,
+    ZikoUIElement,
     Multi,
     SPA,
     Watch,
     ExtractAll,
     RemoveAll
 };
+export { 
+    ZikoUIImage,
+    ZikoUIAudio,
+    ZikoUIVideo,
+    ZikoUIFigure
+ } from "./UI/index";
 

@@ -140,4 +140,5 @@ const UI={
         return this;
     }
 }
-export default UI
+export * from "./Media"
+export default UI;

@@ -54,7 +54,7 @@ class SceneGl extends ZikoUIElement{
             }
             //return []
         }
-        
+        return this;
     }
     renderGl(callback){
         this.updateLastIntersected()

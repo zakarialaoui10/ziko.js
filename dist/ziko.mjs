@@ -5195,7 +5195,6 @@ class ZikoUIVideo extends ZikoUIElement {
       return this;
     }
   }
-const video = (src, width, height) => new ZikoUIVideo(src, width, height);
 
 class ZikoUIWebcame extends ZikoUIVideo{
     constructor(){
@@ -5285,6 +5284,7 @@ class ZikoUIImage extends ZikoUIElement {
 const image = (src, width, height) => new ZikoUIImage(src, width, height);
 const audio = (src) => new ZikoUIAudio(src);
 const figure =(image,caption) =>new ZikoUIFigure(image,caption);
+const video = (src, width, height) => new ZikoUIVideo(src, width, height);
 
 function set_vertical(direction){
     direction == 1
@@ -7086,4 +7086,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Time, UI$1 as UI, Watch, Ziko, ZikoUIElement };
+export { Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Time, UI$1 as UI, Watch, Ziko, ZikoUIAudio, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUIVideo };

@@ -31,8 +31,6 @@ class ZikoUIVideo extends ZikoUIElement {
       return this;
     }
   }
-const video = (src, width, height) => new ZikoUIVideo(src, width, height);
 export {
-    video,
     ZikoUIVideo
 }

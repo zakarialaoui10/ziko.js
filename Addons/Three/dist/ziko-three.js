@@ -52545,7 +52545,7 @@
 	    get isHovered(){
 	        //this.parent.renderGl()
 
-	        return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
+	        //return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
 	    }
 	    _Maintain(){
 	        this.mesh=new Mesh(this.geometry,this.material.currentMaterial);
@@ -52604,6 +52604,7 @@
 
 	}
 
+	console.log(ziko.ZikoUIImage);
 	const waitElm=(UIElement)=>{
 	    return new Promise(resolve => {
 	        if (UIElement) {
@@ -55826,11 +55827,11 @@
 	        else {
 	            for ( let i = 0; i < intersects.length; i ++ ) {
 	                this.cache.last_intersected_uuid=intersects[i].object.uuid;
-	                return this.items
+	                //return this.items
 	            }
-	            return []
+	            //return []
 	        }
-	        
+	        return this;
 	    }
 	    renderGl(callback){
 	        this.updateLastIntersected();

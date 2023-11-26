@@ -1,5 +1,8 @@
 
 import ZikoUIElement from "../ZikoUIElement.js"
+import {
+  ZikoUIVideo
+} from "./video.js"
 class ZikoUIImage extends ZikoUIElement {
     constructor(src, w, h) {
       super();
@@ -67,8 +70,16 @@ class ZikoUIImage extends ZikoUIElement {
 
 const image = (src, width, height) => new ZikoUIImage(src, width, height);
 const audio = (src) => new ZikoUIAudio(src);
-const figure =(image,caption) =>new ZikoUIFigure(image,caption)
-export{image,audio,figure,ZikoUIImage}
+const figure =(image,caption) =>new ZikoUIFigure(image,caption);
+const video = (src, width, height) => new ZikoUIVideo(src, width, height);
+
 export{
-  video
-}from "./video.js";
+  image,
+  audio,
+  figure,
+  video,
+  ZikoUIImage,
+  ZikoUIAudio,
+  ZikoUIFigure,
+  ZikoUIVideo
+}

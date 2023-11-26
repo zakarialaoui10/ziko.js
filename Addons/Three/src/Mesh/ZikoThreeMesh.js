@@ -19,7 +19,7 @@ class ZikoThreeMesh{
     get isHovered(){
         //this.parent.renderGl()
 
-        return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
+        //return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
     }
     _Maintain(){
         this.mesh=new THREE.Mesh(this.geometry,this.material.currentMaterial);
