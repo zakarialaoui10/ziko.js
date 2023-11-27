@@ -58991,6 +58991,14 @@ function SceneComposer(){
         useTransformControls(){
             if(!this.cache.controls.orbit)this.cache.controls.transform=ZikoTransformControls(this);
             return this;
+        },
+        usePerspectiveCamera(){
+            this.camera.usePerspective();
+            return this;
+        },
+        useOrthographicCamera(){
+            this.camera.useOrthographic();
+            return this;
         }
     }
 }
@@ -59139,9 +59147,6 @@ class ZikoThreeExtrudeSvg extends ZikoThreeGroupe{
     constructor(svg,depth=5,bevelEnabled=false){
         super();
         this.add(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)));
-    }
-    a(){
-        console.log("...");
     }
 }
 const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeExtrude(shape,depth,bevelEnabled);

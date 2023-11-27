@@ -134,6 +134,14 @@ export function SceneComposer(){
         useTransformControls(){
             if(!this.cache.controls.orbit)this.cache.controls.transform=ZikoTransformControls(this);
             return this;
+        },
+        usePerspectiveCamera(){
+            this.camera.usePerspective();
+            return this;
+        },
+        useOrthographicCamera(){
+            this.camera.useOrthographic();
+            return this;
         }
     }
 }
