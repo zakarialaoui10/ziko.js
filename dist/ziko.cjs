@@ -3800,96 +3800,6 @@ class ZikoIntersectionObserver{
 
 const WatchIntersection=(UI,callback,config)=>new ZikoIntersectionObserver(UI,callback,config);
 
-class ZikoMutationObserver {
-    constructor(UIElement, options) {
-      this.UIElement = UIElement;
-      this.options = options || { attributes: true, childList: true, subtree: true };
-      this.observer = null;
-      this.streamingEnabled = true;
-      this.mutationHistory = {
-        attributes: [],
-        childList: [],
-        subtree: [],
-      };
-  
-      this.observeCallback = (mutationsList, observer) => {
-        if (this.streamingEnabled) {
-          for (const mutation of mutationsList) {
-            if (mutation.type === 'attributes') {
-              this.mutationHistory.attributes.push(mutation.target.getAttribute(mutation.attributeName));
-            } else if (mutation.type === 'childList') {
-              this.mutationHistory.childList.push(mutation);
-            } else if (mutation.type === 'subtree') {
-              this.mutationHistory.subtree.push(mutation);
-            }
-          }
-        }
-        if (this.callback) {
-          this.callback(mutationsList, observer);
-        }
-      };
-    }
-  
-    observe(callback) {
-      if(!this.observer) {
-        this.observer = new MutationObserver(this.observeCallback);
-        this.observer.observe(this.UIElement.element, this.options);
-        this.callback = callback;
-        this.streamingEnabled = true;
-      }
-    }
-  
-    pause(options) {
-      if (this.observer) {
-        this.observer.disconnect();
-        if (options) {
-          this.observer.observe(this.UIElement, options);
-        }
-      }
-    }
-  
-    reset(options) {
-      if (this.observer) {
-        this.observer.disconnect();
-        this.observer.observe(this.UIElement, options || this.options);
-      }
-    }
-  
-    clear() {
-      if (this.observer) {
-        this.observer.disconnect();
-        this.observer = null;
-        this.mutationHistory = {
-          attributes: [],
-          childList: [],
-          subtree: [],
-        };
-      }
-      this.streamingEnabled = false;
-      return this;
-    }
-  
-    getMutationHistory() {
-      return this.mutationHistory;
-    }
-  
-    enableStreaming() {
-      this.streamingEnabled = true;
-      return this;
-    }
-  
-    disableStreaming() {
-      this.streamingEnabled = false;
-      return this;
-    }
-  }
-
-const Watch=(UIElement,options={},callback=null)=>{
-    const Observer= new ZikoMutationObserver(UIElement,options);
-    if(callback)Observer.observe(callback);
-    return Observer
-};
-
 class ZikoUIElement {
   constructor(element ) {
     this.Target = document.body;
@@ -7060,6 +6970,9 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
+// import { 
+//     ZikoUICanvas
+//  } from "./Graphics/Canvas/canvas.js";
 const Ziko={
     Math: Math$1,
     UI: UI$1,
@@ -7069,7 +6982,7 @@ const Ziko={
     Data,
     Multi,
     SPA,
-    Watch,
+    //Watch,
     ALL_UI_ELEMENTS,
 };
 function ExtractAll(){
@@ -7088,6 +7001,12 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
+// export {
+//     ZikoUICanvas
+// }
+console.log(1);
+
+exports.Canvas = Canvas;
 exports.Data = Data;
 exports.Events = Events;
 exports.ExtractAll = ExtractAll;
@@ -7096,13 +7015,31 @@ exports.Math = Math$1;
 exports.Multi = Multi;
 exports.RemoveAll = RemoveAll;
 exports.SPA = SPA;
+exports.Svg = Svg;
 exports.Time = Time;
 exports.UI = UI$1;
-exports.Watch = Watch;
 exports.Ziko = Ziko;
 exports.ZikoUIAudio = ZikoUIAudio;
 exports.ZikoUICanvas = ZikoUICanvas;
 exports.ZikoUIElement = ZikoUIElement;
 exports.ZikoUIFigure = ZikoUIFigure;
 exports.ZikoUIImage = ZikoUIImage;
+exports.ZikoUISvg = ZikoUISvg;
 exports.ZikoUIVideo = ZikoUIVideo;
+exports.audio = audio;
+exports.canvasArc = canvasArc;
+exports.canvasCircle = canvasCircle;
+exports.canvasLine = canvasLine;
+exports.canvasPoints = canvasPoints;
+exports.canvasRect = canvasRect;
+exports.figure = figure;
+exports.image = image;
+exports.svgCircle = svgCircle;
+exports.svgEllipse = svgEllipse;
+exports.svgGroupe = svgGroupe;
+exports.svgImage = svgImage;
+exports.svgLine = svgLine;
+exports.svgPolygon = svgPolygon;
+exports.svgRect = svgRect;
+exports.svgText = svgText;
+exports.video = video;

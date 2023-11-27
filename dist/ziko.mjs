@@ -3798,96 +3798,6 @@ class ZikoIntersectionObserver{
 
 const WatchIntersection=(UI,callback,config)=>new ZikoIntersectionObserver(UI,callback,config);
 
-class ZikoMutationObserver {
-    constructor(UIElement, options) {
-      this.UIElement = UIElement;
-      this.options = options || { attributes: true, childList: true, subtree: true };
-      this.observer = null;
-      this.streamingEnabled = true;
-      this.mutationHistory = {
-        attributes: [],
-        childList: [],
-        subtree: [],
-      };
-  
-      this.observeCallback = (mutationsList, observer) => {
-        if (this.streamingEnabled) {
-          for (const mutation of mutationsList) {
-            if (mutation.type === 'attributes') {
-              this.mutationHistory.attributes.push(mutation.target.getAttribute(mutation.attributeName));
-            } else if (mutation.type === 'childList') {
-              this.mutationHistory.childList.push(mutation);
-            } else if (mutation.type === 'subtree') {
-              this.mutationHistory.subtree.push(mutation);
-            }
-          }
-        }
-        if (this.callback) {
-          this.callback(mutationsList, observer);
-        }
-      };
-    }
-  
-    observe(callback) {
-      if(!this.observer) {
-        this.observer = new MutationObserver(this.observeCallback);
-        this.observer.observe(this.UIElement.element, this.options);
-        this.callback = callback;
-        this.streamingEnabled = true;
-      }
-    }
-  
-    pause(options) {
-      if (this.observer) {
-        this.observer.disconnect();
-        if (options) {
-          this.observer.observe(this.UIElement, options);
-        }
-      }
-    }
-  
-    reset(options) {
-      if (this.observer) {
-        this.observer.disconnect();
-        this.observer.observe(this.UIElement, options || this.options);
-      }
-    }
-  
-    clear() {
-      if (this.observer) {
-        this.observer.disconnect();
-        this.observer = null;
-        this.mutationHistory = {
-          attributes: [],
-          childList: [],
-          subtree: [],
-        };
-      }
-      this.streamingEnabled = false;
-      return this;
-    }
-  
-    getMutationHistory() {
-      return this.mutationHistory;
-    }
-  
-    enableStreaming() {
-      this.streamingEnabled = true;
-      return this;
-    }
-  
-    disableStreaming() {
-      this.streamingEnabled = false;
-      return this;
-    }
-  }
-
-const Watch=(UIElement,options={},callback=null)=>{
-    const Observer= new ZikoMutationObserver(UIElement,options);
-    if(callback)Observer.observe(callback);
-    return Observer
-};
-
 class ZikoUIElement {
   constructor(element ) {
     this.Target = document.body;
@@ -7058,6 +6968,9 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
+// import { 
+//     ZikoUICanvas
+//  } from "./Graphics/Canvas/canvas.js";
 const Ziko={
     Math: Math$1,
     UI: UI$1,
@@ -7067,7 +6980,7 @@ const Ziko={
     Data,
     Multi,
     SPA,
-    Watch,
+    //Watch,
     ALL_UI_ELEMENTS,
 };
 function ExtractAll(){
@@ -7086,4 +6999,9 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Time, UI$1 as UI, Watch, Ziko, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUIVideo };
+// export {
+//     ZikoUICanvas
+// }
+console.log(1);
+
+export { Canvas, Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, figure, image, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, video };

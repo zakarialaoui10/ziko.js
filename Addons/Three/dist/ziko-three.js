@@ -55948,6 +55948,7 @@
 	}
 	const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
 
+	console.log(ziko.svgCircle);
 	const ZikoThree={
 	    image2texture,
 	    THREE,
