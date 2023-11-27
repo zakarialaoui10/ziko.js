@@ -59083,6 +59083,29 @@ class SceneGl extends ziko.ZikoUIElement{
     }
 }
 
+class ZikoThreeHelper {
+    constructor(){
+        this.element=null;
+        Object.assign(this, GeometryComposer.call(this));      
+    }
+}
+class ZikoThreeGridHelper extends ZikoThreeHelper{
+    constructor(n,m,color1,color2){
+        super();
+        this.element=new THREE.GridHelper(n,m,color1,color2);
+        Object.assign(this, GeometryComposer.call(this));
+    }
+}
+class ZikoThreePolarHelper extends ZikoThreeHelper{
+    constructor(r,R,c,d){
+        super();
+        this.element=new THREE.PolarGridHelper(r,R,c,d);
+    }
+}
+
+const gridHelper3=(n,m,color1,color2)=>new ZikoThreeGridHelper(n,m,color1,color2);
+const polarHelper3=(r,R,c,d)=>new ZikoThreePolarHelper(r,R,c,d);
+
 const cube3=(l)=>new ZikoThreeMesh(new BoxGeometry(l,l,l));
 const plan3=(w,h)=>new ZikoThreeMesh(new PlaneGeometry(w,h,100,100));
 const line3=(p0,p1)=>{
@@ -59175,6 +59198,8 @@ const ZikoThree={
     groupe3,
     svg3,
     extrude3,
+    gridHelper3,
+    polarHelper3,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
