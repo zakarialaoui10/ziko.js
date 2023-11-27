@@ -1,6 +1,5 @@
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import {ZikoUISvg} from "ziko";
-import * as THREE from "three"
 const loadSVG=svg=>{
     let element=null;
     let shapes = [];

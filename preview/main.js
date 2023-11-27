@@ -193,3 +193,6 @@ img=image("zikojs.png").hide()
 texture=ZikoThree.image2texture(img)
 cnv.remove()
 //Scene.camera.posX((screenLeft/screen.width)*4.663076581549986)
+
+sv=Svg()
+sv.add(svgCircle(0,0,5))

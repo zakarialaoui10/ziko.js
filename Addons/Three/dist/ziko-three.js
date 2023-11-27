@@ -51709,7 +51709,7 @@
 
 	}
 
-	var THREE = /*#__PURE__*/Object.freeze({
+	var THREE$1 = /*#__PURE__*/Object.freeze({
 		__proto__: null,
 		ACESFilmicToneMapping: ACESFilmicToneMapping,
 		AddEquation: AddEquation,
@@ -55511,7 +55511,7 @@
 
 	}
 
-	const loadSVG=svg=>{
+	const loadSVG$1=svg=>{
 	    let element=null;
 	    let shapes = [];
 	    const loader = new SVGLoader();
@@ -59101,16 +59101,11 @@
 	const icosahedron3=(r)=>new ZikoThreeMesh(new IcosahedronGeometry(r));
 	const octahedron3=(r)=>new ZikoThreeMesh(new OctahedronGeometry(r));
 
-	const extrudeGeo=(shape,depth=20,bevelEnabled=false)=>new ExtrudeGeometry(shape, {
-	    depth,
-	    bevelEnabled
-	});
-	const extrudeSvgGeo=(svg,depth=20,bevelEnabled=false)=>loadSVG(svg).map(n=>extrudeGeo(n,depth,bevelEnabled));
-
 	class ZikoThreeGroupe extends ZikoThreeMesh{
 		constructor(){
 			super();
 			this.mesh=new Group();
+			this.items=[];
 		}
 		add(...obj){
 			for(let i=0;i<obj.length;i++){
@@ -59118,6 +59113,7 @@
 					obj[i]=new ZikoThreeMesh(obj);
 				}
 				this.mesh.add(obj[i].mesh);
+				this.items.push(obj[i]);
 			}
 	       return this;
 		}
@@ -59130,12 +59126,18 @@
 		}
 	}
 	const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
-	const svg3=(svg,depth=20,bevelEnabled=false)=>groupe3(...extrudeSvgGeo(svg,depth,bevelEnabled).map(n=>new ZikoThreeMesh(n)));
+
+	const extrudeGeo=(shape,depth=20,bevelEnabled=false)=>new THREE.ExtrudeGeometry(shape, {
+	    depth,
+	    bevelEnabled
+	});
+	const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeMesh(extrudeGeo(shape,depth,bevelEnabled));
+	const svg3=(svg,depth=5,bevelEnabled=false)=>groupe3(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)));
 
 	const ZikoThree={
-	    loadSVG,
+	    loadSVG: loadSVG$1,
 	    image2texture,
-	    THREE,
+	    THREE: THREE$1,
 	    SceneGl,
 	    cube3,
 	    plan3,
@@ -59153,6 +59155,7 @@
 	    octahedron3,
 	    groupe3,
 	    svg3,
+	    extrude3,
 	    ExtractAll:function(){
 	            for (let i = 0; i < Object.keys(this).length; i++) {
 	                globalThis[Object.keys(this)[i]] = Object.values(this)[i];

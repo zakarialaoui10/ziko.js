@@ -16,5 +16,8 @@ export{
 } from "./Meshes/primitives.js";
 export{
     groupe3,
-    svg3
 } from "./Meshes/groupe.js"
+export { 
+    svg3,
+    extrude3
+ } from "./Meshes/extrude.js";

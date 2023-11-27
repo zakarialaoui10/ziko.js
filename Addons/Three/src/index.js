@@ -19,7 +19,8 @@ import{
     icosahedron3,
     octahedron3,
     groupe3,
-    svg3
+    svg3,
+    extrude3
 } from "./Mesh/index.js";
 const ZikoThree={
     loadSVG,
@@ -42,6 +43,7 @@ const ZikoThree={
     octahedron3,
     groupe3,
     svg3,
+    extrude3,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
                 globalThis[Object.keys(this)[i]] = Object.values(this)[i];
