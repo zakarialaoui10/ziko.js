@@ -143,8 +143,8 @@ class ZikoIntersectionObserver{
 //     Flex().size("100px","80px")
 //     )
 
-
-Scene=new SceneGl("100vw","100vh").style({
+//screen.width,screen.heigh
+Scene=new SceneGl("50vw","50vh").style({
     margin:0,
     overfflow:"hidden"
 })
@@ -196,3 +196,5 @@ cnv.remove()
 
 sv=Svg()
 sv.add(svgCircle(0,0,5))
+//Scene.camera.useOrthographic()
+//Scene[0].posX(map(Scene.Width,0,Scene.Width,Scene.camera.left,Scene.camera.right)/2)

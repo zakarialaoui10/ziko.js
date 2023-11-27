@@ -59123,13 +59123,28 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
 }
 const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
 
-const extrudeGeo=(shape,depth=20,bevelEnabled=false)=>new THREE.ExtrudeGeometry(shape, {
-    depth,
-    bevelEnabled
-});
-const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeMesh(extrudeGeo(shape,depth,bevelEnabled));
-//const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeExtrude(shape,depth,bevelEnabled);
-const svg3=(svg,depth=5,bevelEnabled=false)=>groupe3(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)));
+class ZikoThreeExtrude extends ZikoThreeMesh{
+    constructor(shape,depth=5,bevelEnabled=false){
+        super();
+        this.mesh=new THREE.Mesh(
+            new THREE.ExtrudeGeometry(shape, {
+            depth,
+            bevelEnabled
+        }));
+    }
+}
+class ZikoThreeExtrudeSvg extends ZikoThreeGroupe{
+    constructor(svg,depth=5,bevelEnabled=false){
+        super();
+        this.add(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)));
+    }
+    a(){
+        console.log("...");
+    }
+}
+const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeExtrude(shape,depth,bevelEnabled);
+//const svg3=(svg,depth=5,bevelEnabled=false)=>groupe3(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)))
+const svg3=(svg,depth=5,bevelEnabled=false)=>new ZikoThreeExtrudeSvg(svg,depth,bevelEnabled);
 
 const ZikoThree={
     loadSVG: loadSVG$1,

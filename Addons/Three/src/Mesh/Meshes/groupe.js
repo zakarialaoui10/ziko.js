@@ -28,4 +28,5 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
 	}
 }
 export const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
+export {ZikoThreeGroupe}
 
