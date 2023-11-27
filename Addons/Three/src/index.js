@@ -1,6 +1,7 @@
 import * as THREE from "three"
 import { SceneGl } from "./Scene/gl.js";
 import { image2texture } from "./Loaders/image.js";
+import { loadSVG } from "./Loaders/svg.js";
 import{
     cube3,
     plan3,
@@ -19,6 +20,7 @@ import{
     groupe3,
 } from "./Mesh/index.js";
 const ZikoThree={
+    loadSVG,
     image2texture,
     THREE,
     SceneGl,
@@ -48,5 +50,6 @@ const ZikoThree={
         return this;
     }
 }
+
 //if(Ziko)Object.assign(Ziko.Graphics,{...ZikoThree})
 export default ZikoThree
