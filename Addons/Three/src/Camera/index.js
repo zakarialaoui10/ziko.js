@@ -3,10 +3,10 @@ import * as THREE from "three"
 class ZikoTHREECamera{
 	#PERSPECTIVE_CAMERA
 	#ORTHOGRAPHIC_CAMERA
-	constructor(width,height,near=0.1,far=1000){
+	constructor(w,h,near=0.1,far=1000){
 		this.parent=null;
-		this.width=width;
-		this.height=height;
+		this.w=w;
+		this.h=h;
 		this.near=near;
 		this.far=far;
 		this.#PERSPECTIVE_CAMERA=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
@@ -14,7 +14,7 @@ class ZikoTHREECamera{
 		this.fov=50;
 		this.pD=10;
 		this.oD=120;
-		this.#ORTHOGRAPHIC_CAMERA=new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+		//this.#ORTHOGRAPHIC_CAMERA=new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
 	}
 	#maintain(){
 		if(this.parent)this.parent.renderGl()
@@ -33,13 +33,13 @@ class ZikoTHREECamera{
 		return -this.pD*Math.tan(this.halfFovV);
 	}
 	get aspect(){
-		return this.width/this.height;
+		return this.w/this.h;
 	}
 	get halfFovV(){
 		return THREE.MathUtils.DEG2RAD * this.fov * 0.5;
 	}
 	get halfFovH(){
-		return Math.atan((this.width/this.height) * Math.tan( this.halfFovV ) );
+		return Math.atan((this.parent.Width/this.parent.Height) * Math.tan( this.halfFovV ) );
 	}
 	get halfH(){
 		return this.pD*Math.tan(this.halfFovH)
@@ -106,14 +106,19 @@ class ZikoTHREECamera{
 		return this;
 	}
 	usePerspective(){
+		if(!this.#PERSPECTIVE_CAMERA)this.#PERSPECTIVE_CAMERA=new PerspectiveCamera(this.fov,this.aspect,this.near,this.far);
 		this.currentCamera=this.#PERSPECTIVE_CAMERA;
 		this.currentCamera.position.set(0,0,this.pD);
+		this.parent.cache.controls.orbit.control.object=this.currentCamera;
 		this.#maintain()
 		return this;
 	}
 	useOrthographic(){
-		this.currentCamera= this.#ORTHOGRAPHIC_CAMERA
+		if(!this.#ORTHOGRAPHIC_CAMERA)this.#ORTHOGRAPHIC_CAMERA=new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+		this.currentCamera= this.#ORTHOGRAPHIC_CAMERA;
 		this.currentCamera.position.set(0,0,this.oD);
+		this.parent.cache.controls.orbit.control.object=this.currentCamera;
+
 		this.#maintain()
 		return this;
 	}
