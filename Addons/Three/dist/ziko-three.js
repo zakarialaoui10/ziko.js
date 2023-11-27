@@ -55521,7 +55521,7 @@
 	    if(svg instanceof HTMLElement) element = svg.outerHTML;
 	    const svgData = loader.parse(element);
 	    svgData.paths.forEach((path, i) => {
-	        shapes = path.toShapes(true);
+	        shapes[i]=path.toShapes(true)[0];
 	    });
 	    return shapes
 	};
@@ -59101,6 +59101,12 @@
 	const icosahedron3=(r)=>new ZikoThreeMesh(new IcosahedronGeometry(r));
 	const octahedron3=(r)=>new ZikoThreeMesh(new OctahedronGeometry(r));
 
+	const extrudeGeo=(shape,depth=20,bevelEnabled=false)=>new ExtrudeGeometry(shape, {
+	    depth,
+	    bevelEnabled
+	});
+	const extrudeSvgGeo=(svg,depth=20,bevelEnabled=false)=>loadSVG(svg).map(n=>extrudeGeo(n,depth,bevelEnabled));
+
 	class ZikoThreeGroupe extends ZikoThreeMesh{
 		constructor(){
 			super();
@@ -59108,6 +59114,9 @@
 		}
 		add(...obj){
 			for(let i=0;i<obj.length;i++){
+				if(obj[i] instanceof Mesh){
+					obj[i]=new ZikoThreeMesh(obj);
+				}
 				this.mesh.add(obj[i].mesh);
 			}
 	       return this;
@@ -59121,6 +59130,7 @@
 		}
 	}
 	const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
+	const svg3=(svg,depth=20,bevelEnabled=false)=>groupe3(...extrudeSvgGeo(svg,depth,bevelEnabled).map(n=>new ZikoThreeMesh(n)));
 
 	const ZikoThree={
 	    loadSVG,
@@ -59142,6 +59152,7 @@
 	    icosahedron3,
 	    octahedron3,
 	    groupe3,
+	    svg3,
 	    ExtractAll:function(){
 	            for (let i = 0; i < Object.keys(this).length; i++) {
 	                globalThis[Object.keys(this)[i]] = Object.values(this)[i];

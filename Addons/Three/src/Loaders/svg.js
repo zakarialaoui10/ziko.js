@@ -1,5 +1,5 @@
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
-import {Ziko, ZikoUISvg} from "ziko";
+import {ZikoUISvg} from "ziko";
 import * as THREE from "three"
 const loadSVG=svg=>{
     let element=null;
@@ -11,7 +11,7 @@ const loadSVG=svg=>{
     if(svg instanceof HTMLElement) element = svg.outerHTML;
     const svgData = loader.parse(element);
     svgData.paths.forEach((path, i) => {
-        shapes = path.toShapes(true);
+        shapes[i]=path.toShapes(true)[0];
     });
     return shapes
 }

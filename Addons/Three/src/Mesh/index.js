@@ -15,5 +15,6 @@ export{
     octahedron3
 } from "./Meshes/primitives.js";
 export{
-    groupe3
+    groupe3,
+    svg3
 } from "./Meshes/groupe.js"
