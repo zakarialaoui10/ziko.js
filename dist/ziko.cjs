@@ -6484,8 +6484,8 @@ class ZikoUICanvas extends ZikoUIElement{
             width:w,
             height:h
         });
-        //this.lineWidth();
-        //this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        this.lineWidth();
+        this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
         return this;
     }
     adjust(){
@@ -7008,6 +7008,7 @@ console.log(1);
 
 exports.Canvas = Canvas;
 exports.Data = Data;
+exports.Ease = Ease;
 exports.Events = Events;
 exports.ExtractAll = ExtractAll;
 exports.Graphics = Graphics;
@@ -7032,8 +7033,10 @@ exports.canvasCircle = canvasCircle;
 exports.canvasLine = canvasLine;
 exports.canvasPoints = canvasPoints;
 exports.canvasRect = canvasRect;
+exports.debounce = debounce;
 exports.figure = figure;
 exports.image = image;
+exports.loop = loop;
 exports.svgCircle = svgCircle;
 exports.svgEllipse = svgEllipse;
 exports.svgGroupe = svgGroupe;
@@ -7042,4 +7045,10 @@ exports.svgLine = svgLine;
 exports.svgPolygon = svgPolygon;
 exports.svgRect = svgRect;
 exports.svgText = svgText;
+exports.throttle = throttle;
+exports.timeTaken = timeTaken;
+exports.time_memory_Taken = time_memory_Taken;
 exports.video = video;
+exports.wait = wait;
+exports.waitForUIElm = waitForUIElm;
+exports.waitForUIElmSync = waitForUIElmSync;

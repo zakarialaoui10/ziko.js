@@ -1,8 +1,12 @@
 import * as THREE from "three";
-import {ZikoUIElement} from "ziko"
+import {
+    ZikoUIElement,
+    throttle
+} from "ziko"
 import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
+import { waitElm } from "../Utils";
 
 class SceneGl extends ZikoUIElement{
     constructor(w,h){
@@ -26,35 +30,19 @@ class SceneGl extends ZikoUIElement{
         this.camera.currentCamera.position.z=10;
         this.camera.parent=this;
         this.sceneGl.background=new THREE.Color("#ff0000");
-        //this.cache.controls.orbit=ZikoOrbitControls(this)
-        //this.cache.controls.transfrom=ZikoTransformControls(this)
         this.renderGl()
         this.render();
         this.size(w,h);
         this.WatchSize(()=>this.maintain())
+        //this.useOrbitCOntrols()
+        waitElm(this.element).then(()=>{
+            this.useOrbitControls()
+        })
+        
         
     }
-    updateLastIntersected(){
-        this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
-        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children ).filter(n=>{
-            return !(
-                (n.object.type.includes("Controls"))||
-                (n.object.tag==="helper")||
-                ["X","Y","Z","XYZ","XYZE","E"].includes(n.object.name)
-            )
-        });
-        if(intersects.length===0)this.cache.last_intersected_uuid=null;
-        else{
-            for ( let i = 0; i < intersects.length; i ++ ) {
-                this.cache.last_intersected_uuid=intersects[i].object.uuid;
-                //return this.items
-            }
-            //return []
-        }
-        return this;
-    }
-    renderGl(callback){
-        this.updateLastIntersected()
+    renderGl(){
+        //this.forEachIntersectedItem()
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 		return this;
 	}
@@ -77,6 +65,26 @@ class SceneGl extends ZikoUIElement{
         this.maintain();
 		this.renderGl();
 		return this;
+    }
+    forEachIntersectedItem(if_callback=()=>{},else_callback=()=>{}){
+        this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
+        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children ).filter(n=>{
+            return !(
+                (n.object.type.includes("Controls"))||
+                (n.object.tag==="helper")||
+                ["X","Y","Z","XYZ","XYZE","E"].includes(n.object.name)
+            )
+        })
+        const uuids=intersects.map(n=>n.object.uuid);
+        const intersectred_items=this.items.filter(n=>uuids.includes(n.mesh.uuid))
+        const not_intersectred_items=this.items.filter(n=>!uuids.includes(n.mesh.uuid))
+            for ( let i = 0; i < intersectred_items.length; i ++ ) {
+                console.log(intersectred_items[i])
+                intersectred_items[i].color("#ff00ff")    
+            }
+        return this;
+
+        // should be used  with throttle or debounce
     }
 }
 export {SceneGl}

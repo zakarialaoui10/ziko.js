@@ -75,28 +75,30 @@ export function MaterialComposer(){
             return this;
         },
 
-        color:function(color){
+        color:function(color,render=true){
             this.mesh.material.color=new THREE.Color(color);
-            this.render();
+            if(render)this.render();
             return this;
         },
         side:function(){
 
         },
-        wireframe:function(bool){
+        wireframe:function(bool,render=true){
             this.mesh.material.wireframe=bool;
-            this.render();
+            if(render)this.render();
+            return this;
         },
-        opacity:function(n=1){
-            this.transparent(true);
+        opacity:function(n=1,render=true){
+            this.transparent(true,false);
             this.mesh.material.opacity=n;
-            this.render()
+            if(render)this.render()
+            return this;
         },
-        transparent:function(bool){
+        transparent:function(bool,render=true){
             this.mesh.material.transparent=bool;
             this.render();          
         },
-        texture:function(texture){
+        texture:function(texture,render=true){
             if(texture instanceof THREE.Texture){
                 this.mesh.material.map=texture;
             }
@@ -107,7 +109,8 @@ export function MaterialComposer(){
                 this.mesh.material.map=canvas2texture(texture);
             }
             this.mesh.material.needsUpdate=true;
-            this?.parent.renderGl()
+            //this?.parent.renderGl()
+            if(render)this.render()
             return this;
         }
     }

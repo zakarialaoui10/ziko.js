@@ -63,6 +63,7 @@ export {
  export * from "./Math/index.js"
  export * from "./UI/index.js";
  export * from "./Graphics/index.js";
+ export * from "./Time"
 
 // export {
 //     ZikoUICanvas

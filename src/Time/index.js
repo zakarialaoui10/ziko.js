@@ -10,7 +10,7 @@ import {
     time_memory_Taken,
     waitForUIElm,
     waitForUIElmSync
-} from "./utils/index.js"
+} from "./utils/index.js";
 const Time={
     wait,
     timeTaken,
@@ -32,4 +32,6 @@ const Time={
         return this;
     }
 }
+export * from "./utils/index.js"
+export {loop}
 export default Time;

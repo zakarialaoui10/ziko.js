@@ -6482,8 +6482,8 @@ class ZikoUICanvas extends ZikoUIElement{
             width:w,
             height:h
         });
-        //this.lineWidth();
-        //this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        this.lineWidth();
+        this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
         return this;
     }
     adjust(){
@@ -7004,4 +7004,4 @@ function RemoveAll(){
 // }
 console.log(1);
 
-export { Canvas, Data, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, figure, image, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, video };
+export { Canvas, Data, Ease, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, debounce, figure, image, loop, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, throttle, timeTaken, time_memory_Taken, video, wait, waitForUIElm, waitForUIElmSync };

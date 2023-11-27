@@ -52425,28 +52425,30 @@ function MaterialComposer(){
             return this;
         },
 
-        color:function(color){
+        color:function(color,render=true){
             this.mesh.material.color=new Color(color);
-            this.render();
+            if(render)this.render();
             return this;
         },
         side:function(){
 
         },
-        wireframe:function(bool){
+        wireframe:function(bool,render=true){
             this.mesh.material.wireframe=bool;
-            this.render();
+            if(render)this.render();
+            return this;
         },
-        opacity:function(n=1){
-            this.transparent(true);
+        opacity:function(n=1,render=true){
+            this.transparent(true,false);
             this.mesh.material.opacity=n;
-            this.render();
+            if(render)this.render();
+            return this;
         },
-        transparent:function(bool){
+        transparent:function(bool,render=true){
             this.mesh.material.transparent=bool;
             this.render();          
         },
-        texture:function(texture){
+        texture:function(texture,render=true){
             if(texture instanceof Texture){
                 this.mesh.material.map=texture;
             }
@@ -52457,7 +52459,8 @@ function MaterialComposer(){
                 this.mesh.material.map=canvas2texture(texture);
             }
             this.mesh.material.needsUpdate=true;
-            this?.parent.renderGl();
+            //this?.parent.renderGl()
+            if(render)this.render();
             return this;
         }
     }
@@ -55847,35 +55850,19 @@ class SceneGl extends ziko.ZikoUIElement{
         this.camera.currentCamera.position.z=10;
         this.camera.parent=this;
         this.sceneGl.background=new Color("#ff0000");
-        //this.cache.controls.orbit=ZikoOrbitControls(this)
-        //this.cache.controls.transfrom=ZikoTransformControls(this)
         this.renderGl();
         this.render();
         this.size(w,h);
         this.WatchSize(()=>this.maintain());
+        //this.useOrbitCOntrols()
+        waitElm(this.element).then(()=>{
+            this.useOrbitControls();
+        });
+        
         
     }
-    updateLastIntersected(){
-        this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
-        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children ).filter(n=>{
-            return !(
-                (n.object.type.includes("Controls"))||
-                (n.object.tag==="helper")||
-                ["X","Y","Z","XYZ","XYZE","E"].includes(n.object.name)
-            )
-        });
-        if(intersects.length===0)this.cache.last_intersected_uuid=null;
-        else {
-            for ( let i = 0; i < intersects.length; i ++ ) {
-                this.cache.last_intersected_uuid=intersects[i].object.uuid;
-                //return this.items
-            }
-            //return []
-        }
-        return this;
-    }
-    renderGl(callback){
-        this.updateLastIntersected();
+    renderGl(){
+        //this.forEachIntersectedItem()
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 		return this;
 	}
@@ -55898,6 +55885,26 @@ class SceneGl extends ziko.ZikoUIElement{
         this.maintain();
 		this.renderGl();
 		return this;
+    }
+    forEachIntersectedItem(if_callback=()=>{},else_callback=()=>{}){
+        this.cache.raycaster.setFromCamera( this.cache.pointer, this.camera.currentCamera );
+        const intersects = this.cache.raycaster.intersectObjects( this.sceneGl.children ).filter(n=>{
+            return !(
+                (n.object.type.includes("Controls"))||
+                (n.object.tag==="helper")||
+                ["X","Y","Z","XYZ","XYZE","E"].includes(n.object.name)
+            )
+        });
+        const uuids=intersects.map(n=>n.object.uuid);
+        const intersectred_items=this.items.filter(n=>uuids.includes(n.mesh.uuid));
+        this.items.filter(n=>!uuids.includes(n.mesh.uuid));
+            for ( let i = 0; i < intersectred_items.length; i ++ ) {
+                console.log(intersectred_items[i]);
+                intersectred_items[i].color("#ff00ff");    
+            }
+        return this;
+
+        // should be used  with throttle or debounce
     }
 }
 
@@ -55946,7 +55953,6 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
 }
 const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
 
-console.log(ziko.svgCircle);
 const ZikoThree={
     image2texture,
     THREE,

@@ -46,6 +46,6 @@ const Graphics={
         return this;
     }
 }
-export * from "./Svg"
-export * from "./Canvas"
+export * from "./Svg/index.js"
+export * from "./Canvas/index.js"
 export default Graphics;
