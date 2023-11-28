@@ -122,7 +122,7 @@ export function SceneComposer(){
             return this;
         },
         useTransformControls(){
-            if(!this.cache.controls.orbit)this.cache.controls.transform=ZikoTransformControls(this);
+            if(!this.cache.controls.transform)this.cache.controls.transform=ZikoTransformControls(this);
             return this;
         },
         usePerspectiveCamera(){

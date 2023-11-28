@@ -58804,7 +58804,7 @@ class ZikoThreeTransformControls{
     #TARGET
     constructor(target){
         this.#TARGET=target;
-        this.control=new TransformControls(target.camera.currentCamera,target.rendererGl.domElement);
+        this.control=new TransformControls(target.camera.currentCamera,target.rendererTarget.domElement);
         this.#TARGET.sceneGl.add(this.control);
         this.isPaused=false;
         this.mode="translate";
@@ -58841,7 +58841,7 @@ class ZikoThreeTransformControls{
     onChange(handler){
         this.control.addEventListener("change",()=>{
             if(!this.isPaused){
-                this.#TARGET.renderGl();
+                this.#TARGET.renderGl()?.renderCss();
                 if(handler)handler();
             }
         });
@@ -58979,7 +58979,7 @@ function SceneComposer(){
             return this;
         },
         useTransformControls(){
-            if(!this.cache.controls.orbit)this.cache.controls.transform=ZikoTransformControls(this);
+            if(!this.cache.controls.transform)this.cache.controls.transform=ZikoTransformControls(this);
             return this;
         },
         usePerspectiveCamera(){
@@ -59000,7 +59000,7 @@ class ZikoThreeSceneGl extends ziko.ZikoUIElement{
             type:"gl",
             controls:{
                 orbit:null,
-                transfrom:null
+                transform:null
             },
             pointer:new Vector2(),
 		    raycaster:new Raycaster(),
@@ -59025,6 +59025,9 @@ class ZikoThreeSceneGl extends ziko.ZikoUIElement{
         //this.useOrbitCOntrols()
         waitElm(this.element.element).then(()=>{
             this.useOrbitControls();
+        });
+        this.style({
+            margin:0
         });
         
         

@@ -16,7 +16,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
             type:"gl",
             controls:{
                 orbit:null,
-                transfrom:null
+                transform:null
             },
             pointer:new THREE.Vector2(),
 		    raycaster:new THREE.Raycaster(),
@@ -41,6 +41,9 @@ class ZikoThreeSceneGl extends ZikoUIElement{
         //this.useOrbitCOntrols()
         waitElm(this.element.element).then(()=>{
             this.useOrbitControls()
+        })
+        this.style({
+            margin:0
         })
         
         

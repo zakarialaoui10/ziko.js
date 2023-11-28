@@ -4,7 +4,7 @@ class ZikoThreeTransformControls{
     #TARGET
     constructor(target){
         this.#TARGET=target;
-        this.control=new TransformControls(target.camera.currentCamera,target.rendererGl.domElement);
+        this.control=new TransformControls(target.camera.currentCamera,target.rendererTarget.domElement);
         this.#TARGET.sceneGl.add(this.control)
         this.isPaused=false;
         this.mode="translate";
@@ -41,7 +41,7 @@ class ZikoThreeTransformControls{
     onChange(handler){
         this.control.addEventListener("change",()=>{
             if(!this.isPaused){
-                this.#TARGET.renderGl()
+                this.#TARGET.renderGl()?.renderCss()
                 if(handler)handler()
             }
         });
