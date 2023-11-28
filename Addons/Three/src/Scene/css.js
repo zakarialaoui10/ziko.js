@@ -2,6 +2,7 @@ import { ZikoUIElement } from "ziko";
 import * as THREE from "three"
 import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { ZikoThreeSceneGl } from "./gl";
+import {UI3} from "../Mesh/index"
 class ZikoThreeSceneCss extends ZikoThreeSceneGl{
     constructor(w,h){
         super(w,h)
@@ -12,11 +13,10 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         this.figure.append(this.canvas);
         this.element.appendChild(this.rendererCss.domElement);
         this.canvas.style({
-            position:"absolute",
-            margin:0
+            position:"absolute"
         })
         this.useOrbitControls()
-        this.cache.controls.orbit.onChange(()=>{this.renderGl();this.renderCss()})
+        this.cache.controls.orbit.onChange(()=>{this.renderGl().renderCss()})
     }
     renderCss(){
         this.rendererCss.render(this.sceneCss,this.camera.currentCamera);
@@ -31,12 +31,16 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         Object.assign(this, { [[i]]: this.items[i] });
         this.length = this.items.length;
         this.renderGl()
+        this.renderCss()
         return this;
     }
     addCssElement(...element){
         for(let i=0;i<element.length;i++){
-            if(element[i] instanceof ZikoUIElement)console.log(element[i])
+            console.log(element[i] instanceof ZikoUIElement)
+            if(element[i] instanceof ZikoUIElement)this.sceneCss.add(UI3(element[i]))
         }
+    this.renderGl().renderCss()
+    return this;
     }
 }
 

@@ -59385,69 +59385,6 @@ class CSS3DRenderer {
 
 }
 
-class ZikoThreeSceneCss extends ZikoThreeSceneGl{
-    constructor(w,h){
-        super(w,h);
-        this.sceneCss=new Scene();
-        this.rendererCss=new CSS3DRenderer();
-        this.rendererCss.domElement.appendChild(this.rendererGl.domElement );
-        this.rendererTarget=this.rendererCss;
-        this.figure.append(this.canvas);
-        this.element.appendChild(this.rendererCss.domElement);
-        this.canvas.style({
-            position:"absolute",
-            margin:0
-        });
-        this.useOrbitControls();
-        this.cache.controls.orbit.onChange(()=>{this.renderGl();this.renderCss();});
-    }
-    renderCss(){
-        this.rendererCss.render(this.sceneCss,this.camera.currentCamera);
-        return this;
-    }
-    maintain(){
-        this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
-        this.camera.currentCamera.updateProjectionMatrix();
-        this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-        this.rendererCss.setSize(this.element.clientWidth,this.element.clientHeight);
-        for (let i = 0; i < this.items.length; i++)
-        Object.assign(this, { [[i]]: this.items[i] });
-        this.length = this.items.length;
-        this.renderGl();
-        return this;
-    }
-    addCssElement(...element){
-        for(let i=0;i<element.length;i++){
-            if(element[i] instanceof ziko.ZikoUIElement)console.log(element[i]);
-        }
-    }
-}
-
-const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h);
-
-class ZikoThreeHelper {
-    constructor(){
-        this.element=null;
-        Object.assign(this, GeometryComposer.call(this));      
-    }
-}
-class ZikoThreeGridHelper extends ZikoThreeHelper{
-    constructor(n,m,color1,color2){
-        super();
-        this.element=new THREE.GridHelper(n,m,color1,color2);
-        Object.assign(this, GeometryComposer.call(this));
-    }
-}
-class ZikoThreePolarHelper extends ZikoThreeHelper{
-    constructor(r,R,c,d){
-        super();
-        this.element=new THREE.PolarGridHelper(r,R,c,d);
-    }
-}
-
-const gridHelper3=(n,m,color1,color2)=>new ZikoThreeGridHelper(n,m,color1,color2);
-const polarHelper3=(r,R,c,d)=>new ZikoThreePolarHelper(r,R,c,d);
-
 const cube3=(l)=>new ZikoThreeMesh(new BoxGeometry(l,l,l));
 const plan3=(w,h)=>new ZikoThreeMesh(new PlaneGeometry(w,h,100,100));
 const line3=(p0,p1)=>{
@@ -59519,6 +59456,72 @@ const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeExtrude(shape,de
 const svg3=(svg,depth=5,bevelEnabled=false)=>new ZikoThreeExtrudeSvg(svg,depth,bevelEnabled);
 
 const UI3=ui=>new CSS3DObject(ui.element);
+
+class ZikoThreeSceneCss extends ZikoThreeSceneGl{
+    constructor(w,h){
+        super(w,h);
+        this.sceneCss=new Scene();
+        this.rendererCss=new CSS3DRenderer();
+        this.rendererCss.domElement.appendChild(this.rendererGl.domElement );
+        this.rendererTarget=this.rendererCss;
+        this.figure.append(this.canvas);
+        this.element.appendChild(this.rendererCss.domElement);
+        this.canvas.style({
+            position:"absolute"
+        });
+        this.useOrbitControls();
+        this.cache.controls.orbit.onChange(()=>{this.renderGl().renderCss();});
+    }
+    renderCss(){
+        this.rendererCss.render(this.sceneCss,this.camera.currentCamera);
+        return this;
+    }
+    maintain(){
+        this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+        this.camera.currentCamera.updateProjectionMatrix();
+        this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+        this.rendererCss.setSize(this.element.clientWidth,this.element.clientHeight);
+        for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+        this.length = this.items.length;
+        this.renderGl();
+        this.renderCss();
+        return this;
+    }
+    addCssElement(...element){
+        for(let i=0;i<element.length;i++){
+            console.log(element[i] instanceof ziko.ZikoUIElement);
+            if(element[i] instanceof ziko.ZikoUIElement)this.sceneCss.add(UI3(element[i]));
+        }
+    this.renderGl().renderCss();
+    return this;
+    }
+}
+
+const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h);
+
+class ZikoThreeHelper {
+    constructor(){
+        this.element=null;
+        Object.assign(this, GeometryComposer.call(this));      
+    }
+}
+class ZikoThreeGridHelper extends ZikoThreeHelper{
+    constructor(n,m,color1,color2){
+        super();
+        this.element=new THREE.GridHelper(n,m,color1,color2);
+        Object.assign(this, GeometryComposer.call(this));
+    }
+}
+class ZikoThreePolarHelper extends ZikoThreeHelper{
+    constructor(r,R,c,d){
+        super();
+        this.element=new THREE.PolarGridHelper(r,R,c,d);
+    }
+}
+
+const gridHelper3=(n,m,color1,color2)=>new ZikoThreeGridHelper(n,m,color1,color2);
+const polarHelper3=(r,R,c,d)=>new ZikoThreePolarHelper(r,R,c,d);
 
 const ZikoThree={
     UI3,
