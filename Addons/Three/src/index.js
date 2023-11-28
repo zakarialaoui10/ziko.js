@@ -1,5 +1,6 @@
 import * as THREE from "three"
 import { SceneGl } from "./Scene/gl.js";
+import { SceneCss } from "./Scene/css.js";
 import { image2texture } from "./Loaders/image.js";
 import { loadSVG } from "./Loaders/svg.js";
 //import { extrudeSvg } from "./Mesh/Geometries/index.js";
@@ -24,13 +25,16 @@ import{
     octahedron3,
     groupe3,
     svg3,
-    extrude3
+    extrude3,
+    UI3
 } from "./Mesh/index.js";
 const ZikoThree={
+    UI3,
     loadSVG,
     image2texture,
     THREE,
     SceneGl,
+    SceneCss,
     cube3,
     plan3,
     line3,

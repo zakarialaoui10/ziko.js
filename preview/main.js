@@ -189,12 +189,14 @@ Scene.cache.controls.orbit.onChange(()=>{
 //     Scene.renderGl()
 // })
 
-img=image("zikojs.png").hide()
-texture=ZikoThree.image2texture(img)
+// img=image("zikojs.png").hide()
+// texture=ZikoThree.image2texture(img)
 cnv.remove()
-//Scene.camera.posX((screenLeft/screen.width)*4.663076581549986)
+// //Scene.camera.posX((screenLeft/screen.width)*4.663076581549986)
 
-sv=Svg()
-sv.add(svgCircle(0,0,5))
+// sv=Svg()
+// sv.add(svgCircle(0,0,5))
 //Scene.camera.useOrthographic()
 //Scene[0].posX(map(Scene.Width,0,Scene.Width,Scene.camera.left,Scene.camera.right)/2)
+
+a=SceneCss(300,300)

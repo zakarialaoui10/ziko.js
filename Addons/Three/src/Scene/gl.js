@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import {
     ZikoUIElement,
+    ZikoHtml,
     throttle
 } from "ziko"
 import { ZikoCamera } from "../Camera";
@@ -8,10 +9,11 @@ import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
 import { waitElm } from "../Utils";
 
-class SceneGl extends ZikoUIElement{
+class ZikoThreeSceneGl extends ZikoUIElement{
     constructor(w,h){
         super()
         Object.assign(this.cache,{
+            type:"gl",
             controls:{
                 orbit:null,
                 transfrom:null
@@ -21,10 +23,12 @@ class SceneGl extends ZikoUIElement{
             last_intersected_uuid:null
         })
         Object.assign(this,SceneComposer.call(this))
-        this.element=document.createElement("figure");
-        this.canvas=document.createElement("canvas");
-        this.element.appendChild(this.canvas);
-        this.rendererGl=new THREE.WebGLRenderer({canvas:this.canvas});
+        this.figure=ZikoHtml("figure");
+        this.canvas=ZikoHtml("canvas")
+        this.figure.append(this.canvas);
+        this.element=this.figure.element;
+        this.rendererGl=new THREE.WebGLRenderer({canvas:this.canvas.element});
+        this.rendererTarget=this.rendererGl;
 		this.sceneGl=new THREE.Scene();
         this.camera=ZikoCamera(w,h,0.1,1000);
         this.camera.currentCamera.position.z=10;
@@ -35,11 +39,22 @@ class SceneGl extends ZikoUIElement{
         this.size(w,h);
         this.WatchSize(()=>this.maintain())
         //this.useOrbitCOntrols()
-        waitElm(this.element).then(()=>{
+        waitElm(this.element.element).then(()=>{
             this.useOrbitControls()
         })
         
         
+        
+    }
+    maintain(){
+        this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+        this.camera.currentCamera.updateProjectionMatrix();
+        this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+        for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+        this.length = this.items.length;
+        this.renderGl()
+        return this;
     }
     renderGl(){
         //this.forEachIntersectedItem()
@@ -87,4 +102,8 @@ class SceneGl extends ZikoUIElement{
         // should be used  with throttle or debounce
     }
 }
-export {SceneGl}
+const SceneGl=ZikoThreeSceneGl
+export {
+    ZikoThreeSceneGl,
+    SceneGl
+}

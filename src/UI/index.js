@@ -141,4 +141,5 @@ const UI={
     }
 }
 export * from "./Media"
+export {ZikoHtml}
 export default UI;

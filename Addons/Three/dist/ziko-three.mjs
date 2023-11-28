@@ -1,4 +1,4 @@
-import { ZikoUIImage, ZikoUICanvas, ZikoUISvg, ZikoUIElement } from 'ziko';
+import { ZikoUIImage, ZikoUICanvas, ZikoUISvg, ZikoUIElement, ZikoHtml } from 'ziko';
 
 /**
  * @license
@@ -6801,7 +6801,7 @@ const _x = /*@__PURE__*/ new Vector3();
 const _y = /*@__PURE__*/ new Vector3();
 const _z = /*@__PURE__*/ new Vector3();
 
-const _matrix = /*@__PURE__*/ new Matrix4();
+const _matrix$1 = /*@__PURE__*/ new Matrix4();
 const _quaternion$3 = /*@__PURE__*/ new Quaternion();
 
 class Euler {
@@ -7036,9 +7036,9 @@ class Euler {
 
 	setFromQuaternion( q, order, update ) {
 
-		_matrix.makeRotationFromQuaternion( q );
+		_matrix$1.makeRotationFromQuaternion( q );
 
-		return this.setFromRotationMatrix( _matrix, order, update );
+		return this.setFromRotationMatrix( _matrix$1, order, update );
 
 	}
 
@@ -46362,9 +46362,9 @@ class Audio extends Object3D {
 
 }
 
-const _position = /*@__PURE__*/ new Vector3();
-const _quaternion = /*@__PURE__*/ new Quaternion();
-const _scale = /*@__PURE__*/ new Vector3();
+const _position$4 = /*@__PURE__*/ new Vector3();
+const _quaternion$5 = /*@__PURE__*/ new Quaternion();
+const _scale$3 = /*@__PURE__*/ new Vector3();
 const _orientation = /*@__PURE__*/ new Vector3();
 
 class PositionalAudio extends Audio {
@@ -46473,9 +46473,9 @@ class PositionalAudio extends Audio {
 
 		if ( this.hasPlaybackControl === true && this.isPlaying === false ) return;
 
-		this.matrixWorld.decompose( _position, _quaternion, _scale );
+		this.matrixWorld.decompose( _position$4, _quaternion$5, _scale$3 );
 
-		_orientation.set( 0, 0, 1 ).applyQuaternion( _quaternion );
+		_orientation.set( 0, 0, 1 ).applyQuaternion( _quaternion$5 );
 
 		const panner = this.panner;
 
@@ -46485,16 +46485,16 @@ class PositionalAudio extends Audio {
 
 			const endTime = this.context.currentTime + this.listener.timeDelta;
 
-			panner.positionX.linearRampToValueAtTime( _position.x, endTime );
-			panner.positionY.linearRampToValueAtTime( _position.y, endTime );
-			panner.positionZ.linearRampToValueAtTime( _position.z, endTime );
+			panner.positionX.linearRampToValueAtTime( _position$4.x, endTime );
+			panner.positionY.linearRampToValueAtTime( _position$4.y, endTime );
+			panner.positionZ.linearRampToValueAtTime( _position$4.z, endTime );
 			panner.orientationX.linearRampToValueAtTime( _orientation.x, endTime );
 			panner.orientationY.linearRampToValueAtTime( _orientation.y, endTime );
 			panner.orientationZ.linearRampToValueAtTime( _orientation.z, endTime );
 
 		} else {
 
-			panner.setPosition( _position.x, _position.y, _position.z );
+			panner.setPosition( _position$4.x, _position$4.y, _position$4.z );
 			panner.setOrientation( _orientation.x, _orientation.y, _orientation.z );
 
 		}
@@ -57211,7 +57211,7 @@ class ZikoThreeOrbitControls{
     #TARGET
     constructor(target){
         this.#TARGET=target;
-        this.control=new OrbitControls(target.camera.currentCamera,target.rendererGl.domElement);
+        this.control=new OrbitControls(target.camera.currentCamera,target.rendererTarget.domElement);
         this.isPaused=false;
         this.onChange();
 
@@ -58877,16 +58877,6 @@ function SceneComposer(){
             });
             return this;
         },
-        maintain:function(){
-            this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
-            this.camera.currentCamera.updateProjectionMatrix();
-            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-            for (let i = 0; i < this.items.length; i++)
-            Object.assign(this, { [[i]]: this.items[i] });
-            this.length = this.items.length;
-            this.renderGl();
-            return this;
-        },
         clone:function(){
 
         },
@@ -59001,10 +58991,11 @@ function SceneComposer(){
     }
 }
 
-class SceneGl extends ZikoUIElement{
+class ZikoThreeSceneGl extends ZikoUIElement{
     constructor(w,h){
         super();
         Object.assign(this.cache,{
+            type:"gl",
             controls:{
                 orbit:null,
                 transfrom:null
@@ -59014,10 +59005,12 @@ class SceneGl extends ZikoUIElement{
             last_intersected_uuid:null
         });
         Object.assign(this,SceneComposer.call(this));
-        this.element=document.createElement("figure");
-        this.canvas=document.createElement("canvas");
-        this.element.appendChild(this.canvas);
-        this.rendererGl=new WebGLRenderer({canvas:this.canvas});
+        this.figure=ZikoHtml("figure");
+        this.canvas=ZikoHtml("canvas");
+        this.figure.append(this.canvas);
+        this.element=this.figure.element;
+        this.rendererGl=new WebGLRenderer({canvas:this.canvas.element});
+        this.rendererTarget=this.rendererGl;
 		this.sceneGl=new Scene();
         this.camera=ZikoCamera(w,h,0.1,1000);
         this.camera.currentCamera.position.z=10;
@@ -59028,11 +59021,22 @@ class SceneGl extends ZikoUIElement{
         this.size(w,h);
         this.WatchSize(()=>this.maintain());
         //this.useOrbitCOntrols()
-        waitElm(this.element).then(()=>{
+        waitElm(this.element.element).then(()=>{
             this.useOrbitControls();
         });
         
         
+        
+    }
+    maintain(){
+        this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+        this.camera.currentCamera.updateProjectionMatrix();
+        this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+        for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+        this.length = this.items.length;
+        this.renderGl();
+        return this;
     }
     renderGl(){
         //this.forEachIntersectedItem()
@@ -59080,6 +59084,344 @@ class SceneGl extends ZikoUIElement{
         // should be used  with throttle or debounce
     }
 }
+const SceneGl=ZikoThreeSceneGl;
+
+/**
+ * Based on http://www.emagix.net/academic/mscs-project/item/camera-sync-with-css3-and-webgl-threejs
+ */
+
+const _position = new Vector3();
+const _quaternion = new Quaternion();
+const _scale = new Vector3();
+
+class CSS3DObject extends Object3D {
+
+	constructor( element = document.createElement( 'div' ) ) {
+
+		super();
+
+		this.isCSS3DObject = true;
+
+		this.element = element;
+		this.element.style.position = 'absolute';
+		this.element.style.pointerEvents = 'auto';
+		this.element.style.userSelect = 'none';
+
+		this.element.setAttribute( 'draggable', false );
+
+		this.addEventListener( 'removed', function () {
+
+			this.traverse( function ( object ) {
+
+				if ( object.element instanceof Element && object.element.parentNode !== null ) {
+
+					object.element.parentNode.removeChild( object.element );
+
+				}
+
+			} );
+
+		} );
+
+	}
+
+	copy( source, recursive ) {
+
+		super.copy( source, recursive );
+
+		this.element = source.element.cloneNode( true );
+
+		return this;
+
+	}
+
+}
+
+//
+
+const _matrix = new Matrix4();
+const _matrix2 = new Matrix4();
+
+class CSS3DRenderer {
+
+	constructor( parameters = {} ) {
+
+		const _this = this;
+
+		let _width, _height;
+		let _widthHalf, _heightHalf;
+
+		const cache = {
+			camera: { style: '' },
+			objects: new WeakMap()
+		};
+
+		const domElement = parameters.element !== undefined ? parameters.element : document.createElement( 'div' );
+
+		domElement.style.overflow = 'hidden';
+
+		this.domElement = domElement;
+
+		const viewElement = document.createElement( 'div' );
+		viewElement.style.transformOrigin = '0 0';
+		viewElement.style.pointerEvents = 'none';
+		domElement.appendChild( viewElement );
+
+		const cameraElement = document.createElement( 'div' );
+
+		cameraElement.style.transformStyle = 'preserve-3d';
+
+		viewElement.appendChild( cameraElement );
+
+		this.getSize = function () {
+
+			return {
+				width: _width,
+				height: _height
+			};
+
+		};
+
+		this.render = function ( scene, camera ) {
+
+			const fov = camera.projectionMatrix.elements[ 5 ] * _heightHalf;
+
+			if ( camera.view && camera.view.enabled ) {
+
+				// view offset
+				viewElement.style.transform = `translate( ${ - camera.view.offsetX * ( _width / camera.view.width ) }px, ${ - camera.view.offsetY * ( _height / camera.view.height ) }px )`;
+
+				// view fullWidth and fullHeight, view width and height
+				viewElement.style.transform += `scale( ${ camera.view.fullWidth / camera.view.width }, ${ camera.view.fullHeight / camera.view.height } )`;
+
+			} else {
+
+				viewElement.style.transform = '';
+
+			}
+
+			if ( scene.matrixWorldAutoUpdate === true ) scene.updateMatrixWorld();
+			if ( camera.parent === null && camera.matrixWorldAutoUpdate === true ) camera.updateMatrixWorld();
+
+			let tx, ty;
+
+			if ( camera.isOrthographicCamera ) {
+
+				tx = - ( camera.right + camera.left ) / 2;
+				ty = ( camera.top + camera.bottom ) / 2;
+
+			}
+
+			const scaleByViewOffset = camera.view && camera.view.enabled ? camera.view.height / camera.view.fullHeight : 1;
+			const cameraCSSMatrix = camera.isOrthographicCamera ?
+				`scale( ${ scaleByViewOffset } )` + 'scale(' + fov + ')' + 'translate(' + epsilon( tx ) + 'px,' + epsilon( ty ) + 'px)' + getCameraCSSMatrix( camera.matrixWorldInverse ) :
+				`scale( ${ scaleByViewOffset } )` + 'translateZ(' + fov + 'px)' + getCameraCSSMatrix( camera.matrixWorldInverse );
+			const perspective = camera.isPerspectiveCamera ? 'perspective(' + fov + 'px) ' : '';
+
+			const style = perspective + cameraCSSMatrix +
+				'translate(' + _widthHalf + 'px,' + _heightHalf + 'px)';
+
+			if ( cache.camera.style !== style ) {
+
+				cameraElement.style.transform = style;
+
+				cache.camera.style = style;
+
+			}
+
+			renderObject( scene, scene, camera);
+
+		};
+
+		this.setSize = function ( width, height ) {
+
+			_width = width;
+			_height = height;
+			_widthHalf = _width / 2;
+			_heightHalf = _height / 2;
+
+			domElement.style.width = width + 'px';
+			domElement.style.height = height + 'px';
+
+			viewElement.style.width = width + 'px';
+			viewElement.style.height = height + 'px';
+
+			cameraElement.style.width = width + 'px';
+			cameraElement.style.height = height + 'px';
+
+		};
+
+		function epsilon( value ) {
+
+			return Math.abs( value ) < 1e-10 ? 0 : value;
+
+		}
+
+		function getCameraCSSMatrix( matrix ) {
+
+			const elements = matrix.elements;
+
+			return 'matrix3d(' +
+				epsilon( elements[ 0 ] ) + ',' +
+				epsilon( - elements[ 1 ] ) + ',' +
+				epsilon( elements[ 2 ] ) + ',' +
+				epsilon( elements[ 3 ] ) + ',' +
+				epsilon( elements[ 4 ] ) + ',' +
+				epsilon( - elements[ 5 ] ) + ',' +
+				epsilon( elements[ 6 ] ) + ',' +
+				epsilon( elements[ 7 ] ) + ',' +
+				epsilon( elements[ 8 ] ) + ',' +
+				epsilon( - elements[ 9 ] ) + ',' +
+				epsilon( elements[ 10 ] ) + ',' +
+				epsilon( elements[ 11 ] ) + ',' +
+				epsilon( elements[ 12 ] ) + ',' +
+				epsilon( - elements[ 13 ] ) + ',' +
+				epsilon( elements[ 14 ] ) + ',' +
+				epsilon( elements[ 15 ] ) +
+			')';
+
+		}
+
+		function getObjectCSSMatrix( matrix ) {
+
+			const elements = matrix.elements;
+			const matrix3d = 'matrix3d(' +
+				epsilon( elements[ 0 ] ) + ',' +
+				epsilon( elements[ 1 ] ) + ',' +
+				epsilon( elements[ 2 ] ) + ',' +
+				epsilon( elements[ 3 ] ) + ',' +
+				epsilon( - elements[ 4 ] ) + ',' +
+				epsilon( - elements[ 5 ] ) + ',' +
+				epsilon( - elements[ 6 ] ) + ',' +
+				epsilon( - elements[ 7 ] ) + ',' +
+				epsilon( elements[ 8 ] ) + ',' +
+				epsilon( elements[ 9 ] ) + ',' +
+				epsilon( elements[ 10 ] ) + ',' +
+				epsilon( elements[ 11 ] ) + ',' +
+				epsilon( elements[ 12 ] ) + ',' +
+				epsilon( elements[ 13 ] ) + ',' +
+				epsilon( elements[ 14 ] ) + ',' +
+				epsilon( elements[ 15 ] ) +
+			')';
+
+			return 'translate(-50%,-50%)' + matrix3d;
+
+		}
+
+		function renderObject( object, scene, camera, cameraCSSMatrix ) {
+
+			if ( object.isCSS3DObject ) {
+
+				const visible = ( object.visible === true ) && ( object.layers.test( camera.layers ) === true );
+				object.element.style.display = ( visible === true ) ? '' : 'none';
+
+				if ( visible === true ) {
+
+					object.onBeforeRender( _this, scene, camera );
+
+					let style;
+
+					if ( object.isCSS3DSprite ) {
+
+						// http://swiftcoder.wordpress.com/2008/11/25/constructing-a-billboard-matrix/
+
+						_matrix.copy( camera.matrixWorldInverse );
+						_matrix.transpose();
+
+						if ( object.rotation2D !== 0 ) _matrix.multiply( _matrix2.makeRotationZ( object.rotation2D ) );
+
+						object.matrixWorld.decompose( _position, _quaternion, _scale );
+						_matrix.setPosition( _position );
+						_matrix.scale( _scale );
+
+						_matrix.elements[ 3 ] = 0;
+						_matrix.elements[ 7 ] = 0;
+						_matrix.elements[ 11 ] = 0;
+						_matrix.elements[ 15 ] = 1;
+
+						style = getObjectCSSMatrix( _matrix );
+
+					} else {
+
+						style = getObjectCSSMatrix( object.matrixWorld );
+
+					}
+
+					const element = object.element;
+					const cachedObject = cache.objects.get( object );
+
+					if ( cachedObject === undefined || cachedObject.style !== style ) {
+
+						element.style.transform = style;
+
+						const objectData = { style: style };
+						cache.objects.set( object, objectData );
+
+					}
+
+					if ( element.parentNode !== cameraElement ) {
+
+						cameraElement.appendChild( element );
+
+					}
+
+					object.onAfterRender( _this, scene, camera );
+
+				}
+
+			}
+
+			for ( let i = 0, l = object.children.length; i < l; i ++ ) {
+
+				renderObject( object.children[ i ], scene, camera);
+
+			}
+
+		}
+
+	}
+
+}
+
+class ZikoThreeSceneCss extends ZikoThreeSceneGl{
+    constructor(w,h){
+        super(w,h);
+        this.sceneCss=new Scene();
+        this.rendererCss=new CSS3DRenderer();
+        this.rendererCss.domElement.appendChild(this.rendererGl.domElement );
+        this.rendererTarget=this.rendererCss;
+        this.figure.append(this.canvas);
+        this.element.appendChild(this.rendererCss.domElement);
+        this.canvas.style({
+            position:"absolute",
+            margin:0
+        });
+        this.useOrbitControls();
+        this.cache.controls.orbit.onChange(()=>{this.renderGl();this.renderCss();});
+    }
+    renderCss(){
+        this.rendererCss.render(this.sceneCss,this.camera.currentCamera);
+        return this;
+    }
+    maintain(){
+        this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
+        this.camera.currentCamera.updateProjectionMatrix();
+        this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
+        this.rendererCss.setSize(this.element.clientWidth,this.element.clientHeight);
+        for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+        this.length = this.items.length;
+        this.renderGl();
+        return this;
+    }
+    addCssElement(...element){
+        for(let i=0;i<element.length;i++){
+            if(element[i] instanceof ZikoUIElement)console.log(element[i]);
+        }
+    }
+}
+
+const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h);
 
 class ZikoThreeHelper {
     constructor(){
@@ -59174,11 +59516,15 @@ const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeExtrude(shape,de
 //const svg3=(svg,depth=5,bevelEnabled=false)=>groupe3(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)))
 const svg3=(svg,depth=5,bevelEnabled=false)=>new ZikoThreeExtrudeSvg(svg,depth,bevelEnabled);
 
+const UI3=ui=>new CSS3DObject(ui.element);
+
 const ZikoThree={
+    UI3,
     loadSVG: loadSVG$1,
     image2texture,
     THREE: THREE$1,
     SceneGl,
+    SceneCss,
     cube3,
     plan3,
     line3,

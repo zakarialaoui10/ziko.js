@@ -22,16 +22,6 @@ export function SceneComposer(){
             })
             return this;
         },
-        maintain:function(){
-            this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
-            this.camera.currentCamera.updateProjectionMatrix();
-            this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
-            for (let i = 0; i < this.items.length; i++)
-            Object.assign(this, { [[i]]: this.items[i] });
-            this.length = this.items.length;
-            this.renderGl()
-            return this;
-        },
         clone:function(){
 
         },

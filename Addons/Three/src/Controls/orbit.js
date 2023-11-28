@@ -1,9 +1,11 @@
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+
 class ZikoThreeOrbitControls{
     #TARGET
     constructor(target){
         this.#TARGET=target;
-        this.control=new OrbitControls(target.camera.currentCamera,target.rendererGl.domElement);
+        this.control=new OrbitControls(target.camera.currentCamera,target.rendererTarget.domElement);
         this.isPaused=false;
         this.onChange()
 

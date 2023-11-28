@@ -7005,4 +7005,4 @@ function RemoveAll(){
 // }
 console.log(1);
 
-export { Canvas, Data, Ease, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, debounce, figure, image, loop, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, throttle, timeTaken, time_memory_Taken, video, wait, waitForUIElm, waitForUIElmSync };
+export { Canvas, Data, Ease, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, debounce, figure, image, loop, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, throttle, timeTaken, time_memory_Taken, video, wait, waitForUIElm, waitForUIElmSync };
