@@ -1,10 +1,9 @@
-import * as THREE from "three"
 import { TransformControls } from 'three/addons/controls/TransformControls.js';
 class ZikoThreeTransformControls{
     #TARGET
     constructor(target){
         this.#TARGET=target;
-        this.control=new TransformControls(target.camera.currentCamera,target.rendererTarget.domElement);
+        this.control=new TransformControls(target.camera.currentCamera,target.rendererGl.domElement);
         this.#TARGET.sceneGl.add(this.control)
         this.isPaused=false;
         this.mode="translate";

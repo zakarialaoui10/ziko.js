@@ -5664,7 +5664,9 @@ const UI$1={
     }
 };
 
-class Loop {
+//const isNode = () => (typeof process !== 'undefined');
+
+class ZikoTimeLoop {
   constructor(callback, {fps,step,t=[0,null],start=true}={}) {
     this.callback = callback;
     this.cache = {
@@ -5741,7 +5743,7 @@ class Loop {
     }  }
 }
 
-const loop = (callback, options) => new Loop(callback, options);
+const loop = (callback, options) => new ZikoTimeLoop(callback, options);
 
 const Ease={
     Linear:function(t){
@@ -5952,6 +5954,50 @@ const timeTaken = callback => {
     return r;
 };
 
+class ZikoTimeAnimation{
+    constructor(callback){
+        this.cache={
+            isRunning:false,
+            AnimationId:null,
+            ease:Ease.Linear
+        };
+        this.t=0;
+        this.tx=0;
+        this.ty=0;
+        this.i=0;
+        this.step=50;
+        this.duration=1000;
+        this.callback=callback;
+    }
+    #animation_handler(){
+            this.t+=this.step;
+            this.i++;
+            this.tx=map$1(this.t,0,this.duration,0,1);
+            this.ty=this.cache.ease(this.tx);
+            this.callback(this);
+            if(this.t>=this.duration){
+                clearInterval(this.cache.AnimationId);
+                this.cache.isRunning=false;
+            }
+    }
+    start(){
+        this.cache.isRunning=true;
+        this.cache.AnimationId=setInterval(this.#animation_handler.bind(this),this.step);
+        return this;
+    }
+    stop(){
+
+    }
+    clear(){
+
+    }
+    stream(){
+
+    }
+}
+
+const animation=(callback)=>new ZikoTimeAnimation(callback);
+
 const Time={
     wait,
     timeTaken,
@@ -5960,6 +6006,7 @@ const Time={
     Ease,
     time_memory_Taken,
     loop,
+    animation,
     waitForUIElm,
     waitForUIElmSync,
     ExtractAll:function(){
@@ -7029,6 +7076,7 @@ exports.ZikoUIFigure = ZikoUIFigure;
 exports.ZikoUIImage = ZikoUIImage;
 exports.ZikoUISvg = ZikoUISvg;
 exports.ZikoUIVideo = ZikoUIVideo;
+exports.animation = animation;
 exports.audio = audio;
 exports.canvasArc = canvasArc;
 exports.canvasCircle = canvasCircle;

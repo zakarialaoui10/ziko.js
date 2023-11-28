@@ -1,6 +1,9 @@
 import{
     loop
 } from "./loop.js"
+import{
+    animation
+} from "./animation.js"
 import {
     wait,
     timeTaken,
@@ -19,6 +22,7 @@ const Time={
     Ease,
     time_memory_Taken,
     loop,
+    animation,
     waitForUIElm,
     waitForUIElmSync,
     ExtractAll:function(){
@@ -33,5 +37,8 @@ const Time={
     }
 }
 export * from "./utils/index.js"
-export {loop}
+export {
+    loop,
+    animation
+}
 export default Time;

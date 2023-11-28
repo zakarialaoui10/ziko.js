@@ -1,6 +1,6 @@
-const isNode = () => (typeof process !== 'undefined');
+//const isNode = () => (typeof process !== 'undefined');
 
-class Loop {
+class ZikoTimeLoop {
   constructor(callback, {fps,step,t=[0,null],start=true}={}) {
     this.callback = callback;
     this.cache = {
@@ -78,7 +78,7 @@ class Loop {
   }
 }
 
-const loop = (callback, options) => new Loop(callback, options);
+const loop = (callback, options) => new ZikoTimeLoop(callback, options);
 
 
 //const a = loop((e) => console.log(e.i), {step:100,fps:30,t:[500,4001],start:true});
