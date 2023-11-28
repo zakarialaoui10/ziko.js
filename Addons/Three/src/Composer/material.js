@@ -76,7 +76,7 @@ export function MaterialComposer(){
         },
 
         color:function(color,render=true){
-            this.mesh.material.color=new THREE.Color(color);
+            this.element.material.color=new THREE.Color(color);
             if(render)this.render();
             return this;
         },
@@ -84,31 +84,31 @@ export function MaterialComposer(){
 
         },
         wireframe:function(bool,render=true){
-            this.mesh.material.wireframe=bool;
+            this.element.material.wireframe=bool;
             if(render)this.render();
             return this;
         },
         opacity:function(n=1,render=true){
             this.transparent(true,false);
-            this.mesh.material.opacity=n;
+            this.element.material.opacity=n;
             if(render)this.render()
             return this;
         },
         transparent:function(bool,render=true){
-            this.mesh.material.transparent=bool;
+            this.element.material.transparent=bool;
             this.render();          
         },
         texture:function(texture,render=true){
             if(texture instanceof THREE.Texture){
-                this.mesh.material.map=texture;
+                this.element.material.map=texture;
             }
             if(texture instanceof ZikoUIImage){
-                this.mesh.material.map=image2texture(texture);
+                this.element.material.map=image2texture(texture);
             }
             if(texture instanceof ZikoUICanvas){
-                this.mesh.material.map=canvas2texture(texture);
+                this.element.material.map=canvas2texture(texture);
             }
-            this.mesh.material.needsUpdate=true;
+            this.element.material.needsUpdate=true;
             //this?.parent.renderGl()
             if(render)this.render()
             return this;

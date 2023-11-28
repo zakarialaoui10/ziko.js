@@ -52263,42 +52263,42 @@
 	function GeometryComposer(){
 	    return {
 	        posX:function(x=this.POSX){
-				this.mesh.position.x=x;
+				this.element.position.x=x;
 				maintain.call(this);
 				return this;
 	        },
 	        posY:function(y=this.POSY){
-				this.mesh.position.y=y;
+				this.element.position.y=y;
 				maintain.call(this);
 				return this;
 	        },
 	        posZ:function(z=this.POSZ){
-				this.mesh.position.z=z;
+				this.element.position.z=z;
 				maintain.call(this);
 				return this;
 	        },
 	        pos:function(x,y,z){
-				this.mesh.position.set(x,y,z);
+				this.element.position.set(x,y,z);
 				maintain.call(this);
 				return this;
 	        },
 			tarnslateX:function(dx=0){
-				this.mesh.position.x=this.POSX+dx;
+				this.element.position.x=this.POSX+dx;
 				maintain.call(this);
 				return this;
 	        },
 	        translateY:function(dy=0){
-				this.mesh.position.y=this.POSY+dy;
+				this.element.position.y=this.POSY+dy;
 				maintain.call(this);
 				return this;
 	        },
 	        translateZ:function(dz=0){
-				this.mesh.position.z=this.POSZ+dz;
+				this.element.position.z=this.POSZ+dz;
 				maintain.call(this);
 				return this;
 	        },
 	        translate:function(dx=0,dy=0,dz=0){
-				this.mesh.rotation.set(
+				this.element.rotation.set(
 					this.POSX+dx,
 					this.POSY+dy,
 					this.POSZ+dz,
@@ -52307,42 +52307,42 @@
 				return this;
 	        },
 	        rotX:function(x=this.ROTX){
-				this.mesh.rotation.x=x;
+				this.element.rotation.x=x;
 				maintain.call(this);
 				return this;
 	        },
 	        rotY:function(y=this.ROTY){
-				this.mesh.rotation.y=y;
+				this.element.rotation.y=y;
 				maintain.call(this);
 				return this;            
 	        },
 	        rotZ:function(z=this.ROTZ){
-				this.mesh.rotation.z=z;
+				this.element.rotation.z=z;
 				maintain.call(this);
 				return this;            
 	        },
 	        rot:function(x,y,z){
-				this.mesh.rotation.set(x,y,z);
+				this.element.rotation.set(x,y,z);
 				maintain.call(this);
 				return this;
 	        },
 			scaleX:function(x){
-				this.mesh.scale.x=x;
+				this.element.scale.x=x;
 				maintain.call(this);
 				return this;
 	        },
 	        scaleY:function(y){
-				this.mesh.scale.y=y;
+				this.element.scale.y=y;
 				maintain.call(this);
 				return this;            
 	        },
 	        scaleZ:function(z){
-				this.mesh.scale.z=z;
+				this.element.scale.z=z;
 				maintain.call(this);
 				return this;            
 	        },
 	        scale:function(x,y,z){
-				this.mesh.scale.set(x,y,z);
+				this.element.scale.set(x,y,z);
 				maintain.call(this);
 				return this;
 	        },
@@ -55595,7 +55595,7 @@
 	        },
 
 	        color:function(color,render=true){
-	            this.mesh.material.color=new Color(color);
+	            this.element.material.color=new Color(color);
 	            if(render)this.render();
 	            return this;
 	        },
@@ -55603,31 +55603,31 @@
 
 	        },
 	        wireframe:function(bool,render=true){
-	            this.mesh.material.wireframe=bool;
+	            this.element.material.wireframe=bool;
 	            if(render)this.render();
 	            return this;
 	        },
 	        opacity:function(n=1,render=true){
 	            this.transparent(true,false);
-	            this.mesh.material.opacity=n;
+	            this.element.material.opacity=n;
 	            if(render)this.render();
 	            return this;
 	        },
 	        transparent:function(bool,render=true){
-	            this.mesh.material.transparent=bool;
+	            this.element.material.transparent=bool;
 	            this.render();          
 	        },
 	        texture:function(texture,render=true){
 	            if(texture instanceof Texture){
-	                this.mesh.material.map=texture;
+	                this.element.material.map=texture;
 	            }
 	            if(texture instanceof ziko.ZikoUIImage){
-	                this.mesh.material.map=image2texture(texture);
+	                this.element.material.map=image2texture(texture);
 	            }
 	            if(texture instanceof ziko.ZikoUICanvas){
-	                this.mesh.material.map=canvas2texture(texture);
+	                this.element.material.map=canvas2texture(texture);
 	            }
-	            this.mesh.material.needsUpdate=true;
+	            this.element.material.needsUpdate=true;
 	            //this?.parent.renderGl()
 	            if(render)this.render();
 	            return this;
@@ -55652,75 +55652,75 @@
 
 	    #POINTS_MATERIAL
 	    constructor(mesh){
-	        this.mesh=mesh;
+	        this.element=mesh;
 	        this.attributes={};
 	    }
 	    get currentMaterial(){
-	        return this.mesh.material;
+	        return this.element.material;
 	    }
 	    useMeshBasicMaterial(){
 	        if(!this.#MESH_BASIC_MATERIAL)this.#MESH_BASIC_MATERIAL=new MeshBasicMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_BASIC_MATERIAL;
+	        this.element.material=this.#MESH_BASIC_MATERIAL;
 	        return this;
 	    }
 	    useMeshPhongMaterial(){
 	        if(!this.#MESH_PHONG_MATERIAL)this.#MESH_PHONG_MATERIAL=new MeshPhongMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_PHONG_MATERIAL;
+	        this.element.material=this.#MESH_PHONG_MATERIAL;
 	        return this;
 	    }
 	    useMeshDepthMaterial(){
 	        if(!this.#MESH_DEPTH_MATERIAL)this.#MESH_DEPTH_MATERIAL=new MeshDepthMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_DEPTH_MATERIAL;
+	        this.element.material=this.#MESH_DEPTH_MATERIAL;
 	        return this;
 	    }
 	    useMeshLambertMaterial(){
 	        if(!this.#MESH_LAMBERT_MATERIAL)this.#MESH_LAMBERT_MATERIAL=new MeshLambertMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_LAMBERT_MATERIAL;
+	        this.element.material=this.#MESH_LAMBERT_MATERIAL;
 	        return this;
 	    }
 	    useMeshPhysicalMaterial(){
 	        if(!this.#MESH_PHYSICAL_MATERIAL)this.#MESH_PHYSICAL_MATERIAL=new MeshPhysicalMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_PHYSICAL_MATERIAL;
+	        this.element.material=this.#MESH_PHYSICAL_MATERIAL;
 	        return this;
 	    }
 	    useMeshNormalMaterial(){
 	        if(!this.#MESH_NORMAL_MATERIAL)this.#MESH_NORMAL_MATERIAL=new MeshNormalMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_NORMAL_MATERIAL;
+	        this.element.material=this.#MESH_NORMAL_MATERIAL;
 	        return this;
 	    }
 	    useMeshStandardMaterial(){
 	        if(!this.#MESH_STANDARD_MATERIAL)this.#MESH_STANDARD_MATERIAL=new MeshStandardMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_STANDARD_MATERIAL;
+	        this.element.material=this.#MESH_STANDARD_MATERIAL;
 	        return this;
 	    }
 	    useMeshDistanceMaterial(){
 	        if(!this.#MESH_DISTANCE_MATERIAL)this.#MESH_DISTANCE_MATERIAL=new MeshDistanceMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_DISTANCE_MATERIAL;
+	        this.element.material=this.#MESH_DISTANCE_MATERIAL;
 	        return this;
 	    }
 	    useMeshMatcapMaterial(){
 	        if(!this.#MESH_MATCAP_MATERIAL)this.#MESH_MATCAP_MATERIAL=new MeshMatcapMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_MATCAP_MATERIAL;
+	        this.element.material=this.#MESH_MATCAP_MATERIAL;
 	        return this;
 	    }
 	    useMeshToonMaterial(){
 	        if(!this.#MESH_TOON_MATERIAL)this.#MESH_TOON_MATERIAL=new MeshToonMaterial(this.attributes);
-	        this.mesh.material=this.#MESH_TOON_MATERIAL;
+	        this.element.material=this.#MESH_TOON_MATERIAL;
 	        return this;
 	    }
 	    useLineBasicMaterial(){
 	        if(!this.#LINE_BASIC_MATERIAL)this.#LINE_BASIC_MATERIAL=new LineBasicMaterial(this.attributes);
-	        this.mesh.material=this.#LINE_BASIC_MATERIAL;
+	        this.element.material=this.#LINE_BASIC_MATERIAL;
 	        return this;
 	    }
 	    useLineDashedMaterial(){
 	        if(!this.#LINE_DASHED_MATERIAL)this.#LINE_DASHED_MATERIAL=new LineDashedMaterial(this.attributes);
-	        this.mesh.material=this.#LINE_DASHED_MATERIAL;
+	        this.element.material=this.#LINE_DASHED_MATERIAL;
 	        return this;
 	    }
 	    usePointsMaterial(){
 	        if(!this.#POINTS_MATERIAL)this.#POINTS_MATERIAL=new PointsMaterial(this.attributes);
-	        this.mesh.material=this.#POINTS_MATERIAL;
+	        this.element.material=this.#POINTS_MATERIAL;
 	        return this;      
 	    }
 	}
@@ -55732,8 +55732,8 @@
 	            
 	        };
 	        this.parent=null; // Scene
-	        this.mesh=new Mesh(Geometry,Material);
-	        this.material=ZikoMaterial(this.mesh,{});
+	        this.element=new Mesh(Geometry,Material);
+	        this.material=ZikoMaterial(this.element,{});
 
 	        Object.assign(this, GeometryComposer.call(this));
 	        Object.assign(this, MaterialComposer.call(this));
@@ -55741,10 +55741,10 @@
 	    get isHovered(){
 	        //this.parent.renderGl()
 
-	        //return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
+	        //return this.parent.cache.last_intersected_uuid===this.element.uuid;
 	    }
 	    _Maintain(){
-	        this.mesh=new Mesh(this.geometry,this.material.currentMaterial);
+	        this.element=new Mesh(this.geometry,this.material.currentMaterial);
 	        if(this.parent)this.parent.renderGl();
 	        return this;
 	    }
@@ -55756,28 +55756,28 @@
 
 	    }
 	    get Geometry(){
-	        return this.mesh.geometry;
+	        return this.element.geometry;
 	    }
 	    get Material(){
-	        return this.mesh.material;
+	        return this.element.material;
 	    }
 	    get px(){
-	        return this.mesh.position.x;
+	        return this.element.position.x;
 	    }
 	    get py(){
-	        return this.mesh.position.y;
+	        return this.element.position.y;
 	    }
 	    get pz(){
-	        return this.mesh.position.z;
+	        return this.element.position.z;
 	    }
 	    get rx(){
-	        return this.mesh.rotation.x;
+	        return this.element.rotation.x;
 	    }
 	    get ry(){
-	        return this.mesh.rotation.y;
+	        return this.element.rotation.y;
 	    }
 	    get rz(){
-	        return this.mesh.rotation.z;
+	        return this.element.rotation.z;
 	    }
 	    get x(){
 	        return {
@@ -58858,7 +58858,7 @@
 	        return this;
 	    }
 	    attach(obj){
-	        this.control.attach(obj.mesh);
+	        this.control.attach(obj.element);
 	        return this;
 	    }
 	}
@@ -59050,7 +59050,7 @@
 	    addGl(...obj){
 			obj.map((n,i)=>{
 				if(n instanceof ZikoThreeMesh){
-					this.sceneGl.add(obj[i].mesh);
+					this.sceneGl.add(obj[i].element);
 					this.items.push(obj[i]);
 					n.parent=this;
 				}
@@ -59061,7 +59061,7 @@
 			return this;
 		}
 	    removeGl(...obj){
-			obj.map((n,i)=>this.sceneGl.remove(obj[i].mesh));
+			obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
 	        this.items=this.items.filter(n=>!obj.includes(n));
 	        this.maintain();
 			this.renderGl();
@@ -59077,8 +59077,8 @@
 	            )
 	        });
 	        const uuids=intersects.map(n=>n.object.uuid);
-	        const intersectred_items=this.items.filter(n=>uuids.includes(n.mesh.uuid));
-	        this.items.filter(n=>!uuids.includes(n.mesh.uuid));
+	        const intersectred_items=this.items.filter(n=>uuids.includes(n.element.uuid));
+	        this.items.filter(n=>!uuids.includes(n.element.uuid));
 	            for ( let i = 0; i < intersectred_items.length; i ++ ) {
 	                console.log(intersectred_items[i]);
 	                intersectred_items[i].color("#ff00ff");    
@@ -59477,7 +59477,7 @@
 	class ZikoThreeGroupe extends ZikoThreeMesh{
 		constructor(){
 			super();
-			this.mesh=new Group();
+			this.element=new Group();
 			this.items=[];
 		}
 		add(...obj){
@@ -59485,7 +59485,7 @@
 				if(obj[i] instanceof Mesh){
 					obj[i]=new ZikoThreeMesh(obj);
 				}
-				this.mesh.add(obj[i].mesh);
+				this.element.add(obj[i].mesh);
 				this.items.push(obj[i]);
 			}
 	       return this;
@@ -59493,7 +59493,7 @@
 		remove(...obj){
 	        if(obj.length===0);
 			else for(let i=0;i<obj.length;i++){
-				this.mesh.remove(obj[i].mesh);
+				this.element.remove(obj[i].mesh);
 			}
 	       return this;
 		}
@@ -59503,7 +59503,7 @@
 	class ZikoThreeExtrude extends ZikoThreeMesh{
 	    constructor(shape,depth=5,bevelEnabled=false){
 	        super();
-	        this.mesh=new THREE.Mesh(
+	        this.element=new THREE.Mesh(
 	            new THREE.ExtrudeGeometry(shape, {
 	            depth,
 	            bevelEnabled

@@ -4,7 +4,7 @@ import ZikoThreeMesh from "../ZikoThreeMesh"
 class ZikoThreeGroupe extends ZikoThreeMesh{
 	constructor(){
 		super();
-		this.mesh=new THREE.Group();
+		this.element=new THREE.Group();
 		this.items=[]
 	}
 	add(...obj){
@@ -12,7 +12,7 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
 			if(obj[i] instanceof THREE.Mesh){
 				obj[i]=new ZikoThreeMesh(obj);
 			}
-			this.mesh.add(obj[i].mesh);
+			this.element.add(obj[i].mesh);
 			this.items.push(obj[i])
 		}
        return this;
@@ -22,7 +22,7 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
             //remove groupe
         }
 		else for(let i=0;i<obj.length;i++){
-			this.mesh.remove(obj[i].mesh);
+			this.element.remove(obj[i].mesh);
 		}
        return this;
 	}

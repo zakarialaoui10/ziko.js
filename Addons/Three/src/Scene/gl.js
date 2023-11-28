@@ -64,7 +64,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
     addGl(...obj){
 		obj.map((n,i)=>{
 			if(n instanceof ZikoThreeMesh){
-				this.sceneGl.add(obj[i].mesh);
+				this.sceneGl.add(obj[i].element);
 				this.items.push(obj[i]);
 				n.parent=this;
 			}
@@ -75,7 +75,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 		return this;
 	}
     removeGl(...obj){
-		obj.map((n,i)=>this.sceneGl.remove(obj[i].mesh));
+		obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
         this.items=this.items.filter(n=>!obj.includes(n));
         this.maintain();
 		this.renderGl();
@@ -91,8 +91,8 @@ class ZikoThreeSceneGl extends ZikoUIElement{
             )
         })
         const uuids=intersects.map(n=>n.object.uuid);
-        const intersectred_items=this.items.filter(n=>uuids.includes(n.mesh.uuid))
-        const not_intersectred_items=this.items.filter(n=>!uuids.includes(n.mesh.uuid))
+        const intersectred_items=this.items.filter(n=>uuids.includes(n.element.uuid))
+        const not_intersectred_items=this.items.filter(n=>!uuids.includes(n.element.uuid))
             for ( let i = 0; i < intersectred_items.length; i ++ ) {
                 console.log(intersectred_items[i])
                 intersectred_items[i].color("#ff00ff")    

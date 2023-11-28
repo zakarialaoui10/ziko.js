@@ -5,42 +5,42 @@ function maintain(){
 export function GeometryComposer(){
     return {
         posX:function(x=this.POSX){
-			this.mesh.position.x=x;
+			this.element.position.x=x;
 			maintain.call(this);
 			return this;
         },
         posY:function(y=this.POSY){
-			this.mesh.position.y=y;
+			this.element.position.y=y;
 			maintain.call(this);
 			return this;
         },
         posZ:function(z=this.POSZ){
-			this.mesh.position.z=z;
+			this.element.position.z=z;
 			maintain.call(this);
 			return this;
         },
         pos:function(x,y,z){
-			this.mesh.position.set(x,y,z);
+			this.element.position.set(x,y,z);
 			maintain.call(this);
 			return this;
         },
 		tarnslateX:function(dx=0){
-			this.mesh.position.x=this.POSX+dx;
+			this.element.position.x=this.POSX+dx;
 			maintain.call(this);
 			return this;
         },
         translateY:function(dy=0){
-			this.mesh.position.y=this.POSY+dy;
+			this.element.position.y=this.POSY+dy;
 			maintain.call(this);
 			return this;
         },
         translateZ:function(dz=0){
-			this.mesh.position.z=this.POSZ+dz;
+			this.element.position.z=this.POSZ+dz;
 			maintain.call(this);
 			return this;
         },
         translate:function(dx=0,dy=0,dz=0){
-			this.mesh.rotation.set(
+			this.element.rotation.set(
 				this.POSX+dx,
 				this.POSY+dy,
 				this.POSZ+dz,
@@ -49,42 +49,42 @@ export function GeometryComposer(){
 			return this;
         },
         rotX:function(x=this.ROTX){
-			this.mesh.rotation.x=x;
+			this.element.rotation.x=x;
 			maintain.call(this);
 			return this;
         },
         rotY:function(y=this.ROTY){
-			this.mesh.rotation.y=y;
+			this.element.rotation.y=y;
 			maintain.call(this);
 			return this;            
         },
         rotZ:function(z=this.ROTZ){
-			this.mesh.rotation.z=z;
+			this.element.rotation.z=z;
 			maintain.call(this);
 			return this;            
         },
         rot:function(x,y,z){
-			this.mesh.rotation.set(x,y,z);
+			this.element.rotation.set(x,y,z);
 			maintain.call(this);
 			return this;
         },
 		scaleX:function(x){
-			this.mesh.scale.x=x;
+			this.element.scale.x=x;
 			maintain.call(this);
 			return this;
         },
         scaleY:function(y){
-			this.mesh.scale.y=y;
+			this.element.scale.y=y;
 			maintain.call(this);
 			return this;            
         },
         scaleZ:function(z){
-			this.mesh.scale.z=z;
+			this.element.scale.z=z;
 			maintain.call(this);
 			return this;            
         },
         scale:function(x,y,z){
-			this.mesh.scale.set(x,y,z);
+			this.element.scale.set(x,y,z);
 			maintain.call(this);
 			return this;
         },

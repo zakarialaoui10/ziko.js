@@ -10,8 +10,8 @@ class ZikoThreeMesh{
             
         }
         this.parent=null; // Scene
-        this.mesh=new THREE.Mesh(Geometry,Material);
-        this.material=ZikoMaterial(this.mesh,{});
+        this.element=new THREE.Mesh(Geometry,Material);
+        this.material=ZikoMaterial(this.element,{});
 
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
@@ -19,10 +19,10 @@ class ZikoThreeMesh{
     get isHovered(){
         //this.parent.renderGl()
 
-        //return this.parent.cache.last_intersected_uuid===this.mesh.uuid;
+        //return this.parent.cache.last_intersected_uuid===this.element.uuid;
     }
     _Maintain(){
-        this.mesh=new THREE.Mesh(this.geometry,this.material.currentMaterial);
+        this.element=new THREE.Mesh(this.geometry,this.material.currentMaterial);
         if(this.parent)this.parent.renderGl();
         return this;
     }
@@ -34,28 +34,28 @@ class ZikoThreeMesh{
 
     }
     get Geometry(){
-        return this.mesh.geometry;
+        return this.element.geometry;
     }
     get Material(){
-        return this.mesh.material;
+        return this.element.material;
     }
     get px(){
-        return this.mesh.position.x;
+        return this.element.position.x;
     }
     get py(){
-        return this.mesh.position.y;
+        return this.element.position.y;
     }
     get pz(){
-        return this.mesh.position.z;
+        return this.element.position.z;
     }
     get rx(){
-        return this.mesh.rotation.x;
+        return this.element.rotation.x;
     }
     get ry(){
-        return this.mesh.rotation.y;
+        return this.element.rotation.y;
     }
     get rz(){
-        return this.mesh.rotation.z;
+        return this.element.rotation.z;
     }
     get x(){
         return {

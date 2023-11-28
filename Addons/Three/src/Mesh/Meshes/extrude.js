@@ -3,7 +3,7 @@ import { groupe3 , ZikoThreeGroupe } from "./groupe";
 class ZikoThreeExtrude extends ZikoThreeMesh{
     constructor(shape,depth=5,bevelEnabled=false){
         super()
-        this.mesh=new THREE.Mesh(
+        this.element=new THREE.Mesh(
             new THREE.ExtrudeGeometry(shape, {
             depth,
             bevelEnabled

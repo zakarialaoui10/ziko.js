@@ -56,7 +56,7 @@ class ZikoThreeTransformControls{
         return this;
     }
     attach(obj){
-        this.control.attach(obj.mesh);
+        this.control.attach(obj.element);
         return this;
     }
 }
