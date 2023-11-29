@@ -104,6 +104,9 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 
         // should be used  with throttle or debounce
     }
+    get orbit(){
+        return this.cache.controls.orbit;
+    }
 }
 const SceneGl=ZikoThreeSceneGl
 export {

@@ -52155,10 +52155,12 @@
 	        this.saved_state.quaternion.copy(this.currentCamera.quaternion);
 	        return this;
 	    }
-	    restore(){
+	    restore(renderGl=false,renderCss=false){
 	        this.currentCamera.position.copy(this.saved_state.position);
 	        this.currentCamera.quaternion.copy(this.saved_state.quaternion);
 	        this.currentCamera.updateMatrixWorld();
+			if(renderGl)this.parent.renderGl();
+			if(renderCss)this.parent.renderCss();
 	        return this;
 	    }
 		get left(){
@@ -57246,10 +57248,12 @@
 	        this.saved_state.quaternion.copy(this.#TARGET.camera.currentCamera.quaternion);
 	        return this;
 	    }
-	    restore(){
+	    restore(renderGl=false,renderCss=false){
 	        this.#TARGET.camera.currentCamera.position.copy(this.saved_state.position);
 	        this.#TARGET.camera.currentCamera.quaternion.copy(this.saved_state.quaternion);
 	        this.#TARGET.camera.currentCamera.updateMatrixWorld();
+	        if(renderGl)this.#TARGET.renderGl();
+			if(renderCss)this.#TARGET.renderCss();
 	        return this;
 	    }
 	    enable(){
@@ -59129,6 +59133,9 @@
 	        return this;
 
 	        // should be used  with throttle or debounce
+	    }
+	    get orbit(){
+	        return this.cache.controls.orbit;
 	    }
 	}
 	const SceneGl=ZikoThreeSceneGl;

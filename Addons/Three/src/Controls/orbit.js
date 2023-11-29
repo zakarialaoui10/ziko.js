@@ -19,10 +19,12 @@ class ZikoThreeOrbitControls{
         this.saved_state.quaternion.copy(this.#TARGET.camera.currentCamera.quaternion);
         return this;
     }
-    restore(){
+    restore(renderGl=false,renderCss=false){
         this.#TARGET.camera.currentCamera.position.copy(this.saved_state.position);
         this.#TARGET.camera.currentCamera.quaternion.copy(this.saved_state.quaternion);
         this.#TARGET.camera.currentCamera.updateMatrixWorld();
+        if(renderGl)this.#TARGET.renderGl()
+		if(renderCss)this.#TARGET.renderCss()
         return this;
     }
     enable(){

@@ -28,10 +28,12 @@ class ZikoTHREECamera{
         this.saved_state.quaternion.copy(this.currentCamera.quaternion);
         return this;
     }
-    restore(){
+    restore(renderGl=false,renderCss=false){
         this.currentCamera.position.copy(this.saved_state.position);
         this.currentCamera.quaternion.copy(this.saved_state.quaternion);
         this.currentCamera.updateMatrixWorld();
+		if(renderGl)this.parent.renderGl()
+		if(renderCss)this.parent.renderCss()
         return this;
     }
 	get left(){
