@@ -1,7 +1,10 @@
 
 import * as THREE from "three"
-import ZikoThreeMesh from "../ZikoThreeMesh"
-class ZikoThreeGroupe extends ZikoThreeMesh{
+import { 
+	ZikoThreeObject,
+	ZikoThreeMesh
+ } from "../ZikoThreeMesh";
+class ZikoThreeGroupe extends ZikoThreeObject{
 	constructor(){
 		super();
 		this.element=new THREE.Group();

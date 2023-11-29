@@ -3,7 +3,7 @@ import * as THREE from "three"
 import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { ZikoThreeSceneGl } from "./gl";
 import {UI3} from "../Mesh/index"
-import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
+import { ZikoThreeObject } from "../Mesh/ZikoThreeMesh";
 class ZikoThreeSceneCss extends ZikoThreeSceneGl{
     constructor(w,h){
         super(w,h)
@@ -40,7 +40,7 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         let rerenderCss=false;
         obj=obj.map(n=>n instanceof ZikoUIElement?UI3(n):n)
 		obj.map(n=>{
-			if(n instanceof ZikoThreeMesh){
+			if(n instanceof ZikoThreeObject){
                 if(n.cache.type==="gl"){
                     this.sceneGl.add(n.element);
                     rerenderGl=true;

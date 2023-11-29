@@ -1,6 +1,4 @@
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-
 class ZikoThreeOrbitControls{
     #TARGET
     constructor(target){

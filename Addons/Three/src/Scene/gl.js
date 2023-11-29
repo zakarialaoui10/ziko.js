@@ -5,18 +5,12 @@ import {
     throttle
 } from "ziko"
 import { ZikoCamera } from "../Camera";
-import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
+import { 
+    ZikoThreeObject,
+    ZikoThreeMesh
+ } from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
 import { waitElm } from "../Utils";
-// function add_object_to_scene(sceneTarget,obj){
-//         if(n instanceof ZikoThreeMesh){
-//             this[sceneTarget].add(obj.element);
-//             this.items.push(obj[i]);
-//             obj.parent=this;
-//         }
-//         //else this.sceneGl.add(obj[i])
-
-// }
 class ZikoThreeSceneGl extends ZikoUIElement{
     constructor(w,h){
         super()
@@ -74,7 +68,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 	}
     add(...obj){
 		obj.map((n,i)=>{
-			if(n instanceof ZikoThreeMesh){
+			if(n instanceof ZikoThreeObject){
 				this.sceneGl.add(obj[i].element);
 				this.items.push(obj[i]);
 				n.parent=this;

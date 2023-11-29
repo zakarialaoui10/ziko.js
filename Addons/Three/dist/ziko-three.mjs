@@ -55623,7 +55623,7 @@ function MaterialComposer(){
 
         color:function(color,render=true){
             this.element.material.color=new Color(color);
-            if(render)this.render();
+            if(render)this.renderGl();
             return this;
         },
         side:function(){
@@ -55631,18 +55631,18 @@ function MaterialComposer(){
         },
         wireframe:function(bool,render=true){
             this.element.material.wireframe=bool;
-            if(render)this.render();
+            if(render)this.renderGl();
             return this;
         },
         opacity:function(n=1,render=true){
             this.transparent(true,false);
             this.element.material.opacity=n;
-            if(render)this.render();
+            if(render)this.renderGl();
             return this;
         },
         transparent:function(bool,render=true){
             this.element.material.transparent=bool;
-            this.render();          
+            this.renderGl();          
         },
         texture:function(texture,render=true){
             if(texture instanceof Texture){
@@ -55655,8 +55655,7 @@ function MaterialComposer(){
                 this.element.material.map=canvas2texture(texture);
             }
             this.element.material.needsUpdate=true;
-            //this?.parent.renderGl()
-            if(render)this.render();
+            if(render)this.renderGl();
             return this;
         }
     }
@@ -55753,21 +55752,10 @@ class ZikoTHREEMaterial{
 }
 const ZikoMaterial=(mesh,attributes={})=>new ZikoTHREEMaterial(mesh,attributes);
 
-class ZikoThreeMesh{
-    constructor(Geometry,Material){
-        this.cache={
-            type:"gl"
-        };
+class ZikoThreeObject{
+    constructor(){
         this.parent=null; // Scene
-        this.element=new Mesh(Geometry,Material);
-        this.material=ZikoMaterial(this.element,{});
         Object.assign(this, GeometryComposer.call(this));
-        Object.assign(this, MaterialComposer.call(this));
-    }
-    get isHovered(){
-        //this.parent.renderGl()
-
-        //return this.parent.cache.last_intersected_uuid===this.element.uuid;
     }
     _Maintain(){
         this.element=new Mesh(this.geometry,this.material.currentMaterial);
@@ -55780,12 +55768,6 @@ class ZikoThreeMesh{
     }
     remove(){
 
-    }
-    get Geometry(){
-        return this.element.geometry;
-    }
-    get Material(){
-        return this.element.material;
     }
     get px(){
         return this.element.position.x;
@@ -55822,6 +55804,28 @@ class ZikoThreeMesh{
             pos:this.pz,
             rot:this.rz
         }
+    }
+}
+class ZikoThreeMesh extends ZikoThreeObject{
+    constructor(Geometry,Material){
+        super();
+        this.cache={
+            type:"gl"
+        };
+        this.element=new Mesh(Geometry,Material);
+        this.material=ZikoMaterial(this.element,{});
+        Object.assign(this, MaterialComposer.call(this));
+    }
+    get isHovered(){
+        //this.parent.renderGl()
+
+        //return this.parent.cache.last_intersected_uuid===this.element.uuid;
+    }
+    get Geometry(){
+        return this.element.geometry;
+    }
+    get Material(){
+        return this.element.material;
     }
 
 }
@@ -59067,15 +59071,6 @@ function SceneComposer(){
     }
 }
 
-// function add_object_to_scene(sceneTarget,obj){
-//         if(n instanceof ZikoThreeMesh){
-//             this[sceneTarget].add(obj.element);
-//             this.items.push(obj[i]);
-//             obj.parent=this;
-//         }
-//         //else this.sceneGl.add(obj[i])
-
-// }
 class ZikoThreeSceneGl extends ZikoUIElement{
     constructor(w,h){
         super();
@@ -59133,7 +59128,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 	}
     add(...obj){
 		obj.map((n,i)=>{
-			if(n instanceof ZikoThreeMesh){
+			if(n instanceof ZikoThreeObject){
 				this.sceneGl.add(obj[i].element);
 				this.items.push(obj[i]);
 				n.parent=this;
@@ -59496,7 +59491,7 @@ const dodecahedron3=(r)=>new ZikoThreeMesh(new DodecahedronGeometry(r));
 const icosahedron3=(r)=>new ZikoThreeMesh(new IcosahedronGeometry(r));
 const octahedron3=(r)=>new ZikoThreeMesh(new OctahedronGeometry(r));
 
-class ZikoThreeGroupe extends ZikoThreeMesh{
+class ZikoThreeGroupe extends ZikoThreeObject{
 	constructor(){
 		super();
 		this.element=new Group();
@@ -59522,7 +59517,7 @@ class ZikoThreeGroupe extends ZikoThreeMesh{
 }
 const groupe3=(...obj)=>new ZikoThreeGroupe().add(...obj);
 
-class ZikoThreeExtrude extends ZikoThreeMesh{
+class ZikoThreeExtrude extends ZikoThreeObject{
     constructor(shape,depth=5,bevelEnabled=false){
         super();
         this.element=new THREE.Mesh(
@@ -59543,7 +59538,7 @@ const extrude3=(shape,depth=5,bevelEnabled=false)=>new ZikoThreeExtrude(shape,de
 const svg3=(svg,depth=5,bevelEnabled=false)=>new ZikoThreeExtrudeSvg(svg,depth,bevelEnabled);
 
 //const UI3=ui=>new CSS3DObject(ui.element)
-class ZikoThreeCss extends ZikoThreeMesh{
+class ZikoThreeCss extends ZikoThreeObject{
     constructor(UIElement){
         super();
         this.cache={
@@ -59590,7 +59585,7 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         let rerenderCss=false;
         obj=obj.map(n=>n instanceof ZikoUIElement?UI3(n):n);
 		obj.map(n=>{
-			if(n instanceof ZikoThreeMesh){
+			if(n instanceof ZikoThreeObject){
                 if(n.cache.type==="gl"){
                     this.sceneGl.add(n.element);
                     rerenderGl=true;

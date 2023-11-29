@@ -1,5 +1,5 @@
 import * as THREE from "three"
-import ZikoThreeMesh from "../ZikoThreeMesh.js";
+import { ZikoThreeMesh } from "../ZikoThreeMesh";
 const cube3=(l)=>new ZikoThreeMesh(new THREE.BoxGeometry(l,l,l));
 const plan3=(w,h)=>new ZikoThreeMesh(new THREE.PlaneGeometry(w,h,100,100));
 const line3=(p0,p1)=>{

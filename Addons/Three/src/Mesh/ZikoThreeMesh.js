@@ -4,21 +4,10 @@ import {
     MaterialComposer
 } from "../Composer/index.js"
 import { ZikoMaterial } from "./Materials/index.js";
-class ZikoThreeMesh{
-    constructor(Geometry,Material){
-        this.cache={
-            type:"gl"
-        }
+class ZikoThreeObject{
+    constructor(){
         this.parent=null; // Scene
-        this.element=new THREE.Mesh(Geometry,Material);
-        this.material=ZikoMaterial(this.element,{});
         Object.assign(this, GeometryComposer.call(this));
-        Object.assign(this, MaterialComposer.call(this));
-    }
-    get isHovered(){
-        //this.parent.renderGl()
-
-        //return this.parent.cache.last_intersected_uuid===this.element.uuid;
     }
     _Maintain(){
         this.element=new THREE.Mesh(this.geometry,this.material.currentMaterial);
@@ -31,12 +20,6 @@ class ZikoThreeMesh{
     }
     remove(){
 
-    }
-    get Geometry(){
-        return this.element.geometry;
-    }
-    get Material(){
-        return this.element.material;
     }
     get px(){
         return this.element.position.x;
@@ -74,8 +57,31 @@ class ZikoThreeMesh{
             rot:this.rz
         }
     }
+}
+class ZikoThreeMesh extends ZikoThreeObject{
+    constructor(Geometry,Material){
+        super()
+        this.cache={
+            type:"gl"
+        }
+        this.element=new THREE.Mesh(Geometry,Material);
+        this.material=ZikoMaterial(this.element,{});
+        Object.assign(this, MaterialComposer.call(this));
+    }
+    get isHovered(){
+        //this.parent.renderGl()
+
+        //return this.parent.cache.last_intersected_uuid===this.element.uuid;
+    }
+    get Geometry(){
+        return this.element.geometry;
+    }
+    get Material(){
+        return this.element.material;
+    }
 
 }
-
-const ZikoMesh=()=>new ZikoThreeMesh()
-export default ZikoThreeMesh
+export {
+    ZikoThreeObject,
+    ZikoThreeMesh
+}
