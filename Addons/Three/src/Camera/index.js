@@ -33,8 +33,17 @@ class ZikoTHREECamera{
         return this;
     }
 	useState(state,renderGl=true,renderCss=true){
-		this.currentCamera.position.copy(state.position);
-        this.currentCamera.quaternion.copy(state.quaternion);
+		let {position,quaternion}=state;
+		if(!(position instanceof THREE.Vector3)){
+			const {x,y,z}=position;
+			position=new THREE.Vector3(x,y,z)
+		}
+		if(!(quaternion instanceof THREE.Quaternion)){
+			const {_x,_y,_z,_w}=quaternion;
+			quaternion=new THREE.Quaternion(_x,_y,_z,_w)
+		}
+		this.currentCamera.position.copy(position);
+        this.currentCamera.quaternion.copy(quaternion);
 		this.currentCamera.updateMatrixWorld();
 		if(renderGl)this.parent?.renderGl()
 		if(renderCss)this.parent?.renderCss()
@@ -143,9 +152,6 @@ class ZikoTHREECamera{
 	}
 	get Helper(){
 		return new CameraHelper(this.currentCamera)
-	}
-	useState(state){
-
 	}
 }
 

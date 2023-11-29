@@ -8,28 +8,15 @@ logo=image("zikojs.png").size("140px","auto").style({borderRadius:"20%",zIndex:3
 Sketch.addCssElement(Paint,logo)
 Sketch.sceneCss.children[1].position.y=240
 c=Ziko.Events.Channel("test")
-c.on("orbit_change",e=>{
-    Sketch.camera.rot(e.rx,e.ry,e.rz).pos(e.px,e.py,e.pz)
-    Sketch.renderCss()
-})
-Sketch.cache.controls.orbit.onChange(()=>{
-    c.broadcast.emit("orbit_change",{
-        rx:Sketch.camera.rx,
-        ry:Sketch.camera.ry,
-        rz:Sketch.camera.rz,
-        px:Sketch.camera.px,
-        py:Sketch.camera.py,
-        pz:Sketch.camera.pz
-    })})   
-    Paint.onPtrDown(e=>{
-        e.event.ctrlKey?Sketch.cache.controls.orbit.enable():Sketch.cache.controls.orbit.disable()
-    }).onPtrUp(()=>{})
+c.on("orbit_change",e=>Sketch.camera.useState(e.state,false,true))
+Sketch.orbit.onChange(()=>{
+    c.broadcast.emit("orbit_change",{state:Sketch.orbit.currentState})
+})   
+    Paint.onPtrDown(e=>e.event.ctrlKey?Sketch.orbit.enable():Sketch.orbit.disable()).onPtrUp(()=>{})
     Paint.onPtrMove(e=>{
-        if(e.event.ctrlKey){
-            Sketch.cache.controls.orbit.enable()
-        }
+        if(e.event.ctrlKey) Sketch.orbit.enable()
         else{
-            Sketch.cache.controls.orbit.disable()
+            Sketch.orbit.disable()
             if(e.isDown){
                 const x=map(e.mx,0,Paint.Width,Paint.Xmin,Paint.Xmax)
                 const y=map(e.my,0,Paint.Height,Paint.Ymax,Paint.Ymin)
@@ -38,6 +25,4 @@ Sketch.cache.controls.orbit.onChange(()=>{
             }
         }
     })
-    c.on("draw",e=>{
-        Paint.append(canvasRect(e.x,e.y,1,1).color({stroke:e.color,fill:"#5555AA"}).fill())
-    })
+    c.on("draw",e=>Paint.append(canvasRect(e.x,e.y,1,1).color({stroke:e.color,fill:"#5555AA"}).fill()))

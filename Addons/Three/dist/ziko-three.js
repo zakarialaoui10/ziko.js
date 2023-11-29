@@ -52160,8 +52160,17 @@
 	        return this;
 	    }
 		useState(state,renderGl=true,renderCss=true){
-			this.currentCamera.position.copy(state.position);
-	        this.currentCamera.quaternion.copy(state.quaternion);
+			let {position,quaternion}=state;
+			if(!(position instanceof Vector3)){
+				const {x,y,z}=position;
+				position=new Vector3(x,y,z);
+			}
+			if(!(quaternion instanceof Quaternion)){
+				const {_x,_y,_z,_w}=quaternion;
+				quaternion=new Quaternion(_x,_y,_z,_w);
+			}
+			this.currentCamera.position.copy(position);
+	        this.currentCamera.quaternion.copy(quaternion);
 			this.currentCamera.updateMatrixWorld();
 			if(renderGl)this.parent?.renderGl();
 			if(renderCss)this.parent?.renderCss();
@@ -52270,9 +52279,6 @@
 		}
 		get Helper(){
 			return new CameraHelper(this.currentCamera)
-		}
-		useState(state){
-
 		}
 	}
 
@@ -57246,14 +57252,32 @@
 	        this.onChange();
 
 	    }
+	    get currentState(){
+	        const state={
+	            position:new THREE.Vector3(),
+	            quaternion:new THREE.Quaternion()
+	        };
+	        state.position.copy(this.#TARGET.camera.currentCamera.position);
+	        state.quaternion.copy(this.#TARGET.camera.currentCamera.quaternion);
+	        return state;
+	    }
 	    save(){
 	        this.saved_state.position.copy(this.#TARGET.camera.currentCamera.position);
 	        this.saved_state.quaternion.copy(this.#TARGET.camera.currentCamera.quaternion);
 	        return this;
 	    }
 	    useState(state,renderGl=true,renderCss=true){
-			this.#TARGET.camera.currentCamera.position.copy(state.position);
-	        this.#TARGET.camera.currentCamera.quaternion.copy(state.quaternion);
+	        let {position,quaternion}=state;
+			if(!(position instanceof THREE.Vector3)){
+				const {x,y,z}=position;
+				position=new THREE.Vector3(x,y,z);
+			}
+			if(!(quaternion instanceof THREE.Quaternion)){
+				const {_x,_y,_z,_w}=quaternion;
+				quaternion=new THREE.Quaternion(_x,_y,_z,_w);
+			}
+			this.#TARGET.camera.currentCamera.position.copy(position);
+	        this.#TARGET.camera.currentCamera.quaternion.copy(quaternion);
 			this.#TARGET.camera.currentCamera.updateMatrixWorld();
 			if(renderGl)this.#TARGET?.renderGl();
 			if(renderCss)this.#TARGET?.renderCss();
