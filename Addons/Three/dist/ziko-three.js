@@ -52141,12 +52141,26 @@
 			this.fov=50;
 			this.pD=10;
 			this.oD=120;
-			//this.#ORTHOGRAPHIC_CAMERA=new OrthographicCamera(this.left,this.right,this.top,this.bottom,this.near,this.far);
+			this.saved_state={
+	            position:new Vector3(),
+	            quaternion:new Quaternion()
+	        };
 		}
 		#maintain(){
 			if(this.parent)this.parent.renderGl();
 			return this;
 		}
+		save(){
+	        this.saved_state.position.copy(this.currentCamera.position);
+	        this.saved_state.quaternion.copy(this.currentCamera.quaternion);
+	        return this;
+	    }
+	    restore(){
+	        this.currentCamera.position.copy(this.saved_state.position);
+	        this.currentCamera.quaternion.copy(this.saved_state.quaternion);
+	        this.currentCamera.updateMatrixWorld();
+	        return this;
+	    }
 		get left(){
 			return -this.pD*Math.tan(this.halfFovH);
 		}
@@ -52251,6 +52265,9 @@
 		}
 		get Helper(){
 			return new CameraHelper(this.currentCamera)
+		}
+		useState(state){
+
 		}
 	}
 
