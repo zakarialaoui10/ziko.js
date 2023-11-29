@@ -3,6 +3,7 @@ import * as THREE from "three"
 import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { ZikoThreeSceneGl } from "./gl";
 import {UI3} from "../Mesh/index"
+import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 class ZikoThreeSceneCss extends ZikoThreeSceneGl{
     constructor(w,h){
         super(w,h)
@@ -42,6 +43,20 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
     this.renderGl().renderCss()
     return this;
     }
+    add(...obj){
+		obj.map((n,i)=>{
+			if(n instanceof ZikoThreeMesh){
+                if(n.type==="gl")this.sceneGl.add(obj[i].element);
+                else if(n.type==="css")this.sceneCss.add(obj[i].element);             
+                this.items.push(obj[i]);
+                n.parent=this;  
+			}
+		});
+        this.maintain();
+        if(obj.some(n=>n.type==="gl"))this.renderGl();
+        if(obj.some(n=>n.type==="css"))this.renderCss();
+		return this;
+	}
 }
 
 const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h)

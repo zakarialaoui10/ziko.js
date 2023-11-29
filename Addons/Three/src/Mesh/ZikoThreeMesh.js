@@ -6,6 +6,7 @@ import {
 import { ZikoMaterial } from "./Materials/index.js";
 class ZikoThreeMesh{
     constructor(Geometry,Material){
+        this.type="gl";
         this.cache={
             
         }

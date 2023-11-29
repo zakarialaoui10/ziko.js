@@ -55756,6 +55756,7 @@
 
 	class ZikoThreeMesh{
 	    constructor(Geometry,Material){
+	        this.type="gl";
 	        this.cache={
 	            
 	        };
@@ -59069,6 +59070,15 @@
 	    }
 	}
 
+	// function add_object_to_scene(sceneTarget,obj){
+	//         if(n instanceof ZikoThreeMesh){
+	//             this[sceneTarget].add(obj.element);
+	//             this.items.push(obj[i]);
+	//             obj.parent=this;
+	//         }
+	//         //else this.sceneGl.add(obj[i])
+
+	// }
 	class ZikoThreeSceneGl extends ziko.ZikoUIElement{
 	    constructor(w,h){
 	        super();
@@ -59124,7 +59134,7 @@
 			this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 			return this;
 		}
-	    addGl(...obj){
+	    add(...obj){
 			obj.map((n,i)=>{
 				if(n instanceof ZikoThreeMesh){
 					this.sceneGl.add(obj[i].element);
@@ -59137,7 +59147,7 @@
 			this.renderGl();
 			return this;
 		}
-	    removeGl(...obj){
+	    remove(...obj){
 			obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
 	        this.items=this.items.filter(n=>!obj.includes(n));
 	        this.maintain();
@@ -59537,7 +59547,15 @@
 	//const svg3=(svg,depth=5,bevelEnabled=false)=>groupe3(...loadSVG(svg).map(n=>extrude3(n,depth,bevelEnabled)))
 	const svg3=(svg,depth=5,bevelEnabled=false)=>new ZikoThreeExtrudeSvg(svg,depth,bevelEnabled);
 
-	const UI3=ui=>new CSS3DObject(ui.element);
+	//const UI3=ui=>new CSS3DObject(ui.element)
+	class ZikoThreeCss extends ZikoThreeMesh{
+	    constructor(UIElement){
+	        super();
+	        this.type="css";
+	        this.element=new CSS3DObject(UIElement.element);
+	    }
+	}
+	const UI3=UIElement=>new ZikoThreeCss(UIElement);
 
 	class ZikoThreeSceneCss extends ZikoThreeSceneGl{
 	    constructor(w,h){
@@ -59578,6 +59596,20 @@
 	    this.renderGl().renderCss();
 	    return this;
 	    }
+	    add(...obj){
+			obj.map((n,i)=>{
+				if(n instanceof ZikoThreeMesh){
+	                if(n.type==="gl")this.sceneGl.add(obj[i].element);
+	                else if(n.type==="css")this.sceneCss.add(obj[i].element);             
+	                this.items.push(obj[i]);
+	                n.parent=this;  
+				}
+			});
+	        this.maintain();
+	        if(obj.some(n=>n.type==="gl"))this.renderGl();
+	        if(obj.some(n=>n.type==="css"))this.renderCss();
+			return this;
+		}
 	}
 
 	const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h);

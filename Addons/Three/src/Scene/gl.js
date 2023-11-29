@@ -8,7 +8,15 @@ import { ZikoCamera } from "../Camera";
 import ZikoThreeMesh from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
 import { waitElm } from "../Utils";
+// function add_object_to_scene(sceneTarget,obj){
+//         if(n instanceof ZikoThreeMesh){
+//             this[sceneTarget].add(obj.element);
+//             this.items.push(obj[i]);
+//             obj.parent=this;
+//         }
+//         //else this.sceneGl.add(obj[i])
 
+// }
 class ZikoThreeSceneGl extends ZikoUIElement{
     constructor(w,h){
         super()
@@ -64,7 +72,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 		this.rendererGl.render(this.sceneGl,this.camera.currentCamera);
 		return this;
 	}
-    addGl(...obj){
+    add(...obj){
 		obj.map((n,i)=>{
 			if(n instanceof ZikoThreeMesh){
 				this.sceneGl.add(obj[i].element);
@@ -77,7 +85,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 		this.renderGl();
 		return this;
 	}
-    removeGl(...obj){
+    remove(...obj){
 		obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
         this.items=this.items.filter(n=>!obj.includes(n));
         this.maintain();
