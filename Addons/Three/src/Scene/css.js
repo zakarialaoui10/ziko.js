@@ -23,7 +23,7 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         this.rendererCss.render(this.sceneCss,this.camera.currentCamera);
         return this;
     }
-    maintain(){
+    maintain(renderGl=true,renderCss=true){
         this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
         this.camera.currentCamera.updateProjectionMatrix();
         this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
@@ -31,32 +31,48 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         for (let i = 0; i < this.items.length; i++)
         Object.assign(this, { [[i]]: this.items[i] });
         this.length = this.items.length;
-        this.renderGl()
-        this.renderCss()
+        if(renderGl)this.renderGl()
+        if(renderCss)this.renderCss()
         return this;
     }
-    addCssElement(...element){
-        for(let i=0;i<element.length;i++){
-            console.log(element[i] instanceof ZikoUIElement)
-            if(element[i] instanceof ZikoUIElement)this.sceneCss.add(UI3(element[i]))
-        }
-    this.renderGl().renderCss()
-    return this;
-    }
     add(...obj){
-		obj.map((n,i)=>{
+        let rerenderGl=false;
+        let rerenderCss=false;
+        obj=obj.map(n=>n instanceof ZikoUIElement?UI3(n):n)
+		obj.map(n=>{
 			if(n instanceof ZikoThreeMesh){
-                if(n.type==="gl")this.sceneGl.add(obj[i].element);
-                else if(n.type==="css")this.sceneCss.add(obj[i].element);             
-                this.items.push(obj[i]);
+                if(n.cache.type==="gl"){
+                    this.sceneGl.add(n.element);
+                    rerenderGl=true;
+                }
+                else if(n.cache.type==="css"){
+                    this.sceneCss.add(n.element); 
+                    rerenderCss=true
+                }            
+                this.items.push(n);
                 n.parent=this;  
 			}
 		});
-        this.maintain();
-        if(obj.some(n=>n.type==="gl"))this.renderGl();
-        if(obj.some(n=>n.type==="css"))this.renderCss();
+        this.maintain(rerenderGl,rerenderCss);
 		return this;
 	}
+    remove(...obj){
+        let rerenderGl=false;
+        let rerenderCss=false;
+		obj.map((n,i)=>{
+            if(n.cache.type==="gl"){
+                let rerenderGl=true;
+                this.sceneGl.remove(obj[i].element);
+            }
+            else if(n.cache.type==="css"){
+                let rerenderCss=true;
+                this?.sceneCss?.remove(obj[i].element);
+            }
+        });
+        this.items=this.items.filter(n=>!obj.includes(n));
+        this.maintain(rerenderGl,rerenderCss);
+		return this;
+    }
 }
 
 const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h)

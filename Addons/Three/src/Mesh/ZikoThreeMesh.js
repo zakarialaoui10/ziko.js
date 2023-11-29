@@ -6,14 +6,12 @@ import {
 import { ZikoMaterial } from "./Materials/index.js";
 class ZikoThreeMesh{
     constructor(Geometry,Material){
-        this.type="gl";
         this.cache={
-            
+            type:"gl"
         }
         this.parent=null; // Scene
         this.element=new THREE.Mesh(Geometry,Material);
         this.material=ZikoMaterial(this.element,{});
-
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
     }

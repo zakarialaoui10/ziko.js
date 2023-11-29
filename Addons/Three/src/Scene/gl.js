@@ -82,14 +82,12 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 			else this.sceneGl.add(obj[i])
 		});
         this.maintain();
-		this.renderGl();
 		return this;
 	}
     remove(...obj){
 		obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
         this.items=this.items.filter(n=>!obj.includes(n));
         this.maintain();
-		this.renderGl();
 		return this;
     }
     forEachIntersectedItem(if_callback=()=>{},else_callback=()=>{}){

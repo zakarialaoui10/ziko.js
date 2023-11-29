@@ -52280,94 +52280,97 @@ class ZikoTHREECamera{
 
 const ZikoCamera=(w,h,n,f)=>new ZikoTHREECamera(w,h,n,f);
 
-function maintain(){
-	if(this.parent)this.parent.renderGl();
+function maintain(render){
+	if(render && this.parent){
+		if(this.cache.type==="gl")this.parent.renderGl();
+		if(this.cache.type==="css")this.parent?.renderCss();
+	}
 	return this;
 }
 function GeometryComposer(){
     return {
-        posX:function(x=this.POSX){
+        posX:function(x=this.POSX,render=true){
 			this.element.position.x=x;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        posY:function(y=this.POSY){
+        posY:function(y=this.POSY,render=true){
 			this.element.position.y=y;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        posZ:function(z=this.POSZ){
+        posZ:function(z=this.POSZ,render=true){
 			this.element.position.z=z;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
         pos:function(x,y,z){
-			this.element.position.set(x,y,z);
-			maintain.call(this);
+			this.element.position.set(x,y,z,render);
+			maintain.call(this,render);
 			return this;
         },
-		tarnslateX:function(dx=0){
+		tarnslateX:function(dx=0,render=true){
 			this.element.position.x=this.POSX+dx;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        translateY:function(dy=0){
+        translateY:function(dy=0,render=true){
 			this.element.position.y=this.POSY+dy;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        translateZ:function(dz=0){
+        translateZ:function(dz=0,render=true){
 			this.element.position.z=this.POSZ+dz;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        translate:function(dx=0,dy=0,dz=0){
+        translate:function(dx=0,dy=0,dz=0,render=true){
 			this.element.rotation.set(
 				this.POSX+dx,
 				this.POSY+dy,
 				this.POSZ+dz,
 				);
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        rotX:function(x=this.ROTX){
+        rotX:function(x=this.ROTX,render=true){
 			this.element.rotation.x=x;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        rotY:function(y=this.ROTY){
+        rotY:function(y=this.ROTY,render=true){
 			this.element.rotation.y=y;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;            
         },
-        rotZ:function(z=this.ROTZ){
+        rotZ:function(z=this.ROTZ,render=true){
 			this.element.rotation.z=z;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;            
         },
-        rot:function(x,y,z){
+        rot:function(x,y,z,render=true){
 			this.element.rotation.set(x,y,z);
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-		scaleX:function(x){
+		scaleX:function(x,render=true){
 			this.element.scale.x=x;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
-        scaleY:function(y){
+        scaleY:function(y,render=true){
 			this.element.scale.y=y;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;            
         },
-        scaleZ:function(z){
+        scaleZ:function(z,render=true){
 			this.element.scale.z=z;
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;            
         },
-        scale:function(x,y,z){
+        scale:function(x,y,z,render=true){
 			this.element.scale.set(x,y,z);
-			maintain.call(this);
+			maintain.call(this,render);
 			return this;
         },
     }
@@ -55752,14 +55755,12 @@ const ZikoMaterial=(mesh,attributes={})=>new ZikoTHREEMaterial(mesh,attributes);
 
 class ZikoThreeMesh{
     constructor(Geometry,Material){
-        this.type="gl";
         this.cache={
-            
+            type:"gl"
         };
         this.parent=null; // Scene
         this.element=new Mesh(Geometry,Material);
         this.material=ZikoMaterial(this.element,{});
-
         Object.assign(this, GeometryComposer.call(this));
         Object.assign(this, MaterialComposer.call(this));
     }
@@ -59140,14 +59141,12 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 			else this.sceneGl.add(obj[i]);
 		});
         this.maintain();
-		this.renderGl();
 		return this;
 	}
     remove(...obj){
 		obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
         this.items=this.items.filter(n=>!obj.includes(n));
         this.maintain();
-		this.renderGl();
 		return this;
     }
     forEachIntersectedItem(if_callback=()=>{},else_callback=()=>{}){
@@ -59547,7 +59546,9 @@ const svg3=(svg,depth=5,bevelEnabled=false)=>new ZikoThreeExtrudeSvg(svg,depth,b
 class ZikoThreeCss extends ZikoThreeMesh{
     constructor(UIElement){
         super();
-        this.type="css";
+        this.cache={
+            type:"css"
+        };
         this.element=new CSS3DObject(UIElement.element);
     }
 }
@@ -59572,7 +59573,7 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         this.rendererCss.render(this.sceneCss,this.camera.currentCamera);
         return this;
     }
-    maintain(){
+    maintain(renderGl=true,renderCss=true){
         this.camera.currentCamera.aspect=(this.element.clientWidth)/(this.element.clientHeight); 
         this.camera.currentCamera.updateProjectionMatrix();
         this.rendererGl.setSize(this.element.clientWidth,this.element.clientHeight);
@@ -59580,32 +59581,46 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
         for (let i = 0; i < this.items.length; i++)
         Object.assign(this, { [[i]]: this.items[i] });
         this.length = this.items.length;
-        this.renderGl();
-        this.renderCss();
+        if(renderGl)this.renderGl();
+        if(renderCss)this.renderCss();
         return this;
     }
-    addCssElement(...element){
-        for(let i=0;i<element.length;i++){
-            console.log(element[i] instanceof ZikoUIElement);
-            if(element[i] instanceof ZikoUIElement)this.sceneCss.add(UI3(element[i]));
-        }
-    this.renderGl().renderCss();
-    return this;
-    }
     add(...obj){
-		obj.map((n,i)=>{
+        let rerenderGl=false;
+        let rerenderCss=false;
+        obj=obj.map(n=>n instanceof ZikoUIElement?UI3(n):n);
+		obj.map(n=>{
 			if(n instanceof ZikoThreeMesh){
-                if(n.type==="gl")this.sceneGl.add(obj[i].element);
-                else if(n.type==="css")this.sceneCss.add(obj[i].element);             
-                this.items.push(obj[i]);
+                if(n.cache.type==="gl"){
+                    this.sceneGl.add(n.element);
+                    rerenderGl=true;
+                }
+                else if(n.cache.type==="css"){
+                    this.sceneCss.add(n.element); 
+                    rerenderCss=true;
+                }            
+                this.items.push(n);
                 n.parent=this;  
 			}
 		});
-        this.maintain();
-        if(obj.some(n=>n.type==="gl"))this.renderGl();
-        if(obj.some(n=>n.type==="css"))this.renderCss();
+        this.maintain(rerenderGl,rerenderCss);
 		return this;
 	}
+    remove(...obj){
+        let rerenderGl=false;
+        let rerenderCss=false;
+		obj.map((n,i)=>{
+            if(n.cache.type==="gl"){
+                this.sceneGl.remove(obj[i].element);
+            }
+            else if(n.cache.type==="css"){
+                this?.sceneCss?.remove(obj[i].element);
+            }
+        });
+        this.items=this.items.filter(n=>!obj.includes(n));
+        this.maintain(rerenderGl,rerenderCss);
+		return this;
+    }
 }
 
 const SceneCss=(w,h)=>new ZikoThreeSceneCss(w,h);

@@ -1,12 +1,12 @@
 Ziko.ExtractAll()
 ZikoThree.ExtractAll()
+document.body.addEventListener("contextmenu",e=>e.preventDefault())
 const RANDOM_COLOR=Random.color()
 Paint=Canvas().view(-10,-10,10,10).size(500,500).background("#eeeeee").adjust()
 Sketch=SceneCss("100vw","100vh").background("#111111").style({margin:0})
 Sketch.camera.posZ(700)
 logo=image("zikojs.png").size("140px","auto").style({borderRadius:"20%",zIndex:3})
-Sketch.add(UI3(Paint),UI3(logo))
-//Sketch.sceneCss.children[1].position.y=240
+Sketch.add(UI3(Paint),UI3(logo).posY(-210))
 c=Ziko.Events.Channel("test")
 c.on("orbit_change",e=>Sketch.camera.useState(e.state,false,true))
 Sketch.orbit.onChange(()=>{

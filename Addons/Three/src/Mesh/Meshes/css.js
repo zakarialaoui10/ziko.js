@@ -4,7 +4,9 @@ import ZikoThreeMesh from '../ZikoThreeMesh';
 class ZikoThreeCss extends ZikoThreeMesh{
     constructor(UIElement){
         super()
-        this.type="css"
+        this.cache={
+            type:"css"
+        }
         this.element=new CSS3DObject(UIElement.element)
     }
 }
