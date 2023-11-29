@@ -69,16 +69,23 @@ class ZikoThreeOrbitControls{
         this.control.dispose();
         return this;
     }
-    on(){
+    init(){
         this.control=new OrbitControls(this.#TARGET.camera.currentCamera,this.#TARGET.rendererTarget.domElement);
         this.restore();
         return this;
     }
-    onChange(handler){
+    clear(){
+        this.dispose();
+        this.#TARGET.cache.controls.orbit=null;
+        return null
+    }
+    onChange(handler,renderGl=true,renderCss=true){
         this.control.addEventListener("change",()=>{
             if(!this.isPaused){
-                this.#TARGET.renderGl()?.renderCss()
-                if(handler)handler()
+                this.#TARGET.renderGl();
+                if(renderGl)this.#TARGET.renderGl();
+                if(this.#TARGET.cache.type==="css" && renderCss)this.#TARGET.renderCss();
+                if(handler)handler();
             }
         });
         return this;

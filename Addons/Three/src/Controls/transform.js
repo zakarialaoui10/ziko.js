@@ -40,11 +40,15 @@ class ZikoThreeTransformControls{
     onChange(handler){
         this.control.addEventListener("change",()=>{
             if(!this.isPaused){
-                this.#TARGET.renderGl()?.renderCss()
+                this.#TARGET.renderGl()
                 if(handler)handler()
             }
         });
         this.control.addEventListener('dragging-changed',( event )=>{
+            if(this.#TARGET.cache.controls.orbit){
+                event.value?this.#TARGET.cache.controls.orbit.disable():this.#TARGET.cache.controls.orbit.enable()
+            }
+            //console.log(event.value)
             //this.#TARGET.cache.controls.orbit.enabled = ! event.value;
             //console.log(this.#TARGET.cache.controls.orbit.enabled )
         })

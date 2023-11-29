@@ -26,3 +26,6 @@ Sketch.orbit.onChange(()=>{
         }
     })
     c.on("draw",e=>Paint.append(canvasRect(e.x,e.y,1,1).color({stroke:e.color,fill:"#5555AA"}).fill()))
+
+// a=new SceneGl(400,400)
+// a.add(cube3(2))
