@@ -22,7 +22,7 @@ export function GeometryComposer(){
 			maintain.call(this,render);
 			return this;
         },
-        pos:function(x,y,z){
+        pos:function(x,y,z,render){
 			this.element.position.set(x,y,z,render);
 			maintain.call(this,render);
 			return this;

@@ -1,5 +1,5 @@
 import { ZikoThreeObject } from "../ZikoThreeMesh";
-import { groupe3 , ZikoThreeGroupe } from "./groupe";
+import { ZikoThreeGroupe } from "./groupe";
 class ZikoThreeExtrude extends ZikoThreeObject{
     constructor(shape,depth=5,bevelEnabled=false){
         super()
@@ -8,6 +8,9 @@ class ZikoThreeExtrude extends ZikoThreeObject{
             depth,
             bevelEnabled
         }));
+        Object.assign(this.cache,{
+			type:"extrude"
+		})
     }
 }
 class ZikoThreeExtrudeSvg extends ZikoThreeGroupe{

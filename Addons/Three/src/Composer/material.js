@@ -77,7 +77,7 @@ export function MaterialComposer(){
 
         color:function(color,render=true){
             this.element.material.color=new THREE.Color(color);
-            if(render)this.renderGl();
+            if(render && this.parent)this.parent.renderGl();
             return this;
         },
         side:function(){
@@ -85,18 +85,18 @@ export function MaterialComposer(){
         },
         wireframe:function(bool,render=true){
             this.element.material.wireframe=bool;
-            if(render)this.renderGl();
+            if(render && this.parent)this.parent.renderGl();
             return this;
         },
         opacity:function(n=1,render=true){
             this.transparent(true,false);
             this.element.material.opacity=n;
-            if(render)this.renderGl()
+            if(render && this.parent)this.parent.renderGl()
             return this;
         },
         transparent:function(bool,render=true){
             this.element.material.transparent=bool;
-            this.renderGl();          
+            this.parent.renderGl();          
         },
         texture:function(texture,render=true){
             if(texture instanceof THREE.Texture){
@@ -109,7 +109,7 @@ export function MaterialComposer(){
                 this.element.material.map=canvas2texture(texture);
             }
             this.element.material.needsUpdate=true;
-            if(render)this.renderGl()
+            if(render && this.parent)this.parent.renderGl()
             return this;
         }
     }

@@ -5,8 +5,12 @@ const RANDOM_COLOR=Random.color()
 Paint=Canvas().view(-10,-10,10,10).size(500,500).background("#eeeeee").adjust()
 Sketch=SceneCss("100vw","100vh").background("#111111").style({margin:0})
 Sketch.camera.posZ(700)
+Galerie=new SceneGl(innerWidth,innerHeight)
 logo=image("zikojs.png").size("140px","auto").style({borderRadius:"20%",zIndex:3})
-Sketch.add(UI3(Paint),UI3(logo).posY(-210))
+save=btn("save").onPtrDown(
+    ()=>Galerie.add(cube3(1).texture(Paint).pos(5*cos(Galerie.length*PI/20),5*sin(Galerie.length*PI/20),-(Galerie.length%10)*5))
+)
+Sketch.add(UI3(Paint).posY(70),UI3(logo).posY(-200),UI3(save))
 c=Ziko.Events.Channel("test")
 c.on("orbit_change",e=>Sketch.camera.useState(e.state,false,true))
 Sketch.orbit.onChange(()=>{

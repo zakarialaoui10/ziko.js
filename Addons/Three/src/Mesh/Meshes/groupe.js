@@ -8,7 +8,10 @@ class ZikoThreeGroupe extends ZikoThreeObject{
 	constructor(){
 		super();
 		this.element=new THREE.Group();
-		this.items=[]
+		this.items=[];
+		Object.assign(this.cache,{
+			type:"groupe"
+		})
 	}
 	add(...obj){
 		for(let i=0;i<obj.length;i++){

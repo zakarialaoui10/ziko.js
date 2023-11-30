@@ -7,7 +7,6 @@ import {
 import { ZikoCamera } from "../Camera";
 import { 
     ZikoThreeObject,
-    ZikoThreeMesh
  } from "../Mesh/ZikoThreeMesh";
 import { SceneComposer } from "../Composer/scene";
 import { waitElm } from "../Utils";
@@ -79,6 +78,7 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 		return this;
 	}
     remove(...obj){
+        if(obj.length===0){}
 		obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
         this.items=this.items.filter(n=>!obj.includes(n));
         this.maintain();
