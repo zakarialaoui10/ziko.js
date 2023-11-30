@@ -12,7 +12,7 @@ class CanvasArc extends ZikoCanvasElement{
             this.applyNormalStyle(ctx);
             ctx.beginPath();
             this.path=new Path2D();
-            this.path.arc(this._x, this._y, this.r, 0, this.angle);
+            this.path.arc(this.px, this.py, this.r, 0, this.angle);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);

@@ -5,8 +5,12 @@ const RANDOM_COLOR=Random.color()
 Paint=Canvas().view(-10,-10,10,10).size(500,500).background("#eeeeee").adjust()
 Sketch=SceneCss("100vw","100vh").background("#111111").style({margin:0})
 Sketch.camera.posZ(700)
-Galerie=new SceneGl(innerWidth,innerHeight).useOrbitControls()
-logo=image("zikojs.png").size("140px","auto").style({borderRadius:"20%",zIndex:3})
+Galerie=Section().style({
+    width:"100vw",
+    height:"100vh",
+    backgroundColor:"cyan"
+})
+logo=image("zikojs.png").alt("zikojs").size("140px","auto").style({borderRadius:"20%",zIndex:3})
 saveBtn=btn("save")
 Sketch.add(UI3(Paint).posY(70),UI3(logo).posY(-200),UI3(saveBtn))
 c=Ziko.Events.Channel("test")

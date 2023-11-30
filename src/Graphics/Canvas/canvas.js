@@ -1,6 +1,7 @@
 import ZikoUIElement from "../../UI/ZikoUIElement.js";
 import {Matrix} from "../../Math/Matrix/index.js"
 import { convolute } from "../../Math/Signal/conv.js";
+import { waitElm } from "../../UI/Utils/index.js";
 class ZikoUICanvas extends ZikoUIElement{
     constructor(w,h){
         super();
@@ -21,6 +22,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [10,10]
         ])
         this.render();
+        this.WatchSize(()=>Paint.adjust())
     }
     get Width(){
         return this.element.width;

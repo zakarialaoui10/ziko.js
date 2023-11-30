@@ -34,10 +34,12 @@ class ZikoCanvasElement{
         }
         this.render();
     }
-    get _x(){
+    get px(){
+        //_x=====>px
         return (this.position.x??0)+(this.parent.position.x??0);
     }
-    get _y(){
+    get py(){
+        //_y=====>py
         return (this.position.y??0)+(this.parent.position.y??0);
     }
     isIntersectedWith(){

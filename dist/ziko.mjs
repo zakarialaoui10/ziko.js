@@ -6477,6 +6477,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [10,10]
         ]);
         this.render();
+        this.WatchSize(()=>Paint.adjust());
     }
     get Width(){
         return this.element.width;
@@ -6671,10 +6672,12 @@ class ZikoCanvasElement{
         };
         this.render();
     }
-    get _x(){
+    get px(){
+        //_x=====>px
         return (this.position.x??0)+(this.parent.position.x??0);
     }
-    get _y(){
+    get py(){
+        //_y=====>py
         return (this.position.y??0)+(this.parent.position.y??0);
     }
     isIntersectedWith(){
@@ -6761,7 +6764,7 @@ class CanvasArc extends ZikoCanvasElement{
             this.applyNormalStyle(ctx);
             ctx.beginPath();
             this.path=new Path2D();
-            this.path.arc(this._x, this._y, this.r, 0, this.angle);
+            this.path.arc(this.px, this.py, this.r, 0, this.angle);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);

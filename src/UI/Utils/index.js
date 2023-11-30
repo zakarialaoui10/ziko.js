@@ -39,5 +39,32 @@ const cloneUI=UIElement=>{
 function isPrimitive(value) {
     return typeof value !== 'object' && typeof value !== 'function' || value === null;
   }
-
-export{Id,Class,style,script,linkStyle,CloneElement,cloneUI,isPrimitive,addSuffixeToNumber}
+const waitElm=(UIElement)=>{
+    return new Promise(resolve => {
+        if (UIElement) {
+            return resolve(UIElement);
+        }
+        const observer = new MutationObserver(() => {
+            if (UIElement) {
+                resolve(UIElement);
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+  }
+export{
+  Id,
+  Class,
+  style,
+  script,
+  linkStyle,
+  CloneElement,
+  cloneUI,
+  isPrimitive,
+  addSuffixeToNumber,
+  waitElm
+}
