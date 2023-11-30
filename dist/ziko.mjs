@@ -4396,6 +4396,14 @@ class ZikoUIElement {
   get Id() {
     return this.element.getAttribute("id");
   }
+  forEach(callback){
+    this.items.forEach(callback);
+    return this;
+  }
+  filter(condition_callback,if_callback,else_callback){
+    this.items.filter(condition_callback).forEach(if_callback);
+    return this;
+  }
   filterByTextContent(text,exactMatch=false){
     this.items.map(n=>n.render());
     this.items.filter(n=>{
