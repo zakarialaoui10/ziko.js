@@ -57,20 +57,25 @@ class ZikoThreeSceneCss extends ZikoThreeSceneGl{
 		return this;
 	}
     remove(...obj){
+        if(obj.length==0){
+            if(this.Target.children.length) this.Target.removeChild(this.element);
+          }
+        else{
         let rerenderGl=false;
         let rerenderCss=false;
 		obj.map((n,i)=>{
             if(n.cache.type==="gl"){
-                let rerenderGl=true;
+                rerenderGl=true;
                 this.sceneGl.remove(obj[i].element);
             }
             else if(n.cache.type==="css"){
-                let rerenderCss=true;
+                rerenderCss=true;
                 this?.sceneCss?.remove(obj[i].element);
             }
         });
         this.items=this.items.filter(n=>!obj.includes(n));
         this.maintain(rerenderGl,rerenderCss);
+    }
 		return this;
     }
 }

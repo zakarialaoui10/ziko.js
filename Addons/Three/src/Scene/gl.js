@@ -78,10 +78,14 @@ class ZikoThreeSceneGl extends ZikoUIElement{
 		return this;
 	}
     remove(...obj){
-        if(obj.length===0){}
-		obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
-        this.items=this.items.filter(n=>!obj.includes(n));
-        this.maintain();
+        if(obj.length==0){
+            if(this.Target.children.length) this.Target.removeChild(this.element);
+          }
+        else {
+            obj.map((n,i)=>this.sceneGl.remove(obj[i].element));
+            this.items=this.items.filter(n=>!obj.includes(n));
+            this.maintain();
+        }
 		return this;
     }
     forEachIntersectedItem(if_callback=()=>{},else_callback=()=>{}){
