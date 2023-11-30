@@ -1,5 +1,6 @@
 import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 import styleComposer from "./Style/index.js";
+import { ZikoStyle } from "./Style/style.js";
 import { 
   Pointer, 
   Key, 
@@ -25,18 +26,15 @@ class ZikoUIElement {
     this.cache = {
       isHidden: false,
       isFrozzen:false,
-      isFaddedOut:false,
       transformMatrix:matrix([
         [0,0,0],
         [0,0,0],
         [1,1,0]
       ]),
-      style: {},
+      style: ZikoStyle({}),
       attributes: {},
       filters: {},
-      transformation:{
-        Flip:[0,0,0]
-      }
+      
     };
     this.items = [];
     this.events = {
@@ -52,8 +50,18 @@ class ZikoUIElement {
       resize:null,
       intersection:null
     }
+    this.cache.style.linkTo(this);
     this.style({ position: "relative" });
     this.size("auto", "auto");
+  }
+  get st(){
+    return this.cache.style;
+  }
+  get attr(){
+    return this.cache.attributes;
+  }
+  get evt(){
+
   }
   clone() {
     const UI = new this.constructor();

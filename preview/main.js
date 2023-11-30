@@ -31,7 +31,7 @@ ZikoThree.ExtractAll()
 //     })
 //     c.on("draw",e=>Paint.append(canvasRect(e.x,e.y,1,1).color({stroke:e.color,fill:"#5555AA"}).fill()))
 const RANDOM_COLOR=Random.color()
-Paint=Canvas().view(-10,-10,10,10).size(500,500).background("#eeeeee")
+Paint=Canvas().view(-10,-10,10,10).size(500,500).style({backgroud:"#eeeeee"})
 Paint.onPtrDown(()=>{}).onPtrUp(()=>{})
     Paint.onPtrMove(e=>{
         if(e.event.ctrlKey) Sketch.orbit.enable()
