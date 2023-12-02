@@ -1,4 +1,4 @@
-import { style , addSuffixeToNumber } from "../Utils/index.js";
+import { style , addSuffixeToNumber, waitElm } from "../Utils/index.js";
 class ZikoUIElementStyle{
     constructor(defaultStyle={}){
         this.target=null;
@@ -13,12 +13,22 @@ class ZikoUIElementStyle{
             }
         }
     }
+    style(styles,{target = "parent", maskVector = null } = {}){
+        if (target === "parent" || target === 0)style(this.target.element, styles);
+        else if(target === "parent" || target === 0){
+          if (maskVector) {
+            this.items.map((n, i) => maskVector[i] == 1 && n.style(styles));
+          } 
+          else this.items.map((n) => n.style(styles));      
+        }
+        return this;
+      }
     linkTo(target){
         this.target=target;
         return this;
     }
     use(name="default"){
-        this.target.style(this.styles.get(name));
+        this.style(this.styles.get(name));
         return this;
     }
     update(name,styles){
@@ -38,9 +48,23 @@ class ZikoUIElementStyle{
         names.forEach(n=>this.styles.delete(n));
         return this;
     }
+    updateDefaultStyle(){
+        const defaultStyle=Object.fromEntries(
+            Object.entries(this.target.element.style).filter(n=>isNaN(+n[0]))
+        )   
+        this.update("default",defaultStyle);
+        return this;
+    }
+    hover(styles){
+        //this.updateDefaultStyle()
+        if(styles)this.add("hover",styles)
+        this.target.element.addEventListener("pointerenter",()=>this.use("hover"));
+        this.target.element.addEventListener("pointerleave",()=>this.use("default"))
+        return this;
+    }
     // Size
     size(width,height,{ target, maskVector } = {}){
-        this.target.style({
+        this.style({
             width,
             height
         },{ target, maskVector })
@@ -54,12 +78,12 @@ class ZikoUIElementStyle{
             let max= w.max ?? w.min;
             min=addSuffixeToNumber(min,"px");
             max=addSuffixeToNumber(max,"px"); 
-            this.target.style({ minWidth: min, maxWidth: max }, { target, maskVector });
+            this.style({ minWidth: min, maxWidth: max }, { target, maskVector });
           }
         }
         else {
           w=addSuffixeToNumber(w,"px");
-          this.target.style({width:w},{ target, maskVector });
+          this.style({width:w},{ target, maskVector });
         }
         return this
     }
@@ -71,12 +95,12 @@ class ZikoUIElementStyle{
             let max= h.max ?? h.min;
             min=addSuffixeToNumber(min,"px");
             max=addSuffixeToNumber(max,"px"); 
-            this.target.style({ minHeight: min, maxHeight: max }, { target, maskVector });
+            this.style({ minHeight: min, maxHeight: max }, { target, maskVector });
           }
         }
         else {
           h=addSuffixeToNumber(h,"px");
-          this.target.style({height:h},{ target, maskVector });
+          this.style({height:h},{ target, maskVector });
         }
         return this
     }    
@@ -89,7 +113,7 @@ class ZikoUIElementStyle{
         }
         else {
           this.cache.isHidden=true;
-          this.target.style({display:"none"},{target,maskVector});
+          this.style({display:"none"},{target,maskVector});
         }
         return this;
     }
@@ -101,140 +125,140 @@ class ZikoUIElementStyle{
         }
         else {
           this.cache.isHidden=false;
-          this.target.style({display:""},{target,maskVector});
+          this.style({display:""},{target,maskVector});
         }
         return this;
     }
     color(color,{ target, maskVector } = {}){
-        this.target.style({color},{ target, maskVector });
+        this.style({color},{ target, maskVector });
         return this;
     }
     background(background,{ target, maskVector } = {}){
-        this.target.style({background},{ target, maskVector });
+        this.style({background},{ target, maskVector });
         return this;
     }
     backgroundColor(backgroundColor,{ target, maskVector } = {}){
-        this.target.style({backgroundColor},{ target, maskVector });
+        this.style({backgroundColor},{ target, maskVector });
         return this;
     }
     opacity(opacity, { target, maskVector } = {}) {
-        this.target.style({ opacity }, { target, maskVector });
+        this.style({ opacity }, { target, maskVector });
         return this;
     }
     // Placement
     position(position,{ target, maskVector } = {}){
-        this.target.style({position},{ target, maskVector });
+        this.style({position},{ target, maskVector });
         return this
     }
     display(disp, { target, maskVector } = {}) {
-        this.target.style({ display: disp }, { target, maskVector });
+        this.style({ display: disp }, { target, maskVector });
         return this;
     }
     zIndex(z,{ target, maskVector } = {}){
-        this.target.style({zIndex:z},{ target, maskVector });
+        this.style({zIndex:z},{ target, maskVector });
         return this;
     }
     float(float, { target, maskVector } = {}) {
-        this.target.style({ float: float }, { target, maskVector });
+        this.style({ float: float }, { target, maskVector });
         return this;
     }
     // Box Model 
     border(border = "1px solid red", { target, maskVector } = {}){
-        this.target.style({border}, { target, maskVector });
+        this.style({border}, { target, maskVector });
         return this;
     }
     borderTop(borderTop = "1px solid red", { target, maskVector } = {}){
-        this.target.style({borderTop}, { target, maskVector });
+        this.style({borderTop}, { target, maskVector });
         return this;
     }
     borderRight(borderRight = "1px solid red", { target, maskVector } = {}){
-        this.target.style({borderRight}, { target, maskVector });
+        this.style({borderRight}, { target, maskVector });
         return this;
     }
     borderBottom(borderBottom = "1px solid red", { target, maskVector } = {}){
-        this.target.style({borderBottom}, { target, maskVector });
+        this.style({borderBottom}, { target, maskVector });
         return this;
     }
     borderLeft(borderLeft = "1px solid red", { target, maskVector } = {}){
-        this.target.style({borderLeft}, { target, maskVector });
+        this.style({borderLeft}, { target, maskVector });
         return this;
     }
     borderRadius(radius,{ target, maskVector } = {}){
         radius=addSuffixeToNumber(radius,"px");
-        this.target.style({ borderRadius: radius }, { target, maskVector });
+        this.style({ borderRadius: radius }, { target, maskVector });
         return this;
     }
     margin(margin,{ target, maskVector } = {}){
         margin=addSuffixeToNumber(margin,"px");
-        this.target.style({ margin }, { target, maskVector });
+        this.style({ margin }, { target, maskVector });
         return this;
     }
     marginTop(marginTop,{ target, maskVector } = {}){
         marginTop=addSuffixeToNumber(marginTop,"px");
-        this.target.style({marginTop},{ target, maskVector });
+        this.style({marginTop},{ target, maskVector });
         return this;
     }
     marginRight(marginRight,{ target, maskVector } = {}){
         marginRight=addSuffixeToNumber(marginRight,"px");
-        this.target.style({marginRight},{ target, maskVector });
+        this.style({marginRight},{ target, maskVector });
         return this;
     }
     marginBootom(marginBootom,{ target, maskVector } = {}){
         marginBootom=addSuffixeToNumber(marginBootom,"px");
-        this.target.style({marginBootom},{ target, maskVector });
+        this.style({marginBootom},{ target, maskVector });
         return this;
     }
     marginLeft(marginLeft,{ target, maskVector } = {}){
         marginLeft=addSuffixeToNumber(marginLeft,"px");
-        this.target.style({marginLeft},{ target, maskVector });
+        this.style({marginLeft},{ target, maskVector });
         return this;
     }
     padding(padding,{ target, maskVector } = {}){
         padding=addSuffixeToNumber(padding,"px");
-        this.target.style({padding},{ target, maskVector });
+        this.style({padding},{ target, maskVector });
         return this;
     }
     paddingTop(paddingTop,{ target, maskVector } = {}){
         paddingTop=addSuffixeToNumber(paddingTop,"px");
-        this.target.style({paddingTop},{ target, maskVector });
+        this.style({paddingTop},{ target, maskVector });
         return this;
     }
     paddingRight(paddingRight,{ target, maskVector } = {}){
         paddingRight=addSuffixeToNumber(paddingRight,"px");
-        this.target.style({paddingRight},{ target, maskVector });
+        this.style({paddingRight},{ target, maskVector });
         return this;
     }
     paddingBootom(paddingBootom,{ target, maskVector } = {}){
         paddingBootom=addSuffixeToNumber(paddingBootom,"px");
-        this.target.style({paddingBootom},{ target, maskVector });
+        this.style({paddingBootom},{ target, maskVector });
         return this;
     }
     paddingLeft(paddingLeft,{ target, maskVector } = {}){
         paddingLeft=addSuffixeToNumber(paddingLeft,"px");
-        this.target.style({paddingLeft},{ target, maskVector });
+        this.style({paddingLeft},{ target, maskVector });
         return this;
     }
     // Typographie
     font(font,{ target, maskVector } = {}){
-        this.target.style({font},{ target, maskVector });
+        this.style({font},{ target, maskVector });
         return this;
     }
     fontFamily(fontFamily="",{ target, maskVector } = {}){
-        this.target.style({fontFamily},{ target, maskVector });
+        this.style({fontFamily},{ target, maskVector });
         return this;
     }
     fontSize(fontSize,{ target, maskVector } = {}){
-        this.target.style({fontSize},{ target, maskVector });
+        this.style({fontSize},{ target, maskVector });
         return this;
     }
     // Misc
     cursor(type="pointer"){
-        this.target.style({ cursor: type });
+        this.style({ cursor: type });
         return this;
     }  
     overflow(x,y,{ target, maskVector } = {}){
         const values=["hidden","auto"];
-        this.target.style({
+        this.style({
           overflowX:typeof x==="number"?values[x]:x,
           overflowY:typeof y==="number"?values[y]:y
         },{target,maskVector})
@@ -242,12 +266,12 @@ class ZikoUIElementStyle{
     }
     clip(polygon, { target, maskVector } = {}) {
         if (typeof polygon === "string") polygon = "polygon(" + polygon + ")";
-        this.target.style({ clipPath: polygon }, { target, maskVector });
+        this.style({ clipPath: polygon }, { target, maskVector });
         return this;
     }
     // Transfromations
     fadeOut(t = 1) {
-        this.target.style({ 
+        this.style({ 
           transition: t/1000 + "s", 
           opacity: 0 
         });
@@ -255,7 +279,7 @@ class ZikoUIElementStyle{
         return this;
     }
     fadeIn(t = 1) {
-        this.target.style({ 
+        this.style({ 
           transition: t/1000 + "s", 
           opacity: 1 
         });
@@ -267,39 +291,39 @@ class ZikoUIElementStyle{
         return this;
     }
     translateX(px, t = 0) {
-        this.target.style({ transform: "translateX(" + px + "px)" });
-        if (t != 0) this.target.style({ transition: `transform ${t/1000}s ease` });
+        this.style({ transform: "translateX(" + px + "px)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     translateY(px, t = 0) {
-        this.target.style({ transform: "translateY(" + px + "px)" });
-        if (t != 0) this.target.style({ transition: `transform ${t/1000}s ease` });
+        this.style({ transform: "translateY(" + px + "px)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     translate(x, y = x, t = 0) {
-        this.target.style({ transform: `translate( ${x}px , ${y}px )`});
-        if (t != 0) this.target.style({ transition: `transform ${t/1000}s ease` });
+        this.style({ transform: `translate( ${x}px , ${y}px )`});
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     rotateX(deg, t = 0) {
-        this.target.style({ transform: "rotateX(" + deg + "deg)" });
-        if (t != 0) this.target.style({ transition: `transform ${t/1000}s ease` });
+        this.style({ transform: "rotateX(" + deg + "deg)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     rotateY(deg, t = 0) {
-        this.target.style({ transform: "rotateY(" + deg + "deg)" });
-        if (t != 0) this.target.style({ transition: `transform ${t/1000}s ease` });
+        this.style({ transform: "rotateY(" + deg + "deg)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     rotateZ(deg, t = 0) {
-        this.target.style({ transform: "rotateZ(" + deg + "deg)" });
-        if (t != 0) this.target.style({ transition: `transform ${t/1000}s ease` });
+        this.style({ transform: "rotateZ(" + deg + "deg)" });
+        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     flipeX({ t = 1 } = {}) {
         this.cache.transformation.Flip[0] += 180;
         this.cache.transformation.Flip[0] %= 360;
-        this.target.style({
+        this.style({
           transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
           transition: "all " + t + "s ease",
         });
@@ -308,7 +332,7 @@ class ZikoUIElementStyle{
     flipeY(t = 1) {
         this.cache.transformation.Flip[1] += 180 ;
         this.cache.transformation.Flip[1] %= 360;
-        this.target.style({
+        this.style({
           transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
           transition: "all " + t + "s ease",
         });
@@ -317,38 +341,38 @@ class ZikoUIElementStyle{
     flipeZ(t = 1) {
         this.cache.transformation.Flip[2] += 180;
         this.cache.transformation.Flip[2] %= 360;
-        this.target.style({
+        this.style({
           transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
           transition: "all " + t + "s ease",
         });
         return this;
     }
     slideHeightIn(t = 1, h = this.h) {
-        this.target.style({ transition: t + "s", height: h });
+        this.style({ transition: t + "s", height: h });
         return this;
     }
     slideHeightOut(t = 1) {
-        this.target.style({ transition: t + "s", height: 0 });
+        this.style({ transition: t + "s", height: 0 });
         this.target.element.addEventListener("transitionend", () =>
-          this.target.style({ opacity: "none" }),
+          this.style({ opacity: "none" }),
         );
         return this;
       }
     slideWidthIn(t = 1, w = this.w) {
-        this.target.style({ transition: t + "s", width: w });
+        this.style({ transition: t + "s", width: w });
         return this;
     }
     slideWidthOut(t = 1) {
-        this.target.style({ transition: t + "s", width: 0 });
+        this.style({ transition: t + "s", width: 0 });
         const wrapper=()=>{
-            this.target.style({ opacity: "none" })
+            this.style({ opacity: "none" })
         }
         this.target.element.addEventListener("transitionend",wrapper);
         this.target.element.removeEventListener("transitionend",wrapper);
         return this;
     }
     slideIn({ t = 1, w = "100%", h = "auto" } = {}) {
-        this.target.style({
+        this.style({
           transition: t + "s",
           width: w,
           height: h,
@@ -357,7 +381,7 @@ class ZikoUIElementStyle{
         return this;
     }
     slideOut({ t = 1, width = 0, height = 0 } = {}) {
-        this.target.style({
+        this.style({
           visibility: "hidden",
           transition: t + "s",
           opacity: "none",
@@ -365,7 +389,7 @@ class ZikoUIElementStyle{
           height: height,
         });
         const wrapper=()=>{
-            this.target.style({ opacity: "none" });
+            this.style({ opacity: "none" });
         }
         this.target.element.addEventListener("transitionend",wrapper);
         this.target.element.removeEventListener("transitionend",wrapper);

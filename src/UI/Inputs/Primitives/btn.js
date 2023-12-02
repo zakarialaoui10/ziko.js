@@ -5,7 +5,7 @@ class ZikoUIBtn extends ZikoUIElement {
       this.element = document.createElement("button");
       this.setValue(value);
       this.render();
-      this.cursor("pointer");
+      this.st.cursor("pointer");
     }
     setValue(value) {
       if (value instanceof ZikoUIElement) value.setTarget(this.element);

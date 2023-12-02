@@ -5,7 +5,6 @@ export function styleComposer(){
       style:function(styles,{target = "parent", maskVector = null } = {}){
         if (target === "parent" || target === 0) {
             style(this.element, styles);
-            //Object.assign(this.cache.style,styles);
         }
         else if(target === "parent" || target === 0){
           if (maskVector) {
