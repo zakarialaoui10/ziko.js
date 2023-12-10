@@ -1,1 +1,7548 @@
-!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t="undefined"!=typeof globalThis?globalThis:t||self).Ziko={})}(this,(function(t){"use strict";class e{}let s=class t extends e{constructor(e=0,s=0){super(),e instanceof t?(this.a=e.a,this.b=e.b):"object"==typeof e?"a"in s&&"b"in e?(this.a=e.a,this.b=e.b):"a"in s&&"z"in e?(this.a=e.a,this.b=m(e.z**2-e.a**2)):"a"in s&&"phi"in e?(this.a=e.a,this.b=e.a*b(e.phi)):"b"in s&&"z"in e?(this.b=e.b,this.a=m(e.z**2-e.b**2)):"b"in s&&"phi"in e?(this.b=s,this.a=e.b/b(e.phi)):"z"in s&&"phi"in e&&(this.a=e.z*y(e.phi),this.a=e.z*x(e.phi)):"number"==typeof e&&"number"==typeof s&&(this.a=+e.toFixed(32),this.b=+s.toFixed(32))}get clone(){return new t(this.a,this.b)}get z(){return O(this.a,this.b)}get phi(){return C(this.b,this.a)}static get ZERO(){return new t(0,0)}get conj(){return new t(this.a,-this.b)}get inv(){return new t(this.a/(p(this.a,2)+p(this.b,2)),-this.b/(p(this.a,2)+p(this.b,2)))}add(...e){for(let s=0;s<e.length;s++)"number"==typeof e[s]&&(e[s]=new t(e[s],0));let s=e.map((t=>t.a)),r=e.map((t=>t.b));return this.a+=+n(...s).toFixed(15),this.b+=+n(...r).toFixed(15),this}sub(...e){for(let s=0;s<e.length;s++)"number"==typeof e[s]&&(e[s]=new t(e[s],0));let s=e.map((t=>t.a)),r=e.map((t=>t.b));return this.a-=+n(...s).toFixed(15),this.b-=+n(...r).toFixed(15),this}mul(...e){for(let s=0;s<e.length;s++)"number"==typeof e[s]&&(e[s]=new t(e[s],0));let s=+i(this.z,...e.map((t=>t.z))).toFixed(15),r=+n(this.phi,...e.map((t=>t.phi))).toFixed(15);return this.a=+(s*y(r).toFixed(15)).toFixed(14),this.b=+(s*x(r).toFixed(15)).toFixed(14),this}div(...e){for(let s=0;s<e.length;s++)"number"==typeof e[s]&&(e[s]=new t(e[s],0));let s=+(this.z/i(...e.map((t=>t.z)))).toFixed(15),r=+(this.phi-n(...e.map((t=>t.phi)))).toFixed(15);return this.a=+(s*y(r).toFixed(15)).toFixed(15),this.b=+(s*x(r).toFixed(15)).toFixed(15),this}pow(t){if(M(t)===t&&t>0){let e=+(this.z**t).toFixed(15),s=+(this.phi*t).toFixed(15);this.a=+(e*y(s).toFixed(15)).toFixed(15),this.b=+(e*x(s).toFixed(15)).toFixed(15)}return this}static fromExpo(e,s){return new t(+(e*y(s)).toFixed(13),+(e*x(s)).toFixed(13))}get expo(){return[this.z,this.phi]}static add(t,...e){return t.clone.add(...e)}static sub(t,...e){return t.clone.sub(...e)}static mul(t,...e){return t.clone.mul(...e)}static div(t,...e){return t.clone.div(...e)}static pow(t,e){return t.clone.pow(e)}static xpowZ(t){return r(t**this.a*y(this.b*g(t)),t**this.a*x(this.b*g(t)))}sqrtn(t=2){return r(d(this.z,t)*y(this.phi/t),d(this.z,t)*x(this.phi/t))}get sqrt(){return this.sqrtn(2)}get log(){return r(this.z,this.phi)}get cos(){return r(y(this.a)*v(this.b),x(this.a)*k(this.b))}get sin(){return r(x(this.a)*v(this.b),y(this.a)*k(this.b))}get tan(){const t=y(2*this.a)+v(2*this.b);return r(x(2*this.a)/t,k(2*this.b)/t)}printInConsole(){let t=this.a+" + "+this.b+" * i";return console.log(t),t}print(){}UI(){return"<span>"+this.a+" + i * "+this.b+"</span>"}};const r=(t,e)=>{if((t instanceof Array||ArrayBuffer.isView(t))&&(e instanceof Array||ArrayBuffer.isView(t)))return t.map(((s,n)=>r(t[n],e[n])));if(t instanceof P&&e instanceof P){if(t.shape[0]!==e.shape[0]||t.shape[1]!==e.shape[1])return Error(0);const s=t.arr.map(((s,n)=>r(t.arr[n],e.arr[n])));return new P(t.rows,t.cols,...s)}return new s(t,e)},n=(...t)=>{if(t.every((t=>"number"==typeof t))){let e=t[0];for(let s=1;s<t.length;s++)e+=t[s];return e}const e=[];for(let s=0;s<t.length;s++)t[s]instanceof Array?e.push(n(...t[s])):t[s]instanceof Object&&e.push(n(...Object.values(t[s])));return 1===e.length?e[0]:e},i=(...t)=>{if(t.every((t=>"number"==typeof t))){let e=t[0];for(let s=1;s<t.length;s++)e*=t[s];return e}const e=[];for(let s=0;s<t.length;s++)t[s]instanceof Array?e.push(i(...t[s])):t[s]instanceof Object&&e.push(i(...Object.values(t[s])));return 1===e.length?e[0]:e},a=(...t)=>{if(t.every((t=>"number"==typeof t)))return Math.min(...t);const e=[];for(let s=0;s<t.length;s++)t[s]instanceof Array?e.push(a(...t[s])):t[s]instanceof Object&&e.push(Object.fromEntries([Object.entries(t[s]).sort(((t,e)=>t[1]-e[1]))[0]]));return 1===e.length?e[0]:e},o=(...t)=>{if(t.every((t=>"number"==typeof t)))return Math.max(...t);const e=[];for(let s=0;s<t.length;s++)t[s]instanceof Array?e.push(a(...t[s])):t[s]instanceof Object&&e.push(Object.fromEntries([Object.entries(t[s]).sort(((t,e)=>e[1]-t[1]))[0]]));return 1===e.length?e[0]:e},h=(...t)=>{if(t.every((t=>"number"==typeof t))){let e=t.reduce(((t,e)=>[...t,t[t.length-1]+e]),[0]);return e.shift(),e}const e=[];for(let s=0;s<t.length;s++)t[s]instanceof Array?e.push(h(...t[s])):t[s]instanceof Object&&e.push(null);return 1===e.length?e[0]:e},l={cos:t=>+Math.cos(t).toFixed(15),sin:t=>+Math.sin(t).toFixed(15),tan:t=>+Math.tan(t).toFixed(31),sinc:t=>+Math.sin(Math.PI*t)/(Math.PI*t),sec:t=>1/Math.cos(t).toFixed(15),csc:t=>1/Math.sin(t).toFixed(15),cot:t=>1/Math.tan(t).toFixed(15),acos:t=>+Math.acos(t).toFixed(15),asin:t=>+Math.asin(t).toFixed(15),atan:t=>+Math.atan(t).toFixed(15),acot:t=>+Math.PI/2-Math.atan(t).toFixed(15),cosh:t=>+Math.cosh(t).toFixed(15),sinh:t=>+Math.sinh(t).toFixed(15),tanh:t=>+Math.tanh(t).toFixed(15),coth:t=>+(.5*Math.log((1+t)/(1-t))).toFixed(15),acosh:t=>+Math.acosh(t).toFixed(15),asinh:t=>+Math.asinh(t).toFixed(15),atanh:t=>+Math.atanh(t).toFixed(15)};function u(...t){return z(Math.abs,...t)}function m(...t){return z(Math.sqrt,...t)}function p(t,e){if("number"==typeof t)return"number"==typeof e?Math.pow(t,e):e instanceof s?s.fromExpo(t**e.a,e.b*g(t)):z((e=>p(t,e)),...e);if(t instanceof s)return"number"==typeof e?s.fromExpo(t.z**e,t.phi*e):e instanceof s?s.fromExpo(t.z**e.a*f(-t.phi*e.b),g(t.z)*e.b+e.a*t.phi):z((e=>p(t,e)),...e);if(t instanceof Array){if("number"==typeof e)return z((t=>p(t,e)),...t);if(e instanceof Array){const s=[];for(let r=0;r<t.length;r++)s.push(z((e=>p(t[r],e)),...e));return s}}}function d(t,e){if("number"==typeof t)return"number"==typeof e?Math.pow(t,1/e):z((e=>d(t,e)),...e);if(t instanceof s)return"number"==typeof e?s.fromExpo(d(t.z,e),t.phi/e):z((e=>d(t,e)),...e);if(t instanceof Array){if("number"==typeof e)return z((t=>d(t,e)),...t);if(e instanceof Array){const s=[];for(let r=0;r<t.length;r++)s.push(z((e=>d(t[r],e)),...e));return s}}}function f(...t){return z(Math.exp,...t)}function g(...t){return z(Math.log,...t)}function y(...t){return z(l.cos,...t)}function x(...t){return z(l.sin,...t)}function b(...t){return z(l.tan,...t)}function w(...t){return z(l.sinc,...t)}function v(...t){return z(l.cosh,...t)}function k(...t){return z(l.sinh,...t)}function M(...t){return z(Math.floor,...t)}function C(t,e,s=!0){if("number"==typeof t)return"number"==typeof e?s?Math.atan2(t,e):180*Math.atan2(t,e)/Math.PI:z((e=>C(t,e,s)),...e);if(t instanceof Array){if("number"==typeof e)return z((t=>C(t,e,s)),...t);if(e instanceof Array){const s=[];for(let r=0;r<t.length;r++)s.push(z((e=>p(t[r],e)),...e));return s}}}function T(...t){return z(Math.sign,...t)}const O=(...t)=>t.every((t=>"number"==typeof t))?Math.hypot(...t):t.every((t=>t instanceof Array))?z(Math.hypot,...t):void 0,_={_mode:Number,_map:function(t,e,r){return e instanceof P?new P(e.rows,e.cols,e.arr.flat(1).map((e=>t(e,r)))):e instanceof s?new s(t(e.a,r),t(e.b,r)):e instanceof Array?e.map((e=>t(e,r))):void 0},not:function(t){return["number","boolean"].includes(typeof t)?_._mode(!t):this._map(this.not,t)},and:function(t,...e){return["number","boolean"].includes(typeof t)?_._mode(e.reduce(((t,e)=>t&e),t)):this._map(this.and,t,e)},or:function(t,...e){return["number","boolean"].includes(typeof t)?_._mode(e.reduce(((t,e)=>t|e),t)):this._map(this.or,t,e)},nand:function(t,...e){return this.not(this.and(t,e))},nor:function(t,...e){return this.not(this.or(t,e))},xor:function(t,...e){let s=[t,...e];return["number","boolean"].includes(typeof t)?this._mode(1===s.reduce(((t,e)=>(1==+e&&(t+=1),t)),0)):this._map(this.xor,t,e)},xnor:function(t,...e){return _.not(_.xor(t,e))}};var I={_mode:Number,_map:function(t,e,r){return e instanceof P?new P(e.rows,e.cols,e.arr.flat(1).map((e=>t(e,r)))):e instanceof s?new s(t(e.a,r),t(e.b,r)):e instanceof Array?e.map((e=>t(e,r))):void 0},dec2base(t,e){return this._mode=e<=10?Number:String,"number"==typeof t?this._mode((t>>>0).toString(e)):this._map(this.dec2base,t,e)},dec2bin(t){return this.dec2base(t,2)},dec2oct(t){return this.dec2base(t,8)},dec2hex(t){return this.dec2base(t,16)},bin2base(t,e){return this.dec2base(this.bin2dec(t),e)},bin2dec(t){return this._mode("0b"+t)},bin2oct(t){return this.bin2base(t,8)},bin2hex(t){return this.bin2base(t,16)},oct2dec(t){return this._mode("0o"+t)},oct2bin(t){return this.dec2bin(this.oct2dec(t))},oct2hex(t){return this.dec2hex(this.oct2dec(t))},oct2base(t,e){return this.dec2base(this.oct2dec(t),e)},hex2dec(t){return this._mode("0x"+t)},hex2bin(t){return this.dec2bin(this.hex2dec(t))},hex2oct(t){return this.dec2oct(this.hex2dec(t))},hex2base(t,e){return this.dec2base(this.hex2dec(t),e)},IEEE32toDec(t){let e=t.split(" ").join("").padEnd(32,"0"),s=e[0],r=2**(+("0b"+e.slice(1,9))-127);return(-1)**s*(1+e.slice(9,32).split("").map((t=>+t)).map(((t,e)=>t*2**(-e-1))).reduce(((t,e)=>t+e),0))*r},IEEE64toDec(t){let e=t.split(" ").join("").padEnd(64,"0"),s=e[0],r=2**(+("0b"+e.slice(1,12))-1023);return(-1)**s*(1+e.slice(13,64).split("").map((t=>+t)).map(((t,e)=>t*2**(-e-1))).reduce(((t,e)=>t+e),0))*r}};class V{static withDiscount(t,e=t.length){if(1===e)return t.map((t=>[t]));const s=[];let r;return r=this.withDiscount(t,e-1),t.forEach((t=>{r.forEach((e=>{s.push([t].concat(e))}))})),s}static withoutDiscount(t){if(1===t.length)return t.map((t=>[t]));const e=[],s=this.withoutDiscount(t.slice(1)),r=t[0];for(let t=0;t<s.length;t++){const n=s[t];for(let t=0;t<=n.length;t++){const s=n.slice(0,t),i=n.slice(t);e.push(s.concat([r],i))}}return e}}class S{static withDiscount(t,e){if(1===e)return t.map((t=>[t]));const s=[];return t.forEach(((r,n)=>{this.withDiscount(t.slice(n),e-1).forEach((t=>{s.push([r].concat(t))}))})),s}static withoutDiscount(t,e){if(1===e)return t.map((t=>[t]));const s=[];return t.forEach(((r,n)=>{this.withoutDiscount(t.slice(n+1),e-1).forEach((t=>{s.push([r].concat(t))}))})),s}}function j(t){const e=[],s=2**t.length;for(let r=0;r<s;r+=1){const s=[];for(let e=0;e<t.length;e+=1)r&1<<e&&s.push(t[e]);e.push(s)}return e}var D=(...t)=>{let e=at(0,2**t.length,1).toBin.map((e=>e.padStart(t.length,0))).map((t=>t.split("").map((t=>+t)))),s=e.map((e=>e.map(((e,s)=>t[s]))));for(let t=0;t<s.length;t++)for(let r=0;r<s[t].length;r++)s[t][r]={n:s[t][r],m:e[t][r]};return s=s.map((t=>t.filter((t=>1==t.m)))),s=s.map((t=>t.map((t=>t.n)))),s},R={Logic:_,Base:I,Permutation:V,Combinaison:S,PowerSet:j,subset:D};class F{static float(t=1,e){return e?Math.random()*(e-t)+t:t*Math.random()}static int(t,e){return Math.floor(this.float(t,e))}static char(t){t=t??this.bool();const e=String.fromCharCode(this.int(97,120));return t?e.toUpperCase():e}static bool(){return[!1,!0][Math.floor(2*Math.random())]}static string(t,e){return t instanceof Array?new Array(this.int(...t)).fill(0).map((()=>this.char(e))).join(""):new Array(t).fill(0).map((()=>this.char(e))).join("")}static bin(){return this.int(2)}static oct(){return this.int(8)}static dec(){return this.int(8)}static hex(){return this.int(16)}static choice(t=[1,2,3],e=new Array(t.length).fill(1/t.length)){let s=new Array(100);e=yt.accum(...e).map((t=>100*t)),s.fill(t[0],0,e[0]);for(let r=1;r<t.length;r++)s.fill(t[r],e[r-1],e[r]);return s[this.int(s.length-1)]}static shuffleArr(t){return t.sort((()=>.5-Math.random()))}static shuffleMatrix(t){const{rows:e,cols:s,arr:r}=t;return B(e,s,r.flat().sort((()=>.5-Math.random())))}static floats(t,e,s){return new Array(t).fill(0).map((()=>this.float(e,s)))}static ints(t,e,s){return new Array(t).fill(0).map((()=>this.int(e,s)))}static bools(t){return new Array(t).fill(0).map((()=>this.bool()))}static bins(t){return new Array(t).fill(0).map((()=>this.int(2)))}static octs(t){return new Array(t).fill(0).map((()=>this.int(8)))}static decs(t){return new Array(t).fill(0).map((()=>this.int(10)))}static hexs(t){return new Array(t).fill(0).map((()=>this.int(16)))}static choices(t,e,s){return new Array(t).fill(0).map((()=>this.choice(e,s)))}static permutation(...t){return t.permS[this.int(t.length)]}static color(){return"#"+I.dec2hex(this.float(16777216)).padStart(6,0)}static colors(t){return new Array(t).fill(null).map((()=>this.color()))}static complex(t=[0,1],e=[0,1]){return t instanceof Array?new s(this.float(t[0],t[1]),this.float(e[0],e[1])):new s(...this.floats(2,t,e))}static complexInt(t=[0,1],e=[0,1]){return new s(this.int(t[0],t[1]),this.int(e[0],e[1]))}static complexBin(){return new s(...this.bins(2))}static complexOct(){return new s(...this.octs(2))}static complexDec(){return new s(...this.decs(10))}static complexHex(){return new s(...this.octs(2))}static complexes(t,e=0,s=1){return new Array(t).fill(0).map((()=>this.complex(e,s)))}static complexesInt(t,e=0,s=1){return new Array(t).fill(0).map((()=>this.complexInt(e,s)))}static complexesBin(t){return new Array(t).fill(0).map((()=>this.complexBin()))}static complexesOct(t){return new Array(t).fill(0).map((()=>this.complexOct()))}static complexesDec(t){return new Array(t).fill(0).map((()=>this.complexDec()))}static complexesHex(t){return new Array(t).fill(0).map((()=>this.complexHex()))}static matrix(t,e,s,r){return B(t,e,this.floats(t*e,s,r))}static matrixInt(t,e,s,r){return B(t,e,this.ints(t*e,s,r))}static matrixBin(t,e){return B(t,e,this.bins(t*e))}static matrixOct(t,e){return B(t,e,this.octs(t*e))}static matrixDec(t,e){return B(t,e,this.decs(t*e))}static matrixHex(t,e){return B(t,e,this.hex(t*e))}static matrixColor(t,e){return B(t,e,this.colors(t*e))}static matrixComplex(t,e,s,r){return B(t,e,this.complexes(t*e,s,r))}static matrixComplexInt(t,e,s,r){return B(t,e,this.complexesInt(t*e,s,r))}static matrixComplexBin(t,e){return B(t,e,this.complexesBin(t*e))}static matrixComplexOct(t,e){return B(t,e,this.complexesBin(t*e))}static matrixComplexDec(t,e){return B(t,e,this.complexesBin(t*e))}static matrixComplexHex(t,e){return B(t,e,this.complexesBin(t*e))}}let P=class t extends e{constructor(e,s,r=[],n){if(super(),e instanceof t)this.arr=e.arr,this.rows=e.rows,this.cols=e.cols;else{let t,n,i=[];if(arguments[0]instanceof Array)e=arguments[0].length,s=arguments[0][0].length,i=arguments[0];else for(t=0;t<e;t++)for(i.push([]),i[t].push(new Array(s)),n=0;n<s;n++)i[t][n]=r[t*s+n],null==r[t*s+n]&&(i[t][n]=0);this.rows=e,this.cols=s,this.arr=i}this._maintain()}at(t=0,e=void 0){return t<0&&(t=this.rows+t),null==e?this.arr[t]:(e<0&&(e=this.cols+e),this.arr[t][e])}reshape(e,s){if(e*s==this.rows*this.cols)return new t(e,s,this.arr.flat(1));console.error("Err")}static eye(e){let s=new t(e,e);for(let t=0;t<e;t++)for(let r=0;r<e;r++)s.arr[t][r]=t===r?1:0;return s}get clone(){return new t(this.rows,this.cols,this.arr.flat(1))}get size(){return this.rows*this.cols}get shape(){return[this.rows,this.cols]}get reel(){return new t(this.cols,this.rows,this.arr.flat(1).reel)}get imag(){return new t(this.cols,this.rows,this.arr.flat(1).imag)}_maintain(){for(let t=0;t<this.arr.length;t++)Object.assign(this,{[[t]]:this.arr[t]});return this}get(t=0,e=0){return-1==e?this.arr[t]:-1==t?this.arr.map((t=>t[e])):this.arr[t][e]}set(t=0,e=0,s){if(-1==e)return this.arr[t]=s;if(-1==t){for(let t=0;t<this.cols;t++)this.arr[t][e]=s[t]||0;return this.arr}return this.arr[t][e]=s}get isSquare(){return this.rows/this.cols==1}get isSym(){if(!this.isSquare)return!1;const e=this.T,s=this.clone;return 0==t.sub(s,e).max&&0==t.sub(s,e).min}get isAntiSym(){if(!this.isSquare)return!1;const e=this.T,s=this.clone;return 0==t.add(s,e).max&&0==t.add(s,e).min}get isDiag(){if(!this.isSquare)return!1;const e=this.T,s=this.clone,r=t.mul(s,e),n=t.dot(e,s);return 0==t.sub(r,n).max&&0==t.sub(r,n).min}get isOrtho(){return!!this.isSquare&&(this.isDiag&&(1==this.det||-1==this.det))}get isIdemp(){if(!this.isSquare)return!1;const e=this.clone,s=t.dot(e,e);return 0==t.sub(s,e).max&&0==t.sub(s,e).min}get T(){let e=[];for(let t=0;t<this.arr[0].length;t++){e[t]=[];for(let s=0;s<this.arr.length;s++)e[t][s]=this.arr[s][t]}return new t(this.cols,this.rows,e.flat(1))}get det(){if(!this.isSquare)return new Error("is not square matrix");if(1==this.rows)return this.arr[0][0];function e(t,e){var s=[];for(let e=0;e<t.length;e++)s.push(t[e].slice(0));s.splice(0,1);for(let t=0;t<s.length;t++)s[t].splice(e,1);return s}return function s(r){if(2==r.length)return r.flat(1).some((e=>e instanceof t))?void console.warn("Tensors are not completely supported yet ..."):yt.sub(yt.mul(r[0][0],r[1][1]),yt.mul(r[0][1],r[1][0]));for(var n=0,i=0;i<r.length;i++){const t=yt.add(yt.mul(p(-1,i),yt.mul(r[0][i],s(e(r,i)))));n=yt.add(n,t)}return n}(this.arr)}get inv(){if(!this.isSquare)return new Error("is not square matrix");if(0===this.det)return"determinat = 0 !!!";let e=function(t){if(t.length!==t[0].length)return;var e=0,s=0,r=0,n=t.length,i=0,a=[],o=[];for(e=0;e<n;e+=1)for(a[a.length]=[],o[o.length]=[],r=0;r<n;r+=1)a[e][r]=e==r?1:0,o[e][r]=t[e][r];for(e=0;e<n;e+=1){if(0==(i=o[e][e])){for(s=e+1;s<n;s+=1)if(0!=o[s][e]){for(r=0;r<n;r++)i=o[e][r],o[e][r]=o[s][r],o[s][r]=i,i=a[e][r],a[e][r]=a[s][r],a[s][r]=i;break}if(0==(i=o[e][e]))return}for(r=0;r<n;r++)o[e][r]=o[e][r]/i,a[e][r]=a[e][r]/i;for(s=0;s<n;s++)if(s!=e)for(i=o[s][e],r=0;r<n;r++)o[s][r]-=i*o[e][r],a[s][r]-=i*a[e][r]}return a}(this.arr);return new t(this.rows,this.cols,e.flat(1))}static zeros(e,s){let r=new t(e,s);for(let t=0;t<e;t++)for(var n=0;n<s;n++)r.arr[t][n]=0;return r}static ones(e,s){let r=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)r.arr[t][e]=1;return r}static nums(e,s,r){let n=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)n.arr[t][e]=r;return n}static get rand(){return{int:(e,s,r,n)=>{let i=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)i.arr[t][e]=F.randInt(r,n);return i},bin:(e,s)=>{let r=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)r.arr[t][e]=F.randBin;return r},hex:(e,s)=>{let r=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)r.arr[t][e]=F.randHex;return r},choices:(e,s,r,n)=>{let i=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)i.arr[t][e]=F.choice(r,n);return i},permutation:(t,e,s)=>{}}}static rands(e,s,r=1,n){let i=new t(e,s);for(let t=0;t<e;t++)for(let e=0;e<s;e++)i.arr[t][e]=F.rand(r,n);return i}map(t,e,s,r){return yt.map(this,t,e,s,r)}lerp(t,e){return yt.lerp(this,t,e)}norm(t,e){return yt.norm(this,t,e)}clamp(t,e){return yt.clamp(this,t,e)}static map(t,e,s,r,n){return yt.map(t,e,s,r,n)}static lerp(t,e,s){return yt.lerp(t,e,s)}static norm(t,e,s){return yt.norm(t,e,s)}static clamp(t,e,s){return yt.clamp(B,e,s)}toPrecision(t){for(let e=0;e<this.cols;e++)for(let s=0;s<this.rows;s++)this.arr[e][s]=+this.arr[e][s].toPrecision(t);return this}get toBin(){let e=this.arr.flat(1).toBin;return new t(this.rows,this.cols,e)}get toOct(){let e=this.arr.flat(1).toOct;return new t(this.rows,this.cols,e)}get toHex(){let e=this.arr.flat(1).toHex;return new t(this.rows,this.cols,e)}max2min(){let e=this.arr.flat(1).max2min;return new t(this.rows,this.cols,e)}min2max(){let e=this.arr.flat(1).min2max;return new t(this.rows,this.cols,e)}sortRows(e=void 0){let s=this.arr.map((t=>t.sort(e))).flat(1);return new t(this.rows,this.cols,s)}sortCols(e=void 0){let s=this.T.arr.map((t=>t.sort(e))).flat(1);return new t(this.rows,this.cols,s).T}filterByRows(e){var s=this.arr.map((t=>t.map((t=>+(""+t).includes(e))))).map((t=>!!Logic.or(...t))),r=this.arr.filter(((t,e)=>!0===s[e]));return 0===r.length&&r.push([]),console.log(r),new t(r)}filterByCols(e){return new t(this.T.arr.filter((t=>t.includes(e))))}sortAll(e=void 0){let s=this.arr.flat(1).sort(e);return new t(this.rows,this.cols,s)}count(t){return this.arr.flat(1).count(t)}toBase(e){let s=this.arr.flat(1).toBase(e);return new t(this.rows,this.cols,s)}#t(e){if(this.rows!==e.rows)return;let s=this.arr;for(let t=0;t<this.rows;t++)for(let r=this.cols;r<this.cols+e.cols;r++)s[t][r]=e.arr[t][r-this.cols];return this.cols+=e.cols,new t(this.rows,this.cols,s.flat(1))}hstack(...t){const e=[this,...t].reduce(((t,e)=>t.#t(e)));return Object.assign(this,e),this}static hstack(t,...e){return t.clone.hstack(...e)}#e(e){if(this.cols!==e.cols)return;let s=this.arr;for(let t=this.rows;t<this.rows+e.rows;t++){s[t]=[];for(let r=0;r<this.cols;r++)s[t][r]=e.arr[t-this.rows][r]}return this.rows+=e.rows,new t(this.rows,this.cols,s.flat(1))}vstack(...t){const e=[this,...t].reduce(((t,e)=>t.#e(e)));return Object.assign(this,e),this}static vstack(t,...e){return t.clone.vstack(...e)}hqueue(...t){const e=[this,...t].reverse().reduce(((t,e)=>t.#t(e)));return Object.assign(this,e),this}vqueue(...t){const e=[this,...t].reverse().reduce(((t,e)=>t.#e(e)));return Object.assign(this,e),this}static hqueue(t,...e){return t.clone.hqueue(...e)}static vqueue(t,...e){return t.clone.vqueue(...e)}slice(e=0,s=0,r=this.rows-1,n=this.cols-1){let i=r-e,a=n-s,o=new Array(a);for(let t=0;t<i;t++){o[t]=[];for(let r=0;r<a;r++)o[t][r]=this.arr[t+e][r+s]}return new t(i,a,o.flat(1))}static slice(t,e=0,s=0,r=this.rows-1,n=this.cols-1){return t.slice(e,s,r,n)}getRows(t,e=t+1){return this.slice(t,0,e,this.cols)}getCols(t,e=t+1){return this.slice(0,t,this.rows,e)}static getRows(t,e,s=e+1){return t.slice(e,0,s,t.cols)}static getCols(t,e,s=e+1){return t.slice(0,e,t.rows,s)}add(...e){for(let n=0;n<e.length;n++){("number"==typeof e[n]||e[n]instanceof s)&&(e[n]=t.nums(this.rows,this.cols,e[n]));for(let t=0;t<this.rows;t++)for(var r=0;r<this.cols;r++)this.arr[t][r]=yt.add(this.arr[t][r],e[n].arr[t][r])}return new t(this.rows,this.cols,this.arr.flat(1))}sub(...e){for(let r=0;r<e.length;r++){"number"==typeof e[r]&&(e[r]=t.nums(this.rows,this.cols,e[r]));for(let t=0;t<this.rows;t++)for(var s=0;s<this.cols;s++)this.arr[t][s]=yt.sub(this.arr[t][s],e[r].arr[t][s])}return new t(this.rows,this.cols,this.arr.flat(1))}static add(t,...e){return t.clone.add(...e)}static sub(t,...e){return t.clone.sub(...e)}mul(...e){for(let n=0;n<e.length;n++){"number"==typeof e[n]&&(e[n]=t.nums(this.rows,this.cols,e[n]));for(var s=0;s<this.rows;s++)for(var r=0;r<this.cols;r++)this.arr[s][r]=yt.mul(this.arr[s][r],e[n].arr[s][r])}return new t(this.rows,this.cols,this.arr.flat(1))}div(...e){for(let r=0;r<e.length;r++){"number"==typeof e[r]&&(e[r]=t.nums(this.rows,this.cols,e[r]));for(let t=0;t<this.rows;t++)for(var s=0;s<this.cols;s++)this.arr[t][s]=yt.div(this.arr[t][s],e[r].arr[t][s])}return new t(this.rows,this.cols,this.arr.flat(1))}static div(t,...e){return t.clone.div(...e)}static mul(t,...e){return t.clone.mul(...e)}modulo(...e){for(let r=0;r<e.length;r++){"number"==typeof e[r]&&(e[r]=t.nums(this.rows,this.cols,e[r]));for(let t=0;t<this.rows;t++)for(var s=0;s<this.cols;s++)this.arr[t][s]=yt.modulo(this.arr[t][s],e[r].arr[t][s])}return new t(this.rows,this.cols,this.arr.flat(1))}static modulo(t,...e){return t.clone.modulo(...e)}dot(e){for(var s=[],r=0;r<this.arr.length;r++){s[r]=[];for(var n=0;n<e.arr[0].length;n++){s[r][n]=0;for(var i=0;i<this.arr[0].length;i++)s[r][n]=yt.add(s[r][n],yt.mul(this.arr[r][i],e.arr[i][n]))}}return new t(this.arr.length,e.arr[0].length,s.flat(1))}static dot(t,e){return t.dot(e)}pow(t){let e=this.clone,s=this.clone;for(let r=0;r<t-1;r++)s=s.dot(e);return s}static pow(t,e){return t.clone.pow(e)}get somme(){let t=0;for(let e=0;e<this.rows;e++)for(let s=0;s<this.cols;s++)t+=this.arr[e][s];return t}get DoesItContainComplexNumbers(){return this.arr.flat(1/0).some((t=>t instanceof s))}get min(){this.DoesItContainComplexNumbers&&console.error("Complex numbers are not comparable");let t=[];for(let e=0;e<this.rows;e++)t.push(a(...this.arr[e]));return a(...t)}get max(){this.DoesItContainComplexNumbers&&console.error("Complex numbers are not comparable");let t=[];for(let e=0;e<this.rows;e++)t.push(o(...this.arr[e]));return o(...t)}get minRows(){this.DoesItContainComplexNumbers&&console.error("Complex numbers are not comparable");let t=[];for(let e=0;e<this.rows;e++)t.push(a(...this.arr[e]));return t}get maxRows(){this.DoesItContainComplexNumbers&&console.error("Complex numbers are not comparable");let t=[];for(let e=0;e<this.rows;e++)t.push(o(...this.arr[e]));return t}get minCols(){return this.DoesItContainComplexNumbers&&console.error("Complex numbers are not comparable"),this.T.minRows}get maxCols(){return this.DoesItContainComplexNumbers&&console.error("Complex numbers are not comparable"),this.T.maxRows}static fromVector(e){return new t(e.length,1,e)}get toArray(){let t=[];for(let e=0;e<this.rows;e++)for(let s=0;s<this.cols;s++)t.push(this.arr[e][s]);return t}get print(){let t="[";for(let e=0;e<this.arr.length;e++)t+=(0!=e?" ":"")+` [${this.arr[e].map((t=>" "+t.toString()+" "))}],\n`;console.log(t.substring(0,t.length-2)+" ]"),document.write(t.substring(0,t.length-2)+" ]")}get table(){console.table(this.arr)}get serialize(){return JSON.stringify(this)}static deserialize(e){"string"==typeof e&&(e=JSON.parse(e));let s=new t(e.rows,e.cols);return s.arr=e.arr,s}toTable(){var t=new DocumentFragment,e=new Array(this.rows).fill(null).map((()=>document.createElement("tr"))),s=this.arr.map((t=>t.map((()=>document.createElement("td")))));for(let t=0;t<s.length;t++)for(let r=0;r<s[0].length;r++)s[t][r].innerHTML=this.arr[t][r],e[t].appendChild(s[t][r]);return e.map((e=>t.appendChild(e))),t}toGrid(t,e={}){let s=Grid();return s.append(...this.map(t).arr.flat(1).map((t=>t.style(e)))),s.Columns(this.cols),s}sortTable(e=0,{type:s="num",order:r="asc"}={}){var n=this.T.arr.map((t=>t.map(((t,e)=>Object.assign({},{x:t,y:e}))))),i=this.T.arr.map((t=>t.map(((t,e)=>Object.assign({},{x:t,y:e})))));"num"===s?"asc"===r?n[e].sort(((t,e)=>t.x-e.x)):"desc"===r?n[e].sort(((t,e)=>e.x-t.x)):"toggle"===r&&(n[e][0].x>n[e][1].x?n[e].sort(((t,e)=>e.x-t.x)):n[e].sort(((t,e)=>t.x-e.x))):"alpha"===s&&("asc"===r?n[e].sort(((t,e)=>(""+t.x).localeCompare(""+e.x))):"desc"===r&&n[e].sort(((t,e)=>(""+e.x).localeCompare(""+t.x)))),r=n[e].map((t=>t.y));for(let t=0;t<n.length;t++)t!==e&&n[t].map(((t,e)=>t.y=r[e]));for(let t=0;t<n.length;t++)t!==e&&i[t].map(((e,s)=>e.x=n[t][r[s]].x));i[e]=n[e];var a=i.map((t=>t.map((t=>t.x))));return new t(a).T}};var B=(t,e,s)=>new P(t,e,s);const z=(t,...e)=>{const n=e.map((e=>{if(null===e)return t(null);if(["number","string","boolean","bigint","undefined"].includes(typeof e))return t(e);if(e instanceof Array)return e.map((e=>z(t,e)));if(ArrayBuffer.isView(e))return e.map((e=>t(e)));if(e instanceof Set)return new Set(z(t,...e));if(e instanceof Map)return new Map([...e].map((e=>[e[0],z(t,e[1])])));if(e instanceof P)return new P(e.rows,e.cols,z(e.arr.flat(1)));if(e instanceof s){const[s,n,i,a]=[e.a,e.b,e.z,e.phi];switch(t){case Math.log:return r(g(i),a);case Math.exp:return r(f(s)*y(n),f(s)*x(n));case Math.abs:return i;case Math.sqrt:return r(m(i)*y(a/2),m(i)*x(a/2));case l.cos:return r(y(s)*v(n),-x(s)*k(n));case l.sin:return r(x(s)*v(n),y(s)*k(n));case l.tan:{const t=y(2*s)+v(2*n);return r(x(2*s)/t,k(2*n)/t)}case l.cosh:return r(v(s)*y(n),k(s)*x(n));case l.sinh:return r(k(s)*y(n),v(s)*x(n));case l.tanh:{const t=v(2*s)+y(2*n);return r(k(2*s)/t,x(2*n)/t)}}}else if(e instanceof Object)return Object.fromEntries(Object.entries(e).map((e=>[e[0],z(t,e[1])])))}));return 1==n.length?n[0]:n},{PI:N,E:L}=Math,H=Number.EPSILON,U=(t,e)=>{if("number"==typeof t){if("number"==typeof e)return t+e;if(e instanceof Complex)return complex(t+e.a,e.b);if(e instanceof Matrix)return Matrix.nums(e.rows,e.cols,t).add(e);if(e instanceof Array)return e.map((e=>Y(e,t)))}else{if(t instanceof Complex||t instanceof Matrix)return e instanceof Array?e.map((e=>t.clone.add(e))):t.clone.add(e);if(t instanceof Array){if(!(e instanceof Array))return t.map((t=>Y(t,e)));if(t.length===e.length)return t.map(((t,s)=>Y(t,e[s])))}}},q=(t,e)=>{if("number"==typeof t){if("number"==typeof e)return t-e;if(e instanceof Complex)return complex(t-e.a,-e.b);if(e instanceof Matrix)return Matrix.nums(e.rows,e.cols,t).sub(e);if(e instanceof Array)return e.map((e=>Z(e,t)))}else{if(t instanceof Complex||t instanceof Matrix)return e instanceof Array?e.map((e=>t.clone.sub(e))):t.clone.sub(e);if(t instanceof Array){if(!(e instanceof Array))return t.map((t=>Z(t,e)));if(e instanceof Array&&t.length===e.length)return t.map(((t,s)=>Z(t,e[s])))}}},W=(t,e)=>{if("number"==typeof t){if("number"==typeof e)return t*e;if(e instanceof Complex)return complex(t*e.a,t*e.b);if(e instanceof Matrix)return Matrix.nums(e.rows,e.cols,t).mul(e);if(e instanceof Array)return e.map((e=>G(t,e)))}else{if(t instanceof Complex||t instanceof Matrix)return e instanceof Array?e.map((e=>t.clone.mul(e))):t.clone.mul(e);if(t instanceof Array){if(!(e instanceof Array))return t.map((t=>G(t,e)));if(e instanceof Array&&t.length===e.length)return t.map(((t,s)=>G(t,e[s])))}}},X=(t,e)=>{if("number"==typeof t){if("number"==typeof e)return t/e;if(e instanceof Complex)return complex(t/e.a,t/e.b);if(e instanceof Matrix)return Matrix.nums(e.rows,e.cols,t).div(e);if(e instanceof Array)return e.map((e=>Q(t,e)))}else{if(t instanceof Complex||t instanceof Matrix)return e instanceof Array?e.map((e=>t.clone.div(e))):t.clone.div(e);if(t instanceof Array){if(!(e instanceof Array))return t.map((t=>Q(t,e)));if(e instanceof Array&&t.length===e.length)return t.map(((t,s)=>Q(t,e[s])))}}},$=(t,e)=>{if("number"==typeof t){if("number"==typeof e)return t%e;if(e instanceof Complex)return complex(t%e.a,t%e.b);if(e instanceof Matrix)return Matrix.nums(e.rows,e.cols,t).modulo(e);if(e instanceof Array)return e.map((e=>Q(t,e)))}else{if(t instanceof Complex||t instanceof Matrix)return e instanceof Array?e.map((e=>t.clone.div(e))):t.clone.div(e);if(t instanceof Array&&!(e instanceof Array))return t.map((t=>Y(t,e)))}},Y=(t,...e)=>{var s=t;for(let t=0;t<e.length;t++)s=U(s,e[t]);return s},Z=(t,...e)=>{var s=t;for(let t=0;t<e.length;t++)s=q(s,e[t]);return s},G=(t,...e)=>{var s=t;for(let t=0;t<e.length;t++)s=W(s,e[t]);return s},Q=(t,...e)=>{var s=t;for(let t=0;t<e.length;t++)s=X(s,e[t]);return s},K=(t,...e)=>{var s=t;for(let t=0;t<e.length;t++)s=$(s,e[t]);return s},J=t=>new Array(t).fill(0),tt=t=>new Array(t).fill(1),et=(t,e)=>new Array(e).fill(t),st=(t,e,r)=>{if("number"==typeof t)return e!==r?(t-e)/(r-e):0;if(t instanceof Matrix)return new Matrix(t.rows,t.cols,st(t.arr.flat(1),e,r));if(t instanceof s)return new s(st(t.a,e,r),st(t.b,e,r));if(t instanceof Array){if(t.every((t=>typeof("number"===t))))return t.map((t=>st(t,e,r)));{let e=new Array(t.length);for(let s=0;s<t.length;s++)e[s]=st(t[s])}}},rt=(t,e,r)=>{if("number"==typeof t)return(r-e)*t+e;if(t instanceof Matrix)return new Matrix(t.rows,t.cols,rt(t.arr.flat(1),e,r));if(t instanceof s)return new s(rt(t.a,e,r),rt(t.b,e,r));if(t instanceof Array){if(t.every((t=>typeof("number"===t))))return t.map((t=>rt(t,e,r)));{let e=new Array(t.length);for(let s=0;s<t.length;s++)e[s]=rt(t[s])}}},nt=(t,e,r,n,i)=>{if("number"==typeof t)return rt(st(t,e,r),n,i);if(t instanceof Matrix)return new Matrix(t.rows,t.cols,nt(t.arr.flat(1),e,r,n,i));if(t instanceof s)return new s(nt(t.a,r,n,i),nt(t.b,e,r,n,i));if(t instanceof Array){if(t.every((t=>typeof("number"===t))))return t.map((t=>nt(t,e,r,n,i)));{let s=new Array(t.length);for(let a=0;a<t.length;a++)s[a]=nt(t[a],e,r,n,i)}}},it=(t,e,r)=>{if("number"==typeof t)return e(r(t,e),r);if(t instanceof Matrix)return new Matrix(t.rows,t.cols,it(t.arr.flat(1),e,r));if(t instanceof s)return new s(it(t.a,e,r),it(t.b,e,r));if(t instanceof Array){if(t.every((t=>typeof("number"===t))))return t.map((t=>it(t,e,r)));{let s=new Array(t.length);for(let n=0;n<t.length;n++)s[n]=it(t[n],e,r)}}},at=(t,e,s,r=!1)=>{let n=[];if(t<e)for(let i=t;r?i<=e:i<e;i+=s)n.push(10*i/10);else for(let i=t;r?i>=e:i>e;i-=s)n.push(10*i/10);return n},ot=(t,e,n=abs(e-t)+1,i=!0)=>{if(Math.floor(n)===n){if([t,e].every((t=>"number"==typeof t))){const[s,r]=[t,e].sort(((t,e)=>e-t));var a=[];let h;h=i?(s-r)/(n-1):(s-r)/n;for(var o=0;o<n;o++)t<e?a.push(r+h*o):a.push(s-h*o);return a}if([t,e].some((t=>t instanceof s))){const s=r(t),a=r(e);n=n||Math.abs(s.a-a.a)+1;const o=ot(s.a,a.a,n,i),h=ot(s.b,a.b,n,i);let l=new Array(n).fill(null);return l=l.map(((t,e)=>r(o[e],h[e]))),l}}},ht=(t,e,s=e-t+1,r=E,n=!0)=>ot(t,e,s,n).map((t=>pow(r,t))),lt=(t,e,n=abs(e-t)+1,i=!0)=>{if(Math.floor(n)===n){if([t,e].every((t=>"number"==typeof t))){const[s,r]=[t,e].sort(((t,e)=>e-t));let a;a=d(s/r,i?n-1:n);const o=[r];for(let t=1;t<n;t++)o.push(o[t-1]*a);return t<e?o:o.reverse()}if([t,e].some((t=>t instanceof s))){const s=r(t),a=r(e);let o;n=n||Math.abs(s.a-a.a)+1,o=d(a.div(s),i?n-1:n);const h=[s];for(let t=1;t<n;t++)h.push(mul(h[t-1],o));return h}}},ct=(...t)=>z((t=>t*Math.PI/180),...t),ut=(...t)=>z((t=>t/Math.PI*180),...t),mt=(t,e,s)=>{const[r,n]=[Math.min(e,s),Math.max(e,s)];return t>=r&&t<=n},pt=(t,e,s=1e-4)=>Math.abs(t-e)<=s,dt=(t,e)=>t.reduce(((t,s)=>[...t,...e.map((t=>[s,t]))]),[]),ft=(t,e)=>{let s,r=1;if(t==floor(t)&&e==floor(e)){for(s=2;s<=t&&s<=e;++s)t%s==0&&e%s==0&&(r=s);return r}console.log("error")},gt=(t,e)=>{let s;if(t==floor(t)&&e==floor(e)){for(s=t>e?t:e;s%t!=0||s%e!=0;)++s;return s}console.log("error")},yt={add:Y,sub:Z,mul:G,div:Q,modulo:K,zeros:J,ones:tt,nums:et,norm:st,lerp:rt,map:nt,clamp:it,arange:at,linspace:ot,logspace:ht,geomspace:lt,sum:n,prod:i,accum:h,cartesianProduct:dt,ppcm:gt,pgcd:ft,deg2rad:ct,rad2deg:ut,inRange:mt,isApproximatlyEqual:pt};const xt=t=>{const e=[],n=t.length;t[0]instanceof s||(t=t.map((t=>r(t,0))));for(let s=0;s<n;s++){let i=0,a=0;for(let e=0;e<n;e++){const r=2*PI*s*e/n;i+=t[e].a*cos(r)+t[e].b*sin(r),a+=-t[e].a*sin(r)+t[e].b*cos(r)}i/=n,a/=n,e[s]=r(i,a)}return{output:e,re:e.map((t=>t.a)),im:e.map((t=>t.b)),z:e.map((t=>t.z)),phi:e.map((t=>t.phi))}},bt=t=>{const e=[],n=t.length;t[0]instanceof s||(t=t.map((t=>r(t,0))));for(let s=0;s<n;s++){let i=0,a=0;for(let e=0;e<n;e++){const r=2*PI*s*e/n;i+=t[e].a*cos(r)+t[e].b*sin(r),a+=t[e].a*sin(r)+t[e].b*cos(r)}i/=n,a/=n,e[s]=r(i,a)}return{output:e,re:e.map((t=>t.a)),im:e.map((t=>t.b)),z:e.map((t=>t.z)),phi:e.map((t=>t.phi))}},wt=(t,e,s=!0)=>{const r=t.length,n=e.length,i=[],a=s?Math.max(r,n):r+n-1;for(let s=0;s<a;s++){let a=0;for(let i=0;i<n;i++){const o=s+i-Math.floor(n/2);a+=(o>=0&&o<r?t[o]:0)*e[i]}i.push(a)}return i},vt=(t,e,s=!0)=>{t instanceof P||(t=B(t)),e instanceof P||(e=B(e));const r=t.rows,n=t.cols,i=s?Math.max(t.rows,e.rows):t.rows+e.rows-1,a=s?Math.max(t.cols,e.cols):t.cols+e.cols-1,o=e.rows,h=[];for(let s=0;s<i;s++){const i=[];for(let h=0;h<a;h++){let a=0;for(let i=0;i<o;i++)for(let l=0;l<o;l++){const c=s+i-Math.floor(o/2),u=h+l-Math.floor(o/2);a+=(c>=0&&c<r&&u>=0&&u<n?t[c][u]:0)*e[i][l]}i.push(a)}h.push(i)}return h},kt=(t,e,s)=>t instanceof P||t instanceof Array&&t[0][0]?vt(t,e,s):wt(t,e,s);class Mt{constructor(t){this.input=t,this.input_fft=xt(this.input),this.output_fft=[]}lowPass(t){return this.input_fft.output.forEach(((e,s)=>{e=e.z<t?this.output_fft[s]=this.input_fft.output[s]:this.output_fft[s]=r(0,0)})),bt(this.output_fft).re}highPass(t){return this.input_fft.output.forEach(((e,s)=>{e=e.z>t?this.output_fft[s]=this.input_fft.output[s]:this.output_fft[s]=r(0,0)})),bt(this.output_fft).re}bandePass(){}bandeCoupe(){}}const Et={zeros:J,ones:tt,nums:et,arange:at,linspace:ot,logspace:ht,geomspace:lt,map:nt,norm:st,lerp:rt,clamp:it,noise:(t,e=0,s=1)=>F.floats(t,e,s),echelon(t,e=0,s=1){t instanceof Array||(t=[t]);const r=z((t=>t>=e?1:0),...t);return r instanceof Array?r.map((t=>t*s)):r*s},rampe(t,e=0,s=1){t instanceof Array||(t=[t]);const r=z((t=>t>=e?t-e:0),...t);return r instanceof Array?r.map((t=>t*s)):r*s},sign(t,e=0,s=1){t instanceof Array||(t=[t]);const r=z((t=>Math.sign(t-e)),...t);return r instanceof Array?r.map((t=>t*s)):r*s},rect(t,e,s=0){t instanceof Array||(t=[t]);const r=z((t=>s-e/2<t&&s+e/2>t?1-2*u(t/e):0),...t);return r instanceof Array?r.map((t=>t*A)):r*A},tri(t,e,s=0,r=1){t instanceof Array||(t=[t]);const n=z((t=>s-e/2<t&&s+e/2>t?1-2*u(t/e):0),...t);return n instanceof Array?n.map((t=>t*r)):n*r},dirac:(t,e)=>z((t=>t===e?1/0:0),...t),lorentz(t,e=0,s=1){t instanceof Array||(t=[t]);const r=z((t=>1/(1+(t-e)**2)),...t);return r instanceof Array?r.map((t=>t*s)):r*s},sinc(t,e,s=1){t instanceof Array||(t=[t]);const r=z((t=>w(t-e)),...t);return r instanceof Array?r.map((t=>t*s)):r*s},square(t,e=1,s=1){t instanceof Array||(t=[t]);const r=z((t=>T(x(2*t*Math.PI/e))),...t);return r instanceof Array?r.map((t=>t*s)):r*s},sawtooth(){},conv:kt,conv1d:wt,conv2d:vt,circularConv:(t,e)=>kt(t,e,!0),linearConv:(t,e)=>kt(t,e,!1),circularConv1d:(t,e)=>wt(t,e,!0),linearConv1d:(t,e)=>wt(t,e,!1),circularConv2d:(t,e)=>vt(t,e,!0),linearConv2d:(t,e)=>vt(t,e,!1),fft:xt,ifft:bt,filter:t=>new Mt(t)};Object.defineProperties(Number.prototype,{inRange:{value:function(t,e){return mt(this.valueOf(),t,e)}},add:{value:function(...t){return Y(this.valueOf(),...t)}},sub:{value:function(...t){return Z(this.valueOf(),...t)}},mul:{value:function(...t){return G(this.valueOf(),...t)}},div:{value:function(...t){return Q(this.valueOf(),...t)}},modulo:{value:function(...t){return K(this.valueOf(),...t)}},norm:{value:function(t,e){return norm(this.valueOf(),t,e)}},lerp:{value:function(t,e){return lerp(this.valueOf(),t,e)}},map:{value:function(t,e,s,r){return map(this.valueOf(),t,e,s,r)}},clamp:{value:function(t,e){return clamp(this.valueOf(),t,e)}},toDeg:{value:function(){return ut(this.valueOf())}},toRad:{value:function(){return ct(this.valueOf())}}}),Object.defineProperties(Array.prototype,{inRange:{value:function(t,e){return mt(this.valueOf(),t,e)}},add:{value:function(...t){return Y(this.valueOf(),...t)}},sub:{value:function(...t){return Z(this.valueOf(),...t)}},mul:{value:function(...t){return G(this.valueOf(),...t)}},div:{value:function(...t){return Q(this.valueOf(),...t)}},modulo:{value:function(...t){return K(this.valueOf(),...t)}},norm:{value:function(t,e){return norm(this.valueOf(),t,e)}},lerp:{value:function(t,e){return lerp(this.valueOf(),t,e)}},_map:{value:function(t,e,s,r){return map(this.valueOf(),t,e,s,r)}},clamp:{value:function(t,e){return clamp(this.valueOf(),t,e)}},deepMap:{value:function(t){return z(t,...this.valueOf())}}});const At={PI:N,E:L,EPSILON:H,Random:F,complex:r,Complex:s,Matrix:P,LinearSystem:class{static resolve(t,e){return t.inv.dot(P.fromVector(e)).arr.flat(1).map((t=>+t.toFixed(10)))}},matrix:B,matrix2:(...t)=>new P(2,2,t),matrix3:(...t)=>new P(3,3,t),matrix4:(...t)=>new P(4,4,t),cos:y,sin:x,tan:b,sinc:w,sec:function(...t){return z(l.sec,...t)},csc:function(...t){return z(l.csc,...t)},cot:function(...t){return z(l.cot,...t)},abs:u,sqrt:m,pow:p,sqrtn:d,e:f,ln:g,acos:function(...t){return z(l.acos,...t)},asin:function(...t){return z(l.asin,...t)},atan:function(...t){return z(l.atan,...t)},acot:function(...t){return z(l.acot,...t)},cosh:v,sinh:k,tanh:function(...t){return z(l.tanh,...t)},coth:function(...t){return z(l.coth,...t)},acosh:function(...t){return z(l.acosh,...t)},asinh:function(...t){return z(l.asinh,...t)},atanh:function(...t){return z(l.atanh,...t)},min:a,max:o,sign:T,floor:M,ceil:function(...t){return z(Math.ceil,...t)},round:function(...t){return z(Math.round,...t)},fact:function(...t){return z((t=>{let e,s=1;if(0==t)s=1;else if(t>0)for(e=1;e<=t;e++)s*=e;else s=NaN;return s}),...t)},hypot:O,sig:function(...t){return z((t=>1/(1+f(-t))),...t)},atan2:C,Utils:yt,nums:et,zeros:J,ones:tt,sum:n,prod:i,add:Y,mul:G,div:Q,sub:Z,modulo:K,rad2deg:ut,deg2rad:ct,arange:at,linspace:ot,logspace:ht,geomspace:lt,norm:st,lerp:rt,map:nt,clamp:it,pgcd:ft,ppcm:gt,isApproximatlyEqual:pt,inRange:mt,cartesianProduct:dt,Discret:R,Logic:_,Base:I,Permutation:V,Combinaison:S,PowerSet:j,subset:D,Signal:Et,ExtractAll:function(){for(let t=0;t<Object.keys(this).length;t++)globalThis[Object.keys(this)[t]]=Object.values(this)[t];return this},RemoveAll:function(){for(let t=0;t<Object.keys(this).length;t++)delete globalThis[Object.keys(this)[t]];return this}},Ct=(t,e="px")=>("number"==typeof t&&(t+=e),t instanceof Array&&(t=t.map((t=>"number"==typeof t?t+=e:t)).join(" ")),t),Tt=(t,e)=>{t&&Object.assign(t.style,e)};function Ot(){return{style:function(t,{target:e="parent",maskVector:s=null}={}){return"parent"===e||0===e?Tt(this.element,t):"parent"!==e&&0!==e||(s?this.items.map(((e,r)=>1==s[r]&&e.style(t))):this.items.map((e=>e.style(t)))),this},setCss:function(t){return this.element.style.cssText=t,this},addCss:function(t){return this.element.style.cssText+=t,this},size:function(t,e,{target:s,maskVector:r}={}){return this.width(t,{target:s,maskVector:r}),this.height(e,{target:s,maskVector:r}),this},width:function(t,{target:e,maskVector:s}={}){if(t instanceof Object){if(t instanceof Array&&(t={min:t[0],max:t[1]}),"min"in t||"max"in t){let r=t.min??t.max,n=t.max??t.min;r=Ct(r,"px"),n=Ct(n,"px"),this.style({minWidth:r,maxWidth:n},{target:e,maskVector:s})}}else t=Ct(t,"px"),this.style({width:t},{target:e,maskVector:s});return this},height:function(t,{target:e,maskVector:s}={}){if(t instanceof Object){if(t instanceof Array&&(t={min:t[0],max:t[1]}),"min"in t||"max"in t){let r=t.min??t.max,n=t.max??t.min;r=Ct(r,"px"),n=Ct(n,"px"),this.style({minHeight:r,maxHeight:n},{target:e,maskVector:s})}}else t=Ct(t,"px"),this.style({height:t},{target:e,maskVector:s});return this},hide:function({after:t,target:e,maskVector:s}={}){return"number"==typeof t?setTimeout((()=>this.hide({target:e,maskVector:s})),t):(this.cache.isHidden=!0,this.style({display:"none"},{target:e,maskVector:s})),this},show:function({after:t,target:e,maskVector:s}={}){return"number"==typeof t?setTimeout((()=>this.show({target:e,maskVector:s})),t):(this.cache.isHidden=!1,this.style({display:""},{target:e,maskVector:s})),this}}}class _t{constructor(t={}){this.target=null,this.styles=new Map([["default",t]]),this.cache={isHidden:!1,isFaddedOut:!1,transformation:{Flip:[0,0,0]}}}style(t,{target:e="parent",maskVector:s=null}={}){return"parent"===e||0===e?Tt(this.target.element,t):"parent"!==e&&0!==e||(s?this.items.map(((e,r)=>1==s[r]&&e.style(t))):this.items.map((e=>e.style(t)))),this}linkTo(t){return this.target=t,this}use(t="default"){return this.style(this.styles.get(t)),this}update(t,e){const s=this.styles.get(t);return s?this.styles.set(t,Object.assign(s,e)):this.styles.set(t,e),this}add(t,e){return this.styles.set(t,e),this}replace(t,e){return this.styles.set(t,e),this}delete(...t){return t.forEach((t=>this.styles.delete(t))),this}updateDefaultStyle(){const t=Object.fromEntries(Object.entries(this.target.element.style).filter((t=>isNaN(+t[0]))));return this.update("default",t),this}hover(t){return t&&this.add("hover",t),this.target.element.addEventListener("pointerenter",(()=>this.use("hover"))),this.target.element.addEventListener("pointerleave",(()=>this.use("default"))),this}size(t,e,{target:s,maskVector:r}={}){return this.style({width:t,height:e},{target:s,maskVector:r}),this}width(t,{target:e,maskVector:s}={}){if(t instanceof Object){if(t instanceof Array&&(t={min:t[0],max:t[1]}),"min"in t||"max"in t){let r=t.min??t.max,n=t.max??t.min;r=Ct(r,"px"),n=Ct(n,"px"),this.style({minWidth:r,maxWidth:n},{target:e,maskVector:s})}}else t=Ct(t,"px"),this.style({width:t},{target:e,maskVector:s});return this}height(t,{target:e,maskVector:s}={}){if(t instanceof Object){if(t instanceof Array&&(t={min:t[0],max:t[1]}),"min"in t||"max"in t){let r=t.min??t.max,n=t.max??t.min;r=Ct(r,"px"),n=Ct(n,"px"),this.style({minHeight:r,maxHeight:n},{target:e,maskVector:s})}}else t=Ct(t,"px"),this.style({height:t},{target:e,maskVector:s});return this}hide({after:t,target:e,maskVector:s}={}){if("number"==typeof t){const r=()=>this.hide({target:e,maskVector:s});setTimeout(r,t),clearTimeout(r)}else this.cache.isHidden=!0,this.style({display:"none"},{target:e,maskVector:s});return this}show({after:t,target:e,maskVector:s}={}){if("number"==typeof t){const r=()=>this.show({target:e,maskVector:s});setTimeout(r,t),clearTimeout(r)}else this.cache.isHidden=!1,this.style({display:""},{target:e,maskVector:s});return this}color(t,{target:e,maskVector:s}={}){return this.style({color:t},{target:e,maskVector:s}),this}background(t,{target:e,maskVector:s}={}){return this.style({background:t},{target:e,maskVector:s}),this}backgroundColor(t,{target:e,maskVector:s}={}){return this.style({backgroundColor:t},{target:e,maskVector:s}),this}opacity(t,{target:e,maskVector:s}={}){return this.style({opacity:t},{target:e,maskVector:s}),this}position(t,{target:e,maskVector:s}={}){return this.style({position:t},{target:e,maskVector:s}),this}display(t,{target:e,maskVector:s}={}){return this.style({display:t},{target:e,maskVector:s}),this}zIndex(t,{target:e,maskVector:s}={}){return this.style({zIndex:t},{target:e,maskVector:s}),this}float(t,{target:e,maskVector:s}={}){return this.style({float:t},{target:e,maskVector:s}),this}border(t="1px solid red",{target:e,maskVector:s}={}){return this.style({border:t},{target:e,maskVector:s}),this}borderTop(t="1px solid red",{target:e,maskVector:s}={}){return this.style({borderTop:t},{target:e,maskVector:s}),this}borderRight(t="1px solid red",{target:e,maskVector:s}={}){return this.style({borderRight:t},{target:e,maskVector:s}),this}borderBottom(t="1px solid red",{target:e,maskVector:s}={}){return this.style({borderBottom:t},{target:e,maskVector:s}),this}borderLeft(t="1px solid red",{target:e,maskVector:s}={}){return this.style({borderLeft:t},{target:e,maskVector:s}),this}borderRadius(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({borderRadius:t},{target:e,maskVector:s}),this}margin(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({margin:t},{target:e,maskVector:s}),this}marginTop(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({marginTop:t},{target:e,maskVector:s}),this}marginRight(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({marginRight:t},{target:e,maskVector:s}),this}marginBootom(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({marginBootom:t},{target:e,maskVector:s}),this}marginLeft(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({marginLeft:t},{target:e,maskVector:s}),this}padding(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({padding:t},{target:e,maskVector:s}),this}paddingTop(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({paddingTop:t},{target:e,maskVector:s}),this}paddingRight(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({paddingRight:t},{target:e,maskVector:s}),this}paddingBootom(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({paddingBootom:t},{target:e,maskVector:s}),this}paddingLeft(t,{target:e,maskVector:s}={}){return t=Ct(t,"px"),this.style({paddingLeft:t},{target:e,maskVector:s}),this}font(t,{target:e,maskVector:s}={}){return this.style({font:t},{target:e,maskVector:s}),this}fontFamily(t="",{target:e,maskVector:s}={}){return this.style({fontFamily:t},{target:e,maskVector:s}),this}fontSize(t,{target:e,maskVector:s}={}){return this.style({fontSize:t},{target:e,maskVector:s}),this}cursor(t="pointer"){return this.style({cursor:t}),this}overflow(t,e,{target:s,maskVector:r}={}){const n=["hidden","auto"];return this.style({overflowX:"number"==typeof t?n[t]:t,overflowY:"number"==typeof e?n[e]:e},{target:s,maskVector:r}),this}clip(t,{target:e,maskVector:s}={}){return"string"==typeof t&&(t="polygon("+t+")"),this.style({clipPath:t},{target:e,maskVector:s}),this}fadeOut(t=1){return this.style({transition:t/1e3+"s",opacity:0}),this.cache.isFaddedOut=!0,this}fadeIn(t=1){return this.style({transition:t/1e3+"s",opacity:1}),this.cache.isFaddedOut=!1,this}toggleFade(t=1e3,e=t){return this.cache.isFaddedOut?this.fadeIn(t):this.fadeOut(e),this}translateX(t,e=0){return this.style({transform:"translateX("+t+"px)"}),0!=e&&this.style({transition:`transform ${e/1e3}s ease`}),this}translateY(t,e=0){return this.style({transform:"translateY("+t+"px)"}),0!=e&&this.style({transition:`transform ${e/1e3}s ease`}),this}translate(t,e=t,s=0){return this.style({transform:`translate( ${t}px , ${e}px )`}),0!=s&&this.style({transition:`transform ${s/1e3}s ease`}),this}rotateX(t,e=0){return this.style({transform:"rotateX("+t+"deg)"}),0!=e&&this.style({transition:`transform ${e/1e3}s ease`}),this}rotateY(t,e=0){return this.style({transform:"rotateY("+t+"deg)"}),0!=e&&this.style({transition:`transform ${e/1e3}s ease`}),this}rotateZ(t,e=0){return this.style({transform:"rotateZ("+t+"deg)"}),0!=e&&this.style({transition:`transform ${e/1e3}s ease`}),this}flipeX({t:t=1}={}){return this.cache.transformation.Flip[0]+=180,this.cache.transformation.Flip[0]%=360,this.style({transform:"rotateX("+this.cache.transformation.Flip[0]+"deg)",transition:"all "+t+"s ease"}),this}flipeY(t=1){return this.cache.transformation.Flip[1]+=180,this.cache.transformation.Flip[1]%=360,this.style({transform:"rotateY("+this.cache.transformation.Flip[1]+"deg)",transition:"all "+t+"s ease"}),this}flipeZ(t=1){return this.cache.transformation.Flip[2]+=180,this.cache.transformation.Flip[2]%=360,this.style({transform:"rotateZ("+this.cache.transformation.Flip[2]+"deg)",transition:"all "+t+"s ease"}),this}slideHeightIn(t=1,e=this.h){return this.style({transition:t+"s",height:e}),this}slideHeightOut(t=1){return this.style({transition:t+"s",height:0}),this.target.element.addEventListener("transitionend",(()=>this.style({opacity:"none"}))),this}slideWidthIn(t=1,e=this.w){return this.style({transition:t+"s",width:e}),this}slideWidthOut(t=1){this.style({transition:t+"s",width:0});const e=()=>{this.style({opacity:"none"})};return this.target.element.addEventListener("transitionend",e),this.target.element.removeEventListener("transitionend",e),this}slideIn({t:t=1,w:e="100%",h:s="auto"}={}){return this.style({transition:t+"s",width:e,height:s,visibility:"visible"}),this}slideOut({t:t=1,width:e=0,height:s=0}={}){this.style({visibility:"hidden",transition:t+"s",opacity:"none",width:e,height:s});const r=()=>{this.style({opacity:"none"})};return this.target.element.addEventListener("transitionend",r),this.target.element.removeEventListener("transitionend",r),this}}const It={Key:{data:[],dispose:function(){return this.data.map((t=>t?.event?.dispose())),this},destroy:function(){return this.dispose(),this.data.length=0,this}},Pointer:{data:[],dispose:function(){return this.data.map((t=>t?.event?.dispose())),this},destroy:function(){return this.dispose(),this.data.length=0,this}},Drag:{data:[],dispose:function(){return this.data.map((t=>t?.event?.dispose())),this},destroy:function(){return this.dispose(),this.data.length=0,this}}};function Vt(t,e,s,r){return this.event=t,this.cache.preventDefault[e]&&t.preventDefault(),s&&s(),this.cache.stream.enabled[e]&&r&&this.cache.stream.history[e].push(r),this.cache.callbacks[e].map((t=>t(this))),this}class St{constructor(t){this.Target=window,this.setTarget(t),this.__dispose=this.dispose.bind(this)}get TargetElement(){return this.Target.element}setTarget(t){return this.Target=t,this}__handle(t,e,s){const r="drag"===t?t:`${this.cache.prefixe}${t}`;return this.dispose(s),this.TargetElement.addEventListener(r,e),this}__onEvent(t,e,...s){if(0===s.length){if(!(this.cache.callbacks.length>1))return this;this.cache.callbacks.map((t=>e=>t.call(this,e)))}else this.cache.callbacks[t]=s.map((t=>e=>t.call(this,e)));return this.__handle(t,this.__controller[t],e),this}preventDefault(t={}){return Object.assign(this.cache.preventDefault,t),this}pause(t={}){t={...Object.fromEntries(Object.keys(this.cache.stream.enabled).map((t=>[t,!0]))),...t};for(let e in t)t[e]&&(this.TargetElement.removeEventListener(`${this.cache.prefixe}${e}`,this.__controller[`${this.cache.prefixe}${e}`]),this.cache.paused[`${this.cache.prefixe}${e}`]=!0);return this}resume(t={}){t={...Object.fromEntries(Object.keys(this.cache.stream.enabled).map((t=>[t,!0]))),...t};for(let e in t)t[e]&&(this.TargetElement.addEventListener(`${this.cache.prefixe}${e}`,this.__controller[`${this.cache.prefixe}${e}`]),this.cache.paused[`${this.cache.prefixe}${e}`]=!1);return this}dispose(t={}){return this.pause(t),this}stream(t={}){this.cache.stream.t0=Date.now();return t={...Object.fromEntries(Object.keys(this.cache.stream.enabled).map((t=>[t,!0]))),...t},Object.assign(this.cache.stream.enabled,t),this}clear(t={}){t={...Object.fromEntries(Object.keys(this.cache.stream.clear).map((t=>[t,!0]))),...t};for(let e in t)t[e]&&(this.cache.stream.history[e]=[]);return this}get Garbage(){return It}}function jt(t){Vt.call(this,t,"down",(()=>{this.dx=parseInt(t.offsetX),this.dy=parseInt(t.offsetY),this.isDown=!0}),{x:this.dx,y:this.dy,t:Date.now()-this.cache.stream.t0})}function Dt(t){Vt.call(this,t,"move",(()=>{this.mx=parseInt(t.offsetX),this.my=parseInt(t.offsetY),this.isMoving=!0}),{x:this.mx,y:this.my,t:Date.now()-this.cache.stream.t0})}function Rt(t){Vt.call(this,t,"up",(()=>{this.ux=parseInt(t.offsetX),this.uy=parseInt(t.offsetY),this.isDown=!1}),{x:this.ux,y:this.uy,t:Date.now()-this.cache.stream.t0})}function Ft(t){Vt.call(this,t,"enter",null,null)}function Pt(t){Vt.call(this,t,"leave",null,null)}function Bt(t){Vt.call(this,t,"out",null,null)}class zt extends St{constructor(t){super(t),this.event=null,this.dx=0,this.dy=0,this.dt=0,this.mx=0,this.my=0,this.mt=0,this.ux=0,this.uy=0,this.ut=0,this.isMoving=!1,this.isDown=!1,this.cache={prefixe:"pointer",preventDefault:{down:!1,move:!1,up:!1,enter:!1,out:!1,leave:!1},paused:{down:!1,move:!1,up:!1,enter:!1,out:!1,leave:!1},stream:{enabled:{down:!1,move:!1,up:!1,enter:!1,out:!1,leave:!1},clear:{down:!1,move:!1,up:!1,enter:!1,out:!1,leave:!1},history:{down:[],move:[],up:[],enter:[],out:[],leave:[]}},callbacks:{down:[t=>console.log({dx:t.dx,dy:t.dy,down:t.down,move:t.move,t:t.dt})],move:[t=>console.log({mx:t.mx,my:t.my,down:t.down,move:t.move,t:t.dt})],up:[t=>console.log({ux:t.ux,uy:t.uy,down:t.down,move:t.move,t:t.dt})],enter:[t=>console.log({dx:t.dx,dy:t.dy,down:t.down,move:t.move,t:t.dt})],out:[t=>console.log({mx:t.mx,my:t.my,down:t.down,move:t.move,t:t.dt})],leave:[t=>console.log({ux:t.ux,uy:t.uy,down:t.down,move:t.move,t:t.dt})]}},this.__controller={down:jt.bind(this),move:Dt.bind(this),up:Rt.bind(this),enter:Ft.bind(this),out:Bt.bind(this),leave:Pt.bind(this)}}onDown(...t){return this.__onEvent("down",{down:!0,move:!1,up:!1,enter:!1,out:!1,leave:!1},...t),this}onMove(...t){return this.__onEvent("move",{down:!1,move:!0,up:!1,enter:!1,out:!1,leave:!1},...t),this}onUp(...t){return this.__onEvent("up",{down:!1,move:!1,up:!0,enter:!1,out:!1,leave:!1},...t),this}onEnter(...t){return this.__onEvent("enter",{down:!1,move:!1,up:!1,enter:!0,out:!1,leave:!1},...t),this}onOut(...t){return this.__onEvent("out",{down:!1,move:!1,up:!1,enter:!1,out:!0,leave:!1},...t),this}onLeave(...t){return this.__onEvent("leave",{down:!1,move:!1,up:!1,enter:!1,out:!1,leave:!0},...t),this}}var Nt=t=>new zt(t);function Lt(t){Vt.call(this,t,"down",(()=>this.kd=t.key),{key:t.key,t:10})}function Ht(t){Vt.call(this,t,"press",(()=>this.kp=t.key),{key:t.key,t:10})}function Ut(t){Vt.call(this,t,"up",(()=>this.ku=t.key),{key:t.key,t:10})}class qt extends St{constructor(t){super(t),this.kp=null,this.kd=null,this.ku=null,this.t=0,this.cache={prefixe:"key",preventDefault:{down:!1,press:!1,up:!1},paused:{down:!1,press:!1,up:!1},stream:{enabled:{down:!1,press:!1,up:!1},clear:{down:!0,press:!1,up:!1},history:{down:[],press:[],up:[]}},callbacks:{down:[t=>console.log({kd:t.kd})],press:[t=>console.log({kp:t.kp})],up:[t=>console.log({ku:t.ku})]},successifKeysCallback:{down:[t=>console.log(1111)],press:[t=>console.log(1112)],kyup:[t=>console.log(1113)]}},this.__controller={down:Lt.bind(this),press:Ht.bind(this),up:Ut.bind(this)}}onDown(...t){return this.__onEvent("down",{down:!0},...t),this}onPress(...t){return this.__onEvent("press",{press:!0},...t),this}onUp(...t){return this.__onEvent("up",{up:!0},...t),this}}var Wt=t=>new qt(t);function Xt(t){Vt(this,t,"start",null)}function $t(t){Vt.call(this,t,"drag",null,null)}function Yt(t){Vt.call(this,t,"end",null,null)}function Zt(t){Vt.call(this,t,"drop",null,null)}class Gt extends St{constructor(t){super(t),this.Target.setAttribute("draggable",!0),this.cache={prefixe:"drag",preventDefault:{drag:!1,start:!1,end:!1,enter:!1,leave:!1,over:!1},paused:{drag:!1,start:!1,end:!1,enter:!1,leave:!1,over:!1},enabled:{drag:!1,start:!1,end:!1,enter:!1,leave:!1,over:!1},callbacks:{drag:[],start:[],end:[],enter:[],leave:[],over:[]},stream:{enabled:{drag:!1,start:!1,end:!1,enter:!1,leave:!1,over:!1},clear:{drag:!1,start:!1,end:!1,enter:!1,leave:!1,over:!1},history:{drag:[],start:[],end:[],enter:[],leave:[],over:[]}}},this.__controller={start:Xt.bind(this),drag:$t.bind(this),end:Yt.bind(this)}}onStart(...t){return this.__onEvent("start",{},...t),this}onDrag(...t){return this.__onEvent("drag",{},...t),this}onEnd(...t){return this.__onEvent("end",{},...t),this}}class Qt extends St{constructor(t){super(t),this.event=null,this.cache={prefixe:"",preventDefault:{drop:!1},paused:{drop:!1},stream:{enabled:{drop:!1},clear:{drop:!1},history:{drop:[]}},callbacks:{drop:[t=>console.log({dx:t.dx,dy:t.dy,drop:t.drop,move:t.move,t:t.dt})]}},this.__controller={drop:Zt.bind(this)}}onDrop(...t){return this.__onEvent("drop",{},...t),this}}const Kt=t=>new Gt(t),Jt=t=>new Qt(t);function te(t){Vt.call(this,t,"click",null,null)}function ee(t){Vt.call(this,t,"dbclick",null,null)}class se extends St{constructor(t){super(t),this.event=null,this.cache={prefixe:"",preventDefault:{click:!1,dbclick:!1},paused:{click:!1,dbclick:!1},stream:{enabled:{click:!1,dbclick:!1},clear:{click:!1,dbclick:!1},history:{click:[],dbclick:[]}},callbacks:{click:[],dbclick:[]}},this.__controller={click:te.bind(this),dbclick:ee.bind(this)}}onClick(...t){return this.__onEvent("click",{},...t),this}onDbClick(...t){return this.__onEvent("dbclick",{},...t),this}}const re=t=>new se(t);function ne(t){Vt.call(this,t,"copy",null,null)}function ie(t){Vt.call(this,t,"cut",null,null)}function ae(t){Vt.call(this,t,"paste",null,null)}function oe(t){Vt.call(this,t,"select",null,null)}class he extends St{constructor(t){super(t),this.event=null,this.cache={prefixe:"",preventDefault:{copy:!1,cut:!1,paste:!1,select:!1},paused:{copy:!1,cut:!1,paste:!1,select:!1},stream:{enabled:{copy:!1,cut:!1,paste:!1,select:!1},clear:{copy:!1,cut:!1,paste:!1,select:!1},history:{copy:[],cut:[],paste:[],select:[]}},callbacks:{copy:[],cut:[],paste:[],select:[]}},this.__controller={copy:ne.bind(this),cut:ie.bind(this),paste:ae.bind(this),select:oe.bind(this)}}onCopy(...t){return this.__onEvent("copy",{},...t),this}onCut(...t){return this.__onEvent("cut",{},...t),this}onPaste(...t){return this.__onEvent("paste",{},...t),this}onSelect(...t){return this.__onEvent("select",{},...t),this}}const le=t=>new he(t);function ce(t){Vt.call(this,t,"focus",null,null)}function ue(t){Vt.call(this,t,"blur",null,null)}class me extends St{constructor(t){super(t),this.event=null,this.cache={prefixe:"",preventDefault:{focus:!1,blur:!1},paused:{focus:!1,blur:!1},stream:{enabled:{focus:!1,blur:!1},clear:{focus:!1,blur:!1},history:{focus:[],blur:[]}},callbacks:{focus:[],blur:[]}},this.__controller={focus:ce.bind(this),blur:ue.bind(this)}}onFocus(...t){return this.__onEvent("focus",{},...t),this}onBlur(...t){return this.__onEvent("blur",{},...t),this}}const pe=t=>new me(t);function de(t){Vt.call(this,t,"input",null,null)}function fe(t){Vt.call(this,t,"change",null,null)}class ge extends St{constructor(t){super(t),this.event=null,this.cache={prefixe:"",preventDefault:{input:!1,change:!1},paused:{input:!1,change:!1},stream:{enabled:{input:!1,change:!1},clear:{input:!1,change:!1},history:{input:[],change:[]}},callbacks:{input:[],change:[]}},this.__controller={input:de.bind(this),change:fe.bind(this)}}get value(){return this.Target.value}onInput(...t){return this.__onEvent("input",{},...t),this}onChange(...t){return this.__onEvent("change",{},...t),this}}const ye=t=>new ge(t);class xe{constructor(t=""){this.channel=new BroadcastChannel(t),this.EVENTS_DATAS_PAIRS=new Map,this.EVENTS_HANDLERS_PAIRS=new Map,this.LAST_RECEIVED_EVENT="",this.UUID=crypto.randomUUID(),this.SUBSCRIBERS=new Set([this.UUID])}get broadcast(){return this}emit(t,e){return this.EVENTS_DATAS_PAIRS.set(t,e),this.#s(t),this}on(t,e=console.log){return this.EVENTS_HANDLERS_PAIRS.set(t,e),this.#r(),this}#r(){return this.channel.onmessage=t=>{this.LAST_RECEIVED_EVENT=t.data.last_sended_event;const e=t.data.userId;this.SUBSCRIBERS.add(e);const s=t.data.EVENTS_DATAS_PAIRS.get(this.LAST_RECEIVED_EVENT),r=this.EVENTS_HANDLERS_PAIRS.get(this.LAST_RECEIVED_EVENT);s&&r&&r(s)},this}#s(t){return this.channel.postMessage({EVENTS_DATAS_PAIRS:this.EVENTS_DATAS_PAIRS,last_sended_event:t,userId:this.UUID}),this}close(){return this.channel.close(),this}}const be={Pointer:Nt,Key:Wt,Drag:Kt,Drop:Jt,Click:re,Clipboard:le,Focus:pe,Input:ye,Channel:t=>new xe(t),ExtractAll:function(){for(let t=0;t<Object.keys(this).length;t++)globalThis[Object.keys(this)[t]]=Object.values(this)[t];return this},RemoveAll:function(){for(let t=0;t<Object.keys(this).length;t++)delete globalThis[Object.keys(this)[t]];return this}};class we{constructor(t,e){this.target=t,this.contentRect=null,this.observer=new ResizeObserver((()=>{e(this)}))}get BoundingRect(){return this.target.element.getBoundingClientRect()}get width(){return this.BoundingRect.width}get height(){return this.BoundingRect.height}get top(){return this.BoundingRect.top}get bottom(){return this.BoundingRect.bottom}get right(){return this.BoundingRect.right}get left(){return this.BoundingRect.left}get x(){return this.BoundingRect.x}get y(){return this.boundingRect.y}start(){return this.observer.observe(this.target.element),this}stop(){return this}}class ve{constructor(t,e,{threshold:s=0,margin:r=0}={}){this.target=t,this.config={threshold:s,margin:r},this.observer=new IntersectionObserver((t=>{this.entrie=t[0],e(this)}),{threshold:this.threshold})}get ratio(){return this.entrie.intersectionRatio}get isIntersecting(){return this.entrie.isIntersecting}setThreshould(t){return this.config.threshold=t,this}setMargin(t){return t="number"==typeof t?t+"px":t,this.config.margin=t,this}start(){return this.observer.observe(this.target.element),this}stop(){return this}}class ke{constructor(t){var e;this.Target=document.body,"string"==typeof t&&(t=document.createElement(t)),this.element=t,Object.assign(this,Ot.call(this)),this.cache={isHidden:!1,isFrozzen:!1,transformMatrix:B([[0,0,0],[0,0,0],[1,1,0]]),style:(e={},new _t(e)),attributes:{},filters:{}},this.items=[],this.events={ptr:null,key:null,drag:null,drop:null,click:null,clipboard:null,focus:null},this.observer={resize:null,intersection:null},this.cache.style.linkTo(this),this.style({position:"relative"}),this.size("auto","auto")}get st(){return this.cache.style}get attr(){return this.cache.attributes}get evt(){}clone(){const t=new this.constructor,e=[...this.items];return{UI:t.append(...e),items:e}}get Width(){return this.element.getBoundingClientRect().width}get Height(){return this.element.getBoundingClientRect().height}get Top(){return this.element.getBoundingClientRect().top}get Right(){return this.element.getBoundingClientRect().right}get Bottom(){return this.element.getBoundingClientRect().bottom}get Left(){return this.element.getBoundingClientRect().left}freeze(t){return this.cache.isFrozzen=t,this}at(t){return this.items.at(t)}maintain(){for(let t=0;t<this.items.length;t++)Object.assign(this,{[[t]]:this.items[t]});return this.length=this.items.length,this}setTarget(t){return t instanceof ke&&(t=t.element),this.remove(),this.Target=t,this.render(),this}render(t=!0,e=this.Target){return e instanceof ke&&(e=e.element),this.Target=e,t?this.Target.appendChild(this.element):this.remove(),this}append(...t){if(this.cache.isFrozzen)return console.warn("You can't append new item to frozzen element"),this;for(let e=0;e<t.length;e++)["number","string"].includes(typeof t[e])&&(t[e]=Ae(t[e])),t[e]instanceof ke?(t[e].parent=this,this.element.appendChild(t[e].element),t[e].Target=this.element,this.items.push(t[e])):t[e]instanceof Object&&(t[e]?.style&&this.style(t[e]?.style),t[e]?.attr&&Object.entries(t[e].attr).forEach((t=>this.setAttribute(""+t[0],t[1]))));return this.maintain(),this}remove(...t){if(0==t.length)this.Target.children.length&&this.Target.removeChild(this.element);else{const e=t=>{"number"==typeof t&&(t=this.items[t]),t instanceof ke&&this.element.removeChild(t.element),this.items=this.items.filter((e=>e!==t))};for(let s=0;s<t.length;s++)e(t[s]);for(let t=0;t<this.items.length;t++)Object.assign(this,{[[t]]:this.items[t]})}return this}removeAfter(t=1){return setTimeout((()=>this.remove()),t),this}removeItem(...t){const e=t=>{t instanceof ke?this.element.removeChild(t.element):"number"==typeof t&&this.element.removeChild(this.element.children[t])};for(let s=0;s<t.length;s++)e(t[s]);for(let t=0;t<this.items.length;t++)Object.assign(this,{[[t]]:this.items[t]});return this}insertAt(t,...e){if(t>=this.element.children.length)this.append(...e);else for(let s=0;s<e.length;s++)["number","string"].includes(typeof e[s])&&(e[s]=Ae(e[s])),this.element.insertBefore(e[s].element,this.items[t].element),this.items.splice(t,0,e[s]);return this}setAttribute(t,e){return this.element.setAttribute(t,e),Object.assign(this.cache.attributes,Object.fromEntries([[t,e]])),this}removeAttribute(t){return this.element.setAttribute(t),this}setContentEditable(t=!0){return this.setAttribute("contenteditable",t),this}get children(){return[...this.element.children]}get cloneElement(){return this.element.cloneNode(!0)}get styleObject(){return Object.fromEntries(Object.entries(this.element.style).filter((t=>""!=t[1]&&"initial"!==t[1]&&isNaN(+t[0]))))}setClasses(...t){return this.setAttribute("class",t.join(" ")),this}get Classes(){const t=this.element.getAttribute("class");return null===t?[]:t.split(" ")}addClass(){}setId(t){return this.element.setAttribute("id",t),this}get Id(){return this.element.getAttribute("id")}forEach(t){return this.items.forEach(t),this}filter(t,e,s){return this.items.filter(t).forEach(e),this}filterByTextContent(t,e=!1){return this.items.map((t=>t.render())),this.items.filter((s=>{const r=s.element.textContent;return!(e?r===t:r.includes(t))})).map((t=>t.render(!1))),this}filterByClass(t){return this.items.map((t=>t.render())),this.items.filter((e=>!e.Classes.includes(t))).map((t=>t.render(!1))),this}sortByTextContent(t,e){let s=this.children;return s.filter((e=>!e.textContent.toLowerCase().includes(t.toLowerCase()))).map((t=>{t.style.display="none"})),s.filter((e=>e.textContent.toLowerCase().includes(t.toLowerCase()))).map(((t,s)=>t.style.display=e[s])),s.filter((t=>"none"!=t.style.display)),this}onPtrMove(...t){return this.events.ptr||(this.events.ptr=Nt(this)),this.events.ptr.onMove(...t),this}onPtrDown(...t){return this.events.ptr||(this.events.ptr=Nt(this)),this.events.ptr.onDown(...t),this}onPtrUp(...t){return this.events.ptr||(this.events.ptr=Nt(this)),this.events.ptr.onUp(...t),this}onPtrEnter(...t){return this.events.ptr||(this.events.ptr=Nt(this)),this.events.ptr.onEnter(...t),this}onPtrLeave(...t){return this.events.ptr||(this.events.ptr=Nt(this)),this.events.ptr.onLeave(...t),this}onPtrOut(...t){return this.events.ptr||(this.events.ptr=Nt(this)),this.events.ptr.onOut(...t),this}onKeyDown(...t){return this.events.key||(this.events.key=Wt(this)),this.events.key.onDown(...t),this}onKeyPress(...t){return this.events.key||(this.events.key=Wt(this)),this.events.key.onPress(...t),this}onKeyUp(...t){return this.events.key||(this.events.key=Wt(this)),this.events.key.onUp(...t),this}onKeysDown({keys:t=[],callback:e}={}){return this.events.key||(this.events.key=Wt(this)),this.events.key.handleSuccessifKeys({keys:t,callback:e}),this}onDragStart(...t){return this.events.drag||(this.events.drag=Kt(this)),this.events.drag.onStart(...t),this}onDrag(...t){return this.events.drag||(this.events.drag=Kt(this)),this.events.drag.onDrag(...t),this}onDragEnd(...t){return this.events.drag||(this.events.drag=Kt(this)),this.events.drag.onEnd(...t),this}onDrop(...t){return this.events.drop||(this.events.drop=Jt(this)),this.events.drop.onDrop(...t),this}onClick(...t){return this.events.click||(this.events.click=re(this)),this.events.click.onClick(...t),this}onDbClick(...t){return this.events.click||(this.events.click=re(this)),this.events.click.onDbClick(...t),this}onCopy(...t){return this.events.clipboard||(this.events.clipboard=le(this)),this.events.clipboard.onCopy(...t),this}onCut(...t){return this.events.clipboard||(this.events.clipboard=le(this)),this.events.clipboard.onCut(...t),this}onPaste(...t){return this.events.clipboard||(this.events.clipboard=le(this)),this.events.clipboard.onPaste(...t),this}onSelect(...t){return this.events.clipboard||(this.events.clipboard=le(this)),this.events.clipboard.onSelect(...t),this}onFocus(...t){return this.events.focus||(this.events.focus=pe(this)),this.events.focus.onFocus(...t),this}onBlur(...t){return this.events.focus||(this.events.focus=pe(this)),this.events.focus.onFocus(...t),this}WatchAttributes(){}WatchChildren(){}WatchSize(t){return this.observer.resize||(this.observer.resize=((t,e)=>new we(t,e))(this,t)),this.observer.resize.start(),this}WatchIntersection(t,e){return this.observer.intersection||(this.observer.intersection=((t,e,s)=>new ve(t,e,s))(this,t,e)),this.observer.intersection.start(),this}get Visible_area(){let t=this.element.getBoundingClientRect(),e=document.documentElement.clientHeight,s=document.documentElement.clientWidth,r=t.top>0&&t.top<e,n=t.bottom<e&&t.bottom>0,i=t.left>0&&t.left<s,a=t.right>0&&t.right<s;return{top:r,bottom:n,left:i,right:a,heightRatio:(t.height+t.y)/t.height,isVisible:r||n||a||i}}toggleSlide(){}scaleX(t,e=1){return this.style({transform:"scaleX("+t+")",transition:"all "+e+"s ease"}),this}scaleY(t,e=1){return this.style({transform:"scaleY("+t+")",transition:"all "+e+"s ease"}),this}skewX(t,e=1){return this.style({transform:"skewX("+t+"deg)",transition:"all "+e+"s ease"}),this}skewY(t,e=1){return this.style({transform:"skewY("+t+"deg)",transition:"all "+e+"s ease"}),this}skew(t,e,s=1){return this.style({transform:"skew("+t+"deg , "+e+"deg)",transition:"all "+s+"s ease"}),this}scale(t,e=t,s=1){return this.style({transform:"scale("+t+","+e+")",transition:"all "+s+"s ease"}),this}resize(t=0){switch(t){case 0:this.style({resize:"none"});break;case 1:this.style({resize:"horizontal"});break;case 2:this.style({resize:"vertical"});break;case 3:this.style({resize:"both"});break;default:this.style({resize:t})}return this}Glassmorphism(t="rgba(255,255,255,0.1)",e="1px"){return this.style({background:t,backdropFilter:e}),this}Neumorphism(t="50px",e="cyan",s="13px -13px 49px #5d8fac"){return this.style({borderRadius:t,background:e,boxShadow:s}),this}fullScreen(t=!0,e){return t?this.element.requestFullscreen(e):document.exitFullscreen(),this}toggleFullScreen(t){return document.fullscreenElement?document.exitFullscreen():this.element.requestFullscreen(t),this}resizeObserver(t){return new ResizeObserver((e=>t(e))).observe(this.element)}intersectionObserver(t,e="parent"){return"parent"==e?new IntersectionObserver((e=>t(e[0]))).observe(this.element):this.items.map((e=>e.intersectionObserver((e=>t(e)))))}intersectRatio(t){return new IntersectionObserver((e=>t(e[0].intersectionRatio))).observe(this.element)}get coords(){var t=this.element.getBoundingClientRect();return{parent:{cX:Math.floor(t.left+(t.right-t.left)/2),cY:Math.floor(t.top+(t.bottom-t.top)/2)}}}exportHTML(){}toPdf(){return"Install @ziko/jspdf"}}const Me={text:[],p:[],pre:[],h1:[],h2:[],h3:[],h4:[],h5:[],h6:[],br:[],hr:[],btn:[],ol:[],ul:[],image:[],video:[],audio:[],Article:[],Main:[],Section:[],Aside:[],Nav:[],Header:[],Footer:[],Flex:[],FlexMain:[],FlexNav:[],FlexHeader:[],FlexFooter:[],FlexSection:[],FLexArticle:[],FlexAside:[],Table:[],Svg:[],Canvas:[]};class Ee extends ke{constructor(...t){super(),this.element=document.createElement("span"),this.text="",this.addValue(...t),this.st.display("inline-block"),this.render()}clear(){return this.element.textContent="",this}get value(){return this.element.textContent}setValue(t="",e=!1){["string","number"].includes(typeof t)&&(this.text=""+t,this.text.includes("\n")&&(this.text=this.text.split("\n").map((t=>"<span>".concat(t,"</span></br>"))).join(""))),t instanceof s&&(this.text=""+t.UI()),e?this.element.innerHTML+=this.text:this.element.innerHTML=this.text,(t instanceof Array||t instanceof Set)&&(t instanceof Set&&(t=[...t]),this.addValue(...t))}addValue(...t){return t.map((t=>{this.setValue(" ",!0),this.setValue(t,!0)})),this}toggleValues(...t){let e=(t=t.map((t=>""+t))).indexOf(""+this.value);return-1!=e&&e!=t.length-1?this.setValue(t[e+1]):this.setValue(t[0]),this}}const Ae=(...t)=>{const e=new Ee(...t);return Me.text.push(e),e.cache.order=Me.text.length,e};class Ce extends ke{constructor(...t){super(),this.element=document.createElement("p"),this.addValue(...t),this.style({margin:0,padding:0}),this.render()}addValue(...t){for(let e=0;e<t.length;e++)"string"==typeof t[e]||"number"==typeof t[e]?(this.element.appendChild(document.createTextNode(t[e])),this.element.appendChild(document.createElement("br"))):t[e]instanceof ke?this.element.appendChild(t[e].element):t[e]instanceof s&&Ae(t.a+" + "+t.b+"i");return this}clear(){return this.element.childNodes.forEach((t=>t.remove())),this}setValue(...t){return this.clear(),this.addValue(...t),this}}class Te extends ke{constructor(t=1,e=""){super(),this.element=document.createElement("h"+t),this.element.textContent=e,this.render()}get value(){return this.element.innerText}setValue(t=""){this.element.innerText=t}addValue(t=""){return this.element.innerText+=t,this}}class Oe extends ke{constructor(t){super(t),this.render()}}class _e extends ke{constructor(){super(),this.element=document.createElement("br"),this.render(),delete this.append}}class Ie extends ke{constructor(){super(),this.element=document.createElement("hr"),this.render(),delete this.append}}class Ve extends ke{constructor(t){super(),this.element=document.createElement("a"),this.setHref(t),this.render()}setHref(t){this.element.href=t}}const Se=(t,...e)=>new Oe(t).append(...e);class je extends ke{constructor(t){super(),this.element=document.createElement("li"),this.append(t),this.render()}}class De extends ke{constructor(){super(),delete this.append}append(...t){for(let e=0;e<t.length;e++){let s=null;["string","number"].includes(typeof t[e])&&(t[e]=Ae(t[e])),t[e]instanceof ke&&(s=new je(t[e])),s.setTarget(this.element),this.items.push(s[0]),this.maintain()}}remove(...t){if(0==t.length)this.Target.children.length&&this.Target.removeChild(this.element);else{const e=t=>{"number"==typeof t&&(t=this.items[t]),t instanceof ke&&this.element.removeChild(t.parent.element),this.items=this.items.filter((e=>e!==t))};for(let s=0;s<t.length;s++)e(t[s]);for(let t=0;t<this.items.length;t++)Object.assign(this,{[[t]]:this.items[t]})}return this}insertAt(t,...e){if(t>=this.element.children.length)this.append(...e);else for(let s=0;s<e.length;s++){let r=null;["number","string"].includes(typeof e[s])&&(e[s]=Ae(e[s])),e[s]instanceof ke&&(r=new je(e[s])),this.element.insertBefore(r.element,this.items[t].parent.element),this.items.splice(t,0,e[s][0])}return this}filterByTextContent(t,e=!1){return this.items.map((t=>t.parent.render())),this.items.filter((s=>{const r=s.element.textContent;return!(e?r===t:r.includes(t))})).map((t=>t.parent.render(!1))),this}sortByTextContent(t=1){return this.items.map((t=>t.parent.render(!1))),this.sortedItems=this.items.sort(((e,s)=>t*e.element.textContent.localeCompare(s.element.textContent))),this.append(...this.sortedItems),this}filterByClass(t){return this.items.map((t=>t.parent.render(!0))),this.items.filter((e=>!e.Classes.includes(t))).map((t=>t.parent.render(!1))),this}delete(t){return[...this.element.children].indexOf(t)}push(){}pop(){}unshift(){}shift(){}sort(){}filter(){}slice(){}}class Re extends De{constructor(...t){super(),this.element=document.createElement("ol"),this.append(...t),this.render()}type(t=1){return this.element.setAttribute("type",t),this}start(t=1){return this.element.setAttribute("start",t),this}}class Fe extends De{constructor(...t){super(),this.element=document.createElement("ul"),this.append(...t),this.render()}}class Pe extends ke{constructor(t="button"){super(),this.element=document.createElement("button"),this.setValue(t),this.render(),this.st.cursor("pointer")}setValue(t){return t instanceof ke?t.setTarget(this.element):(this.element.appendChild(document.createTextNode("")),this.element.childNodes[0].data=t),this}get value(){return this.element.innerText}toggleValues(...t){let e=(t=t.map((t=>""+t))).indexOf(""+this.value);return-1!=e&&e!=t.length-1?this.setValue(t[e+1]):this.setValue(t[0]),this}}const Be=t=>new Pe(t);class ze extends ke{constructor(t=""){super(),this.element=document.createElement("option"),t instanceof Object&&"value"in t?(this.setValue(t.value),this.setText(t?.text??t.value)):this.setValue(t)}setValue(t=""){return this.element.value=t,this}setText(t=""){return t&&(this.element.textContent=t),this}}class Ne extends ke{constructor(){super(),this.element=document.createElement("textarea"),this.render()}get value(){return this.element.textContent}}class Le extends ke{constructor(t="",e){super(),this.element=document.createElement("input"),Object.assign(this.events,{input:null}),this.setValue(t),e&&this.linkDatalist(e),this.render()}onInput(...t){return this.events.input||(this.events.input=ye(this)),this.events.input.onInput(...t),this}onChange(...t){return this.events.input||(this.events.input=ye(this)),this.events.input.onChange(...t),this}linkDatalist(t){let e;if(t instanceof ts)e=t.Id;else if(t instanceof Array){const s=new ts(...t);e=s.Id,console.log(s)}else e=t;return this.element.setAttribute("list",e),this}get value(){return this.element.value}_setType(t){return this.element.type=t,this}setValue(t=""){return this.element.value=t,this}useState(t){return this.setValue(t),[{value:this.value},t=>this.setValue(t)]}setPlaceholder(t){return t&&(this.element.placeholder=t),this}get isValide(){return this.element.checkValidity()}setRequired(t=!0){return this.element.required=t,this}select(){return this.element.select(),this}copy(){return this.element.select(),document.execCommand("copy"),this}cut(){return this.element.select(),document.execCommand("cut"),this}accept(t){return this.element.accept=t,this}}class He extends Le{constructor(){super(),this._setType("search"),this.Length=0}onsearch(t){return this.element.addEventListener("search",(()=>t())),this}connect(...t){return this}displayLength(t){return this.element.addEventListener("keyup",(()=>t.setValue(this.Length))),this}}class Ue extends Le{constructor(t,e,s=1){super(),this._setType("number"),this.setMin(t).setMax(e).setStep(s),this.render()}get value(){return+this.element.value}setMin(t){return this.element.min=t,this}setMax(t){return this.element.max=t,this}setStep(t){return this.element.step=t,this}}class qe extends Ue{constructor(t=0,e=0,s=10,r=1){super(),this._setType("range"),this.setMin(e).setMax(s).setValue(t).setStep(r),this.render()}}class We extends Le{constructor(){super(),this._setType("color"),this.background(this.value),this.render(),this.onInput((()=>this.background(this.value)))}}class Xe extends Le{constructor(){super(),this._setType("password"),this.render()}}class $e extends Le{constructor(){super(),this._setType("email"),this.render()}}class Ye extends Le{constructor(){super(),this._setType("time"),this.render()}}class Ze extends Le{constructor(){super(),this._setType("date"),this.render()}}class Ge extends Le{constructor(){super(),this._setType("datetime-local"),this.render()}}class Qe extends Le{constructor(){super(),this._setType("checkbox"),this.cursor("pointer")}get checked(){return this.element.checked}check(t=!0){return this.element.checked=t,this}color(t){return this.element.style.accentColor=t,this}}class Ke extends Le{constructor(){super(),this._setType("radio"),this.cursor("pointer")}get checked(){return this.element.checked}check(t=!0){return this.element.checked=t,this}color(t){return this.element.style.accentColor=t,this}}class Je extends ke{constructor(t="File"){super(),this._aux_element=Be(t).setTarget(this.Target),this.element=document.createElement("input"),this.element.setAttribute("type","file"),this.element.setAttribute("accept","image"),this._aux_element.onClick((()=>this.element.click())),this.element.onChange=this.handleImage.bind(this)}handleImage(t){const e=new FileReader,s=new Image;e.onload=function(t){s.src=t.target.result,console.log(s.src)},e.readAsDataURL(t.target.files[0]),this.img=s}get value(){return this.img}render(t=!0){return t?this.Target.appendChild(this._aux_element.element):this.remove(),this}remove(){return this.Target.children.length&&this.Target.removeChild(this._aux_element.element),this}}class ts extends ke{constructor(...t){super(),this.element=document.createElement("datalist"),this.addOptions(...t).setId("ziko-datalist-id"+crypto.randomUUID().slice(8,18)),this.render()}addOptions(...t){return t.map((t=>this.append(new ze(t)))),this}}class es extends ke{constructor(){super(),this.element=document.createElement("select"),this.render()}addOptions(...t){return t.map((t=>this.append(new ze(t)))),this}}class ss extends ke{constructor(t="",e="100%",s="50vh"){super(),this.element=document.createElement("video"),"VIDEO"===t.nodeName?this.element.setAttribute("src",t.src):this.element.setAttribute("src",t),"number"==typeof e&&(e+="%"),"number"==typeof s&&(s+="%"),this.style({width:e,height:s}),this.render()}controls(t=!0){return this.element.controls=t,this}play(){return this.element.play(),this}pause(){return this.element.pause(),this}poster(t=""){return this.element.poster=t,this}PIP(t){return this.element.requestPictureInPicture(t),this}}class rs extends ss{constructor(){super(),this.element.setAttribute("src",""),this.constraints={audio:!0,video:{width:1280,height:720}}}start(){return navigator.mediaDevices.getUserMedia(this.constraints).then((t=>{this.element.srcObject=t,this.element.onloadedmetadata=()=>{this.element.play()}})).catch((function(t){console.log(t.name+": "+t.message)})),this}}class ns extends ke{constructor(t,e,s){super(),this.element=document.createElement("img"),this.value=t,"IMG"===t.nodeName?this.element.setAttribute("src",t.src):this.element.setAttribute("src",t),"number"==typeof e&&(e+="%"),"number"==typeof s&&(s+="%"),this.style({border:"1px solid black",width:e,height:s}),this.render()}updateSrc(t){return this.value=t,this.element.src=t,this}toggleSrc(...t){let e=(t=t.map((t=>""+t))).indexOf(""+this.value);return-1!=e&&e!=t.length-1?this.updateSrc(t[e+1]):this.updateSrc(t[0]),this}alt(t){return this.element.alt=t,this}}class is extends ke{constructor(t){super(),this.element=document.createElement("audio"),this.element.setAttribute("src",t),this.render(),this.controls()}controls(t=!0){return this.element.controls=t,this}play(){return this.element.play(),this}pause(){return this.element.pause(),this}}class as extends ke{constructor(t,e){super(),this.element=document.createElement("figure"),this.img=t.width("100%").element,this.caption=document.createElement("figcaption"),this.caption.append(e.element),this.element.append(this.img),this.element.append(this.caption),this.render()}}const os=(t,e,s)=>new ns(t,e,s),hs=t=>new is(t),ls=(t,e)=>new as(t,e),cs=(t,e,s)=>new ss(t,e,s);function us(t){return 1==t?this.style({flexDirection:"column"}):-1==t&&this.style({flexDirection:"column-reverse"}),this}function ms(t){return 1==t?this.style({flexDirection:"row"}):-1==t&&this.style({flexDirection:"row-reverse"}),this}function ps(t){return"number"==typeof t&&(t=["flex-start","center","flex-end"][t+1]),t}function ds(t){return ps(-t)}class fs extends ke{constructor(t="div",e="50vw",s="50vh"){super(),this.element=document.createElement(t),this.direction="cols","number"==typeof e&&(e+="%"),"number"==typeof s&&(s+="%"),this.style({border:"1px solid black",width:e,height:s}),this.style({display:"flex"}),this.render()}resp(t,e=!0){return this.wrap(e),this.element.clientWidth<t?this.vertical():this.horizontal(),this}setSpaceAround(){return this.style({justifyContent:"space-around"}),this}setSpaceBetween(){return this.style({justifyContent:"space-between"}),this}setBaseline(){return this.style({alignItems:"baseline"}),this}gap(t){return"row"===this.direction?this.style({columnGap:t}):"column"===this.direction&&this.style({rowGap:t}),this}wrap(t="wrap"){return this.style({flexWrap:"string"==typeof t?t:["no-wrap","wrap","wrap-reverse"][+t]}),this}_justifyContent(t="center"){return this.style({justifyContent:t}),this}vertical(t,e,s=1){return console.log(111111111111),us.call(this,s),this.style({alignItems:"number"==typeof t?ps.call(this,t):t,justifyContent:"number"==typeof e?ds.call(this,e):e}),this}horizontal(t,e,s=1){return ms.call(this,s),this.style({alignItems:"number"==typeof e?ds.call(this,e):e,justifyContent:"number"==typeof t?ps.call(this,t):t}),this}show(){return this.isHidden=!1,this.style({display:"flex"}),this}}class gs extends fs{constructor(...t){super(),this.style({position:"relative",overflow:"hidden",touchAction:"none",userSelect:"none"}),this.horizontal("space-around",0),this.track=Section(...t).style({display:"inline-flex"}),this.track.size(100*this.track.children.length+"vw"),this.track.setTarget(this),this.track.items.map((t=>t.style({pointerEvents:"none",margin:"auto 10px"}))),this.x0=null,this.tx=0,this.onPtrMove((t=>{if(t.isDown){let e=t.event.pageX-this.x0;this.track.translateX(this.tx+e,0)}})),this.onPtrDown((t=>{console.log(t.event),this.x0=t.event.pageX;const e=window.getComputedStyle(this.track.element).getPropertyValue("transform");"none"!==e&&(this.tx=+e.split(",")[4])})),this.onPtrUp((t=>console.log(t.isDown))),this.onPtrLeave((t=>{}))}}class ys extends fs{constructor(){super()}addSection(){const t=Section().style({width:"80%",height:"50px",margin:"5px 0px",border:"1px red solid"});return this.append(t),this}}class xs extends ke{constructor(t="div",e="50vw",s="50vh"){super(),this.element=document.createElement(t),this.direction="cols","number"==typeof e&&(e+="%"),"number"==typeof s&&(s+="%"),this.style({border:"1px solid black",width:e,height:s}),this.style({display:"grid"}),this.render()}columns(t){let e="";for(let s=0;s<t;s++)e=e.concat(" auto");return this.#n(e),this}#n(t="auto auto"){return this.style({gridTemplateColumns:t}),this}gap(t=10,e=t){return"number"==typeof t&&(t+="px"),"number"==typeof e&&(e+="px"),this.style({gridColumnGap:t,gridRowGap:e}),this}}class bs extends ke{constructor(){super(),this.element=document.createElement("main"),this.render()}}class ws extends ke{constructor(){super(),this.element=document.createElement("header"),this.render()}}class vs extends ke{constructor(){super(),this.element=document.createElement("nav"),this.render()}}class ks extends ke{constructor(){super(),this.element=document.createElement("section"),this.style({position:"relative"}),this.render()}}class Ms extends ke{constructor(){super(),this.element=document.createElement("article"),this.render()}}class Es extends ke{constructor(){super(),this.element=document.createElement("aside"),this.render()}}class As extends ke{constructor(){super(),this.element=document.createElement("footer"),this.render()}}class Cs extends ke{constructor(...t){super(),this.element=document.createElement("Tr"),this.append(...t)}}class Ts extends ke{constructor(...t){super(),this.element=document.createElement("Td"),this.append(...t)}}class Os extends ke{constructor(...t){super(),this.element=document.createElement("Tbody"),this.append(...t)}}class _s extends ke{constructor(t){super(),this.element=document.createElement("Caption"),this.append(t)}}const Is=(...t)=>(t=t.map((t=>(t instanceof ke||(t=Ae(t)),t))),new Ts(...t)),Vs=t=>new _s(t),Ss=t=>{var e=new Array(t.rows).fill(null).map((()=>((...t)=>new Cs(...t))())),s=t.arr.map((t=>t.map((()=>null))));for(let r=0;r<s.length;r++)for(let n=0;n<s[0].length;n++)s[r][n]=Is(t.arr[r][n]),e[r].append(s[r][n]);return e};class js extends ke{constructor(t=B(0,0)){super(),this.element=document.createElement("table"),this.fromMatrix(t),this.structure={caption:null,head:null,body:0,foot:null},this.render()}setCaption(t){return this.tCaption=Vs(t),this.append(this.tCaption),this}removeCaption(){return this.removeItem(...this.items.filter((t=>t instanceof _s))),this}setHeader(...t){return this.tHead=((...t)=>new(t=t.map((t=>(t instanceof ke||(t=Is(t)),t))))(...UI))(...t),this.append(this.tHead),this}removeHeader(){return this.removeItem(...this.items.filter((t=>t instanceof _s))),this}setFooter(t){return this.tCaption=Vs(t),this.append(this.tCaption),this}removeFooter(){return this.removeItem(...this.items.filter((t=>t instanceof _s))),this}fromMatrix(t){return this.bodyMatrix=t instanceof Array?B(t):t,this?.tbody?.items?.length&&this.tbody.remove(),this.tbody=((...t)=>new Os(...t))(),this.append(this.tbody),this.tbody.append(...Ss(this.bodyMatrix)),this}transpose(){return this.fromMatrix(this.bodyMatrix.T),this}hstack(t){return t instanceof js&&(t=t.bodyMatrix),this.fromMatrix(this.bodyMatrix.clone.hstack(t)),this}vstack(t){return t instanceof js&&(t=t.bodyMatrix),this.fromMatrix(this.bodyMatrix.clone.vstack(t)),this}slice(t=0,e=0,s=this.bodyMatrix.rows-1,r=this.bodyMatrix.cols-1){return this.fromMatrix(this.bodyMatrix.slice(t,e,s,r)),this}sortByCols(t,e={type:"num",order:"asc"}){return this.fromMatrix(this.bodyMatrix.clone.sortTable(t,e)),this}sortByRows(t,e={type:"num",order:"asc"}){return this.fromMatrix(this.bodyMatrix.T.clone.sortTable(t,e).T),this}filterByRows(t){return this.fromMatrix(this.bodyMatrix.clone.filterByRows(t)),this}filterByCols(t){return this.fromMatrix(this.bodyMatrix.clone.filterByCols(t)),this}}const Ds={ZikoHtml:Se,text:Ae,p:(...t)=>{const e=(new Ce).append(...t);return Me.p.push(e),e.cache.order=Me.p.length,e},h1:(t="")=>{const e=new Te(1,t);return Me.h1.push(e),e.cache.order=Me.text.length,e},h2:(t="")=>{const e=new Te(2,t);return Me.h2.push(e),e.cache.order=Me.text.length,e},h3:(t="")=>{const e=new Te(3,t);return Me.h3.push(e),e.cache.order=Me.text.length,e},h4:(t="")=>{const e=new Te(4,t);return Me.h4.push(e),e.cache.order=Me.text.length,e},h5:(t="")=>{const e=new Te(5,t);return Me.h5.push(e),e.cache.order=Me.text.length,e},h6:(t="")=>{const e=new Te(6,t);return Me.h6.push(e),e.cache.order=Me.text.length,e},btn:Be,br:()=>new _e,hr:()=>new Ie,brs:(t=1)=>new Array(t).fill(new _e),hrs:(t=1)=>new Array(t).fill(new Ie),link:(t,...e)=>new Ve(t).append(...e),ol:(...t)=>new Re(...t),ul:(...t)=>new Fe(...t),input:(t,e)=>{if(t instanceof Object){const{datalist:e,placeholder:s}=t;return t=t.value??"",new Le(t,e).setPlaceholder(s)}return new Le(t,e)},search:(...t)=>(new He).connect(...t),slider:(t,e,s,r)=>{if(t instanceof Object){const{min:e=0,max:s=10,step:r=1}=t;return new qe(t=t?.value??5,e,s,r)}return new qe(t,e,s,r)},checkbox:()=>new Qe,radio:()=>new Ke,datalist:(...t)=>new ts(...t),inputNumber:(t,e,s)=>{if(t instanceof Object){const{value:e,max:s=10,step:r=1,placeholder:n=""}=t;return new qe(t=t?.min??0,s,r).setValue(e).setPlaceholder(n)}return new Ue(t,e,s)},inputColor:()=>new We,inputDate:()=>new Ze,inputDateTime:()=>new Ge,inputEmail:()=>new $e,inputImage:t=>new Je(t),inputPassword:()=>new Xe,inputTime:()=>new Ye,select:()=>new es,textarea:()=>new Ne,inputCamera:()=>new rs,image:os,video:cs,audio:hs,figure:ls,Flex:(...t)=>new fs("div").append(...t),Carousel:(...t)=>new gs(...t),Grid:(...t)=>new xs("div").append(...t),Header:(...t)=>(new ws).append(...t),FlexHeader:(...t)=>new fs("header").append(...t),Main:(...t)=>(new bs).append(...t),FlexMain:(...t)=>new fs("main").append(...t),Section:(...t)=>(new ks).append(...t),FlexSection:(...t)=>new fs("section").append(...t),Article:(...t)=>(new Ms).append(...t),FlexArticle:(...t)=>new fs("article").append(...t),Aside:(...t)=>(new Es).append(...t),FlexAside:(...t)=>new fs("aside").append(...t),Nav:(...t)=>(new vs).append(...t),FlexNav:(...t)=>new fs("nav").append(...t),Footer:(...t)=>(new As).append(...t),FlexFooter:(...t)=>new fs("footer").append(...t),Table:t=>new js(t),Notebook:()=>new ys,ExtractAll:function(){for(let t=0;t<Object.keys(this).length;t++)globalThis[Object.keys(this)[t]]=Object.values(this)[t];return this},RemoveAll:function(){for(let t=0;t<Object.keys(this).length;t++)delete globalThis[Object.keys(this)[t]];return this}};class Rs{constructor(t,{fps:e,step:s,t:r=[0,null],start:n=!0}={}){this.callback=t,this.cache={isRunning:!1,animationId:null,startTime:null,step:s,fps:e,t:r,started:n},this.adjust(),this.i=0}adjust(){if(this.cache.step&&this.cache.fps&&(console.warn(`Fps will be adjusted from ${this.cache.fps} to ${1e3/this.cache.step} to ensure a smoother animation`),this.cache.fps=1e3/this.cache.step),this.cache.started){const t=this.cache.t;t[0]?this.startAfter(t[0]):this.start(),t[1]&&this.stopAfter(t[1])}return this}get TIME_STEP(){return this.cache.step?this.cache.step:1e3/this.cache.fps}start(){return this.cache.isRunning||(this.i=0,this.cache.isRunning=!0,this.cache.startTime=Date.now(),this.animate()),this}pause(){return this.cache.isRunning&&(clearTimeout(this.cache.animationId),this.cache.isRunning=!1),this}stop(){return this.pause(),this.i=0,this}resume(){return this.cache.isRunning=!0,this.animate(),this}startAfter(t=1e3){return setTimeout(this.start.bind(this),t),this}stopAfter(t=1e3){return setTimeout(this.stop.bind(this),t),this}animate=()=>{if(this.cache.isRunning){const t=Date.now(),e=t-this.cache.startTime;e>this.TIME_STEP&&(this.callback(this),this.i++,this.cache.startTime=t-e%this.TIME_STEP),this.cache.animationId=setTimeout(this.animate,0)}}}const Fs=(t,e)=>new Rs(t,e),Ps={Linear:function(t){return t},InSin:t=>1-Math.cos(t*Math.PI/2),OutSin:t=>Math.sin(t*Math.PI/2),InOutSin:t=>-(Math.cos(Math.PI*t)-1)/2,InQuad:t=>t**2,OutQuad:t=>1-Math.pow(1-t,2),InOutQuad:t=>t<.5?2*Math.pow(t,2):1-Math.pow(-2*t+2,2)/2,InCubic:t=>t**3,OutCubic:t=>1-Math.pow(1-t,3),InOutCubic:t=>t<.5?4*Math.pow(t,3):1-Math.pow(-2*t+2,3)/2,InQuart:t=>t**4,OutQuart:t=>1-Math.pow(1-t,4),InOutQuart:t=>t<.5?8*Math.pow(t,4):1-Math.pow(-2*t+2,4)/2,InQuint:t=>t**5,OutQuint:t=>1-Math.pow(1-t,5),InOutQuint:t=>t<.5?16*Math.pow(t,5):1-Math.pow(-2*t+2,5)/2,InExpo:t=>0===t?0:Math.pow(2,10*t-10),OutExpo:t=>1===t?1:1-Math.pow(2,-10*t),InOutExpo:t=>0===t?0:1===t?1:t<.5?Math.pow(2,20*t-10)/2:(2-Math.pow(2,-20*t+10))/2,InCirc:t=>1-Math.sqrt(1-Math.pow(t,2)),OutCirc:t=>Math.sqrt(1-Math.pow(t-1,2)),InOutCic:t=>t<.5?(1-Math.sqrt(1-Math.pow(2*t,2)))/2:(Math.sqrt(1-Math.pow(-2*t+2,2))+1)/2,Arc:t=>1-Math.sin(Math.acos(t)),Back:t=>Math.pow(t,2)*(2*t-1),Elastic:t=>-2*Math.pow(2,10*(t-1))*Math.cos(20*Math.PI*t/3*t),InBack(t){const e=1.70158;return 2.70158*Math.pow(t,3)-e*t**2},OutBack(t){const e=1.70158;return 1+2.70158*Math.pow(t-1,3)+e*Math.pow(t-1,2)},InOutBack(t){const e=2.5949095;return t<.5?Math.pow(2*t,2)*(7.189819*t-e)/2:(Math.pow(2*t-2,2)*((e+1)*(2*t-2)+e)+2)/2},InElastic(t){const e=2*Math.PI/3;return 0===t?0:1===t?1:-Math.pow(2,10*t-10)*Math.sin((10*t-10.75)*e)},OutElastic(t){const e=2*Math.PI/3;return 0===t?0:1===t?1:Math.pow(2,-10*t)*Math.sin((10*t-.75)*e)+1},InOutElastic(t){const e=2*Math.PI/4.5;return 0===t?0:1===t?1:t<.5?-Math.pow(2,20*t-10)*Math.sin((20*t-11.125)*e)/2:Math.pow(2,-20*t+10)*Math.sin((20*t-11.125)*e)/2+1},InBounce:t=>1-Ps.OutBounce(1-t),OutBounce(t){const e=7.5625,s=2.75;return t<1/s?e*t*t:t<2/s?e*(t-=1.5/s)*t+.75:t<2.5/s?e*(t-=2.25/s)*t+.9375:e*(t-=2.625/s)*t+.984375},InOutBounce:t=>t<.5?(1-Ps.OutBounce(1-2*t))/2:(1+Ps.OutBounce(2*t-1))/2},Bs=(t,e=1e3)=>(...s)=>setTimeout((()=>t(...s)),e),zs=(t,e)=>{let s=0;return(...r)=>{const n=(new Date).getTime();n-s<e||(s=n,t(...r))}},Ns=t=>{const e=Date.now(),s=performance.memory.usedJSHeapSize,r=t();return{elapsedTime:Date.now()-e,usedMemory:performance.memory.usedJSHeapSize-s,result:r}},Ls=t=>new Promise((e=>{if(t.element)return e(t.element);const s=new MutationObserver((()=>{t.element&&(e(t.element),s.disconnect())}));s.observe(document.body,{childList:!0,subtree:!0})})),Hs=(t,e=2e3)=>{const s=Date.now();for(;Date.now()-s<e;)if(t.element)return t.element},Us=t=>new Promise((e=>setTimeout(e,t))),qs=t=>{console.time("timeTaken");const e=t();return console.timeEnd("timeTaken"),e};class Ws{constructor(t,e){this.cache={isRunning:!1,AnimationId:null,ease:e},this.t=0,this.tx=0,this.ty=0,this.i=0,this.step=50,this.duration=3e3,this.callback=t}#i(){this.t+=this.step,this.i++,this.tx=nt(this.t,0,this.duration,0,1),this.ty=this.cache.ease(this.tx),this.callback(this),this.t>=this.duration&&(clearInterval(this.cache.AnimationId),this.cache.isRunning=!1)}start(){return this.cache.isRunning=!0,this.cache.AnimationId=setInterval(this.#i.bind(this),this.step),this}stop(){}clear(){}stream(){}}const Xs=(t,e=Ps.Linear)=>new Ws(t,e),$s={wait:Us,timeTaken:qs,throttle:zs,debounce:Bs,Ease:Ps,time_memory_Taken:Ns,loop:Fs,animation:Xs,waitForUIElm:Ls,waitForUIElmSync:Hs,ExtractAll:function(){for(let t=0;t<Object.keys(this).length;t++)globalThis[Object.keys(this)[t]]=Object.values(this)[t];return this},RemoveAll:function(){for(let t=0;t<Object.keys(this).length;t++)delete globalThis[Object.keys(this)[t]];return this}};function Ys(t){const e={type:t.nodeName,attributes:{},children:[]};for(let s=0;s<t.attributes.length;s++){const r=t.attributes[s];e.attributes[r.name]=r.value}for(let s=0;s<t.childNodes.length;s++){const r=t.childNodes[s];r.nodeType===Node.ELEMENT_NODE?e.children.push(Ys(r)):r.nodeType===Node.TEXT_NODE&&(e.text=r.textContent.trim())}return e}const Zs={preload:t=>{const e=new XMLHttpRequest;if(e.open("GET",t,!1),e.send(),200===e.status)return e.responseText;throw new Error(`Failed to fetch data from ${t}. Status: ${e.status}`)},parseXML:function(t){return Ys((new DOMParser).parseFromString(t,"text/xml").documentElement)},ExtractAll:function(){for(let t=0;t<Object.keys(this).length;t++)globalThis[Object.keys(this)[t]]=Object.values(this)[t];return this},RemoveAll:function(){for(let t=0;t<Object.keys(this).length;t++)delete globalThis[Object.keys(this)[t]];return this}};class Gs{color({stroke:t,fill:e}){return this.element.setAttribute("stroke",t),this.element.setAttribute("fill",e),this}fill(t="none"){return this.element.setAttribute("fill",t),this}stroke(t="none",e){return this.element.setAttribute("stroke",t),e&&this.strokeWidth(e),this}strokeWidth(t=1){return this.element.setAttribute("stroke-width",t),this}opacity(t=1){return this.element.setAttribute("opacity",t),this}}class Qs extends Gs{constructor(t,e,s,r,n=!0){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","rect"),this.setX(t).setY(e).width(s).height(r),this.rx=this.x+this.w/2,this.ty=this.y+this.h/2}setX(t){return this.element.x.baseVal.value=t,this.x=t,this}setY(t){return this.element.y.baseVal.value=t,this.y=t,this}r(t,e){return this.rx=t,this.ry=e,this.setX(this.rx-this.w/2),this.setY(this.ry-this.h/2),this}width(t){return this.element.width.baseVal.value=t,this.w=t,this}height(t){return this.element.height.baseVal.value=t,this.h=t,this}}const Ks=(t,e,s,r,n)=>new Qs(t,e,s,r,n);class Js extends Gs{constructor(t,e,s){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","circle"),this.cx(t).cy(e).r(s)}cx(t){return this.element.cx.baseVal.value=t,this}cy(t){return this.element.cy.baseVal.value=t,this}r(t){return this.element.r.baseVal.value=t,this}get R(){return this.element.r.baseVal.value}get Cx(){return this.element.cx.baseVal.value}get Cy(){return this.element.cy.baseVal.value}}const tr=(t,e,s)=>new Js(t,e,s);class er extends Gs{constructor(t,e,s,r){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","ellipse"),this.cx(t).cy(e).rx(s).ry(r)}cx(t){return this.element.cx.baseVal.value=t,this}cy(t){return this.element.cy.baseVal.value=t,this}rx(t){return this.element.rx.baseVal.value=t,this}ry(t){return this.element.ry.baseVal.value=t,this}}const sr=(t,e,s,r)=>new er(t,e,s,r);class rr extends Gs{constructor(t,e,s,r){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","line"),this.x1(t).y1(e).x2(s).y2(r).stroke("black")}x1(t){return this.element.x1.baseVal.value=t,this}y1(t){return this.element.y1.baseVal.value=t,this}x2(t){return this.element.x2.baseVal.value=t,this}y2(t){return this.element.y2.baseVal.value=t,this}}const nr=(t,e,s,r)=>new rr(t,e,s,r);class ir extends Gs{constructor(t=[],e=[]){super(),this.X=t,this.Y=e,this.element=document.createElementNS("http://www.w3.org/2000/svg","polygon"),this.element.setAttribute("points","")}addPoint(t,e){let s=this.element.parentElement.createSVGPoint();return s.x=t,s.y=e,this.element.points.appendItem(s),this}addPoints(t,e){for(let s=0;s<t.length;s++){let r=this.element.parentElement.createSVGPoint();r.x=t[s],r.y=e[s],this.element.points.appendItem(r)}return this}}const ar=(t,e)=>new ir(t,e);class or extends Gs{constructor(t="",e="100%",s="100%",r=0,n=0){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","image"),this.setSrc(t).width(e).height(s).x(r).y(n)}x(t){return this.element.x.baseVal.value=t,this}y(t){return this.element.y.baseVal.value=t,this}width(t){return this.element.setAttribute("width",t),this}height(t){return this.element.setAttribute("height",t),this}setSrc(t=""){return this.element.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href",t),this}}const hr=(t,e,s,r,n)=>new or(t,e,s,r,n);class lr extends Gs{constructor(t,e,s){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","text"),this.setText(t),this.x(e).y(s)}x(t){return this.element.setAttribute("x",t),this}y(t){return this.element.setAttribute("y",t),this}setText(t=""){return this.element.textContent=t,this}}const cr=(t,e,s)=>new lr(t,e,s);class ur extends Gs{constructor(...t){super(),this.items=[],this.element=document.createElementNS("http://www.w3.org/2000/svg","g"),this.add(...t)}add(...t){for(let e=0;e<t.length;e++)this.element.appendChild(t[e].element),this.items.push(t[e]);return 1===t.length?t[0]:t}remove(...t){for(let e=0;e<t.length;e++)this.element.removeChild(t[e].element),this.items=this.items.filter((e=>!t));return this}}const mr=(...t)=>new ur(...t);class pr extends ke{constructor(t=360,e=300){super(),this.element=document.createElementNS("http://www.w3.org/2000/svg","svg"),this.setAttribute("width",t),this.setAttribute("height",e),this.style({border:"1px black solid"}),this.render()}view(t,e,s,r){let n=Math.abs(s-t),i=Math.abs(r-e);return this.element.setAttribute("viewBox",[t,e,n,i].join(" ")),this}add(...t){for(let e=0;e<t.length;e++)this.element.appendChild(t[e].element),this.items.push(t[e]);return 1===t.length?t[0]:t}remove(...t){for(let e=0;e<t.length;e++)this.element.removeChild(t[e].element),this.items=this.items.filter((e=>!t));return this}text(t,e,s){let r=cr(t,e,s);return this.element.appendChild(r.element),r.x(e-r.element.getComputedTextLength()/2),r}rect(t,e,s,r){let n=Ks(t,e,s,r);return this.add(n),n}line(t,e,s,r){let n=nr(t,e,s,r);return this.element.appendChild(n.element),n}circle(t,e,s){let r=tr(t,e,s);return this.element.appendChild(r.element),r}ellipse(t,e,s,r){let n=sr(t,e,s,r);return this.element.appendChild(n.element),n}polygon(t,e){let s=ar(t,e);return this.element.appendChild(s.element),s.addPoints(t,e),s}image(t,e,s,r,n){let i=hr(t,e,s,r,n);return this.element.appendChild(i.element),i}mask(){}toString(){return(new XMLSerializer).serializeToString(this.element)}btoa(){return btoa(this.toString())}toImg(){return"data:image/svg+xml;base64,"+this.btoa()}toImg2(){return"data:image/svg+xml;charset=utf8,"+this.toString().replaceAll("<","%3C").replaceAll(">","%3E").replaceAll("#","%23").replaceAll('"',"'")}}const dr=(t,e)=>new pr(t,e);class fr extends ke{constructor(t,e){super(),this.element=document.createElement("canvas"),this.ctx=this.element.getContext("2d"),this.style({border:"1px red solid"}),this.transformMatrix=new P([[1,0,0],[0,1,0],[0,0,1]]),this.axisMatrix=new P([[-10,-10],[10,10]]),this.render(),this.WatchSize((()=>Paint.adjust()))}get Width(){return this.element.width}get Height(){return this.element.height}get Xmin(){return this.axisMatrix[0][0]}get Ymin(){return this.axisMatrix[0][1]}get Xmax(){return this.axisMatrix[1][0]}get Ymax(){return this.axisMatrix[1][1]}get ImageData(){return this.ctx.getImageData(0,0,c.Width,c.Height)}draw(t=!0){return t?(this.clear(),this.items.forEach((t=>{t.parent=this,t.draw(this.ctx)}))):(this.items.at(-1).parent=this,this.items.at(-1).draw(this.ctx)),this.maintain(),this}applyTransformMatrix(){return this.ctx.setTransform(this.transformMatrix[0][0],this.transformMatrix[1][0],this.transformMatrix[0][1],this.transformMatrix[1][1],this.transformMatrix[0][2],this.transformMatrix[1][2]),this}size(t,e){return this.style({width:t,height:e}),this.lineWidth(),this.view(this.axisMatrix[0][0],this.axisMatrix[0][1],this.axisMatrix[1][0],this.axisMatrix[1][1]),this}adjust(){return this.element.width=this.element.getBoundingClientRect().width,this.element.height=this.element.getBoundingClientRect().height,this.view(this.axisMatrix[0][0],this.axisMatrix[0][1],this.axisMatrix[1][0],this.axisMatrix[1][1]),this}view(t,e,s,r){return this.transformMatrix[0][0]=this.Width/(s-t),this.transformMatrix[1][1]=-this.Height/(r-e),this.transformMatrix[0][2]=this.Width/2,this.transformMatrix[1][2]=this.Height/2,this.axisMatrix=new P([[t,e],[s,r]]),this.applyTransformMatrix(),this.clear(),this.lineWidth(1),this.draw(),this}reset(){return this.ctx.setTransform(1,0,0,0,0,0),this}append(t){return this.items.push(t),this.draw(!1),this}background(t){this.ctx.fillStyle=t,this.ctx.setTransform(1,0,0,1,0,0),this.ctx.fillRect(0,0,this.Width,this.Height),this.applyTransformMatrix(),this.draw()}lineWidth(t){return this.ctx.lineWidth=t/this.transformMatrix[0][0],this}ImageData(t=0,e=0,s=this.Width,r=this.Height){return this.ctx.getImageData(t,e,s,r)}clear(){return this.ctx.setTransform(1,0,0,1,0,0),this.ctx.clearRect(0,0,this.Width,this.Height),this.applyTransformMatrix(),this}clone(){console.log(this.Width);const t=new fr;return t.items=this.items,t.transformMatrix=this.transformMatrix,t.axisMatrix=this.axisMatrix,Object.assign(t.cache,{...this.cache}),this.size(element.style.width,element.style.width),this.applyTransformMatrix(),this.draw(),this.adjust(),t}toImage(){return this.img=document.createElement("img"),this.img.src=this.element.toDataURL("image/png"),this}toBlob(){this.element.toBlob((function(t){var e=document.createElement("img"),s=URL.createObjectURL(t);e.onload=function(){URL.revokeObjectURL(s)},e.src=s,console.log(e)}))}zoomIn(){}zoomOut(){}undo(t){}redo(t){}stream(){}}const gr=(t,e)=>new fr(t,e);class yr{constructor(t,e){this.parent=null,this.position={x:t,y:e},this.cache={interact:" avoid redraw",config:{draggable:!1,selected:!1,highlighted:!1,rendered:!1},style:{normal:{strokeEnabled:!0,fillEnabled:!1,strokeColor:"#111111",fillColor:"#777777"},highlighted:{strokeEnabled:!0,fillEnabled:!1,strokeColor:null,fillColor:null}}},this.history={position:[],styles:[]},this.render()}get px(){return(this.position.x??0)+(this.parent?.position?.x??0)}get py(){return(this.position.y??0)+(this.parent?.position?.y??0)}isIntersectedWith(){}isInStroke(t,e){let s;return this.parent&&(this.parent.ctx.setTransform(1,0,0,1,0,0),s=this.parent.ctx.isPointInStroke(this.path,t,e),this.parent.applyTransformMatrix()),s}isInPath(t,e){let s;return this.parent&&(this.parent.ctx.setTransform(1,0,0,1,0,0),s=this.parent.ctx.isPointInPath(this.path,t,e),this.parent.applyTransformMatrix()),s}posX(t){return this.position.x=t,this.parent&&this.parent.draw(),this}posY(t){return this.position.y=t,this.parent&&this.parent.draw(),this}color({stroke:t=this.cache.style.normal.strokeColor,fill:e=this.cache.style.normal.fillColor}={stroke:t,fill:e}){return this.cache.style.normal.strokeColor=t,this.cache.style.normal.fillColor=e,this.parent&&this.parent.draw(),this}translate(t=0,e=0){this.position.x+=t,this.position.y+=e,this.parent&&this.parent.draw()}applyNormalStyle(t){return t.strokeStyle=this.cache.style.normal.strokeColor,t.fillStyle=this.cache.style.normal.fillColor,this}applyHighlightedStyle(t){return t.strokeStyle=this.cache.style.highlighted.strokeColor,t.fillStyle=this.cache.style.highlighted.fillColor,this}stroke(t=this.cache.style.normal.strokeColor,e=!0){return this.cache.style.normal.strokeEnabled=e,this.cache.style.normal.strokeColor=t,this.parent&&this.parent.draw(),this}fill(t=this.cache.style.normal.fillColor,e=!0){return this.cache.style.normal.fillEnabled=e,this.cache.style.normal.filleColor=t,this.parent&&this.parent.draw(),this}render(t=!0){return this.cache.config.rendered=t,this}}class xr extends yr{constructor(t,e,s,r){super(t,e),this.r=s,this.angle=r,this.path=null}draw(t){if(this.cache.config.rendered){t.save(),this.applyNormalStyle(t),t.beginPath(),this.path=new Path2D,this.path.arc(this.px,this.py,this.r,0,this.angle);const{strokeEnabled:e,fillEnabled:s}=this.cache.style.normal;e&&t.stroke(this.path),s&&t.fill(this.path),t.closePath(),t.restore()}return this}radius(t){return this.r=t,this.parent&&this.parent.draw(),this}}const br=(t,e,s,r)=>new xr(t,e,s,r),wr=(t,e,s)=>new xr(t,e,s,2*Math.PI);class vr extends yr{constructor(t,e){super(),this.pointsMatrix=null,this.path=new Path2D,this.fromXY(t,e)}get points(){return this.pointsMatrix.T.arr}draw(t){if(this.cache.config.rendered){t.save(),this.applyNormalStyle(t),t.beginPath(),this.path.moveTo(this.points[1][0]+this._x,this.points[1][1]+this._y);for(let t=1;t<this.points.length;t++)this.path.lineTo(this.points[t][0]+this._x,this.points[t][1]+this._y);t.stroke(this.path),t.restore()}return this}fromXY(t,e){return this.pointsMatrix=B([t,e]),this}push(t,e){return this.pointsMatrix.hstack(B([t,e])),this.parent&&this.parent.draw(),this}isIn(t,e){let s;return this.parent&&(this.parent.ctx.setTransform(1,0,0,1,0,0),s=this.parent.ctx.isPointInPath(this.path,t,e),this.parent.applyTransformMatrix()),s}}const kr=(t=[],e=[])=>new vr(t,e);class Mr extends yr{constructor(t,e,s,r){super(),this.x0=t,this.x1=s,this.y0=e,this.y1=r,delete this.fill}draw(t){return this.cache.config.rendered&&(t.save(),this.applyNormalStyle(t),t.beginPath(),t.moveTo(this.x0+this._x,this.y0+this._y_),t.lineTo(this.x1+this._x,this.y1+this._y),t.stroke(),this.cache.style.normal.strokeEnabled&&t.stroke(),t.restore()),this}}const Er=(t,e,s,r)=>new Mr(t,e,s,r);class Ar extends yr{constructor(t,e,s,r){super(t,e),this.w=s,this.h=r,this.path=new Path2D}draw(t){if(this.cache.config.rendered){t.save(),this.applyNormalStyle(t),t.beginPath(),this.path.rect(this._x,this._y,this.w,this.h);const{strokeEnabled:e,fillEnabled:s}=this.cache.style.normal;e&&t.stroke(this.path),s&&t.fill(this.path),t.closePath(),t.restore()}return this}width(t){return this.w=t,this.parent&&this.parent.draw(),this}height(t){return this.h=t,this.parent&&this.parent.draw(),this}}const Cr=(t,e,s,r)=>new Ar(t,e,s,r),Tr={Svg:dr,ZikoUISvg:pr,svgCircle:tr,svgEllipse:sr,svgImage:hr,svgLine:nr,svgPolygon:ar,svgRect:Ks,svgText:cr,svgGroupe:mr,Canvas:gr,canvasArc:br,canvasCircle:wr,canvasPoints:kr,canvasLine:Er,canvasRect:Cr,ExtractAll:function(){for(let t=0;t<Object.keys(this).length;t++)globalThis[Object.keys(this)[t]]=Object.values(this)[t];return this},RemoveAll:function(){for(let t=0;t<Object.keys(this).length;t++)delete globalThis[Object.keys(this)[t]];return this}};class Or{#a;constructor(){this.#a=function(t){try{let e=new Function("return "+t.data.fun)()();postMessage({result:e})}catch(t){postMessage({error:t.message})}finally{t.data.close&&self.close()}}.toString(),this.blob=new Blob(["this.onmessage = "+this.#a],{type:"text/javascript"}),this.worker=new Worker(window.URL.createObjectURL(this.blob))}call(t,e,s=!0){return this.worker.postMessage({fun:t.toString(),close:s}),this.worker.onmessage=function(t){t.data.error?console.error(t.data.error):e(t.data.result)},this}}const _r=(t,e,s)=>{const r=new Or;return t&&r.call(t,e,s),r};class Ir{constructor(t,e){this.root_UI=t,this.routes=new Map([[404,text("Error 404")],...Object.entries(e)]),this.patterns=new Map,this.maintain(),window.onpopstate=this.render(location.pathname)}get(t,e){return t instanceof RegExp?this.patterns.set(t,e):this.routes.set(t,e),this.maintain(),this}maintain(){return this.root_UI.append(...this.routes.values()),[...this.routes.values()].map((t=>t.render(!1))),this.render(location.pathname),this}render(t){if(this.routes.get(t))this.routes.get(t).render(!0);else{const e=[...this.patterns.keys()].find((e=>e.test(t)));e?this.patterns.get(e)(t):this.routes.get(404).render(!0)}return window.history.pushState({},"",t),this}}const Vr=(t,e,s)=>new Ir(t,e,s),Sr={Math:At,UI:Ds,Time:$s,Graphics:Tr,Events:be,Data:Zs,Multi:_r,SPA:Vr,ALL_UI_ELEMENTS:Me};console.log(1),t.Canvas=gr,t.Data=Zs,t.Ease=Ps,t.Events=be,t.ExtractAll=function(){return Ds.ExtractAll(),At.ExtractAll(),$s.ExtractAll(),be.ExtractAll(),Tr.ExtractAll(),this},t.Graphics=Tr,t.Math=At,t.Multi=_r,t.RemoveAll=function(){Ds.RemoveAll(),At.RemoveAll(),$s.ExtractAll(),be.RemoveAll(),Tr.RemoveAll()},t.SPA=Vr,t.Svg=dr,t.Time=$s,t.UI=Ds,t.Ziko=Sr,t.ZikoHtml=Se,t.ZikoUIAudio=is,t.ZikoUICanvas=fr,t.ZikoUIElement=ke,t.ZikoUIFigure=as,t.ZikoUIImage=ns,t.ZikoUISvg=pr,t.ZikoUIVideo=ss,t.animation=Xs,t.audio=hs,t.canvasArc=br,t.canvasCircle=wr,t.canvasLine=Er,t.canvasPoints=kr,t.canvasRect=Cr,t.debounce=Bs,t.figure=ls,t.image=os,t.loop=Fs,t.svgCircle=tr,t.svgEllipse=sr,t.svgGroupe=mr,t.svgImage=hr,t.svgLine=nr,t.svgPolygon=ar,t.svgRect=Ks,t.svgText=cr,t.throttle=zs,t.timeTaken=qs,t.time_memory_Taken=Ns,t.video=cs,t.wait=Us,t.waitForUIElm=Ls,t.waitForUIElmSync=Hs}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Ziko = {}));
+})(this, (function (exports) { 'use strict';
+
+  class AbstractZikoMath {}
+
+  //import ZMath from "./index.js";
+  let Complex$1 = class Complex extends AbstractZikoMath{
+      constructor(a = 0, b = 0) {
+          super();
+          if(a instanceof Complex){
+              this.a=a.a;
+              this.b=a.b;
+          }
+          else if(typeof(a)==="object"){
+              if(("a" in b && "b" in a)){
+                  this.a=a.a;
+                  this.b=a.b;
+              }
+              else if(("a" in b && "z" in a)){
+                  this.a=a.a;
+                  this.b=sqrt((a.z**2)-(a.a**2));
+              }
+              else if(("a" in b && "phi" in a)){
+                  this.a=a.a;
+                  this.b=a.a*tan(a.phi);
+              }
+              else if(("b" in b && "z" in a)){
+                  this.b=a.b;
+                  this.a=sqrt((a.z**2)-(a.b**2));
+              }
+              else if(("b" in b && "phi" in a)){
+                  this.b=b;
+                  this.a=a.b/tan(a.phi);
+              }
+              else if(("z" in b && "phi" in a)){
+                  this.a=a.z*cos$1(a.phi);
+                  this.a=a.z*sin$1(a.phi);
+              }
+          }
+          else if(typeof(a)==="number"&&typeof(b)==="number"){
+              this.a = +a.toFixed(32);
+              this.b = +b.toFixed(32);
+          }
+      }
+      get clone() {
+          return new Complex(this.a, this.b);
+      }
+      get z(){
+          return hypot(this.a,this.b);    
+      }
+      get phi(){
+          return atan2(this.b , this.a);        
+      }
+      static get ZERO() {
+          return new Complex(0, 0);
+      }
+      get conj() {
+          return new Complex(this.a, -this.b);
+      }
+      get inv() {
+          return new Complex(this.a / (pow$1(this.a, 2) + pow$1(this.b, 2)), -this.b / (pow$1(this.a, 2) + pow$1(this.b, 2)));
+      }
+      add(...z) {
+          for (let i = 0; i < z.length; i++) {
+              if (typeof z[i] === "number") z[i] = new Complex(z[i], 0);
+          }
+          let re = z.map((n) => n.a);
+          let im = z.map((n) => n.b);
+          this.a+=+sum(...re).toFixed(15);
+          this.b+=+sum(...im).toFixed(15);
+          return this;
+      }
+      sub(...z) {
+          for (let i = 0; i < z.length; i++) {
+              if (typeof z[i] === "number") z[i] = new Complex(z[i], 0);
+          }
+          let re = z.map((n) => n.a);
+          let im = z.map((n) => n.b);
+          this.a-=+sum(...re).toFixed(15);
+          this.b-=+sum(...im).toFixed(15);
+          return this;
+      }
+      mul(...z){
+          for (let i = 0; i < z.length; i++) {
+              if (typeof z[i] === "number") z[i] = new Complex(z[i], 0);
+          }
+          let Z=+prod(this.z,...z.map(n=>n.z)).toFixed(15);
+          let phi=+sum(this.phi,...z.map(n=>n.phi)).toFixed(15);
+          this.a=+(Z*cos$1(phi).toFixed(15)).toFixed(14);
+          this.b=+(Z*sin$1(phi).toFixed(15)).toFixed(14);    
+          return this;
+      }
+      div(...z) {
+          for (let i = 0; i < z.length; i++) {
+              if (typeof z[i] === "number") z[i] = new Complex(z[i], 0);
+          }
+          let Z=+(this.z/prod(...z.map(n=>n.z))).toFixed(15);
+          let phi=+(this.phi-sum(...z.map(n=>n.phi))).toFixed(15);
+          this.a=+(Z*cos$1(phi).toFixed(15)).toFixed(15);
+          this.b=+(Z*sin$1(phi).toFixed(15)).toFixed(15);
+          return this;
+      }
+      pow(n) {
+          if (floor$1(n) === n && n > 0) {
+              let z=+(this.z**n).toFixed(15);
+              let phi=+(this.phi*n).toFixed(15);
+              this.a=+(z*cos$1(phi).toFixed(15)).toFixed(15);
+              this.b=+(z*sin$1(phi).toFixed(15)).toFixed(15);
+          }
+          return this;
+      }
+      static fromExpo(z, phi) {
+          return new Complex(
+              +(z * cos$1(phi)).toFixed(13), 
+              +(z * sin$1(phi)).toFixed(13)
+              );
+      }
+      get expo() {
+          return [this.z, this.phi];
+      }
+      static add(c,...z) {
+          return c.clone.add(...z);
+      }
+      static sub(c,...z) {
+          return c.clone.sub(...z);
+      }
+      static mul(c,...z) {
+          return c.clone.mul(...z);
+      }
+      static div(c,...z) {
+          return c.clone.div(...z);
+      }
+      static pow(z,n){
+          return z.clone.pow(n);
+      }
+      static xpowZ(x){
+          return complex$1((x**this.a)*cos$1(this.b*ln(x)),(x**this.a)*sin$1(this.b*ln(x)));
+      }
+      sqrtn(n=2){
+          return complex$1(sqrtn(this.z,n)*cos$1(this.phi/n),sqrtn(this.z,n)*sin$1(this.phi/n));
+      }
+      get sqrt(){
+          return this.sqrtn(2);
+      }
+      get log(){
+          return complex$1(this.z,this.phi);
+      }
+      get cos(){
+          return complex$1(cos$1(this.a)*cosh(this.b),sin$1(this.a)*sinh(this.b))
+      }
+      get sin(){
+          return complex$1(sin$1(this.a)*cosh(this.b),cos$1(this.a)*sinh(this.b))
+      }
+      get tan(){
+          const de=cos$1(this.a*2)+cosh(this.b*2);
+          return complex$1(sin$1(2*this.a)/de,sinh(2*this.b)/de);
+      }
+      printInConsole() {
+          let string = this.a + " + " + this.b + " * i";
+          console.log(string);
+          return string;
+      }
+      print() {
+          //return text(this.a + " + i * " + this.b);
+      }
+      UI() {
+          return "<span>" + this.a + " + i * " + this.b + "</span>";
+      }
+  };
+
+  const complex$1=(a,b)=>{
+      if((a instanceof Array||ArrayBuffer.isView(a)) && (b instanceof Array||ArrayBuffer.isView(a)))return a.map((n,i)=>complex$1(a[i],b[i]));
+      if(a instanceof Matrix$1 && b instanceof Matrix$1){
+          if((a.shape[0]!==b.shape[0])||(a.shape[1]!==b.shape[1]))return Error(0)
+          const arr=a.arr.map((n,i)=>complex$1(a.arr[i],b.arr[i]));
+          return new Matrix$1(a.rows,a.cols,...arr)
+      }
+      return new Complex$1(a,b)
+  };
+
+  // Mixed calcul
+
+  const sum=(...x)=>{
+      if(x.every(n=>typeof n==="number")){
+          let s = x[0];
+          for (let i = 1; i < x.length; i++) s += x[i];
+          return s;
+      }
+      const Y=[];
+      for(let i=0;i<x.length;i++){
+          if(x[i] instanceof Array)Y.push(sum(...x[i]));
+          else if(x[i] instanceof Object){
+              Y.push(sum(...Object.values(x[i])));
+          }
+      }
+      return Y.length===1?Y[0]:Y;
+  };
+  const prod=(...x)=>{
+      if(x.every(n=>typeof n==="number")){
+          let p = x[0];
+          for (let i = 1; i < x.length; i++) p *= x[i];
+          return p;
+      }
+      const Y=[];
+      for(let i=0;i<x.length;i++){
+          if(x[i] instanceof Array)Y.push(prod(...x[i]));
+          else if(x[i] instanceof Object){
+              Y.push(prod(...Object.values(x[i])));
+          }
+      }
+      return Y.length===1?Y[0]:Y;
+  };
+  const min=(...num)=>{
+      if(num.every(n=>typeof n==="number"))return Math.min(...num);
+      const Y=[];
+      for(let i=0;i<num.length;i++){
+          if(num[i] instanceof Array)Y.push(min(...num[i]));
+          else if(num[i] instanceof Object){
+              Y.push(
+                      Object.fromEntries(
+                          [Object.entries(num[i]).sort((a,b)=>a[1]-b[1])[0]]
+                      )
+                  );
+          }
+      }
+      return Y.length===1?Y[0]:Y;
+  };
+  const max=(...num)=>{
+      if(num.every(n=>typeof n==="number"))return Math.max(...num);
+      const Y=[];
+      for(let i=0;i<num.length;i++){
+          if(num[i] instanceof Array)Y.push(min(...num[i]));
+          else if(num[i] instanceof Object){
+              Y.push(
+                      Object.fromEntries(
+                          [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
+                      )
+                  );
+          }
+      }
+      return Y.length===1?Y[0]:Y;
+  };
+  const accum=(...num)=>{
+      if(num.every(n=>typeof n==="number")){
+          let acc = num.reduce((x, y) => [...x, x[x.length - 1] + y], [0]);
+          acc.shift();
+          return acc;
+      }
+      const Y=[];
+      for(let i=0;i<num.length;i++){
+          if(num[i] instanceof Array)Y.push(accum(...num[i]));
+          else if(num[i] instanceof Object){
+              Y.push(null
+                      // Object.fromEntries(
+                      //     [Object.entries(num[i]).sort((a,b)=>b[1]-a[1])[0]]
+                      // )
+                  );
+          }
+      }
+      return Y.length===1?Y[0]:Y;
+  };
+
+  //moy
+  //med
+  //variance
+  //std
+  //mode
+  //acccum
+  //min2max
+  //max2min
+  //percentile
+
+  const Fixed={
+      cos:x=>+Math.cos(x).toFixed(15),
+      sin:x=>+Math.sin(x).toFixed(15),
+      tan:x=>+Math.tan(x).toFixed(31),
+      sinc:x=>+Math.sin(Math.PI*x)/(Math.PI*x),
+      sec:x=>+1/Math.cos(x).toFixed(15),
+      csc:x=>+1/Math.sin(x).toFixed(15),
+      cot:x=>+1/Math.tan(x).toFixed(15),
+      acos:x=>+Math.acos(x).toFixed(15),
+      asin:x=>+Math.asin(x).toFixed(15),
+      atan:x=>+Math.atan(x).toFixed(15),
+      acot:x=>+Math.PI/2-Math.atan(x).toFixed(15),
+      cosh:x=>+Math.cosh(x).toFixed(15),
+      sinh:x=>+Math.sinh(x).toFixed(15),
+      tanh:x=>+Math.tanh(x).toFixed(15),
+      coth:n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),
+      acosh:x=>+Math.acosh(x).toFixed(15),
+      asinh:x=>+Math.asinh(x).toFixed(15),
+      atanh:x=>+Math.atanh(x).toFixed(15),
+
+
+  };
+  function abs$1(...x){
+      return mapfun(Math.abs,...x);
+  }
+  function sqrt(...x){
+      return mapfun(Math.sqrt,...x);
+  }
+  function pow$1(x,n){
+      if(typeof x === "number"){
+          if(typeof n === "number")return Math.pow(x,n);
+          else if(n instanceof Complex$1)return Complex$1.fromExpo(x**n.a,n.b*ln(x))
+          else return mapfun(a=>pow$1(x,a),...n);
+      }
+      else if(x instanceof Complex$1){
+          if(typeof n === "number")return Complex$1.fromExpo(x.z**n,x.phi*n);
+          else if(n instanceof Complex$1)return Complex$1.fromExpo(
+              x.z**n.a*e(-x.phi*n.b),
+              ln(x.z)*n.b+n.a*x.phi
+          )
+          else return mapfun(a=>pow$1(x,a),...n);
+      }
+      else if(x instanceof Array){
+          if(typeof n === "number") return mapfun(a=>pow$1(a,n),...x);
+          else if(n instanceof Array){
+              const Y=[];
+              for(let i=0;i<x.length;i++){
+                  Y.push(mapfun(a=>pow$1(x[i],a),...n));
+              }
+              return Y;
+          }
+      }
+  }
+  function sqrtn(x,n){
+      if(typeof x === "number"){
+          if(typeof n === "number")return Math.pow(x,1/n);
+          else return mapfun(a=>sqrtn(x,a),...n);
+      }
+      else if(x instanceof Complex$1){
+          if(typeof n === "number")return Complex$1.fromExpo(sqrtn(x.z,n),x.phi/n);
+          else return mapfun(a=>sqrtn(x,a),...n);
+      }
+      else if(x instanceof Array){
+          if(typeof n === "number") return mapfun(a=>sqrtn(a,n),...x);
+          else if(n instanceof Array){
+              const Y=[];
+              for(let i=0;i<x.length;i++){
+                  Y.push(mapfun(a=>sqrtn(x[i],a),...n));
+              }
+              return Y;
+          }
+      }
+  }
+  function e(...x){
+      return mapfun(Math.exp,...x);
+  }
+  function ln(...x){
+      return mapfun(Math.log,...x);
+  }
+  function cos$1(...x){
+      return mapfun(Fixed.cos,...x);
+  }
+  function sin$1(...x){
+      return mapfun(Fixed.sin,...x);
+  }
+  function tan(...x){
+      return mapfun(Fixed.tan,...x);
+  }
+  function sec(...x){
+      return mapfun(Fixed.sec,...x);
+  }
+  function sinc(...x){
+      return mapfun(Fixed.sinc,...x)
+  }
+  function csc(...x){
+      return mapfun(Fixed.csc,...x);
+  }
+  function cot(...x){
+      return mapfun(Fixed.cot,...x);
+  }
+  function acos(...x){
+      return mapfun(Fixed.acos,...x);
+  }
+  function asin(...x){
+      return mapfun(Fixed.asin,...x);
+  }
+  function atan(...x){
+      return mapfun(Fixed.atan,...x);
+  }
+  function acot(...x){
+      return mapfun(Fixed.acot,...x);
+  }
+  function cosh(...x){
+      return mapfun(Fixed.cosh,...x);
+  }
+  function sinh(...x){
+      return mapfun(Fixed.sinh,...x);
+  }
+  function tanh(...x){
+      return mapfun(Fixed.tanh,...x);
+  }
+  function coth(...x){
+      return mapfun(Fixed.coth,...x);
+  }
+  function acosh(...x){
+      return mapfun(Fixed.acosh,...x);
+  }
+  function asinh(...x){
+      return mapfun(Fixed.asinh,...x);
+  }
+  function atanh(...x){
+      return mapfun(Fixed.atanh,...x);
+  }
+  function ceil(...x){
+      return mapfun(Math.ceil,...x);
+  }
+  function floor$1(...x){
+      return mapfun(Math.floor,...x);
+  }
+  function round(...x){
+      return mapfun(Math.round,...x);
+  }
+  // function atan2(...x){
+  //     const n=x.pop();
+  //     return mapfun(a=>Math.atan2(a,n),...x)
+  // }
+  function atan2(x,y,rad=true){
+      if(typeof x === "number"){
+          if(typeof y === "number")return rad?Math.atan2(x,y):Math.atan2(x,y)*180/Math.PI;
+          else return mapfun(a=>atan2(x,a,rad),...y);
+      }
+      // else if(x instanceof Complex){
+      //     if(typeof n === "number")return Complex.fromExpo(x.z**n,x.phi*n);
+      //     else return mapfun(a=>pow(x,a),...n);
+      // }
+      else if(x instanceof Array){
+          if(typeof y === "number") return mapfun(a=>atan2(a,y,rad),...x);
+          else if(y instanceof Array){
+              const Y=[];
+              for(let i=0;i<x.length;i++){
+                  Y.push(mapfun(a=>pow$1(x[i],a),...y));
+              }
+              return Y;
+          }
+      }
+  }
+  function fact(...x){
+      return mapfun(n=> {
+          let i,
+          y = 1;
+          if (n == 0) y = 1;
+          else if (n > 0) for (i = 1; i <= n; i++) y *= i;
+          else y = NaN;
+          return y;
+      },...x);
+  } 
+  function sign(...x){
+      return mapfun(Math.sign,...x);
+  }
+  function sig(...x){
+      return mapfun(n=>1/(1+e(-n)),...x);
+  }
+  const hypot=(...x)=>{
+      if(x.every(n=>typeof n === "number"))return Math.hypot(...x);
+      if(x.every(n=>n instanceof Array))return mapfun(
+          Math.hypot,
+          ...x
+      )
+  };
+
+  //import{arange}from "../Utils/index.js"
+  const Logic$1={
+      _mode:Number,
+      _map:function(func,a,b){
+          if (a instanceof Matrix$1)
+              return new Matrix$1(
+                  a.rows,
+                  a.cols,
+                  a.arr.flat(1).map((n) => func(n, b))
+              );
+          else if (a instanceof Complex$1) return new Complex$1(func(a.a, b), func(a.b, b));
+          else if (a instanceof Array) return a.map((n) => func(n, b));      
+      },
+      not:function(input){
+          if(["number","boolean"].includes(typeof input)) return Logic$1._mode(!input);
+          else return this._map(this.not,input)
+      },
+      and:function(a, ...b){
+          if(["number","boolean"].includes(typeof a))return Logic$1._mode(b.reduce((n, m) => (n &= m), a));
+          else return this._map(this.and,a,b)
+      },
+      or:function(a, ...b) {
+          if(["number","boolean"].includes(typeof a)) return Logic$1._mode(b.reduce((n, m) => (n |= m), a));
+          else return this._map(this.or,a,b);
+      },
+      nand:function(a, ...b) {
+          return this.not(this.and(a, b));
+      },
+      nor:function(a, ...b) {
+          return this.not(this.or(a, b));
+      },
+      xor:function(a,...b){
+          let arr=[a,...b];
+          if(["number","boolean"].includes(typeof a))return this._mode(arr.reduce((length,cur)=>{
+              if(+cur===1)length+=1;
+              return length;
+          },0)===1);
+          else return this._map(this.xor,a,b);
+      },
+      xnor:function(a,...b){
+          return Logic$1.not(Logic$1.xor(a,b))
+      }
+      
+  };
+
+  var Base={
+      _mode:Number,
+      _map:function(func,number,toBase){
+          if (number instanceof Matrix$1)
+              return new Matrix$1(
+                  number.rows,
+                  number.cols,
+                  number.arr.flat(1).map(n=>func(n,toBase))
+              );
+          else if (number instanceof Complex$1) return new Complex$1(func(number.a,toBase),func(number.b,toBase));
+          else if (number instanceof Array) return number.map((n) =>func(n,toBase));
+      },
+      dec2base(dec,base){
+          base<=10?this._mode=Number:this._mode=String;
+          //this._mode=String
+          if (typeof dec === "number") return this._mode((dec >>> 0).toString(base));
+            return this._map(this.dec2base,dec,base)
+      },
+      dec2bin(dec){
+          return this.dec2base(dec,2);
+      },
+      dec2oct(dec){
+          return this.dec2base(dec,8);
+      },
+      dec2hex(dec){
+          return this.dec2base(dec,16);
+      },
+      bin2base(bin, base) {
+          return this.dec2base(this.bin2dec(bin),base)
+      },
+      bin2dec(bin){
+          return this._mode("0b"+bin);
+      },
+      bin2oct(bin){
+          return this.bin2base(bin,8);
+      },
+      bin2hex(bin){
+          return this.bin2base(bin,16);
+      },
+      oct2dec(oct){
+          return this._mode("0o"+oct);
+      },
+      oct2bin(oct){
+          return this.dec2bin(this.oct2dec(oct))
+      },
+      oct2hex(oct){
+          return this.dec2hex(this.oct2dec(oct))
+      },
+      oct2base(oct, base) {
+          return this.dec2base(this.oct2dec(oct),base)
+      },
+      hex2dec(hex){
+          return this._mode("0x"+hex);
+      },
+      hex2bin(hex){
+          return this.dec2bin(this.hex2dec(hex))
+      },
+      hex2oct(hex){
+          return this.dec2oct(this.hex2dec(hex))
+      },
+      hex2base(hex, base) {
+          return this.dec2base(this.hex2dec(hex),base)
+      },
+      IEEE32toDec(Bin){
+          let IEEE32=Bin.split(" ").join("").padEnd(32,"0");
+          let s=IEEE32[0];
+          let e=2**(+("0b"+IEEE32.slice(1,9))-127);
+          let m=IEEE32.slice(9,32).split("").map(n=>+n);
+          let M=m.map((n,i)=>n*(2**(-i-1))).reduce((a,b)=>a+b,0);
+          let dec=(-1)**s*(1+M)*e;
+          return dec
+      },
+      IEEE64toDec(Bin){
+          let IEEE64=Bin.split(" ").join("").padEnd(64,"0");
+          let s=IEEE64[0];
+          let e=2**(+("0b"+IEEE64.slice(1,12))-1023);
+          let m=IEEE64.slice(13,64).split("").map(n=>+n);
+          let M=m.map((n,i)=>n*(2**(-i-1))).reduce((a,b)=>a+b,0);
+          let dec=(-1)**s*(1+M)*e;
+          return dec;
+      }
+  };
+
+  // class Logic1{
+  //     static not(input) {
+  //         if (typeof input === "number") return +!input;
+  //         else if (input instanceof Matrix)
+  //             return new Matrix(
+  //                 input.rows,
+  //                 input.cols,
+  //                 input.arr.flat(1).map((n) => Logic.not(n))
+  //             );
+  //         else if (input instanceof Complex) return new Complex(Logic.not(input.a), Logic.not(input.b));
+  //         else if (input instanceof Array) return input.map((n) => Logic.not(n));
+  //     }
+  //     static and(a, ...b) {
+  //         if (typeof a === "number") return b.reduce((n, m) => (n &= m), a);
+  //         else if (a instanceof Matrix)
+  //             return new Matrix(
+  //                 a.rows,
+  //                 a.cols,
+  //                 a.arr.flat(1).map((n) => Logic.and(n, b))
+  //             );
+  //         else if (a instanceof Complex) return new Complex(Logic.and(a.a, b), Logic.and(a.b, b));
+  //         else if (a instanceof Array) return a.map((n) => Logic.and(n, b));
+  //     }
+  //     static or(a, ...b) {
+  //         if (typeof a === "number") return b.reduce((n, m) => (n |= m), a);
+  //         else if (a instanceof Matrix)
+  //             return new Matrix(
+  //                 a.rows,
+  //                 a.cols,
+  //                 a.arr.flat(1).map((n) => Logic.or(n, b))
+  //             );
+  //         else if (a instanceof Complex) return new Complex(Logic.and(a.a, b), Logic.or(a.b, b));
+  //         else if (a instanceof Array) return a.map((n) => Logic.or(n, b));
+  //     }
+  //     static nand(a, ...b) {
+  //         return Logic.not(Logic.and(a, b));
+  //     }
+  //     static nor(a, ...b) {
+  //         return Logic.not(Logic.or(a, b));
+  //     }
+  //     static xor(a, ...b) {
+  //         if (typeof a === "number") {
+  //             const c = b.Count(1);
+  //             switch (c) {
+  //                 case 0:
+  //                     return a;
+  //                 case 1:
+  //                     return Logic.not(a);
+  //                 default:
+  //                     return 0;
+  //             }
+  //         } else if (a instanceof Matrix)
+  //             return new Matrix(
+  //                 a.rows,
+  //                 a.cols,
+  //                 a.arr.flat(1).map((n) => Logic.xor(n, b))
+  //             );
+  //         else if (a instanceof Complex) return new Complex(Logic.and(a.a, b), Logic.xor(a.b, b));
+  //         else if (a instanceof Array) return a.map((n) => Logic.xor(n, b));
+  //     }
+  //     static xnor(a, ...b) {
+  //         return Logic.not(Logic.xor(a, b));
+  //     }
+  // }
+  // class BaseConversion {
+  //     constructor() {}
+  //     static dec2base(dec, base) {
+  //         if (typeof dec === "number") return (dec >>> 0).toString(base);
+  //         else if (dec instanceof Matrix)
+  //             return new Matrix(
+  //                 dec.rows,
+  //                 dec.cols,
+  //                 dec.arr.flat(1).map((n) => (n >>> 0).toString(base))
+  //             );
+  //         else if (dec instanceof Complex) return new Complex((dec.a >>> 0).toString(base), (dec.b >>> 0).toString(base));
+  //         else if (dec instanceof Array) return dec.map((n) => BaseConversion.dec2base(n, base));
+  //     }
+  //     static bin2base(bin, base) {
+  //         if (typeof bin === "number") return parseInt(bin, 2).toString(base);
+  //         else if (bin instanceof Matrix)
+  //             return new Matrix(
+  //                 bin.rows,
+  //                 bin.cols,
+  //                 bin.arr.flat(1).map((n) => parseInt(n, 2).toString(base))
+  //             );
+  //         else if (bin instanceof Complex) return new Complex(parseInt(bin.a, 2).toString(base), parseInt(bin.b, 2).toString(base));
+  //         else if (bin instanceof Array) return bin.map((n) => BaseConversion.bin2base(n, base));
+  //     }
+  //     static oct2base(oct, base) {
+  //         if (typeof oct === "number") return +parseInt(oct, 8).toString(base);
+  //         else if (oct instanceof Matrix)
+  //             return new Matrix(
+  //                 oct.rows,
+  //                 oct.cols,
+  //                 oct.arr.flat(1).map((n) => parseInt(n, 8).toString(base))
+  //             );
+  //         else if (oct instanceof Complex) return new Complex(parseInt(oct.a, 8).toString(base), parseInt(oct.b, 8).toString(base));
+  //         else if (oct instanceof Array) return oct.map((n) => BaseConversion.oct2base(n, base));
+
+  //         //return oct instanceof Array?oct.map((n)=>parseInt(n,8).toString(base)):parseInt(bin,8).toString(base);
+  //     }
+  //     static hex2base(hex, base) {
+  //         if (typeof hex === "number") return +parseInt(hex, 16).toString(base);
+  //         else if (hex instanceof Matrix)
+  //             return new Matrix(
+  //                 hex.rows,
+  //                 hex.cols,
+  //                 hex.arr.flat(1).map((n) => parseInt(n, 16).toString(base))
+  //             );
+  //         else if (hex instanceof Complex) return new Complex(parseInt(hex.a, 16).toString(base), parseInt(hex.b, 16).toString(base));
+  //         else if (hex instanceof Array) return hex.map((n) => BaseConversion.hex2base(n, base));
+  //     }
+  //     static bin2dec(bin) {
+  //         //return bin instanceof Array?bin.map((n)=>bin2base(n,10)):bin2base(bin,10);
+
+  //         if (typeof bin === "number") return +BaseConversion.bin2base(bin, 10);
+  //         else if (bin instanceof Matrix)
+  //             return new Matrix(
+  //                 bin.rows,
+  //                 bin.cols,
+  //                 bin.arr.flat(1).map((n) => +BaseConversion.bin2base(n, 10))
+  //             );
+  //         else if (bin instanceof Complex) return new Complex(+BaseConversion.bin2base(bin.a, 10), +BaseConversion.bin2base(bin.b, 10));
+  //         else if (bin instanceof Array) return bin.map((n) => BaseConversion.bin2dec(n));
+  //     }
+  //     static dec2bin(dec) {
+  //         //return +BaseConversion.dec2base(dec,2);
+
+  //         if (typeof dec === "number") return +BaseConversion.dec2base(dec, 2);
+  //         else if (dec instanceof Matrix)
+  //             return new Matrix(
+  //                 dec.rows,
+  //                 dec.cols,
+  //                 dec.arr.flat(1).map((n) => +BaseConversion.dec2base(n, 2))
+  //             );
+  //         else if (dec instanceof Complex) return new Complex(+BaseConversion.dec2base(dec.a, 2), +BaseConversion.dec2base(dec.a, 2));
+  //         else if (dec instanceof Array) return dec.map((n) => BaseConversion.dec2bin(n));
+  //     }
+  //     static dec2oct(dec) {
+  //         if (typeof dec === "number") return +BaseConversion.dec2base(dec, 8);
+  //         else if (dec instanceof Matrix)
+  //             return new Matrix(
+  //                 dec.rows,
+  //                 dec.cols,
+  //                 dec.arr.flat(1).map((n) => +BaseConversion.dec2base(n, 8))
+  //             );
+  //         else if (dec instanceof Complex) return new Complex(+BaseConversion.dec2base(dec.a, 8), +BaseConversion.dec2base(dec.a, 8));
+  //         else if (dec instanceof Array) return dec.map((n) => BaseConversion.dec2oct(n));
+  //     }
+  //     static dec2hex(dec) {
+  //         if (typeof dec === "number") return BaseConversion.dec2base(dec, 16);
+  //         //else if(dec instanceof Matrix)return new Matrix(dec.rows,dec.cols,dec.arr.flat(1).map(n=>BaseConversion.dec2base(n,16)));
+  //         //else if(dec instanceof Complex)return new Complex(BaseConversion.dec2base(dec.a,16),BaseConversion.dec2base(dec.a,16));
+  //         else if (dec instanceof Array) return dec.map((n) => BaseConversion.dec2hex(n));
+  //     }
+  //     static IEEE32toDec(Bin){
+  //         let IEEE32=Bin.split(" ").join("").padEnd(32,"0");
+  //         let s=IEEE32[0];
+  //         let e=2**(+("0b"+IEEE32.slice(1,9))-127)
+  //         let m=IEEE32.slice(9,32).split("").map(n=>+n)
+  //         let M=m.map((n,i)=>n*(2**(-i-1))).reduce((a,b)=>a+b,0);
+  //         let dec=(-1)**s*(1+M)*e;
+  //         return dec
+  //     }
+  //     static IEEE64toDec(Bin){
+  //         let IEEE64=Bin.split(" ").join("").padEnd(64,"0");
+  //         let s=IEEE64[0];
+  //         let e=2**(+("0b"+IEEE64.slice(1,12))-1023)
+  //         let m=IEEE64.slice(13,64).split("").map(n=>+n)
+  //         let M=m.map((n,i)=>n*(2**(-i-1))).reduce((a,b)=>a+b,0);
+  //         let dec=(-1)**s*(1+M)*e;
+  //         return dec
+  //     }
+  // }
+  class Permutation {
+      static withDiscount(arr, l = arr.length) {
+          if (l === 1) {
+              return arr.map((n) => [n]);
+          }
+          const permutations = [];
+          let smallerPermutations;
+          smallerPermutations = this.withDiscount(arr, l - 1);
+          arr.forEach((currentOption) => {
+              smallerPermutations.forEach((smallerPermutation) => {
+                  permutations.push([currentOption].concat(smallerPermutation));
+              });
+          });
+          return permutations;
+      }
+      static withoutDiscount(arr) {
+          const l = arr.length;
+          if (l === 1) {
+              return arr.map((n) => [n]);
+          }
+          const permutations = [];
+          const smallerPermutations = this.withoutDiscount(arr.slice(1));
+          const firstOption = arr[0];
+          for (let i = 0; i < smallerPermutations.length; i++) {
+              const smallerPermutation = smallerPermutations[i];
+              for (let j = 0; j <= smallerPermutation.length; j++) {
+                  const permutationPrefix = smallerPermutation.slice(0, j);
+                  const permutationSuffix = smallerPermutation.slice(j);
+                  permutations.push(permutationPrefix.concat([firstOption], permutationSuffix));
+              }
+          }
+          return permutations;
+      }
+  }
+  class Combinaison {
+      static withDiscount(comboOptions, comboLength) {
+          if (comboLength === 1) {
+              return comboOptions.map((comboOption) => [comboOption]);
+          }
+          // Init combinations array.
+          const combos = [];
+          // Remember characters one by one and concatenate them to combinations of smaller lengths.
+          // We don't extract elements here because the repetitions are allowed.
+          comboOptions.forEach((currentOption, optionIndex) => {
+              // Generate combinations of smaller size.
+              const smallerCombos = this.withDiscount(comboOptions.slice(optionIndex), comboLength - 1);
+              // Concatenate currentOption with all combinations of smaller size.
+              smallerCombos.forEach((smallerCombo) => {
+                  combos.push([currentOption].concat(smallerCombo));
+              });
+          });
+          return combos;
+      }
+      static withoutDiscount(comboOptions, comboLength) {
+          // If the length of the combination is 1 then each element of the original array
+          // is a combination itself.
+          if (comboLength === 1) {
+              return comboOptions.map((comboOption) => [comboOption]);
+          }
+          // Init combinations array.
+          const combos = [];
+          // Extract characters one by one and concatenate them to combinations of smaller lengths.
+          // We need to extract them because we don't want to have repetitions after concatenation.
+          comboOptions.forEach((currentOption, optionIndex) => {
+              // Generate combinations of smaller size.
+              const smallerCombos = this.withoutDiscount(comboOptions.slice(optionIndex + 1), comboLength - 1);
+              // Concatenate currentOption with all combinations of smaller size.
+              smallerCombos.forEach((smallerCombo) => {
+                  combos.push([currentOption].concat(smallerCombo));
+              });
+          });
+
+          return combos;
+      }
+  }
+  function PowerSet(originalSet) {
+      const subSets = [];
+      const numberOfCombinations = 2 ** originalSet.length;
+      for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
+          const subSet = [];
+          for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
+              if (combinationIndex & (1 << setElementIndex)) {
+                  subSet.push(originalSet[setElementIndex]);
+              }
+          }
+          subSets.push(subSet);
+      }
+      return subSets;
+  }
+  var subset = (...arr) => {
+      let list = arange(0, 2 ** arr.length, 1);
+      let bin = list.toBin.map((n) => n.padStart(arr.length, 0)).map((n) => n.split("").map((n) => +n));
+      let sub = bin.map((n) => n.map((m, i) => (arr[i])));
+      for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = { n: sub[i][j], m: bin[i][j] };
+      sub = sub.map((n) => n.filter((x) => x.m == 1));
+      sub = sub.map((n) => n.map((m) => m.n));
+      return sub;
+  };
+  var Discret={
+      Logic: Logic$1,
+      Base,
+      Permutation,
+      Combinaison,
+      PowerSet,
+      subset
+  };
+
+  class Random {
+      static float(a = 1, b) {
+          return b ? Math.random() * (b - a) + a : a * Math.random();
+      }
+      static int(a, b) {
+          return Math.floor(this.float(a, b));
+      }
+      static char(upperCase){
+          upperCase=upperCase??this.bool();
+          const Char=String.fromCharCode(this.int(97,120));
+          return upperCase?Char.toUpperCase():Char;
+      }
+      static bool(){
+          return [false,true][Math.floor(Math.random()*2)];
+      }
+      static string(length,upperCase){
+          return length instanceof Array?
+              new Array(this.int(...length)).fill(0).map(() => this.char(upperCase)).join(""):
+              new Array(length).fill(0).map(() => this.char(upperCase)).join("");
+      }
+      static bin() {
+          return this.int(2);
+      }
+      static oct() {
+          return this.int(8);
+      }
+      static dec() {
+          return this.int(8);
+      }
+      static hex() {
+          return this.int(16);
+      }
+      static choice(choices = [1, 2, 3], p = new Array(choices.length).fill(1 / choices.length)) {
+          let newchoice = new Array(100);
+          p=Utils.accum(...p).map(n=>n*100);
+          newchoice.fill(choices[0], 0, p[0]);
+          for (let i = 1; i < choices.length; i++) newchoice.fill(choices[i], p[i - 1], p[i]);
+          return newchoice[this.int(newchoice.length - 1)];
+      }
+      static shuffleArr(arr){
+          return arr.sort(()=>0.5-Math.random())    
+      }
+      static shuffleMatrix(M){
+              const {rows,cols,arr}=M;
+              return matrix(rows,cols,arr.flat().sort(()=>0.5-Math.random()))
+      }
+      static floats(n, a, b) {
+          return new Array(n).fill(0).map(() => this.float(a, b));
+      }
+      static ints(n, a, b) {
+          return new Array(n).fill(0).map(() => this.int(a, b));
+      }
+      static bools(n){
+          return  new Array(n).fill(0).map(() => this.bool());
+      }
+      static bins(n) {
+          return new Array(n).fill(0).map(() => this.int(2));
+      }
+      static octs(n) {
+          return new Array(n).fill(0).map(() => this.int(8));
+      }
+      static decs(n) {
+          return new Array(n).fill(0).map(() => this.int(10));
+      }
+      static hexs(n) {
+          return new Array(n).fill(0).map(() => this.int(16));
+      }
+      static choices(n, choices, p) {
+          return new Array(n).fill(0).map(() => this.choice(choices, p));
+      }
+      static permutation(...arr) {
+          return arr.permS[this.int(arr.length)];
+      }
+      static color() {
+          return "#" + Base.dec2hex(this.float(16777216)).padStart(6,0);
+      }
+      static colors(n) {
+          return new Array(n).fill(null).map(()=>this.color());
+      }
+      static complex(a = [0,1], b = [0,1]) {
+          return a instanceof Array?
+          new Complex$1(
+              this.float(a[0], a[1]),
+              this.float(b[0], b[1])
+          ):
+          new Complex$1(
+              ...this.floats(2,a,b)
+          )
+          
+      }
+      static complexInt(a = [0,1], b = [0,1]) {
+          return new Complex$1(
+              this.int(a[0], a[1]),
+              this.int(b[0], b[1])
+              );
+      }
+      static complexBin() {
+          return new Complex$1(...this.bins(2));
+      }
+      static complexOct() {
+          return new Complex$1(...this.octs(2));
+      }
+      static complexDec() {
+          return new Complex$1(...this.decs(10));
+      }
+      static complexHex() {
+          return new Complex$1(...this.octs(2));
+      }
+      static complexes(n, a = 0, b = 1) {
+          return new Array(n).fill(0).map(() => this.complex(a, b));
+      }
+      static complexesInt(n, a = 0, b = 1) {
+          return new Array(n).fill(0).map(() => this.complexInt(a, b));
+      }
+      static complexesBin(n) {
+          return new Array(n).fill(0).map(() => this.complexBin());
+      }
+      static complexesOct(n) {
+          return new Array(n).fill(0).map(() => this.complexOct());
+      }
+      static complexesDec(n) {
+          return new Array(n).fill(0).map(() => this.complexDec());
+      }
+      static complexesHex(n) {
+          return new Array(n).fill(0).map(() => this.complexHex());
+      }
+      static matrix(r,c,min,max){
+          return matrix(r,c,this.floats(r*c,min,max))
+      }
+      static matrixInt(r,c,min,max){
+          return matrix(r,c,this.ints(r*c,min,max))
+      }
+      static matrixBin(r,c){
+          return matrix(r,c,this.bins(r*c))
+      }
+      static matrixOct(r,c){
+          return matrix(r,c,this.octs(r*c))
+      }
+      static matrixDec(r,c){
+          return matrix(r,c,this.decs(r*c))
+      }
+      static matrixHex(r,c){
+          return matrix(r,c,this.hex(r*c))
+      }
+      static matrixColor(r,c){
+          return matrix(r,c,this.colors(r*c))
+      }
+      static matrixComplex(r,c,a,b){
+          return matrix(r,c,this.complexes(r*c,a,b))
+      }
+      static matrixComplexInt(r,c,a,b){
+          return matrix(r,c,this.complexesInt(r*c,a,b))
+      }
+      static matrixComplexBin(r,c){
+          return matrix(r,c,this.complexesBin(r*c))
+      }
+      static matrixComplexOct(r,c){
+          return matrix(r,c,this.complexesBin(r*c))
+      }
+      static matrixComplexDec(r,c){
+          return matrix(r,c,this.complexesBin(r*c))
+      }
+      static matrixComplexHex(r,c){
+          return matrix(r,c,this.complexesBin(r*c))
+      }
+  }
+
+  let Matrix$1 = class Matrix extends AbstractZikoMath{
+      constructor(rows, cols, element = [] , type) {
+          super();
+          if(rows instanceof Matrix){
+              this.arr=rows.arr;
+              this.rows=rows.rows;
+              this.cols=rows.cols;
+          }
+          else {
+          let arr = [],
+              i,
+              j;
+          if (arguments[0] instanceof Array) {
+              rows = arguments[0].length;
+              cols = arguments[0][0].length;
+              arr = arguments[0];
+          } else {
+              for (i = 0; i < rows; i++) {
+                  arr.push([]);
+                  arr[i].push(new Array(cols));
+                  for (j = 0; j < cols; j++) {
+                      arr[i][j] = element[i * cols + j];
+                      if (element[i * cols + j] == undefined) arr[i][j] = 0;
+                  }
+              }
+          }
+          this.rows = rows;
+          this.cols = cols;
+          this.arr = arr;   
+      }
+      this._maintain();
+          //Object.seal(this);
+      }
+      at(i=0,j=undefined){
+          if(i<0)i=this.rows+i;
+          if(j==undefined) return this.arr[i];
+          if(j<0)j=this.cols+j;
+          return this.arr[i][j];
+      }
+      reshape(newRows, newCols) {
+          let check = newRows * newCols === this.rows * this.cols;
+          if (check) return new Matrix(newRows, newCols, this.arr.flat(1));
+          else console.error("Err");
+      }
+      static eye(size) {
+          let result = new Matrix(size, size);
+          for (let i = 0; i < size; i++) for (let j = 0; j < size; j++) i === j ? (result.arr[i][j] = 1) : (result.arr[i][j] = 0);
+          return result;
+      }
+      get clone() {
+          return new Matrix(this.rows, this.cols, this.arr.flat(1));
+      }
+      get size() {
+          return this.rows * this.cols;
+      } 
+      get shape() {
+          return [this.rows, this.cols];
+      }
+      get reel() {
+          return new Matrix(this.cols, this.rows, this.arr.flat(1).reel);
+      }
+      get imag() {
+          return new Matrix(this.cols, this.rows, this.arr.flat(1).imag);
+      }
+      _maintain(){
+          for(let i=0;i<this.arr.length;i++)Object.assign(this,{[[i]]:this.arr[i]});
+          return this;
+      }
+      get(row = 0, col = 0) {
+          if (col == -1) return this.arr[row];
+          else if (row == -1) return this.arr.map((n) => n[col]);
+          else return this.arr[row][col];
+      }
+      set(row = 0, col = 0, value) {
+          if (col == -1) return (this.arr[row] = value);
+          else if (row == -1) {
+              for (let i = 0; i < this.cols; i++) {
+                  this.arr[i][col] = value[i] || 0;
+              }
+              return this.arr;
+          }
+          return (this.arr[row][col] = value);
+      }
+      get isSquare() {
+          return this.rows / this.cols === 1;
+      }
+      get isSym() {
+          if (!this.isSquare) return false;
+          const T = this.T;
+          const M = this.clone;
+          return Matrix.sub(M, T).max == 0 && Matrix.sub(M, T).min == 0;
+      }
+      get isAntiSym() {
+          if (!this.isSquare) return false;
+          const T = this.T;
+          const M = this.clone;
+          return Matrix.add(M, T).max == 0 && Matrix.add(M, T).min == 0;
+      }
+      get isDiag() {
+          if (!this.isSquare) return false;
+          const T = this.T;
+          const M = this.clone;
+          const MT = Matrix.mul(M, T);
+          const TM = Matrix.dot(T, M);
+          return Matrix.sub(MT, TM).max == 0 && Matrix.sub(MT, TM).min == 0;
+      }
+      get isOrtho() {
+          if (!this.isSquare) return false;
+          return this.isDiag && (this.det == 1 || this.det == -1);
+      }
+      get isIdemp() {
+          if (!this.isSquare) return false;
+          const M = this.clone;
+          const MM = Matrix.dot(M, M);
+          return Matrix.sub(MM, M).max == 0 && Matrix.sub(MM, M).min == 0;
+      }
+      get T() {
+          let transpose = [];
+          for (let i = 0; i < this.arr[0].length; i++) {
+              transpose[i] = [];
+              for (let j = 0; j < this.arr.length; j++) {
+                  transpose[i][j] = this.arr[j][i];
+              }
+          }
+          return new Matrix(this.cols, this.rows, transpose.flat(1));
+      }
+      get det() {
+          if (!this.isSquare) return new Error("is not square matrix");
+          if (this.rows == 1) return this.arr[0][0];
+          function determinat(M) {
+              if (M.length == 2) {
+                  if (M.flat(1).some((n) => n instanceof Matrix)) {
+                      console.warn("Tensors are not completely supported yet ...");
+                      return;
+                  }
+                  return Utils.sub(Utils.mul(M[0][0],M[1][1]),Utils.mul(M[0][1],M[1][0]))
+              }
+              var answer = 0;
+              for (var i = 0; i < M.length; i++) {
+                  //console.log(M[0][i]);
+                  /*answer = answer.add(
+                      pow(-1, i)
+                          .mul(M[0][i])
+                          .mul(determinat(deleteRowAndColumn(M, i)))
+                  );*/
+                  //const to_be_added=Utils.add(Utils.mul(pow(-1, i),Utils.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
+                  const to_be_added=Utils.add(Utils.mul(pow$1(-1, i),Utils.mul(M[0][i],determinat(deleteRowAndColumn(M, i)))));
+                  answer=Utils.add(answer,to_be_added);
+              }
+              return answer;
+          }
+          function deleteRowAndColumn(M, index) {
+              var temp = [];
+              for (let i = 0; i < M.length; i++) temp.push(M[i].slice(0));
+              temp.splice(0, 1);
+              for (let i = 0; i < temp.length; i++) temp[i].splice(index, 1);
+              return temp;
+          }
+          return determinat(this.arr);
+      }
+      get inv() {
+          if (!this.isSquare) return new Error("is not square matrix");
+          if (this.det === 0) return "determinat = 0 !!!";
+          let A = InverseMatrixe(this.arr);
+          return new Matrix(this.rows, this.cols, A.flat(1));
+      }
+      static zeros(rows, cols) {
+          let result = new Matrix(rows, cols);
+          for (let i = 0; i < rows; i++) for (var j = 0; j < cols; j++) result.arr[i][j] = 0;
+          return result;
+      }
+      static ones(rows, cols) {
+          let result = new Matrix(rows, cols);
+          for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = 1;
+          return result;
+      }
+      static nums(rows, cols, number) {
+          let result = new Matrix(rows, cols);
+          for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = number;
+          return result;
+      }
+      static get rand(){
+          return {
+              int:(rows, cols, a, b)=>{
+                  let result = new Matrix(rows, cols);
+                  for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = Random.randInt(a, b);
+                  return result;
+              },
+              bin:(rows,cols)=>{
+                  let result = new Matrix(rows, cols);
+                  for (let i = 0; i < rows; i++) {
+                      for (let j = 0; j < cols; j++) result.arr[i][j] = Random.randBin;
+                  }
+                  return result;       
+              },
+              hex:(rows,cols)=>{
+                  let result = new Matrix(rows, cols);
+                  for (let i = 0; i < rows; i++) {
+                      for (let j = 0; j < cols; j++) result.arr[i][j] = Random.randHex;
+                  }
+                  return result;       
+              },
+              choices:(rows, cols, choices, p)=>{
+                  let result = new Matrix(rows, cols);
+                  for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = Random.choice(choices, p);
+                  return result
+              },
+              permutation:(rows,cols,arr)=>{
+                  //return new Matrix(rows, cols, Random.permutation(...arr))
+              }
+          }
+      }
+      static rands(rows, cols, a = 1, b) {
+          let result = new Matrix(rows, cols);
+          for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = Random.rand(a, b);
+          return result;
+      }
+      /*static randsInt(rows, cols, a, b) {
+      }
+      static randsBin(rows, cols) {
+      }
+      static randsHex(rows, cols) {
+      }
+      static randsChoices(rows, cols, choices, p) {
+      }
+      static randPermutation(rows, cols, arr) {
+          return new Matrix(rows, cols, Random.permutation(...arr));
+      }*/
+      /*map(fct) {
+          var array = this.arr.flat(1);
+          return new Matrix(
+              this.rows,
+              this.cols,
+              array.map((n) => fct(n))
+          );
+      }
+      static map(m, fct) {
+          var array = m.arr.flat(1);
+          return new Matrix(
+              m.rows,
+              m.cols,
+              array.map((n) => fct(n))
+          );
+      }*/
+      map(Imin, Imax, Fmin, Fmax) {
+          return Utils.map(this, Imin, Imax, Fmin, Fmax);
+      }
+      lerp(min, max) {
+          return Utils.lerp(this, min, max);
+      }
+      norm(min, max) {
+          return Utils.norm(this, min, max);
+      }
+      clamp(min, max) {
+          return Utils.clamp(this, min, max);
+      }
+      static map(matrix, Imin, Imax, Fmin, Fmax) {
+          return Utils.map(matrix, Imin, Imax, Fmin, Fmax);
+      }
+      static lerp(matrix, min, max) {
+          return Utils.lerp(matrix, min, max);
+      }
+      static norm(matrix, min, max) {
+          return Utils.norm(matrix, min, max);
+      }
+      static clamp(m, min, max) {
+          return Utils.clamp(matrix, min, max);
+      }
+      toPrecision(p) {
+          for (let i = 0; i < this.cols; i++) for (let j = 0; j < this.rows; j++) this.arr[i][j] = +this.arr[i][j].toPrecision(p);
+          return this;
+      }
+      get toBin() {
+          let newArr = this.arr.flat(1).toBin;
+          return new Matrix(this.rows, this.cols, newArr);
+      }
+      get toOct() {
+          let newArr = this.arr.flat(1).toOct;
+          return new Matrix(this.rows, this.cols, newArr);
+      }
+      get toHex() {
+          let newArr = this.arr.flat(1).toHex;
+          return new Matrix(this.rows, this.cols, newArr);
+      }
+      /*get isOdd() {
+          let newArr = this.arr.flat(1).isOdd;
+          return new Matrix(this.rows, this.cols, newArr);
+      }*/
+      max2min() {
+          let newArr = this.arr.flat(1).max2min;
+          return new Matrix(this.rows, this.cols, newArr);
+      }
+      min2max() {
+          let newArr = this.arr.flat(1).min2max;
+          return new Matrix(this.rows, this.cols, newArr);
+      }
+      sortRows(calback=undefined){
+          let newArr=this.arr.map(n=>n.sort(calback)).flat(1);
+          return new Matrix(this.rows, this.cols, newArr);           
+      }
+      sortCols(calback=undefined){
+          let m=this.T;
+          let newArr=m.arr.map(n=>n.sort(calback)).flat(1);
+          return new Matrix(this.rows, this.cols, newArr).T;           
+      }
+      filterByRows(item){
+          var truth=this.arr.map(n=>n.map(m=>+(""+m).includes(item)));
+          var mask=truth.map(n=>!!Logic.or(...n));
+          var filtredArray=this.arr.filter((n,i)=>mask[i]===true);
+          if(filtredArray.length===0)filtredArray.push([]);
+          console.log(filtredArray);
+          return new Matrix(filtredArray)
+      }
+      filterByCols(item){
+          return new Matrix(this.T.arr.filter(n=>n.includes(item)))
+      }
+      sortAll(calback=undefined){
+          let newArr=this.arr.flat(1).sort(calback);
+          return new Matrix(this.rows, this.cols, newArr);         
+      }
+      count(n) {
+          return this.arr.flat(1).count(n);
+      }
+      toBase(n) {
+          let newArr = this.arr.flat(1).toBase(n);
+          return new Matrix(this.rows, this.cols, newArr);
+      }
+      #hstack(matrix){
+          if (this.rows !== matrix.rows) return;
+          let newArr = this.arr;
+          for (let i = 0; i < this.rows; i++) for (let j = this.cols; j < this.cols + matrix.cols; j++) newArr[i][j] = matrix.arr[i][j - this.cols];
+          this.cols += matrix.cols;
+          return new Matrix(this.rows, this.cols, newArr.flat(1));
+      }
+      hstack(...matrices) {
+          const M=[this,...matrices].reduce((a,b)=>a.#hstack(b));
+          Object.assign(this,M);
+          return this;
+      }
+      static hstack(matrix,...matrices) {
+          return matrix.clone.hstack(...matrices);
+      }
+      #vstack(matrix) {
+          if (this.cols !== matrix.cols) return;
+          let newArr = this.arr;
+          for (let i = this.rows; i < this.rows + matrix.rows; i++) {
+              newArr[i] = [];
+              for (let j = 0; j < this.cols; j++) newArr[i][j] = matrix.arr[i - this.rows][j];
+          }
+          this.rows += matrix.rows;
+          return new Matrix(this.rows, this.cols, newArr.flat(1));
+      }
+      vstack(...matrices) {
+          const M=[this,...matrices].reduce((a,b)=>a.#vstack(b));
+          Object.assign(this,M);
+          return this;
+      }
+      static vstack(matrix,...matrices) {
+          return matrix.clone.vstack(...matrices);
+      }
+      hqueue(...matrices){
+          const M=[this,...matrices].reverse().reduce((a,b)=>a.#hstack(b));
+          Object.assign(this,M);
+          return this;
+      }
+      vqueue(...matrices){
+          const M=[this,...matrices].reverse().reduce((a,b)=>a.#vstack(b));
+          Object.assign(this,M);
+          return this;
+      }
+      static hqueue(matrix,...matrices) {
+          return matrix.clone.hqueue(...matrices);
+      }
+      static vqueue(matrix,...matrices) {
+          return matrix.clone.vqueue(...matrices);
+      }
+      slice(r0=0, c0=0, r1=this.rows-1, c1=this.cols-1) {
+          let newRow = r1 - r0,
+              newCol = c1 - c0;
+          let newArr = new Array(newCol);
+          for (let i = 0; i < newRow; i++) {
+              newArr[i] = [];
+              for (let j = 0; j < newCol; j++) newArr[i][j] = this.arr[i + r0][j + c0];
+          }
+          return new Matrix(newRow, newCol, newArr.flat(1));
+      }
+      static slice(m1,r0=0, c0=0, r1=this.rows-1, c1=this.cols-1) {
+          return m1.slice(r0, c0, r1, c1);
+      }
+      getRows(ri, rf = ri + 1) {
+          return this.slice(ri, 0, rf, this.cols);
+      }
+      getCols(ci, cf = ci + 1) {
+          return this.slice(0, ci, this.rows, cf);
+      }
+      static getRows(m, ri, rf = ri + 1) {
+          return m.slice(ri, 0, rf, m.cols);
+      }
+      static getCols(m, ci, cf = ci + 1) {
+          return m.slice(0, ci, m.rows, cf);
+      }
+      add(...matr) {
+          for (let k = 0; k < matr.length; k++) {
+              if (typeof matr[k] == "number"||matr[k] instanceof Complex$1) matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
+              for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.add(this.arr[i][j],matr[k].arr[i][j]);
+          }
+          return new Matrix(this.rows, this.cols, this.arr.flat(1));
+      }
+      sub(...matr) {
+          for (let k = 0; k < matr.length; k++) {
+              if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
+              for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.sub(this.arr[i][j],matr[k].arr[i][j]);
+          }
+          return new Matrix(this.rows, this.cols, this.arr.flat(1));
+      }
+      static add(m1, ...m2) {
+          return m1.clone.add(...m2);
+      }
+      static sub(m1, ...m2) {
+          return m1.clone.sub(...m2);
+      }
+      mul(...matr) {
+          for (let k = 0; k < matr.length; k++) {
+              if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
+              for (var i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.mul(this.arr[i][j],matr[k].arr[i][j]);
+          }
+          return new Matrix(this.rows, this.cols, this.arr.flat(1));
+      }
+      div(...matr) {
+          for (let k = 0; k < matr.length; k++) {
+              if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
+              for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++) this.arr[i][j] = Utils.div(this.arr[i][j],matr[k].arr[i][j]);
+          }
+          return new Matrix(this.rows, this.cols, this.arr.flat(1));
+      }
+      static div(m1, ...m2) {
+          return m1.clone.div(...m2);
+      }
+      static mul(m1, ...m2) {
+          return m1.clone.mul(...m2);
+      }
+      modulo(...matr) {
+          for (let k = 0; k < matr.length; k++) {
+              if (typeof matr[k] == "number") matr[k] = Matrix.nums(this.rows, this.cols, matr[k]);
+              for (let i = 0; i < this.rows; i++) for (var j = 0; j < this.cols; j++)this.arr[i][j]=Utils.modulo(this.arr[i][j],matr[k].arr[i][j]);
+          }
+          return new Matrix(this.rows, this.cols, this.arr.flat(1));
+      }
+      static modulo(m1, ...m2) {
+          return m1.clone.modulo(...m2);
+      }
+      dot(matrix) {
+          var res = [];
+          for (var i = 0; i < this.arr.length; i++) {
+              res[i] = [];
+              for (var j = 0; j < matrix.arr[0].length; j++) {
+                  res[i][j] = 0;
+                  for (var k = 0; k < this.arr[0].length; k++) {
+                      res[i][j] = Utils.add(
+                          res[i][j],
+                          Utils.mul(this.arr[i][k],matrix.arr[k][j])
+                          );
+                  }
+              }
+          }
+          return new Matrix(this.arr.length, matrix.arr[0].length, res.flat(1));
+      }
+      static dot(matrix1, matrix2) {
+          return matrix1.dot(matrix2);
+      }
+      pow(n) {
+          let a = this.clone,
+              p = this.clone;
+          for (let i = 0; i < n - 1; i++) p = p.dot(a);
+          return p;
+      }
+      static pow(m, n) {
+          return m.clone.pow(n);
+      }
+      get somme() {
+          let S = 0;
+          for (let i = 0; i < this.rows; i++) for (let j = 0; j < this.cols; j++) S += this.arr[i][j];
+          return S;
+      }
+      get DoesItContainComplexNumbers() {
+          return this.arr.flat(Infinity).some((n) => n instanceof Complex$1);
+      }
+      get min() {
+          if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
+          let minRow = [];
+          for (let i = 0; i < this.rows; i++) minRow.push(min(...this.arr[i]));
+          return min(...minRow);
+      }
+      get max() {
+          if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
+          let maxRow = [];
+          for (let i = 0; i < this.rows; i++) maxRow.push(max(...this.arr[i]));
+          return max(...maxRow);
+      }
+      get minRows() {
+          if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
+          let minRow = [];
+          for (let i = 0; i < this.rows; i++) minRow.push(min(...this.arr[i]));
+          return minRow;
+      }
+      get maxRows() {
+          if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
+          let maxRow = [];
+          for (let i = 0; i < this.rows; i++) maxRow.push(max(...this.arr[i]));
+          return maxRow;
+      }
+      get minCols() {
+          if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
+          return this.T.minRows;
+      }
+      get maxCols() {
+          if (this.DoesItContainComplexNumbers) console.error("Complex numbers are not comparable");
+          return this.T.maxRows;
+      }
+      static fromVector(v) {
+          return new Matrix(v.length, 1, v);
+      }
+      get toArray() {
+          let arr = [];
+          for (let i = 0; i < this.rows; i++) {
+              for (let j = 0; j < this.cols; j++) {
+                  arr.push(this.arr[i][j]);
+              }
+          }
+          return arr;
+      }
+      get print() {
+          //"pretty print" the matrix
+          let fstring = "[";
+          for (let i = 0; i < this.arr.length; i++) {
+              fstring += (i != 0 ? " " : "") + ` [${this.arr[i].map((n) => " " + n.toString() + " ")}],\n`;
+          }
+          console.log(fstring.substring(0, fstring.length - 2) + " ]");
+          document.write(fstring.substring(0, fstring.length - 2) + " ]");
+      }
+      get table() {
+          console.table(this.arr);
+      }
+      get serialize() {
+          return JSON.stringify(this);
+      }
+      static deserialize(data) {
+          if (typeof data == "string") {
+              data = JSON.parse(data);
+          }
+          let matrix = new Matrix(data.rows, data.cols);
+          matrix.arr = data.arr;
+          return matrix;
+      }
+      toTable() {
+          var table = new DocumentFragment();
+          var Tr = new Array(this.rows).fill(null).map(() => document.createElement("tr"));
+          var Td = this.arr.map((n) => n.map(() => document.createElement("td")));
+          for (let i = 0; i < Td.length; i++) {
+              for (let j = 0; j < Td[0].length; j++) {
+                  Td[i][j].innerHTML = this.arr[i][j];
+                  Tr[i].appendChild(Td[i][j]);
+              }
+          }
+          Tr.map((n) => table.appendChild(n));
+          return table;
+      }
+      toGrid(element, style = {}) {
+          let a = Grid();
+          a.append(
+              ...this.map(element)
+                  .arr.flat(1)
+                  .map((n) => n.style(style))
+          );
+          a.Columns(this.cols);
+          return a;
+      }
+      sortTable(n=0,{type="num",order="asc"}={}) {
+          var obj=this.T.arr.map(n=>n.map((n,i)=>Object.assign({},{x:n,y:i})));
+          var newObj=this.T.arr.map(n=>n.map((n,i)=>Object.assign({},{x:n,y:i})));
+          if(type==="num"){
+              if(order==="asc")obj[n].sort((a,b)=>a.x-b.x);
+              else if(order==="desc")obj[n].sort((a,b)=>b.x-a.x);
+              else if(order==="toggle"){
+                 // console.log(obj[n][0])
+                  //console.log(obj[n][1])
+                  if(obj[n][0].x>obj[n][1].x)obj[n].sort((a,b)=>b.x-a.x);
+                  else obj[n].sort((a,b)=>a.x-b.x);
+              }
+          }
+          else if(type==="alpha"){
+              if(order==="asc")obj[n].sort((a,b)=>(""+a.x).localeCompare(""+b.x));
+              else if(order==="desc")obj[n].sort((a,b)=>(""+b.x).localeCompare(""+a.x));            
+          }
+          //var order=obj[n].map(n=>n.y);
+          order=obj[n].map(n=>n.y);
+          for(let i=0;i<obj.length;i++){
+              if(i!==n)obj[i].map((n,j)=>n.y=order[j]);
+          }
+          for(let i=0;i<obj.length;i++){
+              if(i!==n)newObj[i].map((n,j)=>n.x=obj[i][order[j]].x);
+          }
+          newObj[n]=obj[n];
+          var newArr=newObj.map(n=>n.map(m=>m.x));
+          return new Matrix(newArr).T;
+      }
+  };
+
+  function InverseMatrixe(M) {
+      if (M.length !== M[0].length) {
+          return;
+      }
+      var i = 0,
+          ii = 0,
+          j = 0,
+          dim = M.length,
+          e = 0;
+          //t = 0;
+      var I = [],
+          C = [];
+      for (i = 0; i < dim; i += 1) {
+          I[I.length] = [];
+          C[C.length] = [];
+          for (j = 0; j < dim; j += 1) {
+              if (i == j) {
+                  I[i][j] = 1;
+              } else {
+                  I[i][j] = 0;
+              }
+              C[i][j] = M[i][j];
+          }
+      }
+      for (i = 0; i < dim; i += 1) {
+          e = C[i][i];
+          if (e == 0) {
+              for (ii = i + 1; ii < dim; ii += 1) {
+                  if (C[ii][i] != 0) {
+                      for (j = 0; j < dim; j++) {
+                          e = C[i][j];
+                          C[i][j] = C[ii][j];
+                          C[ii][j] = e;
+                          e = I[i][j];
+                          I[i][j] = I[ii][j];
+                          I[ii][j] = e;
+                      }
+                      break;
+                  }
+              }
+              e = C[i][i];
+              if (e == 0) {
+                  return;
+              }
+          }
+          for (j = 0; j < dim; j++) {
+              C[i][j] = C[i][j] / e;
+              I[i][j] = I[i][j] / e;
+          }
+          for (ii = 0; ii < dim; ii++) {
+              if (ii == i) {
+                  continue;
+              }
+              e = C[ii][i];
+              for (j = 0; j < dim; j++) {
+                  C[ii][j] -= e * C[i][j];
+                  I[ii][j] -= e * I[i][j];
+              }
+          }
+      }
+      return I;
+  }
+
+  class LinearSystem {
+      static resolve(A, B) {
+          return A.inv
+              .dot(Matrix$1.fromVector(B))
+              .arr.flat(1)
+              .map((n) => +n.toFixed(10));
+      }
+  }
+  var matrix=(r, c, element)=>new Matrix$1(r, c, element);
+  var matrix2=(...element)=>new Matrix$1(2, 2, element);
+  var matrix3=(...element)=>new Matrix$1(3, 3, element);
+  var matrix4=(...element)=>new Matrix$1(4, 4, element);
+
+  const mapfun=(fun,...X)=>{
+      const Y=X.map(x=>{
+          if(x===null)return fun(null);
+          if(["number","string","boolean","bigint","undefined"].includes(typeof x))return fun(x);
+          if(x instanceof Array)return x.map(n=>mapfun(fun,n));
+          if(ArrayBuffer.isView(x))return x.map(n=>fun(n));
+          if(x instanceof Set)return new Set(mapfun(fun,...[...x]));
+          if(x instanceof Map)return new Map([...x].map(n=>[n[0],mapfun(fun,n[1])]));
+          if(x instanceof Matrix$1){
+              return new Matrix$1(x.rows,x.cols,mapfun(x.arr.flat(1)))
+          }
+          if(x instanceof Complex$1){
+              const [a,b,z,phi]=[x.a,x.b,x.z,x.phi];
+              switch(fun){
+                  case Math.log:return complex$1(ln(z),phi); // Done
+                  case Math.exp:return complex$1(e(a)*cos$1(b),e(a)*sin$1(b)); // Done
+                  case Math.abs:return z; // Done
+                  case Math.sqrt:return complex$1(sqrt(z)*cos$1(phi/2),sqrt(z)*sin$1(phi/2)); // Done
+                  case Fixed.cos:return complex$1(cos$1(a)*cosh(b),-(sin$1(a)*sinh(b)));
+                  case Fixed.sin:return complex$1(sin$1(a)*cosh(b),cos$1(a)*sinh(b));
+                  case Fixed.tan:{
+                      const DEN=cos$1(2*a)+cosh(2*b);
+                      return complex$1(sin$1(2*a)/DEN,sinh(2*b)/DEN);
+                  }
+                  case Fixed.cosh:return complex$1(cosh(a)*cos$1(b),sinh(a)*sin$1(b));
+                  case Fixed.sinh:return complex$1(sinh(a)*cos$1(b),cosh(a)*sin$1(b));
+                  case Fixed.tanh:{
+                      const DEN=cosh(2*a)+cos$1(2*b);
+                      return complex$1(sinh(2*a)/DEN,sin$1(2*b)/DEN)
+                  }
+                  //default : return fun(x)
+              }
+          }
+          else if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
+
+      });
+     return Y.length==1?Y[0]:Y; 
+  };
+
+  const { PI: PI$1, E: E$1 } = Math;
+  const EPSILON=Number.EPSILON;
+
+  const _add=(a,b)=>{
+      if(typeof(a)==="number"){
+          if (typeof b == "number") return a + b;
+          else if (b instanceof Complex)return complex(a + b.a, b.b);
+          else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).add(b);
+          else if (b instanceof Array)return b.map(n=>add(n,a));                 
+      }
+      else if(a instanceof Complex||a instanceof Matrix){
+          if(b instanceof Array)return b.map(n=>a.clone.add(n));
+          return a.clone.add(b);
+      }
+      else if(a instanceof Array){
+          if(b instanceof Array){
+              if(a.length === b.length)return a.map((n,i)=>add(n,b[i]))
+          }
+          else {
+              return a.map(n=>add(n,b));
+          }
+      }
+  };
+  const _sub=(a,b)=>{
+      if(typeof(a)==="number"){
+          if (typeof b == "number") return a - b;
+          else if (b instanceof Complex)return complex(a - b.a, -b.b);
+          else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).sub(b);
+          else if (b instanceof Array)return b.map(n=>sub(n,a));                 
+      }
+      else if(a instanceof Complex||a instanceof Matrix){
+          if(b instanceof Array)return b.map(n=>a.clone.sub(n));
+          return a.clone.sub(b);
+      }
+      else if(a instanceof Array){
+          if(b instanceof Array){
+              if(b instanceof Array){
+                  if(a.length === b.length)return a.map((n,i)=>sub(n,b[i]))
+              }
+          }
+          else {
+              return a.map(n=>sub(n,b));
+          }
+      }
+  };
+  const _mul=(a,b)=>{
+      if(typeof(a)==="number"){
+      if (typeof b == "number") return a * b;
+          else if (b instanceof Complex)return complex(a * b.a,a * b.b);
+          else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).mul(b);
+          else if (b instanceof Array)return b.map(n=>mul$1(a,n)); 
+      }
+      else if(a instanceof Complex||a instanceof Matrix){
+          if(b instanceof Array)return b.map(n=>a.clone.mul(n));
+          return a.clone.mul(b);
+      }
+      else if(a instanceof Array){
+          if(b instanceof Array){
+              if(b instanceof Array){
+                  if(a.length === b.length)return a.map((n,i)=>mul$1(n,b[i]))
+              }
+          }
+          else {
+              return a.map(n=>mul$1(n,b));
+          }
+      }
+  };
+  const _div=(a,b)=>{
+      if(typeof(a)==="number"){
+      if (typeof b == "number") return a / b;
+          else if (b instanceof Complex)return complex(a / b.a,a / b.b);
+          else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).div(b);
+          else if (b instanceof Array)return b.map(n=>div(a,n));
+      }
+      else if(a instanceof Complex||a instanceof Matrix){
+          if(b instanceof Array)return b.map(n=>a.clone.div(n));
+          return a.clone.div(b);
+      }
+      else if(a instanceof Array){
+          if(b instanceof Array){
+              if(b instanceof Array){
+                  if(a.length === b.length)return a.map((n,i)=>div(n,b[i]))
+              }
+          }
+          else {
+              return a.map(n=>div(n,b));
+          }
+      }
+  };
+  const _modulo=(a,b)=>{
+      if(typeof(a)==="number"){
+          if (typeof b == "number") return a % b;
+              else if (b instanceof Complex)return complex(a % b.a,a % b.b);
+              else if (b instanceof Matrix) return Matrix.nums(b.rows, b.cols, a).modulo(b);
+              else if (b instanceof Array)return b.map(n=>div(a,n));
+          }
+          else if(a instanceof Complex||a instanceof Matrix){
+              if(b instanceof Array)return b.map(n=>a.clone.div(n));
+              return a.clone.div(b);
+          }
+          else if(a instanceof Array){
+              if(b instanceof Array);
+              else {
+                  return a.map(n=>add(n,b));
+              }
+          }
+  };
+  const add=(a,...b)=>{
+      var res=a;
+      for(let i=0;i<b.length;i++)res=_add(res,b[i]);
+      return res;
+  };
+  const sub=(a,...b)=>{
+      var res=a;
+      for(let i=0;i<b.length;i++)res=_sub(res,b[i]);
+      return res;
+  };
+  const mul$1=(a,...b)=>{
+      var res=a;
+      for(let i=0;i<b.length;i++)res=_mul(res,b[i]);
+      return res;
+  };
+  const div=(a,...b)=>{
+      var res=a;
+      for(let i=0;i<b.length;i++)res=_div(res,b[i]);
+      return res;
+  };
+  const modulo=(a,...b)=>{
+      var res=a;
+      for(let i=0;i<b.length;i++)res=_modulo(res,b[i]);
+      return res;
+  };
+
+  const zeros=(n)=>new Array(n).fill(0);
+  const ones=(n)=>new Array(n).fill(1);
+  const nums=(num,n)=>new Array(n).fill(num);
+  const norm$1=(value, min, max)=>{
+      if (typeof value === "number") return min !== max ? (value - min) / (max - min) : 0;
+      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, norm$1(value.arr.flat(1), min, max));
+      else if (value instanceof Complex$1) return new Complex$1(norm$1(value.a, min, max), norm$1(value.b, min, max));
+      else if (value instanceof Array) {
+          if (value.every((n) => typeof (n === "number"))) {
+              return value.map((n) => norm$1(n, min, max));
+          } else {
+              let y = new Array(value.length);
+              for (let i = 0; i < value.length; i++) {
+                  y[i] = norm$1(value[i]);
+              }
+          }
+      }
+  };
+  const lerp$1=(value, min, max)=>{
+      if (typeof value === "number") return (max - min) * value + min;
+      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, lerp$1(value.arr.flat(1), min, max));
+      else if (value instanceof Complex$1) return new Complex$1(lerp$1(value.a, min, max), lerp$1(value.b, min, max));
+      else if (value instanceof Array) {
+          if (value.every((n) => typeof (n === "number"))) {
+              return value.map((n) => lerp$1(n, min, max));
+          } else {
+              let y = new Array(value.length);
+              for (let i = 0; i < value.length; i++) {
+                  y[i] = lerp$1(value[i]);
+              }
+          }
+      }
+  };
+  const map$1=(value, a, b, c, d)=>{
+      if (typeof value === "number") return lerp$1(norm$1(value, a, b), c, d);
+      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, map$1(value.arr.flat(1), a, b, c, d));
+      else if (value instanceof Complex$1) return new Complex$1(map$1(value.a, b, c, d), map$1(value.b, a, b, c, d));
+      else if (value instanceof Array) {
+          if (value.every((n) => typeof (n === "number"))) {
+              return value.map((n) => map$1(n, a, b, c, d));
+          } else {
+              let y = new Array(value.length);
+              for (let i = 0; i < value.length; i++) {
+                  y[i] = map$1(value[i], a, b, c, d);
+              }
+          }
+      }
+  };
+  const clamp$1=(value, min, max)=>{
+      if (typeof value === "number") return min(max(value, min), max);
+      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp$1(value.arr.flat(1), min, max));
+      else if (value instanceof Complex$1) return new Complex$1(clamp$1(value.a, min, max), clamp$1(value.b, min, max));
+      else if (value instanceof Array) {
+          if (value.every((n) => typeof (n === "number"))) {
+              return value.map((n) => clamp$1(n, min, max));
+          } else {
+              let y = new Array(value.length);
+              for (let i = 0; i < value.length; i++) {
+                  y[i] = clamp$1(value[i], min, max);
+              }
+          }
+      }
+  };
+  const arange=(a, b, step , include = false)=>{
+      let tab = [];
+      if(a<b){
+          for (let i = a; include?i<=b:i<b; i += step) tab.push((i * 10) / 10);
+      }
+      else {
+          for(let i = a; include?i>=b:i>b; i -= step) tab.push((i * 10) / 10);
+      }
+      return tab;
+  };
+  const linspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+      if(Math.floor(n)!==n)return;
+      if([a,b].every(n=>typeof n==="number")){
+          const [max,min]=[a,b].sort((a,b)=>b-a);
+          var Y = [];
+          let step ;
+          endpoint ? step = (max - min) / (n - 1) : step = (max - min) / n;
+          for (var i = 0; i < n; i++) {
+              a<b?Y.push(min+step*i):Y.push(max-step*i);
+          }
+          return Y
+      }
+
+      if([a,b].some(n=>n instanceof Complex$1)){
+          const z1=complex$1(a);
+          const z2=complex$1(b);
+          n=n||Math.abs(z1.a-z2.a)+1;
+          const X=linspace(z1.a,z2.a,n,endpoint);
+          const Y=linspace(z1.b,z2.b,n,endpoint);
+          let Z=new Array(n).fill(null);
+          Z=Z.map((n,i)=>complex$1(X[i],Y[i]));
+          return Z;
+      }
+  };
+  const logspace=(a,b,n=b-a+1,base=E,endpoint=true)=>{
+      return linspace(a,b,n,endpoint).map(n=>pow(base,n))
+  };
+  const geomspace=(a,b,n=abs(b-a)+1,endpoint=true)=>{
+      if(Math.floor(n)!==n)return;
+      if([a,b].every(n=>typeof n==="number")){
+          const [max,min]=[a,b].sort((a,b)=>b-a);
+          let base;
+          endpoint ? base = sqrtn(max/min,n-1) : base = sqrtn(max/min,n) ;
+          const Y = [min];
+          for (let i = 1; i < n; i++) {
+              Y.push(Y[i-1]*base);
+          }
+          return a<b?Y:Y.reverse()
+      }
+
+      if([a,b].some(n=>n instanceof Complex$1)){
+          const z1=complex$1(a);
+          const z2=complex$1(b);
+          n=n||Math.abs(z1.a-z2.a)+1;
+          let base;
+          endpoint ? base = sqrtn(z2.div(z1),n-1) : base = sqrtn(z2.div(z1),n) ;
+          const Y = [z1];
+          for (let i = 1; i < n; i++) {
+              Y.push(mul(Y[i-1],base));
+          } 
+          return Y;
+      }
+  };
+
+  const deg2rad=(...deg)=>mapfun(x=>x*Math.PI/180,...deg);
+  const rad2deg=(...rad)=>mapfun(x=>x/Math.PI*180,...rad);
+
+  const inRange=(x,a,b)=>{
+      const [min,max]=[Math.min(a,b),Math.max(a,b)];
+      return x>=min && x<=max
+  };
+  const isApproximatlyEqual=(a,b,Err=0.0001)=>{
+      return Math.abs(a-b)<=Err;
+  };
+
+  const cartesianProduct=(a, b)=>a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
+  const pgcd=(n1, n2)=>{
+      let i,
+          pgcd = 1;
+      if (n1 == floor(n1) && n2 == floor(n2)) {
+          for (i = 2; i <= n1 && i <= n2; ++i) {
+              if (n1 % i == 0 && n2 % i == 0) pgcd = i;
+          }
+          return pgcd;
+      } else console.log("error");
+  };
+  const ppcm=(n1, n2)=>{
+      let ppcm;
+      if (n1 == floor(n1) && n2 == floor(n2)) {
+          ppcm = n1 > n2 ? n1 : n2;
+          while (true) {
+              if (ppcm % n1 == 0 && ppcm % n2 == 0) break;
+              ++ppcm;
+          }
+          return ppcm;
+      } else console.log("error");
+  };
+
+  const Utils={
+      add,
+      sub,
+      mul: mul$1,
+      div,
+      modulo,
+
+      zeros,
+      ones,
+      nums,
+      norm: norm$1,
+      lerp: lerp$1,
+      map: map$1,
+      clamp: clamp$1,
+      arange,
+      linspace,
+      logspace,
+      geomspace,
+
+      sum,
+      prod,
+      accum,
+
+      cartesianProduct,
+      ppcm,
+      pgcd,
+
+      deg2rad,
+      rad2deg,
+
+      inRange,
+      isApproximatlyEqual
+  };
+
+  function __NumberProto__(){
+      Object.defineProperties(Number.prototype,{
+          inRange:{
+              value: function(a,b) {
+                  return inRange(this.valueOf(),a,b)
+              }
+          },
+          add:{
+              value: function(...n) {
+                  return add(this.valueOf(),...n)
+              }
+          },
+          sub:{
+              value: function(...n) {
+                  return sub(this.valueOf(),...n)
+              }
+          },
+          mul:{
+              value: function(...n) {
+                  return mul$1(this.valueOf(),...n)
+              }
+          },
+          div:{
+              value: function(...n) {
+                  return div(this.valueOf(),...n)
+              }
+          },
+          modulo:{
+              value: function(...n) {
+                  return modulo(this.valueOf(),...n)
+              }
+          },
+          norm:{
+              value: function(min,max) {
+                  return norm(this.valueOf(),min,max)
+              }
+          },
+          lerp:{
+              value: function(min,max) {
+                  return lerp(this.valueOf(),min,max)
+              }
+          },
+          map:{
+              value: function(a,b,c,d) {
+                  return map(this.valueOf(),a,b,c,d)
+              }
+          },
+          clamp:{
+              value: function(min,max) {
+                  return clamp(this.valueOf(),min,max)
+              }
+          },
+          toDeg:{
+              value: function() {
+                  return rad2deg(this.valueOf())
+              }
+          },
+          toRad:{
+              value: function() {
+                  return deg2rad(this.valueOf())
+              }
+          },
+      
+      });
+  }
+
+  function __ArrayProto__(){
+      Object.defineProperties(Array.prototype,{
+          inRange:{
+              value: function(a,b) {
+                  return inRange(this.valueOf(),a,b)
+              }
+          },
+          add:{
+              value: function(...n) {
+                  return add(this.valueOf(),...n)
+              }
+          },
+          sub:{
+              value: function(...n) {
+                  return sub(this.valueOf(),...n)
+              }
+          },
+          mul:{
+              value: function(...n) {
+                  return mul$1(this.valueOf(),...n)
+              }
+          },
+          div:{
+              value: function(...n) {
+                  return div(this.valueOf(),...n)
+              }
+          },
+          modulo:{
+              value: function(...n) {
+                  return modulo(this.valueOf(),...n)
+              }
+          },
+          norm:{
+              value: function(min,max) {
+                  return norm(this.valueOf(),min,max)
+              }
+          },
+          lerp:{
+              value: function(min,max) {
+                  return lerp(this.valueOf(),min,max)
+              }
+          },
+          _map:{
+              value: function(a,b,c,d) {
+                  return map(this.valueOf(),a,b,c,d)
+              }
+          },
+          clamp:{
+              value: function(min,max) {
+                  return clamp(this.valueOf(),min,max)
+              }
+          },
+          deepMap:{
+              value: function(callback) {
+                  return mapfun(callback,...this.valueOf())
+              }
+          },
+          // chunk:{
+          //     value: function() {
+          //     }
+          // },
+
+      });
+  }
+
+  const fft=x=>{
+      const output = [];
+      const N = x.length;
+      if(!(x[0]instanceof Complex$1))x=x.map((n)=>complex$1(n,0));
+      for (let k = 0; k < N; k++) {
+        let re = 0,im=0;
+        for (let n = 0; n < N; n++) {
+          const phi = (2*PI * k * n) / N;
+          re += x[n].a*cos(phi)+x[n].b*sin(phi);
+          im += -x[n].a*sin(phi)+x[n].b*cos(phi);
+        }
+        re = re / N;
+        im = im / N;
+        output[k] = complex$1(re,im);
+      }
+      return {
+          output,
+          re:output.map(n=>n.a),
+          im:output.map(n=>n.b),
+          z:output.map(n=>n.z),
+          phi:output.map(n=>n.phi)
+      }
+    };
+    const ifft=x=>{
+      const output = [];
+      const N = x.length;
+        if(!(x[0]instanceof Complex$1))x=x.map((n)=>complex$1(n,0));
+      for (let k = 0; k < N; k++) {
+        let re=0,im=0;
+        for (let n = 0; n < N; n++) {
+          const phi = (2*PI * k * n) / N;
+          re += x[n].a*cos(phi)+x[n].b*sin(phi);
+          im += x[n].a*sin(phi)+x[n].b*cos(phi);
+        }
+        re = re / N;
+        im = im / N;
+    
+        output[k] = complex$1(re,im);
+      }
+      return {
+          output,
+          re:output.map(n=>n.a),
+          im:output.map(n=>n.b),
+          z:output.map(n=>n.z),
+          phi:output.map(n=>n.phi)
+      };
+    };
+
+  const conv1d=(input, kernel , circular = true)=>{
+      const INPUT_LENGTH = input.length;
+      const KERNEL_LENGTH = kernel.length;
+      const output = [];
+      const LENGTH_OUT = circular ? Math.max(INPUT_LENGTH,KERNEL_LENGTH) : INPUT_LENGTH + KERNEL_LENGTH - 1;
+      for (let i = 0; i < LENGTH_OUT; i++) {
+          let sum = 0;
+          for (let j = 0; j < KERNEL_LENGTH; j++) {
+              const inputIndex = i + j - Math.floor(KERNEL_LENGTH / 2);
+              // Apply zero-padding for out-of-bounds indices
+              const inputValue = inputIndex >= 0 && inputIndex < INPUT_LENGTH
+                  ? input[inputIndex]
+                  : 0;
+              sum += inputValue * kernel[j];
+          }
+          output.push(sum);
+      }
+      return output;
+  };
+
+  const conv2d = (input, kernel, circular = true) => {
+      if(!(input instanceof Matrix$1)) input = matrix(input);
+      if(!(kernel instanceof Matrix$1)) kernel = matrix(kernel);
+      const INPUT_ROWS=input.rows;
+      const INPUT_COLS=input.cols;
+      const OUTPUT_ROWS = circular ? Math.max(input.rows,kernel.rows) : input.rows + kernel.rows-1;
+      const OUTPUT_COLS = circular ? Math.max(input.cols,kernel.cols) : input.cols + kernel.cols-1;
+      const KERNEL_SIZE = kernel.rows;
+      const output = [];
+      for (let i = 0; i < OUTPUT_ROWS ; i++) {
+          const row = [];
+          for (let j = 0; j < OUTPUT_COLS ; j++) {
+              let sum = 0;
+              for (let k = 0; k < KERNEL_SIZE; k++) {
+                  for (let l = 0; l < KERNEL_SIZE; l++) {
+                      const rowIndex = i + k - Math.floor(KERNEL_SIZE / 2);
+                      const colIndex = j + l - Math.floor(KERNEL_SIZE / 2);
+                      // Apply zero-padding for out-of-bounds indices
+                      const inputValue = (rowIndex >= 0 && rowIndex < INPUT_ROWS &&
+                                          colIndex >= 0 && colIndex < INPUT_COLS)
+                          ? input[rowIndex][colIndex]
+                          : 0;
+                      sum += inputValue * kernel[k][l];
+                  }
+              }
+              row.push(sum);
+          }
+          output.push(row);
+      }
+      return output;
+  };
+  const conv=(input,kernel,circular)=>{
+      if(input instanceof Matrix$1 || (input instanceof Array && input[0][0]))return conv2d(input,kernel,circular);
+      return conv1d(input,kernel,circular)
+  };
+  const circularConv=(input,kernel)=>conv(input,kernel,true);
+  const linearConv=(input,kernel)=>conv(input,kernel,false);
+  const circularConv1d=(input,kernel)=>conv1d(input,kernel,true);
+  const circularConv2d=(input,kernel)=>conv2d(input,kernel,true);
+  const linearConv1d=(input,kernel)=>conv1d(input,kernel,false);
+  const linearConv2d=(input,kernel)=>conv2d(input,kernel,false);
+
+  // should be processed in other thread
+  class Filter{
+      constructor(input){
+          this.input=input;
+          this.input_fft=fft(this.input);
+          this.output_fft=[];
+      }
+      // get length(){
+      //     return this.input.length;
+      // }
+      lowPass(fc){
+          this.input_fft.output.forEach((n,i)=>{
+              n=n.z<fc
+              ? this.output_fft[i]=this.input_fft.output[i]
+              : this.output_fft[i]=complex$1(0,0);
+          });
+          return ifft(this.output_fft).re;
+      }
+      highPass(fc){
+          this.input_fft.output.forEach((n,i)=>{
+              n=n.z>fc
+              ? this.output_fft[i]=this.input_fft.output[i]
+              : this.output_fft[i]=complex$1(0,0);
+          });
+          return ifft(this.output_fft).re;
+      }
+      bandePass(){
+
+      }
+      bandeCoupe(){
+
+      }
+  }
+  const filter=input=>new Filter(input);
+
+  const Signal={
+      zeros,
+      ones,
+      nums,
+      arange,
+      linspace,
+      logspace,
+      geomspace,
+      map: map$1,
+      norm: norm$1,
+      lerp: lerp$1,
+      clamp: clamp$1,
+      noise(n,min = 0,max = 1){
+          return Random.floats(n,min,max);
+      },
+      echelon(t,t0 = 0 , A = 1){
+          if(!(t instanceof Array))t=[t];
+          const Y = mapfun(n=>n>=t0?1:0,...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+      },
+      rampe(t,t0 = 0 , A = 1){
+          if(!(t instanceof Array))t=[t];
+          const Y = mapfun(n=>n>=t0?n-t0:0,...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+      },
+      sign(t,t0 = 0 , A = 1){
+          if(!(t instanceof Array))t=[t];
+          const Y = mapfun(n=>Math.sign(n-t0),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+      },
+      rect(t,T,t0 = 0){
+          if(!(t instanceof Array))t=[t];
+          const Y = mapfun(n=>((t0-T/2 < n) && (t0+T/2 > n)? 1 - 2 * abs$1(n/T) : 0),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A
+      },
+      tri(t,T,t0 = 0 , A = 1){
+          if(!(t instanceof Array))t=[t]; 
+          const Y = mapfun(n=>((t0-T/2 < n) && (t0+T/2 > n)? 1 - 2 * abs$1(n/T) : 0),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
+      },
+      dirac(t,t0){
+          return mapfun(n=>n===t0?Infinity:0,...t);
+      },
+      lorentz(t , t0 = 0 , A = 1){
+          if(!(t instanceof Array))t=[t]; 
+          const Y = mapfun(n => 1/(1+(n-t0)**2),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
+      },
+      sinc(t , t0 , A = 1){
+          if(!(t instanceof Array))t=[t]; 
+          const Y = mapfun(n=>sinc(n-t0),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
+      },
+      square(t,T=1,A=1){
+          if(!(t instanceof Array))t=[t]; 
+          const Y = mapfun(n=>sign(sin$1(n*2*Math.PI/T)),...t);
+          return Y instanceof Array ? Y.map(n=>n*A) : Y*A;
+      },
+      sawtooth(){
+
+      },
+      conv,
+      conv1d,
+      conv2d,
+      circularConv,
+      linearConv,
+      circularConv1d,
+      linearConv1d,
+      circularConv2d,
+      linearConv2d,
+      fft,
+      ifft,
+      filter,
+  };
+
+  //import Ziko from "../index.js"
+  __NumberProto__();
+  __ArrayProto__();
+  const Math$1={
+      PI: PI$1,
+      E: E$1,
+      EPSILON,
+      Random,
+      complex: complex$1,
+      Complex: Complex$1,
+      Matrix: Matrix$1,
+      LinearSystem,
+      matrix,
+      matrix2,
+      matrix3,
+      matrix4,
+      cos: cos$1,
+      sin: sin$1,
+      tan,
+      sinc,
+      sec,
+      csc,
+      cot,
+      abs: abs$1,
+      sqrt,
+      pow: pow$1,
+      sqrtn,
+      e,
+      ln,
+      acos,
+      asin,
+      atan,
+      acot,
+      cosh,
+      sinh,
+      tanh,
+      coth,
+      acosh,
+      asinh,
+      atanh,
+      min,
+      max,
+      sign,
+      floor: floor$1,
+      ceil,
+      round,
+      fact,
+      hypot,
+      sig,
+      atan2,
+     // Derivation,
+      Utils,
+      nums,
+      zeros,
+      ones,
+      sum,
+      prod,
+      add,
+      mul: mul$1,
+      div,
+      sub,
+      modulo,
+      rad2deg,
+      deg2rad,
+      arange,
+      linspace,
+      logspace,
+      geomspace,
+      norm: norm$1,
+      lerp: lerp$1,
+      map: map$1,
+      clamp: clamp$1,
+      pgcd,
+      ppcm,
+      isApproximatlyEqual,
+      inRange,
+      cartesianProduct,
+      Discret,
+      Logic: Logic$1,
+      Base,
+      Permutation,
+      Combinaison,
+      PowerSet,
+      subset,
+      Signal,
+      ExtractAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) {
+                  globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
+  };
+
+  const addSuffixeToNumber=(value,suffixe="px")=>{
+    if(typeof value === "number") value+=suffixe;
+    if(value instanceof Array)value=value.map(n=>typeof n==="number"?n+=suffixe:n).join(" ");
+    return value;
+  };
+  const style = (el, styles) => {if(el)Object.assign(el.style, styles);};
+
+  //import { addSuffixeToNumber } from "../Utils.js";
+  function styleComposer(){
+      return {
+        style:function(styles,{target = "parent", maskVector = null } = {}){
+          if (target === "parent" || target === 0) {
+              style(this.element, styles);
+          }
+          else if(target === "parent" || target === 0){
+            if (maskVector) {
+              this.items.map((n, i) => maskVector[i] == 1 && n.style(styles));
+            } 
+            else this.items.map((n) => n.style(styles));      
+          }
+          return this;
+        },
+        // Css
+        setCss:function(css) {
+          this.element.style.cssText = css;
+          return this;
+        },
+        addCss:function(css) {
+          this.element.style.cssText += css;
+          return this;
+        },
+        // Dimensions
+        size:function(w,h,{ target, maskVector } = {}){
+          this.width(w,{ target, maskVector });
+          this.height(h,{ target, maskVector });
+          return this;
+        },
+        width:function(w,{ target, maskVector } = {}){
+          if(w instanceof Object){
+            if(w instanceof Array)w={min:w[0],max:w[1]};
+            if("min" in w || "max" in w){
+              let min= w.min ?? w.max;
+              let max= w.max ?? w.min;
+              min=addSuffixeToNumber(min,"px");
+              max=addSuffixeToNumber(max,"px"); 
+              this.style({ minWidth: min, maxWidth: max }, { target, maskVector });
+            }
+          }
+          else {
+            w=addSuffixeToNumber(w,"px");
+            this.style({width:w},{ target, maskVector });
+          }
+          return this
+        },
+        height:function(h,{ target, maskVector } = {}){
+          if(h instanceof Object){
+            if(h instanceof Array)h={min:h[0],max:h[1]};
+            if("min" in h || "max" in h){
+              let min= h.min ?? h.max;
+              let max= h.max ?? h.min;
+              min=addSuffixeToNumber(min,"px");
+              max=addSuffixeToNumber(max,"px"); 
+              this.style({ minHeight: min, maxHeight: max }, { target, maskVector });
+            }
+          }
+          else {
+            h=addSuffixeToNumber(h,"px");
+            this.style({height:h},{ target, maskVector });
+          }
+          return this
+        },
+        
+        // // Box Model 
+        // border:function(border = "1px solid red", { target, maskVector } = {}){
+        //   this.style({border}, { target, maskVector });
+        //   return this;
+        // },
+        // borderRadius:function(radius,{ target, maskVector } = {}){
+        //   radius=addSuffixeToNumber(radius,"px");
+        //   this.style({ borderRadius: radius }, { target, maskVector });
+        //   return this;
+        // },
+        // margin:function(margin,{ target, maskVector } = {}){
+        //   margin=addSuffixeToNumber(margin,"px");
+        //   this.style({ margin }, { target, maskVector });
+        //   return this;
+        // },
+        // padding:function(padding,{ target, maskVector } = {}){
+        //   padding=addSuffixeToNumber(padding,"px");
+        //   this.style({padding},{ target, maskVector });
+        //   return this;
+        // },
+        // // Placement 
+        // position:function(position,{ target, maskVector } = {}){
+        //   this.style({position},{ target, maskVector });
+        //   return this
+        // },
+        // display:function(disp, { target, maskVector } = {}) {
+        //   this.style({ display: disp }, { target, maskVector });
+        //   return this;
+        // },
+        // zIndex:function(z,{ target, maskVector } = {}){
+        //   this.style({zIndex:z},{ target, maskVector });
+        //   return this;
+        // },
+        // float:function(float, { target, maskVector } = {}) {
+        //   this.style({ float: float }, { target, maskVector });
+        //   return this;
+        // },
+        // // Apparences 
+        // color:function(color,{ target, maskVector } = {}){
+        //   this.style({color},{ target, maskVector });
+        //   return this;
+        // },
+        // background:function(background,{ target, maskVector } = {}){
+        //   this.style({background},{ target, maskVector });
+        //   return this;
+        // },
+        // opacity:function(opacity, { target, maskVector } = {}) {
+        //   this.style({ opacity }, { target, maskVector });
+        //   return this;
+        // },
+        
+        
+        hide:function({after, target, maskVector } = {}){
+          if(typeof after==="number")setTimeout(() => this.hide({target,maskVector}), after);
+          else {
+            this.cache.isHidden=true;
+            this.style({display:"none"},{target,maskVector});
+          }
+          return this;
+        },
+        show:function({after, target, maskVector } = {}){
+          if(typeof after==="number")setTimeout(() => this.show({target,maskVector}), after);
+          else {
+            this.cache.isHidden=false;
+            this.style({display:""},{target,maskVector});
+          }
+          return this;
+        },
+        
+        // cursor:function(type="pointer"){
+        //   this.style({ cursor: type });
+        //   return this;
+        // },
+        // overflow:function(x,y,{ target, maskVector } = {}){
+        //   const values=["hidden","auto"];
+        //   this.style({
+        //     overflowX:typeof x==="number"?values[x]:x,
+        //     overflowY:typeof y==="number"?values[y]:y
+        //   },{target,maskVector})
+        //   return this;
+        // },
+        // clip:function(polygon, { target, maskVector } = {}) {
+        //   if (typeof polygon === "string") polygon = "polygon(" + polygon + ")";
+        //   this.style({ clipPath: polygon }, { target, maskVector });
+        //   return this;
+        // },
+
+        // fadeOut:function(t = 1) {
+        //   this.style({ 
+        //     transition: t/1000 + "s", 
+        //     opacity: 0 
+        //   });
+        //   this.cache.isFaddedOut=true;
+        //   return this;
+        // },
+        // fadeIn:function(t = 1) {
+        //   this.style({ 
+        //     transition: t/1000 + "s", 
+        //     opacity: 1 
+        //   });
+        //   this.cache.isFaddedOut=false;
+        //   return this;
+        // },
+        // toggleFade:function(t_in = 1000,t_out=t_in){
+        //   this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
+        //   return this;
+        // },
+        // translateX:function(px, t = 0) {
+        //   this.style({ transform: "translateX(" + px + "px)" });
+        //   if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        //   return this;
+        // },
+        // translateY:function(px, t = 0) {
+        //   this.style({ transform: "translateY(" + px + "px)" });
+        //   if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        //   return this;
+        // },
+        // translate:function(x, y = x, t = 0) {
+        //   this.style({ transform: `translate( ${x}px , ${y}px )`});
+        //   if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        //   return this;
+        // },
+        // rotateX:function(deg, t = 0) {
+        //   this.style({ transform: "rotateX(" + deg + "deg)" });
+        //   if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        //   return this;
+        // },
+        // rotateY:function(deg, t = 0) {
+        //   this.style({ transform: "rotateY(" + deg + "deg)" });
+        //   if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        //   return this;
+        // },
+        // rotateZ:function(deg, t = 0) {
+        //   this.style({ transform: "rotateZ(" + deg + "deg)" });
+        //   if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        //   return this;
+        // },
+        // flipeX:function({ t = 1 } = {}) {
+        //   this.cache.transformation.Flip[0] += 180;
+        //   this.cache.transformation.Flip[0] %= 360;
+        //   this.style({
+        //     transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
+        //     transition: "all " + t + "s ease",
+        //   });
+        //   return this;
+        // },
+        // flipeY:function(t = 1) {
+        //   this.cache.transformation.Flip[1] += 180 ;
+        //   this.cache.transformation.Flip[1] %= 360;
+        //   this.style({
+        //     transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
+        //     transition: "all " + t + "s ease",
+        //   });
+        //   return this;
+        // },
+        // flipeZ:function(t = 1) {
+        //   this.cache.transformation.Flip[2] += 180;
+        //   this.cache.transformation.Flip[2] %= 360;
+        //   this.style({
+        //     transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
+        //     transition: "all " + t + "s ease",
+        //   });
+        //   return this;
+        // },
+        // slideHeightIn:function(t = 1, h = this.h) {
+        //   this.style({ transition: t + "s", height: h });
+        //   return this;
+        // },
+        // slideHeightOut:function(t = 1) {
+        //   this.style({ transition: t + "s", height: 0 });
+        //   this.element.addEventListener("transitionend", () =>
+        //     this.style({ opacity: "none" }),
+        //   );
+        //   return this;
+        // },
+        // slideWidthIn:function(t = 1, w = this.w) {
+        //   this.style({ transition: t + "s", width: w });
+        //   return this;
+        // },
+        // slideWidthOut:function(t = 1) {
+        //   this.style({ transition: t + "s", width: 0 });
+        //   this.element.addEventListener("transitionend", () =>
+        //     this.style({ opacity: "none" }),
+        //   );
+        //   return this;
+        // },
+        // slideIn:function({ t = 1, w = "100%", h = "auto" } = {}) {
+        //   this.style({
+        //     transition: t + "s",
+        //     width: w,
+        //     height: h,
+        //     visibility: "visible",
+        //   });
+        //   return this;
+        // },
+        // slideOut:function({ t = 1, width = 0, height = 0 } = {}) {
+        //   this.style({
+        //     visibility: "hidden",
+        //     transition: t + "s",
+        //     opacity: "none",
+        //     width: width,
+        //     height: height,
+        //   });
+        //   this.element.addEventListener("transitionend", () => {
+        //     this.style({ opacity: "none" });
+        //     console.log(1);
+        //   });
+        //   return this;
+        // }
+        
+      }
+    }
+
+  class ZikoUIElementStyle{
+      constructor(defaultStyle={}){
+          this.target=null;
+          this.styles=new Map(
+              [["default",defaultStyle]]
+          );
+          this.cache={
+              isHidden:false,
+              isFaddedOut:false,
+              transformation:{
+                  Flip:[0,0,0]
+              }
+          };
+      }
+      style(styles,{target = "parent", maskVector = null } = {}){
+          if (target === "parent" || target === 0)style(this.target.element, styles);
+          else if(target === "parent" || target === 0){
+            if (maskVector) {
+              this.items.map((n, i) => maskVector[i] == 1 && n.style(styles));
+            } 
+            else this.items.map((n) => n.style(styles));      
+          }
+          return this;
+        }
+      linkTo(target){
+          this.target=target;
+          return this;
+      }
+      use(name="default"){
+          this.style(this.styles.get(name));
+          return this;
+      }
+      update(name,styles){
+          const old=this.styles.get(name);
+          old?this.styles.set(name,Object.assign(old,styles)):this.styles.set(name,styles);
+          return this;
+      }
+      add(name,styles){
+          this.styles.set(name,styles);
+          return this;
+      }
+      replace(name,styles){
+          this.styles.set(name,styles);
+          return this;
+      }
+      delete(...names){
+          names.forEach(n=>this.styles.delete(n));
+          return this;
+      }
+      updateDefaultStyle(){
+          const defaultStyle=Object.fromEntries(
+              Object.entries(this.target.element.style).filter(n=>isNaN(+n[0]))
+          );   
+          this.update("default",defaultStyle);
+          return this;
+      }
+      hover(styles){
+          //this.updateDefaultStyle()
+          if(styles)this.add("hover",styles);
+          this.target.element.addEventListener("pointerenter",()=>this.use("hover"));
+          this.target.element.addEventListener("pointerleave",()=>this.use("default"));
+          return this;
+      }
+      // Size
+      size(width,height,{ target, maskVector } = {}){
+          this.style({
+              width,
+              height
+          },{ target, maskVector });
+          return this;
+      }
+      width(w,{ target, maskVector } = {}){
+          if(w instanceof Object){
+            if(w instanceof Array)w={min:w[0],max:w[1]};
+            if("min" in w || "max" in w){
+              let min= w.min ?? w.max;
+              let max= w.max ?? w.min;
+              min=addSuffixeToNumber(min,"px");
+              max=addSuffixeToNumber(max,"px"); 
+              this.style({ minWidth: min, maxWidth: max }, { target, maskVector });
+            }
+          }
+          else {
+            w=addSuffixeToNumber(w,"px");
+            this.style({width:w},{ target, maskVector });
+          }
+          return this
+      }
+      height(h,{ target, maskVector } = {}){
+          if(h instanceof Object){
+            if(h instanceof Array)h={min:h[0],max:h[1]};
+            if("min" in h || "max" in h){
+              let min= h.min ?? h.max;
+              let max= h.max ?? h.min;
+              min=addSuffixeToNumber(min,"px");
+              max=addSuffixeToNumber(max,"px"); 
+              this.style({ minHeight: min, maxHeight: max }, { target, maskVector });
+            }
+          }
+          else {
+            h=addSuffixeToNumber(h,"px");
+            this.style({height:h},{ target, maskVector });
+          }
+          return this
+      }    
+      // Apparence
+      hide({after, target, maskVector } = {}){
+          if(typeof after==="number"){
+              const wrapper=()=>this.hide({target,maskVector});
+              setTimeout(wrapper, after);
+              clearTimeout(wrapper);
+          }
+          else {
+            this.cache.isHidden=true;
+            this.style({display:"none"},{target,maskVector});
+          }
+          return this;
+      }
+      show({after, target, maskVector } = {}){
+          if(typeof after==="number"){
+              const wrapper=()=>this.show({target,maskVector});
+              setTimeout(wrapper, after);
+              clearTimeout(wrapper);
+          }
+          else {
+            this.cache.isHidden=false;
+            this.style({display:""},{target,maskVector});
+          }
+          return this;
+      }
+      color(color,{ target, maskVector } = {}){
+          this.style({color},{ target, maskVector });
+          return this;
+      }
+      background(background,{ target, maskVector } = {}){
+          this.style({background},{ target, maskVector });
+          return this;
+      }
+      backgroundColor(backgroundColor,{ target, maskVector } = {}){
+          this.style({backgroundColor},{ target, maskVector });
+          return this;
+      }
+      opacity(opacity, { target, maskVector } = {}) {
+          this.style({ opacity }, { target, maskVector });
+          return this;
+      }
+      // Placement
+      position(position,{ target, maskVector } = {}){
+          this.style({position},{ target, maskVector });
+          return this
+      }
+      display(disp, { target, maskVector } = {}) {
+          this.style({ display: disp }, { target, maskVector });
+          return this;
+      }
+      zIndex(z,{ target, maskVector } = {}){
+          this.style({zIndex:z},{ target, maskVector });
+          return this;
+      }
+      float(float, { target, maskVector } = {}) {
+          this.style({ float: float }, { target, maskVector });
+          return this;
+      }
+      // Box Model 
+      border(border = "1px solid red", { target, maskVector } = {}){
+          this.style({border}, { target, maskVector });
+          return this;
+      }
+      borderTop(borderTop = "1px solid red", { target, maskVector } = {}){
+          this.style({borderTop}, { target, maskVector });
+          return this;
+      }
+      borderRight(borderRight = "1px solid red", { target, maskVector } = {}){
+          this.style({borderRight}, { target, maskVector });
+          return this;
+      }
+      borderBottom(borderBottom = "1px solid red", { target, maskVector } = {}){
+          this.style({borderBottom}, { target, maskVector });
+          return this;
+      }
+      borderLeft(borderLeft = "1px solid red", { target, maskVector } = {}){
+          this.style({borderLeft}, { target, maskVector });
+          return this;
+      }
+      borderRadius(radius,{ target, maskVector } = {}){
+          radius=addSuffixeToNumber(radius,"px");
+          this.style({ borderRadius: radius }, { target, maskVector });
+          return this;
+      }
+      margin(margin,{ target, maskVector } = {}){
+          margin=addSuffixeToNumber(margin,"px");
+          this.style({ margin }, { target, maskVector });
+          return this;
+      }
+      marginTop(marginTop,{ target, maskVector } = {}){
+          marginTop=addSuffixeToNumber(marginTop,"px");
+          this.style({marginTop},{ target, maskVector });
+          return this;
+      }
+      marginRight(marginRight,{ target, maskVector } = {}){
+          marginRight=addSuffixeToNumber(marginRight,"px");
+          this.style({marginRight},{ target, maskVector });
+          return this;
+      }
+      marginBootom(marginBootom,{ target, maskVector } = {}){
+          marginBootom=addSuffixeToNumber(marginBootom,"px");
+          this.style({marginBootom},{ target, maskVector });
+          return this;
+      }
+      marginLeft(marginLeft,{ target, maskVector } = {}){
+          marginLeft=addSuffixeToNumber(marginLeft,"px");
+          this.style({marginLeft},{ target, maskVector });
+          return this;
+      }
+      padding(padding,{ target, maskVector } = {}){
+          padding=addSuffixeToNumber(padding,"px");
+          this.style({padding},{ target, maskVector });
+          return this;
+      }
+      paddingTop(paddingTop,{ target, maskVector } = {}){
+          paddingTop=addSuffixeToNumber(paddingTop,"px");
+          this.style({paddingTop},{ target, maskVector });
+          return this;
+      }
+      paddingRight(paddingRight,{ target, maskVector } = {}){
+          paddingRight=addSuffixeToNumber(paddingRight,"px");
+          this.style({paddingRight},{ target, maskVector });
+          return this;
+      }
+      paddingBootom(paddingBootom,{ target, maskVector } = {}){
+          paddingBootom=addSuffixeToNumber(paddingBootom,"px");
+          this.style({paddingBootom},{ target, maskVector });
+          return this;
+      }
+      paddingLeft(paddingLeft,{ target, maskVector } = {}){
+          paddingLeft=addSuffixeToNumber(paddingLeft,"px");
+          this.style({paddingLeft},{ target, maskVector });
+          return this;
+      }
+      // Typographie
+      font(font,{ target, maskVector } = {}){
+          this.style({font},{ target, maskVector });
+          return this;
+      }
+      fontFamily(fontFamily="",{ target, maskVector } = {}){
+          this.style({fontFamily},{ target, maskVector });
+          return this;
+      }
+      fontSize(fontSize,{ target, maskVector } = {}){
+          this.style({fontSize},{ target, maskVector });
+          return this;
+      }
+      // Misc
+      cursor(type="pointer"){
+          this.style({ cursor: type });
+          return this;
+      }  
+      overflow(x,y,{ target, maskVector } = {}){
+          const values=["hidden","auto"];
+          this.style({
+            overflowX:typeof x==="number"?values[x]:x,
+            overflowY:typeof y==="number"?values[y]:y
+          },{target,maskVector});
+          return this;
+      }
+      clip(polygon, { target, maskVector } = {}) {
+          if (typeof polygon === "string") polygon = "polygon(" + polygon + ")";
+          this.style({ clipPath: polygon }, { target, maskVector });
+          return this;
+      }
+      // Transfromations
+      fadeOut(t = 1) {
+          this.style({ 
+            transition: t/1000 + "s", 
+            opacity: 0 
+          });
+          this.cache.isFaddedOut=true;
+          return this;
+      }
+      fadeIn(t = 1) {
+          this.style({ 
+            transition: t/1000 + "s", 
+            opacity: 1 
+          });
+          this.cache.isFaddedOut=false;
+          return this;
+      }
+      toggleFade(t_in = 1000,t_out=t_in){
+          this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
+          return this;
+      }
+      translateX(px, t = 0) {
+          this.style({ transform: "translateX(" + px + "px)" });
+          if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+          return this;
+      }
+      translateY(px, t = 0) {
+          this.style({ transform: "translateY(" + px + "px)" });
+          if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+          return this;
+      }
+      translate(x, y = x, t = 0) {
+          this.style({ transform: `translate( ${x}px , ${y}px )`});
+          if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+          return this;
+      }
+      rotateX(deg, t = 0) {
+          this.style({ transform: "rotateX(" + deg + "deg)" });
+          if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+          return this;
+      }
+      rotateY(deg, t = 0) {
+          this.style({ transform: "rotateY(" + deg + "deg)" });
+          if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+          return this;
+      }
+      rotateZ(deg, t = 0) {
+          this.style({ transform: "rotateZ(" + deg + "deg)" });
+          if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+          return this;
+      }
+      flipeX({ t = 1 } = {}) {
+          this.cache.transformation.Flip[0] += 180;
+          this.cache.transformation.Flip[0] %= 360;
+          this.style({
+            transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
+            transition: "all " + t + "s ease",
+          });
+          return this;
+      }
+      flipeY(t = 1) {
+          this.cache.transformation.Flip[1] += 180 ;
+          this.cache.transformation.Flip[1] %= 360;
+          this.style({
+            transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
+            transition: "all " + t + "s ease",
+          });
+          return this;
+        }
+      flipeZ(t = 1) {
+          this.cache.transformation.Flip[2] += 180;
+          this.cache.transformation.Flip[2] %= 360;
+          this.style({
+            transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
+            transition: "all " + t + "s ease",
+          });
+          return this;
+      }
+      slideHeightIn(t = 1, h = this.h) {
+          this.style({ transition: t + "s", height: h });
+          return this;
+      }
+      slideHeightOut(t = 1) {
+          this.style({ transition: t + "s", height: 0 });
+          this.target.element.addEventListener("transitionend", () =>
+            this.style({ opacity: "none" }),
+          );
+          return this;
+        }
+      slideWidthIn(t = 1, w = this.w) {
+          this.style({ transition: t + "s", width: w });
+          return this;
+      }
+      slideWidthOut(t = 1) {
+          this.style({ transition: t + "s", width: 0 });
+          const wrapper=()=>{
+              this.style({ opacity: "none" });
+          };
+          this.target.element.addEventListener("transitionend",wrapper);
+          this.target.element.removeEventListener("transitionend",wrapper);
+          return this;
+      }
+      slideIn({ t = 1, w = "100%", h = "auto" } = {}) {
+          this.style({
+            transition: t + "s",
+            width: w,
+            height: h,
+            visibility: "visible",
+          });
+          return this;
+      }
+      slideOut({ t = 1, width = 0, height = 0 } = {}) {
+          this.style({
+            visibility: "hidden",
+            transition: t + "s",
+            opacity: "none",
+            width: width,
+            height: height,
+          });
+          const wrapper=()=>{
+              this.style({ opacity: "none" });
+          };
+          this.target.element.addEventListener("transitionend",wrapper);
+          this.target.element.removeEventListener("transitionend",wrapper);
+          return this;
+      }
+        
+  }
+
+  const ZikoStyle=(defaultStyle)=>new ZikoUIElementStyle(defaultStyle);
+
+  const Garbage={
+      Key:{
+          data:[],
+          dispose:function(){
+              this.data.map(n=>n?.event?.dispose());
+              return this;
+          },
+          destroy:function(){
+              this.dispose();
+              this.data.length=0;
+              return this;
+          }
+      },
+      Pointer:{
+          data:[],
+          dispose:function(){
+              this.data.map(n=>n?.event?.dispose());
+              return this;
+          },
+          destroy:function(){
+              this.dispose();
+              this.data.length=0;
+              return this;
+          }
+      },
+      Drag:{
+          data:[],
+          dispose:function(){
+              this.data.map(n=>n?.event?.dispose());
+              return this;
+          },
+          destroy:function(){
+              this.dispose();
+              this.data.length=0;
+              return this;
+          }
+      }
+  };
+
+  function EVENT_CONTROLLER(e,EVENT,setter,push_object){
+      this.event=e;
+      if(this.cache.preventDefault[EVENT])e.preventDefault();
+      if(setter)setter();
+      if(this.cache.stream.enabled[EVENT]&&push_object)this.cache.stream.history[EVENT].push(push_object);
+      this.cache.callbacks[EVENT].map(n=>n(this));
+      return this;
+  }
+  class ZikoEvent{
+      constructor(Target){
+          this.Target=window;
+          this.setTarget(Target);
+          this.__dispose=this.dispose.bind(this);
+          // this.EventIndex=Garbage.Pointer.data.length;
+          // Garbage.Pointer.data.push({event:this,index:this.EventIndex});
+      }
+      get TargetElement(){
+          return this.Target.element
+      }
+      setTarget(UI){
+          this.Target=UI;
+          return this;
+      }
+      __handle(event,handler,dispose){
+          const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`;
+          this.dispose(dispose);
+          this.TargetElement.addEventListener(EVENT,handler);
+          return this;   
+      }
+      __onEvent(event,dispose,...callbacks){
+          if(callbacks.length===0){
+              if(this.cache.callbacks.length>1){
+                  this.cache.callbacks.map(n=>e=>n.call(this,e));
+              }   
+              else {
+                  return this;
+              }
+          }
+          else this.cache.callbacks[event]=callbacks.map(n=>e=>n.call(this,e));
+          this.__handle(event,this.__controller[event],dispose);
+          return this;  
+      }
+      preventDefault(config={}){
+          Object.assign(this.cache.preventDefault,config);
+          return this;
+      }
+      pause(config={}){
+          const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
+          config={...all,...config};
+          for(let key in config){
+              if(config[key]){
+                  this.TargetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                  this.cache.paused[`${this.cache.prefixe}${key}`]=true;
+              }
+          }
+          return this;
+       }
+      resume(config={}){
+          const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
+          config={...all,...config};
+          for(let key in config){
+              if(config[key]){
+                  this.TargetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                  this.cache.paused[`${this.cache.prefixe}${key}`]=false;
+              }
+          }
+          return this;
+       }
+      dispose(config={}){
+          this.pause(config);
+          return this;
+       }
+      stream(config={}){
+          this.cache.stream.t0=Date.now();
+          const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,true]));
+          config={...all,...config};
+          Object.assign(this.cache.stream.enabled,config);
+          return this;
+       }
+      clear(config={}){
+          const all=Object.fromEntries(Object.keys(this.cache.stream.clear).map(n=>[n,true]));
+          config={...all,...config};
+          for(let key in config){
+              if(config[key]){
+                  this.cache.stream.history[key]=[];
+              }
+          }
+          return this;
+      }
+      get Garbage(){
+          return Garbage
+      }
+  }
+
+  function pointerdown_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "down",
+          ()=>{
+              this.dx=parseInt(e.offsetX);
+              this.dy=parseInt(e.offsetY);
+              this.isDown=true;
+          },
+          {
+              x:this.dx,
+              y:this.dy,
+              t:Date.now()-this.cache.stream.t0
+          }  
+      );
+  }
+  function pointermove_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "move",
+          ()=>{
+              this.mx=parseInt(e.offsetX);
+              this.my=parseInt(e.offsetY);
+              this.isMoving=true;
+          },
+          {
+              x:this.mx,
+              y:this.my,
+              t:Date.now()-this.cache.stream.t0
+          }    
+      );
+  }
+  function pointerup_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "up",
+          ()=>{
+              this.ux=parseInt(e.offsetX);
+              this.uy=parseInt(e.offsetY);
+              this.isDown=false;
+          },
+          {
+              x:this.ux,
+              y:this.uy,
+              t:Date.now()-this.cache.stream.t0
+          }    
+      );
+  }
+  function pointerenter_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "enter",
+          null,
+          null    
+      );
+  }
+  function pointerleave_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "leave",
+          null,
+          null    
+      );
+  }
+  function pointerout_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "out",
+          null,
+          null    
+      );
+  }
+  class ZikoEventPointer extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.dx=0;
+          this.dy=0;
+          this.dt=0;
+          this.mx=0;
+          this.my=0;
+          this.mt=0;
+          this.ux=0;
+          this.uy=0;      
+          this.ut=0;
+          this.isMoving=false;
+          this.isDown=false;
+          this.cache={
+              prefixe:"pointer",
+              preventDefault:{
+                  down:false,
+                  move:false,
+                  up:false,
+                  enter:false,
+                  out:false,
+                  leave:false,
+              },
+              paused:{
+                  down:false,
+                  move:false,
+                  up:false,
+                  enter:false,
+                  out:false,
+                  leave:false,          
+              },
+              stream:{
+                  enabled:{
+                      down:false,
+                      move:false,
+                      up:false,
+                      enter:false,
+                      out:false,
+                      leave:false,
+                  },
+                  clear:{
+                      down:false,
+                      move:false,
+                      up:false,
+                      enter:false,
+                      out:false,
+                      leave:false,            
+                  },
+                  history:{
+                      down:[],
+                      move:[],
+                      up:[],
+                      enter:[],
+                      out:[],
+                      leave:[]
+                  }
+              },
+              callbacks:{
+                  down:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
+                  move:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
+                  up:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})],
+                  enter:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
+                  out:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
+                  leave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
+              }
+          };
+          this.__controller={
+              down:pointerdown_controller.bind(this),
+              move:pointermove_controller.bind(this),
+              up:pointerup_controller.bind(this),
+              enter:pointerenter_controller.bind(this),
+              out:pointerout_controller.bind(this),
+              leave:pointerleave_controller.bind(this),
+          };
+      }
+      onDown(...callbacks){
+          this.__onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks);
+          return this;
+      }
+      onMove(...callbacks){
+          this.__onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks);
+          return this;
+      }
+      onUp(...callbacks){
+          this.__onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks);
+          return this;
+      }
+      onEnter(...callbacks){
+          this.__onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks);
+          return this;
+      }
+      onOut(...callbacks){
+          this.__onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks);
+          return this;
+      }
+      onLeave(...callbacks){
+          this.__onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks);
+          return this;
+      }
+      // handle({down=false,move=false,up=false}={}){
+      //     if(down)this.handleDown();
+      //     if(move)this.handleMove();
+      //     if(up)this.handleUp()
+      // }
+  }
+  var Pointer=target=>new ZikoEventPointer(target);
+
+  function keydown_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "down",
+          ()=>this.kd=e.key,
+          {key:e.key,t:10}
+          );
+  }
+  function keypress_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "press",
+          ()=>this.kp=e.key,
+          {key:e.key,t:10}
+          );
+  }
+  function keyup_controller(e){
+      EVENT_CONTROLLER.call(
+          this,
+          e,
+          "up",
+          ()=>this.ku=e.key,
+          {key:e.key,t:10}
+          );
+  }
+  class ZikoEventKey extends ZikoEvent{
+      constructor(target){ 
+          super(target);
+          this.kp=null;
+          this.kd=null;
+          this.ku=null;
+          this.t=0;
+          this.cache={
+              prefixe:"key",
+              preventDefault:{
+                  down:false,
+                  press:false,
+                  up:false,
+              },
+              paused:{
+                  down:false,
+                  press:false,
+                  up:false,
+              },
+              stream:{
+                  enabled:{
+                      down:false,
+                      press:false,
+                      up:false,
+                  },
+                  clear:{
+                      down:true,
+                      press:false,
+                      up:false,
+                  },
+                  history:{
+                      down:[],
+                      press:[],
+                      up:[],
+                  }
+              },
+              callbacks:{
+                  down:[(self)=>console.log({kd:self.kd})],
+                  press:[(self)=>console.log({kp:self.kp})],
+                  up:[(self)=>console.log({ku:self.ku})]
+              },
+              successifKeysCallback:{
+                  down:[(self)=>console.log(1111)],
+                  press:[(self)=>console.log(1112)],
+                  kyup:[(self)=>console.log(1113)]
+              }
+          };
+          this.__controller={
+              down:keydown_controller.bind(this),
+              press:keypress_controller.bind(this),
+              up:keyup_controller.bind(this)
+          };
+      }
+      onDown(...callbacks){
+          this.__onEvent("down",{down:true},...callbacks);
+          return this;
+       }
+      onPress(...callbacks){
+          this.__onEvent("press",{press:true},...callbacks);
+          return this;
+       }
+      onUp(...callbacks){
+          this.__onEvent("up",{up:true},...callbacks);
+          return this;
+       }
+      // handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
+      //     const reversedkeys = keys.reverse();
+      //     const newkeys = new Array(reversedkeys.length).fill(null);
+      //     const addsub = (arr, item, length = keys.length) => {
+      //         arr.unshift(item);
+      //         arr.length = length;
+      //       };
+          
+      //     if(event.down){
+      //         this.handleDown();
+      //         this.cache.successifKeysCallback.down=[callback];
+      //         this.cache.callback.down.push(e=>{
+      //             addsub(newkeys,e.kd);
+      //             if(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))this.cache.successifKeysCallback.down.map(n=>n(this))
+      //         })        
+      //         }       
+      //  }
+
+  }
+
+  var Key=Target=>new ZikoEventKey(Target);
+
+  function dragstart_controller(e){
+      EVENT_CONTROLLER(this,e,"start",null);
+  }
+  function drag_controller(e){
+      EVENT_CONTROLLER.call(this,e,"drag",null,null);
+  }
+  function dragend_controller(e){
+      EVENT_CONTROLLER.call(this,e,"end",null,null);
+  }
+  function drop_controller(e){
+      EVENT_CONTROLLER.call(this,e,"drop",null,null);
+  }
+
+  class ZikoEventDrag extends ZikoEvent{
+      constructor(Target){
+          super(Target);
+          this.Target.setAttribute("draggable",true);
+          this.cache={
+              prefixe:"drag",
+              preventDefault:{
+                  drag:false,
+                  start:false,
+                  end:false,
+                  enter:false,
+                  leave:false,
+                  over:false,
+              },
+              paused:{
+                  drag:false,
+                  start:false,
+                  end:false,
+                  enter:false,
+                  leave:false,
+                  over:false,
+              },
+              enabled:{
+                  drag:false,
+                  start:false,
+                  end:false,
+                  enter:false,
+                  leave:false,
+                  over:false,
+              },
+              callbacks:{
+                  drag:[],
+                  start:[],
+                  end:[],
+                  enter:[],
+                  leave:[],
+                  over:[]
+              },
+              stream:{
+                  enabled:{
+                      drag:false,
+                      start:false,
+                      end:false,
+                      enter:false,
+                      leave:false,
+                      over:false,
+                  },
+                  clear:{
+                      drag:false,
+                      start:false,
+                      end:false,
+                      enter:false,
+                      leave:false,
+                      over:false,
+                  },
+                  history:{
+                      drag:[],
+                      start:[],
+                      end:[],
+                      enter:[],
+                      leave:[],
+                      over:[],
+                  }
+              }
+          };
+          this.__controller={
+              start:dragstart_controller.bind(this),
+              drag:drag_controller.bind(this),
+              end:dragend_controller.bind(this)
+          };
+      }
+      onStart(...callbacks){
+          this.__onEvent("start",{},...callbacks);
+          return this;
+      }
+      onDrag(...callbacks){
+          this.__onEvent("drag",{},...callbacks);
+          return this;
+      }
+      onEnd(...callbacks){
+          this.__onEvent("end",{},...callbacks);
+          return this;
+      }
+  }
+  class ZikoEventDrop extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.cache={
+              prefixe:"",
+              preventDefault:{
+                  drop:false,
+              },
+              paused:{
+                  drop:false,      
+              },
+              stream:{
+                  enabled:{
+                      drop:false,
+                  },
+                  clear:{
+                      drop:false,          
+                  },
+                  history:{
+                      drop:[],
+                  }
+              },
+              callbacks:{
+                  drop:[(self)=>console.log({dx:self.dx,dy:self.dy,drop:self.drop,move:self.move,t:self.dt})],
+              }
+          };
+          this.__controller={
+              drop:drop_controller.bind(this),
+          };
+      }
+      onDrop(...callbacks){
+          this.__onEvent("drop",{},...callbacks);
+          return this;
+      } 
+  }
+  const Drag=Target=>new ZikoEventDrag(Target);
+  const Drop=Target=>new ZikoEventDrop(Target);
+
+  function click_controller(e){
+      EVENT_CONTROLLER.call(this,e,"click",null,null);
+  }
+  function dbclick_controller(e){
+      EVENT_CONTROLLER.call(this,e,"dbclick",null,null);
+  }
+  class ZikoEventClick extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.cache={
+              prefixe:"",
+              preventDefault:{
+                  click:false,
+                  dbclick:false,
+              },
+              paused:{
+                  click:false,
+                  dbclick:false,      
+              },
+              stream:{
+                  enabled:{
+                      click:false,
+                      dbclick:false,
+                  },
+                  clear:{
+                      click:false, 
+                      dbclick:false,         
+                  },
+                  history:{
+                      click:[],
+                      dbclick:[],
+                  }
+              },
+              callbacks:{
+                  click:[],
+                  dbclick:[],
+              }
+          };
+          this.__controller={
+              click:click_controller.bind(this),
+              dbclick:dbclick_controller.bind(this),
+          };
+      }
+      onClick(...callbacks){
+          this.__onEvent("click",{},...callbacks);
+          return this;
+       }
+      onDbClick(...callbacks){
+          this.__onEvent("dbclick",{},...callbacks);
+          return this;
+       }     
+  }
+  const Click=Target=>new ZikoEventClick(Target);
+
+  function copy_controller(e){
+      EVENT_CONTROLLER.call(this,e,"copy",null,null);
+  }
+  function cut_controller(e){
+      EVENT_CONTROLLER.call(this,e,"cut",null,null);
+  }
+  function paste_controller(e){
+      EVENT_CONTROLLER.call(this,e,"paste",null,null);
+  }
+  function select_controller(e){
+      EVENT_CONTROLLER.call(this,e,"select",null,null);
+  }
+  class ZikoEventClipboard extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.cache={
+              prefixe:"",
+              preventDefault:{
+                  copy:false,
+                  cut:false,
+                  paste:false,
+                  select:false
+              },
+              paused:{
+                  copy:false,
+                  cut:false,
+                  paste:false,  
+                  select:false  
+              },
+              stream:{
+                  enabled:{
+                      copy:false,
+                      cut:false,
+                      paste:false,
+                      select:false,
+                  },
+                  clear:{
+                      copy:false,
+                      cut:false,
+                      paste:false, 
+                      select:false,      
+                  },
+                  history:{
+                      copy:[],
+                      cut:[],
+                      paste:[],
+                      select:[]
+                  }
+              },
+              callbacks:{
+                  copy:[],
+                  cut:[],
+                  paste:[],
+                  select:[]
+              }
+          };
+          this.__controller={
+              copy:copy_controller.bind(this),
+              cut:cut_controller.bind(this),
+              paste:paste_controller.bind(this),
+              select:select_controller.bind(this)
+          };
+      }
+      onCopy(...callbacks){
+          this.__onEvent("copy",{},...callbacks);
+          return this;
+       } 
+      onCut(...callbacks){
+          this.__onEvent("cut",{},...callbacks);
+          return this;
+       } 
+      onPaste(...callbacks){
+          this.__onEvent("paste",{},...callbacks);
+          return this;
+       }   
+      onSelect(...callbacks){
+          this.__onEvent("select",{},...callbacks);
+          return this;
+       }   
+  }
+  const Clipboard=Target=>new ZikoEventClipboard(Target);
+
+  function focus_controller(e){
+      EVENT_CONTROLLER.call(this,e,"focus",null,null);
+  }
+  function blur_controller(e){
+      EVENT_CONTROLLER.call(this,e,"blur",null,null);
+  }
+  class ZikoEventFocus extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.cache={
+              prefixe:"",
+              preventDefault:{
+                  focus:false,
+                  blur:false,
+              },
+              paused:{
+                  focus:false,
+                  blur:false,      
+              },
+              stream:{
+                  enabled:{
+                      focus:false,
+                      blur:false,
+                  },
+                  clear:{
+                      focus:false, 
+                      blur:false,         
+                  },
+                  history:{
+                      focus:[],
+                      blur:[],
+                  }
+              },
+              callbacks:{
+                  focus:[],
+                  blur:[],
+              }
+          };
+          this.__controller={
+              focus:focus_controller.bind(this),
+              blur:blur_controller.bind(this),
+          };
+      }
+      onFocus(...callbacks){
+          this.__onEvent("focus",{},...callbacks);
+          return this;
+       }
+      onBlur(...callbacks){
+          this.__onEvent("blur",{},...callbacks);
+          return this;
+       }     
+  }
+  const Focus=Target=>new ZikoEventFocus(Target);
+
+  function input_controller(e){
+      EVENT_CONTROLLER.call(this,e,"input",null,null);
+  }
+  function change_controller(e){
+      EVENT_CONTROLLER.call(this,e,"change",null,null);
+  }
+  class ZikoEventInput extends ZikoEvent{
+      constructor(target){
+          super(target);
+          this.event=null;
+          this.cache={
+              prefixe:"",
+              preventDefault:{
+                  input:false,
+                  change:false,
+              },
+              paused:{
+                  input:false,
+                  change:false,      
+              },
+              stream:{
+                  enabled:{
+                      input:false,
+                      change:false,
+                  },
+                  clear:{
+                      input:false, 
+                      change:false,         
+                  },
+                  history:{
+                      input:[],
+                      change:[],
+                  }
+              },
+              callbacks:{
+                  input:[],
+                  change:[],
+              }
+          };
+          this.__controller={
+              input:input_controller.bind(this),
+              change:change_controller.bind(this),
+          };
+      }
+      get value(){
+          return this.Target.value;
+      }
+      onInput(...callbacks){
+          this.__onEvent("input",{},...callbacks);
+          return this;
+       }
+      onChange(...callbacks){
+          this.__onEvent("change",{},...callbacks);
+          return this;
+       }     
+  }
+  const Input=Target=>new ZikoEventInput(Target);
+
+  class ZikoChannel{
+      constructor(name=""){
+          this.channel=new BroadcastChannel(name);
+          this.EVENTS_DATAS_PAIRS=new Map();
+          this.EVENTS_HANDLERS_PAIRS=new Map();
+          this.LAST_RECEIVED_EVENT="";
+          this.UUID=crypto.randomUUID();
+          this.SUBSCRIBERS=new Set([this.UUID]);
+      }
+      get broadcast(){
+          // update receiver
+          return this;
+      }
+      emit(event, data){
+          this.EVENTS_DATAS_PAIRS.set(event,data);
+          this.#maintainEmit(event);
+          return this;
+      }
+      on(event,handler=console.log){
+          this.EVENTS_HANDLERS_PAIRS.set(event,handler);
+          this.#maintainOn();
+          return this;
+      }
+      #maintainOn(){
+          this.channel.onmessage = (e) => {
+              this.LAST_RECEIVED_EVENT=e.data.last_sended_event;
+              const USER_ID=e.data.userId;
+              this.SUBSCRIBERS.add(USER_ID);
+              const Data=e.data.EVENTS_DATAS_PAIRS.get(this.LAST_RECEIVED_EVENT);
+              const Handler=this.EVENTS_HANDLERS_PAIRS.get(this.LAST_RECEIVED_EVENT);
+              if(Data && Handler)Handler(Data);
+            };
+            return this;
+      }
+      #maintainEmit(event){
+          this.channel.postMessage({
+              EVENTS_DATAS_PAIRS:this.EVENTS_DATAS_PAIRS,
+              last_sended_event:event,
+              userId:this.UUID
+          });
+          return this;
+      }
+      close(){
+          this.channel.close();
+          return this;
+      }
+  }
+
+  const Channel=name=>new ZikoChannel(name);
+
+  const Events={
+      Pointer,
+      Key,
+      Drag,
+      Drop,
+      Click,
+      Clipboard,
+      Focus,
+      Input,
+      Channel,
+      ExtractAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) {
+                  globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
+  };
+
+  class ZikoResizeObserver{
+      constructor(UIElement,callback){
+          this.target=UIElement;
+          this.contentRect=null;
+          this.observer=new ResizeObserver(()=>{
+             callback(this);
+          });
+      }
+      get BoundingRect(){
+          return this.target.element.getBoundingClientRect();
+      }
+      get width(){
+          return this.BoundingRect.width;
+      }
+      get height(){
+          return this.BoundingRect.height;
+      }
+      get top(){
+          return this.BoundingRect.top;
+      }
+      get bottom(){
+          return this.BoundingRect.bottom;
+      }
+      get right(){
+          return this.BoundingRect.right;
+      }
+      get left(){
+          return this.BoundingRect.left;
+      }
+      get x(){
+          return this.BoundingRect.x;
+      }
+      get y(){
+          return this.boundingRect.y;
+      }
+      start(){
+          this.observer.observe(this.target.element);
+          return this;
+      }
+      stop(){
+          this.observer.unobserve(this.target.element);
+          return this;
+      }
+  }
+
+  const WatchSize=(UI,callback)=>new ZikoResizeObserver(UI,callback);
+
+  class ZikoIntersectionObserver{
+      constructor(UIElement,callback,{threshold=0,margin=0}={}){
+          this.target=UIElement;
+          this.config={
+              threshold,
+              margin
+          };
+          this.observer=new IntersectionObserver((entries)=>{
+              this.entrie=entries[0];
+              callback(this);
+          },{
+              threshold:this.threshold,
+          });
+      }
+      get ratio(){
+          return this.entrie.intersectionRatio;
+      }
+      get isIntersecting(){
+          return this.entrie.isIntersecting;
+      }
+      setThreshould(threshold){
+          this.config.threshold=threshold;
+          return this;
+      }
+      setMargin(margin){
+          margin=(typeof margin === "number")?margin+"px":margin;
+          this.config.margin=margin;
+          return this;
+      }
+      start(){
+          this.observer.observe(this.target.element);
+          return this;
+      }
+      stop(){
+          return this;
+      }
+  }
+
+  const WatchIntersection=(UI,callback,config)=>new ZikoIntersectionObserver(UI,callback,config);
+
+  class ZikoUIElement {
+    constructor(element ) {
+      this.Target = document.body;
+      if (typeof element === "string") element = document.createElement(element);
+      this.element = element;
+      Object.assign(this, styleComposer.call(this));
+      this.cache = {
+        isHidden: false,
+        isFrozzen:false,
+        transformMatrix:matrix([
+          [0,0,0],
+          [0,0,0],
+          [1,1,0]
+        ]),
+        style: ZikoStyle({}),
+        attributes: {},
+        filters: {},
+        
+      };
+      this.items = [];
+      this.events = {
+        ptr:null,
+        key:null,
+        drag:null,
+        drop:null,
+        click:null,
+        clipboard:null,
+        focus:null,
+      };
+      this.observer={
+        resize:null,
+        intersection:null
+      };
+      this.cache.style.linkTo(this);
+      this.style({ position: "relative" });
+      this.size("auto", "auto");
+    }
+    get st(){
+      return this.cache.style;
+    }
+    get attr(){
+      return this.cache.attributes;
+    }
+    get evt(){
+
+    }
+    clone() {
+      const UI = new this.constructor();
+      const items = [...this.items];
+      return {
+        UI:UI.append(...items),
+        items
+      }
+    }
+    get Width(){
+      return this.element.getBoundingClientRect().width;
+    }
+    get Height(){
+      return this.element.getBoundingClientRect().height;
+    }
+    get Top(){
+      return this.element.getBoundingClientRect().top;
+    }
+    get Right(){
+      return this.element.getBoundingClientRect().right;
+    }
+    get Bottom(){
+      return this.element.getBoundingClientRect().bottom;
+    }
+    get Left(){
+      return this.element.getBoundingClientRect().left;
+    } 
+    freeze(freeze){
+      this.cache.isFrozzen=freeze;
+      return this;
+    }
+    at(index) {
+      return this.items.at(index);
+    }
+    maintain() {
+      for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+      this.length = this.items.length;
+      return this;
+    }
+    setTarget(tg) {
+      if (tg instanceof ZikoUIElement) tg = tg.element;
+      this.remove();
+      this.Target = tg;
+      this.render();
+      return this;
+    }
+    render(render = true , target = this.Target) {
+      if(target instanceof ZikoUIElement)target=target.element;
+      this.Target=target;
+      if(render) {
+        this.Target.appendChild(this.element);
+      }
+      else this.remove();
+      return this;
+    }
+    append(...ele) {
+      if(this.cache.isFrozzen){
+        console.warn("You can't append new item to frozzen element");
+        return this;
+      }
+      for (let i = 0; i < ele.length; i++){
+      if(["number","string"].includes(typeof ele[i]))ele[i]=text$1(ele[i]);
+        if (ele[i] instanceof ZikoUIElement) {
+          ele[i].parent=this;
+          this.element.appendChild(ele[i].element);
+          ele[i].Target = this.element;
+          this.items.push(ele[i]);
+        } else if (ele[i] instanceof Object) {
+          if (ele[i]?.style) this.style(ele[i]?.style);
+          if (ele[i]?.attr) {
+            Object.entries(ele[i].attr).forEach((n) =>
+              this.setAttribute("" + n[0], n[1]),
+            );
+          }
+        }
+      }
+      this.maintain();
+      return this;
+    }
+    remove(...ele) {
+      if(ele.length==0){
+        if(this.Target.children.length) this.Target.removeChild(this.element);
+      }
+      else {
+        const remove = (ele) => {
+          if(typeof ele === "number") ele=this.items[ele];
+          if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
+            this.items=this.items.filter(n=>n!==ele);
+        };
+        for (let i = 0; i < ele.length; i++) remove(ele[i]);
+        for (let i = 0; i < this.items.length; i++)
+          Object.assign(this, { [[i]]: this.items[i] });
+      }
+      return this;
+    }
+    removeAfter(t = 1) {
+      setTimeout(() => this.remove(), t);
+      return this;
+    }
+    removeItem(...ele) {
+      const remove = (ele) => {
+        if (ele instanceof ZikoUIElement) this.element.removeChild(ele.element);
+        else if (typeof ele === "number")
+          this.element.removeChild(this.element.children[ele]);
+      };
+      for (let i = 0; i < ele.length; i++) remove(ele[i]);
+      for (let i = 0; i < this.items.length; i++)
+        Object.assign(this, { [[i]]: this.items[i] });
+      return this;
+    }
+    insertAt(index, ...ele) {
+      if (index >= this.element.children.length) this.append(...ele);
+      else
+        for (let i = 0; i < ele.length; i++) {
+          if(["number","string"].includes(typeof ele[i]))ele[i]=text$1(ele[i]);
+          this.element.insertBefore(ele[i].element, this.items[index].element);
+          this.items.splice(index, 0, ele[i]);
+        }
+      return this;
+    }
+    // Attributes
+    setAttribute(name, value) {
+      this.element.setAttribute(name, value);
+      Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
+      return this;
+    }
+    removeAttribute(name) {
+      this.element.setAttribute(name);
+      return this;
+    }
+    setContentEditable(bool = true) {
+      this.setAttribute("contenteditable", bool);
+      return this;
+    }
+    // link(link, target = "") {
+    //   let a = document.createElement("a");
+    //   a.setAttribute("href", link);
+    //   if (target) a.setAttribute("target", target);
+    //   this.element.addEventListener("click", () => a.click());
+    //   this.element.style.cursor = "pointer";
+    //   return this;
+    // }
+    get children() {
+      return [...this.element.children];
+    }
+    get cloneElement() {
+      return this.element.cloneNode(true);
+    }
+    get styleObject() {
+      //let borderPlus
+      return Object.fromEntries(
+        Object.entries(this.element.style).filter(
+          (n) => n[1] != "" && n[1] !== "initial" && isNaN(+n[0]),
+        ),
+      );
+    }
+    setClasses(...value) {
+      this.setAttribute("class", value.join(" "));
+      return this;
+    }
+    get Classes(){
+      const classes=this.element.getAttribute("class");
+      return classes===null?[]:classes.split(" ");
+    }
+    addClass() {
+      /*this.setAttribute("class", value);
+          return this;*/
+    }
+    setId(Id) {
+      this.element.setAttribute("id", Id);
+      return this;
+    }
+    get Id() {
+      return this.element.getAttribute("id");
+    }
+    forEach(callback){
+      this.items.forEach(callback);
+      return this;
+    }
+    filter(condition_callback,if_callback,else_callback){
+      this.items.filter(condition_callback).forEach(if_callback);
+      return this;
+    }
+    filterByTextContent(text,exactMatch=false){
+      this.items.map(n=>n.render());
+      this.items.filter(n=>{
+        const content=n.element.textContent;
+        return !(exactMatch?content===text:content.includes(text))
+      }).map(n=>n.render(false));
+       return this;
+    }
+    filterByClass(value) {
+      this.items.map(n=>n.render());
+      this.items.filter(n=>!n.Classes.includes(value)).map(n=>n.render(false));
+      return this; 
+    }
+    sortByTextContent(value, displays) {
+      let item = this.children;
+      item
+        .filter((n) => !n.textContent.toLowerCase().includes(value.toLowerCase()))
+        .map((n) => {
+          n.style.display = "none";
+        });
+      item
+        .filter((n) => n.textContent.toLowerCase().includes(value.toLowerCase()))
+        .map((n, i) => (n.style.display = displays[i]));
+      //return item.filter(n=>n.style.display!="none")
+      item.filter((n) => n.style.display != "none");
+      return this;
+    }
+    onPtrMove(...callbacks){
+      if(!this.events.ptr)this.events.ptr = Pointer(this);
+      this.events.ptr.onMove(...callbacks);
+      return this;
+    }
+    onPtrDown(...callbacks){
+      if(!this.events.ptr)this.events.ptr = Pointer(this);
+      this.events.ptr.onDown(...callbacks);
+      return this;
+    }
+    onPtrUp(...callbacks){
+      if(!this.events.ptr)this.events.ptr = Pointer(this);
+      this.events.ptr.onUp(...callbacks);
+      return this;
+    }
+    onPtrEnter(...callbacks){
+      if(!this.events.ptr)this.events.ptr = Pointer(this);
+      this.events.ptr.onEnter(...callbacks);
+      return this;
+    }
+    onPtrLeave(...callbacks){
+      if(!this.events.ptr)this.events.ptr = Pointer(this);
+      this.events.ptr.onLeave(...callbacks);
+      return this;
+    }
+    onPtrOut(...callbacks){
+      if(!this.events.ptr)this.events.ptr = Pointer(this);
+      this.events.ptr.onOut(...callbacks);
+      return this;
+    }
+    onKeyDown(...callbacks){
+      if(!this.events.key)this.events.key = Key(this);
+      this.events.key.onDown(...callbacks);
+      return this;
+    }
+    onKeyPress(...callbacks){
+      if(!this.events.key)this.events.key = Key(this);
+      this.events.key.onPress(...callbacks);
+      return this;
+    }
+    onKeyUp(...callbacks){
+      if(!this.events.key)this.events.key = Key(this);
+      this.events.key.onUp(...callbacks);
+      return this;
+    }
+    onKeysDown({keys=[],callback}={}){
+      if(!this.events.key)this.events.key = Key(this);
+      this.events.key.handleSuccessifKeys({keys,callback});
+      return this;
+    }
+    onDragStart(...callbacks){
+      if(!this.events.drag)this.events.drag = Drag(this);
+      this.events.drag.onStart(...callbacks);
+      return this;
+    }
+    onDrag(...callbacks){
+      if(!this.events.drag)this.events.drag = Drag(this);
+      this.events.drag.onDrag(...callbacks);
+      return this;
+    }
+    onDragEnd(...callbacks){
+      if(!this.events.drag)this.events.drag = Drag(this);
+      this.events.drag.onEnd(...callbacks);
+      return this;
+    }
+    onDrop(...callbacks){
+      if(!this.events.drop)this.events.drop = Drop(this);
+      this.events.drop.onDrop(...callbacks);
+      return this;
+    }
+    onClick(...callbacks){
+      if(!this.events.click)this.events.click = Click(this);
+      this.events.click.onClick(...callbacks);
+      return this;
+    }
+    onDbClick(...callbacks){
+      if(!this.events.click)this.events.click = Click(this);
+      this.events.click.onDbClick(...callbacks);
+      return this;
+    }
+    onCopy(...callbacks){
+      if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
+      this.events.clipboard.onCopy(...callbacks);
+      return this;
+    }
+    onCut(...callbacks){
+      if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
+      this.events.clipboard.onCut(...callbacks);
+      return this;
+    }
+    onPaste(...callbacks){
+      if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
+      this.events.clipboard.onPaste(...callbacks);
+      return this;
+    }
+    onSelect(...callbacks){
+      if(!this.events.clipboard)this.events.clipboard = Clipboard(this);
+      this.events.clipboard.onSelect(...callbacks);
+      return this;
+    }
+    onFocus(...callbacks){
+      if(!this.events.focus)this.events.focus = Focus(this);
+      this.events.focus.onFocus(...callbacks);
+      return this;
+    }
+    onBlur(...callbacks){
+      if(!this.events.focus)this.events.focus = Focus(this);
+      this.events.focus.onFocus(...callbacks);
+      return this;
+    }
+    WatchAttributes(){
+
+    }
+    WatchChildren(){
+
+    }
+    WatchSize(callback){
+      if(!this.observer.resize)this.observer.resize = WatchSize(this,callback);
+      this.observer.resize.start();
+      return this;
+    }
+    WatchIntersection(callback,config){
+      if(!this.observer.intersection)this.observer.intersection = WatchIntersection(this,callback,config);
+      this.observer.intersection.start();
+      return this;
+    }
+    // draggable(bool = true) {
+    //   this.element.setAttribute("draggable", bool);
+    //   return this;
+    // }
+    // get center() {
+    //   this.style({
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //   });
+    //   return this;
+    // }
+    // get Css_3d_obj() {
+    //   return null;
+    //   //return new THREE.CSS3DObject(this.element);
+    // }
+    //VisibleArea
+    get Visible_area() {
+      //let bodyCoords=document.body.getBoundingClientRect();
+      let coords = this.element.getBoundingClientRect();
+      let windowHeight = document.documentElement.clientHeight;
+      let windowWidth = document.documentElement.clientWidth;
+      let topVisible = coords.top > 0 && coords.top < windowHeight;
+      let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
+      let leftVisible = coords.left > 0 && coords.left < windowWidth;
+      let rightVisible = coords.right > 0 && coords.right < windowWidth;
+      //return topVisible || bottomVisible;
+      return {
+        top: topVisible,
+        bottom: bottomVisible,
+        left: leftVisible,
+        right: rightVisible,
+        heightRatio: (coords.height + coords.y) / coords.height,
+        isVisible: topVisible || bottomVisible || rightVisible || leftVisible,
+      };
+    }
+
+    
+    toggleSlide() {}
+
+    
+    
+    scaleX(sc, t = 1) {
+      this.style({
+        transform: "scaleX(" + sc + ")",
+        transition: "all " + t + "s ease",
+      });
+      return this;
+    }
+    scaleY(sc, t = 1) {
+      this.style({
+        transform: "scaleY(" + sc + ")",
+        transition: "all " + t + "s ease",
+      });
+      return this;
+    }
+    skewX(deg, t = 1) {
+      this.style({
+        transform: "skewX(" + deg + "deg)",
+        transition: "all " + t + "s ease",
+      });
+      return this;
+    }
+    skewY(deg, t = 1) {
+      this.style({
+        transform: "skewY(" + deg + "deg)",
+        transition: "all " + t + "s ease",
+      });
+      return this;
+    }
+    skew(x, y, t = 1) {
+      this.style({
+        transform: "skew(" + x + "deg , " + y + "deg)",
+        transition: "all " + t + "s ease",
+      });
+      return this;
+    }
+    scale(x, y = x, t = 1) {
+      this.style({
+        transform: "scale(" + x + "," + y + ")",
+        transition: "all " + t + "s ease",
+      });
+      return this;
+    }
+    resize(n = 0) {
+      switch (n) {
+        case 0:
+          this.style({ resize: "none" });
+          break;
+        case 1:
+          this.style({ resize: "horizontal" });
+          break;
+        case 2:
+          this.style({ resize: "vertical" });
+          break;
+        case 3:
+          this.style({ resize: "both" });
+          break;
+        default:
+          this.style({ resize: n });
+      }
+      return this;
+    }
+    Glassmorphism(background = "rgba(255,255,255,0.1)", blur = "1px") {
+      this.style({ background: background, backdropFilter: blur });
+      return this;
+    }
+    Neumorphism(r = "50px", bg = "cyan", box = "13px -13px 49px #5d8fac") {
+      this.style({ borderRadius: r, background: bg, boxShadow: box });
+      return this;
+    }
+
+    fullScreen(set = true, e) {
+      if (set) this.element.requestFullscreen(e);
+      else document.exitFullscreen();
+      return this;
+    }
+    toggleFullScreen(e) {
+      if (!document.fullscreenElement) this.element.requestFullscreen(e);
+      else document.exitFullscreen();
+      return this;
+    }
+    resizeObserver(calback) {
+      var observer = new ResizeObserver((element) => calback(element));
+      return observer.observe(this.element);
+    }
+    intersectionObserver(calback, target = "parent") {
+      if (target == "parent") {
+        var observer = new IntersectionObserver((element) => calback(element[0]));
+        return observer.observe(this.element);
+      }
+      return this.items.map((n) => n.intersectionObserver((e) => calback(e)));
+    }
+    intersectRatio(calback) {
+      var observer = new IntersectionObserver((element) =>
+        calback(element[0].intersectionRatio),
+      );
+      return observer.observe(this.element);
+    }
+    get coords() {
+      var rect = this.element.getBoundingClientRect();
+      var parent = {
+        cX: Math.floor(rect.left + (rect.right - rect.left) / 2),
+        cY: Math.floor(rect.top + (rect.bottom - rect.top) / 2),
+      };
+      return { parent };
+    }
+    exportHTML() {}
+    toPdf() {
+      return "Install @ziko/jspdf";
+    }
+  }
+
+  const ALL_UI_ELEMENTS={
+      text:[],
+      p:[],
+      pre:[],
+      h1:[],
+      h2:[],
+      h3:[],
+      h4:[],
+      h5:[],
+      h6:[],
+      br:[],
+      hr:[],
+      btn:[],
+      ol:[],
+      ul:[],
+      image:[],
+      video:[],
+      audio:[],
+      Article:[],
+      Main:[],
+      Section:[],
+      Aside:[],
+      Nav:[],
+      Header:[],
+      Footer:[],
+      Flex:[],
+      FlexMain:[],
+      FlexNav:[],
+      FlexHeader:[],
+      FlexFooter:[],
+      FlexSection:[],
+      FLexArticle:[],
+      FlexAside:[],
+      Table:[],
+      Svg:[],
+      Canvas:[]
+    };
+
+  class ZikoUIText extends ZikoUIElement {
+      constructor(...value) {
+        super();
+        this.element = document.createElement("span");
+        this.text = "";
+        this.addValue(...value);
+        this.st.display("inline-block");
+        this.render();
+      }
+      clear() {
+        this.element.textContent = "";
+        return this;
+      }
+      get value() {
+        return this.element.textContent;
+      }
+      setValue(value = "", add = false) {
+        if (["string", "number"].includes(typeof value)) {
+          this.text = "" + value;
+          if (this.text.includes("\n"))
+            this.text = this.text
+              .split("\n")
+              .map((n) => "<span>".concat(n, "</span></br>"))
+              .join("");
+        }
+         if (value instanceof Complex$1) this.text = "" + value.UI();
+         /*
+         else if (value instanceof Ziko.Math.Matrix) {
+            let string = "[";
+            for (let j = 0; j < value.arr.length; j++)
+              string +=
+                (j != 0 ? " " : "") +
+                `[${value.arr[j].map((n) => "  " + n.toString() + " ")}],</br>`;
+            string = string.substring(0, string.length - 6) + "]";
+            this.text = "" + string;
+          } 
+          */
+          //else console.error("not supported yet")
+        if (add) this.element.innerHTML += this.text;
+        else this.element.innerHTML = this.text;
+        if (value instanceof Array || value instanceof Set) {
+          if (value instanceof Set) value = [...value];
+          this.addValue(...value);
+        }
+      }  
+      addValue(...value) {
+        value.map((n) => {
+          this.setValue(" ", true);
+          this.setValue(n, true);
+        });
+        return this;
+      }
+      toggleValues(...values) {
+        values = values.map((n) => "" + n);
+        let index = values.indexOf("" + this.value);
+        if (index != -1 && index != values.length - 1)
+          this.setValue(values[index + 1]);
+        else this.setValue(values[0]);
+        return this;
+      }
+    }
+   const text$1 = (...value) => {
+    const UI=new ZikoUIText(...value);
+    ALL_UI_ELEMENTS.text.push(UI);
+    UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+    return UI
+   };
+
+  class ZikoUIParagraphe extends ZikoUIElement {
+      constructor(...value) {
+        super();
+        this.element = document.createElement("p");
+        this.addValue(...value);
+        this.style({margin:0,padding:0});
+        this.render();
+      }
+      addValue(...value) {
+        for (let i = 0; i < value.length; i++) {
+          if (typeof value[i] == "string" || typeof value[i] == "number") {
+            this.element.appendChild(document.createTextNode(value[i]));
+            this.element.appendChild(document.createElement("br"));
+          } else if (value[i] instanceof ZikoUIElement)
+            this.element.appendChild(value[i].element);
+          else if (value[i] instanceof Complex$1)
+            text$1(value.a + " + " + value.b + "i");
+        }
+        return this;
+      }
+      clear() {
+        this.element.childNodes.forEach((e) => e.remove());
+        return this;
+      }
+      setValue(...value) {
+        this.clear();
+        this.addValue(...value);
+        return this;
+      }
+    }
+    const p = (...ZikoUIElement) => {
+      const UI=new ZikoUIParagraphe().append(...ZikoUIElement);
+      ALL_UI_ELEMENTS.p.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.p.length;  
+      return UI
+     };
+
+  class ZikoUIHeading extends ZikoUIElement {
+      constructor(type = 1, value = "") {
+        super();
+        this.element = document.createElement("h" + type);
+        this.element.textContent = value;
+        this.render();
+      }
+      get value() {
+        return this.element.innerText;
+      }
+      setValue(text = "") {
+        this.element.innerText = text;
+        return;
+      }
+      addValue(text = "") {
+        this.element.innerText += text;
+        return this;
+      }
+    }
+    const h1 = (text = "") => {
+      const UI=new ZikoUIHeading(1, text);
+      ALL_UI_ELEMENTS.h1.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+      return UI
+     };
+    const h2 = (text = "") => {
+      const UI=new ZikoUIHeading(2, text);
+      ALL_UI_ELEMENTS.h2.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+      return UI
+     };
+    const h3 = (text = "") => {
+      const UI=new ZikoUIHeading(3, text);
+      ALL_UI_ELEMENTS.h3.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+      return UI
+     };
+    const h4 = (text = "") => {
+      const UI=new ZikoUIHeading(4, text);
+      ALL_UI_ELEMENTS.h4.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+      return UI
+     };
+    const h5 = (text = "") => {
+      const UI=new ZikoUIHeading(5, text);
+      ALL_UI_ELEMENTS.h5.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+      return UI
+     };
+     const h6 = (text = "") => {
+      const UI=new ZikoUIHeading(6, text);
+      ALL_UI_ELEMENTS.h6.push(UI);
+      UI.cache.order=ALL_UI_ELEMENTS.text.length;  
+      return UI
+     };
+
+  class ZikoHtmlTag extends ZikoUIElement {
+    constructor(element) {
+      super(element);
+        this.render();
+    }
+  }
+  class ZikoUIBr extends ZikoUIElement {
+      constructor() {
+        super();
+          this.element = document.createElement("br");
+          this.render();
+          delete this.append;
+      }
+    }
+    class ZikoUIHr extends ZikoUIElement {
+      constructor() {
+        super();
+          this.element = document.createElement("hr");
+          this.render();
+          delete this.append;
+      }
+    }
+    class ZikoUILink extends ZikoUIElement{
+      constructor(href){
+        super();
+        this.element = document.createElement("a");
+        this.setHref(href);
+        this.render();
+      }
+      setHref(href){
+        this.element.href=href;
+      }
+    }
+    const br = () => new ZikoUIBr();
+    const hr = () => new ZikoUIHr();
+    const brs = (n=1)=> new Array(n).fill(new ZikoUIBr());
+    const hrs = (n=1)=> new Array(n).fill(new ZikoUIHr());
+    const link=(href,...UIElement)=>new ZikoUILink(href).append(...UIElement);
+    const ZikoHtml=(tag,...UIElement)=>new ZikoHtmlTag(tag).append(...UIElement);
+
+  class ZikoUILI extends ZikoUIElement{
+    constructor(UI){
+      super();
+      this.element=document.createElement("li");
+      this.append(UI);
+      this.render();
+    }
+  }
+  class ZikoUIList extends ZikoUIElement {
+      constructor() {
+        super();
+        delete this.append;
+        //this.style({ listStylePosition: "inside" });
+      }
+      append(...arr){
+        for (let i = 0; i < arr.length; i++) {
+          let li = null;
+          if(["string","number"].includes(typeof arr[i]))arr[i]=text$1(arr[i]);
+          if (arr[i] instanceof ZikoUIElement)li=new ZikoUILI(arr[i]);
+          li.setTarget(this.element);
+          this.items.push(li[0]);
+          this.maintain();
+        }
+      }
+      remove(...ele) {
+        if(ele.length==0){
+          if(this.Target.children.length) this.Target.removeChild(this.element);
+        }
+        else {
+          const remove = (ele) => {
+            if(typeof ele === "number") ele=this.items[ele];
+            if(ele instanceof ZikoUIElement)this.element.removeChild(ele.parent.element);
+              this.items=this.items.filter(n=>n!==ele);
+          };
+          for (let i = 0; i < ele.length; i++) remove(ele[i]);
+          for (let i = 0; i < this.items.length; i++)
+            Object.assign(this, { [[i]]: this.items[i] });
+        }
+        return this;
+      }
+      insertAt(index, ...ele) {
+        if (index >= this.element.children.length) this.append(...ele);
+        else
+          for (let i = 0; i < ele.length; i++) {
+            let li = null;
+            if(["number","string"].includes(typeof ele[i]))ele[i]=text$1(ele[i]);
+            if (ele[i] instanceof ZikoUIElement)li=new ZikoUILI(ele[i]);
+            this.element.insertBefore(li.element, this.items[index].parent.element);
+            this.items.splice(index, 0, ele[i][0]);
+          }
+        return this;
+      }
+      filterByTextContent(text,exactMatch=false){
+        this.items.map(n=>n.parent.render());
+        this.items.filter(n=>{
+          const content=n.element.textContent;
+          return !(exactMatch?content===text:content.includes(text))
+        }).map(n=>n.parent.render(false));
+         return this;
+      }
+      sortByTextContent(order=1){
+        this.items.map(n=>n.parent.render(false));
+        // To Fix
+        this.sortedItems=this.items.sort((a,b)=>order*a.element.textContent.localeCompare(b.element.textContent));
+        this.append(...this.sortedItems);
+        return this;
+      }
+      filterByClass(value) {
+        this.items.map(n=>n.parent.render(true));
+        this.items.filter(n=>!n.Classes.includes(value)).map(n=>n.parent.render(false));
+        return this; 
+      }
+      delete(value) {
+        const valueIndex = [...this.element.children].indexOf(value);
+        return valueIndex;
+        /*if(valueIndex >= 0) {
+          return this.list.splice(valueIndex, 1);
+        }*/
+      }
+      push(){
+
+      }
+      pop(){
+
+      }
+      unshift(){
+
+      }
+      shift(){
+
+      }
+      sort(){
+
+      }
+      filter(){
+
+      }
+      slice(){
+        
+      }
+    }
+  class ZikoUIOList extends ZikoUIList{
+    constructor(...arr){
+      super();
+      this.element=document.createElement("ol");
+      this.append(...arr);
+      this.render();
+    }
+    type(tp = 1) {
+      this.element.setAttribute("type", tp);
+      return this;
+    }
+    start(st = 1) {
+      this.element.setAttribute("start", st);
+      return this;
+    }
+  }
+  class ZikoUIUList extends ZikoUIList{
+    constructor(...arr){
+      super();
+      this.element=document.createElement("ul");
+      this.append(...arr);
+      this.render();
+    }
+  }
+  const ol = (...arr) => new ZikoUIOList(...arr);
+  const ul = (...arr) => new ZikoUIUList(...arr);
+
+  class ZikoUIBtn extends ZikoUIElement {
+      constructor(value = "button") {
+        super();
+        this.element = document.createElement("button");
+        this.setValue(value);
+        this.render();
+        this.st.cursor("pointer");
+      }
+      setValue(value) {
+        if (value instanceof ZikoUIElement) value.setTarget(this.element);
+        else {
+          this.element.appendChild(document.createTextNode(""));
+          this.element.childNodes[0].data = value;
+        }
+        return this;
+      }
+      get value() {
+        return this.element.innerText;
+      }
+      toggleValues(...values) {
+        values = values.map((n) => "" + n);
+        let index = values.indexOf("" + this.value);
+        if (index != -1 && index != values.length - 1)
+          this.setValue(values[index + 1]);
+        else this.setValue(values[0]);
+        return this;
+      }
+    }
+  const btn = (value) => new ZikoUIBtn(value);
+
+  class ZikoUIInputOption extends ZikoUIElement {
+      constructor(value = "") {
+        super();
+        this.element = document.createElement("option");
+        if(value instanceof Object&&"value" in value){
+          this.setValue(value.value);
+          this.setText(value?.text??value.value);
+        }
+        else this.setValue(value);
+      }
+      setValue(str = "") {
+        this.element.value = str;
+        return this;
+      }
+      setText(text=""){
+        if(text)this.element.textContent=text;
+        return this;
+      }
+    }
+
+  class ZikoUITextArea extends ZikoUIElement {
+      constructor() {
+        super();
+        this.element = document.createElement("textarea");
+        //Object.assign(this,inputComposer.call(this));
+        this.render();
+      }
+      get value(){
+        return this.element.textContent;
+      }
+    }
+
+    const textarea =()=> new ZikoUITextArea();
+
+  //import { select } from "./select.js";
+  //import { debounce,throttle} from "../../Data/decorators.js";
+
+  class ZikoUIInput extends ZikoUIElement {
+    constructor(value = "",datalist) {
+      super();
+      this.element = document.createElement("input");
+      Object.assign(this.events,{input:null});
+      this.setValue(value);
+      if(datalist)this.linkDatalist(datalist);
+      this.render();
+    }
+    onInput(...callbacks){
+      if(!this.events.input)this.events.input = Input(this);
+      this.events.input.onInput(...callbacks);
+      return this;
+    }
+    onChange(...callbacks){
+      if(!this.events.input)this.events.input = Input(this);
+      this.events.input.onChange(...callbacks);
+      return this;
+    }
+    linkDatalist(datalist) {
+      let id;
+      if(datalist instanceof ZikoUIInputDatalist)id=datalist.Id;
+      else if(datalist instanceof Array){
+        const Datalist=new ZikoUIInputDatalist(...datalist);
+        id=Datalist.Id;
+        console.log(Datalist);
+      }
+      else id=datalist;
+      this.element.setAttribute("list", id);
+      return this;
+    }
+    get value() {
+      return this.element.value;
+    }
+    _setType(type) {
+      this.element.type = type;
+      return this;
+    }
+    setValue(value="") {
+      this.element.value = value;
+      return this;
+    }
+    useState(state){
+      this.setValue(state);
+      return [{value:this.value},e=>this.setValue(e)]
+    }
+    setPlaceholder(value) {
+      if(value)this.element.placeholder = value;
+      return this;
+    }
+    get isValide() {
+      return this.element.checkValidity();
+    }
+    setRequired(required = true) {
+      this.element.required = required;
+      return this;
+    }
+    select() {
+      this.element.select();
+      return this;
+    }
+    copy() {
+      this.element.select();
+      document.execCommand("copy");
+      return this;
+    }
+    cut() {
+      this.element.select();
+      document.execCommand("cut");
+      return this;
+    }
+    accept(value) {
+      this.element.accept = value;
+      return this;
+    }
+  }
+  class ZikoUIInputSearch extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("search");
+      this.Length = 0;
+    }
+    onsearch(callback) {
+      this.element.addEventListener("search", () => callback());
+      return this;
+    }
+    connect(...UIElement) {
+  /* 
+      let memory = new Array(UIElement.length).fill([]);
+      UIElement.map((n, i) => {
+        //console.log(n)
+        n.items.map((m, j) => {
+          memory[i][j] = m.element.style.display;
+        });
+      });
+      UIElement.map((n, i) =>
+        this.onInput(() => {
+          n.filterByTextContent(this.value, memory[i]);
+          this.Length = n.children.filter(
+            (n) => n.style.display != "none"
+          ).length;
+        })
+      );
+      */
+      return this;
+    }
+    displayLength(UIElement) {
+      this.element.addEventListener("keyup", () =>
+        UIElement.setValue(this.Length)
+      );
+      return this;
+    }
+  }
+  class ZikoUIInputNumber extends ZikoUIInput {
+    constructor(min, max ,step = 1) {
+      super();
+      this._setType("number");
+      this.setMin(min).setMax(max).setStep(step);
+      this.render();
+    }
+    get value() {
+      return +this.element.value;
+    }
+    setMin(min) {
+      this.element.min = min;
+      return this;
+    }
+    setMax(max) {
+      this.element.max = max;
+      return this;
+    }
+    setStep(step) {
+      this.element.step = step;
+      return this;
+    }
+  }
+  class ZikoUIInputSlider extends ZikoUIInputNumber {
+    constructor(val = 0, min = 0, max = 10, step = 1) {
+      super();
+      this._setType("range");
+      this.setMin(min).setMax(max).setValue(val).setStep(step);
+      this.render();
+    }
+  }
+  class ZikoUIInputColor extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("color");
+      this.background(this.value);
+      this.render();
+      this.onInput(() => this.background(this.value));
+    }
+  }
+  class ZikoUIInputPassword extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("password");
+      this.render();
+    }
+  }
+  class ZikoUIInputEmail extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("email");
+      this.render();
+    }
+  }
+  class ZikoUIInputTime extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("time");
+      this.render();
+    }
+  }
+  class ZikoUIInputDate extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("date");
+      this.render();
+    }
+  }
+  class ZikoUIInputDateTime extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("datetime-local");
+      this.render();
+    }
+  }
+  class ZikoUIInputCheckbox extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("checkbox");
+      this.cursor("pointer");
+    }
+    get checked() {
+      return this.element.checked;
+    }
+    check(checked = true) {
+      this.element.checked = checked;
+      return this;
+    }
+    color(color) {
+      this.element.style.accentColor = color;
+      return this;
+    }
+  }
+  class ZikoUIInputRadio extends ZikoUIInput {
+    constructor() {
+      super();
+      this._setType("radio");
+      this.cursor("pointer");
+    }
+    get checked() {
+      return this.element.checked;
+    }
+    check(checked = true) {
+      this.element.checked = checked;
+      return this;
+    }
+    color(color) {
+      this.element.style.accentColor = color;
+      return this;
+    }
+  }
+
+
+  class ZikoUIInputImage extends ZikoUIElement {
+    constructor(text = "File") {
+      super();
+      this._aux_element = btn(text).setTarget(this.Target);
+      this.element = document.createElement("input");
+      this.element.setAttribute("type", "file");
+      this.element.setAttribute("accept", "image");
+      this._aux_element.onClick(() => this.element.click());
+      this.element.onChange = this.handleImage.bind(this);
+    }
+    handleImage(e) {
+      const reader = new FileReader();
+      const img = new Image();
+      reader.onload = function (event) {
+        img.src = event.target.result;
+        console.log(img.src);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      this.img = img;
+    }
+    get value() {
+      return this.img;
+    }
+    render(bool = true) {
+      if (bool) this.Target.appendChild(this._aux_element.element);
+      else this.remove();
+      return this;
+    }
+    remove() {
+      if (this.Target.children.length) this.Target.removeChild(this._aux_element.element);
+      return this;
+    }
+  }
+
+  class ZikoUIInputDatalist extends ZikoUIElement {
+    constructor(...options){
+      super();
+      this.element = document.createElement("datalist");
+      this.addOptions(...options).setId("ziko-datalist-id"+crypto.randomUUID().slice(8,18));
+      this.render();
+    }
+    addOptions(...options) {
+      options.map((n) => this.append(new ZikoUIInputOption(n)));
+      return this;
+    }
+  }
+  const input = (value,datalist) => {
+    if(value instanceof Object){
+      const {datalist,placeholder}=value;
+      value=value.value??"";
+      return new ZikoUIInput(value,datalist).setPlaceholder(placeholder);
+    }
+    return new ZikoUIInput(value,datalist);
+  };
+  const datalist = (...options) => new ZikoUIInputDatalist(...options);
+  const slider = (value, min, max, step) =>{
+    if(value instanceof Object){
+      const {min=0,max=10,step=1}=value;
+      value=value?.value??5;
+      return new ZikoUIInputSlider(value, min, max, step);
+    }
+    return new ZikoUIInputSlider(value, min, max, step);
+  };
+  const inputNumber = (min,max,step) =>{
+    if(min instanceof Object){
+      const {value,max=10,step=1,placeholder=""}=min;
+      min=min?.min??0;
+      return new ZikoUIInputSlider(min, max, step).setValue(value).setPlaceholder(placeholder);
+    }
+    return new ZikoUIInputNumber(min,max,step);
+  };
+  const search = (...a) => new ZikoUIInputSearch().connect(...a);
+  const inputImage = (text) => new ZikoUIInputImage(text);
+  const inputPassword = () => new ZikoUIInputPassword();
+  const inputEmail = () => new ZikoUIInputEmail();
+  const inputColor = () => new ZikoUIInputColor();
+  const inputTime = () => new ZikoUIInputTime();
+  const inputDate = () => new ZikoUIInputDate();
+  const inputDateTime = () => new ZikoUIInputDateTime();
+  const checkbox = () => new ZikoUIInputCheckbox();
+  const radio = () => new ZikoUIInputRadio();
+
+  class ZikoUISelect extends ZikoUIElement {
+      constructor(){
+        super();
+        this.element=document.createElement("select");
+        this.render();
+      }
+      addOptions(...options) {
+        options.map(n => this.append(new ZikoUIInputOption(n)));
+        return this;
+      }
+    }
+  const select=()=>new ZikoUISelect();
+
+  class ZikoUIVideo extends ZikoUIElement {
+      constructor(src="", w = "100%", h = "50vh") {
+        super();
+        this.element = document.createElement("video");
+        if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);
+        else this.element.setAttribute("src", src);
+        if (typeof w == "number") w += "%";
+        if (typeof h == "number") h += "%";
+        this.style({ width: w, height: h });
+        this.render();
+      }
+      controls(enabled = true) {
+        this.element.controls = enabled;
+        return this;
+      }
+      play() {
+        this.element.play();
+        return this;
+      }
+      pause() {
+        this.element.pause();
+        return this;
+      }
+      poster(src=""){
+        this.element.poster=src;
+        return this;
+      }
+      PIP(e){
+        this.element.requestPictureInPicture(e);
+        return this;
+      }
+    }
+
+  class ZikoUIWebcame extends ZikoUIVideo{
+      constructor(){
+        super();
+        this.element.setAttribute("src", "");
+        this.constraints = { audio: true, video: { width: 1280, height: 720 } };
+        //this.video=this.element
+      }
+      start(){
+        navigator.mediaDevices.getUserMedia(this.constraints).then((mediaStream)=>{
+          this.element.srcObject = mediaStream;
+          this.element.onloadedmetadata = () =>{
+            this.element.play();
+          };
+        })
+        .catch(function(err) { console.log(err.name + ": " + err.message); });
+        return this;
+      }
+    }
+    const inputCamera=()=>new ZikoUIWebcame();
+
+  class ZikoUIImage extends ZikoUIElement {
+      constructor(src, w, h) {
+        super();
+        this.element = document.createElement("img");
+        this.value=src;
+        if (src.nodeName === "IMG")this.element.setAttribute("src", src.src);
+        else this.element.setAttribute("src", src);
+        if (typeof w == "number") w += "%";
+        if (typeof h == "number") h += "%";
+        this.style({ border: "1px solid black", width: w, height: h });
+        this.render();
+      }
+       updateSrc(url){
+        this.value=url;
+        this.element.src=url;
+       return this;
+      }
+      toggleSrc(...values){
+        values=values.map(n=>""+n);
+        let index=values.indexOf(""+this.value);
+        if(index!=-1&&index!=(values.length-1))this.updateSrc(values[index+1]);
+        else this.updateSrc(values[0]);
+        return this;
+      }
+      alt(alt){
+        this.element.alt=alt;
+        return this;
+      }
+    }
+    
+    
+    class ZikoUIAudio extends ZikoUIElement {
+      constructor(src) {
+        super();
+        this.element = document.createElement("audio");
+        this.element.setAttribute("src", src);
+        this.render();
+        this.controls();
+      }
+      controls(enabled = true) {
+        this.element.controls = enabled;
+        return this;
+      }
+      play() {
+        this.element.play();
+        return this;
+      }
+      pause() {
+        this.element.pause();
+        return this;
+      }
+    }
+    class ZikoUIFigure extends ZikoUIElement{
+      constructor(src,caption){
+        super();
+        this.element=document.createElement("figure");
+        this.img=src.width("100%").element;
+        this.caption=document.createElement("figcaption");
+        this.caption.append(caption.element);
+        this.element.append(this.img);
+        this.element.append(this.caption);
+        this.render();
+      }
+    }
+
+  const image = (src, width, height) => new ZikoUIImage(src, width, height);
+  const audio = (src) => new ZikoUIAudio(src);
+  const figure =(image,caption) =>new ZikoUIFigure(image,caption);
+  const video = (src, width, height) => new ZikoUIVideo(src, width, height);
+
+  function set_vertical(direction){
+      direction == 1
+        ? this.style({ flexDirection: "column" })
+        : direction == -1 && this.style({ flexDirection: "column-reverse" });
+      return this;
+    }
+  function set_horizontal(direction){
+    direction == 1
+        ? this.style({ flexDirection: "row" })
+        : direction == -1 && this.style({ flexDirection: "row-reverse" });
+      return this;
+  }
+  function map_pos_x(align){
+    let pos = ["flex-start", "center", "flex-end"];
+    if (typeof align === "number") align = pos[align + 1];
+    return align;
+  }
+  function map_pos_y(align){
+    return map_pos_x(-align);
+  }
+  class ZikoUIFlex extends ZikoUIElement {
+    constructor(tag ="div", w = "50vw", h = "50vh") {
+      super();
+      this.element = document.createElement(tag);
+      this.direction = "cols";
+      if (typeof w == "number") w += "%";
+      if (typeof h == "number") h += "%";
+      this.style({ border: "1px solid black", width: w, height: h });
+      this.style({ display: "flex" });
+      this.render();
+    }
+    resp(px,wrap = true) {
+      this.wrap(wrap);
+      if (this.element.clientWidth < px) this.vertical();
+      else this.horizontal();
+      return this;
+    }
+    setSpaceAround() {
+      this.style({ justifyContent: "space-around" });
+      return this;
+    }
+    setSpaceBetween() {
+      this.style({ justifyContent: "space-between" });
+      return this;
+    }
+    setBaseline() {
+      this.style({ alignItems: "baseline" });
+      return this;
+    }
+    gap(g) {
+      if (this.direction === "row") this.style({ columnGap: g });
+      else if (this.direction === "column") this.style({ rowGap: g });
+      return this;
+    }
+    wrap(value = "wrap") {
+      const values = ["no-wrap", "wrap","wrap-reverse"];
+      this.style({
+        flexWrap: typeof value === "string" ? value : values[+value],
+      });
+      return this;
+    }
+    _justifyContent(align = "center") {
+      this.style({ justifyContent: align });
+      return this;
+    }
+    vertical(x, y, order=1) {
+      console.log(111111111111);
+      set_vertical.call(this,order);
+      this.style({
+        alignItems: typeof(x)==="number"?map_pos_x.call(this,x):x,
+        justifyContent: typeof(y)=="number"?map_pos_y.call(this,y):y
+      });
+      return this;
+    }
+    horizontal(x, y, order=1) {
+      set_horizontal.call(this,order);
+      this.style({
+        alignItems: typeof(y)=="number"?map_pos_y.call(this,y):y,
+        justifyContent: typeof(x)==="number"?map_pos_x.call(this,x):x
+      });
+      return this;
+    }
+    show() {
+      this.isHidden = false;
+      this.style({ display: "flex" });
+      return this;
+    }
+  }
+
+  const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
+
+  class ZikoUICarousel extends ZikoUIFlex{
+      constructor(...ZikoUIElement){
+          super();
+          this.style({
+              position:"relative",
+              overflow:"hidden",
+              touchAction:"none",
+              userSelect:"none"
+          });
+          this.horizontal("space-around",0);
+          this.track = Section(...ZikoUIElement).style({ display: "inline-flex" });
+          this.track.size(this.track.children.length * 100 + "vw");
+          this.track.setTarget(this);
+          this.track.items.map((n) =>
+            n.style({ pointerEvents: "none", margin: "auto 10px" })
+          );
+          this.x0 = null;
+          this.tx = 0;
+          this.onPtrMove(e=>{
+              if(e.isDown){
+                  let x = e.event.pageX;
+                  let dx = x - this.x0;
+                  this.track.translateX(
+                      this.tx + dx, 
+                      0
+                      );
+                }
+          });
+          this.onPtrDown(e=>{
+              console.log(e.event);
+              this.x0 = e.event.pageX;
+              const transformMatrix = window
+                .getComputedStyle(this.track.element)
+                .getPropertyValue("transform");
+              if (transformMatrix !== "none") {
+                this.tx = +transformMatrix.split(",")[4];
+              }            
+          });
+          this.onPtrUp(e=>console.log(e.isDown));
+          this.onPtrLeave(e=>{
+              // Handle outside up 
+          });
+      }
+  }
+  const Carousel=(...ZikoUIElement)=>new ZikoUICarousel(...ZikoUIElement);
+
+  class ZikoUINoteBook extends ZikoUIFlex{
+      constructor(){
+          super();
+      }
+      addSection(){
+          const Input=Section().style({
+              width:"80%",
+              height:"50px",
+              margin:"5px 0px",
+              border:"1px red solid"
+          });
+          this.append(Input);
+          return this;
+      }
+  }
+
+  const Notebook = () => new ZikoUINoteBook();
+
+  class ZikoUIGrid extends ZikoUIElement {
+      constructor(tag ="div", w = "50vw", h = "50vh") {
+        super();
+        this.element = document.createElement(tag);
+        this.direction = "cols";
+        if (typeof w == "number") w += "%";
+        if (typeof h == "number") h += "%";
+        this.style({ border: "1px solid black", width: w, height: h });
+        this.style({ display: "grid" });
+        this.render();
+      }
+      columns(n) {
+          let temp = "";
+          for (let i = 0; i < n; i++) temp = temp.concat(" auto");
+          this.#templateColumns(temp);
+          return this;
+      }
+      #templateColumns(temp = "auto auto") {
+          this.style({ gridTemplateColumns: temp });
+          return this;
+      }
+      gap(w = 10, h = w) {
+          if(typeof (w) === "number")w += "px";
+          if(typeof (h) === "number")h += "px";
+          this.style({gridColumnGap: w,gridRowGap: h});
+          return this;
+      }
+  }
+  const Grid$1 = (...ZikoUIElement) => new ZikoUIGrid("div").append(...ZikoUIElement);
+
+  class ZikoUIMain extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("main");
+        this.render();
+      }
+    }
+    class ZikoUIHeader extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("header");
+        this.render();
+      }
+    }
+    class ZikoUINav extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("nav");
+        this.render();
+      }
+    }
+    class ZikoUISection extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("section");
+        this.style({position:"relative"});
+        this.render();
+      }
+    }
+    class ZikoUIArticle extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("article");
+        this.render();
+      }
+    }
+    class ZikoUIAside extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("aside");
+        this.render();
+      }
+    }
+    class ZikoUIFooter extends ZikoUIElement{
+      constructor(){
+        super();
+        this.element=document.createElement("footer");
+        this.render();
+      }
+    }
+  const Section$1 = (...ZikoUIElement) => new ZikoUISection().append(...ZikoUIElement);
+  const Article = (...ZikoUIElement) => new ZikoUIArticle().append(...ZikoUIElement);
+  const Main = (...ZikoUIElement) => new ZikoUIMain().append(...ZikoUIElement);
+  const Header = (...ZikoUIElement) => new ZikoUIHeader().append(...ZikoUIElement);
+  const Footer = (...ZikoUIElement) => new ZikoUIFooter().append(...ZikoUIElement);
+  const Nav = (...ZikoUIElement) => new ZikoUINav().append(...ZikoUIElement);
+  const Aside = (...ZikoUIElement) => new ZikoUIAside().append(...ZikoUIElement);
+  const FlexHeader = (...ZikoUIElement) => new ZikoUIFlex("header").append(...ZikoUIElement);
+  const FlexMain = (...ZikoUIElement) => new ZikoUIFlex("main").append(...ZikoUIElement);
+  const FlexArticle = (...ZikoUIElement) => new ZikoUIFlex("article").append(...ZikoUIElement);
+  const FlexSection = (...ZikoUIElement) => new ZikoUIFlex("section").append(...ZikoUIElement);
+  const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUIElement);
+  const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
+  const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
+
+  class ZikoUITr extends ZikoUIElement{
+      constructor(...ZikoUIElement){
+          super();
+          this.element=document.createElement("Tr");
+          this.append(...ZikoUIElement);
+      }
+  }
+  class ZikoUITd extends ZikoUIElement{
+      constructor(...ZikoUIElement){
+          super();
+          this.element=document.createElement("Td");
+          this.append(...ZikoUIElement);
+      }
+  }
+  class ZikoUIThead extends ZikoUIElement{
+      constructor(...ZikoUITr){
+          super();
+          this.element=document.createElement("Thead");
+          this.append(...ZikoUITr);
+      }
+  }
+  class ZikoUITbody extends ZikoUIElement{
+      constructor(...ZikoUITr){
+          super();
+          this.element=document.createElement("Tbody");
+          this.append(...ZikoUITr);
+      }
+  }
+  class ZikoUICaption extends ZikoUIElement{
+      constructor(ZikoUIElement){
+          super();
+          this.element=document.createElement("Caption");
+          this.append(ZikoUIElement);
+      }
+  }
+
+  const tr=(...ZikoUIElement)=>new ZikoUITr(...ZikoUIElement);
+  const td=(...UI)=>{
+      UI=UI.map(n=>{
+          if(!(n instanceof ZikoUIElement))n=text$1(n);
+          return n
+      });
+      return new ZikoUITd(...UI)
+  };
+  const thead=(...ZikoUITd)=>{
+      ZikoUITd=ZikoUITd.map(n=>{
+          if(!(n instanceof ZikoUIElement))n=td(n);
+          return n
+      });
+      return new ZikoUIThead(...UI)
+  };
+  const tbody=(...ZikoUITr)=>new ZikoUITbody(...ZikoUITr);
+  const caption=(ZikoUITr)=>new ZikoUICaption(ZikoUITr);
+
+  const MatrixToTableUI=matrix=>{
+      var Tr = new Array(matrix.rows).fill(null).map(() => tr());
+      var Td = matrix.arr.map((n) => n.map(() => null));
+      for (let i = 0; i < Td.length; i++) {
+          for (let j = 0; j < Td[0].length; j++) {
+              Td[i][j] = td(matrix.arr[i][j]);
+              Tr[i].append(Td[i][j]);
+          }
+      }
+      return Tr
+  };
+
+  class ZikoUITable extends ZikoUIElement {
+      constructor(body=matrix(0,0),{caption=null,thead=null,tfoot=null}={}){
+          super();
+          this.element = document.createElement("table");
+          this.fromMatrix(body);
+          this.structure={
+              caption:null,
+              head:null,
+              body:0,
+              foot:null
+          };
+          this.render();
+      }
+      get caption(){
+
+      }
+      get header(){
+
+      }
+      get body(){
+
+      }
+      get footer(){
+
+      }
+      setCaption(c){
+          this.tCaption=caption(c);
+          this.append(this.tCaption);
+          return this;
+      }
+      removeCaption(){
+          this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+          return this;
+      }
+      setHeader(...c){
+          this.tHead=thead(...c);
+          this.append(this.tHead);
+          return this;
+      }
+      removeHeader(){
+          this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+          return this;
+      }
+      setFooter(c){
+          this.tCaption=caption(c);
+          this.append(this.tCaption);
+          return this;
+      }
+      removeFooter(){
+          this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+          return this;
+      }
+      fromMatrix(bodyMatrix) {
+          (bodyMatrix instanceof Array)?this.bodyMatrix=matrix(bodyMatrix):this.bodyMatrix=bodyMatrix;
+          if(this?.tbody?.items?.length)this.tbody.remove();
+          this.tbody=tbody();
+          this.append(this.tbody);
+          this.tbody.append(...MatrixToTableUI(this.bodyMatrix));
+          //this.structure.body.append(...MatrixToTableUI(matrix))
+          //this.cellStyles({ padding: "0.2rem 0.4rem", textAlign: "center" });
+          return this;
+        }
+      transpose() {
+          this.fromMatrix(this.bodyMatrix.T);
+          return this;
+        }
+      hstack(m) {
+          if(m instanceof ZikoUITable)m=m.bodyMatrix;
+          this.fromMatrix(this.bodyMatrix.clone.hstack(m));
+          return this;
+      }
+      vstack(m) {
+          if(m instanceof ZikoUITable)m=m.bodyMatrix;
+          this.fromMatrix(this.bodyMatrix.clone.vstack(m));
+          return this;
+      }
+      slice(r0=0,c0=0,r1=this.bodyMatrix.rows-1,c1=this.bodyMatrix.cols-1) {
+          this.fromMatrix(this.bodyMatrix.slice(r0,c0,r1,c1));
+          return this;
+        }
+      sortByCols(n, config = { type: "num", order: "asc" }) {
+          this.fromMatrix(this.bodyMatrix.clone.sortTable(n, config));
+          return this;
+      }
+      sortByRows(n, config = { type: "num", order: "asc" }) {
+          this.fromMatrix(this.bodyMatrix.T.clone.sortTable(n, config).T);
+          return this;
+      }
+      filterByRows(item) {
+          this.fromMatrix(this.bodyMatrix.clone.filterByRows(item));
+          return this;
+      }
+      filterByCols(item) {
+          this.fromMatrix(this.bodyMatrix.clone.filterByCols(item));
+          return this;
+        }
+      forEachTd(){}
+  }
+  const Table=(matrix)=>new ZikoUITable(matrix);
+
+  const UI$1={
+      ZikoHtml,
+      text: text$1,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      btn,
+      br,
+      hr,
+      brs,
+      hrs,
+      link,
+      ol,
+      ul,
+      input,
+      search,
+      slider,
+      checkbox,
+      radio,
+      datalist,
+      inputNumber,
+      inputColor,
+      inputDate,
+      inputDateTime,
+      inputEmail,
+      inputImage,
+      inputPassword,
+      inputTime,
+      select,
+      textarea,
+      inputCamera,
+      image,
+      video,
+      audio,
+      figure,
+      Flex,
+      Carousel,
+      Grid: Grid$1,
+      Header,
+      FlexHeader,
+      Main,
+      FlexMain,
+      Section: Section$1,
+      FlexSection,
+      Article,
+      FlexArticle,
+      Aside,
+      FlexAside,
+      Nav,
+      FlexNav,
+      Footer,
+      FlexFooter,
+      Table,
+      Notebook,
+      ExtractAll:function(){
+          for (let i = 0; i < Object.keys(this).length; i++) {
+              globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+          for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
+  };
+
+  //const isNode = () => (typeof process !== 'undefined');
+
+  class ZikoTimeLoop {
+    constructor(callback, {fps,step,t=[0,null],start=true}={}) {
+      this.callback = callback;
+      this.cache = {
+        isRunning: false,
+        animationId : null,
+        startTime : null,
+        step,
+        fps,
+        t,
+        started:start
+      };
+      this.adjust();
+      this.i=0;
+    }
+    adjust(){
+      if(this.cache.step && this.cache.fps){
+        console.warn(`Fps will be adjusted from ${this.cache.fps} to ${1000/this.cache.step} to ensure a smoother animation`);
+        this.cache.fps=1000/this.cache.step;
+      }
+      if(this.cache.started){
+        const t=this.cache.t;
+        t[0]?this.startAfter(t[0]):this.start();
+        if(t[1])this.stopAfter(t[1]);
+      }
+      return this;
+    }
+    get TIME_STEP() {
+      return this.cache.step?this.cache.step:1000 / this.cache.fps;
+    }
+    start() {
+      if (!this.cache.isRunning) {
+        this.i=0;
+        this.cache.isRunning = true;
+        this.cache.startTime = Date.now();
+        this.animate();
+      }
+      return this;
+    }
+    pause() {
+      if (this.cache.isRunning) {
+        clearTimeout(this.cache.animationId);
+        this.cache.isRunning = false;
+      }
+      return this;
+    }
+    stop(){
+      this.pause();
+      this.i=0;
+      return this;
+    }
+    resume(){
+      this.cache.isRunning=true;
+      this.animate();
+      return this;
+    }
+    startAfter(t=1000){
+      setTimeout(this.start.bind(this),t);
+      return this;
+    }
+    stopAfter(t=1000){
+      setTimeout(this.stop.bind(this),t);
+      return this;   
+    }
+    animate = () => {
+      if (this.cache.isRunning) {
+        const now = Date.now();
+        const delta = now - this.cache.startTime;
+        if (delta > this.TIME_STEP) {
+          this.callback(this);
+          this.i++;
+          this.cache.startTime = now - (delta % this.TIME_STEP);
+        }
+        this.cache.animationId = setTimeout(this.animate, 0);
+      }  }
+  }
+
+  const loop = (callback, options) => new ZikoTimeLoop(callback, options);
+
+  const Ease={
+      Linear:function(t){
+          return t;
+      },
+      InSin(t){
+          return 1 - Math.cos((t * Math.PI) / 2);
+      },
+      OutSin(t){
+          return Math.sin((t * Math.PI) / 2);
+      },
+      InOutSin(t){
+          return  -(Math.cos(Math.PI * t) - 1) / 2;
+      },
+      InQuad(t){
+          return t**2;
+      },
+      OutQuad(t){
+          return 1 - Math.pow((1 - t),2)
+      },
+      InOutQuad(t){
+          return t < 0.5 ? 2 * Math.pow(t,2) : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      },
+      InCubic(t){
+          return t**3;    
+      },
+      OutCubic(t){
+          return 1 - Math.pow((1 - t),3)
+      },
+      InOutCubic(t){
+          return t < 0.5 ? 4 * Math.pow(t,3) : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      },
+      InQuart(t){
+          return t**4;
+      },
+      OutQuart(t){
+          return 1 - Math.pow((1 - t),4);
+      },
+      InOutQuart(t){
+          return t < 0.5 ? 8 * Math.pow(t,4) : 1 - Math.pow(-2 * t + 2, 4) / 2;
+      },
+      InQuint(t){
+          return t**5;
+      },
+      OutQuint(t){
+          return 1 - Math.pow((1 - t),5);
+      },
+      InOutQuint(t){
+          return t < 0.5 ? 16 * Math.pow(t,5) : 1 - Math.pow(-2 * t + 2, 5) / 2;
+      },
+      InExpo(t){
+          return t === 0 ? 0 : Math.pow(2, 10 * t - 10);
+      },
+      OutExpo(t){
+          return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      },
+      InOutExpo(t){
+          return t === 0? 0: t === 1? 1: t < 0.5 ? Math.pow(2, 20 * t - 10) / 2: (2 - Math.pow(2, -20 * t + 10)) / 2;
+      },
+      InCirc(t){
+          return 1 - Math.sqrt(1 - Math.pow(t, 2));
+      },
+      OutCirc(t){
+          return Math.sqrt(1 - Math.pow(t - 1, 2));
+      },
+      InOutCic(t){
+          return t < 0.5? (1 - Math.sqrt(1 - Math.pow(2 * t, 2))) / 2: (Math.sqrt(1 - Math.pow(-2 * t + 2, 2)) + 1) / 2;
+      },
+      Arc(t){
+          return 1 - Math.sin(Math.acos(t));
+      },
+      Back(t){
+          // To Be Changed
+          let x=1;
+          return Math.pow(t, 2) * ((x + 1) * t - x);  
+      },
+      Elastic(t){
+          return -2*Math.pow(2, 10 * (t - 1)) * Math.cos(20 * Math.PI * t / 3 * t);
+      },
+      InBack(t){
+          const c1 = 1.70158;
+          const c3 = c1 + 1;
+          return c3 *Math.pow(t,3)- c1 * (t**2);      
+      },
+      OutBack(t){
+          const c1 = 1.70158;
+          const c3 = c1 + 1;
+          return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);     
+      },
+      InOutBack(t){
+          const c1 = 1.70158;
+          const c2 = c1 * 1.525;
+          return t < 0.5
+          ? (Math.pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2)) / 2
+          : (Math.pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;        
+      },
+      InElastic(t){
+          const c4 = (2 * Math.PI) / 3;return t === 0
+          ? 0
+          : t === 1
+          ? 1
+          : -Math.pow(2, 10 * t - 10) * Math.sin((t * 10 - 10.75) * c4);
+      },
+      OutElastic(t){
+          const c4 = (2 * Math.PI) / 3;
+          return t === 0
+          ? 0
+          : t === 1
+          ? 1
+          : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+      },
+      InOutElastic(t){
+          const c5 = (2 * Math.PI) / 4.5;
+          return t === 0
+          ? 0
+          : t === 1
+          ? 1
+          : t < 0.5
+          ? -(Math.pow(2, 20 * t - 10) * Math.sin((20 * t - 11.125) * c5)) / 2
+          : (Math.pow(2, -20 * t + 10) * Math.sin((20 * t - 11.125) * c5)) / 2 + 1;
+      },
+      InBounce(t){
+          return 1 - Ease.OutBounce(1-t);
+      },
+      OutBounce(t){
+          const n1 = 7.5625;
+          const d1 = 2.75;
+          if (t < 1 / d1) {
+              return n1 * t * t;
+          } else if (t < 2 / d1) {
+              return n1 * (t -= 1.5 / d1) * t + 0.75;
+          } else if (t < 2.5 / d1) {
+              return n1 * (t -= 2.25 / d1) * t + 0.9375;
+          } else {
+              return n1 * (t -= 2.625 / d1) * t + 0.984375;
+          }
+
+      },
+      InOutBounce(t){
+          return t < 0.5
+          ? (1 - Ease.OutBounce(1 - 2 * t)) / 2
+          : (1 + Ease.OutBounce(2 * t - 1)) / 2;
+      }
+  };
+
+  const debounce=(fn,delay=1000)=>{
+      let id;
+      return (...args)=>id?clearTimeout(id):setTimeout(()=>fn(...args),delay)
+  };
+  const throttle=(fn,delay)=>{
+      let lastTime=0;
+      return (...args)=>{
+          const now=new Date().getTime();
+          if(now-lastTime<delay)return;
+          lastTime=now;
+          fn(...args); 
+      }
+  };
+
+  const time_memory_Taken = (callback) => {
+      const t0 = Date.now();
+      const m0 = performance.memory.usedJSHeapSize;
+      const result = callback();
+      const t1 = Date.now();
+      const m1 = performance.memory.usedJSHeapSize;
+      const elapsedTime = t1 - t0;
+      const usedMemory = m1 - m0;
+      return { 
+          elapsedTime,
+          usedMemory, 
+          result 
+      };
+    };
+
+  const waitForUIElm=(UIElement)=>{
+      return new Promise(resolve => {
+          if (UIElement.element) {
+              return resolve(UIElement.element);
+          }
+    
+          const observer = new MutationObserver(() => {
+              if (UIElement.element) {
+                  resolve(UIElement.element);
+                  observer.disconnect();
+              }
+          });
+    
+          observer.observe(document.body, {
+              childList: true,
+              subtree: true
+          });
+      });
+    };
+    const waitForUIElmSync=(UIElement,timeout=2000)=>{
+      const t0=Date.now();
+      while(Date.now()-t0<timeout){
+        if(UIElement.element)return UIElement.element
+      }
+    };
+
+  const wait=(delayInMS)=>{
+      return new Promise((resolve) => setTimeout(resolve, delayInMS));
+  };
+  const timeTaken = callback => {
+      console.time('timeTaken');
+      const r = callback();
+      console.timeEnd('timeTaken');
+      return r;
+  };
+
+  class ZikoTimeAnimation{
+      constructor(callback,ease){
+          this.cache={
+              isRunning:false,
+              AnimationId:null,
+              ease
+          };
+          this.t=0;
+          this.tx=0;
+          this.ty=0;
+          this.i=0;
+          this.step=50;
+          this.duration=3000;
+          this.callback=callback;
+      }
+      #animation_handler(){
+              this.t+=this.step;
+              this.i++;
+              this.tx=map$1(this.t,0,this.duration,0,1);
+              this.ty=this.cache.ease(this.tx);
+              this.callback(this);
+              if(this.t>=this.duration){
+                  clearInterval(this.cache.AnimationId);
+                  this.cache.isRunning=false;
+              }
+      }
+      start(){
+          this.cache.isRunning=true;
+          this.cache.AnimationId=setInterval(this.#animation_handler.bind(this),this.step);
+          return this;
+      }
+      stop(){
+
+      }
+      clear(){
+
+      }
+      stream(){
+
+      }
+  }
+
+  const animation=(callback,ease=Ease.Linear)=>new ZikoTimeAnimation(callback,ease);
+
+  const Time={
+      wait,
+      timeTaken,
+      throttle,
+      debounce,
+      Ease,
+      time_memory_Taken,
+      loop,
+      animation,
+      waitForUIElm,
+      waitForUIElmSync,
+      ExtractAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) {
+                  globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
+  };
+
+  function parseXML(xmlString) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+      const rootNode = xmlDoc.documentElement;
+      const result = parseNode(rootNode);
+      return result;
+    }
+    
+    function parseNode(node) {
+      const obj = {
+        type: node.nodeName,
+        attributes: {},
+        children: []
+      };
+      for (let i = 0; i < node.attributes.length; i++) {
+        const attr = node.attributes[i];
+        obj.attributes[attr.name] = attr.value;
+      }
+      for (let i = 0; i < node.childNodes.length; i++) {
+        const child = node.childNodes[i];
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          obj.children.push(parseNode(child));
+        } else if (child.nodeType === Node.TEXT_NODE) {
+          obj.text = child.textContent.trim();
+        }
+      }
+      return obj;
+    }
+
+    // function htmlParser(element) {
+    //   const obj = {
+    //     type: element.tagName,
+    //     attributes: {},
+    //     children: [],
+    //   };
+    //   for (let i = 0; i < element.attributes.length; i++) {
+    //     const attr = element.attributes[i];
+    //     obj.attributes[attr.name] = attr.value;
+    //   }
+    //   for (let i = 0; i < element.children.length; i++) {
+    //     const child = element.children[i];
+    //     obj.children.push(htmlParser(child));
+    //   }
+    //   return obj;
+    // }
+
+  const preload=(url)=>{
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", url, false); 
+      xhr.send();
+      if (xhr.status === 200) {
+        //return JSON.parse(xhr.responseText);
+        return xhr.responseText;
+      } else {
+        throw new Error(`Failed to fetch data from ${url}. Status: ${xhr.status}`);
+      }
+  };
+
+  const Data={
+      preload,
+      parseXML,
+      ExtractAll:function(){
+          for (let i = 0; i < Object.keys(this).length; i++) {
+              globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+          for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
+  };
+
+  class ZikoUISvgElement{
+      color({stroke,fill}){
+        this.element.setAttribute("stroke",stroke);
+        this.element.setAttribute("fill",fill);
+        return this; 
+      }
+      fill(color="none"){
+        this.element.setAttribute('fill', color);
+        return this;
+      }
+      stroke(color="none",width){
+        this.element.setAttribute('stroke', color);
+        width && this.strokeWidth(width);
+        return this;
+      }
+      strokeWidth(width=1){
+        this.element.setAttribute('stroke-width', width);
+        return this;
+      }
+      opacity(value=1){
+        this.element.setAttribute('opacity', value);
+        return this;   
+      }
+      }
+
+  class ZikoUISvgRectangle extends ZikoUISvgElement{
+      constructor(x,y,w,h,center=true){
+        super();
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "rect",
+        );
+        this.setX(x).setY(y).width(w).height(h);
+        this.rx=this.x+this.w/2;
+        this.ty=this.y+this.h/2;
+      }
+      setX(x){
+         this.element.x.baseVal.value=x;
+         this.x=x;
+         return this;
+      }
+      setY(y){
+         this.element.y.baseVal.value=y;
+         this.y=y;
+         return this;
+      }
+      r(rx,ry){
+        this.rx=rx;
+        this.ry=ry;
+        this.setX(this.rx-this.w/2);
+        this.setY(this.ry-this.h/2);
+        return this;
+      } 
+      width(w){
+         this.element.width.baseVal.value=w;
+         this.w=w;
+         return this;
+      } 
+      height(h){
+         this.element.height.baseVal.value=h;
+         this.h=h;
+         return this;
+      } 
+    } 
+    const svgRect=(x,y,w,h,center)=>new ZikoUISvgRectangle(x,y,w,h,center);
+
+  class ZikoUISvgCircle extends ZikoUISvgElement{
+      constructor(cx,cy,r){
+        super();
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "circle",
+        );
+        this.cx(cx).cy(cy).r(r);
+      }
+      cx(cx){
+         this.element.cx.baseVal.value=cx;
+         return this;
+      }
+      cy(cy){
+         this.element.cy.baseVal.value=cy;
+         return this;
+      }
+      r(r){
+         this.element.r.baseVal.value=r;
+         return this;
+      }
+      get R(){
+        return this.element.r.baseVal.value;
+      }
+      get Cx(){
+        return this.element.cx.baseVal.value;
+      } 
+      get Cy(){
+        return this.element.cy.baseVal.value;
+      }  
+    } 
+  const svgCircle=(x,y,r)=>new ZikoUISvgCircle(x,y,r);
+
+  class ZikoUISvgEllipse extends ZikoUISvgElement{
+      constructor(cx,cy,rx,ry){
+        super();
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "ellipse",
+        );
+        this.cx(cx).cy(cy).rx(rx).ry(ry);
+      }
+      cx(cx){
+         this.element.cx.baseVal.value=cx;
+         return this;
+      }
+      cy(cy){
+         this.element.cy.baseVal.value=cy;
+         return this;
+      }
+      rx(rx){
+         this.element.rx.baseVal.value=rx;
+         return this;
+      } 
+      ry(ry){
+         this.element.ry.baseVal.value=ry;
+         return this;
+      } 
+    } 
+  const svgEllipse=(x,y,rx,ry)=>new ZikoUISvgEllipse(x,y,rx,ry);
+
+  class ZikoUISvgLine extends ZikoUISvgElement{
+      constructor(x1,y1,x2,y2){
+        super();
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line",
+        );
+        this.x1(x1).y1(y1).x2(x2).y2(y2).stroke("black");
+      }
+      x1(x1){
+         this.element.x1.baseVal.value=x1;
+         return this;
+      }
+      y1(y1){
+         this.element.y1.baseVal.value=y1;
+         return this;
+      }
+      x2(x2){
+         this.element.x2.baseVal.value=x2;
+         return this;
+      } 
+      y2(y2){
+         this.element.y2.baseVal.value=y2;
+         return this;
+      } 
+    } 
+  const svgLine=(x1,y1,x2,y2)=>new ZikoUISvgLine(x1,y1,x2,y2);
+
+  class ZikoUISvgPolygon extends ZikoUISvgElement{
+      constructor(X=[],Y=[]){
+        super();
+        this.X=X;
+        this.Y=Y;
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "polygon",
+        );
+        this.element.setAttribute("points","");
+      }
+      addPoint(x,y){
+        let p=this.element.parentElement.createSVGPoint();
+        p.x=x;
+        p.y=y;
+        this.element.points.appendItem(p);
+        return this;
+      }
+      addPoints(X,Y){
+        for(let i=0;i<X.length;i++){
+          let p=this.element.parentElement.createSVGPoint();
+          p.x=X[i];
+          p.y=Y[i];
+          this.element.points.appendItem(p);
+        }
+        return this;
+      }
+    } 
+  const svgPolygon=(X,Y)=>new ZikoUISvgPolygon(X,Y);
+
+  class ZikoUISvgImage extends ZikoUISvgElement{
+      constructor(src="",w="100%",h="100%",x=0,y=0){
+        super();
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "image",
+        );
+        this.setSrc(src).width(w).height(h).x(x).y(y);
+      }
+      x(x){
+         this.element.x.baseVal.value=x;
+         return this;
+      }
+      y(y){
+         this.element.y.baseVal.value=y;
+         return this;
+      }
+      width(w){
+         this.element.setAttribute("width",w);
+         return this;
+      }
+      height(h){
+         this.element.setAttribute("height",h);
+         return this;
+      }
+      setSrc(src=""){
+        this.element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', src);
+        return this;
+      }
+    } 
+  const svgImage=(src,w,h,x,y)=>new ZikoUISvgImage(src,w,h,x,y);
+
+  class ZikoUISvgText extends ZikoUISvgElement{
+      constructor(text,x,y){
+        super();
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "text",
+        );
+        this.setText(text);
+        this.x(x).y(y);
+      }
+      x(x){
+         this.element.setAttribute("x",x);
+         return this;
+      }
+      y(y){
+         this.element.setAttribute("y",y);
+         return this;
+      }
+      setText(text=""){
+        this.element.textContent=text;
+        return this;
+      }
+    } 
+  const svgText=(text,x,y)=>new ZikoUISvgText(text,x,y);
+
+  class ZikoUISvgGroupe extends ZikoUISvgElement{
+      constructor(...svgElement){
+        super();
+        this.items=[];
+        this.element=document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "g",
+        );
+        this.add(...svgElement);
+      }
+      add(...svgElement){
+        for(let i=0;i<svgElement.length;i++){
+          this.element.appendChild(svgElement[i].element);
+          this.items.push(svgElement[i]);
+        }
+        if(svgElement.length===1)return svgElement[0]
+        return svgElement;
+      }
+      remove(...svgElement){
+        for(let i=0;i<svgElement.length;i++){
+          this.element.removeChild(svgElement[i].element);
+          this.items=this.items.filter(n=>!svgElement);
+        }
+        return this;     
+      }
+  }
+  const svgGroupe=(...svgElement)=>new ZikoUISvgGroupe(...svgElement);
+
+  //import svgObject from "./Elements/foreignObject.js";
+  //import svgGrid from "./Elements/grid.js";
+
+    class ZikoUISvg extends ZikoUIElement {
+      constructor(w=360,h=300) {
+        super();
+        this.element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        //this.cache={};
+        this.setAttribute("width",w);
+        this.setAttribute("height",h);
+        this.style({border:"1px black solid"});
+        //this.view(-w/2,-h/2,w/2,h/2)
+        //this.view(-10,-10,10,10);
+        this.render();
+      }
+      view(x1,y1,x2,y2){
+        let width=Math.abs(x2-x1);
+        let height=Math.abs(y2-y1);
+        //this.element.style.transform="scale("+Math.sign(x2-x1)+","+(-Math.sign(y2-y1))+")";
+        this.element.setAttribute("viewBox",[x1,y1,width,height].join(" "));
+        //console.log({width:width,height:height})
+        return this;
+    
+      }
+      add(...svgElement){
+        for(let i=0;i<svgElement.length;i++){
+          this.element.appendChild(svgElement[i].element);
+          this.items.push(svgElement[i]);
+        }
+        if(svgElement.length===1)return svgElement[0]
+        return svgElement;
+      }
+      remove(...svgElement){
+        for(let i=0;i<svgElement.length;i++){
+          this.element.removeChild(svgElement[i].element);
+          this.items=this.items.filter(n=>!svgElement);
+        }
+        return this;     
+      }
+      text(text,x,y){
+        let item=svgText(text,x,y);
+        this.element.appendChild(item.element);
+        item.x(x-item.element.getComputedTextLength()/2);
+        return item;
+      }
+      rect(x,y,w,h){
+        let item=svgRect(x,y,w,h);
+        this.add(item);
+        return item;
+      }
+      line(x1,y1,x2,y2){
+        let item=svgLine(x1,y1,x2,y2);
+        this.element.appendChild(item.element);
+        return item;
+      }
+      circle(cx,cy,r){
+        let item=svgCircle(cx,cy,r);
+        this.element.appendChild(item.element);
+        return item;
+      }
+      ellipse(cx,cy,rx,ry){
+        let item=svgEllipse(cx,cy,rx,ry);
+        this.element.appendChild(item.element);
+        return item;
+      }
+      polygon(X,Y){
+        let item=svgPolygon(X,Y);
+        this.element.appendChild(item.element);
+        item.addPoints(X,Y);
+        return item;
+      }
+      image(src,w,h,x,y){
+        let item=svgImage(src,w,h,x,y);
+        this.element.appendChild(item.element);
+        return item;
+      }
+      mask(){
+    
+      }
+      toString(){
+        return  (new XMLSerializer()).serializeToString(this.element);
+      }
+      btoa(){
+        return btoa(this.toString())
+      }
+      toImg(){
+        return 'data:image/svg+xml;base64,'+this.btoa()
+      }
+      toImg2(){
+        return "data:image/svg+xml;charset=utf8,"+this.toString().replaceAll("<","%3C").replaceAll(">","%3E").replaceAll("#","%23").replaceAll('"',"'");
+      }
+    }
+
+    const Svg =(w,h)=>new ZikoUISvg(w,h);
+
+  class ZikoUICanvas extends ZikoUIElement{
+      constructor(w,h){
+          super();
+          this.element=document.createElement("canvas");
+          this.ctx = this.element.getContext("2d");
+          this.style({
+              border:"1px red solid",
+              //width:"300px",
+              //height:"300px"
+          });
+          this.transformMatrix=new Matrix$1([
+              [1,0,0],
+              [0,1,0],
+              [0,0,1]
+          ]);
+          this.axisMatrix=new Matrix$1([
+              [-10,-10],
+              [10,10]
+          ]);
+          this.render();
+          //this.WatchSize(()=>Paint.adjust())
+      }
+      get Width(){
+          return this.element.width;
+      }
+      get Height(){
+          return this.element.height;
+      }
+      get Xmin(){
+          return this.axisMatrix[0][0];
+      }
+      get Ymin(){
+          return this.axisMatrix[0][1];
+      }
+      get Xmax(){
+          return this.axisMatrix[1][0];
+      }
+      get Ymax(){
+          return this.axisMatrix[1][1];
+      }
+      get ImageData(){
+          return this.ctx.getImageData(0,0,c.Width,c.Height);
+      }
+      draw(all=true){
+          if(all){
+              this.clear();  
+              this.items.forEach(element => {
+                  element.parent=this;
+                  element.draw(this.ctx);
+              });
+          }
+          else {
+              this.items.at(-1).parent=this;
+              this.items.at(-1).draw(this.ctx);
+          }
+          this.maintain();
+          return this;
+      }
+      applyTransformMatrix(){
+          this.ctx.setTransform(
+              this.transformMatrix[0][0],
+              this.transformMatrix[1][0],
+              this.transformMatrix[0][1],
+              this.transformMatrix[1][1],
+              this.transformMatrix[0][2],
+              this.transformMatrix[1][2],
+          );
+          return this;
+      }
+      size(w,h){
+          this.style({
+              width:w,
+              height:h
+          });
+          this.lineWidth();
+          this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+          return this;
+      }
+      adjust(){
+          this.element.width=this.element.getBoundingClientRect().width;
+          this.element.height=this.element.getBoundingClientRect().height;
+          this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+          return this;
+      }
+      view(xMin,yMin,xMax,yMax){
+          this.transformMatrix[0][0]=this.Width/(xMax-xMin); // scaleX
+          this.transformMatrix[1][1]=-this.Height/(yMax-yMin); // scaleY
+          this.transformMatrix[0][2]=this.Width/2;
+          this.transformMatrix[1][2]=this.Height/2;
+          this.axisMatrix=new Matrix$1([
+              [xMin,yMin],
+              [xMax,yMax]
+          ]);
+          
+          this.applyTransformMatrix(); 
+          this.clear();
+          this.lineWidth(1);
+          this.draw();
+          return this;
+      }
+      reset(){
+          this.ctx.setTransform(1,0,0,0,0,0);
+          return this;
+      }
+      append(element){
+          this.items.push(element);
+          this.draw(false);
+          return this;
+      }
+      background(color){
+          this.ctx.fillStyle = color;
+          this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+          this.ctx.fillRect(0, 0, this.Width, this.Height);
+          this.applyTransformMatrix();
+          this.draw();
+      }
+      lineWidth(w){
+          this.ctx.lineWidth=w/this.transformMatrix[0][0];        return this
+      }
+      ImageData(x=0,y=0,w=this.Width,h=this.Height){
+          return this.ctx.getImageData(x,y,w,h);
+      }
+      clear(){
+          this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+          this.ctx.clearRect(0, 0, this.Width, this.Height);
+          this.applyTransformMatrix(); 
+          return this;
+      }
+      clone(){
+          console.log(this.Width);
+          const canvas=new ZikoUICanvas();
+          canvas.items=this.items;
+          canvas.transformMatrix=this.transformMatrix;
+          canvas.axisMatrix=this.axisMatrix;
+          Object.assign(canvas.cache,{...this.cache});
+          //waitForUIElm(this)
+          //console.log(element)
+          this.size(element.style.width,element.style.width);
+          this.applyTransformMatrix();
+          this.draw();
+          this.adjust();
+          return canvas;
+      }
+      toImage() {
+          this.img = document.createElement("img");
+          this.img.src = this.element.toDataURL("image/png");
+          return this;
+      }
+      toBlob() {
+          var canvas = this.element;
+          canvas.toBlob(function (blob) {
+              var newImg = document.createElement("img"),
+                  url = URL.createObjectURL(blob);
+              newImg.onload = function () {
+                  URL.revokeObjectURL(url);
+              };
+              newImg.src = url;
+              console.log(newImg);
+          });
+      }
+      zoomIn(){
+
+      }
+      zoomOut(){
+          
+      }
+      undo(n){
+
+      }
+      redo(n){
+
+      }
+      stream(){
+
+      }
+  }
+
+  const Canvas=(w,h)=>new ZikoUICanvas(w,h);
+
+  class ZikoCanvasElement{
+      constructor(x,y){
+          this.parent=null;
+          this.position={
+              x,
+              y
+          };
+          this.cache={
+              interact:" avoid redraw",
+              config:{
+                  draggable:false,
+                  selected:false,
+                  highlighted:false,
+                  rendered:false
+              },
+              style:{
+                  normal:{
+                      strokeEnabled:true,
+                      fillEnabled:false,
+                      strokeColor:"#111111",
+                      fillColor:"#777777",
+                  },
+                  highlighted:{
+                      strokeEnabled:true,
+                      fillEnabled:false,
+                      strokeColor:null,
+                      fillColor:null,
+                  }
+              },
+          };
+          this.history={
+              position:[],
+              styles:[]
+          };
+          this.render();
+      }
+      get px(){
+          //_x=====>px
+          return (this.position.x??0)+(this.parent?.position?.x??0);
+      }
+      get py(){
+          //_y=====>py
+          return (this.position.y??0)+(this.parent?.position?.y??0);
+      }
+      isIntersectedWith(){
+
+      }
+      isInStroke(x,y){
+          let is;
+          if(this.parent){
+              this.parent.ctx.setTransform(1,0,0,1,0,0);
+              is=this.parent.ctx.isPointInStroke(this.path,x,y);
+              this.parent.applyTransformMatrix();
+          }
+          return is;
+      }
+      isInPath(x,y){
+          let is;
+          if(this.parent){
+              this.parent.ctx.setTransform(1,0,0,1,0,0);
+              is=this.parent.ctx.isPointInPath(this.path,x,y);
+              this.parent.applyTransformMatrix();
+          }
+          return is;
+      }
+      posX(x){
+          this.position.x=x;
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      posY(y){
+          this.position.y=y;
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      color({stroke=this.cache.style.normal.strokeColor,fill=this.cache.style.normal.fillColor}={stroke,fill}){
+          this.cache.style.normal.strokeColor=stroke;
+          this.cache.style.normal.fillColor=fill;
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      translate(dx=0,dy=0){
+          this.position.x+=dx;
+          this.position.y+=dy;
+          if(this.parent)this.parent.draw();
+          return;
+      }
+      applyNormalStyle(ctx){
+          ctx.strokeStyle=this.cache.style.normal.strokeColor;
+          ctx.fillStyle=this.cache.style.normal.fillColor;
+          return this;   
+      }
+      applyHighlightedStyle(ctx){
+          ctx.strokeStyle=this.cache.style.highlighted.strokeColor;
+          ctx.fillStyle=this.cache.style.highlighted.fillColor;
+          return this;
+      }
+      stroke(color=this.cache.style.normal.strokeColor,enabled=true){
+          this.cache.style.normal.strokeEnabled=enabled;
+          this.cache.style.normal.strokeColor=color;
+          if(this.parent)this.parent.draw();
+          return this  
+      }
+      fill(color=this.cache.style.normal.fillColor,enabled=true){
+          this.cache.style.normal.fillEnabled=enabled;
+          this.cache.style.normal.filleColor=color;
+          if(this.parent)this.parent.draw();
+          return this;      
+      }
+      render(render=true){
+         this.cache.config.rendered=render;
+         return this;       
+      }
+  }
+
+  class CanvasArc extends ZikoCanvasElement{
+      constructor(x,y,r,angle){
+          super(x,y);
+          this.r=r;
+          this.angle=angle;
+          this.path=null;
+      }
+      draw(ctx){
+          if(this.cache.config.rendered){
+              ctx.save();
+              this.applyNormalStyle(ctx);
+              ctx.beginPath();
+              this.path=new Path2D();
+              this.path.arc(this.px, this.py, this.r, 0, this.angle);
+              const{strokeEnabled,fillEnabled}=this.cache.style.normal;
+              if(strokeEnabled)ctx.stroke(this.path);
+              if(fillEnabled)ctx.fill(this.path);
+              ctx.closePath(); 
+              ctx.restore();
+          }
+          return this;   
+      }
+      radius(r){
+          this.r=r;
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      // distanceFromCenter(x,y){
+      //     return Math.sqrt(
+      //         (this._x-x)**2-(this._y-y)**2
+      //     )
+      // }
+      // isIn(x,y,strict=false){
+      //     return strict?this.distanceFromCenter(x,y)<this.r:this.distanceFromCenter(x,y)<=this.r;
+      // }
+      // isInEdges(x,y){
+      //     return this.distanceFromCenter(x,y)===this.r;
+      // }
+  }
+  const canvasArc=(x,y,r,phi)=>new CanvasArc(x,y,r,phi);
+  const canvasCircle=(x,y,r)=>new CanvasArc(x,y,r,2*Math.PI);
+
+  class CanvasPoints extends ZikoCanvasElement{
+      constructor(ptsX,ptsY){
+          super();
+          this.pointsMatrix=null;
+          this.path=new Path2D();
+          this.fromXY(ptsX,ptsY);
+      }
+      get points(){
+          return this.pointsMatrix.T.arr;
+      }
+      draw(ctx){
+          if(this.cache.config.rendered){
+              ctx.save();
+              this.applyNormalStyle(ctx);
+              ctx.beginPath();
+              this.path.moveTo(this.points[1][0]+this._x,this.points[1][1]+this._y);
+              for(let i=1;i<this.points.length;i++){
+                  this.path.lineTo(this.points[i][0]+this._x,this.points[i][1]+this._y);
+              }
+              ctx.stroke(this.path);
+              ctx.restore();
+          }
+          return this;
+      }
+      fromXY(X,Y){
+          this.pointsMatrix=matrix([X,Y]);
+          return this;
+      }
+      push(ptsX,ptsY){
+          this.pointsMatrix.hstack(matrix([ptsX,ptsY]));
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      isIn(x,y){
+          let is;
+          if(this.parent){
+              this.parent.ctx.setTransform(1,0,0,1,0,0);
+              is=this.parent.ctx.isPointInPath(this.path,x,y);
+              this.parent.applyTransformMatrix();
+          }
+          return is;
+      }
+  }
+
+  const canvasPoints=(ptsX=[],ptsY=[])=>new CanvasPoints(ptsX,ptsY);
+
+  class CanvasLine extends ZikoCanvasElement{
+      constructor(x0,y0,x1,y1){
+          super();
+          this.x0=x0;
+          this.x1=x1;
+          this.y0=y0;
+          this.y1=y1;
+          delete this.fill;
+      }
+      draw(ctx){
+          if(this.cache.config.rendered){
+              ctx.save();
+              this.applyNormalStyle(ctx);
+              ctx.beginPath();
+              ctx.moveTo(this.x0+this._x,this.y0+this._y_);
+              ctx.lineTo(this.x1+this._x,this.y1+this._y);
+              ctx.stroke();
+              if(this.cache.style.normal.strokeEnabled)ctx.stroke();
+              ctx.restore();
+          }
+          return this;   
+      }
+  }
+  const canvasLine=(x0,y0,x1,y1)=>new CanvasLine(x0,y0,x1,y1);
+
+  class CanvasRect extends ZikoCanvasElement{
+      constructor(x,y,w,h){
+          super(x,y);
+          this.w=w;
+          this.h=h;
+          this.path=new Path2D();
+      }
+      draw(ctx){
+          if(this.cache.config.rendered){
+              ctx.save();
+              this.applyNormalStyle(ctx);
+              ctx.beginPath();
+              this.path.rect(this.px, this.py,this.w,this.h);
+              const{strokeEnabled,fillEnabled}=this.cache.style.normal;
+              if(strokeEnabled)ctx.stroke(this.path);
+              if(fillEnabled)ctx.fill(this.path);
+              ctx.closePath(); 
+              ctx.restore();
+          }
+          return this;   
+      }
+      width(w){
+          this.w=w;
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      height(h){
+          this.h=h;
+          if(this.parent)this.parent.draw();
+          return this;
+      }
+      // distanceFromCenter(x,y){
+      //     return Math.sqrt(
+      //         (this.position.x-x)**2-(this.position.y-y)**2
+      //     )
+      // }
+      // isIn(x,y,strict=false){
+      //     return strict?this.distanceFromCenter(x,y)<this.r:this.distanceFromCenter(x,y)<=this.r;
+      // }
+      // isInEdges(x,y){
+      //     return this.distanceFromCenter(x,y)===this.r;
+      // }
+  }
+  const canvasRect=(x,y,w,h)=>new CanvasRect(x,y,w,h);
+
+  const Graphics={
+      Svg,
+      ZikoUISvg,
+      svgCircle,
+      svgEllipse,
+      svgImage,
+      svgLine,
+      svgPolygon,
+      svgRect,
+      svgText,
+      svgGroupe,
+      Canvas, 
+      canvasArc,
+      canvasCircle,
+      canvasPoints,
+      canvasLine,
+      canvasRect,
+      ExtractAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) {
+                  globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+          }
+          return this;
+      },
+      RemoveAll:function(){
+              for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+          return this;
+      }
+  };
+
+  class Threed {
+      #workerContent;
+      constructor() {
+          this.#workerContent = (
+              function (msg) {
+                  try {
+                      const func = new Function("return " + msg.data.fun)();
+                      let result = func();
+                      postMessage({ result });
+                  } catch (error) {
+                      postMessage({ error: error.message });
+                  } finally {
+                      if (msg.data.close) self.close();
+                  }
+              }
+          ).toString();
+          this.blob = new Blob(["this.onmessage = " + this.#workerContent], { type: "text/javascript" });
+          this.worker = new Worker(window.URL.createObjectURL(this.blob));
+      }
+      call(func, callback, close = true) {
+          this.worker.postMessage({
+              fun: func.toString(),
+              close
+          });
+          this.worker.onmessage = function (e) {
+              if (e.data.error) {
+                  console.error(e.data.error);
+              } else {
+                  callback(e.data.result);
+              }
+          };
+          return this;
+      }
+  }
+
+  const Multi = (func, callback , close) => {
+      const T = new Threed();
+      if (func) {
+          T.call(func, callback , close);
+      }
+      return T;
+  };
+
+  class ZikoSPA{
+      constructor(root_UI,routes){
+          this.root_UI=root_UI;
+          this.routes=new Map([
+              [404,text("Error 404")],
+              ...Object.entries(routes)
+          ]);
+          this.patterns=new Map();
+          this.maintain();
+          window.onpopstate = this.render(location.pathname);
+
+      }
+      get(path,wrapper){
+          (path instanceof RegExp)
+          ? this.patterns.set(path,wrapper)
+          : this.routes.set(path,wrapper);
+          this.maintain();
+          return this;
+      }
+      maintain(){
+          this.root_UI.append(...this.routes.values());
+          [...this.routes.values()].map(n=>n.render(false));
+          this.render(location.pathname);
+          return this;
+      }
+      render(path){
+          if(this.routes.get(path))this.routes.get(path).render(true);
+          else {   
+              const key=[...this.patterns.keys()].find(pattern=>pattern.test(path));
+              if(key)this.patterns.get(key)(path);
+              else this.routes.get(404).render(true);
+          }
+          window.history.pushState({}, "", path);
+          return this;
+      }
+  }
+  const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
+
+  // import { 
+  //     ZikoUICanvas
+  //  } from "./Graphics/Canvas/canvas.js";
+  const Ziko={
+      Math: Math$1,
+      UI: UI$1,
+      Time,
+      Graphics,
+      Events,
+      Data,
+      Multi,
+      SPA,
+      //Watch,
+      ALL_UI_ELEMENTS,
+  };
+  function ExtractAll(){
+      UI$1.ExtractAll();
+      Math$1.ExtractAll();
+      Time.ExtractAll();
+      Events.ExtractAll();
+      Graphics.ExtractAll();
+      return this;
+  }
+  function RemoveAll(){
+      UI$1.RemoveAll();
+      Math$1.RemoveAll();
+      Time.ExtractAll();
+      Events.RemoveAll();
+      Graphics.RemoveAll();
+  }
+
+  // export {
+  //     ZikoUICanvas
+  // }
+  console.log(1);
+
+  exports.Canvas = Canvas;
+  exports.Data = Data;
+  exports.Ease = Ease;
+  exports.Events = Events;
+  exports.ExtractAll = ExtractAll;
+  exports.Graphics = Graphics;
+  exports.Math = Math$1;
+  exports.Multi = Multi;
+  exports.RemoveAll = RemoveAll;
+  exports.SPA = SPA;
+  exports.Svg = Svg;
+  exports.Time = Time;
+  exports.UI = UI$1;
+  exports.Ziko = Ziko;
+  exports.ZikoHtml = ZikoHtml;
+  exports.ZikoUIAudio = ZikoUIAudio;
+  exports.ZikoUICanvas = ZikoUICanvas;
+  exports.ZikoUIElement = ZikoUIElement;
+  exports.ZikoUIFigure = ZikoUIFigure;
+  exports.ZikoUIImage = ZikoUIImage;
+  exports.ZikoUISvg = ZikoUISvg;
+  exports.ZikoUIVideo = ZikoUIVideo;
+  exports.animation = animation;
+  exports.audio = audio;
+  exports.canvasArc = canvasArc;
+  exports.canvasCircle = canvasCircle;
+  exports.canvasLine = canvasLine;
+  exports.canvasPoints = canvasPoints;
+  exports.canvasRect = canvasRect;
+  exports.debounce = debounce;
+  exports.figure = figure;
+  exports.image = image;
+  exports.loop = loop;
+  exports.svgCircle = svgCircle;
+  exports.svgEllipse = svgEllipse;
+  exports.svgGroupe = svgGroupe;
+  exports.svgImage = svgImage;
+  exports.svgLine = svgLine;
+  exports.svgPolygon = svgPolygon;
+  exports.svgRect = svgRect;
+  exports.svgText = svgText;
+  exports.throttle = throttle;
+  exports.timeTaken = timeTaken;
+  exports.time_memory_Taken = time_memory_Taken;
+  exports.video = video;
+  exports.wait = wait;
+  exports.waitForUIElm = waitForUIElm;
+  exports.waitForUIElmSync = waitForUIElmSync;
+
+}));

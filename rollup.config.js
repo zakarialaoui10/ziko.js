@@ -16,7 +16,7 @@ export default {
     file: 'dist/ziko.js',
     format: 'umd',
     name:"Ziko",
-    plugins:[terser()]
+    //plugins:[terser()]
   }
 ],
   plugins: [resolve(), commonjs() ],

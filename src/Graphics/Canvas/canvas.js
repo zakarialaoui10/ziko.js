@@ -22,7 +22,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [10,10]
         ])
         this.render();
-        this.WatchSize(()=>Paint.adjust())
+        //this.WatchSize(()=>Paint.adjust())
     }
     get Width(){
         return this.element.width;

@@ -84,7 +84,7 @@ const thead=(...ZikoUITd)=>{
         if(!(n instanceof ZikoUIElement))n=td(n)
         return n
     })
-    return new ZikoUITd(...UI)
+    return new ZikoUIThead(...UI)
 }
 const tbody=(...ZikoUITr)=>new ZikoUITbody(...ZikoUITr)
 const tfoot=(...ZikoUITr)=>new ZikoUITfoot(...ZikoUITr)

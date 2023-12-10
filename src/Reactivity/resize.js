@@ -3,7 +3,7 @@ class ZikoResizeObserver{
         this.target=UIElement;
         this.contentRect=null;
         this.observer=new ResizeObserver(()=>{
-            callback(this)
+           callback(this)
         })
     }
     get BoundingRect(){
@@ -38,7 +38,7 @@ class ZikoResizeObserver{
         return this;
     }
     stop(){
-
+        this.observer.unobserve(this.target.element);
         return this;
     }
 }

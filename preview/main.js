@@ -2,7 +2,7 @@ Ziko.ExtractAll()
 ZikoThree.ExtractAll()
 document.body.addEventListener("contextmenu",e=>e.preventDefault())
 const RANDOM_COLOR=Random.color()
-Paint=Canvas(500,500).view(-10,-10,10,10).size(500,500)
+Paint=Canvas().view(-10,-10,10,10).size(500,500).adjust()
 Paint.st.background("#eeeeee")
 Sketch=SceneCss("100vw","100vh").background("#111111").style({margin:0})
 Sketch.camera.posZ(700)
@@ -25,7 +25,6 @@ Sketch.orbit.onChange(()=>{
             if(e.isDown){
                 let x=map(e.mx,0,Paint.Width,Paint.Xmin,Paint.Xmax)
                 let y=map(e.my,0,Paint.Height,Paint.Ymax,Paint.Ymin)
-                //console.log(e.mx)
                 Paint.append(canvasCircle(x,y,1/2).color({fill:RANDOM_COLOR}).fill())
                 c.broadcast.emit("draw",{x,y,color:RANDOM_COLOR})
             }
@@ -33,16 +32,9 @@ Sketch.orbit.onChange(()=>{
     })
     c.on("draw",e=>Paint.append(canvasRect(e.x,e.y,1,1).color({stroke:e.color,fill:"#5555AA"}).fill()))
 
-// const RANDOM_COLOR=Random.color()
-// Paint=Canvas().view(-10,-10,10,10).size(500,500).style({backgroud:"#eeeeee"})
-// Paint.onPtrDown(()=>{}).onPtrUp(()=>{})
-//     Paint.onPtrMove(e=>{
-//         if(e.event.ctrlKey) Sketch.orbit.enable()
-//         else{
-//             if(e.isDown){
-//                 const x=map(e.mx,0,Paint.Width,Paint.Xmin,Paint.Xmax)
-//                 const y=map(e.my,0,Paint.Height,Paint.Ymax,Paint.Ymin)
-//                 Paint.append(canvasCircle(x,y,1/2).color({fill:RANDOM_COLOR}).fill())
-//             }
-//         }
-//     })
+Galerie.remove()
+Sketch.remove()
+/////////////////////////////////////
+a=Svg(400,400).view(-10,-10,10,10).style({
+    margin:"20px"
+})

@@ -1,9 +1,9 @@
 import ZikoUIElement from "../ZikoUIElement.js"
-import { tbody,tr,td,caption,ZikoUICaption,thead} from "./elements.js";
-import { Matrix,matrix } from "../../Math/Matrix/index.js";
+import { tbody,caption,ZikoUICaption,thead} from "./elements.js";
+import { matrix } from "../../Math/Matrix/index.js";
 import { MatrixToTableUI } from "./utils.js";
 class ZikoUITable extends ZikoUIElement {
-    constructor(body=matrix(0,0)){
+    constructor(body=matrix(0,0),{caption=null,thead=null,tfoot=null}={}){
         super();
         this.element = document.createElement("table");
         this.fromMatrix(body)
@@ -14,6 +14,18 @@ class ZikoUITable extends ZikoUIElement {
             foot:null
         }
         this.render()
+    }
+    get caption(){
+
+    }
+    get header(){
+
+    }
+    get body(){
+
+    }
+    get footer(){
+
     }
     setCaption(c){
         this.tCaption=caption(c);
@@ -86,6 +98,7 @@ class ZikoUITable extends ZikoUIElement {
         this.fromMatrix(this.bodyMatrix.clone.filterByCols(item));
         return this;
       }
+    forEachTd(){}
 }
 const Table=(matrix)=>new ZikoUITable(matrix)
 export {Table}

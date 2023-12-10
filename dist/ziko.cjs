@@ -4118,7 +4118,7 @@ class ZikoResizeObserver{
         this.target=UIElement;
         this.contentRect=null;
         this.observer=new ResizeObserver(()=>{
-            callback(this);
+           callback(this);
         });
     }
     get BoundingRect(){
@@ -4153,7 +4153,7 @@ class ZikoResizeObserver{
         return this;
     }
     stop(){
-
+        this.observer.unobserve(this.target.element);
         return this;
     }
 }
@@ -5877,6 +5877,13 @@ class ZikoUITd extends ZikoUIElement{
         this.append(...ZikoUIElement);
     }
 }
+class ZikoUIThead extends ZikoUIElement{
+    constructor(...ZikoUITr){
+        super();
+        this.element=document.createElement("Thead");
+        this.append(...ZikoUITr);
+    }
+}
 class ZikoUITbody extends ZikoUIElement{
     constructor(...ZikoUITr){
         super();
@@ -5905,7 +5912,7 @@ const thead=(...ZikoUITd)=>{
         if(!(n instanceof ZikoUIElement))n=td(n);
         return n
     });
-    return new ZikoUITd(...UI)
+    return new ZikoUIThead(...UI)
 };
 const tbody=(...ZikoUITr)=>new ZikoUITbody(...ZikoUITr);
 const caption=(ZikoUITr)=>new ZikoUICaption(ZikoUITr);
@@ -5923,7 +5930,7 @@ const MatrixToTableUI=matrix=>{
 };
 
 class ZikoUITable extends ZikoUIElement {
-    constructor(body=matrix(0,0)){
+    constructor(body=matrix(0,0),{caption=null,thead=null,tfoot=null}={}){
         super();
         this.element = document.createElement("table");
         this.fromMatrix(body);
@@ -5934,6 +5941,18 @@ class ZikoUITable extends ZikoUIElement {
             foot:null
         };
         this.render();
+    }
+    get caption(){
+
+    }
+    get header(){
+
+    }
+    get body(){
+
+    }
+    get footer(){
+
     }
     setCaption(c){
         this.tCaption=caption(c);
@@ -6006,6 +6025,7 @@ class ZikoUITable extends ZikoUIElement {
         this.fromMatrix(this.bodyMatrix.clone.filterByCols(item));
         return this;
       }
+    forEachTd(){}
 }
 const Table=(matrix)=>new ZikoUITable(matrix);
 
@@ -6894,7 +6914,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [10,10]
         ]);
         this.render();
-        this.WatchSize(()=>Paint.adjust());
+        //this.WatchSize(()=>Paint.adjust())
     }
     get Width(){
         return this.element.width;
@@ -7293,7 +7313,7 @@ class CanvasRect extends ZikoCanvasElement{
             ctx.save();
             this.applyNormalStyle(ctx);
             ctx.beginPath();
-            this.path.rect(this._x, this._y,this.w,this.h);
+            this.path.rect(this.px, this.py,this.w,this.h);
             const{strokeEnabled,fillEnabled}=this.cache.style.normal;
             if(strokeEnabled)ctx.stroke(this.path);
             if(fillEnabled)ctx.fill(this.path);
