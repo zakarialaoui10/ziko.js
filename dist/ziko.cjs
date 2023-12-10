@@ -4041,6 +4041,56 @@ class ZikoEventInput extends ZikoEvent{
 }
 const Input=Target=>new ZikoEventInput(Target);
 
+const custom_event_controller=event_name=>function(e){
+    EVENT_CONTROLLER.call(this,e,event_name,null,null);
+};
+class ZikoCustomEvent extends ZikoEvent{
+    constructor(target){
+        super(target);
+        this.event=null;
+        this.cache={
+            prefixe:"",
+            preventDefault:{
+                ff:false,
+            },
+            paused:{
+                ff:false,
+            },
+            stream:{
+                enabled:{
+                    ff:false,
+                },
+                clear:{
+                    ff:false, 
+                },
+                history:{
+                    ff:[],
+                }
+            },
+            callbacks:{
+                ff:[],
+            }
+        };
+        this.__controller={
+            ff:custom_event_controller("ff").bind(this),
+        };
+        this.self=this;
+    }
+    init(event_name){
+        this.__controller[event_name]=custom_event_controller.bind(this,event_name);
+    }
+    on(event_name,...callbacks){
+        this.__onEvent(event_name,{},...callbacks);
+        return this;
+     }  
+    emit(){
+        const event=new Event("ff");
+        this.TargetElement.dispatchEvent(event);
+        return this;
+    }
+}
+const CustomEvent=Target=>new ZikoCustomEvent(Target);
+
 class ZikoChannel{
     constructor(name=""){
         this.channel=new BroadcastChannel(name);
@@ -4091,6 +4141,7 @@ class ZikoChannel{
 
 const Channel=name=>new ZikoChannel(name);
 
+window.CE=CustomEvent;
 const Events={
     Pointer,
     Key,
@@ -4100,6 +4151,7 @@ const Events={
     Clipboard,
     Focus,
     Input,
+    CustomEvent,
     Channel,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {
@@ -6828,14 +6880,15 @@ const svgGroupe=(...svgElement)=>new ZikoUISvgGroupe(...svgElement);
         this.element.appendChild(svgElement[i].element);
         this.items.push(svgElement[i]);
       }
-      if(svgElement.length===1)return svgElement[0]
-      return svgElement;
+      this.maintain();
+      return this;
     }
     remove(...svgElement){
       for(let i=0;i<svgElement.length;i++){
         this.element.removeChild(svgElement[i].element);
         this.items=this.items.filter(n=>!svgElement);
       }
+      this.maintain();
       return this;     
     }
     text(text,x,y){
@@ -7081,7 +7134,7 @@ class ZikoCanvasElement{
             y
         };
         this.cache={
-            interact:" avoid redraw",
+            interact:null/*avoid redraw*/,
             config:{
                 draggable:false,
                 selected:false,

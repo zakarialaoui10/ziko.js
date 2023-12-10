@@ -6,7 +6,7 @@ class ZikoCanvasElement{
             y
         }
         this.cache={
-            interact:" avoid redraw",
+            interact:null/*avoid redraw*/,
             config:{
                 draggable:false,
                 selected:false,

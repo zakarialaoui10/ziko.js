@@ -35,6 +35,9 @@ Sketch.orbit.onChange(()=>{
 Galerie.remove()
 Sketch.remove()
 /////////////////////////////////////
-a=Svg(400,400).view(-10,-10,10,10).style({
+a=Canvas().size(400,400).style({
     margin:"20px"
-})
+}).view(-10,-10,10,10).append(canvasCircle(0,0,2))
+
+ev=CE(a)
+//ev.init("ff")

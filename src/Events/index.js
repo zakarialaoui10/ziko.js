@@ -5,7 +5,9 @@ import Click from "./Global/Click.js";
 import Clipboard from "./Global/Clipboard.js";
 import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
+import CustomEvent from "./Global/CustomEvent.js";
 import { Channel } from "./Channel.js";
+window.CE=CustomEvent
 const Events={
     Pointer,
     Key,
@@ -15,6 +17,7 @@ const Events={
     Clipboard,
     Focus,
     Input,
+    CustomEvent,
     Channel,
     ExtractAll:function(){
             for (let i = 0; i < Object.keys(this).length; i++) {

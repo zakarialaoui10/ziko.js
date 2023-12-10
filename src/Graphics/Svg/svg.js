@@ -37,14 +37,15 @@ import svgGroupe from "./Elements/groupe.js";
         this.element.appendChild(svgElement[i].element);
         this.items.push(svgElement[i])
       }
-      if(svgElement.length===1)return svgElement[0]
-      return svgElement;
+      this.maintain()
+      return this;
     }
     remove(...svgElement){
       for(let i=0;i<svgElement.length;i++){
         this.element.removeChild(svgElement[i].element);
         this.items=this.items.filter(n=>!svgElement)
       }
+      this.maintain();
       return this;     
     }
     text(text,x,y){
