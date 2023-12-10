@@ -7,7 +7,6 @@ import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
 import CustomEvent from "./Global/CustomEvent.js";
 import { Channel } from "./Channel.js";
-window.CE=CustomEvent
 const Events={
     Pointer,
     Key,
@@ -38,6 +37,7 @@ export {
     Click,
     Clipboard,
     Focus,
-    Input
+    Input,
+    CustomEvent
 }
 export default Events

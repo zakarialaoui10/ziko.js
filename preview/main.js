@@ -39,5 +39,4 @@ a=Canvas().size(400,400).style({
     margin:"20px"
 }).view(-10,-10,10,10).append(canvasCircle(0,0,2))
 
-ev=CE(a)
-//ev.init("ff")
+a.on("ev",(e)=>console.log(e.detail))

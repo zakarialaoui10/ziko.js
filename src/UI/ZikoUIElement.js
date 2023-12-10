@@ -8,7 +8,8 @@ import {
   Drop, 
   Click , 
   Clipboard ,
-  Focus 
+  Focus,
+  CustomEvent,
 } from "../Events/index.js"
 import { 
   WatchIntersection, 
@@ -45,6 +46,7 @@ class ZikoUIElement {
       click:null,
       clipboard:null,
       focus:null,
+      custom:null,
     }
     this.observer={
       resize:null,
@@ -381,6 +383,16 @@ class ZikoUIElement {
   onBlur(...callbacks){
     if(!this.events.focus)this.events.focus = Focus(this);
     this.events.focus.onFocus(...callbacks);
+    return this;
+  }
+  on(event_name,...callbacks){
+    if(!this.events.custom)this.events.custom = CustomEvent(this);
+    this.events.custom.on(event_name,...callbacks);
+    return this;
+  }
+  emit(event_name,detail={}){
+    if(!this.events.custom)this.events.custom = CustomEvent(this);
+    this.events.custom.emit(event_name,detail);
     return this;
   }
   WatchAttributes(){

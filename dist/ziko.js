@@ -4055,40 +4055,44 @@
           this.cache={
               prefixe:"",
               preventDefault:{
-                  ff:false,
               },
               paused:{
-                  ff:false,
               },
               stream:{
                   enabled:{
-                      ff:false,
                   },
                   clear:{
-                      ff:false, 
                   },
                   history:{
-                      ff:[],
                   }
               },
               callbacks:{
-                  ff:[],
               }
           };
           this.__controller={
-              ff:custom_event_controller("ff").bind(this),
+             // ff:custom_event_controller("ff").bind(this),
           };
           this.self=this;
       }
-      init(event_name){
-          this.__controller[event_name]=custom_event_controller.bind(this,event_name);
+      #init(event_name){
+          this.cache.preventDefault[event_name]=false;
+          this.cache.paused[event_name]=false;
+          this.cache.stream.enabled=false;
+          this.cache.stream.clear=false;
+          this.cache.stream.history=[];
+          this.cache.callbacks[event_name]=[];
+          this.__controller[event_name]=custom_event_controller(event_name).bind(this);
+          return this;
       }
       on(event_name,...callbacks){
+          if(!(this.__controller[event_name]))this.#init(event_name);
           this.__onEvent(event_name,{},...callbacks);
           return this;
        }  
-      emit(){
-          const event=new Event("ff");
+      emit(event_name,detail={}){
+          if(!(this.__controller[event_name]))this.#init(event_name);
+          this.detail=detail;
+          const event=new Event(event_name);
           this.TargetElement.dispatchEvent(event);
           return this;
       }
@@ -4145,7 +4149,6 @@
 
   const Channel=name=>new ZikoChannel(name);
 
-  window.CE=CustomEvent;
   const Events={
       Pointer,
       Key,
@@ -4284,6 +4287,7 @@
         click:null,
         clipboard:null,
         focus:null,
+        custom:null,
       };
       this.observer={
         resize:null,
@@ -4620,6 +4624,16 @@
     onBlur(...callbacks){
       if(!this.events.focus)this.events.focus = Focus(this);
       this.events.focus.onFocus(...callbacks);
+      return this;
+    }
+    on(event_name,...callbacks){
+      if(!this.events.custom)this.events.custom = CustomEvent(this);
+      this.events.custom.on(event_name,...callbacks);
+      return this;
+    }
+    emit(event_name,detail={}){
+      if(!this.events.custom)this.events.custom = CustomEvent(this);
+      this.events.custom.emit(event_name,detail);
       return this;
     }
     WatchAttributes(){
