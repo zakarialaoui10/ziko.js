@@ -17,6 +17,11 @@ Popup
 Popover 
 Tooltipe
 Canvas : Helper 
+htmlUI
+markdownUI
+jsonUI  
+csvUI 
+ymlUI
 
 
 .add.element
