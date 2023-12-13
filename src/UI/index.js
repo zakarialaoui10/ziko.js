@@ -48,12 +48,11 @@ import {
 } from "./Media/index.js"
 import{
     Flex,
+    Grid,
     Carousel,
-    Notebook
-} from "./Flex/index.js"
-import{
-    Grid
-} from "./Grid/index.js"
+    CodeNote,
+    Tabs,
+} from "./CustomElement/index.js"
 import{
     Header,
     FlexHeader,
@@ -128,7 +127,8 @@ const UI={
     Footer,
     FlexFooter,
     Table,
-    Notebook,
+    CodeNote,
+    Tabs,
     ExtractAll:function(){
         for (let i = 0; i < Object.keys(this).length; i++) {
             globalThis[Object.keys(this)[i]] = Object.values(this)[i];

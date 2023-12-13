@@ -5767,7 +5767,6 @@ class ZikoUIFlex extends ZikoUIElement {
     return this;
   }
   vertical(x, y, order=1) {
-    console.log(111111111111);
     set_vertical.call(this,order);
     this.style({
       alignItems: typeof(x)==="number"?map_pos_x.call(this,x):x,
@@ -5791,6 +5790,36 @@ class ZikoUIFlex extends ZikoUIElement {
 }
 
 const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
+
+class ZikoUIGrid extends ZikoUIElement {
+    constructor(tag ="div", w = "50vw", h = "50vh") {
+      super();
+      this.element = document.createElement(tag);
+      this.direction = "cols";
+      if (typeof w == "number") w += "%";
+      if (typeof h == "number") h += "%";
+      this.style({ border: "1px solid black", width: w, height: h });
+      this.style({ display: "grid" });
+      this.render();
+    }
+    columns(n) {
+        let temp = "";
+        for (let i = 0; i < n; i++) temp = temp.concat(" auto");
+        this.#templateColumns(temp);
+        return this;
+    }
+    #templateColumns(temp = "auto auto") {
+        this.style({ gridTemplateColumns: temp });
+        return this;
+    }
+    gap(w = 10, h = w) {
+        if(typeof (w) === "number")w += "px";
+        if(typeof (h) === "number")h += "px";
+        this.style({gridColumnGap: w,gridRowGap: h});
+        return this;
+    }
+}
+const Grid$1 = (...ZikoUIElement) => new ZikoUIGrid("div").append(...ZikoUIElement);
 
 class ZikoUICarousel extends ZikoUIFlex{
     constructor(...ZikoUIElement){
@@ -5854,37 +5883,56 @@ class ZikoUINoteBook extends ZikoUIFlex{
     }
 }
 
-const Notebook = () => new ZikoUINoteBook();
+const CodeNote = () => new ZikoUINoteBook();
 
-class ZikoUIGrid extends ZikoUIElement {
-    constructor(tag ="div", w = "50vw", h = "50vh") {
-      super();
-      this.element = document.createElement(tag);
-      this.direction = "cols";
-      if (typeof w == "number") w += "%";
-      if (typeof h == "number") h += "%";
-      this.style({ border: "1px solid black", width: w, height: h });
-      this.style({ display: "grid" });
-      this.render();
+// Next 
+// Previous
+// Vertical 
+// Horizontal
+class ZikoUITabs extends ZikoUIFlex{
+    constructor(Controllers,Conntents){
+        super();
+        this.style({
+            boxSizing:"border-box",
+            backgroundColor: "blanchedalmond",
+            border:"1px red solid",
+            margin:"30px"
+        });
+        this.append(
+            Flex().size("auto","auto").style({
+                boxSizing:"border-box",
+                justifyContent:"center",
+                alignItems:"center",
+                textAlign:"center",
+
+                minWidth:"50px",
+                minHeight:"50px",
+
+                backgroundColor:"darkblue",
+                border:"1px darkblue solid",
+
+            }),
+            Flex().style({
+                boxSizing:"border-box",
+                justifyContent:"center",
+                alignItems:"center",
+                textAlign:"center",
+
+                width:"100%",
+                height:"100%",
+
+                backgroundColor:"darkslategrey"
+            })
+        );
+        this.Controller=this.items[0];
+        this.Conntent=this.items[1];
     }
-    columns(n) {
-        let temp = "";
-        for (let i = 0; i < n; i++) temp = temp.concat(" auto");
-        this.#templateColumns(temp);
-        return this;
-    }
-    #templateColumns(temp = "auto auto") {
-        this.style({ gridTemplateColumns: temp });
-        return this;
-    }
-    gap(w = 10, h = w) {
-        if(typeof (w) === "number")w += "px";
-        if(typeof (h) === "number")h += "px";
-        this.style({gridColumnGap: w,gridRowGap: h});
-        return this;
+    addPairs(Controller,Content){
+
     }
 }
-const Grid$1 = (...ZikoUIElement) => new ZikoUIGrid("div").append(...ZikoUIElement);
+
+const Tabs=()=>new ZikoUITabs();
 
 class ZikoUIMain extends ZikoUIElement{
     constructor(){
@@ -6174,7 +6222,8 @@ const UI$1={
     Footer,
     FlexFooter,
     Table,
-    Notebook,
+    CodeNote,
+    Tabs,
     ExtractAll:function(){
         for (let i = 0; i < Object.keys(this).length; i++) {
             globalThis[Object.keys(this)[i]] = Object.values(this)[i];

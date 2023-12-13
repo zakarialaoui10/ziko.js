@@ -1,5 +1,5 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import { ZikoUIFlex } from "../Flex/flex.js";
+import { ZikoUIFlex } from "../CustomElement/Flex.js";
 class ZikoUIMain extends ZikoUIElement{
     constructor(){
       super();

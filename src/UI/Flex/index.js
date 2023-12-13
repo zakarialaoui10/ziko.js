@@ -6,5 +6,5 @@ export{
     Carousel
 } from "./carousel.js"
 export {
-    Notebook
-} from "./Notebook.js";
+    CodeNoteBook
+} from "./CodeNoteBook.js";
