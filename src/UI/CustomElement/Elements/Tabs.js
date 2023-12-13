@@ -2,10 +2,9 @@
 // Previous
 // Vertical 
 // Horizontal
-import ZikoUIElement from "../../ZikoUIElement";
 import { Flex, ZikoUIFlex } from "../Flex";
 class ZikoUITabs extends ZikoUIFlex{
-    constructor(Controllers,Conntents){
+    constructor(Controllers,Contents){
         super();
         this.style({
             boxSizing:"border-box",
@@ -40,12 +39,42 @@ class ZikoUITabs extends ZikoUIFlex{
             })
         )
         this.Controller=this.items[0];
-        this.Conntent=this.items[1]
+        this.Content=this.items[1];
+        if(Controllers.length!==Contents.length)console.error("")
+        else {
+            this.Controller.append(...Controllers);
+            this.Content.append(...Contents)
+        }
+        this.setDefault(0);
     }
-    addPairs(Controller,Content){
+    addPairs(ControllerItem,ContentItem){
+        this.Controller.append(ControllerItem);
+        this.Content.append(ContentItem);
+        return this;
+    }
+    setDefault(index){
+        this.Content.forEach(n=>n.remove());
+        this.Content[index].render();
+        return this;
+    }
+    display(index){
+        this.Content.forEach(n=>n.remove());
+        this.Content[index].render();
+        return this;   
+    }
+    next(){
+
+    }
+    previous(){
+
+    }
+    useHorizontalSwipe(){
+
+    }
+    useVerticalSwipe(){
 
     }
 }
 
-const Tabs=()=>new ZikoUITabs()
+const Tabs=(Controllers,Contents)=>new ZikoUITabs(Controllers,Contents)
 export {Tabs}

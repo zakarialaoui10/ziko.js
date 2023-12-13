@@ -4405,13 +4405,16 @@ class ZikoUIElement {
   }
   remove(...ele) {
     if(ele.length==0){
-      if(this.Target.children.length) this.Target.removeChild(this.element);
+      if(this.Target.children.length && [...this.Target.children].includes(this.element)) this.Target.removeChild(this.element);
     }
     else {
       const remove = (ele) => {
         if(typeof ele === "number") ele=this.items[ele];
-        if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
+        console.log(ele);
+        if(ele instanceof ZikoUIElement){
+          this.element.removeChild(ele.element);
           this.items=this.items.filter(n=>n!==ele);
+        }
       };
       for (let i = 0; i < ele.length; i++) remove(ele[i]);
       for (let i = 0; i < this.items.length; i++)
@@ -5890,7 +5893,7 @@ const CodeNote = () => new ZikoUINoteBook();
 // Vertical 
 // Horizontal
 class ZikoUITabs extends ZikoUIFlex{
-    constructor(Controllers,Conntents){
+    constructor(Controllers,Contents){
         super();
         this.style({
             boxSizing:"border-box",
@@ -5925,14 +5928,44 @@ class ZikoUITabs extends ZikoUIFlex{
             })
         );
         this.Controller=this.items[0];
-        this.Conntent=this.items[1];
+        this.Content=this.items[1];
+        if(Controllers.length!==Contents.length)console.error("");
+        else {
+            this.Controller.append(...Controllers);
+            this.Content.append(...Contents);
+        }
+        this.setDefault(0);
     }
-    addPairs(Controller,Content){
+    addPairs(ControllerItem,ContentItem){
+        this.Controller.append(ControllerItem);
+        this.Content.append(ContentItem);
+        return this;
+    }
+    setDefault(index){
+        this.Content.forEach(n=>n.remove());
+        this.Content[index].render();
+        return this;
+    }
+    display(index){
+        this.Content.forEach(n=>n.remove());
+        this.Content[index].render();
+        return this;   
+    }
+    next(){
+
+    }
+    previous(){
+
+    }
+    useHorizontalSwipe(){
+
+    }
+    useVerticalSwipe(){
 
     }
 }
 
-const Tabs=()=>new ZikoUITabs();
+const Tabs=(Controllers,Contents)=>new ZikoUITabs(Controllers,Contents);
 
 class ZikoUIMain extends ZikoUIElement{
     constructor(){

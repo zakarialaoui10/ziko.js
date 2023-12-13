@@ -146,7 +146,7 @@ class ZikoUIElement {
   }
   remove(...ele) {
     if(ele.length==0){
-      if(this.Target.children.length) this.Target.removeChild(this.element);
+      if(this.Target.children.length && [...this.Target.children].includes(this.element)) this.Target.removeChild(this.element);
     }
     else {
       const remove = (ele) => {
