@@ -10,7 +10,7 @@ import {
   Clipboard ,
   Focus,
   CustomEvent,
-} from "../Events/index.js"
+} from "../Reactivity/Events/index.js"
 import { 
   WatchIntersection, 
   WatchSize 

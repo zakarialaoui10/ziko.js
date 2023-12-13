@@ -1,5 +1,5 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
-import { Input } from "../../../Events/index.js";
+import { Input } from "../../../Reactivity/Events/index.js";
 import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
 import { btn } from "./btn.js";
 //import { select } from "./select.js";

@@ -2,7 +2,7 @@ import Math from "./Math/index.js";
 import UI from "./UI/index.js";
 import Time from "./Time/index.js";
 import Data from "./Data/index.js";
-import Events from "./Events/index.js";
+import Events from "./Reactivity/Events";
 import Graphics from "./Graphics/index.js";
 import Multi from "./Worker/index.js";
 //import {Watch} from "./Reactivity/index.js"

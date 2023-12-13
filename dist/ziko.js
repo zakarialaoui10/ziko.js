@@ -4070,9 +4070,7 @@
               }
           };
           this.__controller={
-             // ff:custom_event_controller("ff").bind(this),
           };
-          this.self=this;
       }
       #init(event_name){
           this.cache.preventDefault[event_name]=false;
