@@ -6979,7 +6979,9 @@ class ZikoUICanvas extends ZikoUIElement{
             [10,10]
         ]);
         this.render();
-        //this.WatchSize(()=>Paint.adjust())
+        setTimeout(()=>this.resize(w,h),0);
+        //this.on("sizeupdated",()=>setTimeout(()=>this.adjust(),0))
+        this.on("sizeupdated",()=>this.adjust());
     }
     get Width(){
         return this.element.width;
@@ -7028,13 +7030,15 @@ class ZikoUICanvas extends ZikoUIElement{
         );
         return this;
     }
-    size(w,h){
-        this.style({
-            width:w,
-            height:h
-        });
+    resize(w,h){
+        // this.style({
+        //     width:w,
+        //     height:h
+        // })
+        this.size(w,h);
         this.lineWidth();
         this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
+        this.emit("sizeupdated");
         return this;
     }
     adjust(){

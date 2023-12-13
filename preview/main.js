@@ -35,7 +35,7 @@ Sketch.orbit.onChange(()=>{
 Galerie.remove()
 Sketch.remove()
 /////////////////////////////////////
-a=Canvas().size(400,400).style({
+a=Canvas(400,400).style({
     margin:"20px"
 }).view(-10,-10,10,10).append(canvasCircle(0,0,2))
 
