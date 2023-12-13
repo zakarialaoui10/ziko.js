@@ -42,6 +42,20 @@ function pointerup_controller(e){
             this.ux=parseInt(e.offsetX);
             this.uy=parseInt(e.offsetY);
             this.isDown=false;
+            const dx=this.dx;
+            const dy=this.dy;
+            const ux=this.ux;
+            const uy=this.uy;
+            const delta_x=(ux-dx)/this.Target.Width;
+            const delta_y=(dy-uy)/this.Target.Height;
+            const HORIZONTAL_SWIPPE=(delta_x<0)?"left":(delta_x>0)?"right":"none";
+            const VERTICAL_SWIPPE=(delta_y<0)?"bottom":(delta_y>0)?"top":"none";
+            this.swippe={
+                h:HORIZONTAL_SWIPPE,
+                v:VERTICAL_SWIPPE,
+                delta_x,
+                delta_y
+            }
         },
         {
             x:this.ux,
@@ -90,6 +104,12 @@ class ZikoEventPointer extends ZikoEvent{
         this.ux=0;
         this.uy=0;      
         this.ut=0;
+        this.swippe={
+            h:null,
+            v:null,
+            delta_x:0,
+            delta_y:0
+        }
         this.isMoving=false;
         this.isDown=false;
         this.cache={
@@ -155,26 +175,32 @@ class ZikoEventPointer extends ZikoEvent{
         }
     }
     onDown(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
         this.__onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks)
         return this;
     }
     onMove(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
         this.__onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks)
         return this;
     }
     onUp(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
         this.__onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks)
         return this;
     }
     onEnter(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
         this.__onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks)
         return this;
     }
     onOut(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
         this.__onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks)
         return this;
     }
     onLeave(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
         this.__onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks)
         return this;
     }
