@@ -24,6 +24,7 @@ print
  jsonUI  
  csvUI 
  ymlUI
+swipe event
 
 attr 
 
