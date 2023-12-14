@@ -940,6 +940,6 @@ const Colors = {
       
   };
   //useTheme=index=>{for (a in Colors[keys[index]]) root.style.setProperty(`--${a}`, Colors[keys[index]][a])};
-  useTheme=name=>{for (a in Colors[name]) root.style.setProperty(`--${a}`, Colors[name][a])};
+  //useTheme=name=>{for (a in Colors[name]) root.style.setProperty(`--${a}`, Colors[name][a])};
 
 export {Colors}

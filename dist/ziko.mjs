@@ -3473,8 +3473,6 @@ const Colors = {
       },
       
   };
-  //useTheme=index=>{for (a in Colors[keys[index]]) root.style.setProperty(`--${a}`, Colors[keys[index]][a])};
-  useTheme=name=>{for (a in Colors[name]) root.style.setProperty(`--${a}`, Colors[name][a]);};
 
 const Themes={
     Colors
@@ -5446,6 +5444,9 @@ class ZikoUIElement {
   }
   get Id() {
     return this.element.getAttribute("id");
+  }
+  useTheme(theme){
+    //thme
   }
   forEach(callback){
     this.items.forEach(callback);
@@ -8607,10 +8608,17 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
-// import { 
-//     ZikoUICanvas
-//  } from "./Graphics/Canvas/canvas.js";
+class ZikoUIAPP extends ZikoUIElement{
+    constructor(){
+        super();
+        this.root=document.documentElement;
+        this.element=document.body;
+    }
+}
+const App=()=>new ZikoUIAPP();
+
 const Ziko={
+    App,
     Math: Math$1,
     UI: UI$1,
     Time,
@@ -8619,7 +8627,6 @@ const Ziko={
     Data,
     Multi,
     SPA,
-    //Watch,
     ALL_UI_ELEMENTS,
 };
 function ExtractAll(){
@@ -8638,9 +8645,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-// export {
-//     ZikoUICanvas
-// }
-console.log(1);
-
-export { Canvas, Data, Ease, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, animation, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, debounce, figure, image, loop, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, throttle, timeTaken, time_memory_Taken, video, wait, waitForUIElm, waitForUIElmSync };
+export { App, Canvas, Data, Ease, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, animation, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, debounce, figure, image, loop, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, throttle, timeTaken, time_memory_Taken, video, wait, waitForUIElm, waitForUIElmSync };

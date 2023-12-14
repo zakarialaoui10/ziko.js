@@ -3475,8 +3475,6 @@ const Colors = {
       },
       
   };
-  //useTheme=index=>{for (a in Colors[keys[index]]) root.style.setProperty(`--${a}`, Colors[keys[index]][a])};
-  useTheme=name=>{for (a in Colors[name]) root.style.setProperty(`--${a}`, Colors[name][a]);};
 
 const Themes={
     Colors
@@ -5448,6 +5446,9 @@ class ZikoUIElement {
   }
   get Id() {
     return this.element.getAttribute("id");
+  }
+  useTheme(theme){
+    //thme
   }
   forEach(callback){
     this.items.forEach(callback);
@@ -8609,10 +8610,17 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
-// import { 
-//     ZikoUICanvas
-//  } from "./Graphics/Canvas/canvas.js";
+class ZikoUIAPP extends ZikoUIElement{
+    constructor(){
+        super();
+        this.root=document.documentElement;
+        this.element=document.body;
+    }
+}
+const App=()=>new ZikoUIAPP();
+
 const Ziko={
+    App,
     Math: Math$1,
     UI: UI$1,
     Time,
@@ -8621,7 +8629,6 @@ const Ziko={
     Data,
     Multi,
     SPA,
-    //Watch,
     ALL_UI_ELEMENTS,
 };
 function ExtractAll(){
@@ -8640,11 +8647,7 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-// export {
-//     ZikoUICanvas
-// }
-console.log(1);
-
+exports.App = App;
 exports.Canvas = Canvas;
 exports.Data = Data;
 exports.Ease = Ease;

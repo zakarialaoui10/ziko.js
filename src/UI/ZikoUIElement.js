@@ -1,4 +1,3 @@
-import { waitForUIElm, waitForUIElmSync } from "../Time/Utils/index.js";
 import styleComposer from "./Style/index.js";
 import { ZikoStyle } from "./Style/style.js";
 import { 
@@ -239,6 +238,9 @@ class ZikoUIElement {
   }
   get Id() {
     return this.element.getAttribute("id");
+  }
+  useTheme(theme){
+    //thme
   }
   forEach(callback){
     this.items.forEach(callback);
@@ -563,5 +565,4 @@ class ZikoUIElement {
     return "Install @ziko/jspdf";
   }
 }
-
 export default ZikoUIElement;

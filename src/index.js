@@ -5,14 +5,14 @@ import Data from "./Data/index.js";
 import Events from "./Reactivity/Events";
 import Graphics from "./Graphics/index.js";
 import Multi from "./Worker/index.js";
-//import {Watch} from "./Reactivity/index.js"
 import {SPA} from "./Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
-// import { 
-//     ZikoUICanvas
-//  } from "./Graphics/Canvas/canvas.js";
+import App from "./App/app.js";
+
+
 const Ziko={
+    App,
     Math,
     UI,
     Time,
@@ -21,7 +21,6 @@ const Ziko={
     Data,
     Multi,
     SPA,
-    //Watch,
     ALL_UI_ELEMENTS,
 }
 function ExtractAll(){
@@ -41,6 +40,7 @@ function RemoveAll(){
 }
 export {
     Ziko,
+    App,
     Math,
     UI,
     Time,
@@ -50,22 +50,12 @@ export {
     ZikoUIElement,
     Multi,
     SPA,
-    //Watch,
     ExtractAll,
     RemoveAll
 };
-// export { 
-//     ZikoUIImage,
-//     ZikoUIAudio,
-//     ZikoUIVideo,
-//     ZikoUIFigure,
-//  } from "./UI";
  export * from "./Math/index.js"
  export * from "./UI/index.js";
  export * from "./Graphics/index.js";
  export * from "./Time"
 
-// export {
-//     ZikoUICanvas
-// }
-console.log(1)
+

@@ -3479,8 +3479,6 @@
         },
         
     };
-    //useTheme=index=>{for (a in Colors[keys[index]]) root.style.setProperty(`--${a}`, Colors[keys[index]][a])};
-    useTheme=name=>{for (a in Colors[name]) root.style.setProperty(`--${a}`, Colors[name][a]);};
 
   const Themes={
       Colors
@@ -5452,6 +5450,9 @@
     }
     get Id() {
       return this.element.getAttribute("id");
+    }
+    useTheme(theme){
+      //thme
     }
     forEach(callback){
       this.items.forEach(callback);
@@ -8613,10 +8614,17 @@
   }
   const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
-  // import { 
-  //     ZikoUICanvas
-  //  } from "./Graphics/Canvas/canvas.js";
+  class ZikoUIAPP extends ZikoUIElement{
+      constructor(){
+          super();
+          this.root=document.documentElement;
+          this.element=document.body;
+      }
+  }
+  const App=()=>new ZikoUIAPP();
+
   const Ziko={
+      App,
       Math: Math$1,
       UI: UI$1,
       Time,
@@ -8625,7 +8633,6 @@
       Data,
       Multi,
       SPA,
-      //Watch,
       ALL_UI_ELEMENTS,
   };
   function ExtractAll(){
@@ -8644,11 +8651,7 @@
       Graphics.RemoveAll();
   }
 
-  // export {
-  //     ZikoUICanvas
-  // }
-  console.log(1);
-
+  exports.App = App;
   exports.Canvas = Canvas;
   exports.Data = Data;
   exports.Ease = Ease;
