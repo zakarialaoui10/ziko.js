@@ -5,7 +5,7 @@ import Data from "./Data/index.js";
 import Events from "./Reactivity/Events";
 import Graphics from "./Graphics/index.js";
 import Multi from "./Worker/index.js";
-import {SPA} from "./Router/index.js";
+import {SPA} from "./App/Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
 import App from "./App/app.js";

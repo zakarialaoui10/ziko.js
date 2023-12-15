@@ -8608,14 +8608,87 @@ class ZikoSPA{
 }
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
-class ZikoUIAPP extends ZikoUIElement{
+class ZikoSeo{
+    constructor(app){
+        this.app=app;
+        this.meta={};
+        this.#setMeta("generator","zikojs");
+    }
+    #setMeta(key,value){
+        const meta=document.querySelector(`meta[name=${key}]`);
+        this.meta=meta?meta:document.createElement("meta");
+        this.meta.setAttribute("name",key);
+        this.meta.setAttribute("content",value);
+        if(!meta)this.app.head.append(this.meta);
+        return this;     
+    }
+    charset(charset="utf-8"){
+        const meta=document.querySelector("meta[charset]");
+        this.meta=meta?meta:document.createElement("meta");
+        this.meta.setAttribute("charset",charset);
+        if(!meta)this.app.head.append(this.meta);
+        return this;
+    }
+    description(description){
+        this.#setMeta("description",description);
+        return this;    
+    }
+    viewport(viewport="width=device-width, initial-scale=1.0"){
+        this.#setMeta("viewport",viewport);
+        return this;    
+    }
+    keywords(...keywords){
+        keywords.push("zikojs");
+        keywords=[...new Set(keywords)].join(", ");
+        this.#setMeta("keywords",keywords);
+        return this;
+    }
+    author(name="",email=""){
+        const author=[name,email].join(", ");
+        this.#setMeta("author",author);
+        return this;
+    }
+}
+const Seo=(app)=>new ZikoSeo(app);
+
+class ZikoUIApp extends ZikoUIElement{
     constructor(){
         super();
         this.root=document.documentElement;
-        this.element=document.body;
+        this.element=document.createElement("main");
+        this.head=null;
+        this.#init();
+        this.seo=Seo(this);
+        Object.assign(this.cache,{theme:null});
+        this.render();
+    }
+    #init(){
+        this.root.setAttribute("data-engine","zikojs");
+        const head=this.root.getElementsByTagName("head")[0];
+        this.head=head?head:this.head=document.createElement("head");
+        if(!head)this.root.insertBefore(this.head,document.body);
+        const title=this.head.getElementsByTagName("title")[0];
+        this.Title=title?title:this.head=document.createElement("title");
+        if(!title)this.head.append(this.Title);
+    }
+    title(title=this.title.textContent){
+        this.Title.textContent=title;
+        return this;
+    }
+    prefetch(){
+
+    }
+    description(){
+
+    }
+    get currentTheme(){
+
+    }
+    useTheme(){
+
     }
 }
-const App=()=>new ZikoUIAPP();
+const App=()=>new ZikoUIApp();
 
 const Ziko={
     App,
