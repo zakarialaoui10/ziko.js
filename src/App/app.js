@@ -48,9 +48,10 @@ class ZikoUIApp extends ZikoUIElement{
         this._style.init(styles);
         return this;
     }
-    useStyle(style){
+    useStyle(usedStyle,styles){
         if(!this._style)this._style=useStyle();
-        this._style.use(style);
+        if(styles)this._style.add(styles);
+        this._style.use(usedStyle);
         return this;
     }
 }

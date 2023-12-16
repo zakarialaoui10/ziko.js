@@ -15,11 +15,6 @@ class ZikoUseStyle{
         return key;
       }, {});
     }
-    init(styles){
-      if(!this._style)this._style=useStyle();
-      this._style.add(styles);
-      return this;
-    }
     add(name,style={}){
       if(name instanceof Object)Object.assign(this.styles,name)
       else Object.assign(this.styles,{[name]:style});
