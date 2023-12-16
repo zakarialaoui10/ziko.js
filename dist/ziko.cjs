@@ -3678,6 +3678,55 @@ const Themes={
     ...LightThemes,
     ...DarkThemes
 };
+class ZikoUITheme{
+  constructor(){
+    this.id="Ziko-Theme-"+crypto.randomUUID().slice(0,8);
+  }
+  get Theme(){
+    return {
+        background: `var(--background-${this.id})`,
+        currentLine: `var(--currentLine-${this.id})`,
+        selection: `var(--selection-${this.id})`,
+        foreground: `var(--foreground-${this.id})`,
+        comment: `var(--comment-${this.id})`,
+        cyan: `var(--cyan-${this.id})`,
+        green: `var(--green-${this.id})`,
+        orange: `var(--orange-${this.id})`,
+        pink: `var(--pink-${this.id})`,
+        purple: `var(--purple-${this.id})`,
+        red: `var(--red-${this.id})`,
+        yellow: `var(--yellow-${this.id})`,
+    }
+}
+  useThemeIndex(index){
+    const keys=Object.keys(Themes);
+        for(let a in Themes[keys[index]]){
+            document.documentElement.style.setProperty(`--${a}-${this.id}`, Themes[keys[index]][a]);
+        }
+        return this;
+  }
+  useThemeName(str){
+    str=str.toLowerCase();
+    const Themes_With_Lower_Case=Object.fromEntries(Object.entries(Themes).map(n=>[n[0].toLowerCase(),n[1]]));
+        for(let a in Themes_With_Lower_Case[str]){
+            document.documentElement.style.setProperty(`--${a}-${this.id}`, Themes_With_Lower_Case[str][a]);
+        }
+        return this;
+  }
+  useThemeObject(Theme){
+    for(let a in Theme){
+      document.documentElement.style.setProperty(`--${a}-${this.id}`, Theme[a]);
+    }
+    return this;
+  }
+  use(theme){
+    if(typeof theme === "number")this.useThemeIndex(theme);
+    if(typeof theme === "string")this.useThemeName(theme);
+    if(theme instanceof Object)this.useThemeObject(theme);
+    return this;
+  }
+}  
+const ZikoTheme=()=>new ZikoUITheme();
 
 const addSuffixeToNumber=(value,suffixe="px")=>{
   if(typeof value === "number") value+=suffixe;
@@ -8884,27 +8933,11 @@ class ZikoUIApp extends ZikoUIElement{
 
     }
     get Theme(){
-        return {
-            background: `var(--background-${this.uuid})`,
-            currentLine: `var(--currentLine-${this.uuid})`,
-            selection: `var(--selection-${this.uuid})`,
-            foreground: `var(--foreground-${this.uuid})`,
-            comment: `var(--comment-${this.uuid})`,
-            cyan: `var(--cyan-${this.uuid})`,
-            green: `var(--green-${this.uuid})`,
-            orange: `var(--orange-${this.uuid})`,
-            pink: `var(--pink-${this.uuid})`,
-            purple: `var(--purple-${this.uuid})`,
-            red: `var(--red-${this.uuid})`,
-            yellow: `var(--yellow-${this.uuid})`,
-        }
+        return this.theme?.Theme;
     }
     useTheme(index){
-        const keys=Object.keys(Themes);
-        for(let a in Themes[keys[index]]){
-            this.root.style.setProperty(`--${a}-${this.id}`, Themes[keys[index]][a]);
-        }
-        console.log(keys[index]);
+        if(!this.theme)this.theme=ZikoTheme();
+        this.theme.use(index);
         return this;
     }
 }

@@ -1,6 +1,6 @@
 import ZikoUIElement from "../UI/ZikoUIElement";
 import { Seo } from "./Seo/index.js";
-import { Themes } from "./Theme/index.js";
+import { Themes,ZikoTheme } from "./Theme/index.js";
 class ZikoUIApp extends ZikoUIElement{
     constructor(){
         super();
@@ -32,26 +32,11 @@ class ZikoUIApp extends ZikoUIElement{
 
     }
     get Theme(){
-        return{
-            background: `var(--background-${this.uuid})`,
-            currentLine: `var(--currentLine-${this.uuid})`,
-            selection: `var(--selection-${this.uuid})`,
-            foreground: `var(--foreground-${this.uuid})`,
-            comment: `var(--comment-${this.uuid})`,
-            cyan: `var(--cyan-${this.uuid})`,
-            green: `var(--green-${this.uuid})`,
-            orange: `var(--orange-${this.uuid})`,
-            pink: `var(--pink-${this.uuid})`,
-            purple: `var(--purple-${this.uuid})`,
-            red: `var(--red-${this.uuid})`,
-            yellow: `var(--yellow-${this.uuid})`,
-        }
+        return this.theme?.Theme;
     }
     useTheme(index){
-        const keys=Object.keys(Themes);
-        for(let a in Themes[keys[index]]){
-            this.root.style.setProperty(`--${a}-${this.id}`, Themes[keys[index]][a]);
-        }
+        if(!this.theme)this.theme=ZikoTheme();
+        this.theme.use(index);
         return this;
     }
 }
