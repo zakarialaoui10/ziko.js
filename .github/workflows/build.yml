@@ -1,20 +1,17 @@
-name: Build Core
-
+name:Build 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
+  pull_request: 
     branches: [ "main" ]
-
 jobs:
   build:
-
+    permissions:
+      contents: write 
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
-
+        node-version: [18.x]
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -23,4 +20,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
+    - run: npm build
+    - name: Commit & Push
+      run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -A .
+          git commit -m "build"
+          git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
