@@ -10,20 +10,25 @@ class ZikouseTheme{
     this.use(theme)
   }
   get Theme(){
-    return{
-        background: `var(--background-${this.id})`,
-        currentLine: `var(--currentLine-${this.id})`,
-        selection: `var(--selection-${this.id})`,
-        foreground: `var(--foreground-${this.id})`,
-        comment: `var(--comment-${this.id})`,
-        cyan: `var(--cyan-${this.id})`,
-        green: `var(--green-${this.id})`,
-        orange: `var(--orange-${this.id})`,
-        pink: `var(--pink-${this.id})`,
-        purple: `var(--purple-${this.id})`,
-        red: `var(--red-${this.id})`,
-        yellow: `var(--yellow-${this.id})`,
-    }
+    const colorNames = [
+      'background',
+      'currentLine',
+      'selection',
+      'foreground',
+      'comment',
+      'cyan',
+      'green',
+      'orange',
+      'pink',
+      'purple',
+      'red',
+      'yellow',
+  ];
+  return colorNames.reduce((theme, color) => {
+      theme[color] = `var(--${color}-${this.id})`;
+      return theme;
+  }, {});
+
 }
   useThemeIndex(index){
     const keys=Object.keys(Themes);
