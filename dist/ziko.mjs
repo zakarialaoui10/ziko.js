@@ -8907,21 +8907,26 @@ class ZikoSeo{
 const Seo=(app)=>new ZikoSeo(app);
 
 class ZikoUseStyle{
-    constructor(styles,usedStyle){
+    constructor(style){
       this.id="Ziko-Style-"+crypto.randomUUID().slice(0,8);
+      this.use(style);
       this.keys=new Set();
-      this.styles=Object.assign({
+      this.styles={
         default:{
           fontSize:"1em"
         }
-      },styles);
-      this.use(usedStyle);
+      };
     }
     get Style(){
       return [...this.keys].reduce((key, value) => {
         key[value] = `var(--${value}-${this.id})`;
         return key;
       }, {});
+    }
+    init(styles){
+      if(!this._style)this._style=useStyle();
+      this._style.add(styles);
+      return this;
     }
     add(name,style={}){
       if(name instanceof Object)Object.assign(this.styles,name);
@@ -8958,7 +8963,7 @@ class ZikoUseStyle{
       return this;
     }
   }  
-const useStyle=(styles,usedStyle)=>new ZikoUseStyle(styles,usedStyle);
+const useStyle=(style)=>new ZikoUseStyle(style);
 
 class ZikoUIApp extends ZikoUIElement{
     constructor(){
@@ -8998,12 +9003,17 @@ class ZikoUIApp extends ZikoUIElement{
     }
     useTheme(theme){
         if(!this._theme)this._theme=useTheme(theme);
-        else this._theme.use(theme);
+        this._theme.use(theme);
         return this;
     }
-    useStyle(styles,usedStyle){
-        if(!this._style)this._style=useStyle(styles,usedStyle);
-        else this._style.use(styles,usedStyle);
+    initStyle(styles){
+        if(!this._style)this._style=useStyle();
+        this._style.init(styles);
+        return this;
+    }
+    useStyle(style){
+        if(!this._style)this._style=useStyle();
+        this._style.use(style);
         return this;
     }
 }
