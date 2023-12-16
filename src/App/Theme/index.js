@@ -4,11 +4,22 @@ const Themes={
     ...LightThemes,
     ...DarkThemes
 }
-
 const keys=Object.keys(Themes);
 const useThemeByName=(app,name)=>{for (a in Themes[name]) app.root.style.setProperty(`--${a}-${app.id}`, Themes[name][a])};
 const useThemeByIndex=(app,index)=>{for (a in Themes[keys[index]]) app.root.style.setProperty(`--${a}-${app.id}`, Themes[keys[index]][a])};
-  export {
+class ZikoTheme{
+  constructor(){
+
+  }
+  use(index){
+    const keys=Object.keys(Themes);
+        for(let a in Themes[keys[index]]){
+            this.root.style.setProperty(`--${a}-${this.id}`, Themes[keys[index]][a]);
+        }
+        return this;
+  }
+}  
+export {
     Themes,
     useThemeByName,
     useThemeByIndex

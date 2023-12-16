@@ -5434,6 +5434,7 @@
       if (typeof element === "string") element = document.createElement(element);
       this.element = element;
       Object.assign(this, styleComposer.call(this));
+      this.uuid=this.constructor.name+"-"+crypto.randomUUID().slice(0,8);
       this.cache = {
         isHidden: false,
         isFrozzen:false,
@@ -8859,7 +8860,6 @@
   class ZikoUIApp extends ZikoUIElement{
       constructor(){
           super();
-          this.id="ziko-app";
           this.root=document.documentElement;
           this.element=document.createElement("main");
           this.head=null;
@@ -8889,18 +8889,18 @@
       }
       get Theme(){
           return {
-              background: `var(--background-${this.id})`,
-              currentLine: `var(--currentLine-${this.id})`,
-              selection: `var(--selection-${this.id})`,
-              foreground: `var(--foreground-${this.id})`,
-              comment: `var(--comment-${this.id})`,
-              cyan: `var(--cyan-${this.id})`,
-              green: `var(--green-${this.id})`,
-              orange: `var(--orange-${this.id})`,
-              pink: `var(--pink-${this.id})`,
-              purple: `var(--purple-${this.id})`,
-              red: `var(--red-${this.id})`,
-              yellow: `var(--yellow-${this.id})`,
+              background: `var(--background-${this.uuid})`,
+              currentLine: `var(--currentLine-${this.uuid})`,
+              selection: `var(--selection-${this.uuid})`,
+              foreground: `var(--foreground-${this.uuid})`,
+              comment: `var(--comment-${this.uuid})`,
+              cyan: `var(--cyan-${this.uuid})`,
+              green: `var(--green-${this.uuid})`,
+              orange: `var(--orange-${this.uuid})`,
+              pink: `var(--pink-${this.uuid})`,
+              purple: `var(--purple-${this.uuid})`,
+              red: `var(--red-${this.uuid})`,
+              yellow: `var(--yellow-${this.uuid})`,
           }
       }
       useTheme(index){

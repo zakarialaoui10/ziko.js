@@ -23,6 +23,7 @@ class ZikoUIElement {
     if (typeof element === "string") element = document.createElement(element);
     this.element = element;
     Object.assign(this, styleComposer.call(this));
+    this.uuid=this.constructor.name+"-"+crypto.randomUUID().slice(0,8);
     this.cache = {
       isHidden: false,
       isFrozzen:false,
