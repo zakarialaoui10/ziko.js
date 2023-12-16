@@ -1,6 +1,6 @@
 import ZikoUIElement from "../UI/ZikoUIElement";
 import { Seo } from "./Seo/index.js";
-import { Themes,ZikoTheme } from "./Theme/index.js";
+import { useTheme } from "./Apparence/Theme/index.js";
 class ZikoUIApp extends ZikoUIElement{
     constructor(){
         super();
@@ -35,7 +35,7 @@ class ZikoUIApp extends ZikoUIElement{
         return this.theme?.Theme;
     }
     useTheme(index){
-        if(!this.theme)this.theme=ZikoTheme();
+        if(!this.theme)this.theme=useTheme();
         this.theme.use(index);
         return this;
     }

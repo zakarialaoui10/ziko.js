@@ -4,9 +4,10 @@ const Themes={
     ...LightThemes,
     ...DarkThemes
 }
-class ZikoUITheme{
-  constructor(){
+class ZikouseTheme{
+  constructor(theme){
     this.id="Ziko-Theme-"+crypto.randomUUID().slice(0,8);
+    this.use(theme)
   }
   get Theme(){
     return{
@@ -52,9 +53,9 @@ class ZikoUITheme{
     return this;
   }
 }  
-const ZikoTheme=()=>new ZikoUITheme()
+const useTheme=(theme=0)=>new ZikouseTheme(theme)
 export {
-    ZikoTheme,
+    useTheme,
     Themes,
     LightThemes,
     DarkThemes,

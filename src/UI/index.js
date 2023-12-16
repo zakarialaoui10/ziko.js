@@ -1,4 +1,4 @@
-import { Themes } from "../App/Theme/index.js";
+import { Themes } from "../App/Apparence/Theme/index.js";
 import {
     text,
     p,

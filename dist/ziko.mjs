@@ -3724,7 +3724,7 @@ class ZikoUITheme{
     return this;
   }
 }  
-const ZikoTheme=()=>new ZikoUITheme();
+const UITheme=()=>new ZikoUITheme();
 
 const addSuffixeToNumber=(value,suffixe="px")=>{
   if(typeof value === "number") value+=suffixe;
@@ -8934,7 +8934,7 @@ class ZikoUIApp extends ZikoUIElement{
         return this.theme?.Theme;
     }
     useTheme(index){
-        if(!this.theme)this.theme=ZikoTheme();
+        if(!this.theme)this.theme=UITheme();
         this.theme.use(index);
         return this;
     }
