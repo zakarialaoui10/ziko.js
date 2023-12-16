@@ -3678,7 +3678,7 @@ const Themes={
     ...LightThemes,
     ...DarkThemes
 };
-class ZikouseTheme{
+class ZikoUseTheme{
   constructor(theme){
     this.id="Ziko-Theme-"+crypto.randomUUID().slice(0,8);
     this.use(theme);
@@ -3732,7 +3732,7 @@ class ZikouseTheme{
     return this;
   }
 }  
-const useTheme=(theme=0)=>new ZikouseTheme(theme);
+const useTheme=(theme=0)=>new ZikoUseTheme(theme);
 
 const addSuffixeToNumber=(value,suffixe="px")=>{
   if(typeof value === "number") value+=suffixe;
@@ -8908,6 +8908,60 @@ class ZikoSeo{
 }
 const Seo=(app)=>new ZikoSeo(app);
 
+class ZikoUseStyle{
+    constructor(styles,usedStyle){
+      this.id="Ziko-Style-"+crypto.randomUUID().slice(0,8);
+      this.keys=new Set();
+      this.styles=Object.assign({
+        default:{
+          fontSize:"1em"
+        }
+      },styles);
+      this.use(usedStyle);
+    }
+    get Style(){
+      return [...this.keys].reduce((key, value) => {
+        key[value] = `var(--${value}-${this.id})`;
+        return key;
+      }, {});
+    }
+    add(name,style={}){
+      if(name instanceof Object)Object.assign(this.styles,name);
+      else Object.assign(this.styles,{[name]:style});
+      return this;
+    }
+    #useStyleIndex(index){
+      const keys=Object.keys(this.styles);
+        for(let a in this.styles[keys[index]]){
+          document.documentElement.style.setProperty(`--${a}-${this.id}`, this.styles[keys[index]][a]);
+          this.keys.add(a);
+        }
+
+        return this;
+    }
+    #useStyleName(name){
+      for(let a in this.styles[name]){
+        document.documentElement.style.setProperty(`--${a}-${this.id}`, this.styles[name][a]);
+        this.keys.add(a);
+      }
+      return this;
+    }
+    #useStyleObject(Style){
+      for(let a in Style){
+        document.documentElement.style.setProperty(`--${a}-${this.id}`, Style[a]);
+        this.keys.add(a);
+      }
+      return this;
+    }
+    use(style){
+      if(typeof style === "number")this.#useStyleIndex(style);
+      if(typeof style === "string")this.#useStyleName(style);
+      if(style instanceof Object)this.#useStyleObject(style);
+      return this;
+    }
+  }  
+const useStyle=(styles,usedStyle)=>new ZikoUseStyle(styles,usedStyle);
+
 class ZikoUIApp extends ZikoUIElement{
     constructor(){
         super();
@@ -8939,11 +8993,19 @@ class ZikoUIApp extends ZikoUIElement{
 
     }
     get Theme(){
-        return this.theme?.Theme;
+        return this._theme?.Theme;
     }
-    useTheme(index){
-        if(!this.theme)this.theme=useTheme();
-        this.theme.use(index);
+    get Style(){
+        return this._style?.Style;
+    }
+    useTheme(theme){
+        if(!this._theme)this._theme=useTheme(theme);
+        else this._theme.use(theme);
+        return this;
+    }
+    useStyle(styles,usedStyle){
+        if(!this._style)this._style=useStyle(styles,usedStyle);
+        else this._style.use(styles,usedStyle);
         return this;
     }
 }

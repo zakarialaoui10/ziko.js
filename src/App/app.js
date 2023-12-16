@@ -1,6 +1,7 @@
 import ZikoUIElement from "../UI/ZikoUIElement";
 import { Seo } from "./Seo/index.js";
 import { useTheme } from "./Apparence/Theme/index.js";
+import { useStyle } from "./Apparence/index.js";
 class ZikoUIApp extends ZikoUIElement{
     constructor(){
         super();
@@ -32,11 +33,19 @@ class ZikoUIApp extends ZikoUIElement{
 
     }
     get Theme(){
-        return this.theme?.Theme;
+        return this._theme?.Theme;
     }
-    useTheme(index){
-        if(!this.theme)this.theme=useTheme();
-        this.theme.use(index);
+    get Style(){
+        return this._style?.Style;
+    }
+    useTheme(theme){
+        if(!this._theme)this._theme=useTheme(theme);
+        this._theme.use(theme);
+        return this;
+    }
+    useStyle(style){
+        if(!this._style)this._style=useStyle();
+        this._style.use(style);
         return this;
     }
 }
