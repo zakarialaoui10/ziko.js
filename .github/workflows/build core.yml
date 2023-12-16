@@ -1,4 +1,4 @@
-name: Build 
+name: Build Core
 on:
   push:
     branches: [ "main" ]
@@ -20,7 +20,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm build
+    - run: npm run build
     - name: Commit & Push
       run: |
           git config user.name github-actions
