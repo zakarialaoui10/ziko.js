@@ -34,8 +34,8 @@
          }})
 ```
  - ## 🔰 Rich UI elements
-| HTML Element      | Description              |
-|-------------------|--------------------------|
+| HTML Element      | Description              |Syntaxe   |
+|---|---|---|
 | `ZikoHtml`        | Custom HTML element      |
 | `text`            | Text content             |
 | `p`               | Paragraph                |
