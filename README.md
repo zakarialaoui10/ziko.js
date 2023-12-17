@@ -32,7 +32,75 @@
               d:PI/4,
               e:[PI,PI/2,PI/3,PI/4,PI/6]
          }})
-```    
+```
+ - ## 🔰 Rich UI elements
+| HTML Element      | Description              |
+|-------------------|--------------------------|
+| `ZikoHtml`        | Custom HTML element      |
+| `text`            | Text content             |
+| `p`               | Paragraph                |
+| `h1-h6`           | Headings 1-6             |
+| `btn`             | Button                   |
+| `br`              | Line break               |
+| `hr`              | Horizontal rule          |
+| `brs`             |         |
+| `hrs`             |    |
+| `link`            | Link                     |
+| `ol`              | Ordered list             |
+| `ul`              | Unordered list           |
+| `input`           | Input                    |
+| `search`          | Search input             |
+| `slider`          | Slider input             |
+| `checkbox`        | Checkbox input           |
+| `radio`           | Radio button input       |
+| `datalist`        | Data list input          |
+| `inputNumber`     | Number input             |
+| `inputColor`      | Color input              |
+| `inputDate`       | Date input               |
+| `inputDateTime`   | Date-time input          |
+| `inputEmail`      | Email input              |
+| `inputImage`      | Image input              |
+| `inputPassword`   | Password input           |
+| `inputTime`       | Time input               |
+| `select`          | Select dropdown          |
+| `textarea`        | Text area                |
+| `inputCamera`     | Camera input             |
+| `image`           | Image element            |
+| `video`           | Video element            |
+| `audio`           | Audio element            |
+| `figure`          | Figure element           |
+| `Flex`            | Flex container           |
+| `Carousel`        | Carousel container       |
+| `Grid`            | Grid container           |
+| `Header`          | Header section           |
+| `FlexHeader`      | Flex header section      |
+| `Main`            | Main section             |
+| `FlexMain`        | Flex main section        |
+| `Section`         | Section                  |
+| `FlexSection`     | Flex section             |
+| `Article`         | Article section          |
+| `FlexArticle`     | Flex article section     |
+| `Aside`           | Aside section            |
+| `FlexAside`       | Flex aside section       |
+| `Nav`             | Navigation section       |
+| `FlexNav`         | Flex navigation section  |
+| `Footer`          | Footer section           |
+| `FlexFooter`      | Flex footer section      |
+| `Table`           | Table element            |
+| `CodeNote`        | Code note                |
+| `Tabs`            | Tabs container           |
+| `Accordion`       | Accordion container      |
+| `Canvas`          | Canvas element           |
+| `Svg`             | SVG Container            |
+| `Menu`            | Menu element             |
+| `Popup`           | Popup element            |
+| `Popover`         | Popover element          |
+| `Timeline`        | Timeline element         |
+| `Swipper`         | Swipper element          |
+| `Toast`           | Toast element            |
+| `Treeview`        | Treeview element         |
+| `Columns`         | Columns element          |
+
  - ## 🔰 Methodes Chaining 
 
 ```js
