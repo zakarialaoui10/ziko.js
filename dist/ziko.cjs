@@ -5515,7 +5515,10 @@ class ZikoUIElement {
       intersection:null
     };
     this.cache.style.linkTo(this);
-    this.style({ position: "relative" });
+    this.style({ 
+      position: "relative",
+      boxSizing:"border-box"
+     });
     this.size("auto", "auto");
   }
   get st(){
@@ -6228,7 +6231,7 @@ class ZikoUIHeading extends ZikoUIElement {
     return UI
    };
 
-class ZikoHtmlTag extends ZikoUIElement {
+class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
     super(element);
       this.render();
@@ -6266,7 +6269,7 @@ class ZikoUIBr extends ZikoUIElement {
   const brs = (n=1)=> new Array(n).fill(new ZikoUIBr());
   const hrs = (n=1)=> new Array(n).fill(new ZikoUIHr());
   const link=(href,...UIElement)=>new ZikoUILink(href).append(...UIElement);
-  const ZikoHtml=(tag,...UIElement)=>new ZikoHtmlTag(tag).append(...UIElement);
+  const ZikoHtml=(tag,...UIElement)=>new ZikoUIHtmlTag(tag).append(...UIElement);
 
 class ZikoUILI extends ZikoUIElement{
   constructor(UI){
@@ -7201,6 +7204,50 @@ class ZikoUITabs extends ZikoUIFlex{
 
 const Tabs=(Controllers,Contents)=>new ZikoUITabs(Controllers,Contents);
 
+class ZikoUIAccordion extends ZikoUIElement{
+    constructor(summary,content,icon="😁"){
+        super();
+        this.element=document.createElement("details");
+        this.summary=ZikoHtml("summary",summary).style({
+            fontSize:"1.1em",
+            padding:"0.625rem",
+            fontWeight:"bold",
+            listStyleType:`"${icon}"`,
+            cursor:"pointer",
+        });
+        this.summary[0].style({
+            marginLeft:"0.5em",
+        });
+        this.content=content.style({
+            margin:"0.7em",
+            border:"1px green solid"
+        });
+        this.append(this.summary,this.content);
+        this.style({
+            marginBottom:"0.7em",
+            border:"1px solid purple"
+        });
+        this.render();
+    }
+    get isOpen(){
+        return this.element.open;
+    }
+    open(){
+        this.element.open=true;
+        return this;
+    }
+    close(){
+        this.element.open=true;
+        return this;
+    }
+    toggle(){
+        this.element.open=!this.element.open;
+        return this;
+    }
+}
+ 
+const Accordion=(summary,content,icon)=>new ZikoUIAccordion(summary,content,icon);
+
 class ZikoUIMain extends ZikoUIElement{
     constructor(){
       super();
@@ -7492,6 +7539,7 @@ const UI$1={
     Table,
     CodeNote,
     Tabs,
+    Accordion,
     ExtractAll:function(){
         for (let i = 0; i < Object.keys(this).length; i++) {
             globalThis[Object.keys(this)[i]] = Object.values(this)[i];

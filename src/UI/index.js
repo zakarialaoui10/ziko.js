@@ -53,6 +53,7 @@ import{
     Carousel,
     CodeNote,
     Tabs,
+    Accordion,
 } from "./CustomElement/index.js"
 import{
     Header,
@@ -131,6 +132,7 @@ const UI={
     Table,
     CodeNote,
     Tabs,
+    Accordion,
     ExtractAll:function(){
         for (let i = 0; i < Object.keys(this).length; i++) {
             globalThis[Object.keys(this)[i]] = Object.values(this)[i];

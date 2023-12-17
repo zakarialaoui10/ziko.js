@@ -1,5 +1,5 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-class ZikoHtmlTag extends ZikoUIElement {
+class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
     super(element);
       this.render();
@@ -37,9 +37,10 @@ class ZikoUIBr extends ZikoUIElement {
   const brs = (n=1)=> new Array(n).fill(new ZikoUIBr());
   const hrs = (n=1)=> new Array(n).fill(new ZikoUIHr());
   const link=(href,...UIElement)=>new ZikoUILink(href).append(...UIElement);
-  const ZikoHtml=(tag,...UIElement)=>new ZikoHtmlTag(tag).append(...UIElement);
+  const ZikoHtml=(tag,...UIElement)=>new ZikoUIHtmlTag(tag).append(...UIElement);
 export{
   ZikoHtml,
+  ZikoUIHtmlTag,
   br,
   hr,
   brs,

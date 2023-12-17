@@ -53,7 +53,10 @@ class ZikoUIElement {
       intersection:null
     }
     this.cache.style.linkTo(this);
-    this.style({ position: "relative" });
+    this.style({ 
+      position: "relative",
+      boxSizing:"border-box"
+     });
     this.size("auto", "auto");
   }
   get st(){
