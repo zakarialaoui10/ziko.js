@@ -42,7 +42,7 @@ Sketch.remove()
 // a.on("ev",(e)=>console.log(e.detail))
 ////////////////////////:
 app=Ziko.App().useTheme(0)
-a=Accordion(
+Arg=Accordion(
     text("Argentina").style({
         color:app.Theme.purple
     }),
@@ -59,17 +59,61 @@ a=Accordion(
         "Lionel Messi",
         "Julian Alvarez"
         ).style({
-            color:app.Theme.cyan,
-            boxShadow:`2px 2px 0 0 ${app.Theme.purple}`
+            color:app.Theme.currentLine,
+            backgroundColor:app.Theme.foreground,
+            borderTop:`1px solid ${app.Theme.currentLine}`,
+            borderLeft:`1px solid ${app.Theme.currentLine}`,
+            boxShadow:`3px 3px 2px 0px ${app.Theme.background}`,
+            paddingBottom:"5px"
         }),
     "💙🤍")
-    .size("300px").style({
-        fontSize:"20px",
-        fontFamily:"verdana",
-        backgroundColor:app.Theme.background,
-        margin:"20px 10px"
-    })
-    sc=SceneCss("100vw","100vh");
-    sc.add(a)
-    a.summary.onPtrDown(()=>a.toggle())
+    .size("300px")
+    Fr=Accordion(
+        text("France").style({
+            color:app.Theme.red
+        }),
+        ul(
+            "Hugo Loris",
+            "Varane",
+            "Upamecano",
+            "Julieus Kounde",
+            "Theo hernandez",
+            "Tchouamini",
+            "Rabiot",
+            "Antoine Griezman",
+            "Ousmane Dembele",
+            "Kylian Mbappe",
+            "Olivier Giroud"
+            ).style({
+                color:app.Theme.currentLine,
+                backgroundColor:app.Theme.foreground,
+                borderTop:`1px solid ${app.Theme.currentLine}`,
+                borderLeft:`1px solid ${app.Theme.currentLine}`,
+                boxShadow:`3px 3px 2px 0px ${app.Theme.background}`,
+                paddingBottom:"5px"
+            }),
+        "💙🤍")
+        .size("300px")
+    // Ct=Flex(Arg,Fr).horizontal(0,1).size("700px","auto").style({
+    //     margin:"10px auto",
+    //     background:app.Theme.background,
+    //     boxShadow:`10px 10px 5px 0px ${app.Theme.foreground}`
+    // })
+    // Ct.forEach(n=>{
+    //     n.style({
+    //         fontSize:"1em",
+    //         fontFamily:"verdana",
+    //         backgroundColor:app.Theme.foreground,
+    //         margin:"20px 10px"
+    //     })
+    // })
+    
+    sc=SceneCss("100vw","100vh").background("#333333");
+    sc.add(Arg,Fr)
+    sc[0].posX(-150)
+    sc[1].posX(150)
+    Arg.summary[0].onPtrDown(()=>Arg.toggle())
+    Fr.summary[0].onPtrDown(()=>Fr.toggle())
     app.useTheme("dracula")
+    // Arg.open()
+    // Fr.open()

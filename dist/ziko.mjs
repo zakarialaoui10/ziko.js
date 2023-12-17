@@ -7221,12 +7221,10 @@ class ZikoUIAccordion extends ZikoUIElement{
         });
         this.content=content.style({
             margin:"0.7em",
-            border:"1px green solid"
         });
         this.append(this.summary,this.content);
         this.style({
             marginBottom:"0.7em",
-            border:"1px solid purple"
         });
         this.render();
     }
