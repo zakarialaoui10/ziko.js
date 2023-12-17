@@ -35,8 +35,41 @@ Sketch.orbit.onChange(()=>{
 Galerie.remove()
 Sketch.remove()
 /////////////////////////////////////
-a=Canvas(400,400).style({
-    margin:"20px"
-}).view(-10,-10,10,10).append(canvasCircle(0,0,2))
+// a=Canvas(400,400).style({
+//     margin:"20px"
+// }).view(-10,-10,10,10).append(canvasCircle(0,0,2))
 
-a.on("ev",(e)=>console.log(e.detail))
+// a.on("ev",(e)=>console.log(e.detail))
+////////////////////////:
+app=Ziko.App().useTheme(0)
+a=Accordion(
+    text("Argentina").style({
+        color:app.Theme.purple
+    }),
+    ul(
+        "Emiliano Martinez",
+        "Cristian Romero",
+        "Nicolas Otamendi",
+        "Naheul Molina",
+        "Nicolas Tagliafico",
+        "Enzo Fernandez",
+        "Rodrigo De Paul",
+        "Alexis Mac Alliser",
+        "Anjel Di Maria",
+        "Lionel Messi",
+        "Julian Alvarez"
+        ).style({
+            color:app.Theme.cyan,
+            boxShadow:`2px 2px 0 0 ${app.Theme.purple}`
+        }),
+    "💙🤍")
+    .size("300px").style({
+        fontSize:"20px",
+        fontFamily:"verdana",
+        backgroundColor:app.Theme.background,
+        margin:"20px 10px"
+    })
+    sc=SceneCss("100vw","100vh");
+    sc.add(a)
+    a.summary.onPtrDown(()=>a.toggle())
+    app.useTheme("dracula")

@@ -5521,7 +5521,10 @@
       this.cache.style.linkTo(this);
       this.style({ 
         position: "relative",
-        boxSizing:"border-box"
+        boxSizing:"border-box",
+        fontFamily:"verdana",
+        margin:0,
+        padding:0,
        });
       this.size("auto", "auto");
     }
@@ -7240,8 +7243,14 @@
           this.element.open=true;
           return this;
       }
+      onOpen(callback){
+          return this;
+      }
       close(){
           this.element.open=true;
+          return this;
+      }
+      onClose(callback){
           return this;
       }
       toggle(){
@@ -7251,6 +7260,8 @@
   }
    
   const Accordion=(summary,content,icon)=>new ZikoUIAccordion(summary,content,icon);
+
+  // Watch open using Mutation observer
 
   class ZikoUIMain extends ZikoUIElement{
       constructor(){

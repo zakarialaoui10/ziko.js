@@ -24,7 +24,7 @@ class ZikoUIAccordion extends ZikoUIElement{
             marginBottom:"0.7em",
             border:"1px solid purple"
         })
-        this.render()
+        this.render();
     }
     get isOpen(){
         return this.element.open;
@@ -33,8 +33,14 @@ class ZikoUIAccordion extends ZikoUIElement{
         this.element.open=true;
         return this;
     }
+    onOpen(callback){
+        return this;
+    }
     close(){
         this.element.open=true;
+        return this;
+    }
+    onClose(callback){
         return this;
     }
     toggle(){
@@ -55,3 +61,5 @@ const Accordion=(summary,content,icon)=>new ZikoUIAccordion(summary,content,icon
 export{
     Accordion
 }
+
+// Watch open using Mutation observer 
