@@ -73,19 +73,12 @@
 | `Carousel`        | Carousel container       |
 | `Grid`            | Grid container           |
 | `Header`          | Header section           |
-| `FlexHeader`      | Flex header section      |
 | `Main`            | Main section             |
-| `FlexMain`        | Flex main section        |
 | `Section`         | Section                  |
-| `FlexSection`     | Flex section             |
 | `Article`         | Article section          |
-| `FlexArticle`     | Flex article section     |
 | `Aside`           | Aside section            |
-| `FlexAside`       | Flex aside section       |
 | `Nav`             | Navigation section       |
-| `FlexNav`         | Flex navigation section  |
 | `Footer`          | Footer section           |
-| `FlexFooter`      | Flex footer section      |
 | `Table`           | Table element            |
 | `CodeNote`        | Code note                |
 | `Tabs`            | Tabs container           |
