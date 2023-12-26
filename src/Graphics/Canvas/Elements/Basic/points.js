@@ -1,5 +1,5 @@
 import ZikoCanvasElement from "../Element.js";
-import { matrix } from "../../../../Math/Matrix/index.js";
+import { matrix } from "../../../../../Math/Matrix/index.js";
 class CanvasPoints extends ZikoCanvasElement{
     constructor(ptsX,ptsY){
         super();
