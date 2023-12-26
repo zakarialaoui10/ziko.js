@@ -32,35 +32,46 @@ Arg=Accordion(
         .style({
             textAlign:"center"
         })  
-sc=SceneCss("100vw","100vh").background("#ddd");
-sc.camera.posZ(500)
- arr=new Array(10).fill(null).map((n,i)=>p(`image ${i}`).size("400px","400px").style({background:"green"}))
- ui=arr.map((n,i)=>UI3(n).posZ(-500-i*400).rotX(-PI/4))
-sc.add(Arg,Fr,...ui)
-sc[0].posX(-230).rotX(-PI/12)
-sc[1].posX(230).rotX(-PI/12)
+
+SCENE=SceneCss("100vw","100vh").background("#ddd")
+SCENE.camera.posZ(500)
+links=["zikojs.png","zikojs.png","zikojs.png","zikojs.png","zikojs.png","zikojs.png","zikojs.png","zikojs.png","zikojs.png","zikojs.png"]
+ arr=new Array(10).fill(null).map((n,i)=>p(image(links[i]).size("100px","100px").style({
+    borderRadius:"50%"
+ })))
+//  ui=arr.map((n,i)=>UI3(n).posZ(-500-i*400).rotX(-PI/4))
+ ui=arr.map((n,i)=>UI3(n).pos(200*cos(i*2*PI/10),200*sin(i*2*PI/10)))
+SCENE.add(p(Arg),p(Fr),...ui)
+SCENE[0].posX(-100).rotX(-PI/12)
+SCENE[1].posX(350).rotX(-PI/12)
 Arg.summary[0].onPtrDown(()=>Arg.toggle())
 Fr.summary[0].onPtrDown(()=>Fr.toggle())
 app.useTheme("dracula")
 loop((e)=>{
-    sc.sceneCss.position.x=map(screenLeft,0,innerWidth,170,-170)
-    //ui.map((n,i)=>n.posZ(clamp(-500-i*400+e.i*10,-500,-500+1000)))
-    sc.renderCss()  
+    if(screen.width!==outerWidth){
+        SCENE.sceneCss.position.x=map(screenLeft,0,innerWidth,170,-170);
+        arr.map(n=>n[0].hide())
+        Arg.show()
+        Fr.show()
+    }
+    else {
+        SCENE.sceneCss.position.x=0;
+        arr.map(n=>n[0].show())
+        Arg.hide()
+        Fr.hide()
+    }
+    SCENE.renderCss()  
 },{step:100}).start()
 direction = 1;
 function next(){
     loop(e=>{
         ui.map((n,i)=>n.translateZ(10))
-        sc.renderCss()  
+        SCENE.renderCss()  
     },{step:50,t:[0,2000]}).start()
 }
 function previous(){
     loop(()=>{
         ui.map((n,i)=>n.translateZ(-10))
-        sc.renderCss()  
+        SCENE.renderCss()  
     },{step:50,t:[0,2000]}).start()
 }
-// loop(e=>{
-//     ui.map((n,i)=>n.translateZ(direction*10))
-//     sc.renderCss()  
-// },{step:100}).start()
