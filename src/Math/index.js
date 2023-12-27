@@ -168,5 +168,15 @@ const Math={
         return this;
     }
 }
+export * from "./const.js"
+export * from "./Functions"
+export * from "./Complex"
+export * from "./Matrix"
+export * from "./Discret"
+export * from "./Numeric"
+export * from "./Random"
+export * from "./Signal"
+export * from "./Utils"
+export * from "./Statistics"
 export default Math;
 

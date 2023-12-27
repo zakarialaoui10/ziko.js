@@ -6397,6 +6397,7 @@ class ZikoUIUList extends ZikoUIList{
     this.render();
   }
 }
+const li=UI=>new ZikoUILI(UI);
 const ol = (...arr) => new ZikoUIOList(...arr);
 const ul = (...arr) => new ZikoUIUList(...arr);
 
@@ -9100,4 +9101,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { App, Canvas, Data, Ease, Events, ExtractAll, Graphics, Math$1 as Math, Multi, RemoveAll, SPA, Svg, Time, UI$1 as UI, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIImage, ZikoUISvg, ZikoUIVideo, animation, audio, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, debounce, figure, image, loop, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, throttle, timeTaken, time_memory_Taken, video, wait, waitForUIElm, waitForUIElmSync };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, FlexArticle, FlexAside, FlexFooter, FlexHeader, FlexMain, FlexNav, FlexSection, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

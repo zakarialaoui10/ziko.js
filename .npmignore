@@ -1,8 +1,12 @@
-assets/
-docs/
+# Ignore all .txt files
+*.txt
+_local/
+documentation/
+node_modules/
 notebook/
 test/
 Addons/
 Interfacing/
 .eslintrc.cjs 
 rollup.config.js 
+todo

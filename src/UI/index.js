@@ -144,7 +144,14 @@ const UI={
         return this;
     }
 }
-export * from "./Media"
+export * from "./Text";
+export * from "./List";
+export * from "./Inputs";
+export * from "./Media";
+export * from "./Table";
+export * from "./Semantic";
+export * from "./Misc";
+export * from "./CustomElement";
 export {
     ZikoHtml}
 export default UI;
