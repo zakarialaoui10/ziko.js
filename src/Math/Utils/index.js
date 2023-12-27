@@ -1,8 +1,4 @@
 import { mapfun } from "./mapfun.js";
-import{abs}from "../Functions/index.js"
-import{Matrix}from "../Matrix/index.js"
-import{complex,Complex}from"../Complex/index.js"
-import{E} from "../const.js";
 import { 
     add,
     sub,
@@ -30,8 +26,6 @@ import {
 import{
     sum,
     prod,
-    min,
-    max,
     accum
 } from "../Statistics/functions.js"
 import{

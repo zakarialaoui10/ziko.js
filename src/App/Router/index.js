@@ -1,3 +1,4 @@
+import { text } from "../../UI/Text";
 class ZikoSPA{
     constructor(root_UI,routes){
         this.root_UI=root_UI;

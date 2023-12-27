@@ -1,4 +1,5 @@
 import { Matrix , matrix } from "../Matrix/index.js";
+import { sqrt } from "../Functions/index.js";
 const conv1d=(input, kernel , circular = true)=>{
     const INPUT_LENGTH = input.length;
     const KERNEL_LENGTH = kernel.length;

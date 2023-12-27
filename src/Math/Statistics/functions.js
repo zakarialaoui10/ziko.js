@@ -1,6 +1,4 @@
 // Mixed calcul
-
-import { mapfun } from "../Utils";
 const sum=(...x)=>{
     if(x.every(n=>typeof n==="number")){
         let s = x[0];

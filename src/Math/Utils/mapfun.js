@@ -1,6 +1,6 @@
 import { Matrix } from "../Matrix";
 import { Complex , complex } from "../Complex/index.js";
-import {ln,e,cos,sin,tan,abs,sqrt,cosh,sinh} from "../Functions/index.js";
+import {ln,e,cos,sin,sqrt,cosh,sinh} from "../Functions/index.js";
 import { Fixed } from "../Functions/index.js";
 const mapfun=(fun,...X)=>{
     const Y=X.map(x=>{

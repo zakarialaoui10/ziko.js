@@ -1,4 +1,4 @@
-import { style , addSuffixeToNumber, waitElm } from "../Utils/index.js";
+import { style , addSuffixeToNumber } from "../Utils/index.js";
 class ZikoUIElementStyle{
     constructor(defaultStyle={}){
         this.target=null;

@@ -1,5 +1,5 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import {text,p} from "../Text/index.js";
+import {text} from "../Text/index.js";
 class ZikoUILI extends ZikoUIElement{
   constructor(UI){
     super();
@@ -129,4 +129,4 @@ const li=UI=>new ZikoUILI(UI)
 const ol = (...arr) => new ZikoUIOList(...arr);
 const ul = (...arr) => new ZikoUIUList(...arr);
 
-export{ol,ul}
+export{ol,ul,li}

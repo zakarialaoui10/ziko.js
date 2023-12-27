@@ -1,5 +1,8 @@
 import { Complex , complex } from "../Complex";
-import { sqrtn } from "../Functions";
+import { abs , pow , sqrtn } from "../Functions";
+import { mul } from "../Utils";
+import { E } from "../const";
+import { Matrix  } from "../Matrix";
 const zeros=(n)=>new Array(n).fill(0);
 const ones=(n)=>new Array(n).fill(1);
 const nums=(num,n)=>new Array(n).fill(num);

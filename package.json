@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/core/*/*/*",
+    "lint": "eslint src/*/*/*",
     "build": "rollup -c rollup.config.js"
   },
   "repository": {

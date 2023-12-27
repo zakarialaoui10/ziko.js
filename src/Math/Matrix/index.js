@@ -8,7 +8,7 @@ import { Utils } from "../Utils/index.js";
 import { Complex } from "../Complex/index.js";
 import {Random} from "../Random/index.js"
 class Matrix extends AbstractZikoMath{
-    constructor(rows, cols, element = [] , type) {
+    constructor(rows, cols, element = [] ) {
         super()
         if(rows instanceof Matrix){
             this.arr=rows.arr;
