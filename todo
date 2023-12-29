@@ -34,3 +34,6 @@ attr
 fix flex 
 ziko-kit
 ziko-vs 
+
+
+add config folder (eslint rollup prettier ...) 
