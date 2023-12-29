@@ -7,11 +7,11 @@ iTable
 Grid
 iGrid
 dom
-fix export
-external style 
+fix export ✅
+external style ✅
 custom event ✅
-ui builder (tag) 
-Tabs 
+ui builder (tag) ✅ 
+Tabs ✅
 Swipper 
 Popup
 Popover 
@@ -24,8 +24,8 @@ print
  jsonUI  
  csvUI 
  ymlUI
-swipe event
-wc example
+swipe event 
+wc example ✅
 
 attr 
 
