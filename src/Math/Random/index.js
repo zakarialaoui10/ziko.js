@@ -73,7 +73,8 @@ class Random {
     static choices(n, choices, p) {
         return new Array(n).fill(0).map(() => this.choice(choices, p));
     }
-    static permutation(...arr) {
+    static perm(...arr) {
+        // permutation
         return arr.permS[this.int(arr.length)];
     }
     static color() {
