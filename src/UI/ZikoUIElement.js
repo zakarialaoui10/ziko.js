@@ -142,7 +142,7 @@ class ZikoUIElement {
         if (ele[i]?.style) this.style(ele[i]?.style);
         if (ele[i]?.attr) {
           Object.entries(ele[i].attr).forEach((n) =>
-            this.setAttribute("" + n[0], n[1]),
+            this.setAttr("" + n[0], n[1]),
           );
         }
       }
@@ -192,27 +192,19 @@ class ZikoUIElement {
     return this;
   }
   // Attributes
-  setAttribute(name, value) {
+  setAttr(name, value) {
     this.element.setAttribute(name, value);
     Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
     return this;
   }
-  removeAttribute(name) {
-    this.element.setAttribute(name);
+  removeAttr(name) {
+    this.element.removeAttribute(name);
     return this;
   }
   setContentEditable(bool = true) {
-    this.setAttribute("contenteditable", bool);
+    this.setAttr("contenteditable", bool);
     return this;
   }
-  // link(link, target = "") {
-  //   let a = document.createElement("a");
-  //   a.setAttribute("href", link);
-  //   if (target) a.setAttribute("target", target);
-  //   this.element.addEventListener("click", () => a.click());
-  //   this.element.style.cursor = "pointer";
-  //   return this;
-  // }
   get children() {
     return [...this.element.children];
   }
@@ -228,7 +220,7 @@ class ZikoUIElement {
     );
   }
   setClasses(...value) {
-    this.setAttribute("class", value.join(" "));
+    this.setAttr("class", value.join(" "));
     return this;
   }
   get Classes(){
@@ -236,7 +228,7 @@ class ZikoUIElement {
     return classes===null?[]:classes.split(" ");
   }
   addClass() {
-    /*this.setAttribute("class", value);
+    /*this.setAttr("class", value);
         return this;*/
   }
   setId(Id) {
