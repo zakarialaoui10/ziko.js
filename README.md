@@ -1,4 +1,4 @@
-<img src="documentation/assets/zikojs.png" width="200" align="right" alt="zikojs logo">
+<img src="docs/assets/zikojs.png" width="200" align="right" alt="zikojs logo">
 
 *💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities* 
 
