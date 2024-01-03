@@ -5,3 +5,5 @@
   - debounce : ""
 - Ease : 
   - InSin : ""
+  - OutSin : ""
+  - InOutSin : "" 
