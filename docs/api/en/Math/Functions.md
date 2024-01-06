@@ -63,6 +63,13 @@ This would return :
 }
 ```
 
+💡 You can apply this approach ti build your custom function ;
+```js
+ import {mapfun} from "ziko";
+ const parabolic_func=(a,b,c,x)=>a*(x**2)+b*x+c;
+ 
+```
+
 |Functions|Description|
 |-|-|
 |`abs(...x)`||

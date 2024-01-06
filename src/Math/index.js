@@ -73,7 +73,8 @@ import {
     ppcm,
     isApproximatlyEqual,
     inRange,
-    cartesianProduct
+    cartesianProduct,
+    mapfun
   }from "./Utils/index.js"
 const Math={
     PI,
@@ -124,6 +125,7 @@ const Math={
     atan2,
    // Derivation,
     Utils,
+    mapfun,
     nums,
     zeros,
     ones,
