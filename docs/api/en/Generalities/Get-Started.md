@@ -36,7 +36,7 @@ You can extract all zikojs functions , classes and variables using :
  ```js
   Ziko.ExtractAll()
  ```
-🏷️ This method simplifies syntax by extracting all UI, Math, Time, Graphics, and other methods within the Ziko framework. Instead of writing specific namespace prefixes like Ziko.UI.text("Hi") , Ziko.Math.complex(1,2) , Ziko.Math.matrix([[1,2],[2,3]]), you can directly use simplified syntax such as text("Hi") , complex(1,1) and matrix([[1,2],[2,3]]).
+🏷️ This method simplifies syntax by extracting all UI, Math, Time, Graphics, and other methods within the Ziko framework. Instead of writing specific namespace prefixes like `Ziko.UI.text("Hi") `, `Ziko.Math.complex(1,2) `, `Ziko.Math.matrix([[1,2],[2,3]])`, you can directly use simplified syntax such as `text("Hi") `, `complex(1,1) `and `matrix([[1,2],[2,3]])`.
 
 ⚠️ Be careful with this method because it will overwrite any existing global or local variables and functions with the same names as the extracted methods.
 
