@@ -224,33 +224,6 @@ class Matrix extends AbstractZikoMath{
         for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = Random.rand(a, b);
         return result;
     }
-    /*static randsInt(rows, cols, a, b) {
-    }
-    static randsBin(rows, cols) {
-    }
-    static randsHex(rows, cols) {
-    }
-    static randsChoices(rows, cols, choices, p) {
-    }
-    static randPermutation(rows, cols, arr) {
-        return new Matrix(rows, cols, Random.permutation(...arr));
-    }*/
-    /*map(fct) {
-        var array = this.arr.flat(1);
-        return new Matrix(
-            this.rows,
-            this.cols,
-            array.map((n) => fct(n))
-        );
-    }
-    static map(m, fct) {
-        var array = m.arr.flat(1);
-        return new Matrix(
-            m.rows,
-            m.cols,
-            array.map((n) => fct(n))
-        );
-    }*/
     map(Imin, Imax, Fmin, Fmax) {
         return Utils.map(this, Imin, Imax, Fmin, Fmax);
     }
