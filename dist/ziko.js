@@ -1256,33 +1256,6 @@
           for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) result.arr[i][j] = Random.rand(a, b);
           return result;
       }
-      /*static randsInt(rows, cols, a, b) {
-      }
-      static randsBin(rows, cols) {
-      }
-      static randsHex(rows, cols) {
-      }
-      static randsChoices(rows, cols, choices, p) {
-      }
-      static randPermutation(rows, cols, arr) {
-          return new Matrix(rows, cols, Random.permutation(...arr));
-      }*/
-      /*map(fct) {
-          var array = this.arr.flat(1);
-          return new Matrix(
-              this.rows,
-              this.cols,
-              array.map((n) => fct(n))
-          );
-      }
-      static map(m, fct) {
-          var array = m.arr.flat(1);
-          return new Matrix(
-              m.rows,
-              m.cols,
-              array.map((n) => fct(n))
-          );
-      }*/
       map(Imin, Imax, Fmin, Fmax) {
           return Utils.map(this, Imin, Imax, Fmin, Fmax);
       }
@@ -1943,17 +1916,17 @@
           }
       }
   };
-  const clamp$1=(value, min, max)=>{
-      if (typeof value === "number") return min(max(value, min), max);
-      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp$1(value.arr.flat(1), min, max));
-      else if (value instanceof Complex) return new Complex(clamp$1(value.a, min, max), clamp$1(value.b, min, max));
+  const clamp$1=(value, min_value, max_value)=>{
+      if (typeof value === "number") return min(max(value, min_value), max_value);
+      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp$1(value.arr.flat(1), min_value, max_value));
+      else if (value instanceof Complex) return new Complex(clamp$1(value.a, min_value, max_value), clamp$1(value.b, min_value, max_value));
       else if (value instanceof Array) {
           if (value.every((n) => typeof (n === "number"))) {
-              return value.map((n) => clamp$1(n, min, max));
+              return value.map((n) => clamp$1(n, min_value, max_value));
           } else {
               let y = new Array(value.length);
               for (let i = 0; i < value.length; i++) {
-                  y[i] = clamp$1(value[i], min, max);
+                  y[i] = clamp$1(value[i], min_value, max_value);
               }
           }
       }
