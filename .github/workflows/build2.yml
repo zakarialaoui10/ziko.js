@@ -1,12 +1,13 @@
 name: Build, Test, and Update
 
-on:
-  push:
+on:    
+  push: 
     branches:
       - main
-
 jobs:
   build:
+    permissions :
+      contents : write
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +19,6 @@ jobs:
       with:
         node-version: '18'
         
-
     - name: Install Dependencies
       run: npm install
 
