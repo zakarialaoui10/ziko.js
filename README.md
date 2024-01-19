@@ -6,7 +6,7 @@
 
 
 
-
+## [wiki](https://github.com/zakarialaoui10/ziko.js/wiki/Math-Functions)
 
 # Features 
  - ## 🔰 Methodes Extracting :
