@@ -1,6 +1,6 @@
 {
   "name": "ziko",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities",
   "main": "src/index.js",
   "type": "module",
@@ -33,8 +33,5 @@
     "dir2tree": "^0.3.2",
     "eslint": "^8.52.0",
     "rollup": "^4.1.5"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
   }
 }
