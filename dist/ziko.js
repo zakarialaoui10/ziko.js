@@ -1916,17 +1916,18 @@
           }
       }
   };
-  const clamp$1=(value, min_value, max_value)=>{
-      if (typeof value === "number") return min(max(value, min_value), max_value);
-      else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp$1(value.arr.flat(1), min_value, max_value));
-      else if (value instanceof Complex) return new Complex(clamp$1(value.a, min_value, max_value), clamp$1(value.b, min_value, max_value));
-      else if (value instanceof Array) {
-          if (value.every((n) => typeof (n === "number"))) {
-              return value.map((n) => clamp$1(n, min_value, max_value));
+  const clamp$1=(x, a , b)=>{
+      const [min_value,max_value]=[min(a,b),max(a,b)];
+      if (typeof x === "number") return min(max(x, min_value), max_value);
+      else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, clamp$1(x.arr.flat(1), min_value, max_value));
+      else if (x instanceof Complex) return new Complex(clamp$1(x.a, min_value, max_value), clamp$1(x.b, min_value, max_value));
+      else if (x instanceof Array) {
+          if (x.every((n) => typeof (n === "number"))) {
+              return x.map((n) => clamp$1(n, min_value, max_value));
           } else {
-              let y = new Array(value.length);
-              for (let i = 0; i < value.length; i++) {
-                  y[i] = clamp$1(value[i], min_value, max_value);
+              let y = new Array(x.length);
+              for (let i = 0; i < x.length; i++) {
+                  y[i] = clamp$1(x[i], min_value, max_value);
               }
           }
       }
