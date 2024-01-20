@@ -12,12 +12,14 @@ Math.js can be installed via [npm]() :
 ## Link or Donwload
 
 zikojs can be downloaded or linked from various content delivery networks :
-|CDN|Url|
-|-|-|
-|Cdn||
-|Unpkg||
-|jsDeliver||
-|pageCdn||
+
+[CDN](https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.js) :
+ ```html 
+<script src="https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.js"></script>
+```
+[Unpkg]()
+[jsDeliver]()
+[pageCdn]()
 
 ## Load
 zikojs can be used in node.js and in the browser. 
