@@ -1,7 +1,6 @@
-import ZikoUIElement from "../../../UI/ZikoUIElement.js";
-import {Matrix} from "../../../Math/Matrix/index.js"
-import { convolute } from "../../../Math/Signal/conv.js";
-import { waitElm } from "../../../UI/Utils/index.js";
+import ZikoUIElement from "../../UI/ZikoUIElement.js";
+import {Matrix} from "../../Math/Matrix/index.js"
+import { convolute } from "../../Math/Signal/conv.js";
 class ZikoUICanvas extends ZikoUIElement{
     constructor(w,h){
         super();
