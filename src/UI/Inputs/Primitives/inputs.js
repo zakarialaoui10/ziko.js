@@ -2,6 +2,7 @@ import ZikoUIElement from "../../ZikoUIElement.js";
 import { Input } from "../../../Reactivity/Events/index.js";
 import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
 import { btn } from "./btn.js";
+import { Random } from "../../../Math/Random/index.js";
 //import { select } from "./select.js";
 //import { debounce,throttle} from "../../Data/decorators.js";
 
@@ -269,7 +270,7 @@ class ZikoUIInputDatalist extends ZikoUIElement {
   constructor(...options){
     super();
     this.element = document.createElement("datalist");
-    this.addOptions(...options).setId("ziko-datalist-id"+crypto.randomUUID().slice(8,18));
+    this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
     this.render();
   }
   addOptions(...options) {

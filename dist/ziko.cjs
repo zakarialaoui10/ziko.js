@@ -5301,7 +5301,7 @@ class ZikoChannel{
         this.EVENTS_DATAS_PAIRS=new Map();
         this.EVENTS_HANDLERS_PAIRS=new Map();
         this.LAST_RECEIVED_EVENT="";
-        this.UUID=crypto.randomUUID();
+        this.UUID="ziko-channel"+Random.string(10);
         this.SUBSCRIBERS=new Set([this.UUID]);
     }
     get broadcast(){
@@ -6702,7 +6702,7 @@ class ZikoUIInputDatalist extends ZikoUIElement {
   constructor(...options){
     super();
     this.element = document.createElement("datalist");
-    this.addOptions(...options).setId("ziko-datalist-id"+crypto.randomUUID().slice(8,18));
+    this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
     this.render();
   }
   addOptions(...options) {
@@ -8936,7 +8936,7 @@ const Seo=(app)=>new ZikoSeo(app);
 
 class ZikoUseStyle{
     constructor(style){
-      this.id="Ziko-Style-"+crypto.randomUUID().slice(0,8);
+      this.id="Ziko-Style-"+Random.string(10);
       this.use(style);
       this.keys=new Set();
       this.styles={
@@ -8988,7 +8988,7 @@ class ZikoUseStyle{
   }  
 const useStyle=(style)=>new ZikoUseStyle(style);
 
-class ZikoUIApp extends ZikoUIElement{
+class ZikoUIApp extends ZikoUIFlex{
     constructor(){
         super();
         this.root=document.documentElement;

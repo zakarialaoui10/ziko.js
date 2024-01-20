@@ -1,10 +1,12 @@
+import { Random } from "../../Math/Random";
+
 class ZikoChannel{
     constructor(name=""){
         this.channel=new BroadcastChannel(name);
         this.EVENTS_DATAS_PAIRS=new Map();
         this.EVENTS_HANDLERS_PAIRS=new Map();
         this.LAST_RECEIVED_EVENT="";
-        this.UUID=crypto.randomUUID();
+        this.UUID="ziko-channel"+Random.string(10);
         this.SUBSCRIBERS=new Set([this.UUID]);
     }
     get broadcast(){

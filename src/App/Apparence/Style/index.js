@@ -1,6 +1,8 @@
+import { Random } from "../../../Math/Random";
+
 class ZikoUseStyle{
     constructor(style){
-      this.id="Ziko-Style-"+crypto.randomUUID().slice(0,8);
+      this.id="Ziko-Style-"+Random.string(10);
       this.use(style);
       this.keys=new Set();
       this.styles={
