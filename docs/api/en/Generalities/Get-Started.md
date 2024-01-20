@@ -22,7 +22,7 @@ zikojs can be downloaded or linked from various content delivery networks :
   ```html 
 <script src="https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.min.js"></script>
 ```
-### Unpkg]
+### Unpkg
 ### jsDeliver
 ### pageCdn
 
