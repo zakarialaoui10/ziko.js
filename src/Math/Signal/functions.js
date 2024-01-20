@@ -1,5 +1,8 @@
 import { Complex , complex } from "../Complex";
-import { sqrtn } from "../Functions";
+import { abs , pow , sqrtn , max , min} from "../Functions";
+import { mul } from "../Utils";
+import { E } from "../const";
+import { Matrix  } from "../Matrix";
 const zeros=(n)=>new Array(n).fill(0);
 const ones=(n)=>new Array(n).fill(1);
 const nums=(num,n)=>new Array(n).fill(num);
@@ -48,17 +51,18 @@ const map=(value, a, b, c, d)=>{
         }
     }
 }
-const clamp=(value, min, max)=>{
-    if (typeof value === "number") return min(max(value, min), max);
-    else if (value instanceof Matrix) return new Matrix(value.rows, value.cols, clamp(value.arr.flat(1), min, max));
-    else if (value instanceof Complex) return new Complex(clamp(value.a, min, max), clamp(value.b, min, max));
-    else if (value instanceof Array) {
-        if (value.every((n) => typeof (n === "number"))) {
-            return value.map((n) => clamp(n, min, max));
+const clamp=(x, a , b)=>{
+    const [min_value,max_value]=[min(a,b),max(a,b)]
+    if (typeof x === "number") return min(max(x, min_value), max_value);
+    else if (x instanceof Matrix) return new Matrix(x.rows, x.cols, clamp(x.arr.flat(1), min_value, max_value));
+    else if (x instanceof Complex) return new Complex(clamp(x.a, min_value, max_value), clamp(x.b, min_value, max_value));
+    else if (x instanceof Array) {
+        if (x.every((n) => typeof (n === "number"))) {
+            return x.map((n) => clamp(n, min_value, max_value));
         } else {
-            let y = new Array(value.length);
-            for (let i = 0; i < value.length; i++) {
-                y[i] = clamp(value[i], min, max);
+            let y = new Array(x.length);
+            for (let i = 0; i < x.length; i++) {
+                y[i] = clamp(x[i], min_value, max_value);
             }
         }
     }

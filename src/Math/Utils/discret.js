@@ -1,3 +1,4 @@
+import { floor } from "../Functions";
 const cartesianProduct=(a, b)=>a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
 const pgcd=(n1, n2)=>{
     let i,

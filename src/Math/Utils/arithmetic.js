@@ -1,3 +1,5 @@
+import { Complex,complex} from "../Complex";
+import { Matrix  } from "../Matrix";
 const _add=(a,b)=>{
     if(typeof(a)==="number"){
         if (typeof b == "number") return a + b;
@@ -97,7 +99,6 @@ const _modulo=(a,b)=>{
         }
         else if(a instanceof Array){
             if(b instanceof Array){
-
             }
             else {
                 return a.map(n=>add(n,b));

@@ -15,3 +15,12 @@ const isIsogram=(str)=>{
 const removeExtraSpace=str=>str.replace(/\s+/g,' ');
 const count=(str,value)=>str.split("").filter(x => x==value).length;
 const countWords=(str,value)=>str.split(" ").filter(x => x==value).length;
+
+export{
+    isPalindrome,
+    isAnagrams,
+    isIsogram,
+    removeExtraSpace,
+    count,
+    countWords
+}

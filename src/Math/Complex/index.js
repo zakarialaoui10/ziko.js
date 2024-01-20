@@ -64,7 +64,7 @@ class Complex extends AbstractZikoMath{
     get phi(){
         return atan2(this.b , this.a);        
     }
-    static get ZERO() {
+    static Zero() {
         return new Complex(0, 0);
     }
     get conj() {

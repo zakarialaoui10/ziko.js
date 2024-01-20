@@ -1,6 +1,3 @@
-
-import{Complex} from "../Complex/index.js";
-import{Matrix}from "../Matrix/index.js"
 import{arange}from "../Utils/index.js"
 
 // class Logic1{

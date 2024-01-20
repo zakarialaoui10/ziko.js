@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 node_modules
 dist
 Vanilla
 z_express
+=======
+**/node_modules
+_local
+>>>>>>> 7d5431d47969f4ced782f8652a8f21024648ef65

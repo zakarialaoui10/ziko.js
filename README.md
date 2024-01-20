@@ -1,12 +1,12 @@
-<img src="documentation/assets/zikojs.png" width="200" align="right" alt="zikojs logo">
+<img src="docs/assets/zikojs.png" width="200" align="right" alt="zikojs logo">
 
 *💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities* 
 
 <br>
 
 
-**⏳ It will be released soon ... ⏳**
 
+## [wiki](https://github.com/zakarialaoui10/ziko.js/wiki/Math-Functions)
 
 # Features 
  - ## 🔰 Methodes Extracting :
@@ -34,66 +34,6 @@
          }})
 ```
  - ## 🔰 Rich UI elements
-| HTML Element      | Description              |Syntaxe   |
-|---|---|---|
-| `ZikoHtml`        | Custom HTML element      |
-| `text`            | Text content             |
-| `p`               | Paragraph                |
-| `h1-h6`           | Headings 1-6             |
-| `btn`             | Button                   |
-| `br`              | Line break               |
-| `hr`              | Horizontal rule          |
-| `brs`             |         |
-| `hrs`             |    |
-| `link`            | Link                     |
-| `ol`              | Ordered list             |
-| `ul`              | Unordered list           |
-| `input`           | Input                    |
-| `search`          | Search input             |
-| `slider`          | Slider input             |
-| `checkbox`        | Checkbox input           |
-| `radio`           | Radio button input       |
-| `datalist`        | Data list input          |
-| `inputNumber`     | Number input             |
-| `inputColor`      | Color input              |
-| `inputDate`       | Date input               |
-| `inputDateTime`   | Date-time input          |
-| `inputEmail`      | Email input              |
-| `inputImage`      | Image input              |
-| `inputPassword`   | Password input           |
-| `inputTime`       | Time input               |
-| `select`          | Select dropdown          |
-| `textarea`        | Text area                |
-| `inputCamera`     | Camera input             |
-| `image`           | Image element            |
-| `video`           | Video element            |
-| `audio`           | Audio element            |
-| `figure`          | Figure element           |
-| `Flex`            | Flex container           |
-| `Carousel`        | Carousel container       |
-| `Grid`            | Grid container           |
-| `Header`          | Header section           |
-| `Main`            | Main section             |
-| `Section`         | Section                  |
-| `Article`         | Article section          |
-| `Aside`           | Aside section            |
-| `Nav`             | Navigation section       |
-| `Footer`          | Footer section           |
-| `Table`           | Table element            |
-| `CodeNote`        | Code note                |
-| `Tabs`            | Tabs container           |
-| `Accordion`       | Accordion container      |
-| `Canvas`          | Canvas element           |
-| `Svg`             | SVG Container            |
-| `Menu`            | Menu element             |
-| `Popup`           | Popup element            |
-| `Popover`         | Popover element          |
-| `Timeline`        | Timeline element         |
-| `Swipper`         | Swipper element          |
-| `Toast`           | Toast element            |
-| `Treeview`        | Treeview element         |
-| `Columns`         | Columns element          |
-
  - ## 🔰 Methodes Chaining 
 
 ```js

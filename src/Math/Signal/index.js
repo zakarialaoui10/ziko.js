@@ -32,7 +32,7 @@ import {
 import { 
     filter
  } from "./filter.js";
-import { Matrix } from "../Matrix/index.js";
+//import { Matrix } from "../Matrix/index.js";
 const Signal={
     zeros,
     ones,
@@ -63,7 +63,7 @@ const Signal={
         const Y = mapfun(n=>Math.sign(n-t0),...t);
         return Y instanceof Array ? Y.map(n=>n*A) : Y*A
     },
-    rect(t,T,t0 = 0){
+    rect(t,T,t0 = 0, A = 1){
         if(!(t instanceof Array))t=[t];
         const Y = mapfun(n=>((t0-T/2 < n) && (t0+T/2 > n)? 1 - 2 * abs(n/T) : 0),...t)
         return Y instanceof Array ? Y.map(n=>n*A) : Y*A
