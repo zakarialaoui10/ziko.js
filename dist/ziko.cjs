@@ -3656,7 +3656,7 @@ const Themes={
 };
 class ZikoUseTheme{
   constructor(theme){
-    this.id="Ziko-Theme-"+crypto.randomUUID().slice(0,8);
+    this.id="Ziko-Theme-"+Random.string(10);
     this.use(theme);
   }
   get Theme(){
