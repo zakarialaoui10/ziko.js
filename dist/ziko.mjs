@@ -9039,7 +9039,7 @@ class ZikoUIApp extends ZikoUIFlex{
         return this;
     }
 }
-const App=()=>new ZikoUIApp();
+const App=(...UIElement)=>new ZikoUIApp().append(...UIElement);
 
 const Ziko={
     App,
