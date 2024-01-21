@@ -10,7 +10,7 @@ class ZikoUseTheme{
     this.id="Ziko-Theme-"+Random.string(10);
     this.use(theme)
   }
-  get Theme(){
+  get currentTheme(){
     const colorNames = [
       'background',
       'currentLine',

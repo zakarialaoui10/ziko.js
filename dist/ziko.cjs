@@ -3659,7 +3659,7 @@ class ZikoUseTheme{
     this.id="Ziko-Theme-"+Random.string(10);
     this.use(theme);
   }
-  get Theme(){
+  get currentTheme(){
     const colorNames = [
       'background',
       'currentLine',
@@ -8945,7 +8945,7 @@ class ZikoUseStyle{
         }
       };
     }
-    get Style(){
+    get currentStyle(){
       return [...this.keys].reduce((key, value) => {
         key[value] = `var(--${value}-${this.id})`;
         return key;
@@ -9018,11 +9018,11 @@ class ZikoUIApp extends ZikoUIFlex{
     description(){
 
     }
-    get Theme(){
-        return this._theme?.Theme;
-    }
-    get Style(){
-        return this._style?.Style;
+    get current(){
+        return {
+            theme:this._theme?.currentTheme,
+            style:this._style?.currentStyle
+        }
     }
     useTheme(theme){
         if(!this._theme)this._theme=useTheme(theme);

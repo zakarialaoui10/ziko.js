@@ -11,7 +11,7 @@ class ZikoUseStyle{
         }
       }
     }
-    get Style(){
+    get currentStyle(){
       return [...this.keys].reduce((key, value) => {
         key[value] = `var(--${value}-${this.id})`;
         return key;
