@@ -8996,7 +8996,6 @@
       constructor(){
           super();
           this.root=document.documentElement;
-          //his.element=document.createElement("main");
           this.head=null;
           this.#init();
           this.seo=Seo(this);
