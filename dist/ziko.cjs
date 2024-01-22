@@ -5463,6 +5463,7 @@ class ZikoUIElement {
     Object.assign(this, styleComposer.call(this));
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
+      isRoot:false,
       isHidden: false,
       isFrozzen:false,
       transformMatrix:matrix([
@@ -5508,6 +5509,15 @@ class ZikoUIElement {
   }
   get evt(){
 
+  }
+  get __app__(){
+    if(this.cache.isRoot)return this;
+    let root=this.parent;
+    while(1){
+      if(!root)return null;
+      if(root.cache.isRoot)return root;
+      root=root.parent;
+    }
   }
   clone() {
     const UI = new this.constructor();
@@ -8996,7 +9006,10 @@ class ZikoUIApp extends ZikoUIFlex{
         this.head=null;
         this.#init();
         this.seo=Seo(this);
-        Object.assign(this.cache,{theme:null});
+        Object.assign(this.cache,{
+            theme:null,
+            isRoot:true
+        });
         this.render();
     }
     #init(){

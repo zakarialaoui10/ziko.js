@@ -11,7 +11,10 @@ class ZikoUIApp extends ZikoUIFlex{
         this.head=null;
         this.#init();
         this.seo=Seo(this);
-        Object.assign(this.cache,{theme:null});
+        Object.assign(this.cache,{
+            theme:null,
+            isRoot:true
+        });
         this.render();
     }
     #init(){
