@@ -2,7 +2,7 @@ import {
     markdown2html
  } from "./Converter";
 import parseXML from "./Parser/xml";
-import { preload } from "./preload";
+import { preload } from "./Api";
 const Data={
     markdown2html,
     preload,
