@@ -1,6 +1,10 @@
+import { 
+    markdown2html
+ } from "./Converter";
 import parseXML from "./Parser/xml";
 import { preload } from "./preload";
 const Data={
+    markdown2html,
     preload,
     parseXML,
     ExtractAll:function(){
