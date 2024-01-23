@@ -7922,8 +7922,8 @@
   };
 
   const parseList = line => {
-      const IS_STARTED_WIDT_A_DIGIT_FOLLOWED_BY_A_DOT = /^(\d+)\./; 
-      const match = line.match(IS_STARTED_WIDT_A_DIGIT_FOLLOWED_BY_A_DOT);
+      const DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE = /^\d+\.\s/; 
+      const match = line.match(DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE);
       if (match) {
           let start=+match[1];
           return `<ol${start===1?"":` start=${start}`}>\n<li>${parseInlineElements(line.slice(match[0].length))}</li>\n</ol>\n`;
@@ -7967,14 +7967,14 @@
               continue;
           }
           // Headings
-          if (line.startsWith('#')&&line[1]===" ") {
+          if (line.startsWith('# ')) {
               const headingLevel = line.indexOf(' ');
               const headingText = line.slice(headingLevel + 1);
               htmlOutput += `<h${headingLevel}>${parseInlineElements(headingText)}</h${headingLevel}>\n`;
               continue;
           }
           // Lists
-          if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^(\d+)\./)) {
+          if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^\d+\.\s/)) {
               htmlOutput += parseList(line);
               continue;
           }
@@ -7983,6 +7983,21 @@
       }
       return htmlOutput;
   };
+
+  const csv2arr = (csv, delimiter = ",")=>csv.trim().trimEnd().split("\n").map(n=>n.split(delimiter));
+  const csv2matrix = (csv, delimiter = ",")=>new Matrix(csv2arr(csv,delimiter));
+  const csv2object = (csv, delimiter = ",") => {
+      const [header, ...rows] = csv2arr(csv,delimiter);
+      const result = rows.map(row => {
+          const obj = {};
+          header.forEach((key, index) => {
+              obj[key] = row[index];
+          });
+          return obj;
+      });
+      return result;
+  };
+  const csv2json = (csv, delimiter = ",") => JSON.stringify(csv2object(csv,delimiter));
 
   function parseXML(xmlString) {
       const parser = new DOMParser();
@@ -8044,6 +8059,10 @@
 
   const Data={
       markdown2html,
+      csv2arr,
+      csv2matrix,
+      csv2object,
+      csv2json,
       preload,
       parseXML,
       ExtractAll:function(){
@@ -9264,6 +9283,10 @@
   exports.cot = cot;
   exports.coth = coth;
   exports.csc = csc;
+  exports.csv2arr = csv2arr;
+  exports.csv2json = csv2json;
+  exports.csv2matrix = csv2matrix;
+  exports.csv2object = csv2object;
   exports.datalist = datalist;
   exports.debounce = debounce;
   exports.deg2rad = deg2rad;

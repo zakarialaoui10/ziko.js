@@ -7916,8 +7916,8 @@ const parseCodeBlock = (lines, language) => {
 };
 
 const parseList = line => {
-    const IS_STARTED_WIDT_A_DIGIT_FOLLOWED_BY_A_DOT = /^(\d+)\./; 
-    const match = line.match(IS_STARTED_WIDT_A_DIGIT_FOLLOWED_BY_A_DOT);
+    const DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE = /^\d+\.\s/; 
+    const match = line.match(DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE);
     if (match) {
         let start=+match[1];
         return `<ol${start===1?"":` start=${start}`}>\n<li>${parseInlineElements(line.slice(match[0].length))}</li>\n</ol>\n`;
@@ -7961,14 +7961,14 @@ const markdown2html = markdownText => {
             continue;
         }
         // Headings
-        if (line.startsWith('#')&&line[1]===" ") {
+        if (line.startsWith('# ')) {
             const headingLevel = line.indexOf(' ');
             const headingText = line.slice(headingLevel + 1);
             htmlOutput += `<h${headingLevel}>${parseInlineElements(headingText)}</h${headingLevel}>\n`;
             continue;
         }
         // Lists
-        if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^(\d+)\./)) {
+        if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^\d+\.\s/)) {
             htmlOutput += parseList(line);
             continue;
         }
@@ -7977,6 +7977,21 @@ const markdown2html = markdownText => {
     }
     return htmlOutput;
 };
+
+const csv2arr = (csv, delimiter = ",")=>csv.trim().trimEnd().split("\n").map(n=>n.split(delimiter));
+const csv2matrix = (csv, delimiter = ",")=>new Matrix(csv2arr(csv,delimiter));
+const csv2object = (csv, delimiter = ",") => {
+    const [header, ...rows] = csv2arr(csv,delimiter);
+    const result = rows.map(row => {
+        const obj = {};
+        header.forEach((key, index) => {
+            obj[key] = row[index];
+        });
+        return obj;
+    });
+    return result;
+};
+const csv2json = (csv, delimiter = ",") => JSON.stringify(csv2object(csv,delimiter));
 
 function parseXML(xmlString) {
     const parser = new DOMParser();
@@ -8038,6 +8053,10 @@ const preload=(url)=>{
 
 const Data={
     markdown2html,
+    csv2arr,
+    csv2matrix,
+    csv2object,
+    csv2json,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -9166,4 +9185,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, FlexArticle, FlexAside, FlexFooter, FlexHeader, FlexMain, FlexNav, FlexSection, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, parseXML, pgcd, pow, ppcm, preload, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, FlexArticle, FlexAside, FlexFooter, FlexHeader, FlexMain, FlexNav, FlexSection, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, parseXML, pgcd, pow, ppcm, preload, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

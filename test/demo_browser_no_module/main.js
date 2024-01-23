@@ -1,3 +1,8 @@
 Ziko.ExtractAll()
-console.log(Ziko.markdown2html("# Valid"))
-console.log(Ziko.markdown2html("7. Not Valid"))
+console.log(Ziko.csv2json(`
+a,b,c
+1,2,3
+`))
+
+a=`a,b,c
+1,2,3`

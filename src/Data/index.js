@@ -1,10 +1,18 @@
 import { 
-    markdown2html
+    markdown2html,
+    csv2arr,
+    csv2matrix,
+    csv2object,
+    csv2json
  } from "./Converter";
 import parseXML from "./Parser/xml";
 import { preload } from "./Api";
 const Data={
     markdown2html,
+    csv2arr,
+    csv2matrix,
+    csv2object,
+    csv2json,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -21,6 +29,10 @@ const Data={
 export{
     parseXML,
     preload,
-    markdown2html
+    markdown2html,
+    csv2arr,
+    csv2matrix,
+    csv2object,
+    csv2json
 }
 export default Data
