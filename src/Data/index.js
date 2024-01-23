@@ -3,7 +3,12 @@ import {
     csv2arr,
     csv2matrix,
     csv2object,
-    csv2json
+    csv2json,
+    csv2sql,
+    objects2arr,
+    objects2csv,
+    json2arr,
+    json2csv
  } from "./Converter";
 import parseXML from "./Parser/xml";
 import { preload } from "./Api";
@@ -13,6 +18,11 @@ const Data={
     csv2matrix,
     csv2object,
     csv2json,
+    csv2sql,
+    objects2arr,
+    objects2csv,
+    json2arr,
+    json2csv,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -33,6 +43,11 @@ export{
     csv2arr,
     csv2matrix,
     csv2object,
-    csv2json
+    csv2json,
+    csv2sql,
+    objects2arr,
+    objects2csv,
+    json2arr,
+    json2csv
 }
 export default Data

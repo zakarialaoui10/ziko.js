@@ -7994,6 +7994,23 @@ const csv2object = (csv, delimiter = ",") => {
     return result;
 };
 const csv2json = (csv, delimiter = ",") => JSON.stringify(csv2object(csv,delimiter));
+const csv2sql=(csv, Table)=>{
+    const lines = csv.trim().trimEnd().split('\n').filter(n=>n);
+    const columns = lines[0].split(',');
+    let sqlQuery = `INSERT INTO ${Table} (${columns.join(', ')}) Values `;
+    let sqlValues = [];
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',');
+      sqlValues.push(`(${values})`);
+    }
+    return sqlQuery+sqlValues.join(",\n");
+  };
+
+const objects2arr=data=>[Object.keys(data[0]),...data.map(n=>Object.values(n))];
+const objects2csv=(data,delimiter)=>objects2arr(data).map(n=>n.join(delimiter)).join("\n");
+const json2arr=json=>objects2arr(JSON.parse(json));
+const json2csv=(json,delimiter)=>objects2csv(JSON.parse(json),delimiter);
+window.oc=objects2csv;
 
 function parseXML(xmlString) {
     const parser = new DOMParser();
@@ -8059,6 +8076,11 @@ const Data={
     csv2matrix,
     csv2object,
     csv2json,
+    csv2sql,
+    objects2arr,
+    objects2csv,
+    json2arr,
+    json2csv,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -9283,6 +9305,7 @@ exports.csv2arr = csv2arr;
 exports.csv2json = csv2json;
 exports.csv2matrix = csv2matrix;
 exports.csv2object = csv2object;
+exports.csv2sql = csv2sql;
 exports.datalist = datalist;
 exports.debounce = debounce;
 exports.deg2rad = deg2rad;
@@ -9314,6 +9337,8 @@ exports.inputNumber = inputNumber;
 exports.inputPassword = inputPassword;
 exports.inputTime = inputTime;
 exports.isApproximatlyEqual = isApproximatlyEqual;
+exports.json2arr = json2arr;
+exports.json2csv = json2csv;
 exports.lerp = lerp$1;
 exports.li = li;
 exports.link = link;
@@ -9334,6 +9359,8 @@ exports.modulo = modulo;
 exports.mul = mul;
 exports.norm = norm$1;
 exports.nums = nums;
+exports.objects2arr = objects2arr;
+exports.objects2csv = objects2csv;
 exports.ol = ol;
 exports.ones = ones;
 exports.p = p;
