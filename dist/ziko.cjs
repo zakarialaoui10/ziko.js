@@ -8006,31 +8006,56 @@ const csv2sql=(csv, Table)=>{
     return sqlQuery+sqlValues.join(",\n");
   };
 
-const _objects2arr=data=>[Object.keys(data[0]),...data.map(n=>Object.values(n))];
+const _objects2arr=data=>data instanceof Array?[Object.keys(data[0]),...data.map(n=>Object.values(n))]:[Object.keys(data)];
 const _objects2csv=(data,delimiter)=>_objects2arr(data).map(n=>n.join(delimiter)).join("\n");
 const json2arr=json=>json instanceof Object?_objects2arr(json):_objects2arr(JSON.parse(json));
-const json2csv=(json,delimiter)=>json instanceof Object?_objects2csv(json,delimiter):_objects2csv(JSON.parse(json),delimiter);
-function _processObject(obj, indent) {
-    const yamlLines = [];
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            const value = obj[key];
-
-            if (typeof value === 'object' && value !== null) {
-                yamlLines.push(`${indent}${key}:`);
-                const nestedLines = _processObject(value, `${indent}  `);
-                yamlLines.push(...nestedLines);
-            } else {
-                yamlLines.push(`${indent}${key}: ${value}`);
+const json2csv=(json,delimiter=",")=>json instanceof Object?_objects2csv(json,delimiter):_objects2csv(JSON.parse(json),delimiter);
+const json2csvFile=(json,delimiter)=>{
+    const str=json2csv(json,delimiter);
+    const blob=new Blob([str], { type: 'text/csv;charset=utf-8;' });
+    return {
+       str,
+       blob,
+       url:URL.createObjectURL(blob)
+    }
+};
+const _processObject=(obj, indent)=>{
+    const yml = [];
+    if (Array.isArray(obj)) {
+        obj.forEach(item => {
+            if (typeof item === 'object' && item !== null) {
+                yml.push(`${indent}-`);
+                const nestedLines = _processObject(item, `${indent}  `);
+                yml.push(...nestedLines);
+            } else yml.push(`${indent}- ${item}`);
+        });
+    } else {
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                if (typeof value === 'object' && value !== null) {
+                    yml.push(`${indent}${key}:`);
+                    const nestedLines = _processObject(value, `${indent}  `);
+                    yml.push(...nestedLines);
+                } else {
+                    yml.push(`${indent}${key}: ${value}`);
+                }
             }
         }
     }
-
-    return yamlLines;
-}
-
+    return yml;
+};
 const _object2yml=(object,indent="")=>_processObject(object,indent).join('\n');
 const json2yml=(json,indent)=>json instanceof Object?_object2yml(json,indent):_object2yml(JSON.parse(json),indent);
+const json2ymlFile=(json,indent)=>{
+    const str=json2yml(json,indent);
+    const blob=new Blob([str], { type: 'text/yml;charset=utf-8;' });
+    return {
+       str,
+       blob,
+       url:URL.createObjectURL(blob)
+    }
+};
 
 function parseXML(xmlString) {
     const parser = new DOMParser();
@@ -8099,7 +8124,9 @@ const Data={
     csv2sql,
     json2arr,
     json2csv,
+    json2csvFile,
     json2yml,
+    json2ymlFile,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -9358,7 +9385,9 @@ exports.inputTime = inputTime;
 exports.isApproximatlyEqual = isApproximatlyEqual;
 exports.json2arr = json2arr;
 exports.json2csv = json2csv;
+exports.json2csvFile = json2csvFile;
 exports.json2yml = json2yml;
+exports.json2ymlFile = json2ymlFile;
 exports.lerp = lerp$1;
 exports.li = li;
 exports.link = link;

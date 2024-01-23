@@ -8004,31 +8004,56 @@ const csv2sql=(csv, Table)=>{
     return sqlQuery+sqlValues.join(",\n");
   };
 
-const _objects2arr=data=>[Object.keys(data[0]),...data.map(n=>Object.values(n))];
+const _objects2arr=data=>data instanceof Array?[Object.keys(data[0]),...data.map(n=>Object.values(n))]:[Object.keys(data)];
 const _objects2csv=(data,delimiter)=>_objects2arr(data).map(n=>n.join(delimiter)).join("\n");
 const json2arr=json=>json instanceof Object?_objects2arr(json):_objects2arr(JSON.parse(json));
-const json2csv=(json,delimiter)=>json instanceof Object?_objects2csv(json,delimiter):_objects2csv(JSON.parse(json),delimiter);
-function _processObject(obj, indent) {
-    const yamlLines = [];
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            const value = obj[key];
-
-            if (typeof value === 'object' && value !== null) {
-                yamlLines.push(`${indent}${key}:`);
-                const nestedLines = _processObject(value, `${indent}  `);
-                yamlLines.push(...nestedLines);
-            } else {
-                yamlLines.push(`${indent}${key}: ${value}`);
+const json2csv=(json,delimiter=",")=>json instanceof Object?_objects2csv(json,delimiter):_objects2csv(JSON.parse(json),delimiter);
+const json2csvFile=(json,delimiter)=>{
+    const str=json2csv(json,delimiter);
+    const blob=new Blob([str], { type: 'text/csv;charset=utf-8;' });
+    return {
+       str,
+       blob,
+       url:URL.createObjectURL(blob)
+    }
+};
+const _processObject=(obj, indent)=>{
+    const yml = [];
+    if (Array.isArray(obj)) {
+        obj.forEach(item => {
+            if (typeof item === 'object' && item !== null) {
+                yml.push(`${indent}-`);
+                const nestedLines = _processObject(item, `${indent}  `);
+                yml.push(...nestedLines);
+            } else yml.push(`${indent}- ${item}`);
+        });
+    } else {
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                if (typeof value === 'object' && value !== null) {
+                    yml.push(`${indent}${key}:`);
+                    const nestedLines = _processObject(value, `${indent}  `);
+                    yml.push(...nestedLines);
+                } else {
+                    yml.push(`${indent}${key}: ${value}`);
+                }
             }
         }
     }
-
-    return yamlLines;
-}
-
+    return yml;
+};
 const _object2yml=(object,indent="")=>_processObject(object,indent).join('\n');
 const json2yml=(json,indent)=>json instanceof Object?_object2yml(json,indent):_object2yml(JSON.parse(json),indent);
+const json2ymlFile=(json,indent)=>{
+    const str=json2yml(json,indent);
+    const blob=new Blob([str], { type: 'text/yml;charset=utf-8;' });
+    return {
+       str,
+       blob,
+       url:URL.createObjectURL(blob)
+    }
+};
 
 function parseXML(xmlString) {
     const parser = new DOMParser();
@@ -8097,7 +8122,9 @@ const Data={
     csv2sql,
     json2arr,
     json2csv,
+    json2csvFile,
     json2yml,
+    json2ymlFile,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -9226,4 +9253,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, FlexArticle, FlexAside, FlexFooter, FlexHeader, FlexMain, FlexNav, FlexSection, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2yml, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, parseXML, pgcd, pow, ppcm, preload, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, FlexArticle, FlexAside, FlexFooter, FlexHeader, FlexMain, FlexNav, FlexSection, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, parseXML, pgcd, pow, ppcm, preload, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

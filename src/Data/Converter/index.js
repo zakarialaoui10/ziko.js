@@ -11,5 +11,7 @@ export {
  export {
    json2arr,
    json2csv,
-   json2yml
+   json2csvFile,
+   json2yml,
+   json2ymlFile,
  } from "./json";

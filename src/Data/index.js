@@ -7,7 +7,9 @@ import {
     csv2sql,
     json2arr,
     json2csv,
-    json2yml
+    json2csvFile,
+    json2yml,
+    json2ymlFile
  } from "./Converter";
 import parseXML from "./Parser/xml";
 import { preload } from "./Api";
@@ -20,7 +22,9 @@ const Data={
     csv2sql,
     json2arr,
     json2csv,
+    json2csvFile,
     json2yml,
+    json2ymlFile,
     preload,
     parseXML,
     ExtractAll:function(){
@@ -45,6 +49,8 @@ export{
     csv2sql,
     json2arr,
     json2csv,
-    json2yml
+    json2csvFile,
+    json2yml,
+    json2ymlFile
 }
 export default Data
