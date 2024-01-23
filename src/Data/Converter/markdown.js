@@ -19,10 +19,14 @@ const parseCodeBlock = (lines, language) => {
 };
 
 const parseList = line => {
-    const listType = line.startsWith('1.') ? 'ol' : 'ul';
-    return `<${listType}>\n<li>${parseInlineElements(line.slice(3))}</li>\n</${listType}>\n`;
+    const IS_STARTED_WIDT_A_DIGIT_FOLLOWED_BY_A_DOT = /^(\d+)\./; 
+    const match = line.match(IS_STARTED_WIDT_A_DIGIT_FOLLOWED_BY_A_DOT);
+    if (match) {
+        let start=+match[1]
+        return `<ol${start===1?"":` start=${start}`}>\n<li>${parseInlineElements(line.slice(match[0].length))}</li>\n</ol>\n`;
+    }  
+    return `<ul>\n<li>${parseInlineElements(line)}</li>\n</ul>\n`;
 };
-
 const markdown2html = markdownText => {
     const lines = markdownText.split('\n');
     let htmlOutput = '';
@@ -60,14 +64,14 @@ const markdown2html = markdownText => {
             continue;
         }
         // Headings
-        if (line.startsWith('#')) {
+        if (line.startsWith('#')&&line[1]===" ") {
             const headingLevel = line.indexOf(' ');
             const headingText = line.slice(headingLevel + 1);
             htmlOutput += `<h${headingLevel}>${parseInlineElements(headingText)}</h${headingLevel}>\n`;
             continue;
         }
         // Lists
-        if (line.startsWith('- ') || line.startsWith('* ') || line.startsWith('1. ')) {
+        if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^(\d+)\./)) {
             htmlOutput += parseList(line);
             continue;
         }

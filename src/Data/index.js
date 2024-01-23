@@ -21,5 +21,6 @@ const Data={
 export{
     parseXML,
     preload,
+    markdown2html
 }
 export default Data
