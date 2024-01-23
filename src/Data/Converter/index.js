@@ -9,8 +9,7 @@ export {
     csv2sql
  } from "./csv";
  export {
-   objects2arr, 
-   objects2csv,
    json2arr,
-   json2csv
+   json2csv,
+   json2yml
  } from "./json";
