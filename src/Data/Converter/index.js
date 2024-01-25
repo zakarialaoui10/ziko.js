@@ -15,3 +15,9 @@ export {
    json2yml,
    json2ymlFile,
  } from "./json";
+ export { 
+   svg2str,
+   svg2ascii,
+   svg2imgUrl,
+   svg2img
+ } from "./svg";

@@ -8057,6 +8057,11 @@ const json2ymlFile=(json,indent)=>{
     }
 };
 
+const svg2str=svg=>(new XMLSerializer()).serializeToString(svg);
+const svg2ascii=svg=>btoa(svg2str(svg));
+const svg2imgUrl=svg=>'data:image/svg+xml;base64,'+svg2ascii(svg);
+const svg2img=(svg,render=true)=>image(svg2imgUrl(svg)).render(render);
+
 function parseXML(xmlString) {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
@@ -8116,6 +8121,8 @@ const preload=(url)=>{
 };
 
 const Data={
+    parseXML,
+    preload,
     markdown2html,
     csv2arr,
     csv2matrix,
@@ -8127,8 +8134,10 @@ const Data={
     json2csvFile,
     json2yml,
     json2ymlFile,
-    preload,
-    parseXML,
+    svg2str,
+    svg2ascii,
+    svg2imgUrl,
+    svg2img,
     ExtractAll:function(){
         for (let i = 0; i < Object.keys(this).length; i++) {
             globalThis[Object.keys(this)[i]] = Object.values(this)[i];
@@ -9411,11 +9420,9 @@ exports.nums = nums;
 exports.ol = ol;
 exports.ones = ones;
 exports.p = p;
-exports.parseXML = parseXML;
 exports.pgcd = pgcd;
 exports.pow = pow;
 exports.ppcm = ppcm;
-exports.preload = preload;
 exports.prod = prod;
 exports.rad2deg = rad2deg;
 exports.radio = radio;
@@ -9434,6 +9441,10 @@ exports.sqrtn = sqrtn;
 exports.sub = sub;
 exports.subset = subset;
 exports.sum = sum;
+exports.svg2ascii = svg2ascii;
+exports.svg2img = svg2img;
+exports.svg2imgUrl = svg2imgUrl;
+exports.svg2str = svg2str;
 exports.svgCircle = svgCircle;
 exports.svgEllipse = svgEllipse;
 exports.svgGroupe = svgGroupe;
