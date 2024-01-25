@@ -6984,7 +6984,14 @@
     }
   }
 
-  const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
+  const Flex = (...ZikoUIElement) =>{
+    let tag="div";
+    if(typeof ZikoUIElement[0]==="string"){
+      tag=ZikoUIElement[0];
+      ZikoUIElement.pop();
+    }
+    return new ZikoUIFlex(tag).append(...ZikoUIElement);
+  };
 
   class ZikoUIGrid extends ZikoUIElement {
       constructor(tag ="div", w = "50vw", h = "50vh") {
@@ -7297,13 +7304,6 @@
   const Footer = (...ZikoUIElement) => new ZikoUIFooter().append(...ZikoUIElement);
   const Nav = (...ZikoUIElement) => new ZikoUINav().append(...ZikoUIElement);
   const Aside = (...ZikoUIElement) => new ZikoUIAside().append(...ZikoUIElement);
-  const FlexHeader = (...ZikoUIElement) => new ZikoUIFlex("header").append(...ZikoUIElement);
-  const FlexMain = (...ZikoUIElement) => new ZikoUIFlex("main").append(...ZikoUIElement);
-  const FlexArticle = (...ZikoUIElement) => new ZikoUIFlex("article").append(...ZikoUIElement);
-  const FlexSection = (...ZikoUIElement) => new ZikoUIFlex("section").append(...ZikoUIElement);
-  const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUIElement);
-  const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
-  const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
 
   class ZikoUITr extends ZikoUIElement{
       constructor(...ZikoUIElement){
@@ -7515,19 +7515,12 @@
       Carousel,
       Grid: Grid$1,
       Header,
-      FlexHeader,
       Main,
-      FlexMain,
       Section: Section$1,
-      FlexSection,
       Article,
-      FlexArticle,
       Aside,
-      FlexAside,
       Nav,
-      FlexNav,
       Footer,
-      FlexFooter,
       Table,
       CodeNote,
       Tabs,
@@ -9286,13 +9279,6 @@
   exports.ExtractAll = ExtractAll;
   exports.Fixed = Fixed;
   exports.Flex = Flex;
-  exports.FlexArticle = FlexArticle;
-  exports.FlexAside = FlexAside;
-  exports.FlexFooter = FlexFooter;
-  exports.FlexHeader = FlexHeader;
-  exports.FlexMain = FlexMain;
-  exports.FlexNav = FlexNav;
-  exports.FlexSection = FlexSection;
   exports.Footer = Footer;
   exports.Graphics = Graphics;
   exports.Grid = Grid$1;

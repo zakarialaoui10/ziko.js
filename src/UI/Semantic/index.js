@@ -57,27 +57,13 @@ const Header = (...ZikoUIElement) => new ZikoUIHeader().append(...ZikoUIElement)
 const Footer = (...ZikoUIElement) => new ZikoUIFooter().append(...ZikoUIElement);
 const Nav = (...ZikoUIElement) => new ZikoUINav().append(...ZikoUIElement);
 const Aside = (...ZikoUIElement) => new ZikoUIAside().append(...ZikoUIElement);
-const FlexHeader = (...ZikoUIElement) => new ZikoUIFlex("header").append(...ZikoUIElement);
-const FlexMain = (...ZikoUIElement) => new ZikoUIFlex("main").append(...ZikoUIElement);
-const FlexArticle = (...ZikoUIElement) => new ZikoUIFlex("article").append(...ZikoUIElement);
-const FlexSection = (...ZikoUIElement) => new ZikoUIFlex("section").append(...ZikoUIElement);
-const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUIElement);
-const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
-const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
 export{
   Header,
-  FlexHeader,
   Main,
-  FlexMain,
   Section,
-  FlexSection,
   Article,
-  FlexArticle,
   Aside,
-  FlexAside,
   Nav,
-  FlexNav,
   Footer,
-  FlexFooter,
   ZikoUISection
   }

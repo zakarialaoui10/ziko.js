@@ -87,5 +87,12 @@ class ZikoUIFlex extends ZikoUIElement {
   }
 }
 
-const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
+const Flex = (...ZikoUIElement) =>{
+  let tag="div";
+  if(typeof ZikoUIElement[0]==="string"){
+    tag=ZikoUIElement[0];
+    ZikoUIElement.pop();
+  }
+  return new ZikoUIFlex(tag).append(...ZikoUIElement);
+}
 export{Flex,ZikoUIFlex}

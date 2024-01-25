@@ -6978,7 +6978,14 @@ class ZikoUIFlex extends ZikoUIElement {
   }
 }
 
-const Flex = (...ZikoUIElement) => new ZikoUIFlex("div").append(...ZikoUIElement);
+const Flex = (...ZikoUIElement) =>{
+  let tag="div";
+  if(typeof ZikoUIElement[0]==="string"){
+    tag=ZikoUIElement[0];
+    ZikoUIElement.pop();
+  }
+  return new ZikoUIFlex(tag).append(...ZikoUIElement);
+};
 
 class ZikoUIGrid extends ZikoUIElement {
     constructor(tag ="div", w = "50vw", h = "50vh") {
@@ -7291,13 +7298,6 @@ const Header = (...ZikoUIElement) => new ZikoUIHeader().append(...ZikoUIElement)
 const Footer = (...ZikoUIElement) => new ZikoUIFooter().append(...ZikoUIElement);
 const Nav = (...ZikoUIElement) => new ZikoUINav().append(...ZikoUIElement);
 const Aside = (...ZikoUIElement) => new ZikoUIAside().append(...ZikoUIElement);
-const FlexHeader = (...ZikoUIElement) => new ZikoUIFlex("header").append(...ZikoUIElement);
-const FlexMain = (...ZikoUIElement) => new ZikoUIFlex("main").append(...ZikoUIElement);
-const FlexArticle = (...ZikoUIElement) => new ZikoUIFlex("article").append(...ZikoUIElement);
-const FlexSection = (...ZikoUIElement) => new ZikoUIFlex("section").append(...ZikoUIElement);
-const FlexAside = (...ZikoUIElement) => new ZikoUIFlex("aside").append(...ZikoUIElement);
-const FlexNav = (...ZikoUIElement) => new ZikoUIFlex("nav").append(...ZikoUIElement);
-const FlexFooter = (...ZikoUIElement) => new ZikoUIFlex("footer").append(...ZikoUIElement);
 
 class ZikoUITr extends ZikoUIElement{
     constructor(...ZikoUIElement){
@@ -7509,19 +7509,12 @@ const UI$1={
     Carousel,
     Grid: Grid$1,
     Header,
-    FlexHeader,
     Main,
-    FlexMain,
     Section: Section$1,
-    FlexSection,
     Article,
-    FlexArticle,
     Aside,
-    FlexAside,
     Nav,
-    FlexNav,
     Footer,
-    FlexFooter,
     Table,
     CodeNote,
     Tabs,
@@ -9262,4 +9255,4 @@ function RemoveAll(){
     Graphics.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, FlexArticle, FlexAside, FlexFooter, FlexHeader, FlexMain, FlexNav, FlexSection, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

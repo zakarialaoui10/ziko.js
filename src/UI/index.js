@@ -57,19 +57,12 @@ import{
 } from "./CustomElement/index.js"
 import{
     Header,
-    FlexHeader,
     Main,
-    FlexMain,
     Section,
-    FlexSection,
     Article,
-    FlexArticle,
     Aside,
-    FlexAside,
     Nav,
-    FlexNav,
     Footer,
-    FlexFooter,
     } from "./Semantic/index.js";
 import { Table } from "./Table/index.js";
 const UI={
@@ -116,19 +109,12 @@ const UI={
     Carousel,
     Grid,
     Header,
-    FlexHeader,
     Main,
-    FlexMain,
     Section,
-    FlexSection,
     Article,
-    FlexArticle,
     Aside,
-    FlexAside,
     Nav,
-    FlexNav,
     Footer,
-    FlexFooter,
     Table,
     CodeNote,
     Tabs,
@@ -153,5 +139,6 @@ export * from "./Semantic";
 export * from "./Misc";
 export * from "./CustomElement";
 export {
-    ZikoHtml}
+    ZikoHtml
+}
 export default UI;
