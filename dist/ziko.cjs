@@ -8049,6 +8049,27 @@ const json2ymlFile=(json,indent)=>{
        url:URL.createObjectURL(blob)
     }
 };
+const json2xml=(json, indent = 1)=>{
+    let xml = '';
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        const value = json[key];
+        xml += '\n' + ' '.repeat(indent) + `<${key}>`;
+        (typeof value === 'object') ? xml += json2xml(value, indent + 2) : xml += `${value}`;
+        xml += `</${key}>`;
+      }
+    }
+    return xml.trim();
+  };
+const json2xmlFile=(json,indent)=>{
+    const str=json2xml(json,indent);
+    const blob=new Blob([str], { type: 'text/xml;charset=utf-8;' });
+    return {
+       str,
+       blob,
+       url:URL.createObjectURL(blob)
+    }
+};
 
 const svg2str=svg=>(new XMLSerializer()).serializeToString(svg);
 const svg2ascii=svg=>btoa(svg2str(svg));
@@ -8127,6 +8148,8 @@ const Data={
     json2csvFile,
     json2yml,
     json2ymlFile,
+    json2xml,
+    json2xmlFile,
     svg2str,
     svg2ascii,
     svg2imgUrl,
@@ -9381,6 +9404,8 @@ exports.isApproximatlyEqual = isApproximatlyEqual;
 exports.json2arr = json2arr;
 exports.json2csv = json2csv;
 exports.json2csvFile = json2csvFile;
+exports.json2xml = json2xml;
+exports.json2xmlFile = json2xmlFile;
 exports.json2yml = json2yml;
 exports.json2ymlFile = json2ymlFile;
 exports.lerp = lerp$1;

@@ -14,6 +14,8 @@ export {
    json2csvFile,
    json2yml,
    json2ymlFile,
+   json2xml,
+   json2xmlFile
  } from "./json";
  export { 
    svg2str,

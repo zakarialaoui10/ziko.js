@@ -1,4 +1,3 @@
-import ZikoUIElement from "../UI/ZikoUIElement";
 import { ZikoUIFlex } from "../UI/CustomElement/Flex.js";
 import { Seo } from "./Seo/index.js";
 import { useTheme } from "./Apparence/Theme/index.js";

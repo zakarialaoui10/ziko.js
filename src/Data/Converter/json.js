@@ -48,10 +48,33 @@ const json2ymlFile=(json,indent)=>{
        url:URL.createObjectURL(blob)
     }
 }
+const json2xml=(json, indent = 1)=>{
+    let xml = '';
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        const value = json[key];
+        xml += '\n' + ' '.repeat(indent) + `<${key}>`;
+        (typeof value === 'object') ? xml += json2xml(value, indent + 2) : xml += `${value}`;
+        xml += `</${key}>`;
+      }
+    }
+    return xml.trim();
+  }
+const json2xmlFile=(json,indent)=>{
+    const str=json2xml(json,indent);
+    const blob=new Blob([str], { type: 'text/xml;charset=utf-8;' });
+    return{
+       str,
+       blob,
+       url:URL.createObjectURL(blob)
+    }
+}
 export{
     json2arr,
     json2csv,
     json2csvFile,
     json2yml,
     json2ymlFile,
+    json2xml,
+    json2xmlFile
 }
