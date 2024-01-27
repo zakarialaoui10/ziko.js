@@ -2496,14 +2496,24 @@ const Math$1={
     PowerSet,
     subset,
     Signal,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -5354,14 +5364,24 @@ const Events={
     Input,
     CustomEvent,
     Channel,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -7519,14 +7539,24 @@ const UI$1={
     CodeNote,
     Tabs,
     Accordion,
-    ExtractAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) {
-            globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -7876,14 +7906,24 @@ const Time={
     animation,
     waitForUIElm,
     waitForUIElmSync,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -8152,14 +8192,24 @@ const Data={
     svg2ascii,
     svg2imgUrl,
     svg2img,
-    ExtractAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) {
-            globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -9002,14 +9052,24 @@ const Graphics={
     canvasPoints,
     canvasLine,
     canvasRect,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -9268,6 +9328,7 @@ function ExtractAll(){
     Time.ExtractAll();
     Events.ExtractAll();
     Graphics.ExtractAll();
+    Data.ExtractAll();
     return this;
 }
 function RemoveAll(){
@@ -9276,6 +9337,7 @@ function RemoveAll(){
     Time.ExtractAll();
     Events.RemoveAll();
     Graphics.RemoveAll();
+    Data.ExtractAll();
 }
 
 export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

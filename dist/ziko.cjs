@@ -2498,14 +2498,24 @@ const Math$1={
     PowerSet,
     subset,
     Signal,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -5356,14 +5366,24 @@ const Events={
     Input,
     CustomEvent,
     Channel,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -7521,14 +7541,24 @@ const UI$1={
     CodeNote,
     Tabs,
     Accordion,
-    ExtractAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) {
-            globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -7878,14 +7908,24 @@ const Time={
     animation,
     waitForUIElm,
     waitForUIElmSync,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -8154,14 +8194,24 @@ const Data={
     svg2ascii,
     svg2imgUrl,
     svg2img,
-    ExtractAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) {
-            globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-        for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -9004,14 +9054,24 @@ const Graphics={
     canvasPoints,
     canvasLine,
     canvasRect,
-    ExtractAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) {
-                globalThis[Object.keys(this)[i]] = Object.values(this)[i];
+    ExtractAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+                globalThis[key] = this[key];
+            }
         }
         return this;
     },
-    RemoveAll:function(){
-            for (let i = 0; i < Object.keys(this).length; i++) delete globalThis[Object.keys(this)[i]];   
+    RemoveAll: function () {
+        const keys = Object.keys(this);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (key !== 'RemoveAll') {
+                delete globalThis[key];
+            }
+        }
         return this;
     }
 };
@@ -9270,6 +9330,7 @@ function ExtractAll(){
     Time.ExtractAll();
     Events.ExtractAll();
     Graphics.ExtractAll();
+    Data.ExtractAll();
     return this;
 }
 function RemoveAll(){
@@ -9278,6 +9339,7 @@ function RemoveAll(){
     Time.ExtractAll();
     Events.RemoveAll();
     Graphics.RemoveAll();
+    Data.ExtractAll();
 }
 
 exports.Accordion = Accordion;

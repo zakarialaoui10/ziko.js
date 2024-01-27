@@ -29,6 +29,7 @@ function ExtractAll(){
     Time.ExtractAll();
     Events.ExtractAll();
     Graphics.ExtractAll();
+    Data.ExtractAll()
     return this;
 }
 function RemoveAll(){
@@ -37,6 +38,7 @@ function RemoveAll(){
     Time.ExtractAll();
     Events.RemoveAll();
     Graphics.RemoveAll();
+    Data.ExtractAll()
 }
 export {
     Ziko,
