@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                overflow:hidden;
+                margin:0;
+            }
+        </style>
+    </head> 
+<body>
+  <!-- <script  src="https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.min.js">
+  </script> -->
+    <script src="../../dist/ziko.js"></script>
+
+  <script>
+      document.documentElement.setAttribute("data-engine","zikojs")
+    Ziko.ExtractAll()
+   const Link = link("https://github.com/zakarialaoui10/ziko.js",text("Visit zikojs repository")).setAttr("target","_blank").style({
+      color:"#eee",
+      fontSize: "20px",
+    })
+const hello = p("Hello World").style({
+      color: "gold",
+      fontSize: "30px",
+      fontWeight: "bold",
+      cursor: "pointer"
+    })
+
+Ziko.App(
+    hello.onClick(()=>Link.element.click()),
+      Link
+    ).style({
+      width: "100vw",
+      height: "100vh",
+      background: "darkblue"
+    }).vertical(0, "space-around")
+  </script>
+</body>
+</html>
