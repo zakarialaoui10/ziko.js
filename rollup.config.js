@@ -35,7 +35,11 @@ export default {
     format: 'umd',
     name:"Ziko",
     banner,
-    plugins:[terser()]
+    plugins:[terser({
+      output: {
+        comments: (node, { type, value }) => type === 'comment2' && value.includes('Author'),
+      },
+    })]
   },
   
 ],
@@ -44,7 +48,7 @@ export default {
     commonjs(),
     babel({
       babelHelpers: 'bundled', // or 'runtime'
-      exclude: 'node_modules/**',
+      //exclude: 'node_modules/**',
     }), 
   ],
 };
