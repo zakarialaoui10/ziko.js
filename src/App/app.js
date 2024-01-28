@@ -59,4 +59,4 @@ class ZikoUIApp extends ZikoUIFlex{
     }
 }
 const App=(...UIElement)=>new ZikoUIApp().append(...UIElement)
-export default App;
+export {App};

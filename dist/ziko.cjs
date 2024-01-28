@@ -9355,6 +9355,12 @@ class ZikoUIApp extends ZikoUIFlex{
 }
 const App=(...UIElement)=>new ZikoUIApp().append(...UIElement);
 
+if(document){
+    document.addEventListener("DOMContentLoaded", () => {
+        document.documentElement.setAttribute("data-engine","zikojs");
+      });
+}
+
 const Ziko={
     App,
     Math: Math$1,

@@ -8,9 +8,7 @@ import Multi from "./Worker/index.js";
 import {SPA} from "./App/Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
-import App from "./App/app.js";
-
-
+import { App } from "./App";
 const Ziko={
     App,
     Math,
