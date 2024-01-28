@@ -87,4 +87,4 @@ const Watch=(UIElement,options={},callback=null)=>{
     if(callback)Observer.observe(callback);
     return Observer
 }
-export default Watch; 
+export { Watch }; 

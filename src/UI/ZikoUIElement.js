@@ -19,7 +19,7 @@ import { matrix } from "../Math/Matrix/index.js";
 import { Random } from "../Math/Random/index.js";
 class ZikoUIElement {
   constructor(element ) {
-    this.Target = document.body;
+    this.target = document.body;
     if (typeof element === "string") element = document.createElement(element);
     this.element = element;
     Object.assign(this, styleComposer.call(this));
@@ -123,15 +123,15 @@ class ZikoUIElement {
   setTarget(tg) {
     if (tg instanceof ZikoUIElement) tg = tg.element;
     this.remove();
-    this.Target = tg;
+    this.target = tg;
     this.render();
     return this;
   }
-  render(render = true , target = this.Target) {
+  render(render = true , target = this.target) {
     if(target instanceof ZikoUIElement)target=target.element;
-    this.Target=target;
+    this.target=target;
     if(render) {
-      this.Target.appendChild(this.element);
+      this.target.appendChild(this.element);
     }
     else this.remove();
     return this;
@@ -162,7 +162,7 @@ class ZikoUIElement {
   }
   remove(...ele) {
     if(ele.length==0){
-      if(this.Target.children.length && [...this.Target.children].includes(this.element)) this.Target.removeChild(this.element);
+      if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
     }
     else {
       const remove = (ele) => {

@@ -9,23 +9,23 @@ function EVENT_CONTROLLER(e,EVENT,setter,push_object){
 }
 class ZikoEvent{
     constructor(Target){
-        this.Target=window;
+        this.target=null;
         this.setTarget(Target);
         this.__dispose=this.dispose.bind(this);
         // this.EventIndex=Garbage.Pointer.data.length;
         // Garbage.Pointer.data.push({event:this,index:this.EventIndex});
     }
-    get TargetElement(){
-        return this.Target.element
+    get targetElement(){
+        return this.target.element
     }
     setTarget(UI){
-        this.Target=UI;
+        this.target=UI;
         return this;
     }
     __handle(event,handler,dispose){
         const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`
         this.dispose(dispose);
-        this.TargetElement.addEventListener(EVENT,handler);
+        this.targetElement.addEventListener(EVENT,handler);
         return this;   
     }
     __onEvent(event,dispose,...callbacks){
@@ -50,7 +50,7 @@ class ZikoEvent{
         config={...all,...config}
         for(let key in config){
             if(config[key]){
-                this.TargetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                this.targetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                 this.cache.paused[`${this.cache.prefixe}${key}`]=true;
             }
         }
@@ -61,7 +61,7 @@ class ZikoEvent{
         config={...all,...config}
         for(let key in config){
             if(config[key]){
-                this.TargetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                this.targetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                 this.cache.paused[`${this.cache.prefixe}${key}`]=false;
             }
         }

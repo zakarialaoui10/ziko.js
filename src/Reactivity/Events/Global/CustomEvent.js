@@ -45,7 +45,7 @@ class ZikoCustomEvent extends ZikoEvent{
         if(!(this.__controller[event_name]))this.#init(event_name);
         this.detail=detail;
         const event=new Event(event_name);
-        this.TargetElement.dispatchEvent(event);
+        this.targetElement.dispatchEvent(event);
         return this;
     }
 }

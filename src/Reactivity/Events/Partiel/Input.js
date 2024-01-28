@@ -44,7 +44,7 @@ class ZikoEventInput extends ZikoEvent{
         }
     }
     get value(){
-        return this.Target.value;
+        return this.target.value;
     }
     onInput(...callbacks){
         this.__onEvent("input",{},...callbacks)

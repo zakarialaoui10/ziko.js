@@ -4459,23 +4459,23 @@
   }
   class ZikoEvent{
       constructor(Target){
-          this.Target=window;
+          this.target=null;
           this.setTarget(Target);
           this.__dispose=this.dispose.bind(this);
           // this.EventIndex=Garbage.Pointer.data.length;
           // Garbage.Pointer.data.push({event:this,index:this.EventIndex});
       }
-      get TargetElement(){
-          return this.Target.element
+      get targetElement(){
+          return this.target.element
       }
       setTarget(UI){
-          this.Target=UI;
+          this.target=UI;
           return this;
       }
       __handle(event,handler,dispose){
           const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`;
           this.dispose(dispose);
-          this.TargetElement.addEventListener(EVENT,handler);
+          this.targetElement.addEventListener(EVENT,handler);
           return this;   
       }
       __onEvent(event,dispose,...callbacks){
@@ -4500,7 +4500,7 @@
           config={...all,...config};
           for(let key in config){
               if(config[key]){
-                  this.TargetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                  this.targetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                   this.cache.paused[`${this.cache.prefixe}${key}`]=true;
               }
           }
@@ -4511,7 +4511,7 @@
           config={...all,...config};
           for(let key in config){
               if(config[key]){
-                  this.TargetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                  this.targetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                   this.cache.paused[`${this.cache.prefixe}${key}`]=false;
               }
           }
@@ -5244,7 +5244,7 @@
           };
       }
       get value(){
-          return this.Target.value;
+          return this.target.value;
       }
       onInput(...callbacks){
           this.__onEvent("input",{},...callbacks);
@@ -5303,7 +5303,7 @@
           if(!(this.__controller[event_name]))this.#init(event_name);
           this.detail=detail;
           const event=new Event(event_name);
-          this.TargetElement.dispatchEvent(event);
+          this.targetElement.dispatchEvent(event);
           return this;
       }
   }
@@ -5481,7 +5481,7 @@
 
   class ZikoUIElement {
     constructor(element ) {
-      this.Target = document.body;
+      this.target = document.body;
       if (typeof element === "string") element = document.createElement(element);
       this.element = element;
       Object.assign(this, styleComposer.call(this));
@@ -5585,15 +5585,15 @@
     setTarget(tg) {
       if (tg instanceof ZikoUIElement) tg = tg.element;
       this.remove();
-      this.Target = tg;
+      this.target = tg;
       this.render();
       return this;
     }
-    render(render = true , target = this.Target) {
+    render(render = true , target = this.target) {
       if(target instanceof ZikoUIElement)target=target.element;
-      this.Target=target;
+      this.target=target;
       if(render) {
-        this.Target.appendChild(this.element);
+        this.target.appendChild(this.element);
       }
       else this.remove();
       return this;
@@ -5624,7 +5624,7 @@
     }
     remove(...ele) {
       if(ele.length==0){
-        if(this.Target.children.length && [...this.Target.children].includes(this.element)) this.Target.removeChild(this.element);
+        if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
       }
       else {
         const remove = (ele) => {
