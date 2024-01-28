@@ -1,2 +1,3 @@
-import {clamp} from "ziko";
+import {clamp} from "../dist/ziko.mjs";
 console.log(clamp(0,1,2))
+console.log(globalThis)
