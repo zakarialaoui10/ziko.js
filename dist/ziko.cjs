@@ -7388,20 +7388,21 @@ const MatrixToTableUI=matrix=>{
 };
 
 class ZikoUITable extends ZikoUIElement {
-    constructor(body=matrix(0,0),{caption=null,thead=null,tfoot=null}={}){
+    constructor(body=matrix(0,0),{caption=null,head=null,foot=null}={}){
         super();
         this.element = document.createElement("table");
-        this.fromMatrix(body);
         this.structure={
-            caption:null,
-            head:null,
-            body:0,
-            foot:null
+            caption,
+            head,
+            body:null,
+            foot
         };
+        this.fromMatrix(body);
+        if(caption)this.setCaption(caption);
         this.render();
     }
     get caption(){
-
+        return this.structure.caption;
     }
     get header(){
 
@@ -7413,12 +7414,14 @@ class ZikoUITable extends ZikoUIElement {
 
     }
     setCaption(c){
-        this.tCaption=caption(c);
-        this.append(this.tCaption);
+        this.removeCaption();
+        this.structure.caption=caption(c);
+        this.append(this.structure.caption);
         return this;
     }
     removeCaption(){
-        this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+        if(this.structure.caption)this.removeItem(...this.items.filter(n=>n instanceof ZikoUICaption));
+        this.structure.caption=null;
         return this;
     }
     setHeader(...c){
@@ -7431,8 +7434,8 @@ class ZikoUITable extends ZikoUIElement {
         return this;
     }
     setFooter(c){
-        this.tCaption=caption(c);
-        this.append(this.tCaption);
+        this.structure.caption=caption(c);
+        this.append(this.structure.caption);
         return this;
     }
     removeFooter(){
@@ -7441,10 +7444,10 @@ class ZikoUITable extends ZikoUIElement {
     }
     fromMatrix(bodyMatrix) {
         (bodyMatrix instanceof Array)?this.bodyMatrix=matrix(bodyMatrix):this.bodyMatrix=bodyMatrix;
-        if(this?.tbody?.items?.length)this.tbody.remove();
-        this.tbody=tbody();
-        this.append(this.tbody);
-        this.tbody.append(...MatrixToTableUI(this.bodyMatrix));
+        if(this.structure.body)this.structure.body.remove();
+        this.structure.body=tbody();
+        this.append(this.structure.body);
+        this.structure.body.append(...MatrixToTableUI(this.bodyMatrix));
         //this.structure.body.append(...MatrixToTableUI(matrix))
         //this.cellStyles({ padding: "0.2rem 0.4rem", textAlign: "center" });
         return this;
@@ -7483,9 +7486,16 @@ class ZikoUITable extends ZikoUIElement {
         this.fromMatrix(this.bodyMatrix.clone.filterByCols(item));
         return this;
       }
-    forEachTd(){}
+    forEachRow(callback){
+        this.structure.body.forEach(callback);
+        return this;
+    }
+    forEachItem(callback){
+        this.structure.body.forEach(n=>n.forEach(callback));
+        return this;
+    }
 }
-const Table=(matrix)=>new ZikoUITable(matrix);
+const Table=(matrix,config)=>new ZikoUITable(matrix,config);
 
 const UI$1={
     Themes,
@@ -9355,10 +9365,10 @@ class ZikoUIApp extends ZikoUIFlex{
 }
 const App=(...UIElement)=>new ZikoUIApp().append(...UIElement);
 
+const __init__=()=>document.documentElement.setAttribute("data-engine","zikojs");
 if(document){
-    document.addEventListener("DOMContentLoaded", () => {
-        document.documentElement.setAttribute("data-engine","zikojs");
-      });
+    document.addEventListener("DOMContentLoaded", __init__);
+    document.removeEventListener("DOMContentLoaded", __init__);
 }
 
 const Ziko={
