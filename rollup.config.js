@@ -2,12 +2,15 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
+import babel from '@rollup/plugin-babel';
 
 const banner= `
 /*
+  Project: ziko.js
   Author: Zakaria Elalaoui
-  Date: ${new Date().toLocaleDateString()}
-  Project: zikojs
+  Date : 28/01/2024
+  Git-Repo : https://github.com/zakarialaoui10/ziko.js
+  Git-Wiki : https://github.com/zakarialaoui10/ziko.js/wiki
 */
 `
 export default {
@@ -36,5 +39,12 @@ export default {
   },
   
 ],
-  plugins: [resolve(), commonjs() ],
+  plugins: [
+    resolve(), 
+    commonjs(),
+    babel({
+      babelHelpers: 'bundled', // or 'runtime'
+      exclude: 'node_modules/**',
+    }), 
+  ],
 };
