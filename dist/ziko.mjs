@@ -7561,14 +7561,12 @@ const UI$1={
     }
 };
 
-//const isNode = () => (typeof process !== 'undefined');
-
 class ZikoTimeLoop {
   constructor(callback, {fps,step,t=[0,null],start=true}={}) {
     this.callback = callback;
     this.cache = {
       isRunning: false,
-      animationId : null,
+      AnimationId : null,
       startTime : null,
       step,
       fps,
@@ -7604,7 +7602,7 @@ class ZikoTimeLoop {
   }
   pause() {
     if (this.cache.isRunning) {
-      clearTimeout(this.cache.animationId);
+      clearTimeout(this.cache.AnimationId);
       this.cache.isRunning = false;
     }
     return this;
@@ -7636,7 +7634,7 @@ class ZikoTimeLoop {
         this.i++;
         this.cache.startTime = now - (delta % this.TIME_STEP);
       }
-      this.cache.animationId = setTimeout(this.animate, 0);
+      this.cache.AnimationId = setTimeout(this.animate, 0);
     }  }
 }
 
@@ -7852,48 +7850,78 @@ const timeTaken = callback => {
 };
 
 class ZikoTimeAnimation{
-    constructor(callback,ease){
+    constructor(callback,{ease=Ease.Linear,step=50,t=[0,null],start=true,duration=3000}={}){
         this.cache={
             isRunning:false,
             AnimationId:null,
-            ease
+            startTime:null,
+            ease,
+            step,
+            intervall:t,
+            started:start,
+            duration
         };
         this.t=0;
         this.tx=0;
         this.ty=0;
         this.i=0;
-        this.step=50;
-        this.duration=3000;
         this.callback=callback;
     }
     #animation_handler(){
-            this.t+=this.step;
+            this.t+=this.cache.step;
             this.i++;
-            this.tx=map$1(this.t,0,this.duration,0,1);
+            this.tx=map$1(this.t,0,this.cache.duration,0,1);
             this.ty=this.cache.ease(this.tx);
             this.callback(this);
-            if(this.t>=this.duration){
+            if(this.t>=this.cache.duration){
                 clearInterval(this.cache.AnimationId);
                 this.cache.isRunning=false;
             }
     }
+    reset(restart=true){
+        this.t=0;
+        this.tx=0;
+        this.ty=0;
+        this.i=0;
+        if(restart)this.start();
+        return this;
+    }
+    #animate(reset=true){
+        if(!this.cache.isRunning){
+            if(reset)this.reset(false);
+            this.cache.isRunning=true;
+            this.cache.startTime = Date.now();
+            this.cache.AnimationId=setInterval(this.#animation_handler.bind(this),this.cache.step);
+        }
+        return this;
+    }
     start(){
-        this.cache.isRunning=true;
-        this.cache.AnimationId=setInterval(this.#animation_handler.bind(this),this.step);
+        this.#animate(true);
+        return this;
+    }
+    pause(){
+        if (this.cache.isRunning) {
+            clearTimeout(this.cache.AnimationId);
+            this.cache.isRunning = false;
+          }
+        return this;
+    }
+    resume(){
+        this.#animate(false);
         return this;
     }
     stop(){
-
+        this.pause();
+        this.reset(false);
+        return this;
     }
-    clear(){
-
-    }
-    stream(){
-
-    }
+    // clear(){
+    // }
+    // stream(){
+    // }
 }
 
-const animation=(callback,ease=Ease.Linear)=>new ZikoTimeAnimation(callback,ease);
+const animation=(callback,config)=>new ZikoTimeAnimation(callback,config);
 
 const Time={
     wait,
@@ -9337,6 +9365,7 @@ const Ziko={
     SPA,
     ALL_UI_ELEMENTS,
 };
+globalThis.__Ziko__=Ziko;
 function ExtractAll(){
     UI$1.ExtractAll();
     Math$1.ExtractAll();

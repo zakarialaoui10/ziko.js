@@ -1,11 +1,9 @@
-//const isNode = () => (typeof process !== 'undefined');
-
 class ZikoTimeLoop {
   constructor(callback, {fps,step,t=[0,null],start=true}={}) {
     this.callback = callback;
     this.cache = {
       isRunning: false,
-      animationId : null,
+      AnimationId : null,
       startTime : null,
       step,
       fps,
@@ -41,7 +39,7 @@ class ZikoTimeLoop {
   }
   pause() {
     if (this.cache.isRunning) {
-      clearTimeout(this.cache.animationId);
+      clearTimeout(this.cache.AnimationId);
       this.cache.isRunning = false;
     }
     return this;
@@ -73,7 +71,7 @@ class ZikoTimeLoop {
         this.i++;
         this.cache.startTime = now - (delta % this.TIME_STEP);
       }
-      this.cache.animationId = setTimeout(this.animate, 0);
+      this.cache.AnimationId = setTimeout(this.animate, 0);
     };
   }
 }

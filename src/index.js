@@ -23,6 +23,7 @@ const Ziko={
     SPA,
     ALL_UI_ELEMENTS,
 }
+globalThis.__Ziko__=Ziko;
 function ExtractAll(){
     UI.ExtractAll();
     Math.ExtractAll();
