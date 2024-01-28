@@ -1,6 +1,6 @@
 {
   "name": "ziko",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities",
   "main": "src/index.js",
   "type": "module",
