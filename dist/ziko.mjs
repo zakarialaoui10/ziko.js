@@ -1,3 +1,10 @@
+
+/*
+  Author: Zakaria Elalaoui
+  Date: 28/01/2024
+  Project: zikojs
+*/
+
 class AbstractZikoMath {}
 
 //import ZMath from "./index.js";

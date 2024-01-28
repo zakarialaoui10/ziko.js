@@ -1,3 +1,10 @@
+
+/*
+  Author: Zakaria Elalaoui
+  Date: 28/01/2024
+  Project: zikojs
+*/
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
