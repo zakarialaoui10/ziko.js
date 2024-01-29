@@ -3,7 +3,7 @@ import { tbody,caption,ZikoUICaption,thead} from "./elements.js";
 import { matrix } from "../../Math/Matrix/index.js";
 import { MatrixToTableUI } from "./utils.js";
 class ZikoUITable extends ZikoUIElement {
-    constructor(body=matrix(0,0),{caption=null,head=null,foot=null}={}){
+    constructor(body,{caption=null,head=null,foot=null}={}){
         super();
         this.element = document.createElement("table");
         this.structure={
@@ -59,7 +59,7 @@ class ZikoUITable extends ZikoUIElement {
     }
     fromMatrix(bodyMatrix) {
         (bodyMatrix instanceof Array)?this.bodyMatrix=matrix(bodyMatrix):this.bodyMatrix=bodyMatrix;
-        if(this.structure.body)this.structure.body.remove()
+        if(this.structure.body)this.remove(this.structure.body);
         this.structure.body=tbody()
         this.append(this.structure.body);
         this.structure.body.append(...MatrixToTableUI(this.bodyMatrix))

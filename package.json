@@ -5,6 +5,11 @@
   "main": "src/index.js",
   "type": "module",
   "source": "src/index.js",
+  "files":[
+    "src",
+    "dist",
+    "LICENCE"
+  ],
   "exports": {
     ".": {
       "import": "./dist/ziko.mjs",

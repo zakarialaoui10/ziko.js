@@ -70,7 +70,7 @@ class ZikoUIElement {
     return this.cache.attributes;
   }
   get evt(){
-
+    return this.cache.events;
   }
   get __app__(){
     if(this.cache.isRoot)return this;
@@ -83,11 +83,17 @@ class ZikoUIElement {
   }
   clone() {
     const UI = new this.constructor();
-    const items = [...this.items]
-    return {
-      UI:UI.append(...items),
-      items
+    UI.__proto__=this.__proto__;
+    if(this.items.length){
+      const items = [...this.items].map(n=>n.clone());
+      UI.append(...items);
     }
+    else UI.element=this.element.cloneNode();
+    return UI;
+    // return {
+    //   UI,
+    //   items
+    // }
   }
   get Width(){
     return this.element.getBoundingClientRect().width;
@@ -221,14 +227,14 @@ class ZikoUIElement {
   get cloneElement() {
     return this.element.cloneNode(true);
   }
-  get styleObject() {
-    //let borderPlus
-    return Object.fromEntries(
-      Object.entries(this.element.style).filter(
-        (n) => n[1] != "" && n[1] !== "initial" && isNaN(+n[0]),
-      ),
-    );
-  }
+  // get styleObject() {
+  //   //let borderPlus
+  //   return Object.fromEntries(
+  //     Object.entries(this.element.style).filter(
+  //       (n) => n[1] != "" && n[1] !== "initial" && isNaN(+n[0]),
+  //     ),
+  //   );
+  // }
   setClasses(...value) {
     this.setAttr("class", value.join(" "));
     return this;
@@ -422,25 +428,7 @@ class ZikoUIElement {
     this.observer.intersection.start();
     return this;
   }
-  // draggable(bool = true) {
-  //   this.element.setAttribute("draggable", bool);
-  //   return this;
-  // }
-  // get center() {
-  //   this.style({
-  //     display: "flex",
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //   });
-  //   return this;
-  // }
-  // get Css_3d_obj() {
-  //   return null;
-  //   //return new THREE.CSS3DObject(this.element);
-  // }
-  //VisibleArea
-  get Visible_area() {
-    //let bodyCoords=document.body.getBoundingClientRect();
+  get VisibleArea() {
     let coords = this.element.getBoundingClientRect();
     let windowHeight = document.documentElement.clientHeight;
     let windowWidth = document.documentElement.clientWidth;
@@ -448,7 +436,6 @@ class ZikoUIElement {
     let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
     let leftVisible = coords.left > 0 && coords.left < windowWidth;
     let rightVisible = coords.right > 0 && coords.right < windowWidth;
-    //return topVisible || bottomVisible;
     return {
       top: topVisible,
       bottom: bottomVisible,
@@ -544,23 +531,23 @@ class ZikoUIElement {
     else document.exitFullscreen();
     return this;
   }
-  resizeObserver(calback) {
-    var observer = new ResizeObserver((element) => calback(element));
-    return observer.observe(this.element);
-  }
-  intersectionObserver(calback, target = "parent") {
-    if (target == "parent") {
-      var observer = new IntersectionObserver((element) => calback(element[0]));
-      return observer.observe(this.element);
-    }
-    return this.items.map((n) => n.intersectionObserver((e) => calback(e)));
-  }
-  intersectRatio(calback) {
-    var observer = new IntersectionObserver((element) =>
-      calback(element[0].intersectionRatio),
-    );
-    return observer.observe(this.element);
-  }
+  // resizeObserver(calback) {
+  //   var observer = new ResizeObserver((element) => calback(element));
+  //   return observer.observe(this.element);
+  // }
+  // intersectionObserver(calback, target = "parent") {
+  //   if (target == "parent") {
+  //     var observer = new IntersectionObserver((element) => calback(element[0]));
+  //     return observer.observe(this.element);
+  //   }
+  //   return this.items.map((n) => n.intersectionObserver((e) => calback(e)));
+  // }
+  // intersectRatio(calback) {
+  //   var observer = new IntersectionObserver((element) =>
+  //     calback(element[0].intersectionRatio),
+  //   );
+  //   return observer.observe(this.element);
+  // }
   get coords() {
     var rect = this.element.getBoundingClientRect();
     var parent = {
