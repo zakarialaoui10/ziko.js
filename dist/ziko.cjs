@@ -5844,12 +5844,13 @@ class ZikoUIElement {
     }
   }
   clone() {
+    // Not working For Table 
     const UI = new this.constructor();
     UI.__proto__ = this.__proto__;
     if (this.items.length) {
       const items = [...this.items].map(n => n.clone());
       UI.append(...items);
-    } else UI.element = this.element.cloneNode();
+    } else UI.element = this.element.cloneNode(true);
     return UI;
     // return {
     //   UI,
@@ -7699,7 +7700,7 @@ class ZikoUITable extends ZikoUIElement {
       body: null,
       foot
     };
-    this.fromMatrix(body);
+    if (body) this.fromMatrix(body);
     if (caption) this.setCaption(caption);
     this.render();
   }
