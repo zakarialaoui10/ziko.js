@@ -13,11 +13,12 @@ Math.js can be installed via [npm]() :
 
 zikojs can be downloaded or linked from various content delivery networks :
 
-### CDN :
+### CDN : 
  #### Normal 
  ```html 
 <script src="https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.js"></script>
 ```
+[![](https://data.jsdelivr.com/v1/package/gh/zakarialaoui10/ziko.js/badge)](https://www.jsdelivr.com/package/gh/zakarialaoui10/ziko.js)
  #### Minified
   ```html 
 <script src="https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.min.js"></script>
