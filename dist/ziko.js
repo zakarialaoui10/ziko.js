@@ -5790,8 +5790,8 @@
 
   class ZikoUIElement {
     constructor(element) {
-      this.target = document.body;
-      if (typeof element === "string") element = document.createElement(element);
+      this.target = globalThis.document.body;
+      if (typeof element === "string") element = globalThis.document.createElement(element);
       this.element = element;
       Object.assign(this, styleComposer.call(this));
       this.uuid = this.constructor.name + "-" + Random.string(10);
@@ -6189,8 +6189,8 @@
     }
     get VisibleArea() {
       let coords = this.element.getBoundingClientRect();
-      let windowHeight = document.documentElement.clientHeight;
-      let windowWidth = document.documentElement.clientWidth;
+      let windowHeight = globalThis.document.documentElement.clientHeight;
+      let windowWidth = globalThis.document.documentElement.clientWidth;
       let topVisible = coords.top > 0 && coords.top < windowHeight;
       let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
       let leftVisible = coords.left > 0 && coords.left < windowWidth;
@@ -6292,11 +6292,11 @@
       return this;
     }
     fullScreen(set = true, e) {
-      if (set) this.element.requestFullscreen(e);else document.exitFullscreen();
+      if (set) this.element.requestFullscreen(e);else globalThis.document.exitFullscreen();
       return this;
     }
     toggleFullScreen(e) {
-      if (!document.fullscreenElement) this.element.requestFullscreen(e);else document.exitFullscreen();
+      if (!globalThis.document.fullscreenElement) this.element.requestFullscreen(e);else globalThis.document.exitFullscreen();
       return this;
     }
     // resizeObserver(calback) {
@@ -9610,7 +9610,7 @@
   const App = (...UIElement) => new ZikoUIApp().append(...UIElement);
 
   const __init__ = () => document.documentElement.setAttribute("data-engine", "zikojs");
-  if (document) {
+  if (globalThis?.document) {
     document.addEventListener("DOMContentLoaded", __init__);
     document.removeEventListener("DOMContentLoaded", __init__);
   }
