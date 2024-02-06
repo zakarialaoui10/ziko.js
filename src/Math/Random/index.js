@@ -2,7 +2,7 @@
 import{Complex}from"../Complex/index.js"
 import { Utils } from "../Utils/index.js";
 import{Base}from"../Discret/index.js"
-import {  matrix } from "../Matrix/index.js";
+import { matrix } from "../Matrix/index.js";
 class Random {
     static float(a = 1, b) {
         return b ? Math.random() * (b - a) + a : a * Math.random();
