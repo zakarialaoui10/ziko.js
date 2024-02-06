@@ -1,6 +1,7 @@
 import { Complex } from "../Complex/index.js";
 import { mapfun } from "../Utils/mapfun.js";
 import { min,max }from "../Statistics/functions.js";
+import { gamma } from "../Calculus/index.js";
 export const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),
@@ -23,13 +24,13 @@ export const Fixed={
 
 
 }
-function abs(...x){
+const abs=(...x)=>{
     return mapfun(Math.abs,...x);
 }
-function sqrt(...x){
+const sqrt=(...x)=>{
     return mapfun(Math.sqrt,...x);
 }
-function pow(x,n){
+const pow=(x,n)=>{
     if(typeof x === "number"){
         if(typeof n === "number")return Math.pow(x,n);
         else if(n instanceof Complex)return Complex.fromExpo(x**n.a,n.b*ln(x))
@@ -54,7 +55,7 @@ function pow(x,n){
         }
     }
 }
-function sqrtn(x,n){
+const sqrtn=(x,n)=>{
     if(typeof x === "number"){
         if(typeof n === "number")return Math.pow(x,1/n);
         else return mapfun(a=>sqrtn(x,a),...n);
@@ -74,80 +75,80 @@ function sqrtn(x,n){
         }
     }
 }
-function e(...x){
+const e=(...x)=>{
     return mapfun(Math.exp,...x);
 }
-function ln(...x){
+const ln=(...x)=>{
     return mapfun(Math.log,...x);
 }
-function cos(...x){
+const cos=(...x)=>{
     return mapfun(Fixed.cos,...x);
 }
-function sin(...x){
+const sin=(...x)=>{
     return mapfun(Fixed.sin,...x);
 }
-function tan(...x){
+const tan=(...x)=>{
     return mapfun(Fixed.tan,...x);
 }
-function sec(...x){
+const sec=(...x)=>{
     return mapfun(Fixed.sec,...x);
 }
-function sinc(...x){
+const sinc=(...x)=>{
     return mapfun(Fixed.sinc,...x)
 }
-function csc(...x){
+const csc=(...x)=>{
     return mapfun(Fixed.csc,...x);
 }
-function cot(...x){
+const cot=(...x)=>{
     return mapfun(Fixed.cot,...x);
 }
-function acos(...x){
+const acos=(...x)=>{
     return mapfun(Fixed.acos,...x);
 }
-function asin(...x){
+const asin=(...x)=>{
     return mapfun(Fixed.asin,...x);
 }
-function atan(...x){
+const atan=(...x)=>{
     return mapfun(Fixed.atan,...x);
 }
-function acot(...x){
+const acot=(...x)=>{
     return mapfun(Fixed.acot,...x);
 }
-function cosh(...x){
+const cosh=(...x)=>{
     return mapfun(Fixed.cosh,...x);
 }
-function sinh(...x){
+const sinh=(...x)=>{
     return mapfun(Fixed.sinh,...x);
 }
-function tanh(...x){
+const tanh=(...x)=>{
     return mapfun(Fixed.tanh,...x);
 }
-function coth(...x){
+const coth=(...x)=>{
     return mapfun(Fixed.coth,...x);
 }
-function acosh(...x){
+const acosh=(...x)=>{
     return mapfun(Fixed.acosh,...x);
 }
-function asinh(...x){
+const asinh=(...x)=>{
     return mapfun(Fixed.asinh,...x);
 }
-function atanh(...x){
+const atanh=(...x)=>{
     return mapfun(Fixed.atanh,...x);
 }
-function ceil(...x){
+const ceil=(...x)=>{
     return mapfun(Math.ceil,...x);
 }
-function floor(...x){
+const floor=(...x)=>{
     return mapfun(Math.floor,...x);
 }
-function round(...x){
+const round=(...x)=>{
     return mapfun(Math.round,...x);
 }
-// function atan2(...x){
+// const atan2=(...x)=>{
 //     const n=x.pop();
 //     return mapfun(a=>Math.atan2(a,n),...x)
 // }
-function atan2(x,y,rad=true){
+const atan2=(x,y,rad=true)=>{
     if(typeof x === "number"){
         if(typeof y === "number")return rad?Math.atan2(x,y):Math.atan2(x,y)*180/Math.PI;
         else return mapfun(a=>atan2(x,a,rad),...y);
@@ -167,7 +168,7 @@ function atan2(x,y,rad=true){
         }
     }
 }
-function fact(...x){
+const fact=(...x)=>{
     return mapfun(n=> {
         let i,
         y = 1;
@@ -177,10 +178,10 @@ function fact(...x){
         return y;
     },...x);
 } 
-function sign(...x){
+const sign=(...x)=>{
     return mapfun(Math.sign,...x);
 }
-function sig(...x){
+const sig=(...x)=>{
     return mapfun(n=>1/(1+e(-n)),...x);
 }
 const hypot=(...x)=>{
@@ -226,4 +227,5 @@ export{
     hypot,
     sig,
     atan2,
+    gamma
   };

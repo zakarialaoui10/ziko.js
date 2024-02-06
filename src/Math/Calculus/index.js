@@ -1,0 +1,3 @@
+export { 
+    gamma
+ } from "./gamma";
