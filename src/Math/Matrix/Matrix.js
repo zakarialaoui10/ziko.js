@@ -4,12 +4,13 @@ import{
     min,
     max,
   } from "../Functions/index.js"
-import { Utils } from "../Utils/index.js";
-import { Complex } from "../Complex/index.js";
+import {Utils,mapfun} from "../Utils/index.js";
+import {Complex } from "../Complex/index.js";
 import {Random} from "../Random/index.js"
 import { 
     luDecomposition,
-    qrDecomposition
+    qrDecomposition,
+    choleskyDecomposition
  } from "./Decomposition.js";
 class Matrix extends AbstractZikoMath{
     constructor(rows, cols, element = [] ) {
@@ -545,11 +546,42 @@ class Matrix extends AbstractZikoMath{
             U
         }
     }
+    static LU(...M){
+        const Decomposition=M.map(n=>n.clone.LU());
+        return Decomposition.length===1?Decomposition[0]:Decomposition;
+    }
     QR(){
         const [Q,R]=qrDecomposition(this);
         return {
             Q,
             R
+        }
+    }
+    static QR(...M){
+        const Decomposition=M.map(n=>n.clone.QR());
+        return Decomposition.length===1?Decomposition[0]:Decomposition;
+    }
+    CHOLESKY(){
+        return {
+            L:choleskyDecomposition(this)
+        }
+    }
+    static CHOLESKY(...M){
+        const Decomposition=M.map(n=>n.clone.CHOLESKY());
+        return Decomposition.length===1?Decomposition[0]:Decomposition;
+    }
+    get decomposition(){
+        return{
+            LU:()=>this.LU(),
+            QR:()=>this.QR(),
+            CHOLESKY:()=>this.CHOLESKY()
+        }
+    }
+    static get decomposition(){
+        return{
+            LU:(...M)=>Matrix.LU(...M),
+            QR:(...M)=>Matrix.QR(...M),
+            CHOLESKY:(...M)=>Matrix.CHOLESKY(...M)
         }
     }
     toTable() {

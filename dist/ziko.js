@@ -1053,6 +1053,25 @@
     }
     return [Q, R].map(n => new Matrix(n));
   };
+  const choleskyDecomposition = matrix => {
+    if (matrix instanceof Matrix) matrix = matrix.arr;
+    const n = matrix.length;
+    const L = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j <= i; j++) {
+        let sum = 0;
+        for (let k = 0; k < j; k++) {
+          sum += L[i][k] * L[j][k];
+        }
+        if (i === j) {
+          L[i][j] = Math.sqrt(matrix[i][i] - sum);
+        } else {
+          L[i][j] = 1.0 / L[j][j] * (matrix[i][j] - sum);
+        }
+      }
+    }
+    return new Matrix(L);
+  };
 
   class Matrix extends AbstractZikoMath {
     constructor(rows, cols, element = []) {
@@ -1582,11 +1601,42 @@
         U
       };
     }
+    static LU(...M) {
+      const Decomposition = M.map(n => n.clone.LU());
+      return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
+    }
     QR() {
       const [Q, R] = qrDecomposition(this);
       return {
         Q,
         R
+      };
+    }
+    static QR(...M) {
+      const Decomposition = M.map(n => n.clone.QR());
+      return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
+    }
+    CHOLESKY() {
+      return {
+        L: choleskyDecomposition(this)
+      };
+    }
+    static CHOLESKY(...M) {
+      const Decomposition = M.map(n => n.clone.CHOLESKY());
+      return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
+    }
+    get decomposition() {
+      return {
+        LU: () => this.LU(),
+        QR: () => this.QR(),
+        CHOLESKY: () => this.CHOLESKY()
+      };
+    }
+    static get decomposition() {
+      return {
+        LU: (...M) => Matrix.LU(...M),
+        QR: (...M) => Matrix.QR(...M),
+        CHOLESKY: (...M) => Matrix.CHOLESKY(...M)
       };
     }
     toTable() {
@@ -9818,6 +9868,7 @@
   exports.cartesianProduct = cartesianProduct;
   exports.ceil = ceil;
   exports.checkbox = checkbox;
+  exports.choleskyDecomposition = choleskyDecomposition;
   exports.clamp = clamp$1;
   exports.complex = complex;
   exports.cos = cos;

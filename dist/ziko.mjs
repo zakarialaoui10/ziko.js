@@ -1047,6 +1047,25 @@ const qrDecomposition = matrix => {
   }
   return [Q, R].map(n => new Matrix(n));
 };
+const choleskyDecomposition = matrix => {
+  if (matrix instanceof Matrix) matrix = matrix.arr;
+  const n = matrix.length;
+  const L = new Array(n).fill(0).map(() => new Array(n).fill(0));
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j <= i; j++) {
+      let sum = 0;
+      for (let k = 0; k < j; k++) {
+        sum += L[i][k] * L[j][k];
+      }
+      if (i === j) {
+        L[i][j] = Math.sqrt(matrix[i][i] - sum);
+      } else {
+        L[i][j] = 1.0 / L[j][j] * (matrix[i][j] - sum);
+      }
+    }
+  }
+  return new Matrix(L);
+};
 
 class Matrix extends AbstractZikoMath {
   constructor(rows, cols, element = []) {
@@ -1576,11 +1595,42 @@ class Matrix extends AbstractZikoMath {
       U
     };
   }
+  static LU(...M) {
+    const Decomposition = M.map(n => n.clone.LU());
+    return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
+  }
   QR() {
     const [Q, R] = qrDecomposition(this);
     return {
       Q,
       R
+    };
+  }
+  static QR(...M) {
+    const Decomposition = M.map(n => n.clone.QR());
+    return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
+  }
+  CHOLESKY() {
+    return {
+      L: choleskyDecomposition(this)
+    };
+  }
+  static CHOLESKY(...M) {
+    const Decomposition = M.map(n => n.clone.CHOLESKY());
+    return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
+  }
+  get decomposition() {
+    return {
+      LU: () => this.LU(),
+      QR: () => this.QR(),
+      CHOLESKY: () => this.CHOLESKY()
+    };
+  }
+  static get decomposition() {
+    return {
+      LU: (...M) => Matrix.LU(...M),
+      QR: (...M) => Matrix.QR(...M),
+      CHOLESKY: (...M) => Matrix.CHOLESKY(...M)
     };
   }
   toTable() {
@@ -9734,4 +9784,4 @@ function RemoveAll() {
   Data.ExtractAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

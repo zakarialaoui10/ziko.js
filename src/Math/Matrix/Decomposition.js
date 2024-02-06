@@ -60,7 +60,31 @@ const qrDecomposition=matrix=>{
     }
     return [Q, R].map(n=>new Matrix(n));
 }
+
+const choleskyDecomposition=matrix=>{
+    if(matrix instanceof Matrix)matrix=matrix.arr;
+    const n = matrix.length;
+    const L = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j <= i; j++) {
+            let sum = 0;
+            for (let k = 0; k < j; k++) {
+                sum += L[i][k] * L[j][k];
+            }
+
+            if (i === j) {
+                L[i][j] = Math.sqrt(matrix[i][i] - sum);
+            } else {
+                L[i][j] = (1.0 / L[j][j] * (matrix[i][j] - sum));
+            }
+        }
+    }
+    return new Matrix(L);
+}
+
+
 export { 
     luDecomposition,
-    qrDecomposition
+    qrDecomposition,
+    choleskyDecomposition
  }
