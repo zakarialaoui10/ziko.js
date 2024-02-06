@@ -5,6 +5,7 @@
   Date : 28/01/2024
   Git-Repo : https://github.com/zakarialaoui10/ziko.js
   Git-Wiki : https://github.com/zakarialaoui10/ziko.js/wiki
+  Released under MIT License
 */
 
 'use strict';
@@ -9553,9 +9554,8 @@ const useStyle = style => new ZikoUseStyle(style);
 
 class ZikoUIApp extends ZikoUIFlex {
   constructor() {
-    super();
+    super("main");
     this.root = document.documentElement;
-    //his.element=document.createElement("main");
     this.head = null;
     this.#init();
     this.seo = Seo(this);

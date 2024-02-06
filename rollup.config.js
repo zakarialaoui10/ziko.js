@@ -11,6 +11,7 @@ const banner= `
   Date : 28/01/2024
   Git-Repo : https://github.com/zakarialaoui10/ziko.js
   Git-Wiki : https://github.com/zakarialaoui10/ziko.js/wiki
+  Released under MIT License
 */
 `
 export default {

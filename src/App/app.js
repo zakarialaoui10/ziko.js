@@ -4,9 +4,8 @@ import { useTheme } from "./Apparence/Theme/index.js";
 import { useStyle } from "./Apparence/index.js";
 class ZikoUIApp extends ZikoUIFlex{
     constructor(){
-        super();
+        super("main");
         this.root=document.documentElement;
-        //his.element=document.createElement("main");
         this.head=null;
         this.#init();
         this.seo=Seo(this);
