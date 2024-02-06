@@ -1,2 +1,3 @@
 export * from "./Matrix.js"
-// export * from "./Utils.js"
+export * from "./Decomposition.js"
+export * from "./LinearSystem.js"

@@ -1700,15 +1700,16 @@ function InverseMatrixe(M) {
   }
   return I;
 }
+const matrix = (r, c, element) => new Matrix(r, c, element);
+const matrix2 = (...element) => new Matrix(2, 2, element);
+const matrix3 = (...element) => new Matrix(3, 3, element);
+const matrix4 = (...element) => new Matrix(4, 4, element);
+
 class LinearSystem {
   static resolve(A, B) {
     return A.inv.dot(Matrix.fromVector(B)).arr.flat(1).map(n => +n.toFixed(10));
   }
 }
-const matrix = (r, c, element) => new Matrix(r, c, element);
-const matrix2 = (...element) => new Matrix(2, 2, element);
-const matrix3 = (...element) => new Matrix(3, 3, element);
-const matrix4 = (...element) => new Matrix(4, 4, element);
 
 const mapfun = (fun, ...X) => {
   const Y = X.map(x => {
@@ -9871,6 +9872,7 @@ exports.linspace = linspace;
 exports.ln = ln;
 exports.logspace = logspace;
 exports.loop = loop;
+exports.luDecomposition = luDecomposition;
 exports.map = map$1;
 exports.mapfun = mapfun;
 exports.markdown2html = markdown2html;
@@ -9891,6 +9893,7 @@ exports.pgcd = pgcd;
 exports.pow = pow;
 exports.ppcm = ppcm;
 exports.prod = prod;
+exports.qrDecomposition = qrDecomposition;
 exports.rad2deg = rad2deg;
 exports.radio = radio;
 exports.round = round;
