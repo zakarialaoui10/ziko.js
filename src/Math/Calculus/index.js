@@ -1,2 +1,1 @@
-export * from "./gamma.js"
-export * from "./bessel.js"
+export * from "./specialfunc.js"

@@ -1,7 +1,7 @@
 import { Complex } from "../Complex/index.js";
 import { mapfun } from "../Utils/mapfun.js";
 import { min,max }from "../Statistics/functions.js";
-import { gamma , bessel } from "../Calculus/index.js";
+import { gamma ,bessel ,beta } from "../Calculus/index.js";
 export const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),
@@ -228,5 +228,6 @@ export{
     sig,
     atan2,
     gamma,
-    bessel
+    bessel,
+    beta
   };
