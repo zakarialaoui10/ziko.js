@@ -4,7 +4,7 @@ import{
     min,
     max,
   } from "../Functions/index.js"
-import {Utils,mapfun} from "../Utils/index.js";
+import {Utils} from "../Utils/index.js";
 import {Complex } from "../Complex/index.js";
 import {Random} from "../Random/index.js"
 import { 

@@ -1,3 +1,2 @@
-export { 
-    gamma
- } from "./gamma";
+export * from "./gamma.js"
+export * from "./bessel.js"
