@@ -1,8 +1,6 @@
-import { Random } from "../../../Math/Random";
-
-class ZikoGlobalsStyle{
-    constructor(style){
-      this.id="Ziko-Style-"+Random.string(10);
+class ZikoUseStyle{
+    constructor(style,id=0){
+      this.id="Ziko-Style-"+id;
       this.use(style);
       this.keys=new Set();
       this.styles={
@@ -11,7 +9,7 @@ class ZikoGlobalsStyle{
         }
       }
     }
-    get currentStyle(){
+    get current(){
       return [...this.keys].reduce((key, value) => {
         key[value] = `var(--${value}-${this.id})`;
         return key;
@@ -52,5 +50,5 @@ class ZikoGlobalsStyle{
       return this;
     }
   }  
-const Style=(style)=>new ZikoGlobalsStyle(style)
-export {Style}
+const useStyle=id=>style=>new ZikoUseStyle(style,id)
+export {useStyle}

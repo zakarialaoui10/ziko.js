@@ -1,16 +1,15 @@
 import LightThemes from "./light";
 import DarkThemes from "./dark";
-import { Random } from "../../../Math/Random";
-const AllThemes={
+const Themes={
     ...LightThemes,
     ...DarkThemes
 }
-class ZikoGlobalsTheme{
-  constructor(theme){
-    this.id="Ziko-Theme-"+Random.string(10);
+class ZikoUseTheme{
+  constructor(theme,id=0){
+    this.id="Ziko-Theme-"+id;
     this.use(theme)
   }
-  get currentTheme(){
+  get current(){
     const colorNames = [
       'background',
       'currentLine',
@@ -32,17 +31,17 @@ class ZikoGlobalsTheme{
 
 }
   useThemeIndex(index){
-    const keys=Object.keys(AllThemes);
-        for(let a in AllThemes[keys[index]]){
-            document.documentElement.style.setProperty(`--${a}-${this.id}`, AllThemes[keys[index]][a]);
+    const keys=Object.keys(Themes);
+        for(let a in Themes[keys[index]]){
+            document.documentElement.style.setProperty(`--${a}-${this.id}`, Themes[keys[index]][a]);
         }
         return this;
   }
   useThemeName(str){
     str=str.toLowerCase()
-    const AllThemes_With_Lower_Case=Object.fromEntries(Object.entries(AllThemes).map(n=>[n[0].toLowerCase(),n[1]]))
-        for(let a in AllThemes_With_Lower_Case[str]){
-            document.documentElement.style.setProperty(`--${a}-${this.id}`, AllThemes_With_Lower_Case[str][a]);
+    const Themes_With_Lower_Case=Object.fromEntries(Object.entries(Themes).map(n=>[n[0].toLowerCase(),n[1]]))
+        for(let a in Themes_With_Lower_Case[str]){
+            document.documentElement.style.setProperty(`--${a}-${this.id}`, Themes_With_Lower_Case[str][a]);
         }
         return this;
   }
@@ -59,10 +58,10 @@ class ZikoGlobalsTheme{
     return this;
   }
 }  
-const Theme=(theme=0)=>new ZikoGlobalsTheme(theme)
+const useTheme=(id=0)=>(theme=0)=>new ZikoUseTheme(theme,id)
 export {
-    Theme,
-    AllThemes,
+    useTheme,
+    Themes,
     LightThemes,
     DarkThemes,
 };

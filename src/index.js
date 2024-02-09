@@ -8,9 +8,10 @@ import Multi from "./Worker/index.js";
 import {SPA} from "./App/Router/index.js";
 import ALL_UI_ELEMENTS from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
-import { App } from "./App";
+import { App , Globals } from "./App";
 const Ziko={
     App,
+    Globals,
     Math,
     UI,
     Time,
@@ -59,5 +60,6 @@ export {
  export * from "./Graphics/index.js";
  export * from "./Time"
  export * from "./Data"
+ export * from "./App"
 
 

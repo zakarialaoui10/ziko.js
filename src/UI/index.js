@@ -1,4 +1,3 @@
-import { Themes } from "../App/Apparence/Theme/index.js";
 import {
     text,
     p,
@@ -66,7 +65,6 @@ import{
     } from "./Semantic/index.js";
 import { Table } from "./Table/index.js";
 const UI={
-    Themes,
     ZikoHtml,
     text,
     p,
