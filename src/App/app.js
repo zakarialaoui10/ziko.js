@@ -1,7 +1,7 @@
 import { ZikoUIFlex } from "../UI/CustomElement/Flex.js";
 import { Seo } from "./Seo/index.js";
-import { useTheme } from "./Apparence/Theme/index.js";
-import { useStyle } from "./Apparence/index.js";
+import { useTheme } from "./Global/Theme/index.js";
+import { useStyle } from "./Global/index.js";
 class ZikoUIApp extends ZikoUIFlex{
     constructor(){
         super("main");
