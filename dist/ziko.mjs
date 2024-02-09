@@ -339,12 +339,8 @@ const Fixed = {
   asinh: x => +Math.asinh(x).toFixed(15),
   atanh: x => +Math.atanh(x).toFixed(15)
 };
-const abs = (...x) => {
-  return mapfun(Math.abs, ...x);
-};
-const sqrt = (...x) => {
-  return mapfun(Math.sqrt, ...x);
-};
+const abs = (...x) => mapfun(Math.abs, ...x);
+const sqrt = (...x) => mapfun(Math.sqrt, ...x);
 const pow = (x, n) => {
   if (typeof x === "number") {
     if (typeof n === "number") return Math.pow(x, n);else if (n instanceof Complex) return Complex.fromExpo(x ** n.a, n.b * ln(x));else return mapfun(a => pow(x, a), ...n);
@@ -375,79 +371,29 @@ const sqrtn = (x, n) => {
     }
   }
 };
-const e = (...x) => {
-  return mapfun(Math.exp, ...x);
-};
-const ln = (...x) => {
-  return mapfun(Math.log, ...x);
-};
-const cos = (...x) => {
-  return mapfun(Fixed.cos, ...x);
-};
-const sin = (...x) => {
-  return mapfun(Fixed.sin, ...x);
-};
-const tan = (...x) => {
-  return mapfun(Fixed.tan, ...x);
-};
-const sec = (...x) => {
-  return mapfun(Fixed.sec, ...x);
-};
-const sinc = (...x) => {
-  return mapfun(Fixed.sinc, ...x);
-};
-const csc = (...x) => {
-  return mapfun(Fixed.csc, ...x);
-};
-const cot = (...x) => {
-  return mapfun(Fixed.cot, ...x);
-};
-const acos = (...x) => {
-  return mapfun(Fixed.acos, ...x);
-};
-const asin = (...x) => {
-  return mapfun(Fixed.asin, ...x);
-};
-const atan = (...x) => {
-  return mapfun(Fixed.atan, ...x);
-};
-const acot = (...x) => {
-  return mapfun(Fixed.acot, ...x);
-};
-const cosh = (...x) => {
-  return mapfun(Fixed.cosh, ...x);
-};
-const sinh = (...x) => {
-  return mapfun(Fixed.sinh, ...x);
-};
-const tanh = (...x) => {
-  return mapfun(Fixed.tanh, ...x);
-};
-const coth = (...x) => {
-  return mapfun(Fixed.coth, ...x);
-};
-const acosh = (...x) => {
-  return mapfun(Fixed.acosh, ...x);
-};
-const asinh = (...x) => {
-  return mapfun(Fixed.asinh, ...x);
-};
-const atanh = (...x) => {
-  return mapfun(Fixed.atanh, ...x);
-};
-const ceil = (...x) => {
-  return mapfun(Math.ceil, ...x);
-};
-const floor = (...x) => {
-  return mapfun(Math.floor, ...x);
-};
-const round = (...x) => {
-  return mapfun(Math.round, ...x);
-};
-// const atan2=(...x)=>{
-//     const n=x.pop();
-//     return mapfun(a=>Math.atan2(a,n),...x)
-// }
+const e = (...x) => mapfun(Math.exp, ...x);
+const ln = (...x) => mapfun(Math.log, ...x);
+const cos = (...x) => mapfun(Fixed.cos, ...x);
+const sin = (...x) => mapfun(Fixed.sin, ...x);
+const tan = (...x) => mapfun(Fixed.tan, ...x);
+const sec = (...x) => mapfun(Fixed.sec, ...x);
+const sinc = (...x) => mapfun(Fixed.sinc, ...x);
+const csc = (...x) => mapfun(Fixed.csc, ...x);
+const cot = (...x) => mapfun(Fixed.cot, ...x);
+const acos = (...x) => mapfun(Fixed.acos, ...x);
+const asin = (...x) => mapfun(Fixed.asin, ...x);
+const atan = (...x) => mapfun(Fixed.atan, ...x);
+const acot = (...x) => mapfun(Fixed.acot, ...x);
+const cosh = (...x) => mapfun(Fixed.cosh, ...x);
+const sinh = (...x) => mapfun(Fixed.sinh, ...x);
+const tanh = (...x) => mapfun(Fixed.tanh, ...x);
+const coth = (...x) => mapfun(Fixed.coth, ...x);
+const acosh = (...x) => mapfun(Fixed.acosh, ...x);
+const asinh = (...x) => mapfun(Fixed.asinh, ...x);
+const atanh = (...x) => mapfun(Fixed.atanh, ...x);
+const ceil = (...x) => mapfun(Math.ceil, ...x);
+const floor = (...x) => mapfun(Math.floor, ...x);
+const round = (...x) => mapfun(Math.round, ...x);
 const atan2 = (x, y, rad = true) => {
   if (typeof x === "number") {
     if (typeof y === "number") return rad ? Math.atan2(x, y) : Math.atan2(x, y) * 180 / Math.PI;else return mapfun(a => atan2(x, a, rad), ...y);
@@ -466,20 +412,14 @@ const atan2 = (x, y, rad = true) => {
     }
   }
 };
-const fact = (...x) => {
-  return mapfun(n => {
-    let i,
-      y = 1;
-    if (n == 0) y = 1;else if (n > 0) for (i = 1; i <= n; i++) y *= i;else y = NaN;
-    return y;
-  }, ...x);
-};
-const sign = (...x) => {
-  return mapfun(Math.sign, ...x);
-};
-const sig = (...x) => {
-  return mapfun(n => 1 / (1 + e(-n)), ...x);
-};
+const fact = (...x) => mapfun(n => {
+  let i,
+    y = 1;
+  if (n == 0) y = 1;else if (n > 0) for (i = 1; i <= n; i++) y *= i;else y = NaN;
+  return y;
+}, ...x);
+const sign = (...x) => mapfun(Math.sign, ...x);
+const sig = (...x) => mapfun(n => 1 / (1 + e(-n)), ...x);
 const hypot = (...x) => {
   if (x.every(n => typeof n === "number")) return Math.hypot(...x);
   if (x.every(n => n instanceof Array)) return mapfun(Math.hypot, ...x);
