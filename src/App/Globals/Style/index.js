@@ -1,6 +1,6 @@
 import { Random } from "../../../Math/Random";
 
-class ZikoUseStyle{
+class ZikoGlobalsStyle{
     constructor(style){
       this.id="Ziko-Style-"+Random.string(10);
       this.use(style);
@@ -52,5 +52,5 @@ class ZikoUseStyle{
       return this;
     }
   }  
-const useStyle=(style)=>new ZikoUseStyle(style)
-export {useStyle}
+const Style=(style)=>new ZikoGlobalsStyle(style)
+export {Style}

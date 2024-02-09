@@ -1,7 +1,7 @@
 import { ZikoUIFlex } from "../UI/CustomElement/Flex.js";
 import { Seo } from "./Seo/index.js";
-import { useTheme } from "./Global/Theme/index.js";
-import { useStyle } from "./Global/index.js";
+// import { useTheme } from "./Hooks/Theme/index.js";
+// import { useStyle } from "./Hooks/index.js";
 class ZikoUIApp extends ZikoUIFlex{
     constructor(){
         super("main");
@@ -34,28 +34,28 @@ class ZikoUIApp extends ZikoUIFlex{
     description(){
 
     }
-    get current(){
-        return {
-            theme:this._theme?.currentTheme,
-            style:this._style?.currentStyle
-        }
-    }
-    useTheme(theme){
-        if(!this._theme)this._theme=useTheme(theme);
-        this._theme.use(theme);
-        return this;
-    }
-    initStyle(styles){
-        if(!this._style)this._style=useStyle();
-        this._style.init(styles);
-        return this;
-    }
-    useStyle(usedStyle,styles){
-        if(!this._style)this._style=useStyle();
-        if(styles)this._style.add(styles);
-        this._style.use(usedStyle);
-        return this;
-    }
+    // get current(){
+    //     return {
+    //         theme:this._theme?.currentTheme,
+    //         style:this._style?.currentStyle
+    //     }
+    // }
+    // useTheme(theme){
+    //     if(!this._theme)this._theme=useTheme(theme);
+    //     this._theme.use(theme);
+    //     return this;
+    // }
+    // initStyle(styles){
+    //     if(!this._style)this._style=useStyle();
+    //     this._style.init(styles);
+    //     return this;
+    // }
+    // useStyle(usedStyle,styles){
+    //     if(!this._style)this._style=useStyle();
+    //     if(styles)this._style.add(styles);
+    //     this._style.use(usedStyle);
+    //     return this;
+    // }
 }
 const App=(...UIElement)=>new ZikoUIApp().append(...UIElement)
 export {App};

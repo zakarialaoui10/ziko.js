@@ -7,3 +7,6 @@ export{
     App,
     __init__
 } from "./app.js"
+export { 
+    Globals
+} from "./Globals"
