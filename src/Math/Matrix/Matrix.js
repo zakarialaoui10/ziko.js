@@ -374,6 +374,9 @@ class Matrix extends AbstractZikoMath{
     static slice(m1,r0=0, c0=0, r1=this.rows-1, c1=this.cols-1) {
         return m1.slice(r0, c0, r1, c1);
     }
+    splice(r0,c0,deleteCount,...items){
+        
+    }
     getRows(ri, rf = ri + 1) {
         return this.slice(ri, 0, rf, this.cols);
     }
@@ -539,42 +542,42 @@ class Matrix extends AbstractZikoMath{
         matrix.arr = data.arr;
         return matrix;
     }
-    LU(){
+    DecompositionLU(){
         const [L,U]=luDecomposition(this);
         return {
             L,
             U
         }
     }
-    static LU(...M){
+    static DecompositionLU(...M){
         const Decomposition=M.map(n=>n.clone.LU());
         return Decomposition.length===1?Decomposition[0]:Decomposition;
     }
-    QR(){
+    DecompositionQR(){
         const [Q,R]=qrDecomposition(this);
         return {
             Q,
             R
         }
     }
-    static QR(...M){
-        const Decomposition=M.map(n=>n.clone.QR());
+    static DecompositionQR(...M){
+        const Decomposition=M.map(n=>n.clone.DecompositionQr());
         return Decomposition.length===1?Decomposition[0]:Decomposition;
     }
-    CHOLESKY(){
+    DecompositionCholesky(){
         return {
             L:choleskyDecomposition(this)
         }
     }
-    static CHOLESKY(...M){
-        const Decomposition=M.map(n=>n.clone.CHOLESKY());
+    static DecompositionCholesky(...M){
+        const Decomposition=M.map(n=>n.clone.DecompositionCholesky());
         return Decomposition.length===1?Decomposition[0]:Decomposition;
     }
     get decomposition(){
         return{
-            LU:()=>this.LU(),
-            QR:()=>this.QR(),
-            CHOLESKY:()=>this.CHOLESKY()
+            LU:()=>this.DecompositionLU(),
+            QR:()=>this.DecompositionQR(),
+            Cholesky:()=>this.DecompositionCholesky()
         }
     }
     static get decomposition(){

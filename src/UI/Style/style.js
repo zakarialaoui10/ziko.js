@@ -297,7 +297,8 @@ class ZikoUIElementStyle{
         this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
         return this;
     }
-    #applyTransformMatrix(transformMatrix,t){
+    #applyTransformMatrix(t){
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
         this.style({
             transform: `matrix3d(${transformMatrix})`,
             "-webkit-transform": `matrix3d(${transformMatrix})`,
@@ -311,88 +312,99 @@ class ZikoUIElementStyle{
         this.cache.transformation.matrix.set(3,0,x)
         this.cache.transformation.matrix.set(3,1,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     translateX(x, t = 0) {
         this.cache.transformation.matrix.set(3,0,x)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     translateY(y, t = 0) {
         this.cache.transformation.matrix.set(3,1,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     scale(x, y = x, t = 0) {
         this.cache.transformation.matrix.set(0,0,x)
         this.cache.transformation.matrix.set(1,1,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     scaleX(x = 1 , t = 0) {
         this.cache.transformation.matrix.set(0,0,x)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     scaleY(y = 1, t = 0) {
         this.cache.transformation.matrix.set(1,1,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     skew(x, y = x, t = 0) {
         this.cache.transformation.matrix.set(0,1,x)
         this.cache.transformation.matrix.set(1,0,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     skewX(x = 1 , t = 0) {
         this.cache.transformation.matrix.set(0,1,x)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     skewY(y = 1, t = 0) {
         this.cache.transformation.matrix.set(1,0,y);
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(transformMatrix,t);
+        this.#applyTransformMatrix(t);
         return this;
     }
     rotateX(deg, t = 0) {
-        this.style({ transform: "rotateX(" + deg + "deg)" });
+        this.cache.transformation.matrix.set(1,1,cos(deg));
+        this.cache.transformation.matrix.set(1,2,-sin(deg));
+        this.cache.transformation.matrix.set(2,1,sin(deg));
+        this.cache.transformation.matrix.set(1,2,cos(deg));
+        this.#applyTransformMatrix(t);   
+        return this;
+    }
+    rotateY(deg, t = 0) {
+        this.cache.transformation.matrix.set(0,0,cos(deg));
+        this.cache.transformation.matrix.set(0,2,sin(deg));
+        this.cache.transformation.matrix.set(2,0,-sin(deg));
+        this.cache.transformation.matrix.set(2,2,cos(deg));
+        this.#applyTransformMatrix(t);   
+        return this;
+    }
+    rotateZ(deg, t = 0) {
+        this.cache.transformation.matrix.set(0,0,cos(deg));
+        this.cache.transformation.matrix.set(0,1,-sin(deg));
+        this.cache.transformation.matrix.set(1,0,sin(deg));
+        this.cache.transformation.matrix.set(1,1,cos(deg)); 
+        this.#applyTransformMatrix(t);  
         return this;
     }
     flipeX({ t = 1 } = {}) {
         this.cache.transformation.Flip[0] += 180;
         this.cache.transformation.Flip[0] %= 360;
-        this.style({
-          transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
-          transition: "all " + t + "s ease",
-        });
+        this.rotateX(this.cache.transformation.Flip[0],t);
         return this;
     }
     flipeY(t = 1) {
         this.cache.transformation.Flip[1] += 180 ;
         this.cache.transformation.Flip[1] %= 360;
-        this.style({
-          transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
-          transition: "all " + t + "s ease",
-        });
+        this.rotateY(this.cache.transformation.Flip[1],t);
         return this;
       }
     flipeZ(t = 1) {
         this.cache.transformation.Flip[2] += 180;
         this.cache.transformation.Flip[2] %= 360;
-        this.style({
-          transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
-          transition: "all " + t + "s ease",
-        });
+        this.rotateZ(this.cache.transformation.Flip[2],t);
         return this;
     }
     slideHeightIn(t = 1, h = this.h) {

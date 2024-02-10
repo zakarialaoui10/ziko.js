@@ -1418,6 +1418,7 @@ class Matrix extends AbstractZikoMath {
   static slice(m1, r0 = 0, c0 = 0, r1 = this.rows - 1, c1 = this.cols - 1) {
     return m1.slice(r0, c0, r1, c1);
   }
+  splice(r0, c0, deleteCount, ...items) {}
   getRows(ri, rf = ri + 1) {
     return this.slice(ri, 0, rf, this.cols);
   }
@@ -1580,42 +1581,42 @@ class Matrix extends AbstractZikoMath {
     matrix.arr = data.arr;
     return matrix;
   }
-  LU() {
+  DecompositionLU() {
     const [L, U] = luDecomposition(this);
     return {
       L,
       U
     };
   }
-  static LU(...M) {
+  static DecompositionLU(...M) {
     const Decomposition = M.map(n => n.clone.LU());
     return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
   }
-  QR() {
+  DecompositionQR() {
     const [Q, R] = qrDecomposition(this);
     return {
       Q,
       R
     };
   }
-  static QR(...M) {
-    const Decomposition = M.map(n => n.clone.QR());
+  static DecompositionQR(...M) {
+    const Decomposition = M.map(n => n.clone.DecompositionQr());
     return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
   }
-  CHOLESKY() {
+  DecompositionCholesky() {
     return {
       L: choleskyDecomposition(this)
     };
   }
-  static CHOLESKY(...M) {
-    const Decomposition = M.map(n => n.clone.CHOLESKY());
+  static DecompositionCholesky(...M) {
+    const Decomposition = M.map(n => n.clone.DecompositionCholesky());
     return Decomposition.length === 1 ? Decomposition[0] : Decomposition;
   }
   get decomposition() {
     return {
-      LU: () => this.LU(),
-      QR: () => this.QR(),
-      CHOLESKY: () => this.CHOLESKY()
+      LU: () => this.DecompositionLU(),
+      QR: () => this.DecompositionQR(),
+      Cholesky: () => this.DecompositionCholesky()
     };
   }
   static get decomposition() {
@@ -3435,7 +3436,8 @@ class ZikoUIElementStyle {
     this.cache.isFaddedOut ? this.fadeIn(t_in) : this.fadeOut(t_out);
     return this;
   }
-  #applyTransformMatrix(transformMatrix, t) {
+  #applyTransformMatrix(t) {
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
     this.style({
       transform: `matrix3d(${transformMatrix})`,
       "-webkit-transform": `matrix3d(${transformMatrix})`,
@@ -3450,64 +3452,82 @@ class ZikoUIElementStyle {
   translate(x, y = x, t = 0) {
     this.cache.transformation.matrix.set(3, 0, x);
     this.cache.transformation.matrix.set(3, 1, y);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   translateX(x, t = 0) {
     this.cache.transformation.matrix.set(3, 0, x);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   translateY(y, t = 0) {
     this.cache.transformation.matrix.set(3, 1, y);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   scale(x, y = x, t = 0) {
     this.cache.transformation.matrix.set(0, 0, x);
     this.cache.transformation.matrix.set(1, 1, y);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   scaleX(x = 1, t = 0) {
     this.cache.transformation.matrix.set(0, 0, x);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   scaleY(y = 1, t = 0) {
     this.cache.transformation.matrix.set(1, 1, y);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   skew(x, y = x, t = 0) {
     this.cache.transformation.matrix.set(0, 1, x);
     this.cache.transformation.matrix.set(1, 0, y);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   skewX(x = 1, t = 0) {
     this.cache.transformation.matrix.set(0, 1, x);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   skewY(y = 1, t = 0) {
     this.cache.transformation.matrix.set(1, 0, y);
-    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-    this.#applyTransformMatrix(transformMatrix, t);
+    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
     return this;
   }
   rotateX(deg, t = 0) {
-    this.style({
-      transform: "rotateX(" + deg + "deg)"
-    });
+    this.cache.transformation.matrix.set(1, 1, cos(deg));
+    this.cache.transformation.matrix.set(1, 2, -sin(deg));
+    this.cache.transformation.matrix.set(2, 1, sin(deg));
+    this.cache.transformation.matrix.set(1, 2, cos(deg));
+    this.#applyTransformMatrix(t);
+    return this;
+  }
+  rotateY(deg, t = 0) {
+    this.cache.transformation.matrix.set(0, 0, cos(deg));
+    this.cache.transformation.matrix.set(0, 2, sin(deg));
+    this.cache.transformation.matrix.set(2, 0, -sin(deg));
+    this.cache.transformation.matrix.set(2, 2, cos(deg));
+    this.#applyTransformMatrix(t);
+    return this;
+  }
+  rotateZ(deg, t = 0) {
+    this.cache.transformation.matrix.set(0, 0, cos(deg));
+    this.cache.transformation.matrix.set(0, 1, -sin(deg));
+    this.cache.transformation.matrix.set(1, 0, sin(deg));
+    this.cache.transformation.matrix.set(1, 1, cos(deg));
+    this.#applyTransformMatrix(t);
     return this;
   }
   flipeX({
@@ -3515,28 +3535,19 @@ class ZikoUIElementStyle {
   } = {}) {
     this.cache.transformation.Flip[0] += 180;
     this.cache.transformation.Flip[0] %= 360;
-    this.style({
-      transform: "rotateX(" + this.cache.transformation.Flip[0] + "deg)",
-      transition: "all " + t + "s ease"
-    });
+    this.rotateX(this.cache.transformation.Flip[0], t);
     return this;
   }
   flipeY(t = 1) {
     this.cache.transformation.Flip[1] += 180;
     this.cache.transformation.Flip[1] %= 360;
-    this.style({
-      transform: "rotateY(" + this.cache.transformation.Flip[1] + "deg)",
-      transition: "all " + t + "s ease"
-    });
+    this.rotateY(this.cache.transformation.Flip[1], t);
     return this;
   }
   flipeZ(t = 1) {
     this.cache.transformation.Flip[2] += 180;
     this.cache.transformation.Flip[2] %= 360;
-    this.style({
-      transform: "rotateZ(" + this.cache.transformation.Flip[2] + "deg)",
-      transition: "all " + t + "s ease"
-    });
+    this.rotateZ(this.cache.transformation.Flip[2], t);
     return this;
   }
   slideHeightIn(t = 1, h = this.h) {
