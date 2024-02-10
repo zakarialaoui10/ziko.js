@@ -97,7 +97,7 @@ class ZikoUIElement {
     return this;
   }
   size(width,height,{ target, maskVector } = {}){
-    this.st.style(width,height,{target,maskVector});
+    this.st.size(width,height,{target,maskVector});
     return this; 
   }
   get Width(){

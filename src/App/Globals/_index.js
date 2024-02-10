@@ -1,5 +1,5 @@
-import { useStyle } from "./Style";
-import { useTheme } from "./Theme";
+import { useStyle } from "./Style/_index";
+import { useTheme } from "./Theme/_index";
 const Globals={
     useStyle,
     useTheme,

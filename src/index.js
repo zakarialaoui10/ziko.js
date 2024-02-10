@@ -1,17 +1,16 @@
-import Math from "./Math/index.js";
-import UI from "./UI/index.js";
-import Time from "./Time/index.js";
-import Data from "./Data/index.js";
+import Math from "./Math";
+import UI from "./UI";
+import Time from "./Time";
+import Data from "./Data";
 import Events from "./Reactivity/Events";
-import Graphics from "./Graphics/index.js";
-import Multi from "./Worker/index.js";
-import {SPA} from "./App/Router/index.js";
+import Graphics from "./Graphics";
+import Multi from "./Worker";
+import {SPA} from "./App/Router";
 import ALL_UI_ELEMENTS from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
 import { App } from "./App";
 const Ziko={
     App,
-    Globals,
     Math,
     UI,
     Time,

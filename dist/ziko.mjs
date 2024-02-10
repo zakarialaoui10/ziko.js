@@ -4337,6 +4337,48 @@ const Events = {
   }
 };
 
+class ZikoIntersectionObserver {
+  constructor(UIElement, callback, {
+    threshold = 0,
+    margin = 0
+  } = {}) {
+    this.target = UIElement;
+    this.config = {
+      threshold,
+      margin
+    };
+    this.observer = new IntersectionObserver(entries => {
+      this.entrie = entries[0];
+      callback(this);
+    }, {
+      threshold: this.threshold
+    });
+  }
+  get ratio() {
+    return this.entrie.intersectionRatio;
+  }
+  get isIntersecting() {
+    return this.entrie.isIntersecting;
+  }
+  setThreshould(threshold) {
+    this.config.threshold = threshold;
+    return this;
+  }
+  setMargin(margin) {
+    margin = typeof margin === "number" ? margin + "px" : margin;
+    this.config.margin = margin;
+    return this;
+  }
+  start() {
+    this.observer.observe(this.target.element);
+    return this;
+  }
+  stop() {
+    return this;
+  }
+}
+const WatchIntersection = (UI, callback, config) => new ZikoIntersectionObserver(UI, callback, config);
+
 class ZikoResizeObserver {
   constructor(UIElement, callback) {
     this.target = UIElement;
@@ -4382,48 +4424,6 @@ class ZikoResizeObserver {
   }
 }
 const WatchSize = (UI, callback) => new ZikoResizeObserver(UI, callback);
-
-class ZikoIntersectionObserver {
-  constructor(UIElement, callback, {
-    threshold = 0,
-    margin = 0
-  } = {}) {
-    this.target = UIElement;
-    this.config = {
-      threshold,
-      margin
-    };
-    this.observer = new IntersectionObserver(entries => {
-      this.entrie = entries[0];
-      callback(this);
-    }, {
-      threshold: this.threshold
-    });
-  }
-  get ratio() {
-    return this.entrie.intersectionRatio;
-  }
-  get isIntersecting() {
-    return this.entrie.isIntersecting;
-  }
-  setThreshould(threshold) {
-    this.config.threshold = threshold;
-    return this;
-  }
-  setMargin(margin) {
-    margin = typeof margin === "number" ? margin + "px" : margin;
-    this.config.margin = margin;
-    return this;
-  }
-  start() {
-    this.observer.observe(this.target.element);
-    return this;
-  }
-  stop() {
-    return this;
-  }
-}
-const WatchIntersection = (UI, callback, config) => new ZikoIntersectionObserver(UI, callback, config);
 
 // import styleComposer from "./Style/index.js";
 class ZikoUIElement {
@@ -4509,7 +4509,7 @@ class ZikoUIElement {
     target,
     maskVector
   } = {}) {
-    this.st.style(width, height, {
+    this.st.size(width, height, {
       target,
       maskVector
     });
@@ -8206,7 +8206,6 @@ if (globalThis?.document) {
 
 const Ziko = {
   App,
-  Globals,
   Math: Math$1,
   UI: UI$1,
   Time,
