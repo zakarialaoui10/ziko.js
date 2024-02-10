@@ -1,5 +1,5 @@
-import styleComposer from "./Style/index.js";
-import { ZikoStyle } from "./Style/style.js";
+// import styleComposer from "./Style/index.js";
+import { ZikoStyle } from "./Style/index.js";
 import { 
   Pointer, 
   Key, 
@@ -22,7 +22,7 @@ class ZikoUIElement {
     this.target = globalThis.document.body;
     if (typeof element === "string") element = globalThis.document.createElement(element);
     this.element = element;
-    Object.assign(this, styleComposer.call(this));
+    // Object.assign(this, styleComposer.call(this));
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
       isRoot:false,
@@ -91,6 +91,14 @@ class ZikoUIElement {
     }
     else UI.element=this.element.cloneNode(true);
     return UI;
+  }
+  style(styles,{target = "parent", maskVector = null } = {}){
+    this.st.style(styles,{target,maskVector});
+    return this;
+  }
+  size(width,height,{ target, maskVector } = {}){
+    this.st.style(width,height,{target,maskVector});
+    return this; 
   }
   get Width(){
     return this.element.getBoundingClientRect().width;

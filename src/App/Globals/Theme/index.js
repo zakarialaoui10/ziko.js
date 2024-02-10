@@ -1,9 +1,8 @@
-import LightThemes from "./light";
-import DarkThemes from "./dark";
-const Themes={
-    ...LightThemes,
-    ...DarkThemes
-}
+import { 
+  LightThemes,
+  DarkThemes,
+  Themes
+ } from "../../Themes";
 class ZikoUseTheme{
   constructor(theme,id=0){
     this.id="Ziko-Theme-"+id;
@@ -61,7 +60,7 @@ class ZikoUseTheme{
 const useTheme=(id=0)=>(theme=0)=>new ZikoUseTheme(theme,id)
 export {
     useTheme,
-    Themes,
-    LightThemes,
-    DarkThemes,
+    // Themes,
+    // LightThemes,
+    // DarkThemes,
 };
