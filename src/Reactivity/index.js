@@ -5,5 +5,6 @@ import { Watch } from "./Observer/mutation.js";
 export{
     Watch,
     WatchSize,
-    WatchIntersection
+    WatchIntersection,
 }
+export * from "./State"
