@@ -116,22 +116,22 @@ export function styleComposer(){
       // },
       
       
-      hide:function({after, target, maskVector } = {}){
-        if(typeof after==="number")setTimeout(() => this.hide({target,maskVector}), after);
-        else {
-          this.cache.isHidden=true;
-          this.style({display:"none"},{target,maskVector});
-        }
-        return this;
-      },
-      show:function({after, target, maskVector } = {}){
-        if(typeof after==="number")setTimeout(() => this.show({target,maskVector}), after);
-        else {
-          this.cache.isHidden=false;
-          this.style({display:""},{target,maskVector});
-        }
-        return this;
-      },
+      // hide:function({after, target, maskVector } = {}){
+      //   if(typeof after==="number")setTimeout(() => this.hide({target,maskVector}), after);
+      //   else {
+      //     this.cache.isHidden=true;
+      //     this.style({display:"none"},{target,maskVector});
+      //   }
+      //   return this;
+      // },
+      // show:function({after, target, maskVector } = {}){
+      //   if(typeof after==="number")setTimeout(() => this.show({target,maskVector}), after);
+      //   else {
+      //     this.cache.isHidden=false;
+      //     this.style({display:""},{target,maskVector});
+      //   }
+      //   return this;
+      // },
       
       // cursor:function(type="pointer"){
       //   this.style({ cursor: type });

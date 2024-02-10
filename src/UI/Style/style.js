@@ -1,4 +1,5 @@
 import { style , addSuffixeToNumber } from "../Utils/index.js";
+import { Matrix,cos,sin} from "../../Math/index.js";
 class ZikoUIElementStyle{
     constructor(defaultStyle={}){
         this.target=null;
@@ -9,7 +10,13 @@ class ZikoUIElementStyle{
             isHidden:false,
             isFaddedOut:false,
             transformation:{
-                Flip:[0,0,0]
+                Flip:[0,0,0],
+                matrix:new Matrix([
+                    [1,0,0,0],
+                    [0,1,0,0],
+                    [0,0,1,0],
+                    [0,0,0,1]
+                ])
             }
         }
     }
@@ -290,34 +297,75 @@ class ZikoUIElementStyle{
         this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
         return this;
     }
-    translateX(px, t = 0) {
-        this.style({ transform: "translateX(" + px + "px)" });
+    #applyTransformMatrix(transformMatrix,t){
+        this.style({
+            transform: `matrix3d(${transformMatrix})`,
+            "-webkit-transform": `matrix3d(${transformMatrix})`,
+            "-moz-transform": `matrix3d(${transformMatrix})`, 
+            "-ms-transform": `matrix3d(${transformMatrix})`, 
+            "-o-transform": `matrix3d(${transformMatrix})` 
+        });
         if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
-        return this;
-    }
-    translateY(px, t = 0) {
-        this.style({ transform: "translateY(" + px + "px)" });
-        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
-        return this;
     }
     translate(x, y = x, t = 0) {
-        this.style({ transform: `translate( ${x}px , ${y}px )`});
-        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        this.cache.transformation.matrix.set(3,0,x)
+        this.cache.transformation.matrix.set(3,1,y)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    translateX(x, t = 0) {
+        this.cache.transformation.matrix.set(3,0,x)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    translateY(y, t = 0) {
+        this.cache.transformation.matrix.set(3,1,y)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    scale(x, y = x, t = 0) {
+        this.cache.transformation.matrix.set(0,0,x)
+        this.cache.transformation.matrix.set(1,1,y)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    scaleX(x = 1 , t = 0) {
+        this.cache.transformation.matrix.set(0,0,x)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    scaleY(y = 1, t = 0) {
+        this.cache.transformation.matrix.set(1,1,y)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    skew(x, y = x, t = 0) {
+        this.cache.transformation.matrix.set(0,1,x)
+        this.cache.transformation.matrix.set(1,0,y)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    skewX(x = 1 , t = 0) {
+        this.cache.transformation.matrix.set(0,1,x)
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
+        return this;
+    }
+    skewY(y = 1, t = 0) {
+        this.cache.transformation.matrix.set(1,0,y);
+        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transformMatrix,t);
         return this;
     }
     rotateX(deg, t = 0) {
         this.style({ transform: "rotateX(" + deg + "deg)" });
-        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
-        return this;
-    }
-    rotateY(deg, t = 0) {
-        this.style({ transform: "rotateY(" + deg + "deg)" });
-        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
-        return this;
-    }
-    rotateZ(deg, t = 0) {
-        this.style({ transform: "rotateZ(" + deg + "deg)" });
-        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
         return this;
     }
     flipeX({ t = 1 } = {}) {

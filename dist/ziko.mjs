@@ -2639,7 +2639,8 @@ function styleComposer() {
         });
       }
       return this;
-    },
+    }
+
     // // Box Model 
     // border:function(border = "1px solid red", { target, maskVector } = {}){
     //   this.style({border}, { target, maskVector });
@@ -2691,44 +2692,22 @@ function styleComposer() {
     //   return this;
     // },
 
-    hide: function ({
-      after,
-      target,
-      maskVector
-    } = {}) {
-      if (typeof after === "number") setTimeout(() => this.hide({
-        target,
-        maskVector
-      }), after);else {
-        this.cache.isHidden = true;
-        this.style({
-          display: "none"
-        }, {
-          target,
-          maskVector
-        });
-      }
-      return this;
-    },
-    show: function ({
-      after,
-      target,
-      maskVector
-    } = {}) {
-      if (typeof after === "number") setTimeout(() => this.show({
-        target,
-        maskVector
-      }), after);else {
-        this.cache.isHidden = false;
-        this.style({
-          display: ""
-        }, {
-          target,
-          maskVector
-        });
-      }
-      return this;
-    }
+    // hide:function({after, target, maskVector } = {}){
+    //   if(typeof after==="number")setTimeout(() => this.hide({target,maskVector}), after);
+    //   else {
+    //     this.cache.isHidden=true;
+    //     this.style({display:"none"},{target,maskVector});
+    //   }
+    //   return this;
+    // },
+    // show:function({after, target, maskVector } = {}){
+    //   if(typeof after==="number")setTimeout(() => this.show({target,maskVector}), after);
+    //   else {
+    //     this.cache.isHidden=false;
+    //     this.style({display:""},{target,maskVector});
+    //   }
+    //   return this;
+    // },
 
     // cursor:function(type="pointer"){
     //   this.style({ cursor: type });
@@ -2881,7 +2860,8 @@ class ZikoUIElementStyle {
       isHidden: false,
       isFaddedOut: false,
       transformation: {
-        Flip: [0, 0, 0]
+        Flip: [0, 0, 0],
+        matrix: new Matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
       }
     };
   }
@@ -3453,57 +3433,78 @@ class ZikoUIElementStyle {
     this.cache.isFaddedOut ? this.fadeIn(t_in) : this.fadeOut(t_out);
     return this;
   }
-  translateX(px, t = 0) {
+  #applyTransformMatrix(transformMatrix, t) {
     this.style({
-      transform: "translateX(" + px + "px)"
+      transform: `matrix3d(${transformMatrix})`,
+      "-webkit-transform": `matrix3d(${transformMatrix})`,
+      "-moz-transform": `matrix3d(${transformMatrix})`,
+      "-ms-transform": `matrix3d(${transformMatrix})`,
+      "-o-transform": `matrix3d(${transformMatrix})`
     });
     if (t != 0) this.style({
       transition: `transform ${t / 1000}s ease`
     });
-    return this;
-  }
-  translateY(px, t = 0) {
-    this.style({
-      transform: "translateY(" + px + "px)"
-    });
-    if (t != 0) this.style({
-      transition: `transform ${t / 1000}s ease`
-    });
-    return this;
   }
   translate(x, y = x, t = 0) {
-    this.style({
-      transform: `translate( ${x}px , ${y}px )`
-    });
-    if (t != 0) this.style({
-      transition: `transform ${t / 1000}s ease`
-    });
+    this.cache.transformation.matrix.set(3, 0, x);
+    this.cache.transformation.matrix.set(3, 1, y);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  translateX(x, t = 0) {
+    this.cache.transformation.matrix.set(3, 0, x);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  translateY(y, t = 0) {
+    this.cache.transformation.matrix.set(3, 1, y);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  scale(x, y = x, t = 0) {
+    this.cache.transformation.matrix.set(0, 0, x);
+    this.cache.transformation.matrix.set(1, 1, y);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  scaleX(x = 1, t = 0) {
+    this.cache.transformation.matrix.set(0, 0, x);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  scaleY(y = 1, t = 0) {
+    this.cache.transformation.matrix.set(1, 1, y);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  skew(x, y = x, t = 0) {
+    this.cache.transformation.matrix.set(0, 1, x);
+    this.cache.transformation.matrix.set(1, 0, y);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  skewX(x = 1, t = 0) {
+    this.cache.transformation.matrix.set(0, 1, x);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
+    return this;
+  }
+  skewY(y = 1, t = 0) {
+    this.cache.transformation.matrix.set(1, 0, y);
+    const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(transformMatrix, t);
     return this;
   }
   rotateX(deg, t = 0) {
     this.style({
       transform: "rotateX(" + deg + "deg)"
-    });
-    if (t != 0) this.style({
-      transition: `transform ${t / 1000}s ease`
-    });
-    return this;
-  }
-  rotateY(deg, t = 0) {
-    this.style({
-      transform: "rotateY(" + deg + "deg)"
-    });
-    if (t != 0) this.style({
-      transition: `transform ${t / 1000}s ease`
-    });
-    return this;
-  }
-  rotateZ(deg, t = 0) {
-    this.style({
-      transform: "rotateZ(" + deg + "deg)"
-    });
-    if (t != 0) this.style({
-      transition: `transform ${t / 1000}s ease`
     });
     return this;
   }
@@ -4799,10 +4800,6 @@ class ZikoUIElement {
       UI.append(...items);
     } else UI.element = this.element.cloneNode(true);
     return UI;
-    // return {
-    //   UI,
-    //   items
-    // }
   }
   get Width() {
     return this.element.getBoundingClientRect().width;
@@ -5147,94 +5144,84 @@ class ZikoUIElement {
       isVisible: topVisible || bottomVisible || rightVisible || leftVisible
     };
   }
-  toggleSlide() {}
-  scaleX(sc, t = 1) {
-    this.style({
-      transform: "scaleX(" + sc + ")",
-      transition: "all " + t + "s ease"
-    });
-    return this;
-  }
-  scaleY(sc, t = 1) {
-    this.style({
-      transform: "scaleY(" + sc + ")",
-      transition: "all " + t + "s ease"
-    });
-    return this;
-  }
-  skewX(deg, t = 1) {
-    this.style({
-      transform: "skewX(" + deg + "deg)",
-      transition: "all " + t + "s ease"
-    });
-    return this;
-  }
-  skewY(deg, t = 1) {
-    this.style({
-      transform: "skewY(" + deg + "deg)",
-      transition: "all " + t + "s ease"
-    });
-    return this;
-  }
-  skew(x, y, t = 1) {
-    this.style({
-      transform: "skew(" + x + "deg , " + y + "deg)",
-      transition: "all " + t + "s ease"
-    });
-    return this;
-  }
-  scale(x, y = x, t = 1) {
-    this.style({
-      transform: "scale(" + x + "," + y + ")",
-      transition: "all " + t + "s ease"
-    });
-    return this;
-  }
-  resize(n = 0) {
-    switch (n) {
-      case 0:
-        this.style({
-          resize: "none"
-        });
-        break;
-      case 1:
-        this.style({
-          resize: "horizontal"
-        });
-        break;
-      case 2:
-        this.style({
-          resize: "vertical"
-        });
-        break;
-      case 3:
-        this.style({
-          resize: "both"
-        });
-        break;
-      default:
-        this.style({
-          resize: n
-        });
+
+  // toggleSlide() {}
+
+  // scaleX(sc, t = 1) {
+  //   this.style({
+  //     transform: "scaleX(" + sc + ")",
+  //     transition: "all " + t + "s ease",
+  //   });
+  //   return this;
+  // }
+  // scaleY(sc, t = 1) {
+  //   this.style({
+  //     transform: "scaleY(" + sc + ")",
+  //     transition: "all " + t + "s ease",
+  //   });
+  //   return this;
+  // }
+  // skewX(deg, t = 1) {
+  //   this.style({
+  //     transform: "skewX(" + deg + "deg)",
+  //     transition: "all " + t + "s ease",
+  //   });
+  //   return this;
+  // }
+  // skewY(deg, t = 1) {
+  //   this.style({
+  //     transform: "skewY(" + deg + "deg)",
+  //     transition: "all " + t + "s ease",
+  //   });
+  //   return this;
+  // }
+  // skew(x, y, t = 1) {
+  //   this.style({
+  //     transform: "skew(" + x + "deg , " + y + "deg)",
+  //     transition: "all " + t + "s ease",
+  //   });
+  //   return this;
+  // }
+  // scale(x, y = x, t = 1) {
+  //   this.style({
+  //     transform: "scale(" + x + "," + y + ")",
+  //     transition: "all " + t + "s ease",
+  //   });
+  //   return this;
+  // }
+  // resize(n = 0) {
+  //   switch (n) {
+  //     case 0:
+  //       this.style({ resize: "none" });
+  //       break;
+  //     case 1:
+  //       this.style({ resize: "horizontal" });
+  //       break;
+  //     case 2:
+  //       this.style({ resize: "vertical" });
+  //       break;
+  //     case 3:
+  //       this.style({ resize: "both" });
+  //       break;
+  //     default:
+  //       this.style({ resize: n });
+  //   }
+  //   return this;
+  // }
+  // Glassmorphism(background = "rgba(255,255,255,0.1)", blur = "1px") {
+  //   this.style({ background: background, backdropFilter: blur });
+  //   return this;
+  // }
+  // Neumorphism(r = "50px", bg = "cyan", box = "13px -13px 49px #5d8fac") {
+  //   this.style({ borderRadius: r, background: bg, boxShadow: box });
+  //   return this;
+  // }
+
+  setFullScreen(set = true, e) {
+    if (!this.element.requestFullscreen) {
+      console.error("Fullscreen API is not supported in this browser.");
+      return this;
     }
-    return this;
-  }
-  Glassmorphism(background = "rgba(255,255,255,0.1)", blur = "1px") {
-    this.style({
-      background: background,
-      backdropFilter: blur
-    });
-    return this;
-  }
-  Neumorphism(r = "50px", bg = "cyan", box = "13px -13px 49px #5d8fac") {
-    this.style({
-      borderRadius: r,
-      background: bg,
-      boxShadow: box
-    });
-    return this;
-  }
-  fullScreen(set = true, e) {
     if (set) this.element.requestFullscreen(e);else globalThis.document.exitFullscreen();
     return this;
   }
@@ -5259,20 +5246,18 @@ class ZikoUIElement {
   //   );
   //   return observer.observe(this.element);
   // }
-  get coords() {
-    var rect = this.element.getBoundingClientRect();
-    var parent = {
-      cX: Math.floor(rect.left + (rect.right - rect.left) / 2),
-      cY: Math.floor(rect.top + (rect.bottom - rect.top) / 2)
-    };
-    return {
-      parent
-    };
-  }
-  exportHTML() {}
-  toPdf() {
-    return "Install @ziko/jspdf";
-  }
+  // get coords() {
+  //   var rect = this.element.getBoundingClientRect();
+  //   var parent = {
+  //     cX: Math.floor(rect.left + (rect.right - rect.left) / 2),
+  //     cY: Math.floor(rect.top + (rect.bottom - rect.top) / 2),
+  //   };
+  //   return { parent };
+  // }
+  // exportHTML() {}
+  // toPdf() {
+  //   return "Install @ziko/jspdf";
+  // }
 }
 
 const ALL_UI_ELEMENTS = {
@@ -8509,7 +8494,7 @@ class ZikoUseStyle {
       }
     };
   }
-  get currentStyle() {
+  get current() {
     return [...this.keys].reduce((key, value) => {
       key[value] = `var(--${value}-${this.id})`;
       return key;
@@ -9701,7 +9686,7 @@ class ZikoUseTheme {
     this.id = "Ziko-Theme-" + id;
     this.use(theme);
   }
-  get currentTheme() {
+  get current() {
     const colorNames = ['background', 'currentLine', 'selection', 'foreground', 'comment', 'cyan', 'green', 'orange', 'pink', 'purple', 'red', 'yellow'];
     return colorNames.reduce((theme, color) => {
       theme[color] = `var(--${color}-${this.id})`;
