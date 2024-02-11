@@ -2,6 +2,7 @@ import { useStyle } from "./useStyle";
 import { useTheme } from "./useTheme";
 import { useBattery } from "./useBattery";
 import { useEventEmitter } from "./useEventEmmiter";
+import { useChannel } from "./useChannel";
 import { useTitle } from "./useTitle";
 import { useFavIcon } from "./useFavIcon";
 const State={
@@ -9,6 +10,7 @@ const State={
     useTheme,
     useBattery,
     useEventEmitter,
+    useChannel,
     useTitle,
     useFavIcon,
     ExtractAll: function () {
@@ -38,6 +40,7 @@ export{
     useTheme,
     useBattery,
     useEventEmitter,
+    useChannel,
     useTitle,
     useFavIcon
 }

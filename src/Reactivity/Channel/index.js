@@ -1,5 +1,4 @@
 import { Random } from "../../Math/Random";
-
 class ZikoChannel{
     constructor(name=""){
         this.channel=new BroadcastChannel(name);
