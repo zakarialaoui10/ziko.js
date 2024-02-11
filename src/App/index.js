@@ -9,6 +9,8 @@ export {
 export{
     App,
 } from "./app.js"
-// export { 
-//     Globals
-// } from "./Globals"
+export { 
+    Themes,
+    LightThemes,
+    DarkThemes
+ } from "./Themes";

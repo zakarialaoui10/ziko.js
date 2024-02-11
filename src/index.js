@@ -3,6 +3,7 @@ import UI from "./UI";
 import Time from "./Time";
 import Data from "./Data";
 import Events from "./Reactivity/Events";
+import State from "./Reactivity/State";
 import Graphics from "./Graphics";
 import Multi from "./Worker";
 import {SPA} from "./App/Router";
@@ -16,6 +17,7 @@ const Ziko={
     Time,
     Graphics,
     Events,
+    State,
     Data,
     Multi,
     SPA,
@@ -27,6 +29,7 @@ function ExtractAll(){
     Math.ExtractAll();
     Time.ExtractAll();
     Events.ExtractAll();
+    State.ExtractAll();
     Graphics.ExtractAll();
     Data.ExtractAll()
     return this;
@@ -34,10 +37,11 @@ function ExtractAll(){
 function RemoveAll(){
     UI.RemoveAll();
     Math.RemoveAll();
-    Time.ExtractAll();
+    Time.RemoveAll();
     Events.RemoveAll();
+    State.RemoveAll();
     Graphics.RemoveAll();
-    Data.ExtractAll()
+    Data.RemoveAll()
 }
 export {
     Ziko,
@@ -54,9 +58,9 @@ export {
     ExtractAll,
     RemoveAll
 };
- export * from "./Math/index.js"
- export * from "./UI/index.js";
- export * from "./Graphics/index.js";
+ export * from "./Math"
+ export * from "./UI";
+ export * from "./Graphics";
  export * from "./Time"
  export * from "./Data"
  export * from "./App"
