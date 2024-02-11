@@ -6,7 +6,6 @@ import Clipboard from "./Global/Clipboard.js";
 import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
 import CustomEvent from "./Global/CustomEvent.js";
-import { Channel } from "./Channel.js";
 const Events={
     Pointer,
     Key,
@@ -17,7 +16,6 @@ const Events={
     Focus,
     Input,
     CustomEvent,
-    Channel,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {

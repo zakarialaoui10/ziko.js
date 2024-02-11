@@ -1,11 +1,3 @@
 Ziko.ExtractAll()
-// console.log(Ziko.csv2json(`
-// a,b,c
-// 1,2,3
-// `))
-
-// a=`a,b,c
-// 1,2,3`
-
-
-  
+a=useFavIcon("https://img.a.transfermarkt.technology/portrait/big/28003-1694590254.jpg?lm=1")
+a.onChange(e=>console.log(e))

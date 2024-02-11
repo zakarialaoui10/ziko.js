@@ -4257,55 +4257,6 @@ class ZikoCustomEvent extends ZikoEvent {
 }
 const CustomEvent = Target => new ZikoCustomEvent(Target);
 
-class ZikoChannel {
-  constructor(name = "") {
-    this.channel = new BroadcastChannel(name);
-    this.EVENTS_DATAS_PAIRS = new Map();
-    this.EVENTS_HANDLERS_PAIRS = new Map();
-    this.LAST_RECEIVED_EVENT = "";
-    this.UUID = "ziko-channel" + Random.string(10);
-    this.SUBSCRIBERS = new Set([this.UUID]);
-  }
-  get broadcast() {
-    // update receiver
-    return this;
-  }
-  emit(event, data) {
-    this.EVENTS_DATAS_PAIRS.set(event, data);
-    this.#maintainEmit(event);
-    return this;
-  }
-  on(event, handler = console.log) {
-    this.EVENTS_HANDLERS_PAIRS.set(event, handler);
-    this.#maintainOn();
-    return this;
-  }
-  #maintainOn() {
-    this.channel.onmessage = e => {
-      this.LAST_RECEIVED_EVENT = e.data.last_sended_event;
-      const USER_ID = e.data.userId;
-      this.SUBSCRIBERS.add(USER_ID);
-      const Data = e.data.EVENTS_DATAS_PAIRS.get(this.LAST_RECEIVED_EVENT);
-      const Handler = this.EVENTS_HANDLERS_PAIRS.get(this.LAST_RECEIVED_EVENT);
-      if (Data && Handler) Handler(Data);
-    };
-    return this;
-  }
-  #maintainEmit(event) {
-    this.channel.postMessage({
-      EVENTS_DATAS_PAIRS: this.EVENTS_DATAS_PAIRS,
-      last_sended_event: event,
-      userId: this.UUID
-    });
-    return this;
-  }
-  close() {
-    this.channel.close();
-    return this;
-  }
-}
-const Channel = name => new ZikoChannel(name);
-
 const Events = {
   Pointer,
   Key,
@@ -4316,7 +4267,6 @@ const Events = {
   Focus,
   Input,
   CustomEvent,
-  Channel,
   ExtractAll: function () {
     const keys = Object.keys(this);
     for (let i = 0; i < keys.length; i++) {
@@ -5787,11 +5737,12 @@ class ZikoUseEventEmitter {
 const useEventEmitter = () => new ZikoUseEventEmitter();
 
 class ZikoUseTitle {
-  constructor(useEventEmitter = false) {
+  constructor(title = document.title, useEventEmitter = true) {
     this.cache = {
       Emitter: null
     };
     if (useEventEmitter) this.useEventEmitter();
+    this.set(title);
   }
   useEventEmitter() {
     this.cache.Emitter = useEventEmitter();
@@ -5812,7 +5763,43 @@ class ZikoUseTitle {
     return this;
   }
 }
-const useTitle = useEventEmitter => new ZikoUseTitle(useEventEmitter);
+const useTitle = (title, useEventEmitter) => new ZikoUseTitle(title, useEventEmitter);
+
+class ZikoUseFavIcon {
+  constructor(FavIcon, useEventEmitter = true) {
+    this.#init();
+    this.cache = {
+      Emitter: null
+    };
+    if (useEventEmitter) this.useEventEmitter();
+    this.set(FavIcon);
+  }
+  #init() {
+    this.__FavIcon__ = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    this.__FavIcon__.type = 'image/x-icon';
+    this.__FavIcon__.rel = 'shortcut icon';
+    return this;
+  }
+  set(href) {
+    if (href !== this.__FavIcon__.href) {
+      this.__FavIcon__.href = href;
+      if (this.cache.Emitter) this.cache.Emitter.emit("ziko:favicon-changed");
+    }
+    return this;
+  }
+  get current() {
+    return document.__FavIcon__.href;
+  }
+  onChange(callback) {
+    if (this.cache.Emitter) this.cache.Emitter.on("ziko:favicon-changed", callback);
+    return this;
+  }
+  useEventEmitter() {
+    this.cache.Emitter = useEventEmitter();
+    return this;
+  }
+}
+const useFavIcon = (FavIcon, useEventEmitter) => new ZikoUseFavIcon(FavIcon, useEventEmitter);
 
 const State = {
   useStyle,
@@ -5820,6 +5807,7 @@ const State = {
   useBattery,
   useEventEmitter,
   useTitle,
+  useFavIcon,
   ExtractAll: function () {
     const keys = Object.keys(this);
     for (let i = 0; i < keys.length; i++) {

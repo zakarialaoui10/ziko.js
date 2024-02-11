@@ -1,0 +1,22 @@
+- Device :
+  - useBattery
+  - useGeolocation
+  - useFullScrean
+  - useOrientation
+  - useNotification
+- UI
+  - useTheme
+  - useStyle 
+  - useCss
+  - useTitle
+  - useFavIcon
+- Events
+  - useEventEmitter
+  - useChannel
+- Storage
+  - useSessionStorage
+  - useLocalStorage
+- Timing
+  - useDebounce
+  - useThrottle
+

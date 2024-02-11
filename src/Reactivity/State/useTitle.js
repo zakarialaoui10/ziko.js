@@ -1,10 +1,11 @@
 import { useEventEmitter } from "./useEventEmmiter";
 class ZikoUseTitle{
-    constructor(useEventEmitter=false){
+    constructor(title=document.title,useEventEmitter=true){
         this.cache={
             Emitter:null
         }
         if(useEventEmitter)this.useEventEmitter();
+        this.set(title);
     }
     useEventEmitter(){
         this.cache.Emitter=useEventEmitter();
@@ -25,5 +26,5 @@ class ZikoUseTitle{
         return this;
     }
 }
-const useTitle=(useEventEmitter)=>new ZikoUseTitle(useEventEmitter);
+const useTitle=(title, useEventEmitter)=>new ZikoUseTitle(title, useEventEmitter);
 export{ useTitle }
