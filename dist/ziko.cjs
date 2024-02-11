@@ -3307,45 +3307,6 @@ class ZikoUIElementStyle {
 }
 const ZikoStyle = defaultStyle => new ZikoUIElementStyle(defaultStyle);
 
-const Garbage = {
-  Key: {
-    data: [],
-    dispose: function () {
-      this.data.map(n => n?.event?.dispose());
-      return this;
-    },
-    destroy: function () {
-      this.dispose();
-      this.data.length = 0;
-      return this;
-    }
-  },
-  Pointer: {
-    data: [],
-    dispose: function () {
-      this.data.map(n => n?.event?.dispose());
-      return this;
-    },
-    destroy: function () {
-      this.dispose();
-      this.data.length = 0;
-      return this;
-    }
-  },
-  Drag: {
-    data: [],
-    dispose: function () {
-      this.data.map(n => n?.event?.dispose());
-      return this;
-    },
-    destroy: function () {
-      this.dispose();
-      this.data.length = 0;
-      return this;
-    }
-  }
-};
-
 function EVENT_CONTROLLER(e, EVENT, setter, push_object) {
   this.event = e;
   if (this.cache.preventDefault[EVENT]) e.preventDefault();
@@ -3444,9 +3405,6 @@ class ZikoEvent {
       }
     }
     return this;
-  }
-  get Garbage() {
-    return Garbage;
   }
 }
 
@@ -5618,43 +5576,7 @@ class ZikoUseTheme {
 }
 const useTheme = (id = 0) => (theme = 0) => new ZikoUseTheme(theme, id);
 
-class ZikoUseBattery {
-  constructor() {
-    if (this.isSupported) this.#init();
-  }
-  async #init() {
-    this.__Battery__ = await navigator.getBattery();
-  }
-  get isSupported() {
-    return !!navigator.getBattery;
-  }
-  get current() {
-    // Synchrouns Code
-    const {
-      level,
-      charging,
-      chargingTime,
-      dischargingTime
-    } = this.__Battery__;
-    return {
-      level,
-      charging,
-      chargingTime,
-      dischargingTime
-    };
-  }
-  onChargingChange(callback) {
-    this.__Battery__.addEventListener("chargingchange", callback);
-    return this;
-  }
-  onLevelChange(callback) {
-    this.__Battery__.addEventListener("levelchange", callback);
-    return this;
-  }
-}
-const useBattery = () => new ZikoUseBattery();
-
-class EventEmitter {
+class ZikoUseEventEmitter {
   constructor() {
     this.events = {};
     this.maxListeners = 10;
@@ -5664,8 +5586,6 @@ class EventEmitter {
       this.events[event] = [];
     }
     this.events[event].push(listener);
-
-    // Check if the number of listeners for the event exceeds the maximum
     if (this.events[event].length > this.maxListeners) {
       console.warn(`Warning: Possible memory leak. Event '${event}' has more than ${this.maxListeners} listeners.`);
     }
@@ -5710,28 +5630,6 @@ class EventEmitter {
     } else {
       this.events = {};
     }
-  }
-}
-
-class ZikoUseEventEmitter {
-  constructor() {
-    this.__Emitter__ = new EventEmitter();
-  }
-  on(event, listener) {
-    this.__Emitter__.on(event, listener);
-    return this;
-  }
-  once(event, listener) {
-    this.__Emitter__.once(event, listener);
-    return this;
-  }
-  off(event, listener) {
-    this.__Emitter__.off(event, listener);
-    return this;
-  }
-  emit(event, data) {
-    this.__Emitter__.emit(event, data);
-    return this;
   }
 }
 const useEventEmitter = () => new ZikoUseEventEmitter();
@@ -5801,11 +5699,97 @@ class ZikoUseFavIcon {
 }
 const useFavIcon = (FavIcon, useEventEmitter) => new ZikoUseFavIcon(FavIcon, useEventEmitter);
 
+class ZikoUseChannel {
+  constructor(name = "") {
+    this.channel = new BroadcastChannel(name);
+    this.EVENTS_DATAS_PAIRS = new Map();
+    this.EVENTS_HANDLERS_PAIRS = new Map();
+    this.LAST_RECEIVED_EVENT = "";
+    this.UUID = "ziko-channel" + Random.string(10);
+    this.SUBSCRIBERS = new Set([this.UUID]);
+  }
+  get broadcast() {
+    // update receiver
+    return this;
+  }
+  emit(event, data) {
+    this.EVENTS_DATAS_PAIRS.set(event, data);
+    this.#maintainEmit(event);
+    return this;
+  }
+  on(event, handler = console.log) {
+    this.EVENTS_HANDLERS_PAIRS.set(event, handler);
+    this.#maintainOn();
+    return this;
+  }
+  #maintainOn() {
+    this.channel.onmessage = e => {
+      this.LAST_RECEIVED_EVENT = e.data.last_sended_event;
+      const USER_ID = e.data.userId;
+      this.SUBSCRIBERS.add(USER_ID);
+      const Data = e.data.EVENTS_DATAS_PAIRS.get(this.LAST_RECEIVED_EVENT);
+      const Handler = this.EVENTS_HANDLERS_PAIRS.get(this.LAST_RECEIVED_EVENT);
+      if (Data && Handler) Handler(Data);
+    };
+    return this;
+  }
+  #maintainEmit(event) {
+    this.channel.postMessage({
+      EVENTS_DATAS_PAIRS: this.EVENTS_DATAS_PAIRS,
+      last_sended_event: event,
+      userId: this.UUID
+    });
+    return this;
+  }
+  close() {
+    this.channel.close();
+    return this;
+  }
+}
+const useChannel = name => new ZikoUseChannel(name);
+
+class ZikoUseBattery {
+  constructor() {
+    if (this.isSupported) this.#init();
+  }
+  async #init() {
+    this.__Battery__ = await navigator.getBattery();
+  }
+  get isSupported() {
+    return !!navigator.getBattery;
+  }
+  get current() {
+    // Synchrouns Code
+    const {
+      level,
+      charging,
+      chargingTime,
+      dischargingTime
+    } = this.__Battery__;
+    return {
+      level,
+      charging,
+      chargingTime,
+      dischargingTime
+    };
+  }
+  onChargingChange(callback) {
+    this.__Battery__.addEventListener("chargingchange", callback);
+    return this;
+  }
+  onLevelChange(callback) {
+    this.__Battery__.addEventListener("levelchange", callback);
+    return this;
+  }
+}
+const useBattery = () => new ZikoUseBattery();
+
 const State = {
   useStyle,
   useTheme,
   useBattery,
   useEventEmitter,
+  useChannel,
   useTitle,
   useFavIcon,
   ExtractAll: function () {
@@ -5830,7 +5814,7 @@ const State = {
   }
 };
 
-// import styleComposer from "./Style/index.js";
+// import styleComposer from "./Style";
 class ZikoUIElement {
   constructor(element) {
     this.target = globalThis.document.body;
@@ -9613,7 +9597,7 @@ const Ziko = {
   Time,
   Graphics,
   Events,
-  State,
+  Use: State,
   Data,
   Multi,
   SPA,

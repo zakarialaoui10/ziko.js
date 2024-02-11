@@ -1,4 +1,3 @@
-import Garbage from "./_Garbage.js";
 function EVENT_CONTROLLER(e,EVENT,setter,push_object){
     this.event=e
     if(this.cache.preventDefault[EVENT])e.preventDefault();
@@ -87,9 +86,6 @@ class ZikoEvent{
             }
         }
         return this;
-    }
-    get Garbage(){
-        return Garbage
     }
 }
 export {ZikoEvent,EVENT_CONTROLLER}

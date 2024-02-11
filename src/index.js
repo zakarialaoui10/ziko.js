@@ -3,7 +3,7 @@ import UI from "./UI";
 import Time from "./Time";
 import Data from "./Data";
 import Events from "./Reactivity/Events";
-import State from "./Reactivity/State";
+import Use from "./Reactivity/Use";
 import Graphics from "./Graphics";
 import Multi from "./Worker";
 import {SPA} from "./App/Router";
@@ -17,7 +17,7 @@ const Ziko={
     Time,
     Graphics,
     Events,
-    State,
+    Use,
     Data,
     Multi,
     SPA,
@@ -29,7 +29,7 @@ function ExtractAll(){
     Math.ExtractAll();
     Time.ExtractAll();
     Events.ExtractAll();
-    State.ExtractAll();
+    Use.ExtractAll();
     Graphics.ExtractAll();
     Data.ExtractAll()
     return this;
@@ -39,7 +39,7 @@ function RemoveAll(){
     Math.RemoveAll();
     Time.RemoveAll();
     Events.RemoveAll();
-    State.RemoveAll();
+    Use.RemoveAll();
     Graphics.RemoveAll();
     Data.RemoveAll()
 }

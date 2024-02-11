@@ -1,5 +1,5 @@
-// import styleComposer from "./Style/index.js";
-import { ZikoStyle } from "./Style/index.js";
+// import styleComposer from "./Style";
+import { ZikoStyle } from "./Style";
 import { 
   Pointer, 
   Key, 
@@ -9,14 +9,14 @@ import {
   Clipboard ,
   Focus,
   CustomEvent,
-} from "../Reactivity/Events/index.js"
+} from "../Reactivity/Events"
 import { 
   WatchIntersection, 
   WatchSize 
-} from "../Reactivity/index.js";
-import { text } from "./Text/index.js";
-import { matrix } from "../Math/Matrix/index.js";
-import { Random } from "../Math/Random/index.js";
+} from "../Reactivity";
+import { text } from "./Text";
+import { matrix } from "../Math/Matrix";
+import { Random } from "../Math/Random";
 class ZikoUIElement {
   constructor(element) {
     this.target = globalThis.document.body;

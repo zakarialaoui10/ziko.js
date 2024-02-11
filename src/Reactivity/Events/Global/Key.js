@@ -1,4 +1,3 @@
-import Garbage from "../_Garbage.js";
 import {ZikoEvent,EVENT_CONTROLLER} from "../ZikoEvent.js";
 function keydown_controller(e){
     EVENT_CONTROLLER.call(
