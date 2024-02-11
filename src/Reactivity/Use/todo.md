@@ -10,9 +10,13 @@
   - useCss
   - useTitle
   - useFavIcon
-- Events
+- Interactions
   - useEventEmitter
   - useChannel
+  - useBluetooth
+  - useSerial
+  - useUsb
+  - useSocket
 - Storage
   - useSessionStorage
   - useLocalStorage

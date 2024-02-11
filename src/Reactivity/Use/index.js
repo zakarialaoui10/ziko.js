@@ -9,12 +9,14 @@ import {
     useChannel
  } from "./Interactions";
 import { 
-    useBattery
+    useBattery,
+    useGeolocation
  } from "./Sensors";
 const State={
     useStyle,
     useTheme,
     useBattery,
+    useGeolocation,
     useEventEmitter,
     useChannel,
     useTitle,
@@ -45,6 +47,7 @@ export{
     useStyle,
     useTheme,
     useBattery,
+    useGeolocation,
     useEventEmitter,
     useChannel,
     useTitle,
