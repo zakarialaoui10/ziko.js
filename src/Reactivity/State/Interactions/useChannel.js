@@ -1,4 +1,4 @@
-import { Channel } from "../Channel";
+import { Channel } from "../../Channel";
 class ZikoUseChannel {
     constructor(name=""){
         this.__Channel__=Channel(name);

@@ -1,10 +1,16 @@
-import { useStyle } from "./useStyle";
-import { useTheme } from "./useTheme";
-import { useBattery } from "./useBattery";
-import { useEventEmitter } from "./useEventEmmiter";
-import { useChannel } from "./useChannel";
-import { useTitle } from "./useTitle";
-import { useFavIcon } from "./useFavIcon";
+import { 
+    useStyle,
+    useTheme,
+    useTitle,
+    useFavIcon
+ } from "./UI";
+import { 
+    useEventEmitter,
+    useChannel
+ } from "./Interactions";
+import { 
+    useBattery
+ } from "./Sensors";
 const State={
     useStyle,
     useTheme,

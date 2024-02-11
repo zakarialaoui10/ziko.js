@@ -1,4 +1,4 @@
-import EventEmitter from "../Events/EventEmitter";
+import EventEmitter from "../../Events/EventEmitter";
 class ZikoUseEventEmitter {
     constructor(){
         this.__Emitter__=new EventEmitter();

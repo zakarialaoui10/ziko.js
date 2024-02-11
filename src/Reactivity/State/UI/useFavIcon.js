@@ -1,4 +1,4 @@
-import { useEventEmitter } from "./useEventEmmiter";
+import { useEventEmitter } from "../Interactions/useEventEmmiter";
 class ZikoUseFavIcon{
     constructor(FavIcon,useEventEmitter=true){
         this.#init();
