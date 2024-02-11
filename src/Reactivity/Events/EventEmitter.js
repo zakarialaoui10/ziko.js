@@ -1,7 +1,7 @@
 class EventEmitter {
     constructor() {
       this.events = {};
-      this.maxListeners = 10; // Default maximum number of listeners
+      this.maxListeners = 10; 
     }
   
     on(event, listener) {

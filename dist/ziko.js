@@ -5708,10 +5708,122 @@
   }
   const useBattery = () => new ZikoUseBattery();
 
+  class EventEmitter {
+    constructor() {
+      this.events = {};
+      this.maxListeners = 10;
+    }
+    on(event, listener) {
+      if (!this.events[event]) {
+        this.events[event] = [];
+      }
+      this.events[event].push(listener);
+
+      // Check if the number of listeners for the event exceeds the maximum
+      if (this.events[event].length > this.maxListeners) {
+        console.warn(`Warning: Possible memory leak. Event '${event}' has more than ${this.maxListeners} listeners.`);
+      }
+    }
+    once(event, listener) {
+      const onceListener = data => {
+        this.off(event, onceListener); // Remove the listener after it's been called
+        listener(data);
+      };
+      this.on(event, onceListener);
+    }
+    off(event, listener) {
+      const listeners = this.events[event];
+      if (listeners) {
+        const index = listeners.indexOf(listener);
+        if (index !== -1) {
+          listeners.splice(index, 1);
+        }
+      }
+    }
+    emit(event, data) {
+      const listeners = this.events[event];
+      if (listeners) {
+        listeners.forEach(listener => {
+          listener(data);
+        });
+      }
+    }
+    clear(event) {
+      if (event) {
+        delete this.events[event];
+      } else {
+        this.events = {};
+      }
+    }
+    setMaxListener(event, max) {
+      this.maxListeners = max;
+    }
+    removeAllListeners(event) {
+      if (event) {
+        this.events[event] = [];
+      } else {
+        this.events = {};
+      }
+    }
+  }
+
+  class ZikoUseEventEmitter {
+    constructor() {
+      this.__Emitter__ = new EventEmitter();
+    }
+    on(event, listener) {
+      this.__Emitter__.on(event, listener);
+      return this;
+    }
+    once(event, listener) {
+      this.__Emitter__.once(event, listener);
+      return this;
+    }
+    off(event, listener) {
+      this.__Emitter__.off(event, listener);
+      return this;
+    }
+    emit(event, data) {
+      this.__Emitter__.emit(event, data);
+      return this;
+    }
+  }
+  const useEventEmitter = () => new ZikoUseEventEmitter();
+
+  class ZikoUseTitle {
+    constructor(useEventEmitter = false) {
+      this.cache = {
+        Emitter: null
+      };
+      if (useEventEmitter) this.useEventEmitter();
+    }
+    useEventEmitter() {
+      this.cache.Emitter = useEventEmitter();
+      return this;
+    }
+    set(title) {
+      if (title !== document.title) {
+        document.title = title;
+        if (this.cache.Emitter) this.cache.Emitter.emit("ziko:title-changed");
+      }
+      return this;
+    }
+    get current() {
+      return document.title;
+    }
+    onChange(callback) {
+      if (this.cache.Emitter) this.cache.Emitter.on("ziko:title-changed", callback);
+      return this;
+    }
+  }
+  const useTitle = useEventEmitter => new ZikoUseTitle(useEventEmitter);
+
   const State = {
     useStyle,
     useTheme,
     useBattery,
+    useEventEmitter,
+    useTitle,
     ExtractAll: function () {
       const keys = Object.keys(this);
       for (let i = 0; i < keys.length; i++) {

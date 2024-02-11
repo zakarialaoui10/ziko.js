@@ -1,10 +1,14 @@
 import { useStyle } from "./useStyle";
 import { useTheme } from "./useTheme";
 import { useBattery } from "./useBattery";
+import { useEventEmitter } from "./useEventEmmiter";
+import { useTitle } from "./useTitle";
 const State={
     useStyle,
     useTheme,
     useBattery,
+    useEventEmitter,
+    useTitle,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
@@ -30,5 +34,7 @@ export default State;
 export{
     useStyle,
     useTheme,
-    useBattery
+    useBattery,
+    useEventEmitter,
+    useTitle
 }
