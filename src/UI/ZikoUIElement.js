@@ -20,7 +20,8 @@ import { Random } from "../Math/Random";
 class ZikoUIElement {
   constructor(element) {
     this.target = globalThis.document.body;
-    if (typeof element === "string") element = globalThis.document.createElement(element);
+    // if(element instanceof Node)
+    if(typeof element === "string") element = globalThis.document.createElement(element);
     this.element = element;
     // Object.assign(this, styleComposer.call(this));
     this.uuid=this.constructor.name+"-"+Random.string(10);
