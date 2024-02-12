@@ -46,8 +46,8 @@ function pointerup_controller(e){
             const dy=this.dy;
             const ux=this.ux;
             const uy=this.uy;
-            const delta_x=(ux-dx)/this.Target.Width;
-            const delta_y=(dy-uy)/this.Target.Height;
+            const delta_x=(ux-dx)/this.target.Width;
+            const delta_y=(dy-uy)/this.target.Height;
             const HORIZONTAL_SWIPPE=(delta_x<0)?"left":(delta_x>0)?"right":"none";
             const VERTICAL_SWIPPE=(delta_y<0)?"bottom":(delta_y>0)?"top":"none";
             this.swippe={

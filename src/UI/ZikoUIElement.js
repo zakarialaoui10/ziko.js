@@ -62,7 +62,7 @@ class ZikoUIElement {
       padding:0,
      });
     this.size("auto", "auto");
-    __UI__[this.cache.name].push(this)
+    __UI__[this.cache.name]?.push(this)
   }
   get st(){
     return this.cache.style;

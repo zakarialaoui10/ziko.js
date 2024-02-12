@@ -20,9 +20,8 @@ function map_pos_y(align){
   return map_pos_x(-align);
 }
 class ZikoUIFlex extends ZikoUIElement {
-  constructor(tag ="div", w = "100%", h = "100%") {
-    super();
-    this.element = document.createElement(tag);
+  constructor(tag , w = "100%", h = "100%") {
+    super(tag,"Flex");
     this.direction = "cols";
     if (typeof w == "number") w += "%";
     if (typeof h == "number") h += "%";

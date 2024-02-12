@@ -3477,8 +3477,8 @@ function pointerup_controller(e) {
     const dy = this.dy;
     const ux = this.ux;
     const uy = this.uy;
-    const delta_x = (ux - dx) / this.Target.Width;
-    const delta_y = (dy - uy) / this.Target.Height;
+    const delta_x = (ux - dx) / this.target.Width;
+    const delta_y = (dy - uy) / this.target.Height;
     const HORIZONTAL_SWIPPE = delta_x < 0 ? "left" : delta_x > 0 ? "right" : "none";
     const VERTICAL_SWIPPE = delta_y < 0 ? "bottom" : delta_y > 0 ? "top" : "none";
     this.swippe = {
@@ -3831,7 +3831,7 @@ function drop_controller(e) {
 class ZikoEventDrag extends ZikoEvent {
   constructor(Target) {
     super(Target);
-    this.Target.setAttribute("draggable", true);
+    this.target.setAttribute("draggable", true);
     this.cache = {
       prefixe: "drag",
       preventDefault: {
@@ -6005,7 +6005,7 @@ class ZikoUIElement {
       padding: 0
     });
     this.size("auto", "auto");
-    __UI__[this.cache.name].push(this);
+    __UI__[this.cache.name]?.push(this);
   }
   get st() {
     return this.cache.style;
@@ -6587,30 +6587,27 @@ const h6 = (text = "") => new ZikoUIHeading(6, text);
 
 class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
-    super(element);
+    super(element, "ZikoHtml");
     this.render();
   }
 }
 class ZikoUIBr extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("br");
+    super("br", "br");
     this.render();
     delete this.append;
   }
 }
 class ZikoUIHr extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("hr");
+    super("hr", "hr");
     this.render();
     delete this.append;
   }
 }
 class ZikoUILink extends ZikoUIElement {
   constructor(href) {
-    super();
-    this.element = document.createElement("a");
+    super("a", "link");
     this.setHref(href);
     this.render();
   }
@@ -7285,9 +7282,8 @@ function map_pos_y(align) {
   return map_pos_x(-align);
 }
 class ZikoUIFlex extends ZikoUIElement {
-  constructor(tag = "div", w = "100%", h = "100%") {
-    super();
-    this.element = document.createElement(tag);
+  constructor(tag, w = "100%", h = "100%") {
+    super(tag, "Flex");
     this.direction = "cols";
     if (typeof w == "number") w += "%";
     if (typeof h == "number") h += "%";
@@ -7379,8 +7375,7 @@ const Flex = (...ZikoUIElement) => {
 
 class ZikoUIGrid extends ZikoUIElement {
   constructor(tag = "div", w = "50vw", h = "50vh") {
-    super();
-    this.element = document.createElement(tag);
+    super(tag, "Grid");
     this.direction = "cols";
     if (typeof w == "number") w += "%";
     if (typeof h == "number") h += "%";
@@ -7443,7 +7438,7 @@ class ZikoUICarousel extends ZikoUIFlex {
       if (e.isDown) {
         let x = e.event.pageX;
         let dx = x - this.x0;
-        this.track.translateX(this.tx + dx, 0);
+        this.track.st.translateX(this.tx + dx, 0);
       }
     });
     this.onPtrDown(e => {
@@ -7486,7 +7481,7 @@ const CodeNote = () => new ZikoUINoteBook();
 class ZikoUITabs extends ZikoUIFlex {
   #ACTIVE_ELEMENT_INDEX = 0;
   constructor(Controllers, Contents) {
-    super();
+    super("div", "Tabs");
     this.style({
       boxSizing: "border-box",
       backgroundColor: "blanchedalmond",
@@ -7511,7 +7506,7 @@ class ZikoUITabs extends ZikoUIFlex {
       height: "100%",
       backgroundColor: "darkslategrey"
     }));
-    this.Controller = this.items[0].setAttribute("role", "tablist");
+    this.Controller = this.items[0].setAttr("role", "tablist");
     this.Content = this.items[1];
     if (Controllers.length !== Contents.length) console.error("");else {
       this.Controller.append(...Controllers);
@@ -7524,11 +7519,11 @@ class ZikoUITabs extends ZikoUIFlex {
   init() {
     // Remove old listener
     for (let i = 0; i < this.Controller.length; i++) {
-      this.Controller[i].setAttribute("role", "tab").setAttribute("aria-controls", `tab${i}`);
-      this.Content[i].setAttribute("role", "tabpanel").setAttribute("aria-labelledby", `tab${i}`).setAttribute("tabindex", -1);
+      this.Controller[i].setAttr("role", "tab").setAttr("aria-controls", `tab${i}`);
+      this.Content[i].setAttr("role", "tabpanel").setAttr("aria-labelledby", `tab${i}`).setAttr("tabindex", -1);
     }
     this.Controller.forEach(item => item.onClick(e => {
-      const tab = e.Target.element.getAttribute("aria-controls");
+      const tab = e.target.element.getAttribute("aria-controls");
       const index = +tab.slice(3);
       this.Content.filter(n => n.element.getAttribute("aria-labelledby") === tab, () => {
         if (this.#ACTIVE_ELEMENT_INDEX !== index) this.display(index);
@@ -7540,19 +7535,19 @@ class ZikoUITabs extends ZikoUIFlex {
     this.Controller.append(ControllerItem);
     this.Content.append(ContentItem);
     const length = this.Controller.length;
-    this.Controller.at(-1).setAttribute("role", "tab").setAttribute("aria-controls", `tab${length - 1}`);
-    this.Content.at(-1).setAttribute("role", "tabpanel").setAttribute("aria-labelledby", `tab${length - 1}`).setAttribute("tabindex", -1);
+    this.Controller.at(-1).setAttr("role", "tab").setAttr("aria-controls", `tab${length - 1}`);
+    this.Content.at(-1).setAttr("role", "tabpanel").setAttr("aria-labelledby", `tab${length - 1}`).setAttr("tabindex", -1);
     // Add listener
     return this;
   }
   removePairs(index) {}
   display(index) {
     this.#ACTIVE_ELEMENT_INDEX = index % this.Content.length;
-    this.Controller.forEach(n => n.setAttribute("tabindex", -1).setAttribute("aria-selected", false));
-    this.Controller.at(this.#ACTIVE_ELEMENT_INDEX).setAttribute("tabindex", 0).setAttribute("aria-selected", true);
+    this.Controller.forEach(n => n.setAttr("tabindex", -1).setAttr("aria-selected", false));
+    this.Controller.at(this.#ACTIVE_ELEMENT_INDEX).setAttr("tabindex", 0).setAttr("aria-selected", true);
     (async () => {
-      await this.Content.forEach(n => n.hide());
-      await this.Content.at(this.#ACTIVE_ELEMENT_INDEX).setAttribute("tabindex", 0).show();
+      await this.Content.forEach(n => n.st.hide());
+      await this.Content.at(this.#ACTIVE_ELEMENT_INDEX).setAttr("tabindex", 0).st.show();
     })();
     return this;
   }
@@ -7579,8 +7574,7 @@ const Tabs = (Controllers, Contents) => new ZikoUITabs(Controllers, Contents);
 
 class ZikoUIAccordion extends ZikoUIElement {
   constructor(summary, content, icon = "😁") {
-    super();
-    this.element = document.createElement("details");
+    super("details", "Accordion");
     this.summary = ZikoHtml("summary", summary).style({
       fontSize: "1.1em",
       padding: "0.625rem",
@@ -9625,13 +9619,16 @@ exports.ZikoHtml = ZikoHtml;
 exports.ZikoUIArticle = ZikoUIArticle;
 exports.ZikoUIAside = ZikoUIAside;
 exports.ZikoUIAudio = ZikoUIAudio;
+exports.ZikoUIBr = ZikoUIBr;
 exports.ZikoUICanvas = ZikoUICanvas;
 exports.ZikoUIElement = ZikoUIElement;
 exports.ZikoUIFigure = ZikoUIFigure;
 exports.ZikoUIFooter = ZikoUIFooter;
 exports.ZikoUIHeader = ZikoUIHeader;
+exports.ZikoUIHr = ZikoUIHr;
 exports.ZikoUIHtmlTag = ZikoUIHtmlTag;
 exports.ZikoUIImage = ZikoUIImage;
+exports.ZikoUILink = ZikoUILink;
 exports.ZikoUIMain = ZikoUIMain;
 exports.ZikoUINav = ZikoUINav;
 exports.ZikoUISection = ZikoUISection;

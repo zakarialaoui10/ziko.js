@@ -6,7 +6,7 @@ import { Flex, ZikoUIFlex } from "../Flex";
 class ZikoUITabs extends ZikoUIFlex{
     #ACTIVE_ELEMENT_INDEX=0;
     constructor(Controllers,Contents){
-        super();
+        super("div","Tabs");
         this.style({
             boxSizing:"border-box",
             backgroundColor: "blanchedalmond",
@@ -38,7 +38,7 @@ class ZikoUITabs extends ZikoUIFlex{
                 backgroundColor:"darkslategrey",
             })
         )
-        this.Controller=this.items[0].setAttribute("role","tablist");
+        this.Controller=this.items[0].setAttr("role","tablist");
         this.Content=this.items[1];
         if(Controllers.length!==Contents.length)console.error("")
         else {
@@ -52,11 +52,11 @@ class ZikoUITabs extends ZikoUIFlex{
     init(){  
         // Remove old listener
         for(let i=0;i<this.Controller.length;i++){
-            this.Controller[i].setAttribute("role","tab").setAttribute("aria-controls",`tab${i}`);
-            this.Content[i].setAttribute("role","tabpanel").setAttribute("aria-labelledby",`tab${i}`).setAttribute("tabindex",-1);
+            this.Controller[i].setAttr("role","tab").setAttr("aria-controls",`tab${i}`);
+            this.Content[i].setAttr("role","tabpanel").setAttr("aria-labelledby",`tab${i}`).setAttr("tabindex",-1);
         }
         this.Controller.forEach(item=>item.onClick(e=>{
-            const tab=e.Target.element.getAttribute("aria-controls");
+            const tab=e.target.element.getAttribute("aria-controls");
             const index=+tab.slice(3)
             this.Content.filter(n=>n.element.getAttribute("aria-labelledby")===tab,()=>{
                 if(this.#ACTIVE_ELEMENT_INDEX!==index)this.display(index);
@@ -68,8 +68,8 @@ class ZikoUITabs extends ZikoUIFlex{
         this.Controller.append(ControllerItem);
         this.Content.append(ContentItem);
         const length=this.Controller.length;
-        this.Controller.at(-1).setAttribute("role","tab").setAttribute("aria-controls",`tab${length-1}`);
-        this.Content.at(-1).setAttribute("role","tabpanel").setAttribute("aria-labelledby",`tab${length-1}`).setAttribute("tabindex",-1);
+        this.Controller.at(-1).setAttr("role","tab").setAttr("aria-controls",`tab${length-1}`);
+        this.Content.at(-1).setAttr("role","tabpanel").setAttr("aria-labelledby",`tab${length-1}`).setAttr("tabindex",-1);
         // Add listener
         return this;
     }
@@ -78,11 +78,11 @@ class ZikoUITabs extends ZikoUIFlex{
     }
     display(index){
         this.#ACTIVE_ELEMENT_INDEX=index%this.Content.length;
-        this.Controller.forEach(n=>n.setAttribute("tabindex",-1).setAttribute("aria-selected",false));
-        this.Controller.at(this.#ACTIVE_ELEMENT_INDEX).setAttribute("tabindex",0).setAttribute("aria-selected",true);
+        this.Controller.forEach(n=>n.setAttr("tabindex",-1).setAttr("aria-selected",false));
+        this.Controller.at(this.#ACTIVE_ELEMENT_INDEX).setAttr("tabindex",0).setAttr("aria-selected",true);
         (async ()=>{
-           await this.Content.forEach(n=>n.hide());
-           await this.Content.at(this.#ACTIVE_ELEMENT_INDEX).setAttribute("tabindex",0).show();
+           await this.Content.forEach(n=>n.st.hide());
+           await this.Content.at(this.#ACTIVE_ELEMENT_INDEX).setAttr("tabindex",0).st.show();
         })()
 
         return this;   

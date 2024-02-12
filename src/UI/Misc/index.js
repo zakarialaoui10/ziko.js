@@ -1,30 +1,27 @@
 import ZikoUIElement from "../ZikoUIElement.js";
 class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
-    super(element);
+    super(element,"ZikoHtml");
       this.render();
   }
 }
 class ZikoUIBr extends ZikoUIElement {
     constructor() {
-      super();
-        this.element = document.createElement("br");
+      super("br","br");
         this.render();
         delete this.append
     }
   }
   class ZikoUIHr extends ZikoUIElement {
     constructor() {
-      super();
-        this.element = document.createElement("hr");
+      super("hr","hr");
         this.render();
         delete this.append
     }
   }
   class ZikoUILink extends ZikoUIElement{
     constructor(href){
-      super();
-      this.element = document.createElement("a");
+      super("a","link");
       this.setHref(href);
       this.render();
     }
@@ -40,10 +37,13 @@ class ZikoUIBr extends ZikoUIElement {
   const ZikoHtml=(tag,...UIElement)=>new ZikoUIHtmlTag(tag).append(...UIElement);
 export{
   ZikoHtml,
-  ZikoUIHtmlTag,
   br,
   hr,
   brs,
   hrs,
-  link
+  link,
+  ZikoUIHtmlTag,
+  ZikoUIBr,
+  ZikoUIHr,
+  ZikoUILink
 }

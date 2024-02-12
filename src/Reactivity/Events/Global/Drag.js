@@ -15,7 +15,7 @@ function drop_controller(e){
 class ZikoEventDrag extends ZikoEvent{
     constructor(Target){
         super(Target)
-        this.Target.setAttribute("draggable",true);
+        this.target.setAttribute("draggable",true);
         this.cache={
             prefixe:"drag",
             preventDefault:{

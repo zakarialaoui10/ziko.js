@@ -21,7 +21,7 @@ class ZikoUICarousel extends ZikoUIFlex{
             if(e.isDown){
                 let x = e.event.pageX;
                 let dx = x - this.x0;
-                this.track.translateX(
+                this.track.st.translateX(
                     this.tx + dx, 
                     0
                     );
