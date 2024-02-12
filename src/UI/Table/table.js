@@ -4,8 +4,7 @@ import { matrix } from "../../Math/Matrix/index.js";
 import { MatrixToTableUI } from "./utils.js";
 class ZikoUITable extends ZikoUIElement {
     constructor(body,{caption=null,head=null,foot=null}={}){
-        super();
-        this.element = document.createElement("table");
+        super("table","Table");
         this.structure={
             caption,
             head,

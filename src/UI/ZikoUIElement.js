@@ -1,4 +1,4 @@
-// import styleComposer from "./Style";
+import { __UI__ } from "./__UI__";
 import { ZikoStyle } from "./Style";
 import { 
   Pointer, 
@@ -18,14 +18,13 @@ import { text } from "./Text";
 import { matrix } from "../Math/Matrix";
 import { Random } from "../Math/Random";
 class ZikoUIElement {
-  constructor(element) {
+  constructor(element,name="") {
     this.target = globalThis.document.body;
-    // if(element instanceof Node)
     if(typeof element === "string") element = globalThis.document.createElement(element);
     this.element = element;
-    // Object.assign(this, styleComposer.call(this));
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
+      name,
       isRoot:false,
       isHidden: false,
       isFrozzen:false,
@@ -63,6 +62,7 @@ class ZikoUIElement {
       padding:0,
      });
     this.size("auto", "auto");
+    __UI__[this.cache.name].push(this)
   }
   get st(){
     return this.cache.style;
@@ -455,50 +455,6 @@ class ZikoUIElement {
   
   // toggleSlide() {}
 
-  
-  
-  // scaleX(sc, t = 1) {
-  //   this.style({
-  //     transform: "scaleX(" + sc + ")",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // scaleY(sc, t = 1) {
-  //   this.style({
-  //     transform: "scaleY(" + sc + ")",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // skewX(deg, t = 1) {
-  //   this.style({
-  //     transform: "skewX(" + deg + "deg)",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // skewY(deg, t = 1) {
-  //   this.style({
-  //     transform: "skewY(" + deg + "deg)",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // skew(x, y, t = 1) {
-  //   this.style({
-  //     transform: "skew(" + x + "deg , " + y + "deg)",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // scale(x, y = x, t = 1) {
-  //   this.style({
-  //     transform: "scale(" + x + "," + y + ")",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
   // resize(n = 0) {
   //   switch (n) {
   //     case 0:

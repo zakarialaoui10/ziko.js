@@ -1,9 +1,9 @@
 import ZikoUIElement from "../ZikoUIElement.js";
 import {Complex} from "../../Math/Complex/index.js";
-import { __UI__ } from "../../App";
+import { __UI__ } from "../__UI__.js";
 class ZikoUIText extends ZikoUIElement {
     constructor(...value) {
-      super();
+      super("span","text");
       this.element = document.createElement("span");
       this.text = "";
       this.addValue(...value);
@@ -62,10 +62,5 @@ class ZikoUIText extends ZikoUIElement {
       return this;
     }
   }
- const text = (...value) => {
-  const UI=new ZikoUIText(...value)
-  __UI__.text.push(UI)
-  UI.cache.order=__UI__.text.length;  
-  return UI
- }
+ const text = (...value) => new ZikoUIText(...value)
  export {text}

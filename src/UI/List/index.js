@@ -103,8 +103,7 @@ class ZikoUIList extends ZikoUIElement {
   }
 class ZikoUIOList extends ZikoUIList{
   constructor(...arr){
-    super();
-    this.element=document.createElement("ol")
+    super("ol","ol");
     this.append(...arr);
     this.render();
   }
@@ -119,8 +118,7 @@ class ZikoUIOList extends ZikoUIList{
 }
 class ZikoUIUList extends ZikoUIList{
   constructor(...arr){
-    super();
-    this.element=document.createElement("ul")
+    super("ul","ul");
     this.append(...arr);
     this.render();
   }

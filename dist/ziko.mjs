@@ -2526,6 +2526,44 @@ const Math$1 = {
   }
 };
 
+const __UI__ = {
+  text: [],
+  p: [],
+  pre: [],
+  h1: [],
+  h2: [],
+  h3: [],
+  h4: [],
+  h5: [],
+  h6: [],
+  br: [],
+  hr: [],
+  btn: [],
+  ol: [],
+  ul: [],
+  image: [],
+  video: [],
+  audio: [],
+  Article: [],
+  Main: [],
+  Section: [],
+  Aside: [],
+  Nav: [],
+  Header: [],
+  Footer: [],
+  Flex: [],
+  FlexMain: [],
+  FlexNav: [],
+  FlexHeader: [],
+  FlexFooter: [],
+  FlexSection: [],
+  FLexArticle: [],
+  FlexAside: [],
+  Table: [],
+  Svg: [],
+  Canvas: []
+};
+
 const addSuffixeToNumber = (value, suffixe = "px") => {
   if (typeof value === "number") value += suffixe;
   if (value instanceof Array) value = value.map(n => typeof n === "number" ? n += suffixe : n).join(" ");
@@ -5925,16 +5963,14 @@ const State = {
   }
 };
 
-// import styleComposer from "./Style";
 class ZikoUIElement {
-  constructor(element) {
+  constructor(element, name = "") {
     this.target = globalThis.document.body;
-    // if(element instanceof Node)
     if (typeof element === "string") element = globalThis.document.createElement(element);
     this.element = element;
-    // Object.assign(this, styleComposer.call(this));
     this.uuid = this.constructor.name + "-" + Random.string(10);
     this.cache = {
+      name,
       isRoot: false,
       isHidden: false,
       isFrozzen: false,
@@ -5967,6 +6003,7 @@ class ZikoUIElement {
       padding: 0
     });
     this.size("auto", "auto");
+    __UI__[this.cache.name].push(this);
   }
   get st() {
     return this.cache.style;
@@ -6362,48 +6399,6 @@ class ZikoUIElement {
 
   // toggleSlide() {}
 
-  // scaleX(sc, t = 1) {
-  //   this.style({
-  //     transform: "scaleX(" + sc + ")",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // scaleY(sc, t = 1) {
-  //   this.style({
-  //     transform: "scaleY(" + sc + ")",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // skewX(deg, t = 1) {
-  //   this.style({
-  //     transform: "skewX(" + deg + "deg)",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // skewY(deg, t = 1) {
-  //   this.style({
-  //     transform: "skewY(" + deg + "deg)",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // skew(x, y, t = 1) {
-  //   this.style({
-  //     transform: "skew(" + x + "deg , " + y + "deg)",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
-  // scale(x, y = x, t = 1) {
-  //   this.style({
-  //     transform: "scale(" + x + "," + y + ")",
-  //     transition: "all " + t + "s ease",
-  //   });
-  //   return this;
-  // }
   // resize(n = 0) {
   //   switch (n) {
   //     case 0:
@@ -6475,240 +6470,9 @@ class ZikoUIElement {
   // }
 }
 
-function set_vertical(direction) {
-  direction == 1 ? this.style({
-    flexDirection: "column"
-  }) : direction == -1 && this.style({
-    flexDirection: "column-reverse"
-  });
-  return this;
-}
-function set_horizontal(direction) {
-  direction == 1 ? this.style({
-    flexDirection: "row"
-  }) : direction == -1 && this.style({
-    flexDirection: "row-reverse"
-  });
-  return this;
-}
-function map_pos_x(align) {
-  let pos = ["flex-start", "center", "flex-end"];
-  if (typeof align === "number") align = pos[align + 1];
-  return align;
-}
-function map_pos_y(align) {
-  return map_pos_x(-align);
-}
-class ZikoUIFlex extends ZikoUIElement {
-  constructor(tag = "div", w = "100%", h = "100%") {
-    super();
-    this.element = document.createElement(tag);
-    this.direction = "cols";
-    if (typeof w == "number") w += "%";
-    if (typeof h == "number") h += "%";
-    this.style({
-      width: w,
-      height: h
-    });
-    this.style({
-      display: "flex"
-    });
-    this.render();
-  }
-  resp(px, wrap = true) {
-    this.wrap(wrap);
-    if (this.element.clientWidth < px) this.vertical();else this.horizontal();
-    return this;
-  }
-  setSpaceAround() {
-    this.style({
-      justifyContent: "space-around"
-    });
-    return this;
-  }
-  setSpaceBetween() {
-    this.style({
-      justifyContent: "space-between"
-    });
-    return this;
-  }
-  setBaseline() {
-    this.style({
-      alignItems: "baseline"
-    });
-    return this;
-  }
-  gap(g) {
-    if (this.direction === "row") this.style({
-      columnGap: g
-    });else if (this.direction === "column") this.style({
-      rowGap: g
-    });
-    return this;
-  }
-  wrap(value = "wrap") {
-    const values = ["no-wrap", "wrap", "wrap-reverse"];
-    this.style({
-      flexWrap: typeof value === "string" ? value : values[+value]
-    });
-    return this;
-  }
-  _justifyContent(align = "center") {
-    this.style({
-      justifyContent: align
-    });
-    return this;
-  }
-  vertical(x, y, order = 1) {
-    set_vertical.call(this, order);
-    this.style({
-      alignItems: typeof x === "number" ? map_pos_x.call(this, x) : x,
-      justifyContent: typeof y == "number" ? map_pos_y.call(this, y) : y
-    });
-    return this;
-  }
-  horizontal(x, y, order = 1) {
-    set_horizontal.call(this, order);
-    this.style({
-      alignItems: typeof y == "number" ? map_pos_y.call(this, y) : y,
-      justifyContent: typeof x === "number" ? map_pos_x.call(this, x) : x
-    });
-    return this;
-  }
-  show() {
-    this.isHidden = false;
-    this.style({
-      display: "flex"
-    });
-    return this;
-  }
-}
-const Flex = (...ZikoUIElement) => {
-  let tag = "div";
-  if (typeof ZikoUIElement[0] === "string") {
-    tag = ZikoUIElement[0];
-    ZikoUIElement.pop();
-  }
-  return new ZikoUIFlex(tag).append(...ZikoUIElement);
-};
-
-class ZikoSeo {
-  constructor(app) {
-    this.app = app;
-    this.meta = {};
-    this.#setMeta("generator", "zikojs");
-  }
-  #setMeta(key, value) {
-    const meta = document.querySelector(`meta[name=${key}]`);
-    this.meta = meta ? meta : document.createElement("meta");
-    this.meta.setAttribute("name", key);
-    this.meta.setAttribute("content", value);
-    if (!meta) this.app.head.append(this.meta);
-    return this;
-  }
-  charset(charset = "utf-8") {
-    const meta = document.querySelector("meta[charset]");
-    this.meta = meta ? meta : document.createElement("meta");
-    this.meta.setAttribute("charset", charset);
-    if (!meta) this.app.head.append(this.meta);
-    return this;
-  }
-  description(description) {
-    this.#setMeta("description", description);
-    return this;
-  }
-  viewport(viewport = "width=device-width, initial-scale=1.0") {
-    this.#setMeta("viewport", viewport);
-    return this;
-  }
-  keywords(...keywords) {
-    keywords.push("zikojs");
-    keywords = [...new Set(keywords)].join(", ");
-    this.#setMeta("keywords", keywords);
-    return this;
-  }
-  author(name = "", email = "") {
-    const author = [name, email].join(", ");
-    this.#setMeta("author", author);
-    return this;
-  }
-}
-const Seo = app => new ZikoSeo(app);
-
-class ZikoUIApp extends ZikoUIFlex {
-  constructor() {
-    super("main");
-    this.root = document.documentElement;
-    this.head = null;
-    this.#init();
-    this.seo = Seo(this);
-    Object.assign(this.cache, {
-      theme: null,
-      isRoot: true
-    });
-    this.render();
-  }
-  #init() {
-    this.root.setAttribute("data-engine", "zikojs");
-    const head = this.root.getElementsByTagName("head")[0];
-    this.head = head ? head : this.head = document.createElement("head");
-    if (!head) this.root.insertBefore(this.head, document.body);
-    const title = this.head.getElementsByTagName("title")[0];
-    this.Title = title ? title : document.createElement("title");
-    if (!title) this.head.append(this.Title);
-  }
-  title(title = this.title.textContent) {
-    this.Title.textContent = title;
-    return this;
-  }
-  prefetch() {}
-  description() {}
-}
-const App = (...UIElement) => new ZikoUIApp().append(...UIElement);
-
-const __UI__ = {
-  text: [],
-  p: [],
-  pre: [],
-  h1: [],
-  h2: [],
-  h3: [],
-  h4: [],
-  h5: [],
-  h6: [],
-  br: [],
-  hr: [],
-  btn: [],
-  ol: [],
-  ul: [],
-  image: [],
-  video: [],
-  audio: [],
-  Article: [],
-  Main: [],
-  Section: [],
-  Aside: [],
-  Nav: [],
-  Header: [],
-  Footer: [],
-  Flex: [],
-  FlexMain: [],
-  FlexNav: [],
-  FlexHeader: [],
-  FlexFooter: [],
-  FlexSection: [],
-  FLexArticle: [],
-  FlexAside: [],
-  Table: [],
-  Svg: [],
-  Canvas: []
-};
-
-const __init__ = () => document.documentElement.setAttribute("data-engine", "zikojs");
-
 class ZikoUIText extends ZikoUIElement {
   constructor(...value) {
-    super();
+    super("span", "text");
     this.element = document.createElement("span");
     this.text = "";
     this.addValue(...value);
@@ -6760,17 +6524,11 @@ class ZikoUIText extends ZikoUIElement {
     return this;
   }
 }
-const text = (...value) => {
-  const UI = new ZikoUIText(...value);
-  __UI__.text.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
+const text = (...value) => new ZikoUIText(...value);
 
 class ZikoUIParagraphe extends ZikoUIElement {
   constructor(...value) {
-    super();
-    this.element = document.createElement("p");
+    super("p", "p");
     this.addValue(...value);
     this.style({
       margin: 0,
@@ -6797,16 +6555,11 @@ class ZikoUIParagraphe extends ZikoUIElement {
     return this;
   }
 }
-const p = (...ZikoUIElement) => {
-  const UI = new ZikoUIParagraphe().append(...ZikoUIElement);
-  __UI__.p.push(UI);
-  UI.cache.order = __UI__.p.length;
-  return UI;
-};
+const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
 
 class ZikoUIHeading extends ZikoUIElement {
   constructor(type = 1, value = "") {
-    super();
+    super(`h${type}`, `h${type}`);
     this.element = document.createElement("h" + type);
     this.element.textContent = value;
     this.render();
@@ -6823,42 +6576,12 @@ class ZikoUIHeading extends ZikoUIElement {
     return this;
   }
 }
-const h1 = (text = "") => {
-  const UI = new ZikoUIHeading(1, text);
-  __UI__.h1.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
-const h2 = (text = "") => {
-  const UI = new ZikoUIHeading(2, text);
-  __UI__.h2.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
-const h3 = (text = "") => {
-  const UI = new ZikoUIHeading(3, text);
-  __UI__.h3.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
-const h4 = (text = "") => {
-  const UI = new ZikoUIHeading(4, text);
-  __UI__.h4.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
-const h5 = (text = "") => {
-  const UI = new ZikoUIHeading(5, text);
-  __UI__.h5.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
-const h6 = (text = "") => {
-  const UI = new ZikoUIHeading(6, text);
-  __UI__.h6.push(UI);
-  UI.cache.order = __UI__.text.length;
-  return UI;
-};
+const h1 = (text = "") => new ZikoUIHeading(1, text);
+const h2 = (text = "") => new ZikoUIHeading(2, text);
+const h3 = (text = "") => new ZikoUIHeading(3, text);
+const h4 = (text = "") => new ZikoUIHeading(4, text);
+const h5 = (text = "") => new ZikoUIHeading(5, text);
+const h6 = (text = "") => new ZikoUIHeading(6, text);
 
 class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
@@ -6987,8 +6710,7 @@ class ZikoUIList extends ZikoUIElement {
 }
 class ZikoUIOList extends ZikoUIList {
   constructor(...arr) {
-    super();
-    this.element = document.createElement("ol");
+    super("ol", "ol");
     this.append(...arr);
     this.render();
   }
@@ -7003,8 +6725,7 @@ class ZikoUIOList extends ZikoUIList {
 }
 class ZikoUIUList extends ZikoUIList {
   constructor(...arr) {
-    super();
-    this.element = document.createElement("ul");
+    super("ul", "ul");
     this.append(...arr);
     this.render();
   }
@@ -7404,9 +7125,56 @@ class ZikoUISelect extends ZikoUIElement {
 }
 const select = () => new ZikoUISelect();
 
+class ZikoUIImage extends ZikoUIElement {
+  constructor(src, w, h) {
+    super("image", "image");
+    this.element = document.createElement("img");
+    this.value = src;
+    if (src.nodeName === "IMG") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
+    if (typeof w == "number") w += "%";
+    if (typeof h == "number") h += "%";
+    this.style({
+      border: "1px solid black",
+      width: w,
+      height: h
+    });
+    this.render();
+  }
+  updateSrc(url) {
+    this.value = url;
+    this.element.src = url;
+    return this;
+  }
+  toggleSrc(...values) {
+    values = values.map(n => "" + n);
+    let index = values.indexOf("" + this.value);
+    if (index != -1 && index != values.length - 1) this.updateSrc(values[index + 1]);else this.updateSrc(values[0]);
+    return this;
+  }
+  alt(alt) {
+    this.element.alt = alt;
+    return this;
+  }
+}
+const image = (src, width, height) => new ZikoUIImage(src, width, height);
+
+class ZikoUIFigure extends ZikoUIElement {
+  constructor(src, caption) {
+    super();
+    this.element = document.createElement("figure");
+    this.img = src.width("100%").element;
+    this.caption = document.createElement("figcaption");
+    this.caption.append(caption.element);
+    this.element.append(this.img);
+    this.element.append(this.caption);
+    this.render();
+  }
+}
+const figure = (image, caption) => new ZikoUIFigure(image, caption);
+
 class ZikoUIVideo extends ZikoUIElement {
   constructor(src = "", w = "100%", h = "50vh") {
-    super();
+    super("video", "video");
     this.element = document.createElement("video");
     if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
     if (typeof w == "number") w += "%";
@@ -7438,6 +7206,30 @@ class ZikoUIVideo extends ZikoUIElement {
     return this;
   }
 }
+const video = (src, width, height) => new ZikoUIVideo(src, width, height);
+
+class ZikoUIAudio extends ZikoUIElement {
+  constructor(src) {
+    super("audio", "audio");
+    this.element = document.createElement("audio");
+    this.element.setAttribute("src", src);
+    this.render();
+    this.controls();
+  }
+  controls(enabled = true) {
+    this.element.controls = enabled;
+    return this;
+  }
+  play() {
+    this.element.play();
+    return this;
+  }
+  pause() {
+    this.element.pause();
+    return this;
+  }
+}
+const audio = src => new ZikoUIAudio(src);
 
 class ZikoUIWebcame extends ZikoUIVideo {
   constructor() {
@@ -7466,74 +7258,122 @@ class ZikoUIWebcame extends ZikoUIVideo {
 }
 const inputCamera = () => new ZikoUIWebcame();
 
-class ZikoUIImage extends ZikoUIElement {
-  constructor(src, w, h) {
+function set_vertical(direction) {
+  direction == 1 ? this.style({
+    flexDirection: "column"
+  }) : direction == -1 && this.style({
+    flexDirection: "column-reverse"
+  });
+  return this;
+}
+function set_horizontal(direction) {
+  direction == 1 ? this.style({
+    flexDirection: "row"
+  }) : direction == -1 && this.style({
+    flexDirection: "row-reverse"
+  });
+  return this;
+}
+function map_pos_x(align) {
+  let pos = ["flex-start", "center", "flex-end"];
+  if (typeof align === "number") align = pos[align + 1];
+  return align;
+}
+function map_pos_y(align) {
+  return map_pos_x(-align);
+}
+class ZikoUIFlex extends ZikoUIElement {
+  constructor(tag = "div", w = "100%", h = "100%") {
     super();
-    this.element = document.createElement("img");
-    this.value = src;
-    if (src.nodeName === "IMG") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
+    this.element = document.createElement(tag);
+    this.direction = "cols";
     if (typeof w == "number") w += "%";
     if (typeof h == "number") h += "%";
     this.style({
-      border: "1px solid black",
       width: w,
       height: h
     });
+    this.style({
+      display: "flex"
+    });
     this.render();
   }
-  updateSrc(url) {
-    this.value = url;
-    this.element.src = url;
+  resp(px, wrap = true) {
+    this.wrap(wrap);
+    if (this.element.clientWidth < px) this.vertical();else this.horizontal();
     return this;
   }
-  toggleSrc(...values) {
-    values = values.map(n => "" + n);
-    let index = values.indexOf("" + this.value);
-    if (index != -1 && index != values.length - 1) this.updateSrc(values[index + 1]);else this.updateSrc(values[0]);
+  setSpaceAround() {
+    this.style({
+      justifyContent: "space-around"
+    });
     return this;
   }
-  alt(alt) {
-    this.element.alt = alt;
+  setSpaceBetween() {
+    this.style({
+      justifyContent: "space-between"
+    });
+    return this;
+  }
+  setBaseline() {
+    this.style({
+      alignItems: "baseline"
+    });
+    return this;
+  }
+  gap(g) {
+    if (this.direction === "row") this.style({
+      columnGap: g
+    });else if (this.direction === "column") this.style({
+      rowGap: g
+    });
+    return this;
+  }
+  wrap(value = "wrap") {
+    const values = ["no-wrap", "wrap", "wrap-reverse"];
+    this.style({
+      flexWrap: typeof value === "string" ? value : values[+value]
+    });
+    return this;
+  }
+  _justifyContent(align = "center") {
+    this.style({
+      justifyContent: align
+    });
+    return this;
+  }
+  vertical(x, y, order = 1) {
+    set_vertical.call(this, order);
+    this.style({
+      alignItems: typeof x === "number" ? map_pos_x.call(this, x) : x,
+      justifyContent: typeof y == "number" ? map_pos_y.call(this, y) : y
+    });
+    return this;
+  }
+  horizontal(x, y, order = 1) {
+    set_horizontal.call(this, order);
+    this.style({
+      alignItems: typeof y == "number" ? map_pos_y.call(this, y) : y,
+      justifyContent: typeof x === "number" ? map_pos_x.call(this, x) : x
+    });
+    return this;
+  }
+  show() {
+    this.isHidden = false;
+    this.style({
+      display: "flex"
+    });
     return this;
   }
 }
-class ZikoUIAudio extends ZikoUIElement {
-  constructor(src) {
-    super();
-    this.element = document.createElement("audio");
-    this.element.setAttribute("src", src);
-    this.render();
-    this.controls();
+const Flex = (...ZikoUIElement) => {
+  let tag = "div";
+  if (typeof ZikoUIElement[0] === "string") {
+    tag = ZikoUIElement[0];
+    ZikoUIElement.pop();
   }
-  controls(enabled = true) {
-    this.element.controls = enabled;
-    return this;
-  }
-  play() {
-    this.element.play();
-    return this;
-  }
-  pause() {
-    this.element.pause();
-    return this;
-  }
-}
-class ZikoUIFigure extends ZikoUIElement {
-  constructor(src, caption) {
-    super();
-    this.element = document.createElement("figure");
-    this.img = src.width("100%").element;
-    this.caption = document.createElement("figcaption");
-    this.caption.append(caption.element);
-    this.element.append(this.img);
-    this.element.append(this.caption);
-    this.render();
-  }
-}
-const image = (src, width, height) => new ZikoUIImage(src, width, height);
-const audio = src => new ZikoUIAudio(src);
-const figure = (image, caption) => new ZikoUIFigure(image, caption);
-const video = (src, width, height) => new ZikoUIVideo(src, width, height);
+  return new ZikoUIFlex(tag).append(...ZikoUIElement);
+};
 
 class ZikoUIGrid extends ZikoUIElement {
   constructor(tag = "div", w = "50vw", h = "50vh") {
@@ -7786,29 +7626,25 @@ const Accordion = (summary, content, icon) => new ZikoUIAccordion(summary, conte
 
 class ZikoUIMain extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("main");
+    super("main", "Main");
     this.render();
   }
 }
 class ZikoUIHeader extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("header");
+    super("header", "Header");
     this.render();
   }
 }
 class ZikoUINav extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("nav");
+    super("nav", "Nav");
     this.render();
   }
 }
 class ZikoUISection extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("section");
+    super("section", "Section");
     this.style({
       position: "relative"
     });
@@ -7817,21 +7653,19 @@ class ZikoUISection extends ZikoUIElement {
 }
 class ZikoUIArticle extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("article");
+    super("article", "Article");
     this.render();
   }
 }
 class ZikoUIAside extends ZikoUIElement {
   constructor() {
-    super();
-    this.element = document.createElement("aside");
+    super("aside", "Aside");
     this.render();
   }
 }
 class ZikoUIFooter extends ZikoUIElement {
   constructor() {
-    super();
+    super("footer", "Footer");
     this.element = document.createElement("footer");
     this.render();
   }
@@ -7915,8 +7749,7 @@ class ZikoUITable extends ZikoUIElement {
     head = null,
     foot = null
   } = {}) {
-    super();
-    this.element = document.createElement("table");
+    super("table", "Table");
     this.structure = {
       caption,
       head,
@@ -9630,6 +9463,82 @@ class ZikoSPA {
 }
 const SPA = (root_UI, routes, patterns) => new ZikoSPA(root_UI, routes, patterns);
 
+class ZikoSeo {
+  constructor(app) {
+    this.app = app;
+    this.meta = {};
+    this.#setMeta("generator", "zikojs");
+  }
+  #setMeta(key, value) {
+    const meta = document.querySelector(`meta[name=${key}]`);
+    this.meta = meta ? meta : document.createElement("meta");
+    this.meta.setAttribute("name", key);
+    this.meta.setAttribute("content", value);
+    if (!meta) this.app.head.append(this.meta);
+    return this;
+  }
+  charset(charset = "utf-8") {
+    const meta = document.querySelector("meta[charset]");
+    this.meta = meta ? meta : document.createElement("meta");
+    this.meta.setAttribute("charset", charset);
+    if (!meta) this.app.head.append(this.meta);
+    return this;
+  }
+  description(description) {
+    this.#setMeta("description", description);
+    return this;
+  }
+  viewport(viewport = "width=device-width, initial-scale=1.0") {
+    this.#setMeta("viewport", viewport);
+    return this;
+  }
+  keywords(...keywords) {
+    keywords.push("zikojs");
+    keywords = [...new Set(keywords)].join(", ");
+    this.#setMeta("keywords", keywords);
+    return this;
+  }
+  author(name = "", email = "") {
+    const author = [name, email].join(", ");
+    this.#setMeta("author", author);
+    return this;
+  }
+}
+const Seo = app => new ZikoSeo(app);
+
+class ZikoUIApp extends ZikoUIFlex {
+  constructor() {
+    super("main");
+    this.root = document.documentElement;
+    this.head = null;
+    this.#init();
+    this.seo = Seo(this);
+    Object.assign(this.cache, {
+      theme: null,
+      isRoot: true
+    });
+    this.render();
+  }
+  #init() {
+    this.root.setAttribute("data-engine", "zikojs");
+    const head = this.root.getElementsByTagName("head")[0];
+    this.head = head ? head : this.head = document.createElement("head");
+    if (!head) this.root.insertBefore(this.head, document.body);
+    const title = this.head.getElementsByTagName("title")[0];
+    this.Title = title ? title : document.createElement("title");
+    if (!title) this.head.append(this.Title);
+  }
+  title(title = this.title.textContent) {
+    this.Title.textContent = title;
+    return this;
+  }
+  prefetch() {}
+  description() {}
+}
+const App = (...UIElement) => new ZikoUIApp().append(...UIElement);
+
+const __init__ = () => document.documentElement.setAttribute("data-engine", "zikojs");
+
 const Ziko = {
   App,
   Math: Math$1,
@@ -9643,6 +9552,7 @@ const Ziko = {
   __UI__
 };
 globalThis.__Ziko__ = Ziko;
+globalThis.__UI__ = __UI__;
 function ExtractAll() {
   UI$1.ExtractAll();
   Math$1.ExtractAll();
@@ -9663,4 +9573,4 @@ function RemoveAll() {
   Data.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, __UI__, __init__, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHtmlTag, ZikoUIImage, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

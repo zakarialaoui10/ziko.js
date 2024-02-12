@@ -1,7 +1,7 @@
-import ZikoUIElement from "../ZikoUIElement.js";
+import ZikoUIElement from "../../ZikoUIElement.js";
 class ZikoUIVideo extends ZikoUIElement {
     constructor(src="", w = "100%", h = "50vh") {
-      super();
+      super("video","video");
       this.element = document.createElement("video");
       if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);
       else this.element.setAttribute("src", src);
@@ -31,6 +31,8 @@ class ZikoUIVideo extends ZikoUIElement {
       return this;
     }
   }
+const video = (src, width, height) => new ZikoUIVideo(src, width, height);
 export {
-    ZikoUIVideo
+  video,
+  ZikoUIVideo
 }

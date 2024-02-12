@@ -7,6 +7,5 @@ export {
     DarkThemes
 } from "./Themes";
 export {
-    __UI__,
     __init__
 } from "./Globals"

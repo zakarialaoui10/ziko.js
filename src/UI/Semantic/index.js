@@ -1,51 +1,44 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import { ZikoUIFlex } from "../CustomElement/Flex.js";
 class ZikoUIMain extends ZikoUIElement{
     constructor(){
-      super();
-      this.element=document.createElement("main");
+      super("main","Main");
       this.render();
     }
   }
   class ZikoUIHeader extends ZikoUIElement{
     constructor(){
-      super();
-      this.element=document.createElement("header");
+      super("header","Header");
       this.render();
     }
   }
   class ZikoUINav extends ZikoUIElement{
     constructor(){
-      super();
-      this.element=document.createElement("nav");
+      super("nav","Nav");
       this.render();
     }
   }
   class ZikoUISection extends ZikoUIElement{
     constructor(){
-      super();
-      this.element=document.createElement("section");
+      super("section","Section");
       this.style({position:"relative"})
       this.render();
     }
   }
   class ZikoUIArticle extends ZikoUIElement{
     constructor(){
-      super();
-      this.element=document.createElement("article");
+      super("article","Article");
       this.render();
     }
   }
   class ZikoUIAside extends ZikoUIElement{
     constructor(){
-      super();
-      this.element=document.createElement("aside");
+      super("aside","Aside");
       this.render();
     }
   }
   class ZikoUIFooter extends ZikoUIElement{
     constructor(){
-      super();
+      super("footer","Footer");
       this.element=document.createElement("footer");
       this.render();
     }
@@ -65,5 +58,11 @@ export{
   Aside,
   Nav,
   Footer,
-  ZikoUISection
-  }
+  ZikoUIHeader,
+  ZikoUIMain,
+  ZikoUISection,
+  ZikoUIArticle,
+  ZikoUIAside,
+  ZikoUINav,
+  ZikoUIFooter
+}
