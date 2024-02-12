@@ -6,7 +6,8 @@ import {
  } from "./UI";
 import { 
     useEventEmitter,
-    useChannel
+    useChannel,
+    useThread
  } from "./Interactions";
 import { 
     useBattery,
@@ -46,10 +47,11 @@ export default State;
 export{
     useStyle,
     useTheme,
+    useTitle,
+    useFavIcon,
     useBattery,
     useGeolocation,
     useEventEmitter,
     useChannel,
-    useTitle,
-    useFavIcon
+    useThread
 }

@@ -1,15 +1,14 @@
-import Math from "./Math";
-import UI from "./UI";
-import Time from "./Time";
-import Data from "./Data";
-import Events from "./Reactivity/Events";
-import Use from "./Reactivity/Use";
-import Graphics from "./Graphics";
-import Multi from "./Worker";
-import {SPA} from "./App/Router";
-import ALL_UI_ELEMENTS from "./UI/all.js";
+import Math from "./Math/index.js";
+import UI from "./UI/index.js";
+import Time from "./Time/index.js";
+import Data from "./Data/index.js";
+import Events from "./Reactivity/Events/index.js";
+import Use from "./Reactivity/Use/index.js";
+import Graphics from "./Graphics/index.js";
+import {SPA} from "./App/Router/index.js";
+import __UI__ from "./UI/all.js";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
-import { App } from "./App";
+import { App } from "./App/index.js";
 const Ziko={
     App,
     Math,
@@ -19,9 +18,8 @@ const Ziko={
     Events,
     Use,
     Data,
-    Multi,
     SPA,
-    ALL_UI_ELEMENTS,
+    __UI__,
 }
 globalThis.__Ziko__=Ziko;
 function ExtractAll(){
@@ -53,7 +51,6 @@ export {
     Events,
     Data,
     ZikoUIElement,
-    Multi,
     SPA,
     ExtractAll,
     RemoveAll

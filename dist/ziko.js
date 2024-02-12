@@ -6385,7 +6385,7 @@
     // }
   }
 
-  const ALL_UI_ELEMENTS = {
+  const __UI__ = {
     text: [],
     p: [],
     pre: [],
@@ -6479,8 +6479,8 @@
   }
   const text = (...value) => {
     const UI = new ZikoUIText(...value);
-    ALL_UI_ELEMENTS.text.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.text.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
 
@@ -6516,8 +6516,8 @@
   }
   const p = (...ZikoUIElement) => {
     const UI = new ZikoUIParagraphe().append(...ZikoUIElement);
-    ALL_UI_ELEMENTS.p.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.p.length;
+    __UI__.p.push(UI);
+    UI.cache.order = __UI__.p.length;
     return UI;
   };
 
@@ -6542,38 +6542,38 @@
   }
   const h1 = (text = "") => {
     const UI = new ZikoUIHeading(1, text);
-    ALL_UI_ELEMENTS.h1.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.h1.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
   const h2 = (text = "") => {
     const UI = new ZikoUIHeading(2, text);
-    ALL_UI_ELEMENTS.h2.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.h2.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
   const h3 = (text = "") => {
     const UI = new ZikoUIHeading(3, text);
-    ALL_UI_ELEMENTS.h3.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.h3.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
   const h4 = (text = "") => {
     const UI = new ZikoUIHeading(4, text);
-    ALL_UI_ELEMENTS.h4.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.h4.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
   const h5 = (text = "") => {
     const UI = new ZikoUIHeading(5, text);
-    ALL_UI_ELEMENTS.h5.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.h5.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
   const h6 = (text = "") => {
     const UI = new ZikoUIHeading(6, text);
-    ALL_UI_ELEMENTS.h6.push(UI);
-    UI.cache.order = ALL_UI_ELEMENTS.text.length;
+    __UI__.h6.push(UI);
+    UI.cache.order = __UI__.text.length;
     return UI;
   };
 
@@ -9434,52 +9434,6 @@
     }
   };
 
-  class Threed {
-    #workerContent;
-    constructor() {
-      this.#workerContent = function (msg) {
-        try {
-          const func = new Function("return " + msg.data.fun)();
-          let result = func();
-          postMessage({
-            result
-          });
-        } catch (error) {
-          postMessage({
-            error: error.message
-          });
-        } finally {
-          if (msg.data.close) self.close();
-        }
-      }.toString();
-      this.blob = new Blob(["this.onmessage = " + this.#workerContent], {
-        type: "text/javascript"
-      });
-      this.worker = new Worker(window.URL.createObjectURL(this.blob));
-    }
-    call(func, callback, close = true) {
-      this.worker.postMessage({
-        fun: func.toString(),
-        close
-      });
-      this.worker.onmessage = function (e) {
-        if (e.data.error) {
-          console.error(e.data.error);
-        } else {
-          callback(e.data.result);
-        }
-      };
-      return this;
-    }
-  }
-  const Multi = (func, callback, close) => {
-    const T = new Threed();
-    if (func) {
-      T.call(func, callback, close);
-    }
-    return T;
-  };
-
   class ZikoSPA {
     constructor(root_UI, routes) {
       this.root_UI = root_UI;
@@ -9581,28 +9535,6 @@
     }
     prefetch() {}
     description() {}
-    // get current(){
-    //     return {
-    //         theme:this._theme?.currentTheme,
-    //         style:this._style?.currentStyle
-    //     }
-    // }
-    // useTheme(theme){
-    //     if(!this._theme)this._theme=useTheme(theme);
-    //     this._theme.use(theme);
-    //     return this;
-    // }
-    // initStyle(styles){
-    //     if(!this._style)this._style=useStyle();
-    //     this._style.init(styles);
-    //     return this;
-    // }
-    // useStyle(usedStyle,styles){
-    //     if(!this._style)this._style=useStyle();
-    //     if(styles)this._style.add(styles);
-    //     this._style.use(usedStyle);
-    //     return this;
-    // }
   }
   const App = (...UIElement) => new ZikoUIApp().append(...UIElement);
 
@@ -9621,9 +9553,8 @@
     Events,
     Use: State,
     Data,
-    Multi,
     SPA,
-    ALL_UI_ELEMENTS
+    __UI__
   };
   globalThis.__Ziko__ = Ziko;
   function ExtractAll() {
@@ -9675,7 +9606,6 @@
   exports.Main = Main;
   exports.Math = Math$1;
   exports.Matrix = Matrix;
-  exports.Multi = Multi;
   exports.Nav = Nav;
   exports.PI = PI;
   exports.Permutation = Permutation;

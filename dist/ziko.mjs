@@ -6379,7 +6379,7 @@ class ZikoUIElement {
   // }
 }
 
-const ALL_UI_ELEMENTS = {
+const __UI__ = {
   text: [],
   p: [],
   pre: [],
@@ -6473,8 +6473,8 @@ class ZikoUIText extends ZikoUIElement {
 }
 const text = (...value) => {
   const UI = new ZikoUIText(...value);
-  ALL_UI_ELEMENTS.text.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.text.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 
@@ -6510,8 +6510,8 @@ class ZikoUIParagraphe extends ZikoUIElement {
 }
 const p = (...ZikoUIElement) => {
   const UI = new ZikoUIParagraphe().append(...ZikoUIElement);
-  ALL_UI_ELEMENTS.p.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.p.length;
+  __UI__.p.push(UI);
+  UI.cache.order = __UI__.p.length;
   return UI;
 };
 
@@ -6536,38 +6536,38 @@ class ZikoUIHeading extends ZikoUIElement {
 }
 const h1 = (text = "") => {
   const UI = new ZikoUIHeading(1, text);
-  ALL_UI_ELEMENTS.h1.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.h1.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 const h2 = (text = "") => {
   const UI = new ZikoUIHeading(2, text);
-  ALL_UI_ELEMENTS.h2.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.h2.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 const h3 = (text = "") => {
   const UI = new ZikoUIHeading(3, text);
-  ALL_UI_ELEMENTS.h3.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.h3.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 const h4 = (text = "") => {
   const UI = new ZikoUIHeading(4, text);
-  ALL_UI_ELEMENTS.h4.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.h4.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 const h5 = (text = "") => {
   const UI = new ZikoUIHeading(5, text);
-  ALL_UI_ELEMENTS.h5.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.h5.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 const h6 = (text = "") => {
   const UI = new ZikoUIHeading(6, text);
-  ALL_UI_ELEMENTS.h6.push(UI);
-  UI.cache.order = ALL_UI_ELEMENTS.text.length;
+  __UI__.h6.push(UI);
+  UI.cache.order = __UI__.text.length;
   return UI;
 };
 
@@ -9428,52 +9428,6 @@ const Graphics = {
   }
 };
 
-class Threed {
-  #workerContent;
-  constructor() {
-    this.#workerContent = function (msg) {
-      try {
-        const func = new Function("return " + msg.data.fun)();
-        let result = func();
-        postMessage({
-          result
-        });
-      } catch (error) {
-        postMessage({
-          error: error.message
-        });
-      } finally {
-        if (msg.data.close) self.close();
-      }
-    }.toString();
-    this.blob = new Blob(["this.onmessage = " + this.#workerContent], {
-      type: "text/javascript"
-    });
-    this.worker = new Worker(window.URL.createObjectURL(this.blob));
-  }
-  call(func, callback, close = true) {
-    this.worker.postMessage({
-      fun: func.toString(),
-      close
-    });
-    this.worker.onmessage = function (e) {
-      if (e.data.error) {
-        console.error(e.data.error);
-      } else {
-        callback(e.data.result);
-      }
-    };
-    return this;
-  }
-}
-const Multi = (func, callback, close) => {
-  const T = new Threed();
-  if (func) {
-    T.call(func, callback, close);
-  }
-  return T;
-};
-
 class ZikoSPA {
   constructor(root_UI, routes) {
     this.root_UI = root_UI;
@@ -9575,28 +9529,6 @@ class ZikoUIApp extends ZikoUIFlex {
   }
   prefetch() {}
   description() {}
-  // get current(){
-  //     return {
-  //         theme:this._theme?.currentTheme,
-  //         style:this._style?.currentStyle
-  //     }
-  // }
-  // useTheme(theme){
-  //     if(!this._theme)this._theme=useTheme(theme);
-  //     this._theme.use(theme);
-  //     return this;
-  // }
-  // initStyle(styles){
-  //     if(!this._style)this._style=useStyle();
-  //     this._style.init(styles);
-  //     return this;
-  // }
-  // useStyle(usedStyle,styles){
-  //     if(!this._style)this._style=useStyle();
-  //     if(styles)this._style.add(styles);
-  //     this._style.use(usedStyle);
-  //     return this;
-  // }
 }
 const App = (...UIElement) => new ZikoUIApp().append(...UIElement);
 
@@ -9615,9 +9547,8 @@ const Ziko = {
   Events,
   Use: State,
   Data,
-  Multi,
   SPA,
-  ALL_UI_ELEMENTS
+  __UI__
 };
 globalThis.__Ziko__ = Ziko;
 function ExtractAll() {
@@ -9640,4 +9571,4 @@ function RemoveAll() {
   Data.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Multi, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIAudio, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIHtmlTag, ZikoUIImage, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

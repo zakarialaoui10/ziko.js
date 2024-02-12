@@ -1,4 +1,4 @@
-const ALL_UI_ELEMENTS={
+const __UI__={
     text:[],
     p:[],
     pre:[],
@@ -35,4 +35,4 @@ const ALL_UI_ELEMENTS={
     Svg:[],
     Canvas:[]
   }
-export default ALL_UI_ELEMENTS;
+export default __UI__;
