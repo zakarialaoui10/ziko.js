@@ -7,7 +7,8 @@ import {
 import { 
     useEventEmitter,
     useChannel,
-    useThread
+    useThread,
+    useBluetooth
  } from "./Interactions";
 import { 
     useBattery,
@@ -20,6 +21,8 @@ const State={
     useGeolocation,
     useEventEmitter,
     useChannel,
+    useThread,
+    useBluetooth,
     useTitle,
     useFavIcon,
     ExtractAll: function () {
@@ -53,5 +56,6 @@ export{
     useGeolocation,
     useEventEmitter,
     useChannel,
-    useThread
+    useThread,
+    useBluetooth
 }

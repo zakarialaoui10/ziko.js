@@ -5748,6 +5748,99 @@ class ZikoUseChannel {
 }
 const useChannel = name => new ZikoUseChannel(name);
 
+class ZikoUseThreed {
+  #workerContent;
+  constructor() {
+    this.#workerContent = function (msg) {
+      try {
+        const func = new Function("return " + msg.data.fun)();
+        let result = func();
+        postMessage({
+          result
+        });
+      } catch (error) {
+        postMessage({
+          error: error.message
+        });
+      } finally {
+        if (msg.data.close) self.close();
+      }
+    }.toString();
+    this.blob = new Blob(["this.onmessage = " + this.#workerContent], {
+      type: "text/javascript"
+    });
+    this.worker = new Worker(window.URL.createObjectURL(this.blob));
+  }
+  call(func, callback, close = true) {
+    this.worker.postMessage({
+      fun: func.toString(),
+      close
+    });
+    this.worker.onmessage = function (e) {
+      if (e.data.error) {
+        console.error(e.data.error);
+      } else {
+        callback(e.data.result);
+      }
+    };
+    return this;
+  }
+}
+const useThread = (func, callback, close) => {
+  const T = new ZikoUseThreed();
+  if (func) {
+    T.call(func, callback, close);
+  }
+  return T;
+};
+
+class ZikoUseBluetooth {
+  constructor(options = {
+    acceptAllDevices: true
+  }) {
+    this.options = options;
+    this.__Emitter__ = useEventEmitter();
+    if (this.isSupported) this.#init();
+  }
+  async #init() {
+    this.promise = navigator.bluetooth.requestDevice(this.options).then(device => this.device = device);
+  }
+  get isSupported() {
+    return !!navigator.bluetooth;
+  }
+  get current() {
+    // Synchrouns Code
+    return this.device;
+  }
+  connect() {
+    this.server = this.device.gatt.connect();
+    this.__Emitter__.emit("ziko:bluetooth-connected");
+    return this;
+  }
+  disconnect() {
+    this.device.gatt.disconnect();
+    this.__Emitter__.emit("ziko:bluetooth-disconnected");
+    return this;
+  }
+  onConnect(callback) {
+    this.__Emitter__.on("ziko:bluetooth-connected", callback);
+    return this;
+  }
+  onDisconnect(callback) {
+    this.__Emitter__.on("ziko:bluetooth-disconnected", callback);
+    return this;
+  }
+  dispose() {}
+  async battery(callback) {
+    const batteryService = await this.server.getPrimaryService("battery_service");
+    const batteryLevelCharacteristic = await batteryService.getCharacteristic("battery_level");
+    const batteryLevel = await batteryLevelCharacteristic.readValue();
+    const batteryPercent = await batteryLevel.getUint8(0);
+    callback(batteryPercent);
+  }
+}
+const useBluetooth = options => new ZikoUseBluetooth(options);
+
 class ZikoUseBattery {
   constructor() {
     if (this.isSupported) this.#init();
@@ -5808,6 +5901,8 @@ const State = {
   useGeolocation,
   useEventEmitter,
   useChannel,
+  useThread,
+  useBluetooth,
   useTitle,
   useFavIcon,
   ExtractAll: function () {
