@@ -46,8 +46,5 @@ class ZikoUseChannel{
         return this;
     }
 }
-
-const Channel=name=>new ZikoChannel(name)
-export {Channel}
 const useChannel=name=>new ZikoUseChannel(name);
 export{ useChannel }

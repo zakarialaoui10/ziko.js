@@ -1,6 +1,6 @@
-import{Complex} from "../Complex/index.js";
-import{Matrix}from "../Matrix/index.js"
-var Base={
+import { Complex } from "../../Complex";
+import { Matrix } from "../../Matrix";
+const Base={
     _mode:Number,
     _map:function(func,number,toBase){
         if (number instanceof Matrix)
