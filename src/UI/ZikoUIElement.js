@@ -28,11 +28,11 @@ class ZikoUIElement {
       isRoot:false,
       isHidden: false,
       isFrozzen:false,
-      transformMatrix:matrix([
-        [0,0,0],
-        [0,0,0],
-        [1,1,0]
-      ]),
+      // transformMatrix:matrix([
+      //   [0,0,0],
+      //   [0,0,0],
+      //   [1,1,0]
+      // ]),
       style: ZikoStyle({}),
       attributes: {},
       filters: {},
@@ -233,14 +233,6 @@ class ZikoUIElement {
   get cloneElement() {
     return this.element.cloneNode(true);
   }
-  // get styleObject() {
-  //   //let borderPlus
-  //   return Object.fromEntries(
-  //     Object.entries(this.element.style).filter(
-  //       (n) => n[1] != "" && n[1] !== "initial" && isNaN(+n[0]),
-  //     ),
-  //   );
-  // }
   setClasses(...value) {
     this.setAttr("class", value.join(" "));
     return this;
@@ -455,25 +447,7 @@ class ZikoUIElement {
   
   // toggleSlide() {}
 
-  // resize(n = 0) {
-  //   switch (n) {
-  //     case 0:
-  //       this.style({ resize: "none" });
-  //       break;
-  //     case 1:
-  //       this.style({ resize: "horizontal" });
-  //       break;
-  //     case 2:
-  //       this.style({ resize: "vertical" });
-  //       break;
-  //     case 3:
-  //       this.style({ resize: "both" });
-  //       break;
-  //     default:
-  //       this.style({ resize: n });
-  //   }
-  //   return this;
-  // }
+
   // Glassmorphism(background = "rgba(255,255,255,0.1)", blur = "1px") {
   //   this.style({ background: background, backdropFilter: blur });
   //   return this;

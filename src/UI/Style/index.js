@@ -110,7 +110,14 @@ class ZikoUIElementStyle{
           this.style({height:h},{ target, maskVector });
         }
         return this
-    }    
+    } 
+    enableResize(h=false,v=false){
+        let resize="none";
+        if(h)v?resize="both":resize="horizontal";
+        else v?resize="vertical":resize="none";
+        this.style({resize},{ target, maskVector });
+        return this;
+    }   
     // Apparence
     hide({after, target, maskVector } = {}){
         if(typeof after==="number"){
