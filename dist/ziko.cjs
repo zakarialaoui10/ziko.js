@@ -3169,22 +3169,34 @@ class ZikoUIElementStyle {
       transition: `transform ${t / 1000}s ease`
     });
   }
-  translate(x, y = x, t = 0) {
+  translate(x, y = x, z = 0, t = 0) {
     this.cache.transformation.matrix.set(3, 0, x);
     this.cache.transformation.matrix.set(3, 1, y);
-    this.cache.transformation.matrix.arr.join(",");
+    this.cache.transformation.matrix.set(3, 2, z);
     this.#applyTransformMatrix(t);
     return this;
   }
   translateX(x, t = 0) {
     this.cache.transformation.matrix.set(3, 0, x);
-    this.cache.transformation.matrix.arr.join(",");
     this.#applyTransformMatrix(t);
     return this;
   }
   translateY(y, t = 0) {
     this.cache.transformation.matrix.set(3, 1, y);
-    this.cache.transformation.matrix.arr.join(",");
+    this.#applyTransformMatrix(t);
+    return this;
+  }
+  translateZ(z, t = 0) {
+    const d = -1 / this.cache.transformation.matrix[2][2];
+    this.cache.transformation.matrix.set(3, 2, z);
+    this.cache.transformation.matrix.set(3, 3, 1 - z / d);
+    this.#applyTransformMatrix(t);
+    return this;
+  }
+  perspective(d, t = 0) {
+    const z = this.cache.transformation.matrix[3][2];
+    this.cache.transformation.matrix.set(2, 2, -1 / d);
+    this.cache.transformation.matrix.set(3, 3, 1 - z / d);
     this.#applyTransformMatrix(t);
     return this;
   }
