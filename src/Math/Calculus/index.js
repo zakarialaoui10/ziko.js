@@ -1,1 +1,1 @@
-export * from "./specialfunc.js"
+export * from "./Special Functions"

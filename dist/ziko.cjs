@@ -269,6 +269,8 @@ const _gamma = x => {
   const t = x + g + 0.5;
   return +(Math.sqrt(2 * Math.PI) * Math.pow(t, x + 0.5) * Math.exp(-t) * a).toFixed(10);
 };
+const gamma = (...x) => mapfun(_gamma, ...x);
+
 const _bessel = (n, x) => {
   const maxTerms = 100;
   let result = 0;
@@ -279,6 +281,20 @@ const _bessel = (n, x) => {
   }
   return result;
 };
+const bessel = (n, x) => {
+  if (typeof n === "number") {
+    if (typeof n === "number") return _bessel(n, x);else console.warn("Not supported yet");
+  } else if (n instanceof Array) {
+    if (typeof x === "number") return mapfun(a => _bessel(a, x), ...n);else if (x instanceof Array) {
+      const Y = [];
+      for (let i = 0; i < n.length; i++) {
+        Y.push(mapfun(a => _bessel(n[i], a), ...x));
+      }
+      return Y;
+    }
+  }
+};
+
 const _beta = (x, y) => {
   const lowerLimit = 0;
   const upperLimit = 1;
@@ -292,20 +308,6 @@ const _beta = (x, y) => {
     result += f(xi);
   }
   return result * h;
-};
-const gamma = (...x) => mapfun(_gamma, ...x);
-const bessel = (n, x) => {
-  if (typeof n === "number") {
-    if (typeof n === "number") return _bessel(n, x);else console.warn("Not supported yet");
-  } else if (n instanceof Array) {
-    if (typeof x === "number") return mapfun(a => _bessel(a, x), ...n);else if (x instanceof Array) {
-      const Y = [];
-      for (let i = 0; i < n.length; i++) {
-        Y.push(mapfun(a => _bessel(n[i], a), ...x));
-      }
-      return Y;
-    }
-  }
 };
 const beta = (x, y) => {
   if (typeof x === "number") {
@@ -2636,6 +2638,13 @@ class ZikoUIElementStyle {
     this.target.element.addEventListener("pointerleave", () => this.use("default"));
     return this;
   }
+  // Checkers 
+  isInline() {
+    return getComputedStyle(this.target.element).display.includes("inline");
+  }
+  isBlock() {
+    return !this.isInline();
+  }
   // Size
   size(width, height, {
     target,
@@ -2713,6 +2722,27 @@ class ZikoUIElementStyle {
         target,
         maskVector
       });
+    }
+    return this;
+  }
+  enableResize(h = false, v = false, {
+    target,
+    maskVector
+  } = {}) {
+    let resize = "none";
+    if (h) v ? resize = "both" : resize = "horizontal";else v ? resize = "vertical" : resize = "none";
+    this.style({
+      resize,
+      overflow: "hidden"
+    }, {
+      target,
+      maskVector
+    });
+    if (this.isInline()) {
+      console.group("Ziko Issue : Temporarily Incompatible Method");
+      console.warn(".enableResize has no effect on inline elements!");
+      console.info("%cConsider using other display types such as block, inline-block, flex, or grid for proper resizing behavior.", "color:gold;background-color:#3333cc;padding:5px");
+      console.groupEnd();
     }
     return this;
   }
@@ -5988,7 +6018,11 @@ class ZikoUIElement {
       isRoot: false,
       isHidden: false,
       isFrozzen: false,
-      transformMatrix: matrix([[0, 0, 0], [0, 0, 0], [1, 1, 0]]),
+      // transformMatrix:matrix([
+      //   [0,0,0],
+      //   [0,0,0],
+      //   [1,1,0]
+      // ]),
       style: ZikoStyle({}),
       attributes: {},
       filters: {}
@@ -6194,14 +6228,6 @@ class ZikoUIElement {
   get cloneElement() {
     return this.element.cloneNode(true);
   }
-  // get styleObject() {
-  //   //let borderPlus
-  //   return Object.fromEntries(
-  //     Object.entries(this.element.style).filter(
-  //       (n) => n[1] != "" && n[1] !== "initial" && isNaN(+n[0]),
-  //     ),
-  //   );
-  // }
   setClasses(...value) {
     this.setAttr("class", value.join(" "));
     return this;
@@ -6413,25 +6439,6 @@ class ZikoUIElement {
 
   // toggleSlide() {}
 
-  // resize(n = 0) {
-  //   switch (n) {
-  //     case 0:
-  //       this.style({ resize: "none" });
-  //       break;
-  //     case 1:
-  //       this.style({ resize: "horizontal" });
-  //       break;
-  //     case 2:
-  //       this.style({ resize: "vertical" });
-  //       break;
-  //     case 3:
-  //       this.style({ resize: "both" });
-  //       break;
-  //     default:
-  //       this.style({ resize: n });
-  //   }
-  //   return this;
-  // }
   // Glassmorphism(background = "rgba(255,255,255,0.1)", blur = "1px") {
   //   this.style({ background: background, backdropFilter: blur });
   //   return this;

@@ -69,6 +69,13 @@ class ZikoUIElementStyle{
         this.target.element.addEventListener("pointerleave",()=>this.use("default"))
         return this;
     }
+    // Checkers 
+    isInline(){
+        return getComputedStyle(this.target.element).display.includes("inline");
+    }
+    isBlock(){
+        return !(this.isInline());
+    }
     // Size
     size(width,height,{ target, maskVector } = {}){
         this.style({
@@ -111,11 +118,20 @@ class ZikoUIElementStyle{
         }
         return this
     } 
-    enableResize(h=false,v=false){
+    enableResize(h=false,v=false,{ target, maskVector } = {}){
         let resize="none";
         if(h)v?resize="both":resize="horizontal";
         else v?resize="vertical":resize="none";
-        this.style({resize},{ target, maskVector });
+        this.style({
+            resize,
+            overflow:"hidden"
+        },{ target, maskVector });
+        if(this.isInline()){
+            console.group("Ziko Issue : Temporarily Incompatible Method");
+            console.warn(".enableResize has no effect on inline elements!");
+            console.info("%cConsider using other display types such as block, inline-block, flex, or grid for proper resizing behavior.","color:gold;background-color:#3333cc;padding:5px");
+            console.groupEnd();
+        }
         return this;
     }   
     // Apparence
