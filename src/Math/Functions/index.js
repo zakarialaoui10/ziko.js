@@ -3,7 +3,7 @@ import { mapfun } from "../Utils/mapfun.js";
 import { 
     min,
     max 
-}from "../Statistics/functions.js";
+}from "../Statistics";
 import { 
     gamma,
     bessel,

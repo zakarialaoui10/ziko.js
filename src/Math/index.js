@@ -1,8 +1,7 @@
-//import Ziko from "../index.js"
 import { __NumberProto__ } from "../__proto__/Number.js";
 import { __ArrayProto__ } from "../__proto__/Array.js";
 import {PI,E,EPSILON} from "./const.js"
-import { Signal } from "./Signal/index.js";
+import { Signal } from "./Signal";
 __NumberProto__()
 __ArrayProto__()
 import{
@@ -40,13 +39,13 @@ import{
     hypot,
     sig,
     atan2,
-  } from "./Functions/index.js";
-import {Random} from "./Random/index.js";
-//import { Derivation } from "./Numeric/index.js";
-import {complex,Complex} from "./Complex/index.js";
-import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./Matrix/index.js"
-import Discret from "./Discret/index.js";
-import {Logic,Base,Permutation,Combinaison,PowerSet,subset} from "./Discret/index.js";
+  } from "./Functions";
+import {Random} from "./Random";
+//import { Derivation } from "./Numeric";
+import {complex,Complex} from "./Complex";
+import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./Matrix"
+import Discret from "./Discret";
+import {Logic,Base,Permutation,Combinaison,powerSet,subSet} from "./Discret";
 import {
     Utils,
     zeros,
@@ -75,7 +74,7 @@ import {
     inRange,
     cartesianProduct,
     mapfun
-  }from "./Utils/index.js"
+  }from "./Utils"
 const Math={
     PI,
     E,
@@ -156,8 +155,8 @@ const Math={
     Base,
     Permutation,
     Combinaison,
-    PowerSet,
-    subset,
+    powerSet,
+    subSet,
     Signal,
     ExtractAll: function () {
         const keys = Object.keys(this);

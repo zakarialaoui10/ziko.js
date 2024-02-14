@@ -27,7 +27,7 @@ import{
     sum,
     prod,
     accum
-} from "../Statistics/functions.js"
+} from "../Statistics"
 import{
     inRange,
     isApproximatlyEqual

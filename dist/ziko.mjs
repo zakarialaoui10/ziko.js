@@ -427,6 +427,33 @@ const hypot = (...x) => {
   if (x.every(n => n instanceof Array)) return mapfun(Math.hypot, ...x);
 };
 
+const powerSet = originalSet => {
+  const subSets = [];
+  const numberOfCombinations = 2 ** originalSet.length;
+  for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
+    const subSet = [];
+    for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
+      if (combinationIndex & 1 << setElementIndex) {
+        subSet.push(originalSet[setElementIndex]);
+      }
+    }
+    subSets.push(subSet);
+  }
+  return subSets;
+};
+const subSet = (...arr) => {
+  let list = arange(0, 2 ** arr.length, 1);
+  let bin = list.toBin.map(n => n.padStart(arr.length, 0)).map(n => n.split("").map(n => +n));
+  let sub = bin.map(n => n.map((m, i) => arr[i]));
+  for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = {
+    n: sub[i][j],
+    m: bin[i][j]
+  };
+  sub = sub.map(n => n.filter(x => x.m == 1));
+  sub = sub.map(n => n.map(m => m.n));
+  return sub;
+};
+
 const Base = {
   _mode: Number,
   _map: function (func, number, toBase) {
@@ -503,7 +530,6 @@ const Base = {
   }
 };
 
-//import{arange}from "../Utils/index.js"
 const Logic$1 = {
   _mode: Number,
   _map: function (func, a, b) {
@@ -610,39 +636,13 @@ class Combinaison {
     return combos;
   }
 }
-function PowerSet(originalSet) {
-  const subSets = [];
-  const numberOfCombinations = 2 ** originalSet.length;
-  for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
-    const subSet = [];
-    for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
-      if (combinationIndex & 1 << setElementIndex) {
-        subSet.push(originalSet[setElementIndex]);
-      }
-    }
-    subSets.push(subSet);
-  }
-  return subSets;
-}
-var subset = (...arr) => {
-  let list = arange(0, 2 ** arr.length, 1);
-  let bin = list.toBin.map(n => n.padStart(arr.length, 0)).map(n => n.split("").map(n => +n));
-  let sub = bin.map(n => n.map((m, i) => arr[i]));
-  for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = {
-    n: sub[i][j],
-    m: bin[i][j]
-  };
-  sub = sub.map(n => n.filter(x => x.m == 1));
-  sub = sub.map(n => n.map(m => m.n));
-  return sub;
-};
 const Discret = {
   Logic: Logic$1,
   Base,
   Permutation,
   Combinaison,
-  PowerSet,
-  subset
+  powerSet,
+  subSet
 };
 
 class Random {
@@ -1787,7 +1787,7 @@ const clamp$1 = (x, a, b) => {
     }
   }
 };
-const arange = (a, b, step, include = false) => {
+const arange$1 = (a, b, step, include = false) => {
   let tab = [];
   if (a < b) {
     for (let i = a; include ? i <= b : i < b; i += step) tab.push(i * 10 / 10);
@@ -1895,7 +1895,7 @@ const Utils = {
   lerp: lerp$1,
   map: map$1,
   clamp: clamp$1,
-  arange,
+  arange: arange$1,
   linspace,
   logspace,
   geomspace,
@@ -2177,7 +2177,7 @@ const Signal = {
   zeros,
   ones,
   nums,
-  arange,
+  arange: arange$1,
   linspace,
   logspace,
   geomspace,
@@ -2246,7 +2246,6 @@ const Signal = {
   filter
 };
 
-//import Ziko from "../index.js"
 __NumberProto__();
 __ArrayProto__();
 const Math$1 = {
@@ -2311,7 +2310,7 @@ const Math$1 = {
   modulo,
   rad2deg,
   deg2rad,
-  arange,
+  arange: arange$1,
   linspace,
   logspace,
   geomspace,
@@ -2329,8 +2328,8 @@ const Math$1 = {
   Base,
   Permutation,
   Combinaison,
-  PowerSet,
-  subset,
+  powerSet,
+  subSet,
   Signal,
   ExtractAll: function () {
     const keys = Object.keys(this);
@@ -9412,4 +9411,4 @@ function RemoveAll() {
   Data.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, PowerSet, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUIBr, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHr, ZikoUIHtmlTag, ZikoUIImage, ZikoUILink, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subset, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUIBr, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHr, ZikoUIHtmlTag, ZikoUIImage, ZikoUILink, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, accum, acos, acosh, acot, add, animation, arange$1 as arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, powerSet, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subSet, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

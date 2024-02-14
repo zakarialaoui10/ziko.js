@@ -429,6 +429,33 @@ const hypot = (...x) => {
   if (x.every(n => n instanceof Array)) return mapfun(Math.hypot, ...x);
 };
 
+const powerSet = originalSet => {
+  const subSets = [];
+  const numberOfCombinations = 2 ** originalSet.length;
+  for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
+    const subSet = [];
+    for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
+      if (combinationIndex & 1 << setElementIndex) {
+        subSet.push(originalSet[setElementIndex]);
+      }
+    }
+    subSets.push(subSet);
+  }
+  return subSets;
+};
+const subSet = (...arr) => {
+  let list = arange(0, 2 ** arr.length, 1);
+  let bin = list.toBin.map(n => n.padStart(arr.length, 0)).map(n => n.split("").map(n => +n));
+  let sub = bin.map(n => n.map((m, i) => arr[i]));
+  for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = {
+    n: sub[i][j],
+    m: bin[i][j]
+  };
+  sub = sub.map(n => n.filter(x => x.m == 1));
+  sub = sub.map(n => n.map(m => m.n));
+  return sub;
+};
+
 const Base = {
   _mode: Number,
   _map: function (func, number, toBase) {
@@ -505,7 +532,6 @@ const Base = {
   }
 };
 
-//import{arange}from "../Utils/index.js"
 const Logic$1 = {
   _mode: Number,
   _map: function (func, a, b) {
@@ -612,39 +638,13 @@ class Combinaison {
     return combos;
   }
 }
-function PowerSet(originalSet) {
-  const subSets = [];
-  const numberOfCombinations = 2 ** originalSet.length;
-  for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
-    const subSet = [];
-    for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
-      if (combinationIndex & 1 << setElementIndex) {
-        subSet.push(originalSet[setElementIndex]);
-      }
-    }
-    subSets.push(subSet);
-  }
-  return subSets;
-}
-var subset = (...arr) => {
-  let list = arange(0, 2 ** arr.length, 1);
-  let bin = list.toBin.map(n => n.padStart(arr.length, 0)).map(n => n.split("").map(n => +n));
-  let sub = bin.map(n => n.map((m, i) => arr[i]));
-  for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = {
-    n: sub[i][j],
-    m: bin[i][j]
-  };
-  sub = sub.map(n => n.filter(x => x.m == 1));
-  sub = sub.map(n => n.map(m => m.n));
-  return sub;
-};
 const Discret = {
   Logic: Logic$1,
   Base,
   Permutation,
   Combinaison,
-  PowerSet,
-  subset
+  powerSet,
+  subSet
 };
 
 class Random {
@@ -1789,7 +1789,7 @@ const clamp$1 = (x, a, b) => {
     }
   }
 };
-const arange = (a, b, step, include = false) => {
+const arange$1 = (a, b, step, include = false) => {
   let tab = [];
   if (a < b) {
     for (let i = a; include ? i <= b : i < b; i += step) tab.push(i * 10 / 10);
@@ -1897,7 +1897,7 @@ const Utils = {
   lerp: lerp$1,
   map: map$1,
   clamp: clamp$1,
-  arange,
+  arange: arange$1,
   linspace,
   logspace,
   geomspace,
@@ -2179,7 +2179,7 @@ const Signal = {
   zeros,
   ones,
   nums,
-  arange,
+  arange: arange$1,
   linspace,
   logspace,
   geomspace,
@@ -2248,7 +2248,6 @@ const Signal = {
   filter
 };
 
-//import Ziko from "../index.js"
 __NumberProto__();
 __ArrayProto__();
 const Math$1 = {
@@ -2313,7 +2312,7 @@ const Math$1 = {
   modulo,
   rad2deg,
   deg2rad,
-  arange,
+  arange: arange$1,
   linspace,
   logspace,
   geomspace,
@@ -2331,8 +2330,8 @@ const Math$1 = {
   Base,
   Permutation,
   Combinaison,
-  PowerSet,
-  subset,
+  powerSet,
+  subSet,
   Signal,
   ExtractAll: function () {
     const keys = Object.keys(this);
@@ -9446,7 +9445,6 @@ exports.Matrix = Matrix;
 exports.Nav = Nav;
 exports.PI = PI;
 exports.Permutation = Permutation;
-exports.PowerSet = PowerSet;
 exports.Random = Random;
 exports.RemoveAll = RemoveAll;
 exports.SPA = SPA;
@@ -9481,12 +9479,13 @@ exports.ZikoUISvg = ZikoUISvg;
 exports.ZikoUIVideo = ZikoUIVideo;
 exports.__init__ = __init__;
 exports.abs = abs;
+exports.accum = accum;
 exports.acos = acos;
 exports.acosh = acosh;
 exports.acot = acot;
 exports.add = add;
 exports.animation = animation;
-exports.arange = arange;
+exports.arange = arange$1;
 exports.asin = asin;
 exports.asinh = asinh;
 exports.atan = atan;
@@ -9584,6 +9583,7 @@ exports.ones = ones;
 exports.p = p;
 exports.pgcd = pgcd;
 exports.pow = pow;
+exports.powerSet = powerSet;
 exports.ppcm = ppcm;
 exports.prod = prod;
 exports.qrDecomposition = qrDecomposition;
@@ -9602,7 +9602,7 @@ exports.slider = slider;
 exports.sqrt = sqrt;
 exports.sqrtn = sqrtn;
 exports.sub = sub;
-exports.subset = subset;
+exports.subSet = subSet;
 exports.sum = sum;
 exports.svg2ascii = svg2ascii;
 exports.svg2img = svg2img;
