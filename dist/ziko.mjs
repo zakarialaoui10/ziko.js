@@ -429,30 +429,26 @@ const hypot = (...x) => {
 
 const powerSet = originalSet => {
   const subSets = [];
-  const numberOfCombinations = 2 ** originalSet.length;
-  for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
+  const NUMBER_OF_COMBINATIONS = 2 ** originalSet.length;
+  for (let i = 0; i < NUMBER_OF_COMBINATIONS; i += 1) {
     const subSet = [];
-    for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
-      if (combinationIndex & 1 << setElementIndex) {
-        subSet.push(originalSet[setElementIndex]);
+    for (let j = 0; j < originalSet.length; j += 1) {
+      if (i & 1 << j) {
+        subSet.push(originalSet[j]);
       }
     }
     subSets.push(subSet);
   }
   return subSets;
 };
-const subSet = (...arr) => {
-  let list = arange(0, 2 ** arr.length, 1);
-  let bin = list.toBin.map(n => n.padStart(arr.length, 0)).map(n => n.split("").map(n => +n));
-  let sub = bin.map(n => n.map((m, i) => arr[i]));
-  for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = {
-    n: sub[i][j],
-    m: bin[i][j]
-  };
-  sub = sub.map(n => n.filter(x => x.m == 1));
-  sub = sub.map(n => n.map(m => m.n));
-  return sub;
-};
+
+// const subSet = (...arr) => {
+//     let list = arange(0, 2 ** arr.length, 1);
+//     let bin = list.map((n) => n.toString(2).padStart(arr.length, '0')).map((n) => n.split("").map((n) => +n));
+//     let sub = bin.map((n) => n.map((m, i) => (m === 1 ? arr[i] : null))).map((n) => n.filter((x) => x !== null));
+//     return sub;
+// };
+const subSet = null;
 
 const Base = {
   _mode: Number,
@@ -564,9 +560,7 @@ const Logic$1 = {
 
 class Permutation {
   static withDiscount(arr, l = arr.length) {
-    if (l === 1) {
-      return arr.map(n => [n]);
-    }
+    if (l === 1) return arr.map(n => [n]);
     const permutations = [];
     let smallerPermutations;
     smallerPermutations = this.withDiscount(arr, l - 1);
@@ -579,9 +573,7 @@ class Permutation {
   }
   static withoutDiscount(arr) {
     const l = arr.length;
-    if (l === 1) {
-      return arr.map(n => [n]);
-    }
+    if (l === 1) return arr.map(n => [n]);
     const permutations = [];
     const smallerPermutations = this.withoutDiscount(arr.slice(1));
     const firstOption = arr[0];
@@ -596,19 +588,15 @@ class Permutation {
     return permutations;
   }
 }
+
 class Combinaison {
   static withDiscount(comboOptions, comboLength) {
     if (comboLength === 1) {
       return comboOptions.map(comboOption => [comboOption]);
     }
-    // Init combinations array.
     const combos = [];
-    // Remember characters one by one and concatenate them to combinations of smaller lengths.
-    // We don't extract elements here because the repetitions are allowed.
     comboOptions.forEach((currentOption, optionIndex) => {
-      // Generate combinations of smaller size.
       const smallerCombos = this.withDiscount(comboOptions.slice(optionIndex), comboLength - 1);
-      // Concatenate currentOption with all combinations of smaller size.
       smallerCombos.forEach(smallerCombo => {
         combos.push([currentOption].concat(smallerCombo));
       });
@@ -616,19 +604,12 @@ class Combinaison {
     return combos;
   }
   static withoutDiscount(comboOptions, comboLength) {
-    // If the length of the combination is 1 then each element of the original array
-    // is a combination itself.
     if (comboLength === 1) {
       return comboOptions.map(comboOption => [comboOption]);
     }
-    // Init combinations array.
     const combos = [];
-    // Extract characters one by one and concatenate them to combinations of smaller lengths.
-    // We need to extract them because we don't want to have repetitions after concatenation.
     comboOptions.forEach((currentOption, optionIndex) => {
-      // Generate combinations of smaller size.
       const smallerCombos = this.withoutDiscount(comboOptions.slice(optionIndex + 1), comboLength - 1);
-      // Concatenate currentOption with all combinations of smaller size.
       smallerCombos.forEach(smallerCombo => {
         combos.push([currentOption].concat(smallerCombo));
       });
@@ -636,11 +617,16 @@ class Combinaison {
     return combos;
   }
 }
+const combinaison = (comboOptions, comboLength, discount = false) => Combinaison[discount ? "withDiscount" : "withoutDiscount"](comboOptions, comboLength);
+
 const Discret = {
   Logic: Logic$1,
   Base,
   Permutation,
+  // permutationWithDiscount,
+  // permutationWithoutDiscount,
   Combinaison,
+  combinaison,
   powerSet,
   subSet
 };
@@ -1787,7 +1773,7 @@ const clamp$1 = (x, a, b) => {
     }
   }
 };
-const arange$1 = (a, b, step, include = false) => {
+const arange = (a, b, step, include = false) => {
   let tab = [];
   if (a < b) {
     for (let i = a; include ? i <= b : i < b; i += step) tab.push(i * 10 / 10);
@@ -1895,7 +1881,7 @@ const Utils = {
   lerp: lerp$1,
   map: map$1,
   clamp: clamp$1,
-  arange: arange$1,
+  arange,
   linspace,
   logspace,
   geomspace,
@@ -2177,7 +2163,7 @@ const Signal = {
   zeros,
   ones,
   nums,
-  arange: arange$1,
+  arange,
   linspace,
   logspace,
   geomspace,
@@ -2310,7 +2296,7 @@ const Math$1 = {
   modulo,
   rad2deg,
   deg2rad,
-  arange: arange$1,
+  arange,
   linspace,
   logspace,
   geomspace,
@@ -9411,4 +9397,4 @@ function RemoveAll() {
   Data.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUIBr, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHr, ZikoUIHtmlTag, ZikoUIImage, ZikoUILink, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, accum, acos, acosh, acot, add, animation, arange$1 as arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, powerSet, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subSet, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUIBr, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHr, ZikoUIHtmlTag, ZikoUIImage, ZikoUILink, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, accum, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, debounce, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, powerSet, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subSet, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, throttle, timeTaken, time_memory_Taken, ul, video, wait, waitForUIElm, waitForUIElmSync, zeros };

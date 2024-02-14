@@ -435,30 +435,26 @@
 
   const powerSet = originalSet => {
     const subSets = [];
-    const numberOfCombinations = 2 ** originalSet.length;
-    for (let combinationIndex = 0; combinationIndex < numberOfCombinations; combinationIndex += 1) {
+    const NUMBER_OF_COMBINATIONS = 2 ** originalSet.length;
+    for (let i = 0; i < NUMBER_OF_COMBINATIONS; i += 1) {
       const subSet = [];
-      for (let setElementIndex = 0; setElementIndex < originalSet.length; setElementIndex += 1) {
-        if (combinationIndex & 1 << setElementIndex) {
-          subSet.push(originalSet[setElementIndex]);
+      for (let j = 0; j < originalSet.length; j += 1) {
+        if (i & 1 << j) {
+          subSet.push(originalSet[j]);
         }
       }
       subSets.push(subSet);
     }
     return subSets;
   };
-  const subSet = (...arr) => {
-    let list = arange(0, 2 ** arr.length, 1);
-    let bin = list.toBin.map(n => n.padStart(arr.length, 0)).map(n => n.split("").map(n => +n));
-    let sub = bin.map(n => n.map((m, i) => arr[i]));
-    for (let i = 0; i < sub.length; i++) for (let j = 0; j < sub[i].length; j++) sub[i][j] = {
-      n: sub[i][j],
-      m: bin[i][j]
-    };
-    sub = sub.map(n => n.filter(x => x.m == 1));
-    sub = sub.map(n => n.map(m => m.n));
-    return sub;
-  };
+
+  // const subSet = (...arr) => {
+  //     let list = arange(0, 2 ** arr.length, 1);
+  //     let bin = list.map((n) => n.toString(2).padStart(arr.length, '0')).map((n) => n.split("").map((n) => +n));
+  //     let sub = bin.map((n) => n.map((m, i) => (m === 1 ? arr[i] : null))).map((n) => n.filter((x) => x !== null));
+  //     return sub;
+  // };
+  const subSet = null;
 
   const Base = {
     _mode: Number,
@@ -570,9 +566,7 @@
 
   class Permutation {
     static withDiscount(arr, l = arr.length) {
-      if (l === 1) {
-        return arr.map(n => [n]);
-      }
+      if (l === 1) return arr.map(n => [n]);
       const permutations = [];
       let smallerPermutations;
       smallerPermutations = this.withDiscount(arr, l - 1);
@@ -585,9 +579,7 @@
     }
     static withoutDiscount(arr) {
       const l = arr.length;
-      if (l === 1) {
-        return arr.map(n => [n]);
-      }
+      if (l === 1) return arr.map(n => [n]);
       const permutations = [];
       const smallerPermutations = this.withoutDiscount(arr.slice(1));
       const firstOption = arr[0];
@@ -602,19 +594,15 @@
       return permutations;
     }
   }
+
   class Combinaison {
     static withDiscount(comboOptions, comboLength) {
       if (comboLength === 1) {
         return comboOptions.map(comboOption => [comboOption]);
       }
-      // Init combinations array.
       const combos = [];
-      // Remember characters one by one and concatenate them to combinations of smaller lengths.
-      // We don't extract elements here because the repetitions are allowed.
       comboOptions.forEach((currentOption, optionIndex) => {
-        // Generate combinations of smaller size.
         const smallerCombos = this.withDiscount(comboOptions.slice(optionIndex), comboLength - 1);
-        // Concatenate currentOption with all combinations of smaller size.
         smallerCombos.forEach(smallerCombo => {
           combos.push([currentOption].concat(smallerCombo));
         });
@@ -622,19 +610,12 @@
       return combos;
     }
     static withoutDiscount(comboOptions, comboLength) {
-      // If the length of the combination is 1 then each element of the original array
-      // is a combination itself.
       if (comboLength === 1) {
         return comboOptions.map(comboOption => [comboOption]);
       }
-      // Init combinations array.
       const combos = [];
-      // Extract characters one by one and concatenate them to combinations of smaller lengths.
-      // We need to extract them because we don't want to have repetitions after concatenation.
       comboOptions.forEach((currentOption, optionIndex) => {
-        // Generate combinations of smaller size.
         const smallerCombos = this.withoutDiscount(comboOptions.slice(optionIndex + 1), comboLength - 1);
-        // Concatenate currentOption with all combinations of smaller size.
         smallerCombos.forEach(smallerCombo => {
           combos.push([currentOption].concat(smallerCombo));
         });
@@ -642,11 +623,16 @@
       return combos;
     }
   }
+  const combinaison = (comboOptions, comboLength, discount = false) => Combinaison[discount ? "withDiscount" : "withoutDiscount"](comboOptions, comboLength);
+
   const Discret = {
     Logic: Logic$1,
     Base,
     Permutation,
+    // permutationWithDiscount,
+    // permutationWithoutDiscount,
     Combinaison,
+    combinaison,
     powerSet,
     subSet
   };
@@ -1793,7 +1779,7 @@
       }
     }
   };
-  const arange$1 = (a, b, step, include = false) => {
+  const arange = (a, b, step, include = false) => {
     let tab = [];
     if (a < b) {
       for (let i = a; include ? i <= b : i < b; i += step) tab.push(i * 10 / 10);
@@ -1901,7 +1887,7 @@
     lerp: lerp$1,
     map: map$1,
     clamp: clamp$1,
-    arange: arange$1,
+    arange,
     linspace,
     logspace,
     geomspace,
@@ -2183,7 +2169,7 @@
     zeros,
     ones,
     nums,
-    arange: arange$1,
+    arange,
     linspace,
     logspace,
     geomspace,
@@ -2316,7 +2302,7 @@
     modulo,
     rad2deg,
     deg2rad,
-    arange: arange$1,
+    arange,
     linspace,
     logspace,
     geomspace,
@@ -9489,7 +9475,7 @@
   exports.acot = acot;
   exports.add = add;
   exports.animation = animation;
-  exports.arange = arange$1;
+  exports.arange = arange;
   exports.asin = asin;
   exports.asinh = asinh;
   exports.atan = atan;
