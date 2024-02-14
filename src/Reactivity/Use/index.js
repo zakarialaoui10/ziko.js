@@ -18,7 +18,7 @@ import {
     useThrottle,
     useDebounce
  } from "./Decorators";
-const State={
+const Use={
     useStyle,
     useTheme,
     useBattery,
@@ -52,7 +52,7 @@ const State={
         return this;
     }
 }
-export default State;
+export default Use;
 export{
     useStyle,
     useTheme,

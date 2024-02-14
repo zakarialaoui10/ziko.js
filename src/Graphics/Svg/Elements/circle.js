@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgCircle extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgCircle extends ZikoSvgElement{
     constructor(cx,cy,r){
       super()
       this.element=document.createElementNS(
@@ -30,5 +30,5 @@ class ZikoUISvgCircle extends ZikoUISvgElement{
       return this.element.cy.baseVal.value;
     }  
   } 
-const svgCircle=(x,y,r)=>new ZikoUISvgCircle(x,y,r);
+const svgCircle=(x,y,r)=>new ZikoSvgCircle(x,y,r);
 export default svgCircle

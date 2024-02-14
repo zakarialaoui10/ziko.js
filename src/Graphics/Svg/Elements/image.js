@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgImage extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgImage extends ZikoSvgElement{
     constructor(src="",w="100%",h="100%",x=0,y=0){
       super()
       this.element=document.createElementNS(
@@ -29,5 +29,5 @@ class ZikoUISvgImage extends ZikoUISvgElement{
       return this;
     }
   } 
-const svgImage=(src,w,h,x,y)=>new ZikoUISvgImage(src,w,h,x,y);
+const svgImage=(src,w,h,x,y)=>new ZikoSvgImage(src,w,h,x,y);
 export default svgImage

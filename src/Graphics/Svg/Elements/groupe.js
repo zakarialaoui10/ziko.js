@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgGroupe extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgGroupe extends ZikoSvgElement{
     constructor(...svgElement){
       super();
       this.items=[];
@@ -25,5 +25,5 @@ class ZikoUISvgGroupe extends ZikoUISvgElement{
       return this;     
     }
 }
-const svgGroupe=(...svgElement)=>new ZikoUISvgGroupe(...svgElement)
+const svgGroupe=(...svgElement)=>new ZikoSvgGroupe(...svgElement)
 export default svgGroupe

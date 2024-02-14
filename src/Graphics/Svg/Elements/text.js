@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgText extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgText extends ZikoSvgElement{
     constructor(text,x,y){
       super()
       this.element=document.createElementNS(
@@ -22,5 +22,5 @@ class ZikoUISvgText extends ZikoUISvgElement{
       return this;
     }
   } 
-const svgText=(text,x,y)=>new ZikoUISvgText(text,x,y);
+const svgText=(text,x,y)=>new ZikoSvgText(text,x,y);
 export default svgText

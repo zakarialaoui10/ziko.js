@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgPolygon extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgPolygon extends ZikoSvgElement{
     constructor(X=[],Y=[]){
       super()
       this.X=X;
@@ -27,5 +27,5 @@ class ZikoUISvgPolygon extends ZikoUISvgElement{
       return this;
     }
   } 
-const svgPolygon=(X,Y)=>new ZikoUISvgPolygon(X,Y);
+const svgPolygon=(X,Y)=>new ZikoSvgPolygon(X,Y);
 export default svgPolygon

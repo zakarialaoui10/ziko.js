@@ -48,43 +48,43 @@ import svgGroupe from "./Elements/groupe.js";
       this.maintain();
       return this;     
     }
-    text(text,x,y){
-      let item=svgText(text,x,y);
-      this.element.appendChild(item.element);
-      item.x(x-item.element.getComputedTextLength()/2);
-      return item;
-    }
-    rect(x,y,w,h){
-      let item=svgRect(x,y,w,h);
-      this.add(item);
-      return item;
-    }
-    line(x1,y1,x2,y2){
-      let item=svgLine(x1,y1,x2,y2);
-      this.element.appendChild(item.element);
-      return item;
-    }
-    circle(cx,cy,r){
-      let item=svgCircle(cx,cy,r);
-      this.element.appendChild(item.element);
-      return item;
-    }
-    ellipse(cx,cy,rx,ry){
-      let item=svgEllipse(cx,cy,rx,ry);
-      this.element.appendChild(item.element);
-      return item;
-    }
-    polygon(X,Y){
-      let item=svgPolygon(X,Y);
-      this.element.appendChild(item.element);
-      item.addPoints(X,Y)
-      return item;
-    }
-    image(src,w,h,x,y){
-      let item=svgImage(src,w,h,x,y);
-      this.element.appendChild(item.element);
-      return item;
-    }
+    // text(text,x,y){
+    //   let item=svgText(text,x,y);
+    //   this.element.appendChild(item.element);
+    //   item.x(x-item.element.getComputedTextLength()/2);
+    //   return item;
+    // }
+    // rect(x,y,w,h){
+    //   let item=svgRect(x,y,w,h);
+    //   this.add(item);
+    //   return item;
+    // }
+    // line(x1,y1,x2,y2){
+    //   let item=svgLine(x1,y1,x2,y2);
+    //   this.element.appendChild(item.element);
+    //   return item;
+    // }
+    // circle(cx,cy,r){
+    //   let item=svgCircle(cx,cy,r);
+    //   this.element.appendChild(item.element);
+    //   return item;
+    // }
+    // ellipse(cx,cy,rx,ry){
+    //   let item=svgEllipse(cx,cy,rx,ry);
+    //   this.element.appendChild(item.element);
+    //   return item;
+    // }
+    // polygon(X,Y){
+    //   let item=svgPolygon(X,Y);
+    //   this.element.appendChild(item.element);
+    //   item.addPoints(X,Y)
+    //   return item;
+    // }
+    // image(src,w,h,x,y){
+    //   let item=svgImage(src,w,h,x,y);
+    //   this.element.appendChild(item.element);
+    //   return item;
+    // }
     mask(){
   
     }

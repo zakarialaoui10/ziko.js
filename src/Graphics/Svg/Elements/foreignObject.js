@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgForeignObject extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement";
+class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super()
       this.items=[];
@@ -42,5 +42,5 @@ class ZikoUISvgForeignObject extends ZikoUISvgElement{
         return this;     
       }
   } 
-const svgObject=(x,y,r)=>new ZikoUISvgForeignObject(x,y,r);
+const svgObject=(x,y,r)=>new ZikoSvgForeignObject(x,y,r);
 export default svgObject

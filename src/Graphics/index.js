@@ -9,7 +9,7 @@ import{
     svgRect,
     svgText,
     svgGroupe
-} from "./Svg/index.js";
+} from "./Svg";
 import {
     Canvas,
     canvasArc,
@@ -17,7 +17,7 @@ import {
     canvasPoints,
     canvasLine,
     canvasRect
-} from "./Canvas/index.js";
+} from "./Canvas";
 const Graphics={
     Svg,
     ZikoUISvg,
@@ -56,6 +56,6 @@ const Graphics={
         return this;
     }
 }
-export * from "./Svg/index.js"
-export * from "./Canvas/index.js"
+export * from "./Svg"
+export * from "./Canvas"
 export default Graphics;

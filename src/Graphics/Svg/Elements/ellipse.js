@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgEllipse extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgEllipse extends ZikoSvgElement{
     constructor(cx,cy,rx,ry){
       super()
       this.element=document.createElementNS(
@@ -25,5 +25,5 @@ class ZikoUISvgEllipse extends ZikoUISvgElement{
        return this;
     } 
   } 
-const svgEllipse=(x,y,rx,ry)=>new ZikoUISvgEllipse(x,y,rx,ry);
+const svgEllipse=(x,y,rx,ry)=>new ZikoSvgEllipse(x,y,rx,ry);
 export default svgEllipse

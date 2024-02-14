@@ -1,6 +1,6 @@
 
-import ZikoUISvgELement from "./_SvgElement.js";
-class ZikoUISvgRectangle extends ZikoUISvgELement{
+import ZikoSvgELement from "./ZikoSvgElement.js";
+class ZikoSvgRectangle extends ZikoSvgELement{
     constructor(x,y,w,h,center=true){
       super()
       this.element=document.createElementNS(
@@ -39,5 +39,5 @@ class ZikoUISvgRectangle extends ZikoUISvgELement{
        return this;
     } 
   } 
-  const svgRect=(x,y,w,h,center)=>new ZikoUISvgRectangle(x,y,w,h,center);
+  const svgRect=(x,y,w,h,center)=>new ZikoSvgRectangle(x,y,w,h,center);
   export default svgRect

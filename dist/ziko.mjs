@@ -6165,7 +6165,7 @@ const Time = {
   }
 };
 
-const State = {
+const Use = {
   useStyle,
   useTheme,
   useBattery,
@@ -8437,7 +8437,7 @@ const Data = {
   }
 };
 
-class ZikoUISvgElement {
+class ZikoSvgElement {
   color({
     stroke,
     fill
@@ -8465,7 +8465,7 @@ class ZikoUISvgElement {
   }
 }
 
-class ZikoUISvgRectangle extends ZikoUISvgElement {
+class ZikoSvgRectangle extends ZikoSvgElement {
   constructor(x, y, w, h, center = true) {
     super();
     this.element = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -8501,9 +8501,9 @@ class ZikoUISvgRectangle extends ZikoUISvgElement {
     return this;
   }
 }
-const svgRect = (x, y, w, h, center) => new ZikoUISvgRectangle(x, y, w, h, center);
+const svgRect = (x, y, w, h, center) => new ZikoSvgRectangle(x, y, w, h, center);
 
-class ZikoUISvgCircle extends ZikoUISvgElement {
+class ZikoSvgCircle extends ZikoSvgElement {
   constructor(cx, cy, r) {
     super();
     this.element = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -8531,9 +8531,9 @@ class ZikoUISvgCircle extends ZikoUISvgElement {
     return this.element.cy.baseVal.value;
   }
 }
-const svgCircle = (x, y, r) => new ZikoUISvgCircle(x, y, r);
+const svgCircle = (x, y, r) => new ZikoSvgCircle(x, y, r);
 
-class ZikoUISvgEllipse extends ZikoUISvgElement {
+class ZikoSvgEllipse extends ZikoSvgElement {
   constructor(cx, cy, rx, ry) {
     super();
     this.element = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
@@ -8556,9 +8556,9 @@ class ZikoUISvgEllipse extends ZikoUISvgElement {
     return this;
   }
 }
-const svgEllipse = (x, y, rx, ry) => new ZikoUISvgEllipse(x, y, rx, ry);
+const svgEllipse = (x, y, rx, ry) => new ZikoSvgEllipse(x, y, rx, ry);
 
-class ZikoUISvgLine extends ZikoUISvgElement {
+class ZikoSvgLine extends ZikoSvgElement {
   constructor(x1, y1, x2, y2) {
     super();
     this.element = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -8581,9 +8581,9 @@ class ZikoUISvgLine extends ZikoUISvgElement {
     return this;
   }
 }
-const svgLine = (x1, y1, x2, y2) => new ZikoUISvgLine(x1, y1, x2, y2);
+const svgLine = (x1, y1, x2, y2) => new ZikoSvgLine(x1, y1, x2, y2);
 
-class ZikoUISvgPolygon extends ZikoUISvgElement {
+class ZikoSvgPolygon extends ZikoSvgElement {
   constructor(X = [], Y = []) {
     super();
     this.X = X;
@@ -8608,9 +8608,9 @@ class ZikoUISvgPolygon extends ZikoUISvgElement {
     return this;
   }
 }
-const svgPolygon = (X, Y) => new ZikoUISvgPolygon(X, Y);
+const svgPolygon = (X, Y) => new ZikoSvgPolygon(X, Y);
 
-class ZikoUISvgImage extends ZikoUISvgElement {
+class ZikoSvgImage extends ZikoSvgElement {
   constructor(src = "", w = "100%", h = "100%", x = 0, y = 0) {
     super();
     this.element = document.createElementNS("http://www.w3.org/2000/svg", "image");
@@ -8637,9 +8637,9 @@ class ZikoUISvgImage extends ZikoUISvgElement {
     return this;
   }
 }
-const svgImage = (src, w, h, x, y) => new ZikoUISvgImage(src, w, h, x, y);
+const svgImage = (src, w, h, x, y) => new ZikoSvgImage(src, w, h, x, y);
 
-class ZikoUISvgText extends ZikoUISvgElement {
+class ZikoSvgText extends ZikoSvgElement {
   constructor(text, x, y) {
     super();
     this.element = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -8659,9 +8659,9 @@ class ZikoUISvgText extends ZikoUISvgElement {
     return this;
   }
 }
-const svgText = (text, x, y) => new ZikoUISvgText(text, x, y);
+const svgText = (text, x, y) => new ZikoSvgText(text, x, y);
 
-class ZikoUISvgGroupe extends ZikoUISvgElement {
+class ZikoSvgGroupe extends ZikoSvgElement {
   constructor(...svgElement) {
     super();
     this.items = [];
@@ -8684,7 +8684,7 @@ class ZikoUISvgGroupe extends ZikoUISvgElement {
     return this;
   }
 }
-const svgGroupe = (...svgElement) => new ZikoUISvgGroupe(...svgElement);
+const svgGroupe = (...svgElement) => new ZikoSvgGroupe(...svgElement);
 
 //import svgObject from "./Elements/foreignObject.js";
 //import svgGrid from "./Elements/grid.js";
@@ -8727,43 +8727,43 @@ class ZikoUISvg extends ZikoUIElement {
     this.maintain();
     return this;
   }
-  text(text, x, y) {
-    let item = svgText(text, x, y);
-    this.element.appendChild(item.element);
-    item.x(x - item.element.getComputedTextLength() / 2);
-    return item;
-  }
-  rect(x, y, w, h) {
-    let item = svgRect(x, y, w, h);
-    this.add(item);
-    return item;
-  }
-  line(x1, y1, x2, y2) {
-    let item = svgLine(x1, y1, x2, y2);
-    this.element.appendChild(item.element);
-    return item;
-  }
-  circle(cx, cy, r) {
-    let item = svgCircle(cx, cy, r);
-    this.element.appendChild(item.element);
-    return item;
-  }
-  ellipse(cx, cy, rx, ry) {
-    let item = svgEllipse(cx, cy, rx, ry);
-    this.element.appendChild(item.element);
-    return item;
-  }
-  polygon(X, Y) {
-    let item = svgPolygon(X, Y);
-    this.element.appendChild(item.element);
-    item.addPoints(X, Y);
-    return item;
-  }
-  image(src, w, h, x, y) {
-    let item = svgImage(src, w, h, x, y);
-    this.element.appendChild(item.element);
-    return item;
-  }
+  // text(text,x,y){
+  //   let item=svgText(text,x,y);
+  //   this.element.appendChild(item.element);
+  //   item.x(x-item.element.getComputedTextLength()/2);
+  //   return item;
+  // }
+  // rect(x,y,w,h){
+  //   let item=svgRect(x,y,w,h);
+  //   this.add(item);
+  //   return item;
+  // }
+  // line(x1,y1,x2,y2){
+  //   let item=svgLine(x1,y1,x2,y2);
+  //   this.element.appendChild(item.element);
+  //   return item;
+  // }
+  // circle(cx,cy,r){
+  //   let item=svgCircle(cx,cy,r);
+  //   this.element.appendChild(item.element);
+  //   return item;
+  // }
+  // ellipse(cx,cy,rx,ry){
+  //   let item=svgEllipse(cx,cy,rx,ry);
+  //   this.element.appendChild(item.element);
+  //   return item;
+  // }
+  // polygon(X,Y){
+  //   let item=svgPolygon(X,Y);
+  //   this.element.appendChild(item.element);
+  //   item.addPoints(X,Y)
+  //   return item;
+  // }
+  // image(src,w,h,x,y){
+  //   let item=svgImage(src,w,h,x,y);
+  //   this.element.appendChild(item.element);
+  //   return item;
+  // }
   mask() {}
   toString() {
     return new XMLSerializer().serializeToString(this.element);
@@ -9369,7 +9369,7 @@ const Ziko = {
   Time,
   Graphics,
   Events,
-  Use: State,
+  Use,
   Data,
   SPA,
   __UI__
@@ -9381,7 +9381,7 @@ function ExtractAll() {
   Math$1.ExtractAll();
   Time.ExtractAll();
   Events.ExtractAll();
-  State.ExtractAll();
+  Use.ExtractAll();
   Graphics.ExtractAll();
   Data.ExtractAll();
   return this;
@@ -9391,7 +9391,7 @@ function RemoveAll() {
   Math$1.RemoveAll();
   Time.RemoveAll();
   Events.RemoveAll();
-  State.RemoveAll();
+  Use.RemoveAll();
   Graphics.RemoveAll();
   Data.RemoveAll();
 }

@@ -1,5 +1,5 @@
-import ZikoUISvgElement from "./_SvgElement.js";
-class ZikoUISvgLine extends ZikoUISvgElement{
+import ZikoSvgElement from "./ZikoSvgElement.js";
+class ZikoSvgLine extends ZikoSvgElement{
     constructor(x1,y1,x2,y2){
       super()
       this.element=document.createElementNS(
@@ -25,5 +25,5 @@ class ZikoUISvgLine extends ZikoUISvgElement{
        return this;
     } 
   } 
-const svgLine=(x1,y1,x2,y2)=>new ZikoUISvgLine(x1,y1,x2,y2);
+const svgLine=(x1,y1,x2,y2)=>new ZikoSvgLine(x1,y1,x2,y2);
 export default svgLine

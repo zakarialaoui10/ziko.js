@@ -1,4 +1,4 @@
-class ZikoUISvgElement{
+class ZikoSvgElement{
     color({stroke,fill}){
       this.element.setAttribute("stroke",stroke);
       this.element.setAttribute("fill",fill);
@@ -22,4 +22,4 @@ class ZikoUISvgElement{
       return this;   
     }
     }
-  export default ZikoUISvgElement
+  export default ZikoSvgElement
