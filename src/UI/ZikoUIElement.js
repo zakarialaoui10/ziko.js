@@ -73,6 +73,9 @@ class ZikoUIElement {
   get evt(){
     return this.cache.events;
   }
+  get html(){
+    return this.element.innerHTML;
+  }
   get __app__(){
     if(this.cache.isRoot)return this;
     let root=this.parent;
@@ -183,8 +186,8 @@ class ZikoUIElement {
           this.items=this.items.filter(n=>n!==ele);
       };
       for (let i = 0; i < ele.length; i++) remove(ele[i]);
-      for (let i = 0; i < this.items.length; i++)
-        Object.assign(this, { [[i]]: this.items[i] });
+      for (let i = 0; i < this.items.length; i++)Object.assign(this, { [[i]]: this.items[i] });
+      // Remove from item 
     }
     return this;
   }
@@ -251,9 +254,6 @@ class ZikoUIElement {
   }
   get Id() {
     return this.element.getAttribute("id");
-  }
-  useTheme(theme){
-    //thme
   }
   forEach(callback){
     this.items.forEach(callback);
@@ -471,34 +471,5 @@ class ZikoUIElement {
     else globalThis.document.exitFullscreen();
     return this;
   }
-  // resizeObserver(calback) {
-  //   var observer = new ResizeObserver((element) => calback(element));
-  //   return observer.observe(this.element);
-  // }
-  // intersectionObserver(calback, target = "parent") {
-  //   if (target == "parent") {
-  //     var observer = new IntersectionObserver((element) => calback(element[0]));
-  //     return observer.observe(this.element);
-  //   }
-  //   return this.items.map((n) => n.intersectionObserver((e) => calback(e)));
-  // }
-  // intersectRatio(calback) {
-  //   var observer = new IntersectionObserver((element) =>
-  //     calback(element[0].intersectionRatio),
-  //   );
-  //   return observer.observe(this.element);
-  // }
-  // get coords() {
-  //   var rect = this.element.getBoundingClientRect();
-  //   var parent = {
-  //     cX: Math.floor(rect.left + (rect.right - rect.left) / 2),
-  //     cY: Math.floor(rect.top + (rect.bottom - rect.top) / 2),
-  //   };
-  //   return { parent };
-  // }
-  // exportHTML() {}
-  // toPdf() {
-  //   return "Install @ziko/jspdf";
-  // }
 }
 export default ZikoUIElement;

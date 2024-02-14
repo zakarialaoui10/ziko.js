@@ -18,6 +18,10 @@ import {
     useThrottle,
     useDebounce
  } from "./Decorators";
+import {
+    useLocaleStorage,
+    useSessionStorage
+} from "./Storage"
 const Use={
     useStyle,
     useTheme,
@@ -31,6 +35,8 @@ const Use={
     useFavIcon,
     useThrottle,
     useDebounce,
+    useLocaleStorage,
+    useSessionStorage,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
@@ -63,5 +69,9 @@ export{
     useEventEmitter,
     useChannel,
     useThread,
-    useBluetooth
+    useBluetooth,
+    useThrottle,
+    useDebounce,
+    useLocaleStorage,
+    useSessionStorage
 }
