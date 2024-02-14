@@ -7,8 +7,8 @@ import{
 import {
     wait,
     timeTaken,
-    throttle,
-    debounce,
+    useThrottle,
+    useDebounce,
     Ease,
     time_memory_Taken,
     waitForUIElm,
@@ -17,8 +17,8 @@ import {
 const Time={
     wait,
     timeTaken,
-    throttle,
-    debounce,
+    useThrottle,
+    useDebounce,
     Ease,
     time_memory_Taken,
     loop,

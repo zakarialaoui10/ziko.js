@@ -14,6 +14,10 @@ import {
     useBattery,
     useGeolocation
  } from "./Sensors";
+import { 
+    useThrottle,
+    useDebounce
+ } from "./Decorators";
 const State={
     useStyle,
     useTheme,
@@ -25,6 +29,8 @@ const State={
     useBluetooth,
     useTitle,
     useFavIcon,
+    useThrottle,
+    useDebounce,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {

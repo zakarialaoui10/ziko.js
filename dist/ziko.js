@@ -16,7 +16,6 @@
 
   class AbstractZikoMath {}
 
-  //import ZMath from "./index.js";
   class Complex extends AbstractZikoMath {
     constructor(a = 0, b = 0) {
       super();
@@ -629,8 +628,6 @@
     Logic: Logic$1,
     Base,
     Permutation,
-    // permutationWithDiscount,
-    // permutationWithoutDiscount,
     Combinaison,
     combinaison,
     powerSet,
@@ -5789,6 +5786,391 @@
   }
   const useGeolocation = () => new ZikoUseGeolocation();
 
+  class ZikoTimeLoop {
+    constructor(callback, {
+      fps,
+      step,
+      t = [0, null],
+      start = true
+    } = {}) {
+      this.callback = callback;
+      this.cache = {
+        isRunning: false,
+        AnimationId: null,
+        startTime: null,
+        step,
+        fps,
+        t,
+        started: start
+      };
+      this.adjust();
+      this.i = 0;
+    }
+    adjust() {
+      if (this.cache.step && this.cache.fps) {
+        console.warn(`Fps will be adjusted from ${this.cache.fps} to ${1000 / this.cache.step} to ensure a smoother animation`);
+        this.cache.fps = 1000 / this.cache.step;
+      }
+      if (this.cache.started) {
+        const t = this.cache.t;
+        t[0] ? this.startAfter(t[0]) : this.start();
+        if (t[1]) this.stopAfter(t[1]);
+      }
+      return this;
+    }
+    get TIME_STEP() {
+      return this.cache.step ? this.cache.step : 1000 / this.cache.fps;
+    }
+    start() {
+      if (!this.cache.isRunning) {
+        this.i = 0;
+        this.cache.isRunning = true;
+        this.cache.startTime = Date.now();
+        this.animate();
+      }
+      return this;
+    }
+    pause() {
+      if (this.cache.isRunning) {
+        clearTimeout(this.cache.AnimationId);
+        this.cache.isRunning = false;
+      }
+      return this;
+    }
+    stop() {
+      this.pause();
+      this.i = 0;
+      return this;
+    }
+    resume() {
+      this.cache.isRunning = true;
+      this.animate();
+      return this;
+    }
+    startAfter(t = 1000) {
+      setTimeout(this.start.bind(this), t);
+      return this;
+    }
+    stopAfter(t = 1000) {
+      setTimeout(this.stop.bind(this), t);
+      return this;
+    }
+    animate = () => {
+      if (this.cache.isRunning) {
+        const now = Date.now();
+        const delta = now - this.cache.startTime;
+        if (delta > this.TIME_STEP) {
+          this.callback(this);
+          this.i++;
+          this.cache.startTime = now - delta % this.TIME_STEP;
+        }
+        this.cache.AnimationId = setTimeout(this.animate, 0);
+      }
+    };
+  }
+  const loop = (callback, options) => new ZikoTimeLoop(callback, options);
+
+  const Ease = {
+    Linear: function (t) {
+      return t;
+    },
+    InSin(t) {
+      return 1 - Math.cos(t * Math.PI / 2);
+    },
+    OutSin(t) {
+      return Math.sin(t * Math.PI / 2);
+    },
+    InOutSin(t) {
+      return -(Math.cos(Math.PI * t) - 1) / 2;
+    },
+    InQuad(t) {
+      return t ** 2;
+    },
+    OutQuad(t) {
+      return 1 - Math.pow(1 - t, 2);
+    },
+    InOutQuad(t) {
+      return t < 0.5 ? 2 * Math.pow(t, 2) : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    },
+    InCubic(t) {
+      return t ** 3;
+    },
+    OutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    },
+    InOutCubic(t) {
+      return t < 0.5 ? 4 * Math.pow(t, 3) : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    },
+    InQuart(t) {
+      return t ** 4;
+    },
+    OutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    },
+    InOutQuart(t) {
+      return t < 0.5 ? 8 * Math.pow(t, 4) : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    },
+    InQuint(t) {
+      return t ** 5;
+    },
+    OutQuint(t) {
+      return 1 - Math.pow(1 - t, 5);
+    },
+    InOutQuint(t) {
+      return t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * t + 2, 5) / 2;
+    },
+    InExpo(t) {
+      return t === 0 ? 0 : Math.pow(2, 10 * t - 10);
+    },
+    OutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    },
+    InOutExpo(t) {
+      return t === 0 ? 0 : t === 1 ? 1 : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;
+    },
+    InCirc(t) {
+      return 1 - Math.sqrt(1 - Math.pow(t, 2));
+    },
+    OutCirc(t) {
+      return Math.sqrt(1 - Math.pow(t - 1, 2));
+    },
+    InOutCic(t) {
+      return t < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * t, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * t + 2, 2)) + 1) / 2;
+    },
+    Arc(t) {
+      return 1 - Math.sin(Math.acos(t));
+    },
+    Back(t) {
+      // To Be Changed
+      let x = 1;
+      return Math.pow(t, 2) * ((x + 1) * t - x);
+    },
+    Elastic(t) {
+      return -2 * Math.pow(2, 10 * (t - 1)) * Math.cos(20 * Math.PI * t / 3 * t);
+    },
+    InBack(t) {
+      const c1 = 1.70158;
+      const c3 = c1 + 1;
+      return c3 * Math.pow(t, 3) - c1 * t ** 2;
+    },
+    OutBack(t) {
+      const c1 = 1.70158;
+      const c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    },
+    InOutBack(t) {
+      const c1 = 1.70158;
+      const c2 = c1 * 1.525;
+      return t < 0.5 ? Math.pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2) / 2 : (Math.pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
+    },
+    InElastic(t) {
+      const c4 = 2 * Math.PI / 3;
+      return t === 0 ? 0 : t === 1 ? 1 : -Math.pow(2, 10 * t - 10) * Math.sin((t * 10 - 10.75) * c4);
+    },
+    OutElastic(t) {
+      const c4 = 2 * Math.PI / 3;
+      return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+    },
+    InOutElastic(t) {
+      const c5 = 2 * Math.PI / 4.5;
+      return t === 0 ? 0 : t === 1 ? 1 : t < 0.5 ? -(Math.pow(2, 20 * t - 10) * Math.sin((20 * t - 11.125) * c5)) / 2 : Math.pow(2, -20 * t + 10) * Math.sin((20 * t - 11.125) * c5) / 2 + 1;
+    },
+    InBounce(t) {
+      return 1 - Ease.OutBounce(1 - t);
+    },
+    OutBounce(t) {
+      const n1 = 7.5625;
+      const d1 = 2.75;
+      if (t < 1 / d1) {
+        return n1 * t * t;
+      } else if (t < 2 / d1) {
+        return n1 * (t -= 1.5 / d1) * t + 0.75;
+      } else if (t < 2.5 / d1) {
+        return n1 * (t -= 2.25 / d1) * t + 0.9375;
+      } else {
+        return n1 * (t -= 2.625 / d1) * t + 0.984375;
+      }
+    },
+    InOutBounce(t) {
+      return t < 0.5 ? (1 - Ease.OutBounce(1 - 2 * t)) / 2 : (1 + Ease.OutBounce(2 * t - 1)) / 2;
+    }
+  };
+
+  const useDebounce = (fn, delay = 1000) => {
+    let id;
+    return (...args) => id ? clearTimeout(id) : setTimeout(() => fn(...args), delay);
+  };
+  const useThrottle = (fn, delay) => {
+    let lastTime = 0;
+    return (...args) => {
+      const now = new Date().getTime();
+      if (now - lastTime < delay) return;
+      lastTime = now;
+      fn(...args);
+    };
+  };
+
+  const time_memory_Taken = callback => {
+    const t0 = Date.now();
+    const m0 = performance.memory.usedJSHeapSize;
+    const result = callback();
+    const t1 = Date.now();
+    const m1 = performance.memory.usedJSHeapSize;
+    const elapsedTime = t1 - t0;
+    const usedMemory = m1 - m0;
+    return {
+      elapsedTime,
+      usedMemory,
+      result
+    };
+  };
+
+  const waitForUIElm = UIElement => {
+    return new Promise(resolve => {
+      if (UIElement.element) {
+        return resolve(UIElement.element);
+      }
+      const observer = new MutationObserver(() => {
+        if (UIElement.element) {
+          resolve(UIElement.element);
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    });
+  };
+  const waitForUIElmSync = (UIElement, timeout = 2000) => {
+    const t0 = Date.now();
+    while (Date.now() - t0 < timeout) {
+      if (UIElement.element) return UIElement.element;
+    }
+  };
+
+  const wait = delayInMS => {
+    return new Promise(resolve => setTimeout(resolve, delayInMS));
+  };
+  const timeTaken = callback => {
+    console.time('timeTaken');
+    const r = callback();
+    console.timeEnd('timeTaken');
+    return r;
+  };
+
+  class ZikoTimeAnimation {
+    constructor(callback, {
+      ease = Ease.Linear,
+      step = 50,
+      t = [0, null],
+      start = true,
+      duration = 3000
+    } = {}) {
+      this.cache = {
+        isRunning: false,
+        AnimationId: null,
+        startTime: null,
+        ease,
+        step,
+        intervall: t,
+        started: start,
+        duration
+      };
+      this.t = 0;
+      this.tx = 0;
+      this.ty = 0;
+      this.i = 0;
+      this.callback = callback;
+    }
+    #animation_handler() {
+      this.t += this.cache.step;
+      this.i++;
+      this.tx = map$1(this.t, 0, this.cache.duration, 0, 1);
+      this.ty = this.cache.ease(this.tx);
+      this.callback(this);
+      if (this.t >= this.cache.duration) {
+        clearInterval(this.cache.AnimationId);
+        this.cache.isRunning = false;
+      }
+    }
+    reset(restart = true) {
+      this.t = 0;
+      this.tx = 0;
+      this.ty = 0;
+      this.i = 0;
+      if (restart) this.start();
+      return this;
+    }
+    #animate(reset = true) {
+      if (!this.cache.isRunning) {
+        if (reset) this.reset(false);
+        this.cache.isRunning = true;
+        this.cache.startTime = Date.now();
+        this.cache.AnimationId = setInterval(this.#animation_handler.bind(this), this.cache.step);
+      }
+      return this;
+    }
+    start() {
+      this.#animate(true);
+      return this;
+    }
+    pause() {
+      if (this.cache.isRunning) {
+        clearTimeout(this.cache.AnimationId);
+        this.cache.isRunning = false;
+      }
+      return this;
+    }
+    resume() {
+      this.#animate(false);
+      return this;
+    }
+    stop() {
+      this.pause();
+      this.reset(false);
+      return this;
+    }
+    // clear(){
+    // }
+    // stream(){
+    // }
+  }
+  const animation = (callback, config) => new ZikoTimeAnimation(callback, config);
+
+  const Time = {
+    wait,
+    timeTaken,
+    useThrottle,
+    useDebounce,
+    Ease,
+    time_memory_Taken,
+    loop,
+    animation,
+    waitForUIElm,
+    waitForUIElmSync,
+    ExtractAll: function () {
+      const keys = Object.keys(this);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (key !== 'ExtractAll' && key !== 'RemoveAll') {
+          globalThis[key] = this[key];
+        }
+      }
+      return this;
+    },
+    RemoveAll: function () {
+      const keys = Object.keys(this);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (key !== 'RemoveAll') {
+          delete globalThis[key];
+        }
+      }
+      return this;
+    }
+  };
+
   const State = {
     useStyle,
     useTheme,
@@ -5800,6 +6182,8 @@
     useBluetooth,
     useTitle,
     useFavIcon,
+    useThrottle,
+    useDebounce,
     ExtractAll: function () {
       const keys = Object.keys(this);
       for (let i = 0; i < keys.length; i++) {
@@ -7761,391 +8145,6 @@
     }
   };
 
-  class ZikoTimeLoop {
-    constructor(callback, {
-      fps,
-      step,
-      t = [0, null],
-      start = true
-    } = {}) {
-      this.callback = callback;
-      this.cache = {
-        isRunning: false,
-        AnimationId: null,
-        startTime: null,
-        step,
-        fps,
-        t,
-        started: start
-      };
-      this.adjust();
-      this.i = 0;
-    }
-    adjust() {
-      if (this.cache.step && this.cache.fps) {
-        console.warn(`Fps will be adjusted from ${this.cache.fps} to ${1000 / this.cache.step} to ensure a smoother animation`);
-        this.cache.fps = 1000 / this.cache.step;
-      }
-      if (this.cache.started) {
-        const t = this.cache.t;
-        t[0] ? this.startAfter(t[0]) : this.start();
-        if (t[1]) this.stopAfter(t[1]);
-      }
-      return this;
-    }
-    get TIME_STEP() {
-      return this.cache.step ? this.cache.step : 1000 / this.cache.fps;
-    }
-    start() {
-      if (!this.cache.isRunning) {
-        this.i = 0;
-        this.cache.isRunning = true;
-        this.cache.startTime = Date.now();
-        this.animate();
-      }
-      return this;
-    }
-    pause() {
-      if (this.cache.isRunning) {
-        clearTimeout(this.cache.AnimationId);
-        this.cache.isRunning = false;
-      }
-      return this;
-    }
-    stop() {
-      this.pause();
-      this.i = 0;
-      return this;
-    }
-    resume() {
-      this.cache.isRunning = true;
-      this.animate();
-      return this;
-    }
-    startAfter(t = 1000) {
-      setTimeout(this.start.bind(this), t);
-      return this;
-    }
-    stopAfter(t = 1000) {
-      setTimeout(this.stop.bind(this), t);
-      return this;
-    }
-    animate = () => {
-      if (this.cache.isRunning) {
-        const now = Date.now();
-        const delta = now - this.cache.startTime;
-        if (delta > this.TIME_STEP) {
-          this.callback(this);
-          this.i++;
-          this.cache.startTime = now - delta % this.TIME_STEP;
-        }
-        this.cache.AnimationId = setTimeout(this.animate, 0);
-      }
-    };
-  }
-  const loop = (callback, options) => new ZikoTimeLoop(callback, options);
-
-  const Ease = {
-    Linear: function (t) {
-      return t;
-    },
-    InSin(t) {
-      return 1 - Math.cos(t * Math.PI / 2);
-    },
-    OutSin(t) {
-      return Math.sin(t * Math.PI / 2);
-    },
-    InOutSin(t) {
-      return -(Math.cos(Math.PI * t) - 1) / 2;
-    },
-    InQuad(t) {
-      return t ** 2;
-    },
-    OutQuad(t) {
-      return 1 - Math.pow(1 - t, 2);
-    },
-    InOutQuad(t) {
-      return t < 0.5 ? 2 * Math.pow(t, 2) : 1 - Math.pow(-2 * t + 2, 2) / 2;
-    },
-    InCubic(t) {
-      return t ** 3;
-    },
-    OutCubic(t) {
-      return 1 - Math.pow(1 - t, 3);
-    },
-    InOutCubic(t) {
-      return t < 0.5 ? 4 * Math.pow(t, 3) : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    },
-    InQuart(t) {
-      return t ** 4;
-    },
-    OutQuart(t) {
-      return 1 - Math.pow(1 - t, 4);
-    },
-    InOutQuart(t) {
-      return t < 0.5 ? 8 * Math.pow(t, 4) : 1 - Math.pow(-2 * t + 2, 4) / 2;
-    },
-    InQuint(t) {
-      return t ** 5;
-    },
-    OutQuint(t) {
-      return 1 - Math.pow(1 - t, 5);
-    },
-    InOutQuint(t) {
-      return t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * t + 2, 5) / 2;
-    },
-    InExpo(t) {
-      return t === 0 ? 0 : Math.pow(2, 10 * t - 10);
-    },
-    OutExpo(t) {
-      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-    },
-    InOutExpo(t) {
-      return t === 0 ? 0 : t === 1 ? 1 : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;
-    },
-    InCirc(t) {
-      return 1 - Math.sqrt(1 - Math.pow(t, 2));
-    },
-    OutCirc(t) {
-      return Math.sqrt(1 - Math.pow(t - 1, 2));
-    },
-    InOutCic(t) {
-      return t < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * t, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * t + 2, 2)) + 1) / 2;
-    },
-    Arc(t) {
-      return 1 - Math.sin(Math.acos(t));
-    },
-    Back(t) {
-      // To Be Changed
-      let x = 1;
-      return Math.pow(t, 2) * ((x + 1) * t - x);
-    },
-    Elastic(t) {
-      return -2 * Math.pow(2, 10 * (t - 1)) * Math.cos(20 * Math.PI * t / 3 * t);
-    },
-    InBack(t) {
-      const c1 = 1.70158;
-      const c3 = c1 + 1;
-      return c3 * Math.pow(t, 3) - c1 * t ** 2;
-    },
-    OutBack(t) {
-      const c1 = 1.70158;
-      const c3 = c1 + 1;
-      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-    },
-    InOutBack(t) {
-      const c1 = 1.70158;
-      const c2 = c1 * 1.525;
-      return t < 0.5 ? Math.pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2) / 2 : (Math.pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
-    },
-    InElastic(t) {
-      const c4 = 2 * Math.PI / 3;
-      return t === 0 ? 0 : t === 1 ? 1 : -Math.pow(2, 10 * t - 10) * Math.sin((t * 10 - 10.75) * c4);
-    },
-    OutElastic(t) {
-      const c4 = 2 * Math.PI / 3;
-      return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
-    },
-    InOutElastic(t) {
-      const c5 = 2 * Math.PI / 4.5;
-      return t === 0 ? 0 : t === 1 ? 1 : t < 0.5 ? -(Math.pow(2, 20 * t - 10) * Math.sin((20 * t - 11.125) * c5)) / 2 : Math.pow(2, -20 * t + 10) * Math.sin((20 * t - 11.125) * c5) / 2 + 1;
-    },
-    InBounce(t) {
-      return 1 - Ease.OutBounce(1 - t);
-    },
-    OutBounce(t) {
-      const n1 = 7.5625;
-      const d1 = 2.75;
-      if (t < 1 / d1) {
-        return n1 * t * t;
-      } else if (t < 2 / d1) {
-        return n1 * (t -= 1.5 / d1) * t + 0.75;
-      } else if (t < 2.5 / d1) {
-        return n1 * (t -= 2.25 / d1) * t + 0.9375;
-      } else {
-        return n1 * (t -= 2.625 / d1) * t + 0.984375;
-      }
-    },
-    InOutBounce(t) {
-      return t < 0.5 ? (1 - Ease.OutBounce(1 - 2 * t)) / 2 : (1 + Ease.OutBounce(2 * t - 1)) / 2;
-    }
-  };
-
-  const debounce = (fn, delay = 1000) => {
-    let id;
-    return (...args) => id ? clearTimeout(id) : setTimeout(() => fn(...args), delay);
-  };
-  const throttle = (fn, delay) => {
-    let lastTime = 0;
-    return (...args) => {
-      const now = new Date().getTime();
-      if (now - lastTime < delay) return;
-      lastTime = now;
-      fn(...args);
-    };
-  };
-
-  const time_memory_Taken = callback => {
-    const t0 = Date.now();
-    const m0 = performance.memory.usedJSHeapSize;
-    const result = callback();
-    const t1 = Date.now();
-    const m1 = performance.memory.usedJSHeapSize;
-    const elapsedTime = t1 - t0;
-    const usedMemory = m1 - m0;
-    return {
-      elapsedTime,
-      usedMemory,
-      result
-    };
-  };
-
-  const waitForUIElm = UIElement => {
-    return new Promise(resolve => {
-      if (UIElement.element) {
-        return resolve(UIElement.element);
-      }
-      const observer = new MutationObserver(() => {
-        if (UIElement.element) {
-          resolve(UIElement.element);
-          observer.disconnect();
-        }
-      });
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    });
-  };
-  const waitForUIElmSync = (UIElement, timeout = 2000) => {
-    const t0 = Date.now();
-    while (Date.now() - t0 < timeout) {
-      if (UIElement.element) return UIElement.element;
-    }
-  };
-
-  const wait = delayInMS => {
-    return new Promise(resolve => setTimeout(resolve, delayInMS));
-  };
-  const timeTaken = callback => {
-    console.time('timeTaken');
-    const r = callback();
-    console.timeEnd('timeTaken');
-    return r;
-  };
-
-  class ZikoTimeAnimation {
-    constructor(callback, {
-      ease = Ease.Linear,
-      step = 50,
-      t = [0, null],
-      start = true,
-      duration = 3000
-    } = {}) {
-      this.cache = {
-        isRunning: false,
-        AnimationId: null,
-        startTime: null,
-        ease,
-        step,
-        intervall: t,
-        started: start,
-        duration
-      };
-      this.t = 0;
-      this.tx = 0;
-      this.ty = 0;
-      this.i = 0;
-      this.callback = callback;
-    }
-    #animation_handler() {
-      this.t += this.cache.step;
-      this.i++;
-      this.tx = map$1(this.t, 0, this.cache.duration, 0, 1);
-      this.ty = this.cache.ease(this.tx);
-      this.callback(this);
-      if (this.t >= this.cache.duration) {
-        clearInterval(this.cache.AnimationId);
-        this.cache.isRunning = false;
-      }
-    }
-    reset(restart = true) {
-      this.t = 0;
-      this.tx = 0;
-      this.ty = 0;
-      this.i = 0;
-      if (restart) this.start();
-      return this;
-    }
-    #animate(reset = true) {
-      if (!this.cache.isRunning) {
-        if (reset) this.reset(false);
-        this.cache.isRunning = true;
-        this.cache.startTime = Date.now();
-        this.cache.AnimationId = setInterval(this.#animation_handler.bind(this), this.cache.step);
-      }
-      return this;
-    }
-    start() {
-      this.#animate(true);
-      return this;
-    }
-    pause() {
-      if (this.cache.isRunning) {
-        clearTimeout(this.cache.AnimationId);
-        this.cache.isRunning = false;
-      }
-      return this;
-    }
-    resume() {
-      this.#animate(false);
-      return this;
-    }
-    stop() {
-      this.pause();
-      this.reset(false);
-      return this;
-    }
-    // clear(){
-    // }
-    // stream(){
-    // }
-  }
-  const animation = (callback, config) => new ZikoTimeAnimation(callback, config);
-
-  const Time = {
-    wait,
-    timeTaken,
-    throttle,
-    debounce,
-    Ease,
-    time_memory_Taken,
-    loop,
-    animation,
-    waitForUIElm,
-    waitForUIElmSync,
-    ExtractAll: function () {
-      const keys = Object.keys(this);
-      for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
-        if (key !== 'ExtractAll' && key !== 'RemoveAll') {
-          globalThis[key] = this[key];
-        }
-      }
-      return this;
-    },
-    RemoveAll: function () {
-      const keys = Object.keys(this);
-      for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
-        if (key !== 'RemoveAll') {
-          delete globalThis[key];
-        }
-      }
-      return this;
-    }
-  };
-
   const parseInlineElements = text => {
     return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>').replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">');
   };
@@ -9509,7 +9508,6 @@
   exports.csv2object = csv2object;
   exports.csv2sql = csv2sql;
   exports.datalist = datalist;
-  exports.debounce = debounce;
   exports.deg2rad = deg2rad;
   exports.div = div;
   exports.e = e;
@@ -9610,10 +9608,11 @@
   exports.tanh = tanh;
   exports.text = text;
   exports.textarea = textarea;
-  exports.throttle = throttle;
   exports.timeTaken = timeTaken;
   exports.time_memory_Taken = time_memory_Taken;
   exports.ul = ul;
+  exports.useDebounce = useDebounce;
+  exports.useThrottle = useThrottle;
   exports.video = video;
   exports.wait = wait;
   exports.waitForUIElm = waitForUIElm;

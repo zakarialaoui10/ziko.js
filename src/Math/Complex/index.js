@@ -4,7 +4,6 @@ import{
     sin,
     tan,
     pow,
-    //atan,
     floor,
     hypot,
     cosh,
@@ -16,7 +15,6 @@ import{
   }from "../Functions/index.js"
 import { Matrix } from "../Matrix/index.js";
 import {sum,prod,deg2rad} from "../Utils/index.js";
-//import ZMath from "./index.js";
 class Complex extends AbstractZikoMath{
     constructor(a = 0, b = 0) {
         super()

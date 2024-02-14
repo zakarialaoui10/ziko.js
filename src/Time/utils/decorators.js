@@ -1,8 +1,8 @@
-const debounce=(fn,delay=1000)=>{
+const useDebounce=(fn,delay=1000)=>{
     let id;
     return(...args)=>id?clearTimeout(id):setTimeout(()=>fn(...args),delay)
 }
-const throttle=(fn,delay)=>{
+const useThrottle=(fn,delay)=>{
     let lastTime=0;
     return (...args)=>{
         const now=new Date().getTime()
@@ -11,8 +11,7 @@ const throttle=(fn,delay)=>{
         fn(...args); 
     }
 }
-
 export{
-    debounce,
-    throttle
+    useDebounce,
+    useThrottle
 }

@@ -13,14 +13,6 @@ export{
     timeTaken,
     Ease
 }
-export{
-    throttle,
-    debounce
-} from "./decorators.js";
-export {
-    time_memory_Taken
-} from "./performance.js";
-export{
-    waitForUIElm,
-    waitForUIElmSync
-} from "./ui.js"
+export * from "./decorators.js";
+export * from "./performance.js";
+export * from "./ui.js"
