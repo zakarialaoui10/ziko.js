@@ -7385,7 +7385,6 @@ const select = () => new ZikoUISelect();
 class ZikoUIImage extends ZikoUIElement {
   constructor(src, w, h) {
     super("image", "image");
-    this.element = document.createElement("img");
     this.value = src;
     if (src.nodeName === "IMG") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
     if (typeof w == "number") w += "%";
@@ -7417,8 +7416,7 @@ const image = (src, width, height) => new ZikoUIImage(src, width, height);
 
 class ZikoUIFigure extends ZikoUIElement {
   constructor(src, caption) {
-    super();
-    this.element = document.createElement("figure");
+    super("figure", "figure");
     this.img = src.width("100%").element;
     this.caption = document.createElement("figcaption");
     this.caption.append(caption.element);
@@ -7432,7 +7430,6 @@ const figure = (image, caption) => new ZikoUIFigure(image, caption);
 class ZikoUIVideo extends ZikoUIElement {
   constructor(src = "", w = "100%", h = "50vh") {
     super("video", "video");
-    this.element = document.createElement("video");
     if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
     if (typeof w == "number") w += "%";
     if (typeof h == "number") h += "%";
@@ -7442,7 +7439,7 @@ class ZikoUIVideo extends ZikoUIElement {
     });
     this.render();
   }
-  controls(enabled = true) {
+  useControls(enabled = true) {
     this.element.controls = enabled;
     return this;
   }
@@ -7458,7 +7455,7 @@ class ZikoUIVideo extends ZikoUIElement {
     this.element.poster = src;
     return this;
   }
-  PIP(e) {
+  usePIP(e) {
     this.element.requestPictureInPicture(e);
     return this;
   }
@@ -7468,12 +7465,11 @@ const video = (src, width, height) => new ZikoUIVideo(src, width, height);
 class ZikoUIAudio extends ZikoUIElement {
   constructor(src) {
     super("audio", "audio");
-    this.element = document.createElement("audio");
     this.element.setAttribute("src", src);
     this.render();
     this.controls();
   }
-  controls(enabled = true) {
+  useControls(enabled = true) {
     this.element.controls = enabled;
     return this;
   }

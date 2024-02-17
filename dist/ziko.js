@@ -7391,7 +7391,6 @@
   class ZikoUIImage extends ZikoUIElement {
     constructor(src, w, h) {
       super("image", "image");
-      this.element = document.createElement("img");
       this.value = src;
       if (src.nodeName === "IMG") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
       if (typeof w == "number") w += "%";
@@ -7423,8 +7422,7 @@
 
   class ZikoUIFigure extends ZikoUIElement {
     constructor(src, caption) {
-      super();
-      this.element = document.createElement("figure");
+      super("figure", "figure");
       this.img = src.width("100%").element;
       this.caption = document.createElement("figcaption");
       this.caption.append(caption.element);
@@ -7438,7 +7436,6 @@
   class ZikoUIVideo extends ZikoUIElement {
     constructor(src = "", w = "100%", h = "50vh") {
       super("video", "video");
-      this.element = document.createElement("video");
       if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);else this.element.setAttribute("src", src);
       if (typeof w == "number") w += "%";
       if (typeof h == "number") h += "%";
@@ -7448,7 +7445,7 @@
       });
       this.render();
     }
-    controls(enabled = true) {
+    useControls(enabled = true) {
       this.element.controls = enabled;
       return this;
     }
@@ -7464,7 +7461,7 @@
       this.element.poster = src;
       return this;
     }
-    PIP(e) {
+    usePIP(e) {
       this.element.requestPictureInPicture(e);
       return this;
     }
@@ -7474,12 +7471,11 @@
   class ZikoUIAudio extends ZikoUIElement {
     constructor(src) {
       super("audio", "audio");
-      this.element = document.createElement("audio");
       this.element.setAttribute("src", src);
       this.render();
       this.controls();
     }
-    controls(enabled = true) {
+    useControls(enabled = true) {
       this.element.controls = enabled;
       return this;
     }

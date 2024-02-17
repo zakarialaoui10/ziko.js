@@ -1,8 +1,7 @@
 import ZikoUIElement from "../../ZikoUIElement";
 class ZikoUIFigure extends ZikoUIElement{
     constructor(src,caption){
-      super()
-      this.element=document.createElement("figure");
+      super("figure","figure")
       this.img=src.width("100%").element;
       this.caption=document.createElement("figcaption");
       this.caption.append(caption.element)

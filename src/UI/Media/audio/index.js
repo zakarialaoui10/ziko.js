@@ -2,12 +2,11 @@ import ZikoUIElement from "../../ZikoUIElement";
 class ZikoUIAudio extends ZikoUIElement {
     constructor(src) {
       super("audio","audio");
-      this.element = document.createElement("audio");
       this.element.setAttribute("src", src);
       this.render();
       this.controls();
     }
-    controls(enabled = true) {
+    useControls(enabled = true) {
       this.element.controls = enabled;
       return this;
     }
