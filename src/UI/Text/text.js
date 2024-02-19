@@ -1,6 +1,6 @@
 import ZikoUIElement from "../ZikoUIElement.js";
 import {Complex} from "../../Math/Complex/index.js";
-import { __UI__ } from "../__UI__.js";
+import { __UI__ } from "../../App/Globals/__UI__.js";
 class ZikoUIText extends ZikoUIElement {
     constructor(...value) {
       super("span","text");

@@ -7,7 +7,7 @@ import {
     h4,
     h5,
     h6
-} from "./Text/index.js";
+} from "./Text";
 import {
     br,
     hr,
@@ -15,11 +15,11 @@ import {
     hrs,
     link,
     ZikoHtml
-} from "./Misc/index.js";
+} from "./Misc";
 import {
     ol,
     ul
-} from "./List/index.js"
+} from "./List"
 import {
     btn,
     input,
@@ -39,21 +39,21 @@ import {
     select,
     textarea,
     inputCamera
-} from "./Inputs/index.js";
+} from "./Inputs";
 import {
     image,
     video,
     audio,
     figure
-} from "./Media/index.js"
+} from "./Media"
 import{
     Flex,
     Grid,
     Carousel,
-    CodeNote,
+    CodeCell,
     Tabs,
     Accordion,
-} from "./CustomElement/index.js"
+} from "./CustomElement"
 import{
     Header,
     Main,
@@ -62,8 +62,8 @@ import{
     Aside,
     Nav,
     Footer,
-    } from "./Semantic/index.js";
-import { Table } from "./Table/index.js";
+    } from "./Semantic";
+import { Table } from "./Table";
 const UI={
     ZikoHtml,
     text,
@@ -114,7 +114,7 @@ const UI={
     Nav,
     Footer,
     Table,
-    CodeNote,
+    CodeCell,
     Tabs,
     Accordion,
     ExtractAll: function () {

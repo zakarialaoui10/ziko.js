@@ -6,7 +6,10 @@ import Events from "./Reactivity/Events";
 import Use from "./Reactivity/Use";
 import Graphics from "./Graphics";
 import {SPA} from "./App/Router";
-import { __UI__ } from "./UI/__UI__.js";
+import { 
+    __UI__,
+    __Target__,
+ } from "./App/Globals";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
 import { App } from "./App";
 const Ziko={
@@ -19,10 +22,10 @@ const Ziko={
     Use,
     Data,
     SPA,
-    __UI__,
 }
 globalThis.__Ziko__=Ziko;
 globalThis.__UI__=__UI__;
+globalThis.__Target__=__Target__;
 function ExtractAll(){
     UI.ExtractAll();
     Math.ExtractAll();

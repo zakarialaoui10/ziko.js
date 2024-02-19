@@ -2342,44 +2342,6 @@
     }
   };
 
-  const __UI__ = {
-    text: [],
-    p: [],
-    pre: [],
-    h1: [],
-    h2: [],
-    h3: [],
-    h4: [],
-    h5: [],
-    h6: [],
-    br: [],
-    hr: [],
-    btn: [],
-    ol: [],
-    ul: [],
-    image: [],
-    video: [],
-    audio: [],
-    Article: [],
-    Main: [],
-    Section: [],
-    Aside: [],
-    Nav: [],
-    Header: [],
-    Footer: [],
-    Flex: [],
-    FlexMain: [],
-    FlexNav: [],
-    FlexHeader: [],
-    FlexFooter: [],
-    FlexSection: [],
-    FLexArticle: [],
-    FlexAside: [],
-    Table: [],
-    Svg: [],
-    Canvas: []
-  };
-
   const addSuffixeToNumber = (value, suffixe = "px") => {
     if (typeof value === "number") value += suffixe;
     if (value instanceof Array) value = value.map(n => typeof n === "number" ? n += suffixe : n).join(" ");
@@ -4060,7 +4022,7 @@
       return this;
     }
   }
-  const Input = Target => new ZikoEventInput(Target);
+  const Input$1 = Target => new ZikoEventInput(Target);
 
   const custom_event_controller = event_name => function (e) {
     EVENT_CONTROLLER.call(this, e, event_name, null, null);
@@ -4115,7 +4077,7 @@
     Click,
     Clipboard,
     Focus,
-    Input,
+    Input: Input$1,
     CustomEvent,
     ExtractAll: function () {
       const keys = Object.keys(this);
@@ -6282,7 +6244,7 @@
 
   class ZikoUIElement {
     constructor(element, name = "") {
-      this.target = globalThis.document.body;
+      this.target = globalThis.__Target__ || globalThis.document.body;
       if (typeof element === "string") element = globalThis.document.createElement(element);
       this.element = element;
       this.uuid = this.constructor.name + "-" + Random.string(10);
@@ -6324,7 +6286,7 @@
         padding: 0
       });
       this.size("auto", "auto");
-      __UI__[this.cache.name]?.push(this);
+      globalThis.__UI__[this.cache.name]?.push(this);
     }
     get st() {
       return this.cache.style;
@@ -6736,6 +6698,44 @@
     }
   }
 
+  const __UI__ = {
+    text: [],
+    p: [],
+    pre: [],
+    h1: [],
+    h2: [],
+    h3: [],
+    h4: [],
+    h5: [],
+    h6: [],
+    br: [],
+    hr: [],
+    btn: [],
+    ol: [],
+    ul: [],
+    image: [],
+    video: [],
+    audio: [],
+    Article: [],
+    Main: [],
+    Section: [],
+    Aside: [],
+    Nav: [],
+    Header: [],
+    Footer: [],
+    Flex: [],
+    FlexMain: [],
+    FlexNav: [],
+    FlexHeader: [],
+    FlexFooter: [],
+    FlexSection: [],
+    FLexArticle: [],
+    FlexAside: [],
+    Table: [],
+    Svg: [],
+    Canvas: []
+  };
+
   class ZikoUIText extends ZikoUIElement {
     constructor(...value) {
       super("span", "text");
@@ -7071,12 +7071,12 @@
       this.render();
     }
     onInput(...callbacks) {
-      if (!this.events.input) this.events.input = Input(this);
+      if (!this.events.input) this.events.input = Input$1(this);
       this.events.input.onInput(...callbacks);
       return this;
     }
     onChange(...callbacks) {
-      if (!this.events.input) this.events.input = Input(this);
+      if (!this.events.input) this.events.input = Input$1(this);
       this.events.input.onChange(...callbacks);
       return this;
     }
@@ -7673,6 +7673,54 @@
   }
   const Grid$1 = (...ZikoUIElement) => new ZikoUIGrid("div").append(...ZikoUIElement);
 
+  class ZikoUIAccordion extends ZikoUIElement {
+    constructor(summary, content, icon = "😁") {
+      super("details", "Accordion");
+      this.summary = ZikoHtml("summary", summary).style({
+        fontSize: "1.1em",
+        padding: "0.625rem",
+        fontWeight: "bold",
+        listStyleType: `"${icon}"`,
+        cursor: "pointer"
+      });
+      this.summary[0].style({
+        marginLeft: "0.5em"
+      });
+      this.content = content.style({
+        margin: "0.7em"
+      });
+      this.append(this.summary, this.content);
+      this.style({
+        marginBottom: "0.7em"
+      });
+      this.render();
+    }
+    get isOpen() {
+      return this.element.open;
+    }
+    open() {
+      this.element.open = true;
+      return this;
+    }
+    onOpen(callback) {
+      return this;
+    }
+    close() {
+      this.element.open = true;
+      return this;
+    }
+    onClose(callback) {
+      return this;
+    }
+    toggle() {
+      this.element.open = !this.element.open;
+      return this;
+    }
+  }
+  const Accordion = (summary, content, icon) => new ZikoUIAccordion(summary, content, icon);
+
+  // Watch open using Mutation observer
+
   class ZikoUICarousel extends ZikoUIFlex {
     constructor(...ZikoUIElement) {
       super();
@@ -7717,22 +7765,99 @@
   }
   const Carousel = (...ZikoUIElement) => new ZikoUICarousel(...ZikoUIElement);
 
-  class ZikoUINoteBook extends ZikoUIFlex {
-    constructor() {
-      super();
-    }
-    addSection() {
-      const Input = Section().style({
-        width: "80%",
-        height: "50px",
-        margin: "5px 0px",
-        border: "1px red solid"
+  class ZikoCodeCell {
+    constructor(code = "", {
+      type = "js",
+      order = null
+    } = {}) {
+      this.Input = Input(code);
+      this.Output = Output();
+      this.type = type;
+      this.order = order;
+      this.metadata = {};
+      this.InOut = Flex(this.Input, this.Output).vertical().style({
+        width: "90vw",
+        margin: "20px auto"
       });
-      this.append(Input);
+      //this.init();
+    }
+    // init(){
+    //     this.Input.onPtrDown(e=>globalThis.__Target__=e.target.element.nextElementSibling);
+    // }
+    get codeText() {
+      return this.Input.element.innerText;
+    }
+    get codeHTML() {
+      return this.Input.element.innerHTML;
+    }
+    get outputHTML() {
+      return this.Output.element.innerHTML;
+    }
+    Cell() {
+      return {
+        input: this.codeText,
+        output: this.outputHTML,
+        order: this.order,
+        type: this.type
+      };
+    }
+    execute() {
+      this.clearOutput();
+      this.evaluate();
+    }
+    #evaluateJs() {
+      globalThis.eval(this.Input.element.innerText);
+    }
+    #evaluateMd() {}
+    #evaluateHtml() {}
+    evaluate() {
+      globalThis.__Target__ = this.Output.element;
+      switch (this.type) {
+        case "js":
+          this.#evaluateJs();
+          break;
+      }
       return this;
     }
+    clearInput() {
+      this.Output.element.innerText = "";
+      return this;
+    }
+    clearOutput() {
+      this.Output.element.innerText = "";
+      return this;
+    }
+    setOrder(order) {
+      this.order = order;
+      return this;
+    }
+    remove() {
+      this.InOut.remove();
+    }
   }
-  const CodeNote = () => new ZikoUINoteBook();
+  const Input = (codeText = "") => ZikoHtml("code", codeText).style({
+    width: "100%",
+    height: "auto",
+    padding: "10px",
+    boxSizing: "border-box",
+    border: "1px solid #ccc",
+    outline: "none",
+    fontSize: "1rem",
+    fontFamily: "Lucida Console, Courier New, monospace",
+    padding: "1rem 0.5rem",
+    wordBreak: "break-all",
+    background: "#f6f8fa",
+    color: "#0062C3"
+  }).setAttr("contenteditable", true);
+  const Output = () => Section().style({
+    width: "100%",
+    height: "auto"
+  });
+  const CodeCell = (codeText, {
+    type
+  } = {}) => new ZikoCodeCell(codeText, {
+    type
+  });
 
   // Next 
   // Previous
@@ -7831,54 +7956,6 @@
     }
   }
   const Tabs = (Controllers, Contents) => new ZikoUITabs(Controllers, Contents);
-
-  class ZikoUIAccordion extends ZikoUIElement {
-    constructor(summary, content, icon = "😁") {
-      super("details", "Accordion");
-      this.summary = ZikoHtml("summary", summary).style({
-        fontSize: "1.1em",
-        padding: "0.625rem",
-        fontWeight: "bold",
-        listStyleType: `"${icon}"`,
-        cursor: "pointer"
-      });
-      this.summary[0].style({
-        marginLeft: "0.5em"
-      });
-      this.content = content.style({
-        margin: "0.7em"
-      });
-      this.append(this.summary, this.content);
-      this.style({
-        marginBottom: "0.7em"
-      });
-      this.render();
-    }
-    get isOpen() {
-      return this.element.open;
-    }
-    open() {
-      this.element.open = true;
-      return this;
-    }
-    onOpen(callback) {
-      return this;
-    }
-    close() {
-      this.element.open = true;
-      return this;
-    }
-    onClose(callback) {
-      return this;
-    }
-    toggle() {
-      this.element.open = !this.element.open;
-      return this;
-    }
-  }
-  const Accordion = (summary, content, icon) => new ZikoUIAccordion(summary, content, icon);
-
-  // Watch open using Mutation observer
 
   class ZikoUIMain extends ZikoUIElement {
     constructor() {
@@ -8162,7 +8239,7 @@
     Nav,
     Footer,
     Table,
-    CodeNote,
+    CodeCell,
     Tabs,
     Accordion,
     ExtractAll: function () {
@@ -9337,6 +9414,11 @@
   }
   const SPA = (root_UI, routes, patterns) => new ZikoSPA(root_UI, routes, patterns);
 
+  const __init__ = () => document.documentElement.setAttribute("data-engine", "zikojs");
+
+  var __Target__ = null;
+  if (document.body) __Target__ = document.body;
+
   class ZikoSeo {
     constructor(app) {
       this.app = app;
@@ -9411,8 +9493,6 @@
   }
   const App = (...UIElement) => new ZikoUIApp().append(...UIElement);
 
-  const __init__ = () => document.documentElement.setAttribute("data-engine", "zikojs");
-
   const Ziko = {
     App,
     Math: Math$1,
@@ -9422,11 +9502,11 @@
     Events,
     Use,
     Data,
-    SPA,
-    __UI__
+    SPA
   };
   globalThis.__Ziko__ = Ziko;
   globalThis.__UI__ = __UI__;
+  globalThis.__Target__ = __Target__;
   function ExtractAll() {
     UI$1.ExtractAll();
     Math$1.ExtractAll();
@@ -9454,7 +9534,7 @@
   exports.Base = Base;
   exports.Canvas = Canvas;
   exports.Carousel = Carousel;
-  exports.CodeNote = CodeNote;
+  exports.CodeCell = CodeCell;
   exports.Combinaison = Combinaison;
   exports.Complex = Complex;
   exports.DarkThemes = DarkThemes;

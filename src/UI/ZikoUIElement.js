@@ -1,4 +1,3 @@
-import { __UI__ } from "./__UI__";
 import { ZikoStyle } from "./Style";
 import { 
   Pointer, 
@@ -15,11 +14,10 @@ import {
   WatchSize 
 } from "../Reactivity";
 import { text } from "./Text";
-import { matrix } from "../Math/Matrix";
 import { Random } from "../Math/Random";
 class ZikoUIElement {
   constructor(element,name="") {
-    this.target = globalThis.document.body;
+    this.target = globalThis.__Target__||globalThis.document.body;
     if(typeof element === "string") element = globalThis.document.createElement(element);
     this.element = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
@@ -62,7 +60,7 @@ class ZikoUIElement {
       padding:0,
      });
     this.size("auto", "auto");
-    __UI__[this.cache.name]?.push(this)
+    globalThis.__UI__[this.cache.name]?.push(this)
   }
   get st(){
     return this.cache.style;

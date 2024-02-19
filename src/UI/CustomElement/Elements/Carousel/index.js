@@ -1,4 +1,4 @@
-import { ZikoUIFlex } from "../Flex.js";
+import { ZikoUIFlex } from "../../Flex";
 class ZikoUICarousel extends ZikoUIFlex{
     constructor(...ZikoUIElement){
         super()

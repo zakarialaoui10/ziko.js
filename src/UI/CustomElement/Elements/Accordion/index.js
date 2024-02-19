@@ -1,6 +1,6 @@
-import ZikoUIElement from "../../ZikoUIElement";
-import { ZikoUIFlex } from "../Flex";
-import { ZikoHtml } from "../../Misc";
+import ZikoUIElement from "../../../ZikoUIElement";
+import { ZikoUIFlex } from "../../Flex";
+import { ZikoHtml } from "../../../Misc";
 class ZikoUIAccordion extends ZikoUIElement{
     constructor(summary,content,icon="😁"){
         super("details","Accordion")
