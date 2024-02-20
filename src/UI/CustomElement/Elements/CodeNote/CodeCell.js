@@ -1,3 +1,4 @@
+import { useSuccesifKeys } from "../../../../Reactivity";
 import {ZikoHtml} from "../../../Misc";
 import { Flex } from "../../Flex";
 class ZikoCodeCell{
@@ -15,10 +16,23 @@ class ZikoCodeCell{
             margin:"20px auto"
         });
         this.Right=null;
-        this.Left=null;      
+        this.Left=null;
+        this.Input.onKeyDown(e=>{
+            if(e.kd==="Enter" && e.event.shiftKey){
+                e.event.preventDefault();
+                this.execute();
+            }
+        }
+        )
+        this.Input.onKeyPress(e=>{
+            if(e.kp==="(")a.Input.element.textContent+=")";
+            if(e.kp==="[")a.Input.element.textContent+="]";
+            if(e.kp==="{")a.Input.element.textContent+="}";
+        })    
     }
+    // space &nbsp
     get codeText() {
-        return this.Input.element.innerText;
+        return this.Input.element.textContent;
     }
     get codeHTML() {
         return this.Input.element.innerHTML;
@@ -40,7 +54,12 @@ class ZikoCodeCell{
         return this;
     }
     #evaluateJs(){
-        globalThis.eval(this.Input.element.innerText);
+        try{
+            globalThis.eval(this.Input.element.innerText);
+        }
+        catch(err){
+            console.error(err);
+        }
     }
     #evaluateMd(){
 
@@ -86,7 +105,7 @@ const Input=(codeText="")=>ZikoHtml("code",codeText).style({
     background:"#f6f8fa",
     color:"#0062C3"
 }).setAttr("contenteditable",true);
-const Output=()=>Section().style({
+const Output=()=>ZikoHtml("output").style({
     width:"100%",
     height:"auto",
 })

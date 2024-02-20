@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="area" contenteditable="true" style="width:80%; height:60px; border: 1px solid black;">
+  Focus on me, the cursor will be at position 10.
+</div>
+<script>
+document.getElementById('area').focus();
+
+// Function to set cursor position in a contenteditable div
+function setCursorPosition(node, offset) {
+    const selection = window.getSelection();
+    const range = document.createRange();
+
+    range.setStart(node, offset);
+    range.collapse(true);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+}
+
+// Call the function to set cursor position after a small delay
+setTimeout(() => {
+    window.node = document.getElementById('area').firstChild;
+    const offset = 10;
+    setCursorPosition(node, offset);
+});
+
+document.addEventListener("keydown",()=>setTimeout(() => {
+    window.node = document.getElementById('area').firstChild;
+    const offset = 10;
+    setCursorPosition(node, offset);
+}))
+
+</script>
+
+</body>
+</html>

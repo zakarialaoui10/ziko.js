@@ -3606,31 +3606,6 @@ class ZikoEventKey extends ZikoEvent {
     }, ...callbacks);
     return this;
   }
-  successifKeysCallback(keys = [], callback = () => {}) {
-    this.cache.stream.enabled.down = true;
-    const length = keys.length;
-    return () => {
-      const LastKeysDown = this.cache.stream.history.down.slice(-length).map(n => n.key);
-      if (keys.join("") === LastKeysDown.join("")) callback();
-    };
-  }
-  // handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
-  //     const reversedkeys = keys.reverse();
-  //     const newkeys = new Array(reversedkeys.length).fill(null);
-  //     const addsub = (arr, item, length = keys.length) => {
-  //         arr.unshift(item);
-  //         arr.length = length;
-  //       };
-
-  //     if(event.down){
-  //         this.handleDown();
-  //         this.cache.successifKeysCallback.down=[callback];
-  //         this.cache.callback.down.push(e=>{
-  //             addsub(newkeys,e.kd);
-  //             if(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))this.cache.successifKeysCallback.down.map(n=>n(this))
-  //         })        
-  //         }       
-  //  }
 }
 var Key = Target => new ZikoEventKey(Target);
 
@@ -6211,7 +6186,10 @@ const useSuccesifKeys = (self, keys = [], callback = () => {}) => {
   self.cache.stream.enabled.down = true;
   const length = keys.length;
   const LastKeysDown = self.cache.stream.history.down.slice(-length).map(n => n.key);
-  if (keys.join("") === LastKeysDown.join("")) callback.call(self, self);
+  if (keys.join("") === LastKeysDown.join("")) {
+    self.event.preventDefault();
+    callback.call(self, self);
+  }
 };
 
 const Use = {
@@ -7791,9 +7769,21 @@ class ZikoCodeCell {
     });
     this.Right = null;
     this.Left = null;
+    this.Input.onKeyDown(e => {
+      if (e.kd === "Enter" && e.event.shiftKey) {
+        e.event.preventDefault();
+        this.execute();
+      }
+    });
+    this.Input.onKeyPress(e => {
+      if (e.kp === "(") a.Input.element.textContent += ")";
+      if (e.kp === "[") a.Input.element.textContent += "]";
+      if (e.kp === "{") a.Input.element.textContent += "}";
+    });
   }
+  // space &nbsp
   get codeText() {
-    return this.Input.element.innerText;
+    return this.Input.element.textContent;
   }
   get codeHTML() {
     return this.Input.element.innerHTML;
@@ -7815,7 +7805,11 @@ class ZikoCodeCell {
     return this;
   }
   #evaluateJs() {
-    globalThis.eval(this.Input.element.innerText);
+    try {
+      globalThis.eval(this.Input.element.innerText);
+    } catch (err) {
+      console.error(err);
+    }
   }
   #evaluateMd() {}
   #evaluateHtml() {}
@@ -7858,7 +7852,7 @@ const Input = (codeText = "") => ZikoHtml("code", codeText).style({
   background: "#f6f8fa",
   color: "#0062C3"
 }).setAttr("contenteditable", true);
-const Output = () => Section().style({
+const Output = () => ZikoHtml("output").style({
   width: "100%",
   height: "auto"
 });
