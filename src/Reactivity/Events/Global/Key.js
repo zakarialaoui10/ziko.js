@@ -91,23 +91,6 @@ class ZikoEventKey extends ZikoEvent{
         this.__onEvent("up",{up:true},...callbacks)
         return this;
      }
-    // handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
-    //     const reversedkeys = keys.reverse();
-    //     const newkeys = new Array(reversedkeys.length).fill(null);
-    //     const addsub = (arr, item, length = keys.length) => {
-    //         arr.unshift(item);
-    //         arr.length = length;
-    //       };
-        
-    //     if(event.down){
-    //         this.handleDown();
-    //         this.cache.successifKeysCallback.down=[callback];
-    //         this.cache.callback.down.push(e=>{
-    //             addsub(newkeys,e.kd);
-    //             if(JSON.stringify(reversedkeys)===JSON.stringify(newkeys))this.cache.successifKeysCallback.down.map(n=>n(this))
-    //         })        
-    //         }       
-    //  }
 
 }
 

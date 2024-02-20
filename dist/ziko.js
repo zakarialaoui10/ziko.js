@@ -3612,6 +3612,14 @@
       }, ...callbacks);
       return this;
     }
+    successifKeysCallback(keys = [], callback = () => {}) {
+      this.cache.stream.enabled.down = true;
+      const length = keys.length;
+      return () => {
+        const LastKeysDown = this.cache.stream.history.down.slice(-length).map(n => n.key);
+        if (keys.join("") === LastKeysDown.join("")) callback();
+      };
+    }
     // handleSuccessifKeys({keys=[],callback=()=>console.log(1),event={down:true,press:false,up:false}}={}){
     //     const reversedkeys = keys.reverse();
     //     const newkeys = new Array(reversedkeys.length).fill(null);
@@ -6205,6 +6213,13 @@
   const useLocaleStorage = (key, initialValue) => new ZikoUseStorage(localStorage, key, initialValue);
   const useSessionStorage = (key, initialValue) => new ZikoUseStorage(sessionStorage, key, initialValue);
 
+  const useSuccesifKeys = (self, keys = [], callback = () => {}) => {
+    self.cache.stream.enabled.down = true;
+    const length = keys.length;
+    const LastKeysDown = self.cache.stream.history.down.slice(-length).map(n => n.key);
+    if (keys.join("") === LastKeysDown.join("")) callback.call(self, self);
+  };
+
   const Use = {
     useStyle,
     useTheme,
@@ -6220,6 +6235,7 @@
     useDebounce,
     useLocaleStorage,
     useSessionStorage,
+    useSuccesifKeys,
     ExtractAll: function () {
       const keys = Object.keys(this);
       for (let i = 0; i < keys.length; i++) {
@@ -7779,11 +7795,9 @@
         width: "90vw",
         margin: "20px auto"
       });
-      //this.init();
+      this.Right = null;
+      this.Left = null;
     }
-    // init(){
-    //     this.Input.onPtrDown(e=>globalThis.__Target__=e.target.element.nextElementSibling);
-    // }
     get codeText() {
       return this.Input.element.innerText;
     }
@@ -7804,6 +7818,7 @@
     execute() {
       this.clearOutput();
       this.evaluate();
+      return this;
     }
     #evaluateJs() {
       globalThis.eval(this.Input.element.innerText);

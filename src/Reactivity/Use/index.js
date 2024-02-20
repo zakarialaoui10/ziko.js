@@ -22,6 +22,9 @@ import {
     useLocaleStorage,
     useSessionStorage
 } from "./Storage"
+import { 
+    useSuccesifKeys
+ } from "./Contexte";
 const Use={
     useStyle,
     useTheme,
@@ -37,6 +40,7 @@ const Use={
     useDebounce,
     useLocaleStorage,
     useSessionStorage,
+    useSuccesifKeys,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
@@ -73,5 +77,6 @@ export{
     useThrottle,
     useDebounce,
     useLocaleStorage,
-    useSessionStorage
+    useSessionStorage,
+    useSuccesifKeys
 }

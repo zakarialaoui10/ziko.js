@@ -13,7 +13,9 @@ class ZikoCodeCell{
         ).vertical().style({
             width:"90vw",
             margin:"20px auto"
-        })      
+        });
+        this.Right=null;
+        this.Left=null;      
     }
     get codeText() {
         return this.Input.element.innerText;
@@ -35,6 +37,7 @@ class ZikoCodeCell{
     execute(){
         this.clearOutput()
         this.evaluate();
+        return this;
     }
     #evaluateJs(){
         globalThis.eval(this.Input.element.innerText);
