@@ -51,6 +51,7 @@ import{
     Grid,
     Carousel,
     CodeCell,
+    CodeNote,
     Tabs,
     Accordion,
 } from "./CustomElement"
@@ -115,6 +116,7 @@ const UI={
     Footer,
     Table,
     CodeCell,
+    CodeNote,
     Tabs,
     Accordion,
     ExtractAll: function () {

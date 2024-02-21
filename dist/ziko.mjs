@@ -6238,6 +6238,7 @@ class ZikoUIElement {
     this.uuid = this.constructor.name + "-" + Random.string(10);
     this.cache = {
       name,
+      parent: null,
       isRoot: false,
       isHidden: false,
       isFrozzen: false,
@@ -6290,7 +6291,7 @@ class ZikoUIElement {
   }
   get __app__() {
     if (this.cache.isRoot) return this;
-    let root = this.parent;
+    let root = this.cache.parent;
     while (1) {
       if (!root) return null;
       if (root.cache.isRoot) return root;
@@ -6326,6 +6327,9 @@ class ZikoUIElement {
       maskVector
     });
     return this;
+  }
+  get parent() {
+    return this.cache.parent;
   }
   get Width() {
     return this.element.getBoundingClientRect().width;
@@ -6380,9 +6384,9 @@ class ZikoUIElement {
       return this;
     }
     for (let i = 0; i < ele.length; i++) {
-      if (["number", "string"].includes(typeof ele[i])) ele[i] = text(ele[i]);
+      if (["number", "string"].includes(typeof ele[i])) ele[i] = text$1(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
-        ele[i].parent = this;
+        ele[i].cache.parent = this;
         this.element.appendChild(ele[i].element);
         ele[i].Target = this.element;
         this.items.push(ele[i]);
@@ -6398,7 +6402,7 @@ class ZikoUIElement {
   }
   remove(...ele) {
     if (ele.length == 0) {
-      if (this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
+      if (this.cache.parent) this.cache.parent.remove(this);else if (this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
     } else {
       const remove = ele => {
         if (typeof ele === "number") ele = this.items[ele];
@@ -6429,7 +6433,7 @@ class ZikoUIElement {
   }
   insertAt(index, ...ele) {
     if (index >= this.element.children.length) this.append(...ele);else for (let i = 0; i < ele.length; i++) {
-      if (["number", "string"].includes(typeof ele[i])) ele[i] = text(ele[i]);
+      if (["number", "string"].includes(typeof ele[i])) ele[i] = text$1(ele[i]);
       this.element.insertBefore(ele[i].element, this.items[index].element);
       this.items.splice(index, 0, ele[i]);
     }
@@ -6778,7 +6782,7 @@ class ZikoUIText extends ZikoUIElement {
     return this;
   }
 }
-const text = (...value) => new ZikoUIText(...value);
+const text$1 = (...value) => new ZikoUIText(...value);
 
 class ZikoUIParagraphe extends ZikoUIElement {
   constructor(...value) {
@@ -6795,7 +6799,7 @@ class ZikoUIParagraphe extends ZikoUIElement {
       if (typeof value[i] == "string" || typeof value[i] == "number") {
         this.element.appendChild(document.createTextNode(value[i]));
         this.element.appendChild(document.createElement("br"));
-      } else if (value[i] instanceof ZikoUIElement) this.element.appendChild(value[i].element);else if (value[i] instanceof Complex) text(value.a + " + " + value.b + "i");
+      } else if (value[i] instanceof ZikoUIElement) this.element.appendChild(value[i].element);else if (value[i] instanceof Complex) text$1(value.a + " + " + value.b + "i");
     }
     return this;
   }
@@ -6891,7 +6895,7 @@ class ZikoUIList extends ZikoUIElement {
   append(...arr) {
     for (let i = 0; i < arr.length; i++) {
       let li = null;
-      if (["string", "number"].includes(typeof arr[i])) arr[i] = text(arr[i]);
+      if (["string", "number"].includes(typeof arr[i])) arr[i] = text$1(arr[i]);
       if (arr[i] instanceof ZikoUIElement) li = new ZikoUILI(arr[i]);
       li.setTarget(this.element);
       this.items.push(li[0]);
@@ -6917,7 +6921,7 @@ class ZikoUIList extends ZikoUIElement {
   insertAt(index, ...ele) {
     if (index >= this.element.children.length) this.append(...ele);else for (let i = 0; i < ele.length; i++) {
       let li = null;
-      if (["number", "string"].includes(typeof ele[i])) ele[i] = text(ele[i]);
+      if (["number", "string"].includes(typeof ele[i])) ele[i] = text$1(ele[i]);
       if (ele[i] instanceof ZikoUIElement) li = new ZikoUILI(ele[i]);
       this.element.insertBefore(li.element, this.items[index].parent.element);
       this.items.splice(index, 0, ele[i][0]);
@@ -7753,37 +7757,122 @@ class ZikoUICarousel extends ZikoUIFlex {
 }
 const Carousel = (...ZikoUIElement) => new ZikoUICarousel(...ZikoUIElement);
 
-class ZikoCodeCell {
+class ZikoUICodeNote extends ZikoUIFlex {
+  constructor() {
+    super("section");
+    Object.assign(this.cache, {
+      order: 0,
+      currentNote: null,
+      currentNoteIndex: null
+    });
+    this.vertical(0, 0);
+  }
+  setCurrentNote(currentNote) {
+    this.cache.currentNote = currentNote;
+    this.cache.currentNoteIndex = this.items.findIndex(n => n === currentNote);
+    currentNote.focus();
+    return this;
+  }
+  addNote(text = "") {
+    this.append(CodeCell(text));
+    return this;
+  }
+  execute() {
+    this.cache.currentNote.execute();
+    this.incrementOrder();
+    return this;
+  }
+  incrementOrder() {
+    this.cache.order++;
+    this.cache.currentNote.setOrder(this.cache.order);
+    return this;
+  }
+  next() {
+    if (this.cache.currentNote === this.items.at(-1)) {
+      this.addNote();
+      this.setCurrentNote(this.items.at(-1));
+    } else this.setCurrentNote(this.items[this.cache.currentNoteIndex + 1]);
+    return this;
+  }
+  previous() {
+    // add append before
+    if (this.cache.currentNote !== this.items[0]) {
+      this.setCurrentNote(this.items[this.cache.currentNoteIndex - 1]);
+    }
+    return this;
+  }
+  data() {
+    return this.items.map(n => n.cellData());
+  }
+  serialize() {
+    return JSON.stringify(this.data());
+  }
+  import(data = []) {
+    data.forEach((n, i) => this.addNote(data[i].input));
+    return this;
+  }
+}
+const CodeNote = () => new ZikoUICodeNote();
+
+class ZikoUICodeCell extends ZikoUIFlex {
   constructor(code = "", {
     type = "js",
     order = null
   } = {}) {
+    super("section");
+    Object.assign(this.cache, {
+      state: null,
+      order,
+      type,
+      metadata: {
+        created: Date.now(),
+        updated: null
+      }
+    });
     this.Input = Input(code);
     this.Output = Output();
-    this.type = type;
-    this.order = order;
-    this.metadata = {};
     this.InOut = Flex(this.Input, this.Output).vertical().style({
-      width: "90vw",
-      margin: "20px auto"
+      width: "100%",
+      margin: "10px auto"
     });
-    this.Right = null;
-    this.Left = null;
+    this.RightControl = Right(this);
+    this.LeftControl = Left(this);
+    this.append(this.LeftControl, this.InOut, this.RightControl);
+    this.horizontal(-1, 1).style({
+      //background:"#444",
+      width: "95vw",
+      margin: "0 auto",
+      border: "1px darkblue dotted"
+    });
     this.Input.onKeyDown(e => {
       if (e.kd === "Enter" && e.event.shiftKey) {
         e.event.preventDefault();
-        this.execute();
+        this.execute(this.cache.order);
+      }
+      if (this.cache.parent instanceof ZikoUICodeNote) {
+        if (e.kd === "ArrowDown" && e.event.shiftKey) {
+          this.cache.parent.next();
+        }
+        if (e.kd === "ArrowUp" && e.event.shiftKey) {
+          this.cache.parent.previous();
+        }
       }
     });
-    this.Input.onKeyPress(e => {
-      if (e.kp === "(") a.Input.element.textContent += ")";
-      if (e.kp === "[") a.Input.element.textContent += "]";
-      if (e.kp === "{") a.Input.element.textContent += "}";
+    this.Input.onFocus(() => {
+      if (this.cache.parent instanceof ZikoUICodeNote) {
+        this.cache.parent.cache.currentNote = this;
+        this.cache.parent.setCurrentNote(this);
+      }
     });
+    // this.Input.onKeyPress(e=>{
+    //     if(e.kp==="(")a.Input.element.textContent+=")";
+    //     if(e.kp==="[")a.Input.element.textContent+="]";
+    //     if(e.kp==="{")a.Input.element.textContent+="}";
+    // })    
   }
   // space &nbsp
   get codeText() {
-    return this.Input.element.textContent;
+    return this.Input.element.innerText;
   }
   get codeHTML() {
     return this.Input.element.innerHTML;
@@ -7791,33 +7880,55 @@ class ZikoCodeCell {
   get outputHTML() {
     return this.Output.element.innerHTML;
   }
-  Cell() {
+  cellData() {
     return {
       input: this.codeText,
       output: this.outputHTML,
-      order: this.order,
-      type: this.type
+      order: this.cache.order,
+      type: this.cache.type
     };
   }
-  execute() {
+  execute(order) {
     this.clearOutput();
-    this.evaluate();
+    this.evaluate(order);
+    this.cache.metadata.updated = Date.now();
+    if (this.cache.parent instanceof ZikoUICodeNote) {
+      this.cache.parent.next();
+    }
     return this;
   }
-  #evaluateJs() {
+  #evaluateJs(order) {
     try {
+      this.LeftControl[0].setValue("pending");
+      this.cache.state = "pending";
       globalThis.eval(this.Input.element.innerText);
     } catch (err) {
-      console.error(err);
+      text(`Error : ${err.message}`).style({
+        color: "red",
+        background: "gold",
+        border: "2px red solid",
+        padding: "10px",
+        margin: "10px 0",
+        display: "flex",
+        justifyContent: "center"
+      });
+      this.LeftControl[0].setValue("Err");
+      this.cache.state = "Error";
+    } finally {
+      if (this.cache.state === "pending") {
+        this.cache.state = "success";
+        this.setOrder(order);
+        this.cache.parent.incrementOrder();
+      }
     }
   }
   #evaluateMd() {}
   #evaluateHtml() {}
-  evaluate() {
+  evaluate(order) {
     globalThis.__Target__ = this.Output.element;
-    switch (this.type) {
+    switch (this.cache.type) {
       case "js":
-        this.#evaluateJs();
+        this.#evaluateJs(order);
         break;
     }
     return this;
@@ -7830,12 +7941,16 @@ class ZikoCodeCell {
     this.Output.element.innerText = "";
     return this;
   }
-  setOrder(order) {
-    this.order = order;
+  setOrder(order, render = true) {
+    this.cache.order = order;
+    if (render) {
+      typeof order === "number" ? this.LeftControl[0].setValue(`[${order}]`) : this.LeftControl[0].setValue("[-]");
+    }
     return this;
   }
-  remove() {
-    this.InOut.remove();
+  focus() {
+    this.Input.element.focus();
+    return this;
   }
 }
 const Input = (codeText = "") => ZikoHtml("code", codeText).style({
@@ -7851,15 +7966,45 @@ const Input = (codeText = "") => ZikoHtml("code", codeText).style({
   wordBreak: "break-all",
   background: "#f6f8fa",
   color: "#0062C3"
-}).setAttr("contenteditable", true);
+}).setAttr("contenteditable", true).setAttr("spellcheck", false);
 const Output = () => ZikoHtml("output").style({
   width: "100%",
-  height: "auto"
+  height: "auto",
+  padding: "5px 0"
 });
+const Left = ctx => Flex(text("[ ]")).style({
+  width: "50px",
+  height: getComputedStyle(ctx.Input.element).height,
+  margin: "10px 4px",
+  padding: "5px",
+  color: "darkblue",
+  borderBottom: "4px solid gold"
+}).horizontal(0, 0);
+const BTN_STYLE = {
+  background: "none",
+  width: "25px",
+  height: "25px",
+  fontSize: "1.2rem",
+  cursor: "pointer"
+};
+const Right = ctx => Flex(text('▶️').style(BTN_STYLE).onClick(e => {
+  if (ctx.parent instanceof ZikoUICodeNote) ctx.parent.setCurrentNote(ctx);
+  ctx.execute();
+  globalThis.__Target__ = e.target.parent.parent[1][1];
+}), text('📋').style(BTN_STYLE).onClick(() => {
+  navigator.clipboard.writeText(ctx.Input.element.innerText);
+}), text('✖️').style(BTN_STYLE).onClick(() => ctx.remove())).style({
+  width: "70px",
+  height: "50px",
+  //background:"cyan",
+  margin: "10px 0"
+}).horizontal(0, 0).wrap(true);
 const CodeCell = (codeText, {
-  type
-} = {}) => new ZikoCodeCell(codeText, {
-  type
+  type,
+  order
+} = {}) => new ZikoUICodeCell(codeText, {
+  type,
+  order
 });
 
 // Next 
@@ -8052,7 +8197,7 @@ class ZikoUICaption extends ZikoUIElement {
 const tr = (...ZikoUIElement) => new ZikoUITr(...ZikoUIElement);
 const td = (...UI) => {
   UI = UI.map(n => {
-    if (!(n instanceof ZikoUIElement)) n = text(n);
+    if (!(n instanceof ZikoUIElement)) n = text$1(n);
     return n;
   });
   return new ZikoUITd(...UI);
@@ -8194,7 +8339,7 @@ const Table = (matrix, config) => new ZikoUITable(matrix, config);
 
 const UI$1 = {
   ZikoHtml,
-  text,
+  text: text$1,
   p,
   h1,
   h2,
@@ -8243,6 +8388,7 @@ const UI$1 = {
   Footer,
   Table,
   CodeCell,
+  CodeNote,
   Tabs,
   Accordion,
   ExtractAll: function () {
@@ -9390,7 +9536,7 @@ const Graphics = {
 class ZikoSPA {
   constructor(root_UI, routes) {
     this.root_UI = root_UI;
-    this.routes = new Map([[404, text("Error 404")], ...Object.entries(routes)]);
+    this.routes = new Map([[404, text$1("Error 404")], ...Object.entries(routes)]);
     this.patterns = new Map();
     this.maintain();
     window.onpopstate = this.render(location.pathname);
@@ -9530,4 +9676,4 @@ function RemoveAll() {
   Data.RemoveAll();
 }
 
-export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeCell, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUIBr, ZikoUICanvas, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHr, ZikoUIHtmlTag, ZikoUIImage, ZikoUILink, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, accum, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, powerSet, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subSet, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text, textarea, timeTaken, time_memory_Taken, ul, useDebounce, useThrottle, video, wait, waitForUIElm, waitForUIElmSync, zeros };
+export { Accordion, App, Article, Aside, Base, Canvas, Carousel, CodeCell, CodeNote, Combinaison, Complex, DarkThemes, Data, E, EPSILON, Ease, Events, ExtractAll, Fixed, Flex, Footer, Graphics, Grid$1 as Grid, Header, LightThemes, LinearSystem, Logic$1 as Logic, Main, Math$1 as Math, Matrix, Nav, PI, Permutation, Random, RemoveAll, SPA, Section$1 as Section, Signal, Svg, Table, Tabs, Themes, Time, UI$1 as UI, Utils, Ziko, ZikoHtml, ZikoUIArticle, ZikoUIAside, ZikoUIAudio, ZikoUIBr, ZikoUICanvas, ZikoUICodeNote, ZikoUIElement, ZikoUIFigure, ZikoUIFooter, ZikoUIHeader, ZikoUIHr, ZikoUIHtmlTag, ZikoUIImage, ZikoUILink, ZikoUIMain, ZikoUINav, ZikoUISection, ZikoUISvg, ZikoUIVideo, __init__, abs, accum, acos, acosh, acot, add, animation, arange, asin, asinh, atan, atan2, atanh, audio, bessel, beta, br, brs, btn, canvasArc, canvasCircle, canvasLine, canvasPoints, canvasRect, cartesianProduct, ceil, checkbox, choleskyDecomposition, clamp$1 as clamp, complex, cos, cosh, cot, coth, csc, csv2arr, csv2json, csv2matrix, csv2object, csv2sql, datalist, deg2rad, div, e, fact, figure, floor, gamma, geomspace, h1, h2, h3, h4, h5, h6, hr, hrs, hypot, image, inRange, input, inputCamera, inputColor, inputDate, inputDateTime, inputEmail, inputImage, inputNumber, inputPassword, inputTime, isApproximatlyEqual, json2arr, json2csv, json2csvFile, json2xml, json2xmlFile, json2yml, json2ymlFile, lerp$1 as lerp, li, link, linspace, ln, logspace, loop, luDecomposition, map$1 as map, mapfun, markdown2html, matrix, matrix2, matrix3, matrix4, max, min, modulo, mul, norm$1 as norm, nums, ol, ones, p, pgcd, pow, powerSet, ppcm, prod, qrDecomposition, rad2deg, radio, round, search, sec, select, sig, sign, sin, sinc, sinh, slider, sqrt, sqrtn, sub, subSet, sum, svg2ascii, svg2img, svg2imgUrl, svg2str, svgCircle, svgEllipse, svgGroupe, svgImage, svgLine, svgPolygon, svgRect, svgText, tan, tanh, text$1 as text, textarea, timeTaken, time_memory_Taken, ul, useDebounce, useThrottle, video, wait, waitForUIElm, waitForUIElmSync, zeros };

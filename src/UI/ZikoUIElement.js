@@ -23,6 +23,7 @@ class ZikoUIElement {
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
       name,
+      parent:null,
       isRoot:false,
       isHidden: false,
       isFrozzen:false,
@@ -76,7 +77,7 @@ class ZikoUIElement {
   }
   get __app__(){
     if(this.cache.isRoot)return this;
-    let root=this.parent;
+    let root=this.cache.parent;
     while(1){
       if(!root)return null;
       if(root.cache.isRoot)return root;
@@ -101,6 +102,9 @@ class ZikoUIElement {
   size(width,height,{ target, maskVector } = {}){
     this.st.size(width,height,{target,maskVector});
     return this; 
+  }
+  get parent(){
+    return this.cache.parent;
   }
   get Width(){
     return this.element.getBoundingClientRect().width;
@@ -157,7 +161,7 @@ class ZikoUIElement {
     for (let i = 0; i < ele.length; i++){
     if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
       if (ele[i] instanceof ZikoUIElement) {
-        ele[i].parent=this;
+        ele[i].cache.parent=this;
         this.element.appendChild(ele[i].element);
         ele[i].Target = this.element;
         this.items.push(ele[i]);
@@ -175,7 +179,8 @@ class ZikoUIElement {
   }
   remove(...ele) {
     if(ele.length==0){
-      if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
+      if(this.cache.parent)this.cache.parent.remove(this);
+      else if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
     }
     else {
       const remove = (ele) => {
