@@ -23,6 +23,16 @@ zikojs can be downloaded or linked from various content delivery networks :
   ```html 
 <script src="https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.min.js"></script>
 ```
+ #### Module 
+ ```html
+ <script type="importmap">
+        {
+          "imports": {
+            "Ziko": "https://cdn.jsdelivr.net/gh/zakarialaoui10/ziko.js@main/dist/ziko.mjs"
+          }
+        }
+  </script>
+ ```
 ### Unpkg
 ### jsDeliver
 ### pageCdn

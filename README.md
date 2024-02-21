@@ -39,7 +39,7 @@
 ```js
    text("hello world")
   .style({ color: "red" })
-  .onPtrMove(throttle(() => console.log("hi")));
+  .onPtrMove(useThrottle(() => console.log("hi")));
 ```
  - ## 🔰 Events Handling
 Example of creating simple Paint sketch using canvas and pointer events : 
@@ -70,7 +70,7 @@ c.onPtrUp(()=>{})
    for example in `Table` you can use methodes like `hsatck` `vstack` `transpose` ...
  - ## 🔰 Routing for Single Page Applications (SPA)
  ```js
-const main= Section()
+const main= Ziko.App()
 const p1=Section()
 const p2=Section()
 S=Ziko.SPA(
