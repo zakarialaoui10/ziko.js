@@ -8,9 +8,9 @@
 ## 🎬 Demos 
 - ### [  Windows entanglement using zikojs and ziko-three ](https://www.linkedin.com/feed/update/urn:li:activity:7144023650394918913/)
 
-## [wiki](https://github.com/zakarialaoui10/ziko.js/wiki/Math-Functions)
+## 📃 [wiki](https://github.com/zakarialaoui10/ziko.js/wiki/Math-Functions)
 
-# Features 
+## 💡 [Features]() 
 <details>
  <summary>
   <strong> 🔰 Methodes Extracting : </strong>
