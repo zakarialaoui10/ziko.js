@@ -8,12 +8,18 @@ class ZikoUICodeNote extends ZikoUIFlex{
             currentNote:null,
             currentNoteIndex:null
         })
-        this.vertical(0,0)
+        this.vertical(0,0);
     }
     setCurrentNote(currentNote){
         this.cache.currentNote=currentNote;
         this.cache.currentNoteIndex=this.items.findIndex(n=>n===currentNote);
-        currentNote.focus()
+        currentNote.focus();
+        this.items.forEach(n=>n.Input.style({
+            border: "1px solid #ccc"
+        }))
+        currentNote.Input.style({
+            border:"2px lightgreen solid"
+        });
         return this;
     }
     addNote(text=""){

@@ -9,8 +9,8 @@ class ZikoUILI extends ZikoUIElement{
   }
 }
 class ZikoUIList extends ZikoUIElement {
-    constructor() {
-      super();
+    constructor(element,name) {
+      super(element,name);
       delete this.append;
       //this.style({ listStylePosition: "inside" });
     }

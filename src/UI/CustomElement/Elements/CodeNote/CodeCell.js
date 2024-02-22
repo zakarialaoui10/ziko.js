@@ -1,6 +1,11 @@
-import {ZikoHtml} from "../../../Misc";
 import { Flex, ZikoUIFlex } from "../../Flex";
 import { ZikoUICodeNote } from "./CodeNote";
+import { 
+    Input,
+    Output,
+    Right,
+    Left
+ } from "./SubElements";
 class ZikoUICodeCell extends ZikoUIFlex{
     constructor(code="",{type="js",order=null}={}){
         super("section")
@@ -36,9 +41,14 @@ class ZikoUICodeCell extends ZikoUIFlex{
             border:"1px darkblue dotted"
         })
         this.Input.onKeyDown(e=>{
-            if(e.kd==="Enter" && e.event.shiftKey){
-                e.event.preventDefault();
-                this.execute(this.cache.order);
+            if(e.kd==="Enter"){
+                if(e.event.shiftKey){
+                    e.event.preventDefault();
+                    this.execute(this.cache.order);
+                }
+                else {
+                    //console.log(this.Input.element.firstChild.firstChild.textContent.at(-1))
+                }
             }
             if(this.cache.parent instanceof ZikoUICodeNote){
                 if(e.kd==="ArrowDown" && e.event.shiftKey ){
@@ -56,6 +66,10 @@ class ZikoUICodeCell extends ZikoUIFlex{
                 this.cache.parent.setCurrentNote(this);
             }
         })
+        this.Input.onPaste((e)=>{
+            //e.event.preventDefault();
+            //this.setValue(this.codeText.trim())
+        })
         // this.Input.onKeyPress(e=>{
         //     if(e.kp==="(")a.Input.element.textContent+=")";
         //     if(e.kp==="[")a.Input.element.textContent+="]";
@@ -64,13 +78,17 @@ class ZikoUICodeCell extends ZikoUIFlex{
     }
     // space &nbsp
     get codeText() {
-        return this.Input.element.innerText;
+        return this.Input.element.innerText.trim();
     }
     get codeHTML() {
         return this.Input.element.innerHTML;
     }
     get outputHTML(){
         return this.Output.element.innerHTML;
+    }
+    setValue(codeText){
+        this.Input[0].setValue(codeText);
+        return this;
     }
     cellData(){
         return {
@@ -84,9 +102,6 @@ class ZikoUICodeCell extends ZikoUIFlex{
         this.clearOutput();
         this.evaluate(order);
         this.cache.metadata.updated=Date.now();
-        if(this.cache.parent instanceof ZikoUICodeNote){
-            this.cache.parent.next();
-        }
         return this;
     }
     #evaluateJs(order){
@@ -96,6 +111,7 @@ class ZikoUICodeCell extends ZikoUIFlex{
             globalThis.eval(this.Input.element.innerText);
         }
         catch(err){
+            console.log(err)
             text(`Error : ${err.message}`).style({
                 color:"red",
                 background:"gold",
@@ -112,7 +128,10 @@ class ZikoUICodeCell extends ZikoUIFlex{
             if(this.cache.state==="pending"){
                 this.cache.state="success";
                 this.setOrder(order);
-                this.cache.parent.incrementOrder()
+                if(this.cache.parent instanceof ZikoUICodeNote){
+                    this.cache.parent.incrementOrder();
+                    this.cache.parent.next();
+                }
             }
         }
     }
@@ -150,58 +169,7 @@ class ZikoUICodeCell extends ZikoUIFlex{
     }
 }
 
-const Input=(codeText="")=>ZikoHtml("code",codeText).style({
-    width:"100%",
-    height:"auto",
-    padding:"10px",
-    boxSizing:"border-box",
-    border: "1px solid #ccc", 
-    outline: "none",
-    fontSize: "1rem", 
-    fontFamily: "Lucida Console, Courier New, monospace", 
-    padding: "1rem 0.5rem", 
-    wordBreak:"break-all",
-    background:"#f6f8fa",
-    color:"#0062C3"
-}).setAttr("contenteditable",true).setAttr("spellcheck",false);
-const Output=()=>ZikoHtml("output").style({
-    width:"100%",
-    height:"auto",
-    padding:"5px 0",
-})
-const Left=(ctx)=>Flex(
-    text("[ ]")
-    ).style({
-        width:"50px",
-        height:getComputedStyle(ctx.Input.element).height,
-        margin:"10px 4px",
-        padding:"5px",
-        color:"darkblue",
-        borderBottom:"4px solid gold",
-    }).horizontal(0,0);
-const BTN_STYLE={
-    background:"none",
-    width:"25px",
-    height:"25px",
-    fontSize:"1.2rem",
-    cursor:"pointer"
-}
-const Right=(ctx)=>Flex(
-    text('▶️').style(BTN_STYLE).onClick(e=>{
-        if(ctx.parent instanceof ZikoUICodeNote)ctx.parent.setCurrentNote(ctx);
-        ctx.execute();
-        globalThis.__Target__=e.target.parent.parent[1][1];
-    }),
-    text('📋').style(BTN_STYLE).onClick(()=>{
-        navigator.clipboard.writeText(ctx.Input.element.innerText)
-    }),
-    text('✖️').style(BTN_STYLE).onClick(()=>ctx.remove()),
-).style({
-    width:"70px",
-    height:"50px",
-    //background:"cyan",
-    margin:"10px 0"
-}).horizontal(0,0).wrap(true)
+
 const CodeCell=(codeText,{type,order}={})=>new ZikoUICodeCell(codeText,{type,order});
 export{
     CodeCell

@@ -16,6 +16,20 @@ data=[
         "type": "js"
     }
 ]
+data=[
+    {
+        "input": "BtnStyle={\n width:\"70%\",\n background:\"darkblue\",\n color:\"white\",\n}\nContainerStyle={\n width:\"200px\",\n height:\"200px\",\n border:\"4px darkblue solid\"\n}\nf=Flex(\n btn(\"Home\"),\n btn(\"About\"),\n btn(\"Education\"),\n btn(\"Portfolio\")\n).vertical(0,\"space-around\").style(ContainerStyle).forEach(n=>n.style(BtnStyle))",
+        "output": "",
+        "order": 10,
+        "type": "js"
+    },
+    {
+        "input": "sc=SceneCss(\"60vw\",\"50vh\")\nsc.add(Main(f))\nsc.background(\"#aaf\")",
+        "output": "<figure style=\"position: relative; box-sizing: border-box; font-family: verdana; margin: 0px; padding: 0px; width: 60vw; height: 50vh;\"><canvas data-engine=\"three.js r158\" width=\"572\" height=\"374\" style=\"position: absolute; box-sizing: border-box; font-family: verdana; margin: 0px; padding: 0px; width: 572px; height: 374px;\"></canvas><div style=\"overflow: hidden; touch-action: none; width: 572px; height: 374px;\"><div style=\"transform-origin: 0px 0px; pointer-events: none; width: 572px; height: 374px;\"><div style=\"transform-style: preserve-3d; width: 572px; height: 374px; transform: perspective(401.023px) scale(1) translateZ(401.023px) matrix3d(0.992693, 0.0336058, -0.11589, 0, 0, -0.960434, -0.278507, 0, 0.120664, -0.276472, 0.953417, 0, 0, 0, -344.406, 1) translate(286px, 187px);\"><main draggable=\"false\" style=\"position: absolute; box-sizing: border-box; font-family: verdana; margin: 0px; padding: 0px; width: auto; height: auto; pointer-events: auto; user-select: none; transform: translate(-50%, -50%) matrix3d(1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);\"><div style=\"position: relative; box-sizing: border-box; font-family: verdana; margin: 0px; padding: 0px; width: 200px; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; border: 4px solid darkblue;\"><button style=\"cursor: pointer; width: 70%; background: darkblue; color: white;\">Home</button><button style=\"cursor: pointer; width: 70%; background: darkblue; color: white;\">About</button><button style=\"cursor: pointer; width: 70%; background: darkblue; color: white;\">Education</button><button style=\"cursor: pointer; width: 70%; background: darkblue; color: white;\">Portfolio</button></div></main></div></div></div></figure>",
+        "order": 21,
+        "type": "js"
+    }
+]
 a.import(data)
 b=csv2arr(`
 Assa,Coconut,62.6

@@ -6887,8 +6887,8 @@ class ZikoUILI extends ZikoUIElement {
   }
 }
 class ZikoUIList extends ZikoUIElement {
-  constructor() {
-    super();
+  constructor(element, name) {
+    super(element, name);
     delete this.append;
     //this.style({ listStylePosition: "inside" });
   }
@@ -7771,6 +7771,12 @@ class ZikoUICodeNote extends ZikoUIFlex {
     this.cache.currentNote = currentNote;
     this.cache.currentNoteIndex = this.items.findIndex(n => n === currentNote);
     currentNote.focus();
+    this.items.forEach(n => n.Input.style({
+      border: "1px solid #ccc"
+    }));
+    currentNote.Input.style({
+      border: "2px lightgreen solid"
+    });
     return this;
   }
   addNote(text = "") {
@@ -7814,6 +7820,54 @@ class ZikoUICodeNote extends ZikoUIFlex {
 }
 const CodeNote = () => new ZikoUICodeNote();
 
+const Input = (codeText = "") => ZikoHtml("code", codeText).style({
+  width: "100%",
+  height: "auto",
+  padding: "10px",
+  boxSizing: "border-box",
+  border: "1px solid #ccc",
+  outline: "none",
+  fontSize: "1rem",
+  fontFamily: "Lucida Console, Courier New, monospace",
+  padding: "1rem 0.5rem",
+  wordBreak: "break-all",
+  background: "#f6f8fa",
+  color: "#0062C3"
+}).setAttr("contenteditable", true).setAttr("spellcheck", false);
+const Output = () => ZikoHtml("output").style({
+  width: "100%",
+  height: "auto",
+  padding: "5px 0"
+});
+const Left = ctx => Flex(text$1("[ ]")).style({
+  width: "50px",
+  //height:getComputedStyle(ctx.Input.element).height,
+  height: "50px",
+  margin: "10px 4px",
+  padding: "5px",
+  color: "darkblue",
+  borderBottom: "4px solid gold"
+}).horizontal(0, 0);
+const BTN_STYLE = {
+  background: "none",
+  width: "25px",
+  height: "25px",
+  fontSize: "1.2rem",
+  cursor: "pointer"
+};
+const Right = ctx => Flex(text$1('▶️').style(BTN_STYLE).onClick(e => {
+  if (ctx.parent instanceof ZikoUICodeNote) ctx.parent.setCurrentNote(ctx);
+  ctx.execute();
+  globalThis.__Target__ = e.target.parent.parent[1][1];
+}), text$1('📋').style(BTN_STYLE).onClick(() => {
+  navigator.clipboard.writeText(ctx.codeText);
+}), text$1('✖️').style(BTN_STYLE).onClick(() => ctx.remove()), text$1('✖️').style(BTN_STYLE).onClick(() => ctx.remove())).style({
+  width: "70px",
+  height: "50px",
+  //background:"cyan",
+  margin: "10px 0"
+}).horizontal(0, 0).wrap(true);
+
 class ZikoUICodeCell extends ZikoUIFlex {
   constructor(code = "", {
     type = "js",
@@ -7836,7 +7890,7 @@ class ZikoUICodeCell extends ZikoUIFlex {
       margin: "10px auto"
     });
     this.RightControl = Right(this);
-    this.LeftControl = Left(this);
+    this.LeftControl = Left();
     this.append(this.LeftControl, this.InOut, this.RightControl);
     this.horizontal(-1, 1).style({
       //background:"#444",
@@ -7845,9 +7899,11 @@ class ZikoUICodeCell extends ZikoUIFlex {
       border: "1px darkblue dotted"
     });
     this.Input.onKeyDown(e => {
-      if (e.kd === "Enter" && e.event.shiftKey) {
-        e.event.preventDefault();
-        this.execute(this.cache.order);
+      if (e.kd === "Enter") {
+        if (e.event.shiftKey) {
+          e.event.preventDefault();
+          this.execute(this.cache.order);
+        }
       }
       if (this.cache.parent instanceof ZikoUICodeNote) {
         if (e.kd === "ArrowDown" && e.event.shiftKey) {
@@ -7864,6 +7920,10 @@ class ZikoUICodeCell extends ZikoUIFlex {
         this.cache.parent.setCurrentNote(this);
       }
     });
+    this.Input.onPaste(e => {
+      //e.event.preventDefault();
+      //this.setValue(this.codeText.trim())
+    });
     // this.Input.onKeyPress(e=>{
     //     if(e.kp==="(")a.Input.element.textContent+=")";
     //     if(e.kp==="[")a.Input.element.textContent+="]";
@@ -7872,13 +7932,17 @@ class ZikoUICodeCell extends ZikoUIFlex {
   }
   // space &nbsp
   get codeText() {
-    return this.Input.element.innerText;
+    return this.Input.element.innerText.trim();
   }
   get codeHTML() {
     return this.Input.element.innerHTML;
   }
   get outputHTML() {
     return this.Output.element.innerHTML;
+  }
+  setValue(codeText) {
+    this.Input[0].setValue(codeText);
+    return this;
   }
   cellData() {
     return {
@@ -7892,9 +7956,6 @@ class ZikoUICodeCell extends ZikoUIFlex {
     this.clearOutput();
     this.evaluate(order);
     this.cache.metadata.updated = Date.now();
-    if (this.cache.parent instanceof ZikoUICodeNote) {
-      this.cache.parent.next();
-    }
     return this;
   }
   #evaluateJs(order) {
@@ -7903,6 +7964,7 @@ class ZikoUICodeCell extends ZikoUIFlex {
       this.cache.state = "pending";
       globalThis.eval(this.Input.element.innerText);
     } catch (err) {
+      console.log(err);
       text(`Error : ${err.message}`).style({
         color: "red",
         background: "gold",
@@ -7918,7 +7980,10 @@ class ZikoUICodeCell extends ZikoUIFlex {
       if (this.cache.state === "pending") {
         this.cache.state = "success";
         this.setOrder(order);
-        this.cache.parent.incrementOrder();
+        if (this.cache.parent instanceof ZikoUICodeNote) {
+          this.cache.parent.incrementOrder();
+          this.cache.parent.next();
+        }
       }
     }
   }
@@ -7953,52 +8018,6 @@ class ZikoUICodeCell extends ZikoUIFlex {
     return this;
   }
 }
-const Input = (codeText = "") => ZikoHtml("code", codeText).style({
-  width: "100%",
-  height: "auto",
-  padding: "10px",
-  boxSizing: "border-box",
-  border: "1px solid #ccc",
-  outline: "none",
-  fontSize: "1rem",
-  fontFamily: "Lucida Console, Courier New, monospace",
-  padding: "1rem 0.5rem",
-  wordBreak: "break-all",
-  background: "#f6f8fa",
-  color: "#0062C3"
-}).setAttr("contenteditable", true).setAttr("spellcheck", false);
-const Output = () => ZikoHtml("output").style({
-  width: "100%",
-  height: "auto",
-  padding: "5px 0"
-});
-const Left = ctx => Flex(text("[ ]")).style({
-  width: "50px",
-  height: getComputedStyle(ctx.Input.element).height,
-  margin: "10px 4px",
-  padding: "5px",
-  color: "darkblue",
-  borderBottom: "4px solid gold"
-}).horizontal(0, 0);
-const BTN_STYLE = {
-  background: "none",
-  width: "25px",
-  height: "25px",
-  fontSize: "1.2rem",
-  cursor: "pointer"
-};
-const Right = ctx => Flex(text('▶️').style(BTN_STYLE).onClick(e => {
-  if (ctx.parent instanceof ZikoUICodeNote) ctx.parent.setCurrentNote(ctx);
-  ctx.execute();
-  globalThis.__Target__ = e.target.parent.parent[1][1];
-}), text('📋').style(BTN_STYLE).onClick(() => {
-  navigator.clipboard.writeText(ctx.Input.element.innerText);
-}), text('✖️').style(BTN_STYLE).onClick(() => ctx.remove())).style({
-  width: "70px",
-  height: "50px",
-  //background:"cyan",
-  margin: "10px 0"
-}).horizontal(0, 0).wrap(true);
 const CodeCell = (codeText, {
   type,
   order
