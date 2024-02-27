@@ -1,3 +1,3 @@
-export * from "./Image";
-export * from "./Video";
-export * from "./Audio";
+export * from "./image";
+export * from "./video";
+export * from "./audio";
