@@ -3,5 +3,16 @@ description: This template is for submitting a proposal to ziko.js feature reque
 title: "[ziko.js]" 
 labels: [ziko.js]
 body:
- - type : textarea
- 
+  - type: checkboxes
+    id: sub-area
+    attributes:
+      label: Most appropriate sub-area of ziko.js?
+      description: Please select at least one.
+      options:
+        - label: Math
+        - label: UI
+        - label: Time
+        - label: Data
+        - label: App
+        - label: Reactivity
+        - label: Graphics
