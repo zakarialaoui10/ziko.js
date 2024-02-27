@@ -1,8 +1,7 @@
 name: ziko.js feature request
 description: This template is for submitting a proposal to ziko.js feature request 
-title: [ziko.js] 
+title: "[ziko.js]" 
 labels: [ziko.js]
-assignees: ''
 body:
  - type : textarea
  
