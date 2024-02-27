@@ -1,0 +1,53 @@
+name: ziko.js bug report
+description: This template is for reporting bugs in ziko.js
+title: "[ziko.js] Bug:"
+labels: [bug, ziko.js]
+body:
+  - type: input
+    id: bug-title
+    attributes:
+      label: Bug Title
+      description: A brief title summarizing the bug.
+      placeholder: Enter the bug title here.
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Describe the bug you encountered in detail.
+      placeholder: Provide a detailed description of the bug, including steps to reproduce.
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Specify the environment where the bug occurred (e.g., browser version, operating system).
+      placeholder: Provide details about the environment where the bug was encountered.
+
+  - type: input
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen.
+      placeholder: Explain the behavior you were anticipating.
+
+  - type: input
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: Describe what actually happened.
+      placeholder: Explain the behavior you observed.
+
+  - type: input
+    id: workaround
+    attributes:
+      label: Workaround
+      description: If known, provide any workaround or temporary solution for the issue.
+      placeholder: Enter any workaround for the issue, if available.
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any additional information or context you would like to provide.
+      placeholder: Any further details or context for the bug report.
