@@ -4,9 +4,41 @@
 
 <br>
 
+## ⚡ Get started
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zikojs</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/ziko@latest/dist/ziko.js"></script>
+    <script>
+        Ziko.ExtractAll()
+        const hello = p("Hello World").style({
+            color: "gold",
+            fontSize: "30px",
+            fontWeight: "bold"
+            })
+            .onPtrEnter(e=>e.target.st.color(Random.color()))
+            .onPtrLeave(e=>e.target.st.color("gold"))
+        Ziko.App(
+            hello
+        ).style({
+            width: "100vw",
+            height: "100vh",
+            background: "darkblue"
+            }).vertical(0, "space-around")
+        
+    </script>
+</body>
+</html>
+```
 
 ## 🎬 Demos 
-- ### [  Windows entanglement using zikojs and ziko-three ](https://www.linkedin.com/feed/update/urn:li:activity:7144023650394918913/)
+- ### [  Windows entanglement using zikojs and ziko-three ](https://www.linkedin.com/feed/update/urn:li:activity:7144023650394918913/) 
 
 ## 📃 [wiki](https://github.com/zakarialaoui10/ziko.js/wiki/Math-Functions)
 
@@ -196,7 +228,7 @@ c.onPtrUp(()=>{})
  ### Events
  ### Observers
  ### Use
- 
+
 </details>
 
 <details>

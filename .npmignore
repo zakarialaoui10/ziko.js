@@ -1,7 +1,8 @@
 # Ignore all .txt files
 *.txt
 _local/
-documentation/
+_test_package/
+docs/
 node_modules/
 notebook/
 test/
@@ -10,3 +11,4 @@ Interfacing/
 .eslintrc.cjs 
 rollup.config.js 
 todo
+.vscode/
