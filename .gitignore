@@ -1,2 +1,7 @@
 **/node_modules
 _local
+.vscode
+Addons
+color
+changes.md
+todo

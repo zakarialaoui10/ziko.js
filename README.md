@@ -13,7 +13,7 @@
 ## 💡 [Features]() 
 <details>
  <summary>
-  <strong> 🔰 Methodes Extracting : </strong>
+  <strong> 🔰 Methodes Extracting  </strong>
  </summary>
  
  ```js
@@ -27,9 +27,10 @@
 
 <details>
  <summary>
-  <strong> 🔰 Mathematical Utilities </strong>
+  <strong> 🔰 Mathematical Utilities & Tips </strong>
  </summary>
- 
+
+ ### mapfun  
  📝 Javascript provides a built-in Math module with various functions. 
 
 ⚠️However, there is room for improvement in terms of efficiency. For instance, the Math.sqrt(x) function can calculate the square root of a number x, but it has limitations such as the inability to accept multiple parameters and the inability to map the function to different data types like Arrays and Objects.
@@ -125,51 +126,15 @@ Or you can use the currying syntaxe :
  console.log(parabolic_func(a,b,c)(X));
  // [3,3,1,3]
 ```
-If you find the mapfun utility particularly useful and wish to use it independently, I have created a standalone micro package named mapfun. This micro package contains only the mapfun functions, allowing you to integrate it seamlessly into your projects without the need for the entire zikojs library.
-
-For more information and to explore the mapfun micro package, visit [mapfun](https://github.com/zakarialaoui10/mapfun) on GitHub .
 
 You may not necessarily rely on the mapfun utility every time, as ZikoJS offers a variety of built-in mathematical functions that built on the top of `mapfun` and the Math module in javascript .
 
 Here you will find the built in Mathematic functions in zikojs
 
-- <code id="ziko-math-functions-abs">abs(...x)</code> : Calculate the absolute value of the arguments `(...X)`
-- <code id="ziko-math-functions-sqrt">sqrt(...x)</code>  
-- <code id="ziko-math-functions-pow">pow(x,n)</code> 
-- <code id="ziko-math-functions-sqrtn">sqrtn(x,n)</code>  
-- <code id="ziko-math-functions-e">e(...x)</code>  
-- <code id="ziko-math-functions-ln">ln(...x)</code>  
-- <code id="ziko-math-functions-cos">cos(...x)</code>  
-- <code id="ziko-math-functions-sin">sin(...x)</code>  
-- <code id="ziko-math-functions-tan">tan(...x)</code>  
-- <code id="ziko-math-functions-sinc">sinc(...x)</code>  
-- <code id="ziko-math-functions-acos">acos(...x)</code>  
-- <code id="ziko-math-functions-asin">asin(...x)</code>  
-- <code id="ziko-math-functions-atan">atan(...x)</code>  
-- <code id="ziko-math-functions-cosh">cosh(...x)</code>  
-- <code id="ziko-math-functions-sinh">sinh(...x)</code>  
-- <code id="ziko-math-functions-acosh">acosh(...x)</code>  
-- <code id="ziko-math-functions-asinh">asinh(...x)</code>  
-- <code id="ziko-math-functions-atanh">atanh(...x)</code>  
-- <code id="ziko-math-functions-cot">cot(...x)</code>  
-- <code id="ziko-math-functions-sec">sec(...x)</code>  
-- <code id="ziko-math-functions-csc">csc(...x)</code>  
-- <code id="ziko-math-functions-acot">acot(...x)</code>  
-- <code id="ziko-math-functions-coth">coth(...x)</code>  
-- <code id="ziko-math-functions-acosh">acosh(...x)</code>  
-- <code id="ziko-math-functions-asinh">asinh(...x)</code>  
-- <code id="ziko-math-functions-atanh">atanh(...x)</code>  
-- <code id="ziko-math-functions-atan2">atan2(x,y,?rad)</code>  
-- <code id="ziko-math-functions-hypot">hypot(...x)</code>  
-- <code id="ziko-math-functions-min">min(...x)</code>  
-- <code id="ziko-math-functions-max">max(...x)</code>  
-- <code id="ziko-math-functions-sign">sign(...x)</code>  
-- <code id="ziko-math-functions-sig">sig(...x)</code>  
-- <code id="ziko-math-functions-fact">fact(...x)</code>  
-- <code id="ziko-math-functions-round">round(...x)</code>  
-- <code id="ziko-math-functions-floor">floor(...x)</code>  
-- <code id="ziko-math-functions-ceil">ceil(...x)</code>  
+`abs(...x)`,`sqrt(...x)`,`pow(x,n)`,`sqrtn(x,n)`,`e(...x)`,`ln(...x)`,`cos(...x)`,`sin(...x)`,`tan(...x)`,`sinc(...x)`,`acos(...x)`,`asin(...x)`,`atan(...x)`,`cosh(...x)`,`sinh(...x)`,`acosh(...x)`,`asinh(...x)`,`atanh(...x)`,`cot(...x)`,`sec(...x)`,`csc(...x)`,`acot(...x)`,`coth(...x)`,`acosh(...x)`,`asinh(...x)`,`atanh(...x)`,`atan2(x,y,?rad)`,`hypot(...x)`,`min(...x)`,`max(...x)`,`sign(...x)`,`sig(...x)`,`fact(...x)`,`round(...x)`,`floor(...x)`,`ceil(...x)`
 
+### Matrix
+### Complex
 </details>
 <details>
  <summary>
@@ -227,7 +192,11 @@ c.onPtrUp(()=>{})
  <summary>
   <strong> 🔰 Reactivity </strong>
  </summary>
-    You can watch Elements resizes , intersections , mutations ..
+
+ ### Events
+ ### Observers
+ ### Use
+ 
 </details>
 
 <details>
@@ -275,7 +244,7 @@ S.get(
  </summary>
 
  ```js
-Ziko.Multi(() => {
+useThread(() => {
   s = 0;
   for (i = 0; i < 10000000000; i++) s += i;
   return s;
