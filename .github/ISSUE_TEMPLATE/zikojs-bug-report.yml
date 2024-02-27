@@ -1,6 +1,6 @@
 name: ziko.js bug report
 description: This template is for reporting bugs in ziko.js
-title: "[ziko.js] Bug:"
+title: "[ziko.js report bug] : "
 labels: [bug, ziko.js]
 body:
   - type: input
