@@ -16,17 +16,9 @@ body:
         - label: App
         - label: Reactivity
         - label: Graphics
-
-  - type: input
+  - type: textarea
     id: description
     attributes:
       label: Feature Description
       description: Describe the feature you are requesting in detail.
       placeholder: Please describe the feature here.
-
-  - type: textarea
-    id: additional-info
-    attributes:
-      label: Additional Information
-      description: Any additional information or context you would like to provide.
-      placeholder: Any further details or context for your feature request.

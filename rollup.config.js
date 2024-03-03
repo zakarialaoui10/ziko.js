@@ -8,7 +8,7 @@ const banner= `
 /*
   Project: ziko.js
   Author: Zakaria Elalaoui
-  Date : 28/01/2024
+  Date : ${new Date()}
   Git-Repo : https://github.com/zakarialaoui10/ziko.js
   Git-Wiki : https://github.com/zakarialaoui10/ziko.js/wiki
   Released under MIT License

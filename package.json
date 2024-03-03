@@ -1,8 +1,20 @@
 {
   "name": "ziko",
-  "version": "0.1.3",
+  "version": "0.0.0",
   "description": "a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities",
   "main": "src/index.js",
+  "keywords": [
+    "Zikojs",
+    "Math",
+    "User Interface",
+    "Time",
+    "Data",
+    "Svg",
+    "Canvas",
+    "Reactivity",
+    "Dom",
+    "Single Page Application"
+  ],
   "type": "module",
   "source": "src/index.js",
   "files": [
@@ -39,8 +51,5 @@
     "dir2tree": "^0.3.2",
     "eslint": "^8.52.0",
     "rollup": "^4.1.5"
-  },
-  "dependencies": {
-    "jsdom": "^24.0.0"
   }
 }
