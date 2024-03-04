@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev":"rollup -c rollup.config.js"
+    "dev":"rollup -c config/dev/rollup.config.js",
+    "watch":"",
+    "build":"rollup -c config/build/rollup.config.js",
+    "serve":""
   },
   "author": "zakaria elaloui",
   "license": "MIT",

@@ -33,6 +33,9 @@
     "lint": "eslint src/*/*/*",
     "build": "rollup -c rollup.config.js"
   },
+  "bin": {
+    "create-ziko-app": "starter/bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zakarialaoui10/ziko.js.git"
