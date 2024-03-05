@@ -45,6 +45,12 @@ function RemoveAll(){
     Graphics.RemoveAll();
     Data.RemoveAll()
 }
+export * from "./Math"
+export * from "./UI";
+export * from "./Graphics";
+export * from "./Time"
+export * from "./Data"
+export * from "./App"
 export {
     Ziko,
     App,
@@ -59,11 +65,6 @@ export {
     ExtractAll,
     RemoveAll
 };
- export * from "./Math"
- export * from "./UI";
- export * from "./Graphics";
- export * from "./Time"
- export * from "./Data"
- export * from "./App"
+
 
 

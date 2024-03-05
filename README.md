@@ -5,6 +5,23 @@
 <br>
 
 ## ⚡ Get started
+### NPX
+ ```bash
+  npx create-ziko-app [My_App]
+  cd [My_App]
+ ```
+
+ #### Commands
+  ```
+  npm run dev
+  ```
+  ```
+  npm start
+  ```
+  ```
+  npm run build
+  ```
+### Browser
 ```html
 <!DOCTYPE html>
 <html lang="en">
