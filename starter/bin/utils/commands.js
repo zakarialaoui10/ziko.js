@@ -1,17 +1,16 @@
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-const Execute_Commande=commande=>exec(commande, (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error: ${error.message}`);
-    return;
+const runCommand=command=>{
+  try{
+      execSync(command,{stdio:"inherit"});
   }
-  if (stderr) {
-    console.error(`stderr: ${stderr}`);
-    return;
+  catch(e){
+      console.error(`Failed to execute ${command}`,e);
+      return false;
   }
-  console.log(`stdout: ${stdout}`);
-});
+  return true
+}
 
 const createFolder=(FolderName="")=>{
   if (fs.existsSync(FolderName))fs.rmSync(FolderName, { recursive: true });
@@ -29,5 +28,6 @@ const copyFolder=(source, target)=>{
 }
 export {
   createFolder,
-  copyFolder
+  copyFolder,
+  runCommand
 }
