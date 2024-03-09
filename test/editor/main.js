@@ -30,6 +30,12 @@ data=[
         "type": "js"
     }
 ]
+data=[{
+    "input": "s=Svg()",
+    "output": "<svg width=\"360\" height=\"300\" style=\"border: 1px solid black;\"></svg>",
+    "order": 1,
+    "type": "js"
+}]
 a.import(data)
 b=csv2arr(`
 Assa,Coconut,62.6

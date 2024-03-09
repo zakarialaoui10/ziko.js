@@ -1,7 +1,8 @@
 
-import commonjs from '@rollup/plugin-commonjs';
+//import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
+import serve from 'rollup-plugin-serve'
 
 
 const banner= `
@@ -14,7 +15,7 @@ export default {
   input: 'main.js',
   output: [
   {
-    file: 'public/build/index.js',
+    file: 'build/index.js',
     format: 'umd',
     name:"ZikoDist",
     banner,
@@ -22,7 +23,8 @@ export default {
 ],
   plugins: [
     resolve(), 
-    commonjs(),
-    livereload('public')
+    //commonjs(),
+    serve(),
+    livereload()
   ],
 };

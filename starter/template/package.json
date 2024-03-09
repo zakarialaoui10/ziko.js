@@ -23,5 +23,7 @@
     "express": "^4.18.3",
     "open": "^10.0.4",
     "rollup": "^4.1.5",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.1"
   }
 }

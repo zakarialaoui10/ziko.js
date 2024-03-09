@@ -17,7 +17,7 @@ export default {
   input: 'main.js',
   output: [
   {
-    file: 'public/build/index.js',
+    file: 'build/index.js',
     format: 'umd',
     name:"ZikoDist",
     banner,

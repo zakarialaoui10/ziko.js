@@ -16,8 +16,8 @@ import svgGroupe from "./Elements/groupe.js";
       super();
       this.element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
       //this.cache={};
-      this.setAttribute("width",w);
-      this.setAttribute("height",h);
+      this.setAttr("width",w);
+      this.setAttr("height",h);
       this.style({border:"1px black solid"});
       //this.view(-w/2,-h/2,w/2,h/2)
       //this.view(-10,-10,10,10);
@@ -27,7 +27,7 @@ import svgGroupe from "./Elements/groupe.js";
       let width=Math.abs(x2-x1);
       let height=Math.abs(y2-y1);
       //this.element.style.transform="scale("+Math.sign(x2-x1)+","+(-Math.sign(y2-y1))+")";
-      this.element.setAttribute("viewBox",[x1,y1,width,height].join(" "));
+      this.setAttr("viewBox",[x1,y1,width,height].join(" "));
       //console.log({width:width,height:height})
       return this;
   
