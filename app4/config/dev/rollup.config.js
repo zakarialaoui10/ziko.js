@@ -2,9 +2,9 @@
 //import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
-import serve from 'rollup-plugin-serve';
+import serve from 'rollup-plugin-serve'
 
-let isBrowserOpened=false;
+
 const banner= `
 /*
   Project: ziko.js starter App
@@ -16,21 +16,15 @@ export default {
   output: [
   {
     file: 'public/dist/ziko-app.js',
-    format: 'iife',
+    format: 'umd',
+    name:"ZikoDist",
     banner,
   },
 ],
   plugins: [
     resolve(), 
     //commonjs(),
-    serve({
-      open: !isBrowserOpened,
-      onListening: function(server) {
-        isBrowserOpened = true; 
-      }
-    }),
-    livereload({
-      watch:"src"
-    })
+    serve(),
+    livereload()
   ],
 };

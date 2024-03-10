@@ -12,9 +12,6 @@
   },
   "author": "zakaria elaloui",
   "license": "MIT",
-  "dependencies": {
-    "ziko": "^0.0.1"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -24,7 +21,9 @@
     "open": "^10.0.4",
     "rollup": "^4.1.5",
     "rollup-plugin-livereload": "^2.0.5",
-    "rollup-plugin-serve": "^1.1.1",
-    "zikodb": "^0.0.0"
+    "rollup-plugin-serve": "^1.1.1"
+  },
+  "dependencies": {
+    "ziko": "^0.0.1"
   }
 }
