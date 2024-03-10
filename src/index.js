@@ -52,7 +52,6 @@ export * from "./Time"
 export * from "./Data"
 export * from "./App"
 export {
-    Ziko,
     App,
     Math,
     UI,
@@ -65,6 +64,7 @@ export {
     ExtractAll,
     RemoveAll
 };
+export default Ziko;
 
 
 
