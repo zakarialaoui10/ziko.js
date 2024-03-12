@@ -1,6 +1,6 @@
 {
   "name": "ziko",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities",
   "keywords": [
     "Zikojs",
@@ -30,6 +30,7 @@
   "scripts": {
     "test": "node --watch test/index.js",
     "lint": "eslint src/*/*/*",
+    "dev": "rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js"
   },
   "bin": {
@@ -55,8 +56,5 @@
     "rollup": "^4.1.5",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.1"
-  },
-  "dependencies": {
-    "ziko": "^0.0.1"
   }
 }
