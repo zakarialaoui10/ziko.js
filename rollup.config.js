@@ -20,12 +20,12 @@ export default {
     file: 'dist/ziko.cjs',
     format: 'cjs',
     banner,
-    //exports: "named"
+    exports: "named"
   },{
     file: 'dist/ziko.mjs',
     format: 'es',
     banner,
-    //exports: "named"
+    exports: "named"
   },
   // {
   //   file: 'dist/ziko.js',
