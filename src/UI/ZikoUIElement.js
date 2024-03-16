@@ -2,6 +2,7 @@ import { ZikoStyle } from "./Style";
 import { 
   Pointer,
   Mouse, 
+  Wheel,
   Key, 
   Drag , 
   Drop, 
@@ -28,11 +29,6 @@ class ZikoUIElement {
       isRoot:false,
       isHidden: false,
       isFrozzen:false,
-      // transformMatrix:matrix([
-      //   [0,0,0],
-      //   [0,0,0],
-      //   [1,1,0]
-      // ]),
       style: ZikoStyle({}),
       attributes: {},
       filters: {},
@@ -42,6 +38,7 @@ class ZikoUIElement {
     this.events = {
       ptr:null,
       mouse:null,
+      Wheel:null,
       key:null,
       drag:null,
       drop:null,
@@ -353,6 +350,11 @@ class ZikoUIElement {
   onMouseOut(...callbacks){
     if(!this.events.mouse)this.events.mouse = Mouse(this);
     this.events.mouse.onOut(...callbacks);
+    return this;
+  }
+  onWheel(...callbacks){
+    if(!this.events.wheel)this.events.wheel = Wheel(this);
+    this.events.wheel.onWheel(...callbacks);
     return this;
   }
   onKeyDown(...callbacks){
