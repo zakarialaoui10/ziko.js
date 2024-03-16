@@ -1,4 +1,5 @@
 import Pointer from "./Global/Pointer.js";
+import Mouse from "./Global/Mouse.js";
 import Key from "./Global/Key.js";
 import {Drag,Drop} from "./Global/Drag.js";
 import Click from "./Global/Click.js";
@@ -8,6 +9,7 @@ import Input from "./Partiel/Input.js";
 import CustomEvent from "./Global/CustomEvent.js";
 const Events={
     Pointer,
+    Mouse,
     Key,
     Drag,
     Drop,
@@ -39,6 +41,7 @@ const Events={
 }
 export {
     Pointer,
+    Mouse,
     Key,
     Drag,
     Drop,

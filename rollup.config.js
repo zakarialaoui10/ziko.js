@@ -27,23 +27,23 @@ export default {
     banner,
     exports: "named"
   },
-  // {
-  //   file: 'dist/ziko.js',
-  //   format: 'umd',
-  //   name:"Ziko",
-  //   banner,
-  // },
-  // {
-  //   file: 'dist/ziko.min.js',
-  //   format: 'umd',
-  //   name:"Ziko",
-  //   banner,
-  //   plugins:[terser({
-  //     output: {
-  //       comments: (node, { type, value }) => type === 'comment2' && value.includes('Author'),
-  //     },
-  //   })]
-  // }
+  {
+    file: 'dist/ziko.js',
+    format: 'umd',
+    name:"Ziko",
+    banner,
+  },
+  {
+    file: 'dist/ziko.min.js',
+    format: 'umd',
+    name:"Ziko",
+    banner,
+    plugins:[terser({
+      output: {
+        comments: (node, { type, value }) => type === 'comment2' && value.includes('Author'),
+      },
+    })]
+  }
 ],
   plugins: [
     resolve(), 

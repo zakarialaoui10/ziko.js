@@ -1,6 +1,7 @@
 import { ZikoStyle } from "./Style";
 import { 
-  Pointer, 
+  Pointer,
+  Mouse, 
   Key, 
   Drag , 
   Drop, 
@@ -40,6 +41,7 @@ class ZikoUIElement {
     this.items = [];
     this.events = {
       ptr:null,
+      mouse:null,
       key:null,
       drag:null,
       drop:null,
@@ -321,6 +323,36 @@ class ZikoUIElement {
   onPtrOut(...callbacks){
     if(!this.events.ptr)this.events.ptr = Pointer(this);
     this.events.ptr.onOut(...callbacks);
+    return this;
+  }
+  onMouseMove(...callbacks){
+    if(!this.events.mouse)this.events.mouse = Mouse(this);
+    this.events.mouse.onMove(...callbacks);
+    return this;
+  }
+  onMouseDown(...callbacks){
+    if(!this.events.mouse)this.events.mouse = Mouse(this);
+    this.events.mouse.onDown(...callbacks);
+    return this;
+  }
+  onMouseUp(...callbacks){
+    if(!this.events.mouse)this.events.mouse = Mouse(this);
+    this.events.mouse.onUp(...callbacks);
+    return this;
+  }
+  onMouseEnter(...callbacks){
+    if(!this.events.mouse)this.events.mouse = Mouse(this);
+    this.events.mouse.onEnter(...callbacks);
+    return this;
+  }
+  onMouseLeave(...callbacks){
+    if(!this.events.mouse)this.events.mouse = Mouse(this);
+    this.events.mouse.onLeave(...callbacks);
+    return this;
+  }
+  onMouseOut(...callbacks){
+    if(!this.events.mouse)this.events.mouse = Mouse(this);
+    this.events.mouse.onOut(...callbacks);
     return this;
   }
   onKeyDown(...callbacks){
