@@ -59,3 +59,6 @@ Béni_Mellal,Spinach,93.95
 Sidi_Bouzid,Cherry,53.62
 Guelta_Zemmur,Peach,57.64
 `)
+
+ap=Ziko.App()
+document.body.addEventListener("hashchange",()=>console.log(1))

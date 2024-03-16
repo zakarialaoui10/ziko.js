@@ -7,6 +7,7 @@ import Click from "./Global/Click.js";
 import Clipboard from "./Global/Clipboard.js";
 import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
+import HashEvent from "./Partiel/Hash.js";
 import CustomEvent from "./Global/CustomEvent.js";
 const Events={
     Pointer,
@@ -19,6 +20,7 @@ const Events={
     Clipboard,
     Focus,
     Input,
+    HashEvent,
     CustomEvent,
     ExtractAll: function () {
         const keys = Object.keys(this);
@@ -52,6 +54,7 @@ export {
     Clipboard,
     Focus,
     Input,
+    HashEvent,
     CustomEvent
 }
 export default Events
