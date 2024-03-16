@@ -4,24 +4,20 @@
 
 <br>
 
-## ⚡ Get started
-### NPX
+# Install 
+```bash
+npm install ziko
+```
+# ⚡ Get started
+## Node
  ```bash
   npx create-ziko-app [My_App]
-  cd [My_App]
  ```
-
- #### Commands
   ```
+  cd [My_App]
   npm run dev
   ```
-  ```
-  npm start
-  ```
-  ```
-  npm run build
-  ```
-### Browser
+## Browser
 ```html
 <!DOCTYPE html>
 <html lang="en">
