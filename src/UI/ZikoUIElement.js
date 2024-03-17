@@ -83,7 +83,7 @@ class ZikoUIElement {
       root=root.parent;
     }
   }
-  clone() {
+  clone(render=false) {
     // Not working For Table 
     const UI = new this.constructor();
     UI.__proto__=this.__proto__;
@@ -92,7 +92,7 @@ class ZikoUIElement {
       UI.append(...items);
     }
     else UI.element=this.element.cloneNode(true);
-    return UI;
+    return UI.render(render);
   }
   style(styles,{target = "parent", maskVector = null } = {}){
     this.st.style(styles,{target,maskVector});
@@ -483,20 +483,6 @@ class ZikoUIElement {
       isVisible: topVisible || bottomVisible || rightVisible || leftVisible,
     };
   }
-
-  
-  // toggleSlide() {}
-
-
-  // Glassmorphism(background = "rgba(255,255,255,0.1)", blur = "1px") {
-  //   this.style({ background: background, backdropFilter: blur });
-  //   return this;
-  // }
-  // Neumorphism(r = "50px", bg = "cyan", box = "13px -13px 49px #5d8fac") {
-  //   this.style({ borderRadius: r, background: bg, boxShadow: box });
-  //   return this;
-  // }
-
   setFullScreen(set = true, e) {
     if(!this.element.requestFullscreen){
       console.error("Fullscreen API is not supported in this browser.");

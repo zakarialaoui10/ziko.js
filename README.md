@@ -315,7 +315,7 @@ useThread(() => {
 
 If you appreciate the library, kindly demonstrate your support by giving it a star!<br>
 [![Star](https://img.shields.io/github/stars/zakarialaoui10/ziko.js?style=social)](https://github.com/zakarialaoui10/ziko.js)
- 
+<!--## Financial support-->
 # License 
 This projet is licensed under the terms of MIT License 
 <img src="https://img.shields.io/github/license/zakarialaoui10/zikojs?color=rgb%2820%2C21%2C169%29" width="100" align="right">

@@ -9,6 +9,9 @@ class ZikoUIVideo extends ZikoUIElement {
       this.style({ width: w, height: h });
       this.render();
     }
+    get t(){
+      return this.element.currentTime;  
+    }
     useControls(enabled = true) {
       this.element.controls = enabled;
       return this;
@@ -28,6 +31,16 @@ class ZikoUIVideo extends ZikoUIElement {
     usePIP(e){
       this.element.requestPictureInPicture(e);
       return this;
+    }
+    seekTo(time) {
+      this.element.currentTime = time;
+      return this;
+    }
+    onPlay(){
+
+    }
+    onPause(){
+
     }
   }
 const video = (src, width, height) => new ZikoUIVideo(src, width, height);
