@@ -1,27 +1,7 @@
 import ZikoUIElement from "../ZikoUIElement.js"
-function set_vertical(direction){
-    direction == 1
-      ? this.style({ flexDirection: "column" })
-      : direction == -1 && this.style({ flexDirection: "column-reverse" });
-    return this;
-  }
-function set_horizontal(direction){
-  direction == 1
-      ? this.style({ flexDirection: "row" })
-      : direction == -1 && this.style({ flexDirection: "row-reverse" });
-    return this;
-}
-function map_pos_x(align){
-  let pos = ["flex-start", "center", "flex-end"];
-  if (typeof align === "number") align = pos[align + 1];
-  return align;
-}
-function map_pos_y(align){
-  return map_pos_x(-align);
-}
 class ZikoUIFlex extends ZikoUIElement {
-  constructor(tag , w = "100%", h = "100%") {
-    super(tag,"Flex");
+  constructor(tag = "div", w = "100%", h = "100%") {
+    super(tag ,"Flex");
     this.direction = "cols";
     if (typeof w == "number") w += "%";
     if (typeof h == "number") h += "%";
@@ -93,5 +73,25 @@ const Flex = (...ZikoUIElement) =>{
     ZikoUIElement.pop();
   }
   return new ZikoUIFlex(tag).append(...ZikoUIElement);
+}
+function set_vertical(direction){
+  direction == 1
+    ? this.style({ flexDirection: "column" })
+    : direction == -1 && this.style({ flexDirection: "column-reverse" });
+  return this;
+}
+function set_horizontal(direction){
+direction == 1
+    ? this.style({ flexDirection: "row" })
+    : direction == -1 && this.style({ flexDirection: "row-reverse" });
+  return this;
+}
+function map_pos_x(align){
+let pos = ["flex-start", "center", "flex-end"];
+if (typeof align === "number") align = pos[align + 1];
+return align;
+}
+function map_pos_y(align){
+return map_pos_x(-align);
 }
 export{Flex,ZikoUIFlex}

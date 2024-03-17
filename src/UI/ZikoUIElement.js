@@ -32,7 +32,7 @@ class ZikoUIElement {
       style: ZikoStyle({}),
       attributes: {},
       filters: {},
-      
+      temp:{}
     };
     this.items = [];
     this.events = {
@@ -60,7 +60,7 @@ class ZikoUIElement {
       padding:0,
      });
     this.size("auto", "auto");
-    globalThis.__UI__[this.cache.name]?.push(this)
+    globalThis.__UI__[this.cache.name]?.push(this);
   }
   get st(){
     return this.cache.style;
@@ -261,14 +261,17 @@ class ZikoUIElement {
     this.items.forEach(callback);
     return this;
   }
-  filter(condition_callback,if_callback,else_callback){
+  where(condition_callback,if_callback,else_callback){
     this.items.filter(condition_callback).forEach(if_callback)
     return this;
+  }
+  filter(condition){
+    return this.items.filter(condition);
   }
   filterByTextContent(text,exactMatch=false){
     this.items.map(n=>n.render());
     this.items.filter(n=>{
-      const content=n.element.textContent
+      const content=n.element.textContent;
       return !(exactMatch?content===text:content.includes(text))
     }).map(n=>n.render(false));
      return this;
