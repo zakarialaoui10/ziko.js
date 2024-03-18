@@ -9,7 +9,7 @@ import {
   Click , 
   Clipboard ,
   Focus,
-  CustomEvent,
+  customEvent,
 } from "../Reactivity/Events"
 import { 
   WatchIntersection, 
@@ -441,12 +441,12 @@ class ZikoUIElement {
     return this;
   }
   on(event_name,...callbacks){
-    if(!this.events.custom)this.events.custom = CustomEvent(this);
+    if(!this.events.custom)this.events.custom = customEvent(this);
     this.events.custom.on(event_name,...callbacks);
     return this;
   }
   emit(event_name,detail={}){
-    if(!this.events.custom)this.events.custom = CustomEvent(this);
+    if(!this.events.custom)this.events.custom = customEvent(this);
     this.events.custom.emit(event_name,detail);
     return this;
   }

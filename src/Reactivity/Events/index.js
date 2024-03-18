@@ -8,7 +8,7 @@ import Clipboard from "./Global/Clipboard.js";
 import Focus from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
 import HashEvent from "./Partiel/Hash.js";
-import CustomEvent from "./Global/CustomEvent.js";
+import customEvent from "./Global/CustomEvent.js";
 const Events={
     Pointer,
     Mouse,
@@ -55,6 +55,6 @@ export {
     Focus,
     Input,
     HashEvent,
-    CustomEvent
+    customEvent
 }
 export default Events

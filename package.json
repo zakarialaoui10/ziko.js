@@ -1,6 +1,6 @@
 {
   "name": "ziko",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities",
   "keywords": [
     "Zikojs",
@@ -35,9 +35,6 @@
     "lint": "eslint src/*/*/*",
     "dev": "rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js"
-  },
-  "bin": {
-    "create-ziko-app": "starter/bin/index.js"
   },
   "repository": {
     "type": "git",
