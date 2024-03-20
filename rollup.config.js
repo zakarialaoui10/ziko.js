@@ -15,7 +15,7 @@ const banner= `
 */
 `
 export default {
-  input: 'src/index.js',
+  input: 'core/index.js',
   output: [{
     file: 'dist/ziko.cjs',
     format: 'cjs',

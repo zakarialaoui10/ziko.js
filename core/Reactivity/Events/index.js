@@ -21,7 +21,7 @@ const Events={
     Focus,
     Input,
     HashEvent,
-    CustomEvent,
+    customEvent,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
