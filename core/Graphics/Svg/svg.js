@@ -13,15 +13,15 @@ import svgGroupe from "./Elements/groupe.js";
 
   class ZikoUISvg extends ZikoUIElement {
     constructor(w=360,h=300) {
-      super();
-      this.element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      super("svg","svg");
+      // this.element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
       //this.cache={};
       this.setAttr("width",w);
       this.setAttr("height",h);
       this.style({border:"1px black solid"});
       //this.view(-w/2,-h/2,w/2,h/2)
       //this.view(-10,-10,10,10);
-      this.render();
+      //this.render();
     }
     view(x1,y1,x2,y2){
       let width=Math.abs(x2-x1);

@@ -1,8 +1,8 @@
-import { ZikoHtml } from "../../../Misc";
+import { html } from "../../../Misc";
 import { Flex } from "../../Flex";
 import { text } from "../../../Text";
 import { ZikoUICodeNote } from "./CodeNote";
-const Input=(codeText="")=>ZikoHtml("code",codeText).style({
+const Input=(codeText="")=>html("code",codeText).style({
     width:"100%",
     height:"auto",
     padding:"10px",
@@ -16,7 +16,7 @@ const Input=(codeText="")=>ZikoHtml("code",codeText).style({
     background:"#f6f8fa",
     color:"#0062C3"
 }).setAttr("contenteditable",true).setAttr("spellcheck",false);
-const Output=()=>ZikoHtml("output").style({
+const Output=()=>html("output").style({
     width:"100%",
     height:"auto",
     padding:"5px 0",

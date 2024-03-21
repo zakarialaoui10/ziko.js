@@ -20,8 +20,10 @@ import { Random } from "../Math/Random";
 class ZikoUIElement {
   constructor(element,name="") {
     //this.target = globalThis.__Target__||globalThis.document.body;
-    this.target = globalThis.__ZikoConfig__.default.target||globalThis.document.body
-    if(typeof element === "string") element = globalThis.document.createElement(element);
+    this.target = globalThis.__ZikoConfig__.default.target||globalThis.document.body;
+    if(typeof element === "string") {
+      element === "svg" ? element=document.createElementNS("http://www.w3.org/2000/svg", "svg"): element = globalThis.document.createElement(element);
+    }
     this.element = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {

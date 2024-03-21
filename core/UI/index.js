@@ -14,7 +14,7 @@ import {
     brs,
     hrs,
     link,
-    ZikoHtml
+    html
 } from "./Misc";
 import {
     ol,
@@ -66,7 +66,7 @@ import{
     } from "./Semantic";
 import { Table } from "./Table";
 const UI={
-    ZikoHtml,
+    html,
     text,
     p,
     h1,
@@ -149,6 +149,6 @@ export * from "./Semantic";
 export * from "./Misc";
 export * from "./CustomElement";
 export {
-    ZikoHtml
+    html
 }
 export default UI;

@@ -62,6 +62,7 @@ export {
     Data,
     ZikoUIElement,
     SPA,
+    __ZikoConfig__,
     ExtractAll,
     RemoveAll
 };

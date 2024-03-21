@@ -3,8 +3,8 @@ import {Matrix} from "../../Math/Matrix/index.js"
 import { convolute } from "../../Math/Signal/conv.js";
 class ZikoUICanvas extends ZikoUIElement{
     constructor(w,h){
-        super();
-        this.element=document.createElement("canvas");
+        super("canvas","canvas");
+        //this.element=document.createElement("canvas");
         this.ctx = this.element.getContext("2d");
         this.style({
             border:"1px red solid",

@@ -1,10 +1,10 @@
 import ZikoUIElement from "../../../ZikoUIElement";
 import { ZikoUIFlex } from "../../Flex";
-import { ZikoHtml } from "../../../Misc";
+import { html } from "../../../Misc";
 class ZikoUIAccordion extends ZikoUIElement{
     constructor(summary,content,icon="😁"){
         super("details","Accordion")
-        this.summary=ZikoHtml("summary",summary).style({
+        this.summary=html("summary",summary).style({
             fontSize:"1.1em",
             padding:"0.625rem",
             fontWeight:"bold",
