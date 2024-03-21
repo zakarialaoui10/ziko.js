@@ -4,7 +4,6 @@ class ZikoUISelect extends ZikoUIElement {
     constructor(){
       super();
       this.element=document.createElement("select");
-      this.render()
     }
     addOptions(...options) {
       options.map(n => this.append(new ZikoUIInputOption(n)));

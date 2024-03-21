@@ -5,7 +5,6 @@ class ZikoUITextArea extends ZikoUIElement {
       super();
       this.element = document.createElement("textarea");
       //Object.assign(this,inputComposer.call(this));
-      this.render();
     }
     get value(){
       return this.element.textContent;

@@ -19,7 +19,8 @@ import { text } from "./Text";
 import { Random } from "../Math/Random";
 class ZikoUIElement {
   constructor(element,name="") {
-    this.target = globalThis.__Target__||globalThis.document.body;
+    //this.target = globalThis.__Target__||globalThis.document.body;
+    this.target = globalThis.__ZikoConfig__.default.target||globalThis.document.body
     if(typeof element === "string") element = globalThis.document.createElement(element);
     this.element = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
@@ -61,6 +62,7 @@ class ZikoUIElement {
      });
     this.size("auto", "auto");
     globalThis.__UI__[this.cache.name]?.push(this);
+    this.render(globalThis.__ZikoConfig__.default.render);
   }
   get st(){
     return this.cache.style;

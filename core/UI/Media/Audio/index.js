@@ -3,7 +3,6 @@ class ZikoUIAudio extends ZikoUIElement {
     constructor(src) {
       super("audio","audio");
       this.element.setAttribute("src", src);
-      this.render();
       this.useControls();
     }
     get t(){

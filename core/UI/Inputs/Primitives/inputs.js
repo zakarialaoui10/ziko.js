@@ -13,7 +13,6 @@ class ZikoUIInput extends ZikoUIElement {
     Object.assign(this.events,{input:null})
     this.setValue(value);
     if(datalist)this.linkDatalist(datalist)
-    this.render();
   }
   onInput(...callbacks){
     if(!this.events.input)this.events.input = Input(this);
@@ -124,7 +123,6 @@ class ZikoUIInputNumber extends ZikoUIInput {
     super();
     this._setType("number");
     this.setMin(min).setMax(max).setStep(step);
-    this.render();
   }
   get value() {
     return +this.element.value;
@@ -147,7 +145,6 @@ class ZikoUIInputSlider extends ZikoUIInputNumber {
     super();
     this._setType("range");
     this.setMin(min).setMax(max).setValue(val).setStep(step);
-    this.render();
   }
 }
 class ZikoUIInputColor extends ZikoUIInput {
@@ -155,7 +152,6 @@ class ZikoUIInputColor extends ZikoUIInput {
     super();
     this._setType("color");
     this.background(this.value);
-    this.render();
     this.onInput(() => this.background(this.value));
   }
 }
@@ -163,35 +159,30 @@ class ZikoUIInputPassword extends ZikoUIInput {
   constructor() {
     super();
     this._setType("password");
-    this.render();
   }
 }
 class ZikoUIInputEmail extends ZikoUIInput {
   constructor() {
     super();
     this._setType("email");
-    this.render();
   }
 }
 class ZikoUIInputTime extends ZikoUIInput {
   constructor() {
     super();
     this._setType("time");
-    this.render();
   }
 }
 class ZikoUIInputDate extends ZikoUIInput {
   constructor() {
     super();
     this._setType("date");
-    this.render();
   }
 }
 class ZikoUIInputDateTime extends ZikoUIInput {
   constructor() {
     super();
     this._setType("datetime-local");
-    this.render();
   }
 }
 class ZikoUIInputCheckbox extends ZikoUIInput {
@@ -271,7 +262,6 @@ class ZikoUIInputDatalist extends ZikoUIElement {
     super();
     this.element = document.createElement("datalist");
     this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
-    this.render();
   }
   addOptions(...options) {
     options.map((n) => this.append(new ZikoUIInputOption(n)));

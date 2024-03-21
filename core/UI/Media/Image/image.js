@@ -8,7 +8,6 @@ class ZikoUIImage extends ZikoUIElement {
       if (typeof w == "number") w += "%";
       if (typeof h == "number") h += "%";
       this.style({ border: "1px solid black", width: w, height: h });
-      this.render();
     }
      updateSrc(url){
       this.value=url;

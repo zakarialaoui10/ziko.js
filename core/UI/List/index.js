@@ -5,7 +5,6 @@ class ZikoUILI extends ZikoUIElement{
     super();
     this.element=document.createElement("li");
     this.append(UI);
-    this.render()
   }
 }
 class ZikoUIList extends ZikoUIElement {
@@ -105,7 +104,6 @@ class ZikoUIOList extends ZikoUIList{
   constructor(...arr){
     super("ol","ol");
     this.append(...arr);
-    this.render();
   }
   type(tp = 1) {
     this.element.setAttribute("type", tp);
@@ -120,7 +118,6 @@ class ZikoUIUList extends ZikoUIList{
   constructor(...arr){
     super("ul","ul");
     this.append(...arr);
-    this.render();
   }
 }
 const li=UI=>new ZikoUILI(UI)

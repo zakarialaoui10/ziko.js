@@ -2,45 +2,38 @@ import ZikoUIElement from "../ZikoUIElement.js";
 class ZikoUIMain extends ZikoUIElement{
     constructor(){
       super("main","Main");
-      this.render();
     }
   }
   class ZikoUIHeader extends ZikoUIElement{
     constructor(){
       super("header","Header");
-      this.render();
     }
   }
   class ZikoUINav extends ZikoUIElement{
     constructor(){
       super("nav","Nav");
-      this.render();
     }
   }
   class ZikoUISection extends ZikoUIElement{
     constructor(){
       super("section","Section");
       this.style({position:"relative"})
-      this.render();
     }
   }
   class ZikoUIArticle extends ZikoUIElement{
     constructor(){
       super("article","Article");
-      this.render();
     }
   }
   class ZikoUIAside extends ZikoUIElement{
     constructor(){
       super("aside","Aside");
-      this.render();
     }
   }
   class ZikoUIFooter extends ZikoUIElement{
     constructor(){
       super("footer","Footer");
       this.element=document.createElement("footer");
-      this.render();
     }
   }
 const Section = (...ZikoUIElement) => new ZikoUISection().append(...ZikoUIElement);

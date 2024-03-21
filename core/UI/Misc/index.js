@@ -2,28 +2,24 @@ import ZikoUIElement from "../ZikoUIElement.js";
 class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
     super(element,"ZikoHtml");
-      this.render();
   }
 }
 class ZikoUIBr extends ZikoUIElement {
     constructor() {
       super("br","br");
-        this.render();
-        delete this.append
+          delete this.append
     }
   }
   class ZikoUIHr extends ZikoUIElement {
     constructor() {
       super("hr","hr");
-        this.render();
-        delete this.append
+          delete this.append
     }
   }
   class ZikoUILink extends ZikoUIElement{
     constructor(href){
       super("a","link");
       this.setHref(href);
-      this.render();
     }
     setHref(href){
       this.element.href=href;

@@ -15,7 +15,7 @@ class ZikoUIApp extends ZikoUIFlex{
             theme:null,
             isRoot:true
         });
-        this.render();
+        this.render(globalThis.__ZikoConfig__.default.render);
     }
     #init(){
         this.root.setAttribute("data-engine","zikojs");

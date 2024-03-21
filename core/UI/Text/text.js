@@ -8,7 +8,6 @@ class ZikoUIText extends ZikoUIElement {
       this.text = "";
       this.addValue(...value);
       this.st.display("inline-block");
-      this.render();
     }
     clear() {
       this.element.textContent = "";

@@ -6,7 +6,6 @@ class ZikoUIParagraphe extends ZikoUIElement {
       super("p","p");
       this.addValue(...value);
       this.style({margin:0,padding:0});
-      this.render();
     }
     addValue(...value) {
       for (let i = 0; i < value.length; i++) {

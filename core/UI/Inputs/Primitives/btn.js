@@ -1,10 +1,9 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
 class ZikoUIBtn extends ZikoUIElement {
     constructor(value = "button") {
-      super();
+      super("button","btn");
       this.element = document.createElement("button");
       this.setValue(value);
-      this.render();
       this.st.cursor("pointer");
     }
     setValue(value) {

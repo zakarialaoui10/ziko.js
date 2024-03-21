@@ -15,11 +15,13 @@
     "Single Page Application"
   ],
   "type": "module",
-  "source": "src/index.js",
+  "source": "core/index.js",
   "main": "dist/ziko.cjs",
   "module": "dist/ziko.mjs",
+  "unpkg": "dist/ziko.min.js",
   "files": [
-    "src",
+    "core",
+    "wrapper",
     "dist",
     "LICENCE"
   ],

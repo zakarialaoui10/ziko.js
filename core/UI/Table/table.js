@@ -13,7 +13,6 @@ class ZikoUITable extends ZikoUIElement {
         }
         if(body)this.fromMatrix(body);
         if(caption)this.setCaption(caption)
-        this.render();
     }
     get caption(){
         return this.structure.caption;

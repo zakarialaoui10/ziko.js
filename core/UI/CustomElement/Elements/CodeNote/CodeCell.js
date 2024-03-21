@@ -142,7 +142,7 @@ class ZikoUICodeCell extends ZikoUIFlex{
 
     }
     evaluate(order){
-        globalThis.__Target__=this.Output.element;
+        globalThis.__ZikoConfig__.default.target=this.Output.element;
         switch(this.cache.type){
             case "js":this.#evaluateJs(order);break;
         }

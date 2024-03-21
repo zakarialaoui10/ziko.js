@@ -4,7 +4,6 @@ class ZikoUIHeading extends ZikoUIElement {
       super(`h${type}`,`h${type}`);
       this.element = document.createElement("h" + type);
       this.element.textContent = value;
-      this.render();
     }
     get value() {
       return this.element.innerText;

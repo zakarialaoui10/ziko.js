@@ -7,7 +7,6 @@ class ZikoUIFigure extends ZikoUIElement{
       this.caption.append(caption.element)
       this.element.append(this.img);
       this.element.append(this.caption);
-      this.render();
     }
 }
 const figure =(image,caption) =>new ZikoUIFigure(image,caption);
