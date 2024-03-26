@@ -2,7 +2,6 @@ import ZikoUIElement from "../ZikoUIElement.js";
 class ZikoUIHeading extends ZikoUIElement {
     constructor(type = 1, value = "") {
       super(`h${type}`,`h${type}`);
-      this.element = document.createElement("h" + type);
       this.element.textContent = value;
     }
     get value() {

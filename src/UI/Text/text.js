@@ -2,10 +2,11 @@ import ZikoUIElement from "../ZikoUIElement.js";
 import {Complex} from "../../Math/Complex/index.js";
 import { __UI__ } from "../../App/Globals/__UI__.js";
 class ZikoUIText extends ZikoUIElement {
+    #text = ""
     constructor(...value) {
       super("span","text");
       this.element = document.createElement("span");
-      this.text = "";
+      //this.#text = "";
       this.addValue(...value);
       this.st.display("inline-block");
     }
@@ -18,14 +19,14 @@ class ZikoUIText extends ZikoUIElement {
     }
     setValue(value = "", add = false) {
       if (["string", "number"].includes(typeof value)) {
-        this.text = "" + value;
-        if (this.text.includes("\n"))
-          this.text = this.text
+        this.#text = "" + value;
+        if (this.#text.includes("\n"))
+          this.#text = this.#text
             .split("\n")
             .map((n) => "<span>".concat(n, "</span></br>"))
             .join("");
       }
-       if (value instanceof Complex) this.text = "" + value.UI();
+       if (value instanceof Complex) this.#text = "" + value.UI();
        /*
        else if (value instanceof Ziko.Math.Matrix) {
           let string = "[";
@@ -34,12 +35,12 @@ class ZikoUIText extends ZikoUIElement {
               (j != 0 ? " " : "") +
               `[${value.arr[j].map((n) => "  " + n.toString() + " ")}],</br>`;
           string = string.substring(0, string.length - 6) + "]";
-          this.text = "" + string;
+          this.#text = "" + string;
         } 
         */
         //else console.error("not supported yet")
-      if (add) this.element.innerHTML += this.text;
-      else this.element.innerHTML = this.text;
+      if (add) this.element.innerHTML += this.#text;
+      else this.element.innerHTML = this.#text;
       if (value instanceof Array || value instanceof Set) {
         if (value instanceof Set) value = [...value];
         this.addValue(...value);

@@ -78,6 +78,9 @@ class ZikoUIElement {
   get html(){
     return this.element.innerHTML;
   }
+  get text(){
+    return this.element.textContent;
+  }
   get __app__(){
     if(this.cache.isRoot)return this;
     let root=this.cache.parent;
@@ -289,26 +292,26 @@ class ZikoUIElement {
   map(callback){
     return this.items.map(callback);
   }
-  where(condition_callback,if_callback=()=>{},else_callback=()=>{}){
+  find(condition){
+    return this.items.filter(condition);
+  }
+  filter(condition_callback,if_callback=()=>{},else_callback=()=>{}){
     const FilterItems=this.items.filter(condition_callback);
     FilterItems.forEach(if_callback);
     this.items.filter(item => !FilterItems.includes(item)).forEach(else_callback);
     return this;
-  }
-  filter(condition,callback){
-    return this.items.filter(condition);
   }
   filterByTextContent(text,exactMatch=false){
     this.items.map(n=>n.render());
     this.items.filter(n=>{
       const content=n.element.textContent;
       return !(exactMatch?content===text:content.includes(text))
-    }).map(n=>n.render(false));
+    }).map(n=>n.unrender());
      return this;
   }
   filterByClass(value) {
     this.items.map(n=>n.render());
-    this.items.filter(n=>!n.classes.includes(value)).map(n=>n.render(false));
+    this.items.filter(n=>!n.classes.includes(value)).map(n=>n.unrender());
     return this; 
   }
   sortByTextContent(value, displays) {
