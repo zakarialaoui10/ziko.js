@@ -202,8 +202,12 @@ class ZikoUIElement {
     }
     return this;
   }
+  renderAfter(t = 1) {
+    setTimeout(() => this.render(), t);
+    return this;
+  }
   unrenderAfter(t = 1) {
-    setTimeout(() => this.remove(), t);
+    setTimeout(() => this.unrender(), t);
     return this;
   }
   // removeItem(...ele) {
