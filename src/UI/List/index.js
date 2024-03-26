@@ -2,8 +2,7 @@ import ZikoUIElement from "../ZikoUIElement.js";
 import {text} from "../Text/index.js";
 class ZikoUILI extends ZikoUIElement{
   constructor(UI){
-    super();
-    this.element=document.createElement("li");
+    super("li","li");
     this.append(UI);
   }
 }
@@ -11,7 +10,7 @@ class ZikoUIList extends ZikoUIElement {
     constructor(element,name) {
       super(element,name);
       delete this.append;
-      //this.style({ listStylePosition: "inside" });
+      this.style({ listStylePosition: "inside" });
     }
     append(...arr){
       for (let i = 0; i < arr.length; i++) {

@@ -233,12 +233,24 @@ class ZikoUIElement {
   }
   // Attributes
   setAttr(name, value) {
-    this.element.setAttribute(name, value);
-    Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
+    if(name instanceof Object){
+      const [names,values]=[Object.keys(name),Object.values(name)];
+      for(let i=0;i<names.length;i++){
+        if(values[i] instanceof Array)value[i] = values[i].join(" ");
+        this.element.setAttribute(names[i], values[i]);
+        Object.assign(this.cache.attributes, Object.fromEntries([[names[i], values[i]]]));
+      }
+    }
+    else{
+      if(value instanceof Array)value = value.join(" ");
+      this.element.setAttribute(name, value);
+      Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
+
+    }
     return this;
   }
-  removeAttr(name) {
-    this.element.removeAttribute(name);
+  removeAttr(...names) {
+    for(let i=0;i<names.length;i++)this.element.removeAttribute(names[i]);
     return this;
   }
   setContentEditable(bool = true) {
@@ -255,7 +267,7 @@ class ZikoUIElement {
     this.setAttr("class", value.join(" "));
     return this;
   }
-  get Classes(){
+  get classes(){
     const classes=this.element.getAttribute("class");
     return classes===null?[]:classes.split(" ");
   }
@@ -263,22 +275,27 @@ class ZikoUIElement {
     /*this.setAttr("class", value);
         return this;*/
   }
-  setId(Id) {
-    this.element.setAttribute("id", Id);
+  setId(id) {
+    this.element.setAttribute("id", id);
     return this;
   }
-  get Id() {
+  get id() {
     return this.element.getAttribute("id");
   }
   forEach(callback){
     this.items.forEach(callback);
     return this;
   }
-  where(condition_callback,if_callback,else_callback){
-    this.items.filter(condition_callback).forEach(if_callback)
+  map(callback){
+    return this.items.map(callback);
+  }
+  where(condition_callback,if_callback=()=>{},else_callback=()=>{}){
+    const FilterItems=this.items.filter(condition_callback);
+    FilterItems.forEach(if_callback);
+    this.items.filter(item => !FilterItems.includes(item)).forEach(else_callback);
     return this;
   }
-  filter(condition){
+  filter(condition,callback){
     return this.items.filter(condition);
   }
   filterByTextContent(text,exactMatch=false){
@@ -291,7 +308,7 @@ class ZikoUIElement {
   }
   filterByClass(value) {
     this.items.map(n=>n.render());
-    this.items.filter(n=>!n.Classes.includes(value)).map(n=>n.render(false));
+    this.items.filter(n=>!n.classes.includes(value)).map(n=>n.render(false));
     return this; 
   }
   sortByTextContent(value, displays) {
