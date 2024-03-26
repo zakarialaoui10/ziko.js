@@ -5,7 +5,7 @@
 This getting started describes how to install, link, load and use zikojs.
 
 ## Install 
-Math.js can be installed via [npm]() :
+ziko.js can be installed via [npm]() :
 ```bash
  npm install zikojs
 ```

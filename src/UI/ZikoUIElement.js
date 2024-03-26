@@ -156,6 +156,11 @@ class ZikoUIElement {
     else this.remove();
     return this;
   }
+  unrender(){
+    if(this.cache.parent)this.cache.parent.remove(this);
+    else if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
+    return this;
+  }
   append(...ele) {
     if(this.cache.isFrozzen){
       console.warn("You can't append new item to frozzen element");
@@ -197,21 +202,21 @@ class ZikoUIElement {
     }
     return this;
   }
-  removeAfter(t = 1) {
+  unrenderAfter(t = 1) {
     setTimeout(() => this.remove(), t);
     return this;
   }
-  removeItem(...ele) {
-    const remove = (ele) => {
-      if (ele instanceof ZikoUIElement) this.element.removeChild(ele.element);
-      else if (typeof ele === "number")
-        this.element.removeChild(this.element.children[ele]);
-    };
-    for (let i = 0; i < ele.length; i++) remove(ele[i]);
-    for (let i = 0; i < this.items.length; i++)
-      Object.assign(this, { [[i]]: this.items[i] });
-    return this;
-  }
+  // removeItem(...ele) {
+  //   const remove = (ele) => {
+  //     if (ele instanceof ZikoUIElement) this.element.removeChild(ele.element);
+  //     else if (typeof ele === "number")
+  //       this.element.removeChild(this.element.children[ele]);
+  //   };
+  //   for (let i = 0; i < ele.length; i++) remove(ele[i]);
+  //   for (let i = 0; i < this.items.length; i++)
+  //     Object.assign(this, { [[i]]: this.items[i] });
+  //   return this;
+  // }
   insertAt(index, ...ele) {
     if (index >= this.element.children.length) this.append(...ele);
     else
@@ -499,6 +504,12 @@ class ZikoUIElement {
   toggleFullScreen(e) {
     if (!globalThis.document.fullscreenElement) this.element.requestFullscreen(e);
     else globalThis.document.exitFullscreen();
+    return this;
+  }
+  toPdf(){
+    if(__ZikoPdf__){
+
+    }
     return this;
   }
 }
