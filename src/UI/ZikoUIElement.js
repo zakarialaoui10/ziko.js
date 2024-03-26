@@ -109,22 +109,22 @@ class ZikoUIElement {
   get parent(){
     return this.cache.parent;
   }
-  get Width(){
+  get width(){
     return this.element.getBoundingClientRect().width;
   }
-  get Height(){
+  get height(){
     return this.element.getBoundingClientRect().height;
   }
-  get Top(){
+  get top(){
     return this.element.getBoundingClientRect().top;
   }
-  get Right(){
+  get right(){
     return this.element.getBoundingClientRect().right;
   }
-  get Bottom(){
+  get bottom(){
     return this.element.getBoundingClientRect().bottom;
   }
-  get Left(){
+  get left(){
     return this.element.getBoundingClientRect().left;
   } 
   freeze(freeze){
