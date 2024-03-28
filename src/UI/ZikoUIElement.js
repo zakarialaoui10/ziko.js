@@ -41,7 +41,7 @@ class ZikoUIElement {
     this.events = {
       ptr:null,
       mouse:null,
-      Wheel:null,
+      wheel:null,
       key:null,
       drag:null,
       drop:null,
@@ -90,25 +90,6 @@ class ZikoUIElement {
       root=root.parent;
     }
   }
-  clone(render=false) {
-    // Not working For Table 
-    const UI = new this.constructor();
-    UI.__proto__=this.__proto__;
-    if(this.items.length){
-      const items = [...this.items].map(n=>n.clone());
-      UI.append(...items);
-    }
-    else UI.element=this.element.cloneNode(true);
-    return UI.render(render);
-  }
-  style(styles,{target = "parent", maskVector = null } = {}){
-    this.st.style(styles,{target,maskVector});
-    return this;
-  }
-  size(width,height,{ target, maskVector } = {}){
-    this.st.size(width,height,{target,maskVector});
-    return this; 
-  }
   get parent(){
     return this.cache.parent;
   }
@@ -129,7 +110,27 @@ class ZikoUIElement {
   }
   get left(){
     return this.element.getBoundingClientRect().left;
-  } 
+  }
+  clone(render=false) {
+    // Not working For Table 
+    const UI = new this.constructor();
+    UI.__proto__=this.__proto__;
+    if(this.items.length){
+      const items = [...this.items].map(n=>n.clone());
+      UI.append(...items);
+    }
+    else UI.element=this.element.cloneNode(true);
+    return UI.render(render);
+  }
+  style(styles,{target = "parent", maskVector = null } = {}){
+    this.st.style(styles,{target,maskVector});
+    return this;
+  }
+  size(width,height,{ target, maskVector } = {}){
+    this.st.size(width,height,{target,maskVector});
+    return this; 
+  }
+   
   freeze(freeze){
     this.cache.isFrozzen=freeze;
     return this;
@@ -309,7 +310,7 @@ class ZikoUIElement {
     }).map(n=>n.unrender());
      return this;
   }
-  filterByClass(value) {
+  filterByClass(value){
     this.items.map(n=>n.render());
     this.items.filter(n=>!n.classes.includes(value)).map(n=>n.unrender());
     return this; 
@@ -483,18 +484,18 @@ class ZikoUIElement {
     this.events.custom.emit(event_name,detail);
     return this;
   }
-  WatchAttributes(){
+  watchAttr(){
 
   }
-  WatchChildren(){
+  watchChildren(){
 
   }
-  WatchSize(callback){
+  watchSize(callback){
     if(!this.observer.resize)this.observer.resize = WatchSize(this,callback);
     this.observer.resize.start();
     return this;
   }
-  WatchIntersection(callback,config){
+  watchIntersection(callback,config){
     if(!this.observer.intersection)this.observer.intersection = WatchIntersection(this,callback,config);
     this.observer.intersection.start();
     return this;
