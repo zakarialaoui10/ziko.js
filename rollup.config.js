@@ -16,28 +16,32 @@ const banner= `
 `
 export default {
   input: 'src/index.js',
-  output: [{
-    file: 'dist/ziko.cjs',
-    format: 'cjs',
-    banner,
-    exports: "named"
-  },{
-    file: 'dist/ziko.mjs',
-    format: 'es',
-    banner,
-    exports: "named"
-  },
+  output: [
+  //   {
+  //   file: 'dist/ziko.cjs',
+  //   format: 'cjs',
+  //   banner,
+  //   exports: "named"
+  // },
+  // {
+  //   file: 'dist/ziko.mjs',
+  //   format: 'es',
+  //   banner,
+  //   exports: "named"
+  // },
   {
     file: 'dist/ziko.js',
     format: 'umd',
     name:"Ziko",
     banner,
+    exports: "named"
   },
   {
     file: 'dist/ziko.min.js',
     format: 'umd',
     name:"Ziko",
     banner,
+    exports: "named",
     plugins:[terser({
       output: {
         comments: (node, { type, value }) => type === 'comment2' && value.includes('Author'),
@@ -47,10 +51,10 @@ export default {
 ],
   plugins: [
     resolve(), 
-    commonjs(),
-    babel({
-      babelHelpers: 'bundled', // or 'runtime'
-      //exclude: 'node_modules/**',
-    }), 
+    //commonjs(),
+    // babel({
+    //   babelHelpers: 'bundled', // or 'runtime'
+    //   //exclude: 'node_modules/**',
+    // }), 
   ],
 };
