@@ -32,6 +32,9 @@
     },
     "./A":{
       "import":"./src/A/index.js"
+    },
+    "./react":{
+      "import":"./wrapper/react/index.jsx"
     }
   },
   "scripts": {

@@ -1,6 +1,9 @@
 export { 
     markdown2html
  } from "./markdown";
+export { 
+  adoc2html
+} from "./adoc";
  export { 
     csv2arr,
     csv2matrix,
