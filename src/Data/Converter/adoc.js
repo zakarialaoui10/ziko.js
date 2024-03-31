@@ -3,7 +3,8 @@ const parseInlineElements = text => {
         .replace(/\*(.*?)\*/g, '_$1_')  // Emphasis
         .replace(/\*\*(.*?)\*\*/g, '*$1*') // Strong
         .replace(/\[(.*?)\]\((.*?)\)/g, 'link:$2[$1]')  // Links
-        .replace(/!\[(.*?)\]\((.*?)\)/g, 'image::$2[$1]'); // Images
+        .replace(/!\[(.*?)\]\((.*?)\)/g, 'image::$2[$1]') // Images
+        .replace(/`([^`]+)`/g, '``$1``'); // Inline Code
 };
 
 const parseTable = line => {
@@ -26,6 +27,14 @@ const parseList = line => {
         return `<ol${start===1?"":` start="${start}"`}>${parseInlineElements(line.slice(match[0].length))}</ol>\n`;
     }  
     return `<ul>${parseInlineElements(line)}</ul>\n`;
+};
+
+const parseBlockquote = line => {
+    return `<blockquote>${parseInlineElements(line.slice(2))}</blockquote>\n`;
+};
+
+const parseHorizontalRule = () => {
+    return '<hr>\n';
 };
 
 const adoc2html = adocText => {
@@ -74,6 +83,16 @@ const adoc2html = adocText => {
         // Lists
         if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^\d+\.\s/)) {
             htmlOutput += parseList(line);
+            continue;
+        }
+        // Blockquote
+        if (line.startsWith('> ')) {
+            htmlOutput += parseBlockquote(line);
+            continue;
+        }
+        // Horizontal Rule
+        if (line.trim() === '---') {
+            htmlOutput += parseHorizontalRule();
             continue;
         }
         // Other paragraphs

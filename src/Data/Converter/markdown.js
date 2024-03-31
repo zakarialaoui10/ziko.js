@@ -3,7 +3,8 @@ const parseInlineElements = text => {
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
         .replace(/\*(.*?)\*/g, '<em>$1</em>')              
         .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')  
-        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">'); 
+        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">') 
+        .replace(/`([^`]+)`/g, '<code>$1</code>'); // Inline Code
 };
 
 const parseTable = line => {
@@ -13,20 +14,25 @@ const parseTable = line => {
 };
 
 const parseCodeBlock = (lines, language) => {
-    const codeContent = lines.slice(1, -1).join('\n'); // Exclude the triple backticks
-    const highlightedCode = language ? `<code data-language="${language}">${codeContent}</code>` : `<code>${codeContent}</code>`;
-    return `<pre>${highlightedCode}</pre>\n`;
+    const codeContent = lines.join('\n'); // No need to exclude the triple backticks
+    const highlightedCode = language ? `<pre><code data-language="${language}">${codeContent}</code></pre>` : `<pre><code>${codeContent}</code></pre>`;
+    return `${highlightedCode}\n`;
 };
 
 const parseList = line => {
     const DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE = /^\d+\.\s/; 
     const match = line.match(DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE);
     if (match) {
-        let start=+match[1]
-        return `<ol${start===1?"":` start=${start}`}>\n<li>${parseInlineElements(line.slice(match[0].length))}</li>\n</ol>\n`;
+        let start = +match[1];
+        return `<ol${start===1?"":` start="${start}"`}>${parseInlineElements(line.slice(match[0].length))}</ol>\n`;
     }  
-    return `<ul>\n<li>${parseInlineElements(line)}</li>\n</ul>\n`;
+    return `<ul>${parseInlineElements(line)}</ul>\n`;
 };
+
+const parseHorizontalRule = () => {
+    return '<hr>\n';
+};
+
 const markdown2html = markdownText => {
     const lines = markdownText.split('\n');
     let htmlOutput = '';
@@ -75,9 +81,15 @@ const markdown2html = markdownText => {
             htmlOutput += parseList(line);
             continue;
         }
+        // Horizontal Rule
+        if (line.trim() === '---') {
+            htmlOutput += parseHorizontalRule();
+            continue;
+        }
         // Other paragraphs
         htmlOutput += `<p>${parseInlineElements(line)}</p>\n`;
     }
     return htmlOutput;
 };
-export{markdown2html}
+
+export { markdown2html };
