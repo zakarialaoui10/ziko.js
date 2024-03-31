@@ -1,1 +1,1 @@
-export default class AbstractZikoMath {}
+export default class ZikoMath {}

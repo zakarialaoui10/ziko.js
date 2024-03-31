@@ -1,4 +1,4 @@
-import AbstractZikoMath from "../absract.js";
+import ZikoMath from "../absract.js";
 import{
     pow,
     min,
@@ -12,7 +12,7 @@ import {
     qrDecomposition,
     choleskyDecomposition
  } from "./Decomposition.js";
-class Matrix extends AbstractZikoMath{
+class Matrix extends ZikoMath{
     constructor(rows, cols, element = [] ) {
         super()
         if(rows instanceof Matrix){

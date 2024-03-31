@@ -1,6 +1,20 @@
 import { floor } from "../Functions";
-const cartesianProduct=(a, b)=>a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
-const pgcd=(n1, n2)=>{
+
+/**
+ * Computes the cartesian product of two arrays.
+ * @param {Array} a - The first array.
+ * @param {Array} b - The second array.
+ * @returns {Array} Returns an array representing the cartesian product of the input arrays.
+ */
+const cartesianProduct = (a, b) => a.reduce((p, x) => [...p, ...b.map((y) => [x, y])], []);
+
+/**
+ * Computes the greatest common divisor (GCD) of two numbers.
+ * @param {number} n1 - The first number.
+ * @param {number} n2 - The second number.
+ * @returns {number} Returns the greatest common divisor of the two input numbers.
+ */
+const pgcd = (n1, n2) => {
     let i,
         pgcd = 1;
     if (n1 == floor(n1) && n2 == floor(n2)) {
@@ -10,7 +24,14 @@ const pgcd=(n1, n2)=>{
         return pgcd;
     } else console.log("error");
 }
-const ppcm=(n1, n2)=>{
+
+/**
+ * Computes the least common multiple (LCM) of two numbers.
+ * @param {number} n1 - The first number.
+ * @param {number} n2 - The second number.
+ * @returns {number} Returns the least common multiple of the two input numbers.
+ */
+const ppcm = (n1, n2) => {
     let ppcm;
     if (n1 == floor(n1) && n2 == floor(n2)) {
         ppcm = n1 > n2 ? n1 : n2;
@@ -21,7 +42,8 @@ const ppcm=(n1, n2)=>{
         return ppcm;
     } else console.log("error");
 }
-export{
+
+export {
     cartesianProduct,
     ppcm,
     pgcd

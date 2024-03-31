@@ -18,6 +18,7 @@ import {
 import { text } from "./Text";
 import { Random } from "../Math/Random";
 /**
+ * @constructor
  * @param {string | HTMLElement} element
  * @param {string} name 
  */

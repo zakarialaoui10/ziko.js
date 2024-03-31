@@ -2,6 +2,12 @@ import { Matrix } from "../Matrix";
 import { Complex , complex } from "../Complex/index.js";
 import {ln,e,cos,sin,sqrt,cosh,sinh} from "../Functions/index.js";
 import { Fixed } from "../Functions/index.js";
+ /**
+ * map a function to ...X
+ * @param {function} fun
+ * @param {...any} X
+ * @returns {any|any[]}
+ */
 const mapfun=(fun,...X)=>{
     const Y=X.map(x=>{
         if(x===null)return fun(null);
