@@ -4,7 +4,8 @@ const parseInlineElements = text => {
         .replace(/\*\*(.*?)\*\*/g, '*$1*') // Strong
         .replace(/\[(.*?)\]\((.*?)\)/g, 'link:$2[$1]')  // Links
         .replace(/!\[(.*?)\]\((.*?)\)/g, 'image::$2[$1]') // Images
-        .replace(/`([^`]+)`/g, '``$1``'); // Inline Code
+        .replace(/`([^`]+)`/g, '``$1``') // Inline Code
+        .replace(/^\*\s/, ''); // Remove list item marker at the beginning of the line
 };
 
 const parseTable = line => {
@@ -20,14 +21,27 @@ const parseCodeBlock = (lines, language) => {
 };
 
 const parseList = line => {
-    const DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE = /^\d+\.\s/; 
-    const match = line.match(DIGIT_FOLLOWED_BY_A_DOT_AND_SPACE);
-    if (match) {
-        let start = +match[1];
-        return `<ol${start===1?"":` start="${start}"`}>${parseInlineElements(line.slice(match[0].length))}</ol>\n`;
-    }  
-    return `<ul>${parseInlineElements(line)}</ul>\n`;
+    const OL_PATTERN = /^(\d+)\.\s/;
+    const OL_PATTERN_WITHOUT_START = /^[.]\s/;
+    const UL_PATTERN = /^[*]\s/;
+    
+    if (line.match(OL_PATTERN)) {
+        const start = line.match(OL_PATTERN)[1];
+        return `<ol start="${start}"><li>${parseInlineElements(line.replace(OL_PATTERN, ''))}</li></ol>\n`;
+    } 
+    if (line.match(OL_PATTERN_WITHOUT_START)) {
+        return `<ol><li>${parseInlineElements(line.replace(OL_PATTERN_WITHOUT_START, ''))}</li></ol>\n`;
+    } 
+    if (line.match(UL_PATTERN)) {
+        return `<ul><li>${parseInlineElements(line.replace(UL_PATTERN, ''))}</li></ul>\n`;
+    }
+
+    // If neither ordered nor unordered list pattern matches, treat it as a paragraph
+    return `<p>${parseInlineElements(line)}</p>\n`;
 };
+
+
+
 
 const parseBlockquote = line => {
     return `<blockquote>${parseInlineElements(line.slice(2))}</blockquote>\n`;
@@ -35,6 +49,11 @@ const parseBlockquote = line => {
 
 const parseHorizontalRule = () => {
     return '<hr>\n';
+};
+
+const parseAttributes = line => {
+    const attrs = line.match(/\[(.*?)\]/);
+    return attrs ? attrs[1].split(',').map(attr => `[${attr.trim()}]`).join('') : '';
 };
 
 const adoc2html = adocText => {
@@ -81,7 +100,7 @@ const adoc2html = adocText => {
             continue;
         }
         // Lists
-        if (line.startsWith('- ') || line.startsWith('* ') || line.match(/^\d+\.\s/)) {
+        if (line.match(/^(\d+)\.\s/) || line.match(/^[*\.]\s/)) {
             htmlOutput += parseList(line);
             continue;
         }
@@ -93,6 +112,11 @@ const adoc2html = adocText => {
         // Horizontal Rule
         if (line.trim() === '---') {
             htmlOutput += parseHorizontalRule();
+            continue;
+        }
+        // Attributes
+        if (line.startsWith('[')) {
+            htmlOutput += parseAttributes(line);
             continue;
         }
         // Other paragraphs
