@@ -3,33 +3,13 @@ import{Complex}from"../Complex/index.js"
 import { Utils } from "../Utils/index.js";
 import{Base}from"../Discret/index.js"
 import { matrix } from "../Matrix/index.js";
-/**
- * Class for generating random numbers and values.
- */
 class Random {
-    /**
-     * Generates a random floating-point number within a specified range.
-     * @param {number} [a=1] - The start of the range.
-     * @param {number} [b] - The end of the range.
-     * @returns {number} Returns a random floating-point number.
-     */
     static float(a = 1, b) {
         return b ? Math.random() * (b - a) + a : a * Math.random();
     }
-    /**
-     * Generates a random integer within a specified range.
-     * @param {number} a - The start of the range.
-     * @param {number} b - The end of the range.
-     * @returns {number} Returns a random integer.
-     */
     static int(a, b) {
         return Math.floor(this.float(a, b));
     }
-    /**
-     * Generates a random character.
-     * @param {boolean} [upperCase] - Whether to generate uppercase character.
-     * @returns {string} Returns a random character.
-     */
     static char(upperCase){
         upperCase=upperCase??this.bool();
         const Char=String.fromCharCode(this.int(97,120));
