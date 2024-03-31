@@ -74,18 +74,23 @@ class ZikoUIElement {
   get st(){
     return this.cache.style;
   }
+  /*** Get the attributes of the UI element.*/
   get attr(){
     return this.cache.attributes;
   }
+  /*** Get the events associated with the UI element.*/
   get evt(){
     return this.cache.events;
   }
+  /*** Get the HTML content of the UI element.*/
   get html(){
     return this.element.innerHTML;
   }
+  /*** Get the text content of the UI element.*/
   get text(){
     return this.element.textContent;
   }
+  /*** Get the root parent of the UI element.*/
   get __app__(){
     if(this.cache.isRoot)return this;
     let root=this.cache.parent;
@@ -116,8 +121,10 @@ class ZikoUIElement {
   get left(){
     return this.element.getBoundingClientRect().left;
   }
+  /**
+  * Clone the UI element
+  */
   clone(render=false) {
-    // Not working For Table 
     const UI = new this.constructor();
     UI.__proto__=this.__proto__;
     if(this.items.length){
@@ -127,6 +134,9 @@ class ZikoUIElement {
     else UI.element=this.element.cloneNode(true);
     return UI.render(render);
   }
+  /**
+  * Apply styling for UI element
+  */
   style(styles,{target = "parent", maskVector = null } = {}){
     this.st.style(styles,{target,maskVector});
     return this;
