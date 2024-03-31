@@ -17,6 +17,10 @@ import {
 } from "../Reactivity";
 import { text } from "./Text";
 import { Random } from "../Math/Random";
+/**
+ * @param {string | HTMLElement} element
+ * @param {string} name 
+ */
 class ZikoUIElement {
   constructor(element,name="") {
     //this.target = globalThis.__Target__||globalThis.document.body;

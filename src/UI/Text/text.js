@@ -62,5 +62,8 @@ class ZikoUIText extends ZikoUIElement {
       return this;
     }
   }
- const text = (...value) => new ZikoUIText(...value)
+  /**
+ * @param {...string|number|boolean} str
+ */
+ const text = (...str) => new ZikoUIText(...str)
  export {text}

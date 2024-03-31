@@ -16,6 +16,9 @@ class ZikoUIHeading extends ZikoUIElement {
       return this;
     }
   }
+/**
+ * @param {string} text
+ */
 const h1=(text="")=>new ZikoUIHeading(1, text);
 const h2=(text="")=>new ZikoUIHeading(2, text);
 const h3=(text="")=>new ZikoUIHeading(3, text);

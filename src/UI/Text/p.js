@@ -29,6 +29,9 @@ class ZikoUIParagraphe extends ZikoUIElement {
       return this;
     }
   }
+ /**
+ * @param {...ZikoUIElement} ZikoUIElement[]
+ */
   const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
   export {
     p,

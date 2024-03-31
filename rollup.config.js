@@ -17,18 +17,18 @@ const banner= `
 export default {
   input: 'src/index.js',
   output: [
-  //   {
-  //   file: 'dist/ziko.cjs',
-  //   format: 'cjs',
-  //   banner,
-  //   exports: "named"
-  // },
-  // {
-  //   file: 'dist/ziko.mjs',
-  //   format: 'es',
-  //   banner,
-  //   exports: "named"
-  // },
+    {
+    file: 'dist/ziko.cjs',
+    format: 'cjs',
+    banner,
+    exports: "named"
+  },
+  {
+    file: 'dist/ziko.mjs',
+    format: 'es',
+    banner,
+    exports: "named"
+  },
   {
     file: 'dist/ziko.js',
     format: 'umd',
