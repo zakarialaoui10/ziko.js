@@ -26,14 +26,20 @@ const Ziko={
     __UI__,
     __Config__
 }
-globalThis.__Ziko__={
-    ...Ziko,
-    __UI__,
-    __Config__,
-    ExtractAll,
-    RemoveAll
-};
-function ExtractAll({}){
+
+if ( globalThis.__Ziko__ ) {
+    console.warn( 'WARNING: Multiple instances of Ziko.js being imported.' );
+	} else {
+		globalThis.__Ziko__={
+            ...Ziko,
+            __UI__,
+            __Config__,
+            ExtractAll,
+            RemoveAll
+        };
+	}
+
+function ExtractAll(){
     UI.ExtractAll();
     Math.ExtractAll();
     Time.ExtractAll();
@@ -68,7 +74,6 @@ export {
     Data,
     ZikoUIElement,
     SPA,
-    __Config__,
     ExtractAll,
     RemoveAll
 };
