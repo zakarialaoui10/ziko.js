@@ -1,6 +1,5 @@
-// var __Target__=null;
-// if(globalThis?.document?.body)__Target__=document.body;
-const __ZikoConfig__={
+const __UI__={}
+const __Config__={
     default:{
         target:null,
         render:true
@@ -14,5 +13,7 @@ const __ZikoConfig__={
 }
 export * from "./__init__";
 export * from "./__Target__";
-export * from "./__UI__";
-export {__ZikoConfig__}
+export {
+    __UI__,
+    __Config__
+}

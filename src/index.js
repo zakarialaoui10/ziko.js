@@ -9,7 +9,7 @@ import {SPA} from "./App/Router";
 import { 
     __UI__,
     __Target__,
-    __ZikoConfig__
+    __Config__
  } from "./App/Globals";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
 import { App } from "./App";
@@ -23,11 +23,17 @@ const Ziko={
     Use,
     Data,
     SPA,
+    __UI__,
+    __Config__
 }
-globalThis.__Ziko__=Ziko;
-globalThis.__UI__=__UI__;
-globalThis.__ZikoConfig__=__ZikoConfig__;
-function ExtractAll(){
+globalThis.__Ziko__={
+    ...Ziko,
+    __UI__,
+    __Config__,
+    ExtractAll,
+    RemoveAll
+};
+function ExtractAll({}){
     UI.ExtractAll();
     Math.ExtractAll();
     Time.ExtractAll();
@@ -62,7 +68,7 @@ export {
     Data,
     ZikoUIElement,
     SPA,
-    __ZikoConfig__,
+    __Config__,
     ExtractAll,
     RemoveAll
 };

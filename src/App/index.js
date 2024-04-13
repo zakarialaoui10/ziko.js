@@ -8,5 +8,5 @@ export {
 } from "./Themes";
 export {
     __init__,
-    __ZikoConfig__
+    __Config__
 } from "./Globals"

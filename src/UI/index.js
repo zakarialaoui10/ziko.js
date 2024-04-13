@@ -149,6 +149,6 @@ export * from "./Semantic";
 export * from "./Misc";
 export * from "./CustomElement";
 export {
-    html
+    html,
 }
 export default UI;

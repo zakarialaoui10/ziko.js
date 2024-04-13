@@ -24,8 +24,7 @@ import { Random } from "../Math/Random";
  */
 class ZikoUIElement {
   constructor(element,name="") {
-    //this.target = globalThis.__Target__||globalThis.document.body;
-    this.target = globalThis.__ZikoConfig__.default.target||globalThis.document.body;
+    this.target = globalThis.__Ziko__.__Config__.default.target||globalThis.document.body;
     if(typeof element === "string") {
       element === "svg" ? element=document.createElementNS("http://www.w3.org/2000/svg", "svg"): element = globalThis.document.createElement(element);
     }
@@ -68,8 +67,8 @@ class ZikoUIElement {
       padding:0,
      });
     this.size("auto", "auto");
-    globalThis.__UI__[this.cache.name]?.push(this);
-    this.render(globalThis.__ZikoConfig__.default.render);
+    globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
+    this.render(globalThis.__Ziko__.__Config__.default.render);
   }
   get st(){
     return this.cache.style;

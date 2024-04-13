@@ -1,7 +1,5 @@
-/** @module UI */
 import ZikoUIElement from "../ZikoUIElement.js";
 import {Complex} from "../../Math/Complex/index.js";
-import { __UI__ } from "../../App/Globals/__UI__.js";
 class ZikoUIText extends ZikoUIElement {
     #text = ""
     constructor(...value) {
