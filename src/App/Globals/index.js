@@ -12,7 +12,7 @@ const __Config__={
     init:()=>document.documentElement.setAttribute("data-engine","zikojs")
 }
 export * from "./__init__";
-export * from "./__Target__";
+//export * from "./__Target__";
 export {
     __UI__,
     __Config__

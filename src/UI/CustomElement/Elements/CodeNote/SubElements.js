@@ -43,7 +43,7 @@ const Right=(ctx)=>Flex(
     text('▶️').style(BTN_STYLE).onClick(e=>{
         if(ctx.parent instanceof ZikoUICodeNote)ctx.parent.setCurrentNote(ctx);
         ctx.execute();
-        globalThis.__Config__.default.target=e.target.parent.parent[1][1];
+        globalThis.__Ziko__.__Config__.default.target=e.target.parent.parent[1][1];
     }),
     text('📋').style(BTN_STYLE).onClick(()=>{
         navigator.clipboard.writeText(ctx.codeText)

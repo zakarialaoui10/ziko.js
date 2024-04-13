@@ -11,10 +11,29 @@ class ZikoSPA{
         window.onpopstate = this.render(location.pathname);
 
     }
-    get(path,wrapper){
-        (path instanceof RegExp)
-        ? this.patterns.set(path,wrapper)
-        : this.routes.set(path,wrapper);
+    // get(path,wrapper){
+    //     (path instanceof RegExp)
+    //     ? this.patterns.set(path,wrapper)
+    //     : this.routes.set(path,wrapper);
+    //     this.maintain();
+    //     return this;
+    // }
+    get(path, wrapper) {
+        if (typeof path === 'string' && path.includes(':')) {
+            const params = [];
+            const regex = new RegExp(`^${path.replace(/:([^/]+)/g, (match, paramName) => {
+                params.push(paramName);
+                return '(.+)';
+            })}$`);
+            this.patterns.set(regex, (path) => {
+                const values = regex.exec(path).slice(1);
+                wrapper(...values);
+            });
+        } else {
+            (path instanceof RegExp)
+            ? this.patterns.set(path, wrapper)
+                : this.routes.set(path, wrapper);
+        }
         this.maintain();
         return this;
     }
@@ -38,3 +57,11 @@ class ZikoSPA{
 const SPA=(root_UI,routes,patterns)=>new ZikoSPA(root_UI,routes,patterns);
 
 export {SPA}
+
+/*
+ // Static 
+  S.get("/url",wrapper)
+// Dynamique 
+ s.get("/url/name/:name/id/:id",(path,name,id)=>handler())
+// regEx
+*/

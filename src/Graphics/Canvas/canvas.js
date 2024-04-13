@@ -20,7 +20,7 @@ class ZikoUICanvas extends ZikoUIElement{
             [-10,-10],
             [10,10]
         ])
-        this.render(globalThis.__Config__.default.render);
+        this.render(globalThis.__Ziko__.__Config__.default.render);
         setTimeout(()=>this.resize(w,h),0);
         this.on("sizeupdated",()=>this.adjust())
     }

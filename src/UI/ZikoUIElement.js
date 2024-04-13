@@ -1,4 +1,3 @@
-/** @module UI */
 import { ZikoStyle } from "./Style";
 import { 
   Pointer,
@@ -18,10 +17,6 @@ import {
 } from "../Reactivity";
 import { text } from "./Text";
 import { Random } from "../Math/Random";
-/**
- * @param {string | HTMLElement} element
- * @param {string} name 
- */
 class ZikoUIElement {
   constructor(element,name="") {
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis.document.body;
@@ -228,17 +223,6 @@ class ZikoUIElement {
     setTimeout(() => this.unrender(), t);
     return this;
   }
-  // removeItem(...ele) {
-  //   const remove = (ele) => {
-  //     if (ele instanceof ZikoUIElement) this.element.removeChild(ele.element);
-  //     else if (typeof ele === "number")
-  //       this.element.removeChild(this.element.children[ele]);
-  //   };
-  //   for (let i = 0; i < ele.length; i++) remove(ele[i]);
-  //   for (let i = 0; i < this.items.length; i++)
-  //     Object.assign(this, { [[i]]: this.items[i] });
-  //   return this;
-  // }
   insertAt(index, ...ele) {
     if (index >= this.element.children.length) this.append(...ele);
     else
