@@ -1,3 +1,4 @@
+/** @module Math */
 import ZikoMath from "../absract.js";
 import{
     pow,
@@ -12,6 +13,9 @@ import {
     qrDecomposition,
     choleskyDecomposition
  } from "./Decomposition.js";
+/**
+* @class
+*/
 class Matrix extends ZikoMath{
     constructor(rows, cols, element = [] ) {
         super()
@@ -703,8 +707,9 @@ function InverseMatrixe(M) {
     }
     return I;
 }
-
-
+/**
+* @returns {Matrix}
+*/
 const matrix=(r, c, element)=>new Matrix(r, c, element);
 const matrix2=(...element)=>new Matrix(2, 2, element);
 const matrix3=(...element)=>new Matrix(3, 3, element);

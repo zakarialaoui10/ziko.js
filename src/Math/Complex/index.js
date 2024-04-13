@@ -1,3 +1,4 @@
+/** @module Math */
 import ZikoMath from "../absract.js";
 import{
     cos,
@@ -15,6 +16,9 @@ import{
   }from "../Functions/index.js"
 import { Matrix } from "../Matrix/index.js";
 import {sum,prod,deg2rad} from "../Utils/index.js";
+ /**
+ * @class
+ */
 class Complex extends ZikoMath{
     constructor(a = 0, b = 0) {
         super()

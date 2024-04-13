@@ -1,5 +1,7 @@
+/** @module Math */
 /**
  * Checks if a value is within the specified range.
+ * @function
  * @param {number} x - The value to check.
  * @param {number} a - The start of the range.
  * @param {number} b - The end of the range.

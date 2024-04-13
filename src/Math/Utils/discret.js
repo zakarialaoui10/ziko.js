@@ -1,3 +1,4 @@
+/** @module Math */
 import { floor } from "../Functions";
 
 /**

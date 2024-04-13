@@ -1,3 +1,4 @@
+/** @module Math */
 /**
  * Converts degrees to radians.
  * @param {...number} deg - Degrees to convert.

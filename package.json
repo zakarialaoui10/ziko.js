@@ -15,7 +15,6 @@
     "Single Page Application"
   ],
   "type": "module",
-  
   "main": "dist/ziko.mjs",
   "module": "dist/ziko.mjs",
   "unpkg": "dist/ziko.min.js",
@@ -30,16 +29,16 @@
       "import": "./dist/ziko.mjs",
       "require": "./dist/ziko.cjs"
     },
-    "./A":{
-      "import":"./src/A/index.js"
+    "./A": {
+      "import": "./src/A/index.js"
     },
-    "./react":{
-      "import":"./wrapper/react/index.jsx"
+    "./react": {
+      "import": "./wrapper/react/index.jsx"
     }
   },
   "scripts": {
     "test": "node --watch test/index.js",
-    "test-link":"node _link/index.js",
+    "test-link": "node _link/index.js",
     "lint": "eslint src/*/*/*",
     "dev": "rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js"

@@ -1,3 +1,4 @@
+/** @module UI */
 import ZikoUIElement from "../ZikoUIElement.js";
 class ZikoUIHeading extends ZikoUIElement {
     constructor(type = 1, value = "") {
