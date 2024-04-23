@@ -36,6 +36,9 @@
       "import": "./wrapper/react/index.jsx"
     }
   },
+  "bin": {
+    "create-ziko-app": "starter/bin/index.js"
+  },
   "scripts": {
     "test": "node --watch test/index.js",
     "test-link": "node _link/index.js",
