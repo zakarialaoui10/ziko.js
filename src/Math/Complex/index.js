@@ -1,4 +1,3 @@
-/** @module Math */
 import ZikoMath from "../absract.js";
 import{
     cos,
@@ -16,9 +15,6 @@ import{
   }from "../Functions/index.js"
 import { Matrix } from "../Matrix/index.js";
 import {sum,prod,deg2rad} from "../Utils/index.js";
- /**
- * @class
- */
 class Complex extends ZikoMath{
     constructor(a = 0, b = 0) {
         super()
@@ -182,13 +178,6 @@ class Complex extends ZikoMath{
         return "<span>" + this.a + " + i * " + this.b + "</span>";
     }
 }
- /**
- * Performs complex number operations on numbers, arrays, ArrayBuffers, or Matrices.
- * @param {number|number[]|ArrayBuffer|Matrix} a 
- * @param {number|number[]|ArrayBuffer|Matrix} b
- * @param {number|number[]|ArrayBuffer|Matrix} b
- * @returns {Complex|Complex[]}
- */
 const complex=(a,b)=>{
     if((a instanceof Array||ArrayBuffer.isView(a)) && (b instanceof Array||ArrayBuffer.isView(a)))return a.map((n,i)=>complex(a[i],b[i]));
     if(a instanceof Matrix && b instanceof Matrix){

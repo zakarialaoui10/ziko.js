@@ -8,7 +8,6 @@ import Graphics from "./Graphics";
 import {SPA} from "./App/Router";
 import { 
     __UI__,
-    __Target__,
     __Config__
  } from "./App/Globals";
 import ZikoUIElement from "./UI/ZikoUIElement.js";
@@ -23,8 +22,6 @@ const Ziko={
     Use,
     Data,
     SPA,
-    __UI__,
-    __Config__
 }
 
 if ( globalThis.__Ziko__ ) {
@@ -38,7 +35,9 @@ if ( globalThis.__Ziko__ ) {
             RemoveAll
         };
 	}
-
+if(globalThis.document){
+    document.addEventListener("DOMContentLoaded", __Ziko__.__Config__.init());
+}
 function ExtractAll(){
     UI.ExtractAll();
     Math.ExtractAll();
