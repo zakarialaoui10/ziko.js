@@ -59,10 +59,10 @@ npm install ziko
 - 🔰 No Template Engines
 - 🔰 Flexible Integration with Popular Frameworks/Libraries
 - 🔰 Extensive Add-On Ecosystem
-   |Addon|Purpose|Dependecy|
-   |-|-|-|
-   |zikogl||Threejs|
-   |ziko-lottie|render Lottie file within zikojs app|-|
+   |Addon|Purpose|Dependecy|Links|
+   |-|-|-|-|
+   |zikogl||Threejs|[NPM](https://www.npmjs.com/package/zikogl) [GITHUB](https://github.com/zakarialaoui10/zikogl/)|
+   |ziko-lottie|render Lottie file within zikojs app|-|[NPM](https://www.npmjs.com/package/ziko-lottie) [GITHUB](https://github.com/zakarialaoui10/ziko-lottie/)|
   
 - 🔰 The capability to function in both browser-based and Node.js environments
 - 🔰 Methodes Extracting
