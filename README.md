@@ -187,8 +187,6 @@ You can integrate it inside other frameworks/libraries like React , Vue , Svelte
 ### 🔰 Methodes Extracting
 ### 🔰 Mathematical Utilities & Tips
 ### 🔰 Rich UI elements
-
-```
 ### 🔰 Methodes Chaining
 
 It allows multiple methods to be called sequentially on an object, enhancing code readability and conciseness.
