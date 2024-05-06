@@ -56,21 +56,21 @@ npm install ziko
 ## 📃 [wiki](https://github.com/zakarialaoui10/ziko.js/wiki)
 
 ## 💡 [Features]()
-- 🔰 [No Template Engines]()
-- 🔰 [Flexible Integration with Popular Frameworks/Libraries]()
-- 🔰 [Extensive Add-On Ecosystem]()
-- 🔰 [The capability to function in both browser-based and Node.js environments]()
-- 🔰 [Methodes Extracting]()
-- 🔰 [Mathematical Utilities & Tips]()
-- 🔰 [Rich UI elements]()
-- 🔰 [Methodes Chaining]()
-- 🔰 [Events Handling]()
-- 🔰 [Functions decorators]()
-- 🔰 [Reactivity]()
-- 🔰 [Routing for Single Page Applications (SPA)]()
-- 🔰 [Multithreading supports]()
-- 🔰 [Responsive Design based on Flex element and resize observer]()
-- 🔰 [Loop and animations support]()
+- 🔰 No Template Engines
+- 🔰 Flexible Integration with Popular Frameworks/Libraries
+- 🔰 Extensive Add-On Ecosystem
+- 🔰 The capability to function in both browser-based and Node.js environments
+- 🔰 Methodes Extracting
+- 🔰 Mathematical Utilities & Tips
+- 🔰 Rich UI elements
+- 🔰 Methodes Chaining
+- 🔰 Events Handling
+- 🔰 Functions decorators
+- 🔰 Reactivity
+- 🔰 Routing for Single Page Applications (SPA)
+- 🔰 Multithreading supports
+- 🔰 Responsive Design based on Flex element and resize observer
+- 🔰 Loop and animations support
 
 ## ⭐️ Show your support <a name="support"></a>
 
