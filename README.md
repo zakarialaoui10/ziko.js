@@ -59,7 +59,7 @@ npm install ziko
 
 <details>
  <summary>
-  <strong> 🔰  The ability to work effortlessly in both browser-based and Node.js environments
+  <strong> 🔰 The capability to function in both browser-based and Node.js environments
   </strong>
  </summary>
 </details>
