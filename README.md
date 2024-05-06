@@ -58,6 +58,7 @@ npm install ziko
 ## 💡 [Features]()
 - 🔰 No Template Engines
 - 🔰 Flexible Integration with Popular Frameworks/Libraries
+  You can integrate it inside other frameworks/libraries like React , Vue , Svelte ... To do so, all you need to do is install the [ziko-wrapper](https://www.npmjs.com/package/ziko-wrapper) package.
 - 🔰 Extensive Add-On Ecosystem
    |Addon|Purpose|Dependecy|Links|
    |-|-|-|-|
