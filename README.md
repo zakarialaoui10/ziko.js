@@ -56,6 +56,13 @@ npm install ziko
 ## 📃 [wiki](https://github.com/zakarialaoui10/ziko.js/wiki)
 
 ## 💡 [Features]() 
+
+<details>
+ <summary>
+  <strong> 🔰  The ability to work effortlessly in both browser-based and Node.js environments
+  </strong>
+ </summary>
+</details>
 <details>
  <summary>
   <strong> 🔰 Methodes Extracting  </strong>
