@@ -4,6 +4,62 @@
 
 <br>
 
+# Architecture
+
+```mermaid
+mindmap
+  root((Ziko))
+   Core
+    Math
+     Utils
+     Functions
+     Complex
+     Matrix 
+     Random
+     Calculus
+     Signal
+     Discret
+     Statistics
+    UI
+     Elements
+      Text
+      List 
+      Table 
+      Inputs
+      Semantic
+      Custom Elements
+    Time
+     Animation
+      Ease functions
+     Loop
+    Data
+     Api
+     Converter
+     Decorator
+     Parser
+    Reactivity
+     Events
+     Observer
+     Use
+    Graphics
+     Svg
+     Canvas
+    App
+     Router
+     Seo
+     Config
+     Themes
+   Addons
+    Zikogl
+    Ziko-lottie
+   Wrapper
+    React
+    Svelte
+    Vue
+    Lit
+    Solid
+    Preact
+```
 # Install 
 ```bash
 npm install ziko
@@ -112,6 +168,8 @@ You can integrate it inside other frameworks/libraries like React , Vue , Svelte
 ### 🔰 Methodes Extracting
 ### 🔰 Mathematical Utilities & Tips
 ### 🔰 Rich UI elements
+
+```
 ### 🔰 Methodes Chaining
 
 It allows multiple methods to be called sequentially on an object, enhancing code readability and conciseness.
