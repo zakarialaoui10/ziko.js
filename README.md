@@ -68,7 +68,7 @@ npm install ziko
 - 🔰 [Functions decorators]()
 - 🔰 [Reactivity]()
 - 🔰 [Routing for Single Page Applications (SPA)]()
-- 🔰 [Multithreading supports]
+- 🔰 [Multithreading supports]()
 - 🔰 [Responsive Design based on Flex element and resize observer]()
 - 🔰 [Loop and animations support]()
 
