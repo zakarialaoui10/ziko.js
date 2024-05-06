@@ -57,6 +57,15 @@ npm install ziko
 
 ## 💡 [Features]()
 - 🔰 No Template Engines
+  Zikojs does not rely on template engines, instead it use javascipt function to create UI Elements
+  For Examples :
+  ```js
+  p("hello world").style({color:"red"})
+  ```
+  Will generate the following element :
+  ```html
+    <p style="color:red"></p>
+  ```
 - 🔰 Flexible Integration with Popular Frameworks/Libraries
   You can integrate it inside other frameworks/libraries like React , Vue , Svelte ... To do so, all you need to do is install the [ziko-wrapper](https://www.npmjs.com/package/ziko-wrapper) package.
 - 🔰 Extensive Add-On Ecosystem
@@ -64,12 +73,12 @@ npm install ziko
    |-|-|-|-|
    |zikogl|-|Threejs|[NPM](https://www.npmjs.com/package/zikogl) [GITHUB](https://github.com/zakarialaoui10/zikogl/)|
    |ziko-lottie|render Lottie file within zikojs app|Lottie-web|[NPM](https://www.npmjs.com/package/ziko-lottie) [GITHUB](https://github.com/zakarialaoui10/ziko-lottie/)|
-  
 - 🔰 The capability to function in both browser-based and Node.js environments
 - 🔰 Methodes Extracting
 - 🔰 Mathematical Utilities & Tips
 - 🔰 Rich UI elements
 - 🔰 Methodes Chaining
+  It allows multiple methods to be called sequentially on an object, enhancing code readability and conciseness.
 - 🔰 Events Handling
 - 🔰 Functions decorators
 - 🔰 Reactivity
