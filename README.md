@@ -59,6 +59,11 @@ npm install ziko
 - 🔰 No Template Engines
 - 🔰 Flexible Integration with Popular Frameworks/Libraries
 - 🔰 Extensive Add-On Ecosystem
+   |Addon|Purpose|Dependecy|
+   |-|-|-|
+   |zikogl||Threejs|
+   |ziko-lottie|render Lottie file within zikojs app|-|
+  
 - 🔰 The capability to function in both browser-based and Node.js environments
 - 🔰 Methodes Extracting
 - 🔰 Mathematical Utilities & Tips
