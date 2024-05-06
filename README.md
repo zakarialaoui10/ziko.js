@@ -23,11 +23,30 @@ mindmap
     UI
      Elements
       Text
+       text
+       p 
+       h1...h6
       List 
+       ol
+       ul
       Table 
       Inputs
       Semantic
+       Main
+       Header
+       Footer
+       Section
+       Article
+       Nav
+       Aside
       Custom Elements
+       Flex
+       Grid
+       Accordion
+       Carousel
+       Tabs
+       CodeCell
+       CodeNote
     Time
      Animation
       Ease functions
