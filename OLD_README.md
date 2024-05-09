@@ -212,21 +212,22 @@ Here you will find the built in Mathematic functions in zikojs
 
  Example of creating simple Paint sketch using canvas and pointer events : 
 ```js
-const Scene=Canvas().view(-10,-10,10,10).size(500,500).adjust()
-c.onPtrDown(e=>{
-    c.ctx.beginPath()
-    c.ctx.moveTo(
-        map(e.dx,0,c.element.offsetWidth,c.Xmin,c.Xmax),
-        map(e.dy,0,c.element.offseHeight,c.Ymin,c.Ymax)
+Scene=Canvas().size("500px","500px")
+Scene.onPtrDown(e=>{
+    e.target.ctx.beginPath()
+    e.target.ctx.moveTo(
+        map(e.dx,0,e.target.element.offsetWidth,e.target.Xmin,e.target.Xmax),
+        map(e.dy,0,e.target.element.offseHeight,e.target.Ymin,e.target.Ymax)
         )
 })
-c.onPtrMove(e=>{
+Scene.onPtrMove(e=>{
     if(e.isDown){
-        const x=map(e.mx,0,c.element.offsetWidth,c.axisMatrix[0][0],c.axisMatrix[1][0])
-        const y=map(e.my,0,c.element.offsetHeight,c.axisMatrix[1][1],c.axisMatrix[0][1])
-        c.append(canvasCircle(x,y,1).color({fill:"#5555AA"}).fill())
-   }
-c.onPtrUp(()=>{})
+        const x=map(e.mx,0,e.target.element.offsetWidth,e.target.axisMatrix[0][0],e.target.axisMatrix[1][0])
+        const y=map(e.my,0,e.target.element.offsetHeight,e.target.axisMatrix[1][1],e.target.axisMatrix[0][1])
+        e.target.append(canvasCircle(x,y,1).color({fill:"#5555AA"}).fill())
+   }})
+
+Scene.onPtrUp(()=>{})
   ```
 </details>
 
