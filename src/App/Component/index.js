@@ -2,20 +2,20 @@ class ZikoUIComponent extends HTMLElement{
     constructor(){
         super()
         this.shadowDOM = this.attachShadow({ mode: 'open' });
-        this.setAttribute('role', 'region');
-        this.setAttribute('data-engine',"zikojs")
+        this.wrapper=document.createElement("div");
     }
     connectedCallback() {
+        this.setAttribute('role', 'region');
+        this.setAttribute('data-engine',"zikojs");
+        this.shadowDOM.append(this.wrapper);
         this.observeContentChanges();
     }
     observeContentChanges() {
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'childList' || mutation.type === 'characterData') {
-                    while (this.shadowDOM.firstChild) {
-                        this.shadowDOM.removeChild(this.shadowDOM.firstChild);
-                    }
-                    __Ziko__.__Config__.setDefault({ target: this.shadowDOM });
+                    this.wrapper.innerHTML=""
+                    __Ziko__.__Config__.setDefault({ target: this.wrapper });
                     globalThis.eval(this.innerHTML);
                 }
             });
