@@ -7,8 +7,8 @@ import { Random } from "../../../Math/Random/index.js";
 //import { debounce,throttle} from "../../Data/decorators.js";
 
 class ZikoUIInput extends ZikoUIElement {
-  constructor(value = "",datalist) {
-    super();
+  constructor(name , value = "",datalist) {
+    super("input",name);
     this.element = document.createElement("input");
     Object.assign(this.events,{input:null})
     this.setValue(value);
@@ -83,7 +83,7 @@ class ZikoUIInput extends ZikoUIElement {
 }
 class ZikoUIInputSearch extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputSearch");
     this._setType("search");
     this.Length = 0;
   }
@@ -120,7 +120,7 @@ class ZikoUIInputSearch extends ZikoUIInput {
 }
 class ZikoUIInputNumber extends ZikoUIInput {
   constructor(min, max ,step = 1) {
-    super();
+    super("inpuNumber");
     this._setType("number");
     this.setMin(min).setMax(max).setStep(step);
   }
@@ -142,14 +142,14 @@ class ZikoUIInputNumber extends ZikoUIInput {
 }
 class ZikoUIInputSlider extends ZikoUIInputNumber {
   constructor(val = 0, min = 0, max = 10, step = 1) {
-    super();
+    super("inputSlider");
     this._setType("range");
     this.setMin(min).setMax(max).setValue(val).setStep(step);
   }
 }
 class ZikoUIInputColor extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputColor");
     this._setType("color");
     this.background(this.value);
     this.onInput(() => this.background(this.value));
@@ -157,37 +157,37 @@ class ZikoUIInputColor extends ZikoUIInput {
 }
 class ZikoUIInputPassword extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputPassword");
     this._setType("password");
   }
 }
 class ZikoUIInputEmail extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputEmail");
     this._setType("email");
   }
 }
 class ZikoUIInputTime extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputTime");
     this._setType("time");
   }
 }
 class ZikoUIInputDate extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputDate");
     this._setType("date");
   }
 }
 class ZikoUIInputDateTime extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputDateTime");
     this._setType("datetime-local");
   }
 }
 class ZikoUIInputCheckbox extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputCheckbox");
     this._setType("checkbox");
     this.cursor("pointer");
   }
@@ -205,7 +205,7 @@ class ZikoUIInputCheckbox extends ZikoUIInput {
 }
 class ZikoUIInputRadio extends ZikoUIInput {
   constructor() {
-    super();
+    super("inputRadio");
     this._setType("radio");
     this.cursor("pointer");
   }
@@ -225,7 +225,7 @@ class ZikoUIInputRadio extends ZikoUIInput {
 
 class ZikoUIInputImage extends ZikoUIElement {
   constructor(text = "File") {
-    super();
+    super("inputImage");
     this._aux_element = btn(text).setTarget(this.Target);
     this.element = document.createElement("input");
     this.element.setAttribute("type", "file");
