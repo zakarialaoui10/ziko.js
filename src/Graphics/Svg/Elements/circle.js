@@ -8,25 +8,25 @@ class ZikoSvgCircle extends ZikoSvgElement{
       );
       this.cx(cx).cy(cy).r(r);
     }
-    cx(cx){
+    setCx(cx){
        this.element.cx.baseVal.value=cx;
        return this;
     }
-    cy(cy){
+    setCy(cy){
        this.element.cy.baseVal.value=cy;
        return this;
     }
-    r(r){
+    setRadius(r){
        this.element.r.baseVal.value=r;
        return this;
     }
-    get R(){
+    get r(){
       return this.element.r.baseVal.value;
     }
-    get Cx(){
+    get cx(){
       return this.element.cx.baseVal.value;
     } 
-    get Cy(){
+    get cy(){
       return this.element.cy.baseVal.value;
     }  
   } 
