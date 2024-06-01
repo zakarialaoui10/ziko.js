@@ -36,5 +36,5 @@ class ZikoIntersectionObserver{
     }
 }
 
-const WatchIntersection=(UI,callback,config)=>new ZikoIntersectionObserver(UI,callback,config);
-export {WatchIntersection}
+const watchIntersection=(UI,callback,config)=>new ZikoIntersectionObserver(UI,callback,config);
+export {watchIntersection}

@@ -66,7 +66,7 @@ Events:
     - emit: ""
 
 Observer:
-  - WatchSize: ""
+  - watchSize: ""
   - WacthIntersection: ""
   - WatchAttr: ""
   - WatchItems: ""

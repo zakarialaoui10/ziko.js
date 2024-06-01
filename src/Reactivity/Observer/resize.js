@@ -43,5 +43,5 @@ class ZikoResizeObserver{
     }
 }
 
-const WatchSize=(UI,callback)=>new ZikoResizeObserver(UI,callback)
-export {WatchSize}
+const watchSize=(UI,callback)=>new ZikoResizeObserver(UI,callback)
+export {watchSize}

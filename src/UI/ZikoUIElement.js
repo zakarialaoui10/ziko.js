@@ -12,8 +12,10 @@ import {
   customEvent,
 } from "../Reactivity/Events"
 import { 
-  WatchIntersection, 
-  WatchSize 
+  watchIntersection, 
+  watchSize,
+  watchAttr,
+  watchChildren
 } from "../Reactivity";
 import { text } from "./Text";
 import { Random } from "../Math/Random";
@@ -482,19 +484,21 @@ class ZikoUIElement {
     this.events.custom.emit(event_name,detail);
     return this;
   }
-  watchAttr(){
-
+  watchAttr(callback){
+    if(!this.observer.attr)this.observer.attr = watchAttr(this,callback);
+    return this;
   }
-  watchChildren(){
-
+  watchChildren(callback){
+    if(!this.observer.children)this.observer.children = watchChildren(this,callback);
+    return this;
   }
   watchSize(callback){
-    if(!this.observer.resize)this.observer.resize = WatchSize(this,callback);
+    if(!this.observer.resize)this.observer.resize = watchSize(this,callback);
     this.observer.resize.start();
     return this;
   }
   watchIntersection(callback,config){
-    if(!this.observer.intersection)this.observer.intersection = WatchIntersection(this,callback,config);
+    if(!this.observer.intersection)this.observer.intersection = watchIntersection(this,callback,config);
     this.observer.intersection.start();
     return this;
   }

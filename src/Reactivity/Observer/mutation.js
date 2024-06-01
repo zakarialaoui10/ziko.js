@@ -13,12 +13,10 @@ class ZikoMutationObserver {
       this.observeCallback = (mutationsList, observer) => {
         if (this.streamingEnabled) {
           for (const mutation of mutationsList) {
-            if (mutation.type === 'attributes') {
-              this.mutationHistory.attributes.push(mutation.target.getAttribute(mutation.attributeName));
-            } else if (mutation.type === 'childList') {
-              this.mutationHistory.childList.push(mutation);
-            } else if (mutation.type === 'subtree') {
-              this.mutationHistory.subtree.push(mutation);
+            switch(mutation.type){
+              case 'attributes':this.mutationHistory.attributes.push(mutation.target.getAttribute(mutation.attributeName));break;
+              case 'childList':this.mutationHistory.childList.push(mutation);break;
+              case 'subtree':this.mutationHistory.subtree.push(mutation);break;
             }
           }
         }
@@ -87,4 +85,17 @@ const Watch=(UIElement,options={},callback=null)=>{
     if(callback)Observer.observe(callback);
     return Observer
 }
-export { Watch }; 
+const watchAttr = (UIElement, callback = null) => {
+  const options = { attributes: true, childList: false, subtree: false };
+  return Watch(UIElement, options, ([e])=>callback(e));
+};
+
+const watchChildren = (UIElement, callback = null) => {
+  const options = { attributes: false, childList: true, subtree: false };
+  return Watch(UIElement, options, ([e])=>callback(e));
+};
+export { 
+  Watch,
+  watchAttr,
+  watchChildren
+ }; 
