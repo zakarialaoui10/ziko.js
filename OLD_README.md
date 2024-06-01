@@ -4,6 +4,81 @@
 
 <br>
 
+# Architecture
+
+```mermaid
+mindmap
+  root((Ziko))
+   Core
+    Math
+     Utils
+     Functions
+     Complex
+     Matrix 
+     Random
+     Calculus
+     Signal
+     Discret
+     Statistics
+    UI
+     Elements
+      Text
+       text
+       p 
+       h1...h6
+      List 
+       ol
+       ul
+      Table 
+      Inputs
+      Semantic
+       Main
+       Header
+       Footer
+       Section
+       Article
+       Nav
+       Aside
+      Custom Elements
+       Flex
+       Grid
+       Accordion
+       Carousel
+       Tabs
+       CodeCell
+       CodeNote
+    Time
+     Animation
+      Ease functions
+     Loop
+    Data
+     Api
+     Converter
+     Decorator
+     Parser
+    Reactivity
+     Events
+     Observer
+     Use
+    Graphics
+     Svg
+     Canvas
+    App
+     Router
+     Seo
+     Config
+     Themes
+   Addons
+    Zikogl
+    Ziko-lottie
+   Wrapper
+    React
+    Svelte
+    Vue
+    Lit
+    Solid
+    Preact
+```
 # Install 
 ```bash
 npm install ziko
