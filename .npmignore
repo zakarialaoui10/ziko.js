@@ -5,3 +5,4 @@ test/
 .eslintrc.cjs 
 rollup.config.js 
 .vscode/
+__html/

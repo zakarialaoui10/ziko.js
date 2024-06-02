@@ -241,15 +241,18 @@ class ZikoUIElement {
       const [names,values]=[Object.keys(name),Object.values(name)];
       for(let i=0;i<names.length;i++){
         if(values[i] instanceof Array)value[i] = values[i].join(" ");
-        this.element.setAttribute(names[i], values[i]);
-        Object.assign(this.cache.attributes, Object.fromEntries([[names[i], values[i]]]));
+        if(this?.attr[name[i]]!==value[i]){
+          this.element.setAttribute(names[i], values[i]);
+          Object.assign(this.cache.attributes, Object.fromEntries([[names[i], values[i]]]));
+        }
       }
     }
     else{
       if(value instanceof Array)value = value.join(" ");
-      this.element.setAttribute(name, value);
-      Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
-
+      if(this?.attr[name]!==value){
+        this.element.setAttribute(name, value);
+        Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
+      }
     }
     return this;
   }
@@ -280,7 +283,7 @@ class ZikoUIElement {
         return this;*/
   }
   setId(id) {
-    this.element.setAttribute("id", id);
+    this.setAttr("id", id);
     return this;
   }
   get id() {
