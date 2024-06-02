@@ -1,4 +1,4 @@
-import ZikoSvgElement from "./ZikoSvgElement.js";
+import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgPolygon extends ZikoSvgElement{
     constructor(X=[],Y=[]){
       super()
@@ -8,7 +8,8 @@ class ZikoSvgPolygon extends ZikoSvgElement{
         "http://www.w3.org/2000/svg",
         "polygon",
       );
-      this.element.setAttribute("points","")
+      this.element.setAttribute("points","");
+      this.addPoints(X,Y)
     }
     addPoint(x,y){
       let p=this.element.parentElement.createSVGPoint();
@@ -28,4 +29,4 @@ class ZikoSvgPolygon extends ZikoSvgElement{
     }
   } 
 const svgPolygon=(X,Y)=>new ZikoSvgPolygon(X,Y);
-export default svgPolygon
+export{ svgPolygon }

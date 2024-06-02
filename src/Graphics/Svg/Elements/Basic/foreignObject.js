@@ -1,4 +1,4 @@
-import ZikoSvgElement from "./ZikoSvgElement";
+import ZikoSvgElement from "../ZikoSvgElement";
 class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super("foreignObject")
@@ -43,4 +43,4 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
       }
   } 
 const svgObject=(x,y,r)=>new ZikoSvgForeignObject(x,y,r);
-export default svgObject
+export { svgObject }

@@ -1,12 +1,13 @@
-import ZikoSvgElement from "./ZikoSvgElement.js";
-class ZikoSvgGroupe extends ZikoSvgElement{
-    constructor(...svgElement){
+import ZikoSvgElement from "../ZikoSvgElement.js";
+class ZikoSvgLink extends ZikoSvgElement{
+    constructor(href,...svgElement){
       super();
       this.items=[];
       this.element=document.createElementNS(
         "http://www.w3.org/2000/svg",
-        "g",
+        "a",
       );
+      this.element.setAttribute("href",href)
       this.add(...svgElement)
     }
     add(...svgElement){
@@ -25,5 +26,5 @@ class ZikoSvgGroupe extends ZikoSvgElement{
       return this;     
     }
 }
-const svgGroupe=(...svgElement)=>new ZikoSvgGroupe(...svgElement)
-export default svgGroupe
+const svgLink=(href,...svgElement)=>new ZikoSvgLink(href,...svgElement)
+export{ svgLink }

@@ -1,4 +1,4 @@
-import ZikoSvgElement from "./ZikoSvgElement.js";
+import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgCircle extends ZikoSvgElement{
     constructor(cx,cy,r){
       super("circle")
@@ -31,4 +31,4 @@ class ZikoSvgCircle extends ZikoSvgElement{
     }  
   } 
 const svgCircle=(x,y,r)=>new ZikoSvgCircle(x,y,r);
-export default svgCircle
+export { svgCircle }

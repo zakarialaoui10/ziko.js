@@ -1,4 +1,4 @@
-import ZikoSvgElement from "./ZikoSvgElement.js";
+import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgPath extends ZikoSvgElement{
     constructor(){
     super()
@@ -55,5 +55,5 @@ class ZikoSvgPath extends ZikoSvgElement{
     }
 }
 
-const svgPath=(x,y,r)=>new ZikoSvgPath(x,y,r);
-export default svgPath
+const svgPath=()=>new ZikoSvgPath();
+export{ svgPath }

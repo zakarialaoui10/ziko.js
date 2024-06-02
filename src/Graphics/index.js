@@ -9,8 +9,11 @@ import{
     svgRect,
     svgText,
     svgGroupe,
-    svgLink
-} from "./Svg";
+    svgLink,
+    svgGrid,
+    svgObject,
+    svgPath
+} from "./Svg/index.js";
 import {
     Canvas,
     canvasArc,
@@ -31,6 +34,9 @@ const Graphics={
     svgText,
     svgGroupe,
     svgLink,
+    svgGrid,
+    svgObject,
+    svgPath,
     Canvas, 
     canvasArc,
     canvasCircle,

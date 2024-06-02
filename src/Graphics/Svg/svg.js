@@ -1,16 +1,16 @@
 import ZikoUIElement from "../../UI/ZikoUIElement.js";
-import svgRect from "./Elements/rect.js";
-import svgCircle from "./Elements/circle.js";
-import svgEllipse from "./Elements/ellipse.js";
-import svgLine from "./Elements/line.js";
-//import svgPath from "./Elements/path.js";
-import svgPolygon from "./Elements/polygon.js";
-import svgImage from "./Elements/image.js";
-import svgText from "./Elements/text.js";
-import svgGroupe from "./Elements/groupe.js";
-import svgLink from "./Elements/link.js";
-//import svgObject from "./Elements/foreignObject.js";
-//import svgGrid from "./Elements/grid.js";
+// import svgRect from "./Elements/rect.js";
+// import svgCircle from "./Elements/circle.js";
+// import svgEllipse from "./Elements/ellipse.js";
+// import svgLine from "./Elements/line.js";
+// //import svgPath from "./Elements/path.js";
+// import svgPolygon from "./Elements/polygon.js";
+// import svgImage from "./Elements/image.js";
+// import svgText from "./Elements/text.js";
+// import svgGroupe from "./Elements/groupe.js";
+// import svgLink from "./Elements/link.js";
+// //import svgObject from "./Elements/foreignObject.js";
+// //import svgGrid from "./Elements/grid.js";
 
   class ZikoUISvg extends ZikoUIElement {
     constructor(w=360,h=300) {
@@ -103,13 +103,13 @@ import svgLink from "./Elements/link.js";
   export{
     Svg,
     ZikoUISvg,
-    svgLink,
-    svgCircle,
-    svgEllipse,
-    svgImage,
-    svgLine,
-    svgPolygon,
-    svgRect,
-    svgText,
-    svgGroupe
+    // svgLink,
+    // svgCircle,
+    // svgEllipse,
+    // svgImage,
+    // svgLine,
+    // svgPolygon,
+    // svgRect,
+    // svgText,
+    // svgGroupe
 }
