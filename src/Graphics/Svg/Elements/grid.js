@@ -1,5 +1,5 @@
 import svgPath from "./path.js"
-var svgGrid=(w,h,r=10,c=10)=>{
+const svgGrid=(w,h,r=10,c=10)=>{
     let path=svgPath().fill("none").stroke("coral").strokeWidth(0.6)
     console.log({x:w/r,y:h/c})
     for(let i=0;i<w;i++) path.moveTo(0,i*w/r).hr(w)

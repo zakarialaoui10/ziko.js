@@ -8,7 +8,8 @@ import{
     svgPolygon,
     svgRect,
     svgText,
-    svgGroupe
+    svgGroupe,
+    svgLink
 } from "./Svg";
 import {
     Canvas,
@@ -29,6 +30,7 @@ const Graphics={
     svgRect,
     svgText,
     svgGroupe,
+    svgLink,
     Canvas, 
     canvasArc,
     canvasCircle,

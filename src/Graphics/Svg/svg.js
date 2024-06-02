@@ -8,29 +8,26 @@ import svgPolygon from "./Elements/polygon.js";
 import svgImage from "./Elements/image.js";
 import svgText from "./Elements/text.js";
 import svgGroupe from "./Elements/groupe.js";
+import svgLink from "./Elements/link.js";
 //import svgObject from "./Elements/foreignObject.js";
 //import svgGrid from "./Elements/grid.js";
 
   class ZikoUISvg extends ZikoUIElement {
     constructor(w=360,h=300) {
       super("svg","svg");
-      // this.element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
       //this.cache={};
       this.setAttr("width",w);
       this.setAttr("height",h);
       this.style({border:"1px black solid"});
       //this.view(-w/2,-h/2,w/2,h/2)
-      //this.view(-10,-10,10,10);
-      //this.render();
+      this.view(-10,-10,10,10);
     }
     view(x1,y1,x2,y2){
       let width=Math.abs(x2-x1);
       let height=Math.abs(y2-y1);
-      //this.element.style.transform="scale("+Math.sign(x2-x1)+","+(-Math.sign(y2-y1))+")";
       this.setAttr("viewBox",[x1,y1,width,height].join(" "));
-      //console.log({width:width,height:height})
+      this.st.scaleY(-1);
       return this;
-  
     }
     add(...svgElement){
       for(let i=0;i<svgElement.length;i++){
@@ -106,6 +103,7 @@ import svgGroupe from "./Elements/groupe.js";
   export{
     Svg,
     ZikoUISvg,
+    svgLink,
     svgCircle,
     svgEllipse,
     svgImage,

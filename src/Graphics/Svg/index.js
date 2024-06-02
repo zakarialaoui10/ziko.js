@@ -1,1 +1,1 @@
-export* from "./svg.js"
+export * from "./svg.js"

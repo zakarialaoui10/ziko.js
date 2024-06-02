@@ -1,20 +1,20 @@
 import ZikoSvgElement from "./ZikoSvgElement";
 class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
-      super()
+      super("foreignObject")
       this.items=[];
       this.element=document.createElementNS(
         "http://www.w3.org/2000/svg",
         "foreignObject",
       );
-      this.x(x).y(y).width(w).height(h);
+      this.posX(x).posY(y).width(w).height(h);
       this.add(...ZikoUIElement)
     } 
-    x(x){
+    posX(x){
         this.element.setAttribute("x",x)
         return this;
     }
-    y(y){
+    posY(y){
         this.element.setAttribute("y",y)
         return this;
     }

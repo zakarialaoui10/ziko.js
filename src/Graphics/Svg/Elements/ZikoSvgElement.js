@@ -1,6 +1,24 @@
 class ZikoSvgElement {
-  constructor() {
-    this.cache = {};
+  constructor(type) {
+    this.cache = {
+      type
+    };
+  }
+  pos(x,y){
+    return this.posX(x).posY(y);
+  }
+  posX(x){
+    if(["cirlce","ellipse"].includes(this.cache.type))this.element.cx.baseVal.value=x;
+    else this.element.cx.baseVal.value=x;
+    return this;
+  }
+  posY(y){
+    if(["cirlce","ellipse"].includes(this.cache.type))this.element.cy.baseVal.value=y;
+    else this.element.cy.baseVal.value=y;
+    return this;
+  }
+  translate(x,y){
+    return this;
   }
   color({ stroke, fill }) {
     this.element.setAttribute("stroke", stroke);

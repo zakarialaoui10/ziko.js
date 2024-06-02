@@ -1,26 +1,26 @@
 import ZikoSvgElement from "./ZikoSvgElement.js";
 class ZikoSvgEllipse extends ZikoSvgElement{
     constructor(cx,cy,rx,ry){
-      super()
+      super("ellipse")
       this.element=document.createElementNS(
         "http://www.w3.org/2000/svg",
         "ellipse",
       );
-      this.cx(cx).cy(cy).rx(rx).ry(ry);
+      this.pos(cx,cy).setRx(rx).setRy(ry);
     }
-    cx(cx){
-       this.element.cx.baseVal.value=cx;
-       return this;
-    }
-    cy(cy){
-       this.element.cy.baseVal.value=cy;
-       return this;
-    }
-    rx(rx){
+   //  setCx(cx){
+   //     this.element.cx.baseVal.value=cx;
+   //     return this;
+   //  }
+   //  setCy(cy){
+   //     this.element.cy.baseVal.value=cy;
+   //     return this;
+   //  }
+    setRx(rx){
        this.element.rx.baseVal.value=rx;
        return this;
     } 
-    ry(ry){
+    setRy(ry){
        this.element.ry.baseVal.value=ry;
        return this;
     } 

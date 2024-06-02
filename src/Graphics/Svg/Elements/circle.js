@@ -1,22 +1,22 @@
 import ZikoSvgElement from "./ZikoSvgElement.js";
 class ZikoSvgCircle extends ZikoSvgElement{
     constructor(cx,cy,r){
-      super()
+      super("circle")
       this.element=document.createElementNS(
         "http://www.w3.org/2000/svg",
         "circle",
       );
-      this.cx(cx).cy(cy).r(r);
+      this.pos(cx,cy).setR(r);
     }
-    setCx(cx){
-       this.element.cx.baseVal.value=cx;
-       return this;
-    }
-    setCy(cy){
-       this.element.cy.baseVal.value=cy;
-       return this;
-    }
-    setRadius(r){
+    // setCx(cx){
+    //    this.element.cx.baseVal.value=cx;
+    //    return this;
+    // }
+    // setCy(cy){
+    //    this.element.cy.baseVal.value=cy;
+    //    return this;
+    // }
+    setR(r){
        this.element.r.baseVal.value=r;
        return this;
     }
