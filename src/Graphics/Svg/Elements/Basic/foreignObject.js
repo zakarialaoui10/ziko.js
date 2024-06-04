@@ -1,4 +1,5 @@
 import ZikoSvgElement from "../ZikoSvgElement";
+import { Flex } from "../../../../UI/CustomElement/Flex.js"
 class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super("foreignObject")
@@ -7,17 +8,10 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
         "http://www.w3.org/2000/svg",
         "foreignObject",
       );
+      this.container=Flex().setTarget(this.element).vertical(0,0).size("auto","auto");
+      this.container.st.scaleY(-1);
       this.posX(x).posY(y).width(w).height(h);
-      this.add(...ZikoUIElement)
     } 
-    posX(x){
-        this.element.setAttribute("x",x)
-        return this;
-    }
-    posY(y){
-        this.element.setAttribute("y",y)
-        return this;
-    }
     width(w){
         this.element.setAttribute("width",w)
         return this;
@@ -27,19 +21,12 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
         return this;
     }
     add(...ZikoUIElement){
-        for(let i=0;i<ZikoUIElement.length;i++){
-          this.element.appendChild(ZikoUIElement[i].element);
-          this.items.push(ZikoUIElement[i])
-        }
-        if(ZikoUIElement.length===1)return ZikoUIElement[0]
-        return ZikoUIElement;
+      this.container.append(...ZikoUIElement);
+      return this;
       }
     remove(...ZikoUIElement){
-        for(let i=0;i<ZikoUIElement.length;i++){
-          this.element.removeChild(ZikoUIElement[i].element);
-          this.items=this.items.filter(n=>!ZikoUIElement)
-        }
-        return this;     
+      this.container.append(...ZikoUIElement);
+      return this;   
       }
   } 
 const svgObject=(x,y,r)=>new ZikoSvgForeignObject(x,y,r);

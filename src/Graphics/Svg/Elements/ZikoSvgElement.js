@@ -9,12 +9,12 @@ class ZikoSvgElement {
   }
   posX(x){
     if(["cirlce","ellipse"].includes(this.cache.type))this.element.cx.baseVal.value=x;
-    else this.element.cx.baseVal.value=x;
+    else this.element.x.baseVal.value=x;
     return this;
   }
   posY(y){
     if(["cirlce","ellipse"].includes(this.cache.type))this.element.cy.baseVal.value=y;
-    else this.element.cy.baseVal.value=y;
+    else this.element.y.baseVal.value=y;
     return this;
   }
   translate(x,y){

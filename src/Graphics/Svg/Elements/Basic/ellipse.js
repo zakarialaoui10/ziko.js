@@ -8,14 +8,6 @@ class ZikoSvgEllipse extends ZikoSvgElement{
       );
       this.pos(cx,cy).setRx(rx).setRy(ry);
     }
-   //  setCx(cx){
-   //     this.element.cx.baseVal.value=cx;
-   //     return this;
-   //  }
-   //  setCy(cy){
-   //     this.element.cy.baseVal.value=cy;
-   //     return this;
-   //  }
     setRx(rx){
        this.element.rx.baseVal.value=rx;
        return this;
