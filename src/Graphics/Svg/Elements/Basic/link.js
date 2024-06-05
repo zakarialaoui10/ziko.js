@@ -21,7 +21,7 @@ class ZikoSvgLink extends ZikoSvgElement{
     remove(...svgElement){
       for(let i=0;i<svgElement.length;i++){
         this.element.removeChild(svgElement[i].element);
-        this.items=this.items.filter(n=>!svgElement)
+        this.items=this.items.filter(n=>n!=svgElement)
       }
       return this;     
     }

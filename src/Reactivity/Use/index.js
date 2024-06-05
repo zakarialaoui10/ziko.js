@@ -2,7 +2,8 @@ import {
     useStyle,
     useTheme,
     useTitle,
-    useFavIcon
+    useFavIcon,
+    useMediaQuery
  } from "./UI";
 import { 
     useEventEmitter,
@@ -28,6 +29,7 @@ import {
 const Use={
     useStyle,
     useTheme,
+    useMediaQuery,
     useBattery,
     useGeolocation,
     useEventEmitter,
@@ -66,6 +68,7 @@ export default Use;
 export{
     useStyle,
     useTheme,
+    useMediaQuery,
     useTitle,
     useFavIcon,
     useBattery,
