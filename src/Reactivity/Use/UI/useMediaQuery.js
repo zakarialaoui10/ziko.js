@@ -1,29 +1,48 @@
-class ZikoUseMediaQuery{
-    constructor(){
-        this.mediaQueryRules=[
+/*
+ [
             {
                 query: '(min-width: 600px)',
-                callback:()=>console.log(1)
+                callback: () => console.log(1)
             },
             {
-                query: '(max-width: 599px)',
-                callback:()=>console.log(2)
+                query: '(max-width: 300px)',
+                callback: () => console.log(2)
             }
-        ];
+        ]
+*/
+class ZikoUseMediaQuery {
+    constructor(mediaQueryRules=[],fallback=()=>{}) {
+        this.mediaQueryRules = mediaQueryRules;
+        this.fallback = fallback;
+        this.lastCalledCallback = null;
         this.init();
     }
-    init(){
-        this.mediaQueryRules.forEach(({ query, callback})=>{
+
+    init() {
+        this.mediaQueryRules.forEach(({ query, callback }) => {
             const mediaQueryList = globalThis.matchMedia(query);
-            if (mediaQueryList.matches) callback();
-            mediaQueryList.addListener(() => {
-                if (mediaQueryList.matches) callback();
-            }); 
+            const checkMatches = () => {
+                const anyMatch = this.mediaQueryRules.some(({ query }) => globalThis.matchMedia(query).matches);
+                if (mediaQueryList.matches) {
+                    callback();
+                    this.lastCalledCallback = callback;
+                } else if (!anyMatch && this.lastCalledCallback !== this.fallback) {
+                    this.fallback();
+                    this.lastCalledCallback = this.fallback;
+                }
+            };
+
+            if (mediaQueryList.matches) {
+                callback();
+                this.lastCalledCallback = callback;
+            }
+
+            mediaQueryList.addListener(checkMatches);
         });
     }
 }
 
-const useMediaQuery=()=>new ZikoUseMediaQuery()
-export{
+const useMediaQuery = (mediaQueryRules,fallback) => new ZikoUseMediaQuery(mediaQueryRules,fallback);
+export {
     useMediaQuery
-}
+};
