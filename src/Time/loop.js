@@ -21,7 +21,7 @@ class ZikoTimeLoop {
     if(this.cache.started){
       const t=this.cache.t;
       t[0]?this.startAfter(t[0]):this.start();
-      if(t[1])this.stopAfter(t[1]);
+      if(t[1]&&t[1]!==Infinity)this.stopAfter(t[1]);
     }
     return this;
   }
