@@ -20,7 +20,10 @@ import {
  } from "./Converter";
 import parseXML from "./Parser/xml";
 import { preload } from "./Api";
+import {str,Str} from "./String/index.js"
 const Data={
+    str,
+    Str,
     parseXML,
     preload,
     markdown2html,
@@ -62,5 +65,6 @@ const Data={
         return this;
     }
 }
-export * from "./Converter" 
+export * from "./Converter";
+export * from "./String"
 export default Data

@@ -31,12 +31,7 @@ class ZikoUseMediaQuery {
                     this.lastCalledCallback = this.fallback;
                 }
             };
-
-            if (mediaQueryList.matches) {
-                callback();
-                this.lastCalledCallback = callback;
-            }
-
+            checkMatches()
             mediaQueryList.addListener(checkMatches);
         });
     }
