@@ -80,22 +80,22 @@ class ZikoMutationObserver {
     }
   }
 
-const Watch=(UIElement,options={},callback=null)=>{
+const watch=(UIElement,options={},callback=null)=>{
     const Observer= new ZikoMutationObserver(UIElement,options);
     if(callback)Observer.observe(callback);
     return Observer
 }
 const watchAttr = (UIElement, callback = null) => {
   const options = { attributes: true, childList: false, subtree: false };
-  return Watch(UIElement, options, ([e])=>callback(e));
+  return watch(UIElement, options, ([e])=>callback(e));
 };
 
 const watchChildren = (UIElement, callback = null) => {
   const options = { attributes: false, childList: true, subtree: false };
-  return Watch(UIElement, options, ([e])=>callback(e));
+  return watch(UIElement, options, ([e])=>callback(e));
 };
 export { 
-  Watch,
+  watch,
   watchAttr,
   watchChildren
  }; 

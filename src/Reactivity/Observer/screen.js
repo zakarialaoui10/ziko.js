@@ -1,43 +1,65 @@
 import { loop } from "../../Time";
-import { complex } from "../../Math";
-// let previousLeft = window.screenLeft;
-// let previousTop = window.screenTop;
-
-// function checkScreenPosition() {
-//   const currentLeft = window.screenLeft;
-//   const currentTop = window.screenTop;
-  
-//   if (previousLeft !== currentLeft || previousTop !== currentTop) {
-//     console.log('Screen position changed! (custom check)');
-//     previousLeft = currentLeft;
-//     previousTop = currentTop;
-//   }
-  
-//   // Schedule the next check (e.g., every 100 milliseconds)
-//   setTimeout(checkScreenPosition, 100);
-// }
-
-// checkScreenPosition();
+import { 
+    map,
+    complex,
+ } from "../../Math";
 class ZikoScreenObserver {
-    constructor(callback=e=>console.log({left:e.left,top:e.top})) {
-      this.previousLeft = globalThis?.screenLeft;
-      this.previousTop = globalThis?.screenTop;
+    constructor(callback=e=>console.log({x:e.x,y:e.y})) {
+      this.previousX = globalThis?.screenX;
+      this.previousY = globalThis?.screenY;
+      this.view=[-1,-1,1,1];
       this.start(callback);
     }
-    get left(){
-        return globalThis?.screenLeft;
+    get xMin(){
+        return this.view[0];
     }
-    get top(){
-        return globalThis?.screenTop;
+    get yMin(){
+        return this.view[1];
+    }
+    get xMax(){
+        return this.view[2];
+    }
+    get yMax(){
+        return this.view[3];
+    }
+    get x(){
+        return globalThis?.screenX;
+    }
+    get y(){
+        return globalThis?.screenY;
+    }
+    get scx(){
+        return screen.availWidth/2;
+    }
+    get scy(){
+        return screen.availHeight/2;
+    }
+    get wcx(){
+        return screenX+globalThis?.innerWidth/2;
+    }
+    get wcx_v(){
+        return map(this.wcx,0,screen.availWidth,this.view[0],this.view[2]);
+    }
+    get wcy(){
+        return screenY+globalThis?.innerHeight/2;
+    }
+    get wcy_v(){
+        return -map(this.wcy,0,screen.availHeight,this.view[1],this.view[3]);
+    }
+    get dx(){
+        return map(this.x,0,screen.availWidth,this.xMin,this.xMax); 
+    }
+    get dy(){
+        return map(this.y,0,screen.availHeight,this.yMin,this.yMax); 
     }
     start(callback){
         this.loop = loop(()=>{
-            let currentLeft = globalThis?.screenLeft;
-            let currentTop = globalThis?.screenTop;
-            if (this.previousLeft !== currentLeft || this.previousTop !== currentTop) {
+            let currentX = globalThis?.screenX;
+            let currentY = globalThis?.screenY;
+            if (this.previousX !== currentX || this.previousY !== currentY) {
                 callback(this)
-                this.previousLeft = currentLeft;
-                this.previousTop = currentTop;
+                this.previousX = currentX;
+                this.previousY = currentY;
             }
         },
         {fps:10,t:[0,Infinity],start:true});
@@ -49,3 +71,15 @@ globalThis.watchScreen=watchScreen;
 export{
     watchScreen
 }
+
+/*
+a=ul("x","y","dx","dy","wcx","wxy")
+watchScreen(e=>{
+ a[0].setValue("x : "+e.x) 
+ a[1].setValue("y : "+e.y) 
+ a[2].setValue("dx : "+e.dx) 
+ a[3].setValue("dy : "+e.dy) 
+ a[4].setValue("wCx : "+e.wcx) 
+ a[5].setValue("wCy : "+e.wcy) 
+})
+ */
