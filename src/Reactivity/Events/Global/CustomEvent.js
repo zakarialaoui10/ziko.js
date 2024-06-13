@@ -49,5 +49,5 @@ class ZikoCustomEvent extends ZikoEvent{
         return this;
     }
 }
-const customEvent=Target=>new ZikoCustomEvent(Target);
-export default customEvent;
+const useCustomEvt=Target=>new ZikoCustomEvent(Target);
+export default useCustomEvt;

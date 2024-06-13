@@ -110,12 +110,12 @@ In general, ZikoUIElement supports:
    - `📦 .emit(event,detail)` : Emit a custom event from the UI element with optional detail.
    - `📦 .on(event,...callbacks)` : Register event handlers for custom events.
 
-  #### Click
+  #### useClickEvt
    - `🧩 .evt.click`
    - `📦 .onClick(...callbacks)`
    - `📦 .onDbClick(...callbacks)`
 
-  #### Pointer Events
+  #### usePointerEvt Events
    - `🧩 .evt.ptr`
    - `📦 .onPtrDown(...callbacks)`
    - `📦 .onPtrMove(...callbacks)`
@@ -124,7 +124,7 @@ In general, ZikoUIElement supports:
    - `📦 .onPtrLeave(...callbacks)`
    - `📦 .onPtrOut(...callbacks)`
 
-  #### Mouse Events
+  #### useMouseEvt Events
    - `🧩 .evt.mouse`
    - `📦 .onMouseDown(...callbacks)`
    - `📦 .onMouseMove(...callbacks)`
@@ -141,19 +141,19 @@ In general, ZikoUIElement supports:
    - `📦 .onKeyUp(...callbacks)`
    - `📦 .onKeysDown(...callbacks)`
 
-  #### Focus Events
+  #### useFocusEvt Events
    - `🧩 .evt.focus`
    - `📦 .onFocus(...callbacks)`
    - `📦 .onBlur(...callbacks)`
 
-  #### Drag
+  #### useDragEvt
    - `🧩 .evt.drag`
    - `📦 .onDragStart(...callbacks)` 
    - `📦 .onDrag(...callbacks)`
    - `📦 .onDragEnd(...callbacks)`
    - `📦 .onDrop(...callbacks)`
 
-  #### Clipboard Events 
+  #### useClipboardEvt Events 
    - `🧩 .evt.clipboard`
    - `📦 .onSelect(...callbacks)`:
    - `📦 .onCopy(...callbacks)`:

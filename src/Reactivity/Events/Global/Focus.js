@@ -52,5 +52,5 @@ class ZikoEventFocus extends ZikoEvent{
         return this;
      }     
 }
-const Focus=Target=>new ZikoEventFocus(Target);
-export default Focus
+const useFocusEvt=Target=>new ZikoEventFocus(Target);
+export default useFocusEvt

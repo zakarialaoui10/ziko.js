@@ -1,27 +1,27 @@
-import Pointer from "./Global/Pointer.js";
-import Mouse from "./Global/Mouse.js";
-import Wheel from "./Global/Wheel.js";
-import Key from "./Global/Key.js";
-import {Drag,Drop} from "./Global/Drag.js";
-import Click from "./Global/Click.js";
-import Clipboard from "./Global/Clipboard.js";
-import Focus from "./Global/Focus.js";
+import usePointerEvt from "./Global/Pointer.js";
+import useMouseEvt from "./Global/Mouse.js";
+import useWheelEvt from "./Global/Wheel.js";
+import useKeyEvt from "./Global/Key.js";
+import {useDragEvt,useDropEvt} from "./Global/Drag.js";
+import useClickEvt from "./Global/Click.js";
+import useClipboardEvt from "./Global/Clipboard.js";
+import useFocusEvt from "./Global/Focus.js";
 import Input from "./Partiel/Input.js";
 import HashEvent from "./Partiel/Hash.js";
-import customEvent from "./Global/CustomEvent.js";
+import useCustomEvt from "./Global/CustomEvent.js";
 const Events={
-    Pointer,
-    Mouse,
-    Wheel,
-    Key,
-    Drag,
-    Drop,
-    Click,
-    Clipboard,
-    Focus,
+    usePointerEvt,
+    useMouseEvt,
+    useWheelEvt,
+    useKeyEvt,
+    useDragEvt,
+    useDropEvt,
+    useClickEvt,
+    useClipboardEvt,
+    useFocusEvt,
     Input,
     HashEvent,
-    customEvent,
+    useCustomEvt,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
@@ -44,17 +44,17 @@ const Events={
     }
 }
 export {
-    Pointer,
-    Mouse,
-    Wheel,
-    Key,
-    Drag,
-    Drop,
-    Click,
-    Clipboard,
-    Focus,
+    usePointerEvt,
+    useMouseEvt,
+    useWheelEvt,
+    useKeyEvt,
+    useDragEvt,
+    useDropEvt,
+    useClickEvt,
+    useClipboardEvt,
+    useFocusEvt,
     Input,
     HashEvent,
-    customEvent
+    useCustomEvt
 }
 export default Events
