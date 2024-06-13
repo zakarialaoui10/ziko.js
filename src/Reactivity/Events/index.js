@@ -1,27 +1,27 @@
-import usePointerEvt from "./Global/Pointer.js";
-import useMouseEvt from "./Global/Mouse.js";
-import useWheelEvt from "./Global/Wheel.js";
-import useKeyEvt from "./Global/Key.js";
-import {useDragEvt,useDropEvt} from "./Global/Drag.js";
-import useClickEvt from "./Global/Click.js";
-import useClipboardEvt from "./Global/Clipboard.js";
-import useFocusEvt from "./Global/Focus.js";
-import Input from "./Partiel/Input.js";
-import HashEvent from "./Partiel/Hash.js";
-import useCustomEvt from "./Global/CustomEvent.js";
+import usePointerEvent from "./Global/Pointer.js";
+import useMouseEvent from "./Global/Mouse.js";
+import useWheelEvent from "./Global/Wheel.js";
+import useKeyEvent from "./Global/Key.js";
+import {useDragEvent,useDropEvent} from "./Global/Drag.js";
+import useClickEvent from "./Global/Click.js";
+import useClipboardEvent from "./Global/Clipboard.js";
+import useFocusEvent from "./Global/Focus.js";
+import useInputEvent from "./Partiel/Input.js";
+import useHashEvent from "./Partiel/Hash.js";
+import useCustomEvent from "./Global/CustomEvent.js";
 const Events={
-    usePointerEvt,
-    useMouseEvt,
-    useWheelEvt,
-    useKeyEvt,
-    useDragEvt,
-    useDropEvt,
-    useClickEvt,
-    useClipboardEvt,
-    useFocusEvt,
-    Input,
-    HashEvent,
-    useCustomEvt,
+    usePointerEvent,
+    useMouseEvent,
+    useWheelEvent,
+    useKeyEvent,
+    useDragEvent,
+    useDropEvent,
+    useClickEvent,
+    useClipboardEvent,
+    useFocusEvent,
+    useInputEvent,
+    useHashEvent,
+    useCustomEvent,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
@@ -44,17 +44,17 @@ const Events={
     }
 }
 export {
-    usePointerEvt,
-    useMouseEvt,
-    useWheelEvt,
-    useKeyEvt,
-    useDragEvt,
-    useDropEvt,
-    useClickEvt,
-    useClipboardEvt,
-    useFocusEvt,
-    Input,
-    HashEvent,
-    useCustomEvt
+    usePointerEvent,
+    useMouseEvent,
+    useWheelEvent,
+    useKeyEvent,
+    useDragEvent,
+    useDropEvent,
+    useClickEvent,
+    useClipboardEvent,
+    useFocusEvent,
+    useInputEvent,
+    useHashEvent,
+    useCustomEvent
 }
 export default Events

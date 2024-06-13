@@ -55,5 +55,5 @@ class ZikoEventInput extends ZikoEvent{
         return this;
      }     
 }
-const Input=Target=>new ZikoEventInput(Target);
-export default Input
+const useInputEvent=Target=>new ZikoEventInput(Target);
+export default useInputEvent

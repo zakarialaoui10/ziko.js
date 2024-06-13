@@ -1,15 +1,15 @@
 import { ZikoStyle } from "./Style";
 import { 
-  usePointerEvt,
-  useMouseEvt, 
-  useWheelEvt,
-  useKeyEvt, 
-  useDragEvt , 
-  useDropEvt, 
-  useClickEvt , 
-  useClipboardEvt ,
-  useFocusEvt,
-  useCustomEvt,
+  usePointerEvent,
+  useMouseEvent, 
+  useWheelEvent,
+  useKeyEvent, 
+  useDragEvent , 
+  useDropEvent, 
+  useClickEvent , 
+  useClipboardEvent ,
+  useFocusEvent,
+  useCustomEvent,
 } from "../Reactivity/Events"
 import { 
   watchIntersection, 
@@ -333,157 +333,157 @@ class ZikoUIElement {
     return this;
   }
   onPtrMove(...callbacks){
-    if(!this.events.ptr)this.events.ptr = usePointerEvt(this);
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onMove(...callbacks);
     return this;
   }
   onPtrDown(...callbacks){
-    if(!this.events.ptr)this.events.ptr = usePointerEvt(this);
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onDown(...callbacks);
     return this;
   }
   onPtrUp(...callbacks){
-    if(!this.events.ptr)this.events.ptr = usePointerEvt(this);
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onUp(...callbacks);
     return this;
   }
   onPtrEnter(...callbacks){
-    if(!this.events.ptr)this.events.ptr = usePointerEvt(this);
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onEnter(...callbacks);
     return this;
   }
   onPtrLeave(...callbacks){
-    if(!this.events.ptr)this.events.ptr = usePointerEvt(this);
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onLeave(...callbacks);
     return this;
   }
   onPtrOut(...callbacks){
-    if(!this.events.ptr)this.events.ptr = usePointerEvt(this);
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onOut(...callbacks);
     return this;
   }
   onMouseMove(...callbacks){
-    if(!this.events.mouse)this.events.mouse = useMouseEvt(this);
+    if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onMove(...callbacks);
     return this;
   }
   onMouseDown(...callbacks){
-    if(!this.events.mouse)this.events.mouse = useMouseEvt(this);
+    if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onDown(...callbacks);
     return this;
   }
   onMouseUp(...callbacks){
-    if(!this.events.mouse)this.events.mouse = useMouseEvt(this);
+    if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onUp(...callbacks);
     return this;
   }
   onMouseEnter(...callbacks){
-    if(!this.events.mouse)this.events.mouse = useMouseEvt(this);
+    if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onEnter(...callbacks);
     return this;
   }
   onMouseLeave(...callbacks){
-    if(!this.events.mouse)this.events.mouse = useMouseEvt(this);
+    if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onLeave(...callbacks);
     return this;
   }
   onMouseOut(...callbacks){
-    if(!this.events.mouse)this.events.mouse = useMouseEvt(this);
+    if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onOut(...callbacks);
     return this;
   }
   onWheel(...callbacks){
-    if(!this.events.wheel)this.events.wheel = useWheelEvt(this);
+    if(!this.events.wheel)this.events.wheel = useWheelEvent(this);
     this.events.wheel.onWheel(...callbacks);
     return this;
   }
   onKeyDown(...callbacks){
-    if(!this.events.key)this.events.key = useKeyEvt(this);
+    if(!this.events.key)this.events.key = useKeyEvent(this);
     this.events.key.onDown(...callbacks);
     return this;
   }
   onKeyPress(...callbacks){
-    if(!this.events.key)this.events.key = useKeyEvt(this);
+    if(!this.events.key)this.events.key = useKeyEvent(this);
     this.events.key.onPress(...callbacks);
     return this;
   }
   onKeyUp(...callbacks){
-    if(!this.events.key)this.events.key = useKeyEvt(this);
+    if(!this.events.key)this.events.key = useKeyEvent(this);
     this.events.key.onUp(...callbacks);
     return this;
   }
   onKeysDown({keys=[],callback}={}){
-    if(!this.events.key)this.events.key = useKeyEvt(this);
+    if(!this.events.key)this.events.key = useKeyEvent(this);
     this.events.key.handleSuccessifKeys({keys,callback});
     return this;
   }
   onDragStart(...callbacks){
-    if(!this.events.drag)this.events.drag = useDragEvt(this);
+    if(!this.events.drag)this.events.drag = useDragEvent(this);
     this.events.drag.onStart(...callbacks);
     return this;
   }
   onDrag(...callbacks){
-    if(!this.events.drag)this.events.drag = useDragEvt(this);
+    if(!this.events.drag)this.events.drag = useDragEvent(this);
     this.events.drag.onDrag(...callbacks);
     return this;
   }
   onDragEnd(...callbacks){
-    if(!this.events.drag)this.events.drag = useDragEvt(this);
+    if(!this.events.drag)this.events.drag = useDragEvent(this);
     this.events.drag.onEnd(...callbacks);
     return this;
   }
   onDrop(...callbacks){
-    if(!this.events.drop)this.events.drop = useDropEvt(this);
+    if(!this.events.drop)this.events.drop = useDropEvent(this);
     this.events.drop.onDrop(...callbacks);
     return this;
   }
   onClick(...callbacks){
-    if(!this.events.click)this.events.click = useClickEvt(this);
+    if(!this.events.click)this.events.click = useClickEvent(this);
     this.events.click.onClick(...callbacks);
     return this;
   }
   onDbClick(...callbacks){
-    if(!this.events.click)this.events.click = useClickEvt(this);
+    if(!this.events.click)this.events.click = useClickEvent(this);
     this.events.click.onDbClick(...callbacks);
     return this;
   }
   onCopy(...callbacks){
-    if(!this.events.clipboard)this.events.clipboard = useClipboardEvt(this);
+    if(!this.events.clipboard)this.events.clipboard = useClipboardEvent(this);
     this.events.clipboard.onCopy(...callbacks);
     return this;
   }
   onCut(...callbacks){
-    if(!this.events.clipboard)this.events.clipboard = useClipboardEvt(this);
+    if(!this.events.clipboard)this.events.clipboard = useClipboardEvent(this);
     this.events.clipboard.onCut(...callbacks);
     return this;
   }
   onPaste(...callbacks){
-    if(!this.events.clipboard)this.events.clipboard = useClipboardEvt(this);
+    if(!this.events.clipboard)this.events.clipboard = useClipboardEvent(this);
     this.events.clipboard.onPaste(...callbacks);
     return this;
   }
   onSelect(...callbacks){
-    if(!this.events.clipboard)this.events.clipboard = useClipboardEvt(this);
+    if(!this.events.clipboard)this.events.clipboard = useClipboardEvent(this);
     this.events.clipboard.onSelect(...callbacks);
     return this;
   }
   onFocus(...callbacks){
-    if(!this.events.focus)this.events.focus = useFocusEvt(this);
+    if(!this.events.focus)this.events.focus = useFocusEvent(this);
     this.events.focus.onFocus(...callbacks);
     return this;
   }
   onBlur(...callbacks){
-    if(!this.events.focus)this.events.focus = useFocusEvt(this);
+    if(!this.events.focus)this.events.focus = useFocusEvent(this);
     this.events.focus.onFocus(...callbacks);
     return this;
   }
   on(event_name,...callbacks){
-    if(!this.events.custom)this.events.custom = useCustomEvt(this);
+    if(!this.events.custom)this.events.custom = useCustomEvent(this);
     this.events.custom.on(event_name,...callbacks);
     return this;
   }
   emit(event_name,detail={}){
-    if(!this.events.custom)this.events.custom = useCustomEvt(this);
+    if(!this.events.custom)this.events.custom = useCustomEvent(this);
     this.events.custom.emit(event_name,detail);
     return this;
   }

@@ -1,5 +1,5 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
-import { Input } from "../../../Reactivity/Events/index.js";
+import { useInputEvent } from "../../../Reactivity/Events/index.js";
 import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
 import { btn } from "./btn.js";
 import { Random } from "../../../Math/Random/index.js";
@@ -15,12 +15,12 @@ class ZikoUIInput extends ZikoUIElement {
     if(datalist)this.linkDatalist(datalist)
   }
   onInput(...callbacks){
-    if(!this.events.input)this.events.input = Input(this);
+    if(!this.events.input)this.events.input = useInputEvent(this);
     this.events.input.onInput(...callbacks);
     return this;
   }
   onChange(...callbacks){
-    if(!this.events.input)this.events.input = Input(this);
+    if(!this.events.input)this.events.input = useInputEvent(this);
     this.events.input.onChange(...callbacks);
     return this;
   }

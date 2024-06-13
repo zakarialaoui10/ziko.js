@@ -52,5 +52,5 @@ class ZikoEventClick extends ZikoEvent{
         return this;
      }     
 }
-const useClickEvt=Target=>new ZikoEventClick(Target);
-export default useClickEvt
+const useClickEventnt=Target=>new ZikoEventClick(Target);
+export default useClickEventnt

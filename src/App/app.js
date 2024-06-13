@@ -1,6 +1,6 @@
 import { ZikoUIFlex } from "../UI/CustomElement/Flex.js";
 import { Seo } from "./Seo/index.js";
-import { HashEvent } from "../Reactivity/index.js";
+import { useHashEvent } from "../Reactivity/index.js";
 class ZikoUIApp extends ZikoUIFlex{
     constructor(){
         super("main");
@@ -37,7 +37,7 @@ class ZikoUIApp extends ZikoUIFlex{
 
     }
     onHashChange(...callbacks){
-        if(!this.events.hash)this.events.hash = HashEvent(this);
+        if(!this.events.hash)this.events.hash = useHashEvent(this);
         this.events.hash.onChange(...callbacks);
         return this;
       }

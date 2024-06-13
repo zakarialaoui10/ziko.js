@@ -40,5 +40,5 @@ class ZikoEventHash extends ZikoEvent{
         return this;
      }    
 }
-const HashEvent=Target=>new ZikoEventHash(Target);
-export default HashEvent
+const useHashEvent=Target=>new ZikoEventHash(Target);
+export default useHashEvent

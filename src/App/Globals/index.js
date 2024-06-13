@@ -2,7 +2,10 @@ const __UI__={}
 const __Config__={
     default:{
         target:null,
-        render:true
+        render:true,
+        math:{
+            mode:"deg"
+        }
     },
     setDefault:function(pairs){
         const keys=Object.keys(pairs);

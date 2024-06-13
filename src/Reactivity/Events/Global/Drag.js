@@ -132,6 +132,6 @@ class ZikoEventDrop extends ZikoEvent{
         return this;
     } 
 }
-const useDragEvt=Target=>new ZikoEventDrag(Target);
-const useDropEvt=Target=>new ZikoEventDrop(Target);
-export {useDragEvt,useDropEvt}
+const useDragEvent=Target=>new ZikoEventDrag(Target);
+const useDropEvent=Target=>new ZikoEventDrop(Target);
+export {useDragEvent,useDropEvent}

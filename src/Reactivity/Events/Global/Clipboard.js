@@ -80,5 +80,5 @@ class ZikoEventClipboard extends ZikoEvent{
         return this;
      }   
 }
-const useClipboardEvt=Target=>new ZikoEventClipboard(Target);
-export default useClipboardEvt
+const useClipboardEvent=Target=>new ZikoEventClipboard(Target);
+export default useClipboardEvent

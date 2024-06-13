@@ -40,5 +40,5 @@ class ZikoEventWheel extends ZikoEvent{
         return this;
      }    
 }
-const useWheelEvt=Target=>new ZikoEventWheel(Target);
-export default useWheelEvt
+const useWheelEventnent=Target=>new ZikoEventWheel(Target);
+export default useWheelEventnent

@@ -226,5 +226,5 @@ function mouseover_controller(e){
         null    
     )
 }
-const useMouseEvt=target=>new ZikoEventMouse(target);
-export default useMouseEvt;
+const useMouseEvent=target=>new ZikoEventMouse(target);
+export default useMouseEvent;
