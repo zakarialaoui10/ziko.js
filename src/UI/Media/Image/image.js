@@ -1,7 +1,7 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
 class ZikoUIImage extends ZikoUIElement {
     constructor(src, w, h) {
-      super("img","img");
+      super("img","image");
       this.value=src;
       if (src.nodeName === "IMG")this.element.setAttribute("src", src.src);
       else this.element.setAttribute("src", src);
