@@ -59,7 +59,7 @@ mindmap
     Reactivity
      Events
      Observer
-     Use
+     Hooks
     Graphics
      Svg
      Canvas
@@ -323,7 +323,7 @@ Scene.onPtrUp(()=>{})
 
  ### Events
  ### Observers
- ### Use
+ ### Hooks
 
 </details>
 

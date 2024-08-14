@@ -26,7 +26,7 @@ import {
 import { 
     useSuccesifKeys
  } from "./Contexte";
-const Use={
+const Hooks={
     useStyle,
     useTheme,
     useMediaQuery,
@@ -64,7 +64,7 @@ const Use={
         return this;
     }
 }
-export default Use;
+export default Hooks;
 export{
     useStyle,
     useTheme,

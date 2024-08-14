@@ -76,8 +76,8 @@ class ZikoTimeLoop {
   }
 }
 
-const loop = (callback, options) => new ZikoTimeLoop(callback, options);
+const useTimeLoop = (callback, options) => new ZikoTimeLoop(callback, options);
 
 
-//const a = loop((e) => console.log(e.i), {step:100,fps:30,t:[500,4001],start:true});
-export {loop}
+//const a = useTimeLoop((e) => console.log(e.i), {step:100,fps:30,t:[500,4001],start:true});
+export {useTimeLoop}

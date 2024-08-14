@@ -4,7 +4,7 @@ import Time from "./Time";
 import Data from "./Data";
 import Reactivity from "./Reactivity";
 //import Events from "./Reactivity/Events";
-//import Use from "./Reactivity/Use";
+//import Hooks from "./Reactivity/Hooks";
 import Graphics from "./Graphics";
 import {SPA} from "./App/Router";
 import { 

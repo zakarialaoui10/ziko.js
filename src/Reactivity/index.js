@@ -1,22 +1,22 @@
 import Events from "./Events";
 import Observer from "./Observer"
-import Use from "./Use"
+import Hooks from "./Hooks"
 const Reactivity={
     Events,
     Observer,
-    Use,
+    Hooks,
     ExtractAll: function () {
         this.Events.ExtractAll();
         this.Observer.ExtractAll();
-        this.Use.ExtractAll();
+        this.Hooks.ExtractAll();
     },
     RemoveAll: function () {
         this.Events.RemoveAll();
         this.Observer.RemoveAll();
-        this.Use.RemoveAll();
+        this.Hooks.RemoveAll();
     }
 }
 export * from "./Events";
 export * from "./Observer";
-export * from "./Use";
+export * from "./Hooks";
 export default Reactivity;

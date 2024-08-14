@@ -1,8 +1,8 @@
 import{
-    loop
+    useTimeLoop
 } from "./loop.js"
 import{
-    animation
+    useAnimation
 } from "./animation.js"
 import {
     wait,
@@ -21,8 +21,8 @@ const Time={
     useDebounce,
     Ease,
     time_memory_Taken,
-    loop,
-    animation,
+    useTimeLoop,
+    useAnimation,
     waitForUIElm,
     waitForUIElmSync,
     ExtractAll: function () {
@@ -48,7 +48,7 @@ const Time={
 }
 export * from "./utils/index.js"
 export {
-    loop,
-    animation
+    useTimeLoop,
+    useAnimation
 }
 export default Time;

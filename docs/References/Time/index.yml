@@ -1,5 +1,5 @@
 - animate : ""
-- loop : ""
+- useTimeLoop : ""
 - Decorators :
   - throttle : ""
   - debounce : ""

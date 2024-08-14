@@ -72,5 +72,5 @@ class ZikoTimeAnimation{
     // }
 }
 
-const animation=(callback,config)=>new ZikoTimeAnimation(callback,config)
-export{animation}
+const useAnimation=(callback,config)=>new ZikoTimeAnimation(callback,config)
+export{useAnimation}

@@ -1,4 +1,4 @@
-import { loop } from "../../Time";
+import { useTimeLoop } from "../../Time";
 import { 
     map,
     complex,
@@ -53,7 +53,7 @@ class ZikoScreenObserver {
         return map(this.y,0,screen.availHeight,this.yMin,this.yMax); 
     }
     start(callback){
-        this.loop = loop(()=>{
+        this.loop = useTimeLoop(()=>{
             let currentX = globalThis?.screenX;
             let currentY = globalThis?.screenY;
             if (this.previousX !== currentX || this.previousY !== currentY) {
