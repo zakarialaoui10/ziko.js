@@ -28,7 +28,10 @@ class ZikoUIComponent extends HTMLElement{
     }
 }
 if(globalThis.document){
-    globalThis.customElements.define('ziko-ui', ZikoUIComponent);
+    if (customElements.get('ziko-ui')){
+        globalThis.customElements.define('ziko-ui', ZikoUIComponent);
+
+    }
 }
 export{
     ZikoUIComponent
