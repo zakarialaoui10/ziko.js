@@ -67,26 +67,45 @@ class ZikoUIElement {
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     this.render(globalThis.__Ziko__.__Config__.default.render);
   }
+  // append(...ele) {
+  //   if(this.cache.isFrozzen){
+  //     console.warn("You can't append new item to frozzen element");
+  //     return this;
+  //   }
+  //   for (let i = 0; i < ele.length; i++){
+  //   if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
+  //     if (ele[i] instanceof ZikoUIElement) {
+  //       ele[i].cache.parent=this;
+  //       this.element.appendChild(ele[i].element);
+  //       ele[i].Target = this.element;
+  //       this.items.push(ele[i]);
+  //     } else if (ele[i] instanceof Object) {
+  //       if (ele[i]?.style) this.style(ele[i]?.style);
+  //       if (ele[i]?.attr) {
+  //         Object.entries(ele[i].attr).forEach((n) =>
+  //           this.setAttr("" + n[0], n[1]),
+  //         );
+  //       }
+  //     }
+  //   }
+  //   this.maintain();
+  //   return this;
+  // }
   get st(){
     return this.cache.style;
   }
-  /*** Get the attributes of the UI element.*/
   get attr(){
     return this.cache.attributes;
   }
-  /*** Get the events associated with the UI element.*/
   get evt(){
     return this.cache.events;
   }
-  /*** Get the HTML content of the UI element.*/
   get html(){
     return this.element.innerHTML;
   }
-  /*** Get the text content of the UI element.*/
   get text(){
     return this.element.textContent;
   }
-  /*** Get the root parent of the UI element.*/
   get __app__(){
     if(this.cache.isRoot)return this;
     let root=this.cache.parent;
@@ -117,9 +136,6 @@ class ZikoUIElement {
   get left(){
     return this.element.getBoundingClientRect().left;
   }
-  /**
-  * Clone the UI element
-  */
   clone(render=false) {
     const UI = new this.constructor();
     UI.__proto__=this.__proto__;
@@ -130,9 +146,6 @@ class ZikoUIElement {
     else UI.element=this.element.cloneNode(true);
     return UI.render(render);
   }
-  /**
-  * Apply styling for UI element
-  */
   style(styles,{target = "parent", maskVector = null } = {}){
     this.st.style(styles,{target,maskVector});
     return this;
@@ -176,63 +189,13 @@ class ZikoUIElement {
     else if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
     return this;
   }
-  append(...ele) {
-    if(this.cache.isFrozzen){
-      console.warn("You can't append new item to frozzen element");
-      return this;
-    }
-    for (let i = 0; i < ele.length; i++){
-    if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
-      if (ele[i] instanceof ZikoUIElement) {
-        ele[i].cache.parent=this;
-        this.element.appendChild(ele[i].element);
-        ele[i].Target = this.element;
-        this.items.push(ele[i]);
-      } else if (ele[i] instanceof Object) {
-        if (ele[i]?.style) this.style(ele[i]?.style);
-        if (ele[i]?.attr) {
-          Object.entries(ele[i].attr).forEach((n) =>
-            this.setAttr("" + n[0], n[1]),
-          );
-        }
-      }
-    }
-    this.maintain();
-    return this;
-  }
-  remove(...ele) {
-    if(ele.length==0){
-      if(this.cache.parent)this.cache.parent.remove(this);
-      else if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
-    }
-    else {
-      const remove = (ele) => {
-        if(typeof ele === "number") ele=this.items[ele];
-        if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
-          this.items=this.items.filter(n=>n!==ele);
-      };
-      for (let i = 0; i < ele.length; i++) remove(ele[i]);
-      for (let i = 0; i < this.items.length; i++)Object.assign(this, { [[i]]: this.items[i] });
-      // Remove from item 
-    }
-    return this;
-  }
+  
   renderAfter(t = 1) {
     setTimeout(() => this.render(), t);
     return this;
   }
   unrenderAfter(t = 1) {
     setTimeout(() => this.unrender(), t);
-    return this;
-  }
-  insertAt(index, ...ele) {
-    if (index >= this.element.children.length) this.append(...ele);
-    else
-      for (let i = 0; i < ele.length; i++) {
-        if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
-        this.element.insertBefore(ele[i].element, this.items[index].element);
-        this.items.splice(index, 0, ele[i]);
-      }
     return this;
   }
   // Attributes

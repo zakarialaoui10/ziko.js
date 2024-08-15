@@ -1,7 +1,7 @@
 import { Ease } from "./utils";
 import { map } from "../Math/Utils"
 class ZikoTimeAnimation{
-    constructor(callback,{ease=Ease.Linear,step=50,t=[0,null],start=true,duration=3000}={}){
+    constructor(callback,ease=Ease.Linear,step=50,{t=[0,null],start=true,duration=3000}={}){
         this.cache={
             isRunning:false,
             AnimationId:null,
@@ -72,5 +72,5 @@ class ZikoTimeAnimation{
     // }
 }
 
-const useAnimation=(callback,config)=>new ZikoTimeAnimation(callback,config)
+const useAnimation=(callback,ease=Ease.Linear,step=50,config)=>new ZikoTimeAnimation(callback,ease=Ease.Linear,step=50,config)
 export{useAnimation}

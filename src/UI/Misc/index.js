@@ -1,5 +1,6 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-class ZikoUIHtmlTag extends ZikoUIElement {
+import ZikoUIContainerElement from "../ZikoUIContainerElement.js";
+class ZikoUIHtmlTag extends ZikoUIContainerElement {
   constructor(element) {
     super(element,"html");
   }
@@ -7,16 +8,16 @@ class ZikoUIHtmlTag extends ZikoUIElement {
 class ZikoUIBr extends ZikoUIElement {
     constructor() {
       super("br","br");
-          delete this.append
+          // delete this.append
     }
   }
   class ZikoUIHr extends ZikoUIElement {
     constructor() {
       super("hr","hr");
-          delete this.append
+          // delete this.append
     }
   }
-  class ZikoUILink extends ZikoUIElement{
+  class ZikoUILink extends ZikoUIContainerElement{
     constructor(href){
       super("a","link");
       this.setHref(href);

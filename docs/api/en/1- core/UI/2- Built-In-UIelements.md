@@ -1,7 +1,7 @@
 ZikoJS provides a comprehensive set of built-in UI elements, each designed to simplify the process of creating rich, interactive user interfaces. These elements are built on top of the ZikoUIElement class, ensuring consistency and ease of use. Below is an overview of the available elements, organized by category:
 
 # Primitive Elements 
- ## Special Element Constructor
+ <!-- ## Special Element Constructor
   - ***`html(tag : string | HTMLElement, ...Element : (ZikoUIElement | undefined)[])`*** :
  ## Text Elements
 
@@ -82,16 +82,16 @@ ZikoJS provides a comprehensive set of built-in UI elements, each designed to si
   - ***`br()`*** : Represents a line break element.
   - ***`hr()`*** : Represents a horizontal rule element.
   - ***`brs(n : number)`*** : Represents multiple line break elements.
-  - ***`hrs(n : number)`*** : Represents multiple horizontal rule elements.
+  - ***`hrs(n : number)`*** : Represents multiple horizontal rule elements. -->
 # Custom Elements : 
-  - ***`Accordion(summary : ZikoUIElement, content : ZikoUIElement,icon? : string)`*** : Represents an accordion element for collapsible content.
+  - ***`Collapsible(summary : ZikoUIElement, content : ZikoUIElement,icon? : string)`*** : Represents an accordion element for collapsible content.
   **Usage**
   ```js
   let summary = text("What is ZikoGL");
   let content = p(
     text(" ZikoGL is a ...")
   )
-   Accordion(
+   Collapsible(
     summary,
     content
     )

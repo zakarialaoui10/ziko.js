@@ -1,4 +1,3 @@
-/** @module UI */
 import ZikoUIElement from "../ZikoUIElement.js";
 class ZikoUIHeading extends ZikoUIElement {
     constructor(type = 1, value = "") {
@@ -17,29 +16,11 @@ class ZikoUIHeading extends ZikoUIElement {
       return this;
     }
   }
-/**
- * @param {string|number} text
- */
 const h1=(text="")=>new ZikoUIHeading(1, text);
-/**
- * @param {string|number} text
- */
 const h2=(text="")=>new ZikoUIHeading(2, text);
-/**
- * @param {string|number} text
- */
 const h3=(text="")=>new ZikoUIHeading(3, text);
-/**
- * @param {string|number} text
- */
 const h4=(text="")=>new ZikoUIHeading(4, text);
-/**
- * @param {string|number} text
- */
 const h5=(text="")=>new ZikoUIHeading(5, text);
-/**
- * @param {string|number} text
- */
 const h6=(text="")=>new ZikoUIHeading(6, text);
 export{
   h1,

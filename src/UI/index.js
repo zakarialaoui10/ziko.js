@@ -53,7 +53,7 @@ import{
     CodeCell,
     CodeNote,
     Tabs,
-    Accordion,
+    Collapsible,
 } from "./CustomElement"
 import{
     Header,
@@ -118,7 +118,7 @@ const UI={
     CodeCell,
     CodeNote,
     Tabs,
-    Accordion,
+    Collapsible,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {

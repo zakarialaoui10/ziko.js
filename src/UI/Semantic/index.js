@@ -1,36 +1,36 @@
-import ZikoUIElement from "../ZikoUIElement.js";
-class ZikoUIMain extends ZikoUIElement{
+import ZikoUIContainerElement from "../ZikoUIContainerElement.js";
+class ZikoUIMain extends ZikoUIContainerElement{
     constructor(){
       super("main","Main");
     }
   }
-  class ZikoUIHeader extends ZikoUIElement{
+  class ZikoUIHeader extends ZikoUIContainerElement{
     constructor(){
       super("header","Header");
     }
   }
-  class ZikoUINav extends ZikoUIElement{
+  class ZikoUINav extends ZikoUIContainerElement{
     constructor(){
       super("nav","Nav");
     }
   }
-  class ZikoUISection extends ZikoUIElement{
+  class ZikoUISection extends ZikoUIContainerElement{
     constructor(){
       super("section","Section");
       this.style({position:"relative"})
     }
   }
-  class ZikoUIArticle extends ZikoUIElement{
+  class ZikoUIArticle extends ZikoUIContainerElement{
     constructor(){
       super("article","Article");
     }
   }
-  class ZikoUIAside extends ZikoUIElement{
+  class ZikoUIAside extends ZikoUIContainerElement{
     constructor(){
       super("aside","Aside");
     }
   }
-  class ZikoUIFooter extends ZikoUIElement{
+  class ZikoUIFooter extends ZikoUIContainerElement{
     constructor(){
       super("footer","Footer");
       this.element=document.createElement("footer");

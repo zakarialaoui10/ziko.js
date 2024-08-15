@@ -1,7 +1,8 @@
 import ZikoUIElement from "../ZikoUIElement.js";
+import ZikoContainerElement from "../ZikoUIElement.js";
 import {Complex} from "../../Math/Complex/index.js"
 import { text } from "./text.js";
-class ZikoUIParagraphe extends ZikoUIElement {
+class ZikoUIParagraphe extends ZikoContainerElement {
     constructor(...value) {
       super("p","p");
       this.addValue(...value);
@@ -29,9 +30,6 @@ class ZikoUIParagraphe extends ZikoUIElement {
       return this;
     }
   }
- /**
- * @param {...ZikoUIElement} ZikoUIElement[]
- */
   const p = (...ZikoUIElement) => new ZikoUIParagraphe().append(...ZikoUIElement);
   export {
     p,

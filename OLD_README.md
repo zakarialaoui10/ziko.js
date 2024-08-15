@@ -42,7 +42,7 @@ mindmap
       Custom Elements
        Flex
        Grid
-       Accordion
+       Collapsible
        Carousel
        Tabs
        CodeCell
