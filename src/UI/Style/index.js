@@ -304,17 +304,17 @@ class ZikoUIElementStyle{
         return this;
     }
     // Transfromations
-    fadeOut(t = 1) {
+    fadeOut(transitionTimming = 1) {
         this.style({ 
-          transition: t/1000 + "s", 
+          transition: transitionTimming/1000 + "s", 
           opacity: 0 
         });
         this.cache.isFaddedOut=true;
         return this;
     }
-    fadeIn(t = 1) {
+    fadeIn(transitionTimming = 1) {
         this.style({ 
-          transition: t/1000 + "s", 
+          transition: transitionTimming/1000 + "s", 
           opacity: 1 
         });
         this.cache.isFaddedOut=false;
@@ -324,7 +324,7 @@ class ZikoUIElementStyle{
         this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
         return this;
     }
-    #applyTransformMatrix(t){
+    #applyTransformMatrix(transitionTimming){
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
         this.style({
             transform: `matrix3d(${transformMatrix})`,
@@ -333,136 +333,136 @@ class ZikoUIElementStyle{
             "-ms-transform": `matrix3d(${transformMatrix})`, 
             "-o-transform": `matrix3d(${transformMatrix})` 
         });
-        if (t != 0) this.style({ transition: `transform ${t/1000}s ease` });
+        if (t != 0) this.style({ transition: `transform ${transitionTimming/1000}s ease` });
     }
-    translate(x, y = x ,z = 0, t = 0) {
-        this.cache.transformation.matrix.set(3,0,x);
-        this.cache.transformation.matrix.set(3,1,y);
-        this.cache.transformation.matrix.set(3,2,z);
-        this.#applyTransformMatrix(t);
+    translate(dx, dy = dx ,dz = 0, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(3,0,dx);
+        this.cache.transformation.matrix.set(3,1,dy);
+        this.cache.transformation.matrix.set(3,2,dz);
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    translateX(x, t = 0) {
-        this.cache.transformation.matrix.set(3,0,x)
-        this.#applyTransformMatrix(t);
+    translateX(dx, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(3,0,dx)
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    translateY(y, t = 0) {
-        this.cache.transformation.matrix.set(3,1,y)
-        this.#applyTransformMatrix(t);
+    translateY(dy, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(3,1,dy)
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    translateZ(z, t = 0) {
+    translateZ(dz, transitionTimming = 0) {
         const d=-1/this.cache.transformation.matrix[2][2];
         this.cache.transformation.matrix.set(3,2,z);
-        this.cache.transformation.matrix.set(3,3,1-(z/d));
-        this.#applyTransformMatrix(t);
+        this.cache.transformation.matrix.set(3,3,1-(dz/d));
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    perspective(d,t=0){
+    perspective(distance,transitionTimming=0){
         const z=this.cache.transformation.matrix[3][2];
         this.cache.transformation.matrix.set(2,2,-1/d);
-        this.cache.transformation.matrix.set(3,3,1-(z/d));
-        this.#applyTransformMatrix(t);
+        this.cache.transformation.matrix.set(3,3,1-(z/distance));
+        this.#applyTransformMatrix(transitionTimming);
         return this; 
     }
-    scale(x, y = x, t = 0) {
+    scale(sx, sy = sx, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(0,0,sx)
+        this.cache.transformation.matrix.set(1,1,sy)
+        // const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transitionTimming);
+        return this;
+    }
+    scaleX(x = 1 , transitionTimming = 0) {
         this.cache.transformation.matrix.set(0,0,x)
+        // const transformMatrix = this.cache.transformation.matrix.arr.join(",");
+        this.#applyTransformMatrix(transitionTimming);
+        return this;
+    }
+    scaleY(y = 1, transitionTimming = 0) {
         this.cache.transformation.matrix.set(1,1,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(t);
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    scaleX(x = 1 , t = 0) {
-        this.cache.transformation.matrix.set(0,0,x)
-        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(t);
-        return this;
-    }
-    scaleY(y = 1, t = 0) {
-        this.cache.transformation.matrix.set(1,1,y)
-        const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(t);
-        return this;
-    }
-    skew(x, y = x, t = 0) {
+    skew(x, y = x, transitionTimming = 0) {
         this.cache.transformation.matrix.set(0,1,x)
         this.cache.transformation.matrix.set(1,0,y)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(t);
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    skewX(x = 1 , t = 0) {
+    skewX(x = 1 , transitionTimming = 0) {
         this.cache.transformation.matrix.set(0,1,x)
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(t);
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    skewY(y = 1, t = 0) {
+    skewY(y = 1, transitionTimming = 0) {
         this.cache.transformation.matrix.set(1,0,y);
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
-        this.#applyTransformMatrix(t);
+        this.#applyTransformMatrix(transitionTimming);
         return this;
     }
-    rotateX(deg, t = 0) {
-        this.cache.transformation.matrix.set(1,1,cos(deg));
-        this.cache.transformation.matrix.set(1,2,-sin(deg));
-        this.cache.transformation.matrix.set(2,1,sin(deg));
-        this.cache.transformation.matrix.set(1,2,cos(deg));
-        this.#applyTransformMatrix(t);   
+    rotateX(rx, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(1,1,cos(rx));
+        this.cache.transformation.matrix.set(1,2,-sin(rx));
+        this.cache.transformation.matrix.set(2,1,sin(rx));
+        this.cache.transformation.matrix.set(1,2,cos(rx));
+        this.#applyTransformMatrix(transitionTimming);   
         return this;
     }
-    rotateY(deg, t = 0) {
-        this.cache.transformation.matrix.set(0,0,cos(deg));
-        this.cache.transformation.matrix.set(0,2,sin(deg));
-        this.cache.transformation.matrix.set(2,0,-sin(deg));
-        this.cache.transformation.matrix.set(2,2,cos(deg));
-        this.#applyTransformMatrix(t);   
+    rotateY(ry, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(0,0,cos(ry));
+        this.cache.transformation.matrix.set(0,2,sin(ry));
+        this.cache.transformation.matrix.set(2,0,-sin(ry));
+        this.cache.transformation.matrix.set(2,2,cos(ry));
+        this.#applyTransformMatrix(transitionTimming);   
         return this;
     }
-    rotateZ(deg, t = 0) {
-        this.cache.transformation.matrix.set(0,0,cos(deg));
-        this.cache.transformation.matrix.set(0,1,-sin(deg));
-        this.cache.transformation.matrix.set(1,0,sin(deg));
-        this.cache.transformation.matrix.set(1,1,cos(deg)); 
-        this.#applyTransformMatrix(t);  
+    rotateZ(rz, transitionTimming = 0) {
+        this.cache.transformation.matrix.set(0,0,cos(rz));
+        this.cache.transformation.matrix.set(0,1,-sin(rz));
+        this.cache.transformation.matrix.set(1,0,sin(rz));
+        this.cache.transformation.matrix.set(1,1,cos(rz)); 
+        this.#applyTransformMatrix(transitionTimming);  
         return this;
     }
-    flipeX({ t = 1 } = {}) {
+    flipeX(transitionTimming = 1) {
         this.cache.transformation.Flip[0] += 180;
         this.cache.transformation.Flip[0] %= 360;
-        this.rotateX(this.cache.transformation.Flip[0],t);
+        this.rotateX(this.cache.transformation.Flip[0], transitionTimming);
         return this;
     }
-    flipeY(t = 1) {
+    flipeY(transitionTimming = 1) {
         this.cache.transformation.Flip[1] += 180 ;
         this.cache.transformation.Flip[1] %= 360;
-        this.rotateY(this.cache.transformation.Flip[1],t);
+        this.rotateY(this.cache.transformation.Flip[1], transitionTimming);
         return this;
       }
-    flipeZ(t = 1) {
+    flipeZ(transitionTimming = 1) {
         this.cache.transformation.Flip[2] += 180;
         this.cache.transformation.Flip[2] %= 360;
-        this.rotateZ(this.cache.transformation.Flip[2],t);
+        this.rotateZ(this.cache.transformation.Flip[2], transitionTimming);
         return this;
     }
-    slideHeightIn(t = 1, h = this.h) {
-        this.style({ transition: t + "s", height: h });
+    slideHeightIn(transitionTimming = 1, h = this.h) {
+        this.style({ transition: transitionTimming + "s", height: h });
         return this;
     }
-    slideHeightOut(t = 1) {
-        this.style({ transition: t + "s", height: 0 });
+    slideHeightOut(transitionTimming = 1) {
+        this.style({ transition: transitionTimming + "s", height: 0 });
         this.target.element.addEventListener("transitionend", () =>
           this.style({ opacity: "none" }),
         );
         return this;
       }
-    slideWidthIn(t = 1, w = this.w) {
-        this.style({ transition: t + "s", width: w });
+    slideWidthIn(transitionTimming = 1, w = this.w) {
+        this.style({ transition: transitionTimming + "s", width: w });
         return this;
     }
-    slideWidthOut(t = 1) {
-        this.style({ transition: t + "s", width: 0 });
+    slideWidthOut(transitionTimming = 1) {
+        this.style({ transition: transitionTimming + "s", width: 0 });
         const wrapper=()=>{
             this.style({ opacity: "none" })
         }
@@ -470,19 +470,19 @@ class ZikoUIElementStyle{
         this.target.element.removeEventListener("transitionend",wrapper);
         return this;
     }
-    slideIn({ t = 1, w = "100%", h = "auto" } = {}) {
+    slideIn({ transitionTimming = 1, w = "100%", h = "auto" } = {}) {
         this.style({
-          transition: t + "s",
+          transition: transitionTimming + "s",
           width: w,
           height: h,
           visibility: "visible",
         });
         return this;
     }
-    slideOut({ t = 1, width = 0, height = 0 } = {}) {
+    slideOut({ transitionTimming = 1, width = 0, heightransitionTimming = 0 } = {}) {
         this.style({
           visibility: "hidden",
-          transition: t + "s",
+          transition: transitionTimming + "s",
           opacity: "none",
           width: width,
           height: height,

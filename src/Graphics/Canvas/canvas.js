@@ -1,7 +1,7 @@
-import ZikoUIElement from "../../UI/ZikoUIElement.js";
+import ZikoUIContainerElement from "../../UI/ZikoUIContainerElement.js";
 import {Matrix} from "../../Math/Matrix/index.js"
 import { convolute } from "../../Math/Signal/conv.js";
-class ZikoUICanvas extends ZikoUIElement{
+class ZikoUICanvas extends ZikoUIContainerElement{
     constructor(w,h){
         super("canvas","canvas");
         //this.element=document.createElement("canvas");
