@@ -1,4 +1,5 @@
 import { ZikoStyle } from "./Style";
+import { ZikoUseStyle } from "../Reactivity/Hooks/UI";
 import { 
   usePointerEvent,
   useMouseEvent, 
@@ -17,7 +18,6 @@ import {
   watchAttr,
   watchChildren
 } from "../Reactivity";
-import { text } from "./Text";
 import { Random } from "../Math/Random";
 class ZikoUIElement {
   constructor(element,name="") {
@@ -33,12 +33,12 @@ class ZikoUIElement {
       isRoot:false,
       isHidden: false,
       isFrozzen:false,
+      legacyParent : null,
       style: ZikoStyle({}),
       attributes: {},
       filters: {},
       temp:{}
     };
-    this.items = [];
     this.events = {
       ptr:null,
       mouse:null,
@@ -65,32 +65,9 @@ class ZikoUIElement {
      });
     this.size("auto", "auto");
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
-    this.render(globalThis.__Ziko__.__Config__.default.render);
+    // this.render(globalThis.__Ziko__.__Config__.default.render);
+    globalThis.__Ziko__.__Config__.default.render && this.render()
   }
-  // append(...ele) {
-  //   if(this.cache.isFrozzen){
-  //     console.warn("You can't append new item to frozzen element");
-  //     return this;
-  //   }
-  //   for (let i = 0; i < ele.length; i++){
-  //   if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
-  //     if (ele[i] instanceof ZikoUIElement) {
-  //       ele[i].cache.parent=this;
-  //       this.element.appendChild(ele[i].element);
-  //       ele[i].Target = this.element;
-  //       this.items.push(ele[i]);
-  //     } else if (ele[i] instanceof Object) {
-  //       if (ele[i]?.style) this.style(ele[i]?.style);
-  //       if (ele[i]?.attr) {
-  //         Object.entries(ele[i].attr).forEach((n) =>
-  //           this.setAttr("" + n[0], n[1]),
-  //         );
-  //       }
-  //     }
-  //   }
-  //   this.maintain();
-  //   return this;
-  // }
   get st(){
     return this.cache.style;
   }
@@ -146,26 +123,16 @@ class ZikoUIElement {
     else UI.element=this.element.cloneNode(true);
     return UI.render(render);
   }
-  style(styles,{target = "parent", maskVector = null } = {}){
-    this.st.style(styles,{target,maskVector});
+  style(styles){
+    styles instanceof ZikoUseStyle ? this.st.style(styles.current): this.st.style(styles);
     return this;
   }
-  size(width,height,{ target, maskVector } = {}){
-    this.st.size(width,height,{target,maskVector});
+  size(width,height){
+    this.st.size(width,height);
     return this; 
   }
-   
   freeze(freeze){
     this.cache.isFrozzen=freeze;
-    return this;
-  }
-  at(index) {
-    return this.items.at(index);
-  }
-  maintain() {
-    for (let i = 0; i < this.items.length; i++)
-      Object.assign(this, { [[i]]: this.items[i] });
-    this.length = this.items.length;
     return this;
   }
   setTarget(tg) {
@@ -175,13 +142,14 @@ class ZikoUIElement {
     this.render();
     return this;
   }
-  render(render = true , target = this.target) {
+  render(/*render = true , */target = this.target) {
     if(target instanceof ZikoUIElement)target=target.element;
     this.target=target;
-    if(render) {
-      this.target.appendChild(this.element);
-    }
-    else this.remove();
+    this.target.appendChild(this.element);
+    // if(render) {
+    //   this.target.appendChild(this.element);
+    // }
+    // else this.remove();
     return this;
   }
   unrender(){
@@ -189,7 +157,6 @@ class ZikoUIElement {
     else if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
     return this;
   }
-  
   renderAfter(t = 1) {
     setTimeout(() => this.render(), t);
     return this;
@@ -251,49 +218,6 @@ class ZikoUIElement {
   }
   get id() {
     return this.element.getAttribute("id");
-  }
-  forEach(callback){
-    this.items.forEach(callback);
-    return this;
-  }
-  map(callback){
-    return this.items.map(callback);
-  }
-  find(condition){
-    return this.items.filter(condition);
-  }
-  filter(condition_callback,if_callback=()=>{},else_callback=()=>{}){
-    const FilterItems=this.items.filter(condition_callback);
-    FilterItems.forEach(if_callback);
-    this.items.filter(item => !FilterItems.includes(item)).forEach(else_callback);
-    return this;
-  }
-  filterByTextContent(text,exactMatch=false){
-    this.items.map(n=>n.render());
-    this.items.filter(n=>{
-      const content=n.element.textContent;
-      return !(exactMatch?content===text:content.includes(text))
-    }).map(n=>n.unrender());
-     return this;
-  }
-  filterByClass(value){
-    this.items.map(n=>n.render());
-    this.items.filter(n=>!n.classes.includes(value)).map(n=>n.unrender());
-    return this; 
-  }
-  sortByTextContent(value, displays) {
-    let item = this.children;
-    item
-      .filter((n) => !n.textContent.toLowerCase().includes(value.toLowerCase()))
-      .map((n) => {
-        n.style.display = "none";
-      });
-    item
-      .filter((n) => n.textContent.toLowerCase().includes(value.toLowerCase()))
-      .map((n, i) => (n.style.display = displays[i]));
-    //return item.filter(n=>n.style.display!="none")
-    item.filter((n) => n.style.display != "none");
-    return this;
   }
   onPtrMove(...callbacks){
     if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
@@ -468,23 +392,23 @@ class ZikoUIElement {
     this.observer.intersection.start();
     return this;
   }
-  get VisibleArea() {
-    let coords = this.element.getBoundingClientRect();
-    let windowHeight = globalThis.document.documentElement.clientHeight;
-    let windowWidth = globalThis.document.documentElement.clientWidth;
-    let topVisible = coords.top > 0 && coords.top < windowHeight;
-    let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
-    let leftVisible = coords.left > 0 && coords.left < windowWidth;
-    let rightVisible = coords.right > 0 && coords.right < windowWidth;
-    return {
-      top: topVisible,
-      bottom: bottomVisible,
-      left: leftVisible,
-      right: rightVisible,
-      heightRatio: (coords.height + coords.y) / coords.height,
-      isVisible: topVisible || bottomVisible || rightVisible || leftVisible,
-    };
-  }
+  // get VisibleArea() {
+  //   let coords = this.element.getBoundingClientRect();
+  //   let windowHeight = globalThis.document.documentElement.clientHeight;
+  //   let windowWidth = globalThis.document.documentElement.clientWidth;
+  //   let topVisible = coords.top > 0 && coords.top < windowHeight;
+  //   let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
+  //   let leftVisible = coords.left > 0 && coords.left < windowWidth;
+  //   let rightVisible = coords.right > 0 && coords.right < windowWidth;
+  //   return {
+  //     top: topVisible,
+  //     bottom: bottomVisible,
+  //     left: leftVisible,
+  //     right: rightVisible,
+  //     heightRatio: (coords.height + coords.y) / coords.height,
+  //     isVisible: topVisible || bottomVisible || rightVisible || leftVisible,
+  //   };
+  // }
   setFullScreen(set = true, e) {
     if(!this.element.requestFullscreen){
       console.error("Fullscreen API is not supported in this browser.");

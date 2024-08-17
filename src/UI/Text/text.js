@@ -6,7 +6,7 @@ class ZikoUIText extends ZikoUIElement {
       super("span","text");
       this.element = document.createElement("span");
       //this.#text = "";
-      this.addValue(...value);
+      this.setValue(...value);
       this.st.display("inline-block");
     }
     clear() {
@@ -14,7 +14,7 @@ class ZikoUIText extends ZikoUIElement {
       return this;
     }
     get value() {
-      return this.element.textContent;
+      return this.element.textContent.trim();
     }
     setValue(value = "", add = false) {
       if (["string", "number"].includes(typeof value)) {
@@ -61,9 +61,5 @@ class ZikoUIText extends ZikoUIElement {
       return this;
     }
   }
-  /**
- * @param {...string|number|boolean} str 
- * @return {ZikoUIText}
- */
  const text = (...str) => new ZikoUIText(...str)
  export {text}

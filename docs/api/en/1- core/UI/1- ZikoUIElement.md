@@ -18,31 +18,18 @@ In general, ZikoUIElement supports:
 
 ## Methodes & Getters
 
- ### Acces
-   - `📦 .at(index)` : Retrieves the UI element at the specified index within the ZikoUIElement
-   - `🧊 [index]` : Alternative syntax for accessing UI elements by index
- ### Content 
+- **Content :**
    - `🧩 .html` : Get the HTML content of the UI element
    - `🧩 .text`:  Get the Text content of the UI element
- ### DOM  
-   - `📦 .clone()` :
+- **DOM :**
+   - `📦 .clone()` : Clone the ZikoUIElement 
    - `📦 .render()` : Render the UI element to the DOM
    - `📦 .renderAfter(delay)` : Render the UI element after a specified delay
    - `📦 .unrender()` : Remove the UI element from the DOM.
    - `📦 .unrederAfter(delay)` : Remove the UI element from the DOM after a specified delay.
-   - `📦 .append(...items)` : Append child elements to the UI element
-   - `📦 .remove(...items)` : Remove child elements from the UI element
-   - `📦 .inserAt(index,...items)` : Insert child elements at a specified index within the UI element.
    - `📦 .setTarget(target)` :
-   - `📦 .forEach(callback)` : Iterate over child elements and applies a callback function.
-   - `📦 .map(callback)` : Map over child elements and applies a callback function.
-   - `📦 .find(condition)` : Find All child elements that match a specified condition.
-   - `📦 .filter(condition,if_callback,else_callback)` : Filter child elements based on a condition, with optional callbacks for filtered and non-filtered elements.
-   - `📦 .filterByTextContent(text,exactMatch)` : Filter child elements based on text content, with an option for exact matching.
-   - `📦 .filterByClass(value)` : Filter child elements based on class name.
-   - `📦 .sortByTextConten(value,displays)` : Sort child elements by their text content.
 
- ### Attributes
+- **Attributes :**
    - `📦 .setAttr(name,values)` : Set attribute(s) on the UI element.
    - `📦 .removeveAttr(...names)` : Remove attribute(s) from the UI element.
    - `📦 .setId(value)` : Set the ID attribute of the UI element.
@@ -52,7 +39,7 @@ In general, ZikoUIElement supports:
    - `🧩 .id` : Get the Id of the UI element.
    - `🧩 .classes` : Get the classes of the UI element.
 
- ### CSSOM
+- **CSSOM :**
    - `📦 .style(styleObject)` : Set the Style of the UI element.
    - `📦 .size(width,height)` : Set the size of the UI element.
    - `🧩 .st` :
@@ -104,76 +91,90 @@ In general, ZikoUIElement supports:
       
     
 
- ### Events
-   - `🧩 .evt ` : Get the events registered on the UI element.
-  #### Custom Events
-   - `📦 .emit(event,detail)` : Emit a custom event from the UI element with optional detail.
-   - `📦 .on(event,...callbacks)` : Register event handlers for custom events.
+- **Events :**
+  - `🧩 .evt ` : Get the events registered on the UI element.
+  - **Custom Events :**
+    - `📦 .emit(event,detail)` : Emit a custom event from the UI element with optional detail.
+    - `📦 .on(event,...callbacks)` : Register event handlers for custom events.
 
-  #### useClickEvent
-   - `🧩 .evt.click`
-   - `📦 .onClick(...callbacks)`
-   - `📦 .onDbClick(...callbacks)`
+  - **useClickEvent :**
+    - `🧩 .evt.click`
+    - `📦 .onClick(...callbacks)`
+    - `📦 .onDbClick(...callbacks)`
 
-  #### usePointerEvent Events
-   - `🧩 .evt.ptr`
-   - `📦 .onPtrDown(...callbacks)`
-   - `📦 .onPtrMove(...callbacks)`
-   - `📦 .onPtrUp(...callbacks)`
-   - `📦 .onPtrEnter(...callbacks)`
-   - `📦 .onPtrLeave(...callbacks)`
-   - `📦 .onPtrOut(...callbacks)`
+  - **usePointerEvent Events :**
+    - `🧩 .evt.ptr`
+    - `📦 .onPtrDown(...callbacks)`
+    - `📦 .onPtrMove(...callbacks)`
+    - `📦 .onPtrUp(...callbacks)`
+    - `📦 .onPtrEnter(...callbacks)`
+    - `📦 .onPtrLeave(...callbacks)`
+    - `📦 .onPtrOut(...callbacks)`
 
-  #### useMouseEvent Events
-   - `🧩 .evt.mouse`
-   - `📦 .onMouseDown(...callbacks)`
-   - `📦 .onMouseMove(...callbacks)`
-   - `📦 .onMouseUp(...callbacks)`
-   - `📦 .onMouseEnter(...callbacks)`
-   - `📦 .onMouseLeave(...callbacks)`
-   - `📦 .onMouseOut(...callbacks)`
-   - `📦 .onWheel(...callbacks)`
+  - **useMouseEvent Events :**
+    - `🧩 .evt.mouse`
+    - `📦 .onMouseDown(...callbacks)`
+    - `📦 .onMouseMove(...callbacks)`
+    - `📦 .onMouseUp(...callbacks)`
+    - `📦 .onMouseEnter(...callbacks)`
+    - `📦 .onMouseLeave(...callbacks)`
+    - `📦 .onMouseOut(...callbacks)`
+    - `📦 .onWheel(...callbacks)`
 
-  #### Keyboard Events
-   - `🧩 .evt.key`
-   - `📦 .onKeyDown(...callbacks)`
-   - `📦 .onKeyPress(...callbacks)`
-   - `📦 .onKeyUp(...callbacks)`
-   - `📦 .onKeysDown(...callbacks)`
+  - **Keyboard Events :**
+    - `🧩 .evt.key`
+    - `📦 .onKeyDown(...callbacks)`
+    - `📦 .onKeyPress(...callbacks)`
+    - `📦 .onKeyUp(...callbacks)`
+    - `📦 .onKeysDown(...callbacks)`
 
-  #### useFocusEvent Events
-   - `🧩 .evt.focus`
-   - `📦 .onFocus(...callbacks)`
-   - `📦 .onBlur(...callbacks)`
+  - **Focus Events :**
+    - `🧩 .evt.focus`
+    - `📦 .onFocus(...callbacks)`
+    - `📦 .onBlur(...callbacks)`
 
-  #### useDragEvent
-   - `🧩 .evt.drag`
-   - `📦 .onDragStart(...callbacks)` 
-   - `📦 .onDrag(...callbacks)`
-   - `📦 .onDragEnd(...callbacks)`
-   - `📦 .onDrop(...callbacks)`
+  - **Drag Events :**
+    - `🧩 .evt.drag`
+    - `📦 .onDragStart(...callbacks)` 
+    - `📦 .onDrag(...callbacks)`
+    - `📦 .onDragEnd(...callbacks)`
+    - `📦 .onDrop(...callbacks)`
 
-  #### useClipboardEventnt Events 
-   - `🧩 .evt.clipboard`
-   - `📦 .onSelect(...callbacks)`:
-   - `📦 .onCopy(...callbacks)`:
-   - `📦 .onCut(...callbacks)`:
-   - `📦 .onPaste(...callbacks)`:
+  -**Clipboard Events :**
+    - `🧩 .evt.clipboard`
+    - `📦 .onSelect(...callbacks)`:
+    - `📦 .onCopy(...callbacks)`:
+    - `📦 .onCut(...callbacks)`:
+    - `📦 .onPaste(...callbacks)`:
 
- ### Watchers
+- **Watchers :**
   - `🧩 .observer : `
   - `📦 .watchSize(callback)` : Observe changes in the size of the UI element
   - `📦 .watchIntersection(callback)` : Observe intersection changes of the UI element with other elements.
   - `📦 .watchAttr(callback)` : Observe changes in attributes of the UI element.
   - `📦 .watchChildren(callback)` : Observe changes in child elements of the UI element.
- ### Misc 
+- **Misc :** 
   - `📦 .toPdf()` :
   
+
+**ZikoUIContainerElement** is a specialized subclass of ***`ZikoUIElement`*** designed to manage and contain other UI elements. It inherits all methods from ZikoUIElement and introduces additional methods and getters for handling child elements:
+
+- **Acces :**
+   - `📦 .at(index)` : Retrieves the UI element at the specified index within the ZikoUIElement
+   - `🧊 [index]` : Alternative syntax for accessing UI elements by index
+- **Dom :** 
+   - `📦 .append(...items)` : Append child elements to the UI element
+   - `📦 .remove(...items)` : Remove child elements from the UI element
+   - `📦 .inserAt(index,...items)` : Insert child elements at a specified index within the UI element.
+   - `📦 .forEach(callback)` : Iterate over child elements and applies a callback function.
+   - `📦 .map(callback)` : Map over child elements and applies a callback function.
+   - `📦 .find(condition)` : Find All child elements that match a specified condition.
+   - `📦 .filter(condition,if_callback,else_callback)` : Filter child elements based on a condition, with optional callbacks for filtered and non-filtered elements.
+   - `📦 .filterByTextContent(text,exactMatch)` : Filter child elements based on text content, with an option for exact matching.
+   - `📦 .filterByClass(value)` : Filter child elements based on class name.
+   - `📦 .sortByTextContent(value,displays)` : Sort child elements by their text content.
+
 <p style="font-size:25px; text-align:right">
 <a href="#introduction" style="font-size:25px; text-align:right">⬆️</a>
 </p>
-
-
-
-
 

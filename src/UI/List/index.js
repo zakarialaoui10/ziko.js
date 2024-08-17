@@ -7,7 +7,7 @@ class ZikoUILI extends ZikoUIContainerElement{
     this.append(UI);
   }
 }
-class ZikoUIList extends ZikoUIElement {
+class ZikoUIList extends ZikoUIContainerElement {
     constructor(element,name) {
       super(element,name);
       delete this.append;

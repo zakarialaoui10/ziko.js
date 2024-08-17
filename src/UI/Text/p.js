@@ -1,5 +1,5 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import ZikoContainerElement from "../ZikoUIElement.js";
+import ZikoContainerElement from "../ZikoUIContainerElement.js";
 import {Complex} from "../../Math/Complex/index.js"
 import { text } from "./text.js";
 class ZikoUIParagraphe extends ZikoContainerElement {

@@ -7,7 +7,7 @@ class ZikoUIGrid extends ZikoUIContainerElement {
       if (typeof h == "number") h += "%";
       this.style({ border: "1px solid black", width: w, height: h });
       this.style({ display: "grid" });
-      this.render();
+    //   this.render();
     }
     columns(n) {
         let temp = "";

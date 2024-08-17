@@ -1,4 +1,4 @@
-import { style , addSuffixeToNumber } from "../Utils/index.js";
+import { addSuffixeToNumber } from "../Utils/index.js";
 import { Matrix,cos,sin} from "../../Math/index.js";
 class ZikoUIElementStyle{
     constructor(defaultStyle={}){
@@ -20,16 +20,20 @@ class ZikoUIElementStyle{
             }
         }
     }
-    style(styles,{target = "parent", maskVector = null } = {}){
-        if (target === "parent" || target === 0)style(this.target.element, styles);
-        else if(target === "parent" || target === 0){
-          if (maskVector) {
-            this.items.map((n, i) => maskVector[i] == 1 && n.style(styles));
-          } 
-          else this.items.map((n) => n.style(styles));      
-        }
+    // style(styles ,{target = "parent", maskVector = null } = {}){
+    //     if (target === "parent" || target === 0)style(this.target.element, styles);
+    //     else if(target === "parent" || target === 0){
+    //       if (maskVector) {
+    //         this.items.map((n, i) => maskVector[i] == 1 && n.style(styles));
+    //       } 
+    //       else this.items.map((n) => n.style(styles));      
+    //     }
+    //     return this;
+    //   }
+    style(styles){
+        Object.assign(this.target.element.style, styles);
         return this;
-      }
+    }
     linkTo(target){
         this.target=target;
         return this;

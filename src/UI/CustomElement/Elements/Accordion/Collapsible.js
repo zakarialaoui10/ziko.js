@@ -22,7 +22,7 @@ class ZikoUICollapbsible extends ZikoUIElement{
         this.style({
             marginBottom:"0.7em",
         })
-        this.render();
+        // this.render();
     }
     get isOpen(){
         return this.element.open;

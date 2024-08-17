@@ -7,7 +7,7 @@ class ZikoUIFlex extends ZikoUIContainerElement {
     if (typeof h == "number") h += "%";
     this.style({ width: w, height: h });
     this.style({ display: "flex" });
-    this.render();
+    // this.render();
   }
   resp(px,wrap = true) {
     this.wrap(wrap);
