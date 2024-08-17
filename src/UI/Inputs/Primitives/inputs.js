@@ -1,7 +1,7 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
 import { useInputEvent } from "../../../Reactivity/Events/index.js";
 import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
-import { btn } from "./btn.js";
+import { btn } from "../../Misc/index.js";
 import { Random } from "../../../Math/Random/index.js";
 //import { select } from "./select.js";
 //import { debounce,throttle} from "../../Data/decorators.js";
