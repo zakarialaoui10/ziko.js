@@ -93,12 +93,16 @@ class ZikoUIContainerElement extends ZikoUIElement{
         return this;
       }
       filterByTextContent(text,exactMatch=false){
-        this.items.map(n=>n.render());
-        this.items.filter(n=>{
-          const content=n.element.textContent;
-          return !(exactMatch?content===text:content.includes(text))
-        }).map(n=>n.unrender());
-         return this;
+        this.items.forEach(n=>n.render());
+        this.filter(
+          n=>!(exactMatch?n.text===text:n.text.includes(text)),
+          e=>e.unrender()
+        )
+        // this.items.filter(n=>{
+        //   const content=n.element.textContent;
+        //   return !(exactMatch?content===text:content.includes(text))
+        // }).map(n=>n.unrender());
+        //  return this;
       }
       filterByClass(value){
         this.items.map(n=>n.render());

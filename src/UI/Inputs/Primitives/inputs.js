@@ -9,7 +9,6 @@ import { Random } from "../../../Math/Random/index.js";
 class ZikoUIInput extends ZikoUIElement {
   constructor(name , value = "",datalist) {
     super("input",name);
-    this.element = document.createElement("input");
     Object.assign(this.events,{input:null})
     this.setValue(value);
     if(datalist)this.linkDatalist(datalist)
