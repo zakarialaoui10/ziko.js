@@ -15,7 +15,7 @@ You can use the library separatly or you can integrate it inside other framework
 
 >[!NOTE]
 The library includes numerous addons that are built on top of other libraries enhancing the core features and providing additional capabilities tailored to specific needs.
-> - ***zikogl***
+> - ***ziko-gl***
 > - ***ziko-lottie***
 > - ***ziko-pdf***
 > - ***ziko-xls***

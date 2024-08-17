@@ -1,5 +1,3 @@
-## Introduction
-
 **`ZikoUIElement`** is the constructor class of every UI element in zikojs. 
 It encapsulates the properties and behaviors of a UI element, including its HTML representation, styling, attributes, and event handling...
 You can create a new UI element using the following syntax :
