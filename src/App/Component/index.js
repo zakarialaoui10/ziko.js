@@ -1,6 +1,7 @@
-class ZikoUIComponent extends HTMLElement{
+if(globalThis?.document){
+    class ZikoUIComponent extends HTMLElement{
     constructor(){
-        super()
+        super();
         this.shadowDOM = this.attachShadow({ mode: 'open' });
         this.wrapper=document.createElement("div");
     }
@@ -14,7 +15,7 @@ class ZikoUIComponent extends HTMLElement{
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'childList' || mutation.type === 'characterData') {
-                    this.wrapper.innerHTML=""
+                    this.wrapper.innerHTML="";
                     __Ziko__.__Config__.setDefault({ target: this.wrapper });
                     globalThis.eval(this.innerHTML);
                 }
@@ -27,11 +28,10 @@ class ZikoUIComponent extends HTMLElement{
         console.log('ZikoUIComponent removed from page.');
     }
 }
-if(globalThis.document){
-    if (customElements.get('ziko-ui')){
-        globalThis.customElements.define('ziko-ui', ZikoUIComponent);
-
-    }
+    globalThis.customElements.define('ziko-ui', ZikoUIComponent);
+}
+else {
+    var ZikoUIComponent = null;
 }
 export{
     ZikoUIComponent
