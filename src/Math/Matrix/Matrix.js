@@ -47,7 +47,7 @@ class Matrix extends ZikoMath{
         //Object.seal(this);
     }
     toString(){
-        return arr2str(this.arr);
+        return arr2str(this.arr,false);
     }
     at(i=0,j=undefined){
         if(i<0)i=this.rows+i;
