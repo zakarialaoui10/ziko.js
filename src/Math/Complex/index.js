@@ -53,6 +53,19 @@ class Complex extends ZikoMath{
             this.b = +b.toFixed(32);
         }
     }
+    toString(){
+        let str = "";
+        if (this.a !== 0)
+          this.b >= 0
+            ? (str = `${this.a}+${this.b}*i`)
+            : (str = `${this.a}-${Math.abs(this.b)}*i`);
+        else
+          this.b >= 0
+            ? (str = `${this.b}*i`)
+            : (str = `-${Math.abs(this.b)}*i`);
+        return str;
+    }
+      
     get clone() {
         return new Complex(this.a, this.b);
     }

@@ -26,3 +26,9 @@ export {
    svg2imgUrl,
    svg2img
  } from "./svg";
+ export{
+  obj2str
+ } from "./object.js"
+ export{
+  arr2str
+ } from "./array.js"

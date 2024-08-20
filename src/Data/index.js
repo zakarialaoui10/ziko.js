@@ -1,4 +1,6 @@
 import { 
+    obj2str,
+    arr2str,
     markdown2html,
     adoc2html,
     csv2arr,
@@ -26,6 +28,8 @@ const Data={
     Str,
     parseXML,
     preload,
+    obj2str,
+    arr2str,
     markdown2html,
     adoc2html,
     csv2arr,

@@ -1,4 +1,3 @@
-/** @module Math */
 import ZikoMath from "../absract.js";
 import{
     pow,
@@ -13,9 +12,7 @@ import {
     qrDecomposition,
     choleskyDecomposition
  } from "./Decomposition.js";
-/**
-* @class
-*/
+import { arr2str } from "../../Data/index.js";
 class Matrix extends ZikoMath{
     constructor(rows, cols, element = [] ) {
         super()
@@ -48,6 +45,9 @@ class Matrix extends ZikoMath{
     }
     this._maintain();
         //Object.seal(this);
+    }
+    toString(){
+        return arr2str(this.arr);
     }
     at(i=0,j=undefined){
         if(i<0)i=this.rows+i;
