@@ -1,5 +1,5 @@
 import { arr2str } from "..";
-import { Complex, Matrix } from "../../Math";
+import { Complex, mapfun, Matrix } from "../../Math";
 
 // const obj2str=(object)=>{
 //     const recursiveToString = (obj) => {
@@ -32,29 +32,39 @@ import { Complex, Matrix } from "../../Math";
   
 //     return recursiveToString(object);
 //   };
-const obj2str = (object, useIndentation = true, indentLevel = 0) => {
-    const recursiveToString = (obj, level = 0) => {
-      const indent = useIndentation ? '  '.repeat(level) : '';
-      const nextIndent = useIndentation ? '  '.repeat(level + 1) : '';
-    if (Array.isArray(obj)) return arr2str(obj, false, level);
-    if(obj instanceof Complex || obj instanceof Matrix) return obj.toString();
-    if (typeof obj === 'object' && obj !== null) {
-        const entries = Object.entries(obj)
-          .map(([key, value]) => useIndentation 
-            ? `${nextIndent}${key}: ${recursiveToString(value, level + 1)}` 
-            : `${key}: ${recursiveToString(value, level + 1)}`
-          ).join(useIndentation ? ",\n" : ", ");
+// const obj2str = (object, useIndentation = true, indentLevel = 0) => {
+//     const recursiveToString = (obj, level = 0) => {
+//       const indent = useIndentation ? '  '.repeat(level) : '';
+//       const nextIndent = useIndentation ? '  '.repeat(level + 1) : '';
+//     if (Array.isArray(obj)) return arr2str(obj, false, level);
+//     if(obj instanceof Complex || obj instanceof Matrix) return obj.toString();
+//     if (typeof obj === 'object' && obj !== null) {
+//         const entries = Object.entries(obj)
+//           .map(([key, value]) => useIndentation 
+//             ? `${nextIndent}${key}: ${recursiveToString(value, level + 1)}` 
+//             : `${key}: ${recursiveToString(value, level + 1)}`
+//           ).join(useIndentation ? ",\n" : ", ");
   
-        return useIndentation 
-          ? `{\n${entries}\n${indent}}` 
-          : `{${entries}}`;
-      }
+//         return useIndentation 
+//           ? `{\n${entries}\n${indent}}` 
+//           : `{${entries}}`;
+//       }
   
-      return String(obj);
-    };
+//       return String(obj);
+//     };
   
-    return recursiveToString(object, indentLevel);
-  };
+//     return recursiveToString(object, indentLevel);
+//   };
+
+const obj2str=(obj)=>JSON.stringify(
+  mapfun(n=>{
+    if(["number","string","boolean","bigint"].includes(typeof n)) return String(n);
+    if(n instanceof Complex || n instanceof Matrix) return n.toString();
+    if(n instanceof Array) return arr2str(n)
+  },
+  obj), null, "  ")
+  .replace(/"([^"]+)":/g, '$1:') // Remove Quotes from Keys 
+  .replace(/: "([^"]+)"/g, ': $1'); // Remove Quotes from str values
 export{
     obj2str
 }
