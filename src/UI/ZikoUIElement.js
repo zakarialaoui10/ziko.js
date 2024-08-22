@@ -137,7 +137,7 @@ class ZikoUIElement {
   }
   setTarget(tg) {
     if (tg instanceof ZikoUIElement) tg = tg.element;
-    this.remove();
+    this.unrender();
     this.target = tg;
     this.render();
     return this;

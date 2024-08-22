@@ -1,54 +1,57 @@
-import ZikoUIElement from "../ZikoUIElement.js";
-import {Complex} from "../../Math/Complex/index.js";
-import { Matrix } from "../../Math/Matrix/Matrix.js";
-import { obj2str } from "../../Data/index.js";
-class ZikoUIText extends ZikoUIElement {
-    #text = ""
+import { __ZikoUIText__ } from "./__ZikoUIText__.js";
+class ZikoUIText extends __ZikoUIText__ {
     constructor(...value) {
-      super("span","text");
-      this.element = document.createElement("span");
-      //this.#text = "";
-      this.setValue(...value);
-      this.st.display("inline-block");
-      globalThis.__Ziko__.__Config__.default.render && this.render()
+      super("span", "text", false, ...value);
     }
-    clear() {
-      this.element.textContent = "";
-      return this;
-    }
-    get value() {
-      return this.element.textContent.trim();
-    }
-    setValue(value = "", add = false) {
-      if (["string", "number"].includes(typeof value)) {
-        this.#text = "" + value;
-      }
-      if(value instanceof Complex || value instanceof Matrix) this.#text = "" + value.toString();
-      else if(value instanceof Object) this.#text = "" + obj2str(value); 
-      this.#text = this.#text.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
-        //else console.error("not supported yet")
-      if (add) this.element.innerHTML += this.#text;
-      else this.element.innerHTML = this.#text;
-        if (value instanceof Set) {
-          value = [...value];
-          this.addValue(...value);
-        }
-    }  
-    addValue(...value) {
-      value.map((n) => {
-        this.setValue(" ", true);
-        this.setValue(n, true);
-      });
-      return this;
-    }
-    toggleValues(...values) {
-      values = values.map((n) => "" + n);
-      let index = values.indexOf("" + this.value);
-      if (index != -1 && index != values.length - 1)
-        this.setValue(values[index + 1]);
-      else this.setValue(values[0]);
-      return this;
-    }
+}
+class ZikoUIQuote extends __ZikoUIText__ {
+  constructor(...value) {
+    super("q", "quote", false, ...value);
   }
- const text = (...str) => new ZikoUIText(...str)
- export {text}
+}
+class ZikoUIDefintion extends __ZikoUIText__ {
+  constructor(...value) {
+    super("dfn", "dfnText", false, ...value);
+  }
+}
+class ZikoUISupText extends __ZikoUIText__ {
+  constructor(...value) {
+    super("sup", "supText", false, ...value);
+  }
+}
+class ZikoUISubText extends __ZikoUIText__ {
+  constructor(...value) {
+    super("sub", "subText", false, ...value);
+  }
+}
+class ZikoUIabbrText extends __ZikoUIText__ {
+  constructor(abbr, title) {
+    super("abbr", "abbrText", false, abbr);
+    this.setAttr("title", title);
+  }
+}
+const text = (...str) => new ZikoUIText(...str);
+const quote = (...str) => new ZikoUIQuote(...str);
+const dfnText = (...str) => new ZikoUIDefintion(...str);
+const supText = (...str) => new ZikoUISupText(...str);
+const subText = (...str) => new ZikoUISubText(...str);
+const abbrText = (abbr, title) => new ZikoUIabbrText(abbr, title); 
+window.quote = quote;
+window.subText = subText;
+window.supText = supText;
+window.abbrText = abbrText;
+window.dfnText = dfnText;
+export {
+  ZikoUIText,
+  ZikoUIQuote,
+  ZikoUIDefintion,
+  ZikoUISupText,
+  ZikoUISubText,
+  ZikoUIabbrText,
+  text,
+  quote,
+  dfnText,
+  supText,
+  subText,
+  abbrText
+}

@@ -39,7 +39,7 @@ const mapfun=(fun,...X)=>{
                     const DEN=cosh(2*a)+cos(2*b);
                     return complex(sinh(2*a)/DEN,sin(2*b)/DEN)
                 }
-                //default : return fun(x)
+                default : return fun(x)
             }
         }
         else if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
