@@ -1,12 +1,19 @@
 import {
     text,
+    quote,
+    dfnText,
+    supText,
+    subText,
+    codeText,
+    abbrText,
     p,
+    blockQuote,
     h1,
     h2,
     h3,
     h4,
     h5,
-    h6
+    h6,   
 } from "./Text";
 import {
     btn,
@@ -68,7 +75,14 @@ import { Table } from "./Table";
 const UI={
     html,
     text,
+    quote,
+    dfnText,
+    supText,
+    subText,
+    codeText,
+    abbrText,
     p,
+    blockQuote,
     h1,
     h2,
     h3,

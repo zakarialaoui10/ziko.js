@@ -1,7 +1,26 @@
 - **Text Elements :**
   - ***`text(...str : (string | number | boolean)[])`*** : Represents a standard text element.
     - `📦 .setValue(newTextContent : string, add : boolean)`
-  - ***`p(UIElement : []ZikoUIElement)`*** : Represents a paragraph element
+    - `📦 .addValue(newTextContent : string, add : boolean)`
+    - `📦 .clear()`
+    - `📦 .value`
+
+  - ***`quote(...str : (string | number | boolean)[])`*** : Creates an inline quotation element with the given text or values.
+  
+  - ***`dfnText(...str : (string | number | boolean)[])`*** : Defines a term by wrapping the provided text or values in a ***&lt;dfn&gt;*** element.
+
+  - ***`codeText(...str : (string | number | boolean)[])`*** : 
+
+  - ***`supText(sup : (string | number | boolean)[])`*** : Creates a superscript element with the given text or values.
+
+  - ***`subText(sup : (string | number | boolean)[])`*** : Creates a subscript element with the provided text or values.
+
+  - ***`abbrText(abbr : (string | number | boolean)[], title : (string | number | boolean)[])`*** : Defines an abbreviation with a tooltip using the abbr content and the title attribute.
+
+  - ***`p(...UIElement : []ZikoUIElement)`*** : Creates a paragraph containing the provided ZikoUIElement instances.
+
+  - ***`blockquote(...UIElement : []ZikoUIQuote)`*** : Creates a block quotation element with the provided ZikoUIQuote instances.
+
   
   **Usage**
    ```js

@@ -12,7 +12,6 @@ class ZikoUIBlockQuote extends __ZikoUIText__ {
 }
 const p = (...ZikoUIElement) => new ZikoUIParagraphe(...ZikoUIElement);
 const blockQuote = (cite, quote) => new ZikoUIBlockQuote(cite, quote);
-window.blockQuote = blockQuote;
 export {
   p,
   blockQuote,
