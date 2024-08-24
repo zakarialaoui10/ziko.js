@@ -190,6 +190,9 @@ class ZikoUIElement {
     for(let i=0;i<names.length;i++)this.element.removeAttribute(names[i]);
     return this;
   }
+  getAttr(name){
+    return this.element.attributes[name].value;
+  }
   setContentEditable(bool = true) {
     this.setAttr("contenteditable", bool);
     return this;

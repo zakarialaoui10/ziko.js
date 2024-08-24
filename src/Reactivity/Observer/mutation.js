@@ -1,6 +1,6 @@
 class ZikoMutationObserver {
-    constructor(UIElement, options) {
-      this.UIElement = UIElement;
+    constructor(targetUIElement, options) {
+      this.target = targetUIElement;
       this.options = options || { attributes: true, childList: true, subtree: true };
       this.observer = null;
       this.streamingEnabled = true;
@@ -29,8 +29,9 @@ class ZikoMutationObserver {
     observe(callback) {
       if(!this.observer) {
         this.observer = new MutationObserver(this.observeCallback);
-        this.observer.observe(this.UIElement.element, this.options);
-        this.callback = callback;
+        this.observer.observe(this.target.element, this.options);
+        // this.callback = ([e]) => callback.call(e,this.target);
+        this.callback = ([e]) => callback.call(e, this);
         this.streamingEnabled = true;
       }
     }
@@ -39,7 +40,7 @@ class ZikoMutationObserver {
       if (this.observer) {
         this.observer.disconnect();
         if (options) {
-          this.observer.observe(this.UIElement, options);
+          this.observer.observe(this.target, options);
         }
       }
     }
@@ -47,7 +48,7 @@ class ZikoMutationObserver {
     reset(options) {
       if (this.observer) {
         this.observer.disconnect();
-        this.observer.observe(this.UIElement, options || this.options);
+        this.observer.observe(this.target, options || this.options);
       }
     }
   
@@ -80,19 +81,23 @@ class ZikoMutationObserver {
     }
   }
 
-const watch=(UIElement,options={},callback=null)=>{
-    const Observer= new ZikoMutationObserver(UIElement,options);
+const watch=(targetUIElement,options={},callback=null)=>{
+    const Observer= new ZikoMutationObserver(targetUIElement,options);
     if(callback)Observer.observe(callback);
     return Observer
 }
-const watchAttr = (UIElement, callback = null) => {
+// const watchAttr = (targetUIElement, callback = null) => {
+//   const options = { attributes: true, childList: false, subtree: false };
+//   return watch(targetUIElement, options, ([e])=>callback.call(e,targetUIElement));
+// };
+const watchAttr = (targetUIElement, callback = null) => {
   const options = { attributes: true, childList: false, subtree: false };
-  return watch(UIElement, options, ([e])=>callback.call(e,UIElement));
+  return watch(targetUIElement, options, callback);
 };
 
-const watchChildren = (UIElement, callback = null) => {
+const watchChildren = (targetUIElement, callback = null) => {
   const options = { attributes: false, childList: true, subtree: false };
-  return watch(UIElement, options, ([e])=>callback.call(e,UIElement));
+  return watch(targetUIElement, options, callback);
 };
 export { 
   watch,
