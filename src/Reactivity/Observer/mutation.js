@@ -87,12 +87,12 @@ const watch=(UIElement,options={},callback=null)=>{
 }
 const watchAttr = (UIElement, callback = null) => {
   const options = { attributes: true, childList: false, subtree: false };
-  return watch(UIElement, options, ([e])=>callback(e));
+  return watch(UIElement, options, ([e])=>callback.call(e,UIElement));
 };
 
 const watchChildren = (UIElement, callback = null) => {
   const options = { attributes: false, childList: true, subtree: false };
-  return watch(UIElement, options, ([e])=>callback(e));
+  return watch(UIElement, options, ([e])=>callback.call(e,UIElement));
 };
 export { 
   watch,

@@ -17,21 +17,24 @@ class ZikoUICollapbsible extends ZikoUIElement{
         this.content=content.style({
             margin:"0.7em",
         });
-        // this.append(this.summary,this.content);
         this.element.append(this.summary.element,this.content.element)
         this.style({
             marginBottom:"0.7em",
         })
-        // this.render();
     }
     get isOpen(){
         return this.element.open;
     }
-    open(){
+    open(details=this){
         this.element.open=true;
+        this.emit("open",details)
         return this;
     }
     onOpen(callback){
+        this.on("open",()=>{
+            
+            callback();
+        })
         return this;
     }
     close(){
@@ -46,14 +49,7 @@ class ZikoUICollapbsible extends ZikoUIElement{
         return this;
     }
 }
-class ZikoUIAccordions extends ZikoUIFlex{
-    constructor(){
-        super();
-    }
-    addPair(controller,details){
 
-    }
-}
  
 const Collapsible=(summary,content,icon)=>new ZikoUICollapbsible(summary,content,icon);
 export{
