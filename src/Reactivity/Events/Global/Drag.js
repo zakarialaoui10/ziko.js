@@ -13,8 +13,8 @@ function drop_controller(e){
 }
 
 class ZikoEventDrag extends ZikoEvent{
-    constructor(Target){
-        super(Target)
+    constructor(target){
+        super(target)
         this.target.setAttribute("draggable",true);
         this.cache={
             prefixe:"drag",
@@ -132,6 +132,6 @@ class ZikoEventDrop extends ZikoEvent{
         return this;
     } 
 }
-const useDragEvent=Target=>new ZikoEventDrag(Target);
-const useDropEvent=Target=>new ZikoEventDrop(Target);
+const useDragEvent=target=>new ZikoEventDrag(target);
+const useDropEvent=target=>new ZikoEventDrop(target);
 export {useDragEvent,useDropEvent}

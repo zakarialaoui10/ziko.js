@@ -24,7 +24,7 @@ class ZikoUIContainerElement extends ZikoUIElement{
           if (ele[i] instanceof ZikoUIElement) {
             ele[i].cache.parent=this;
             this.element.appendChild(ele[i].element);
-            ele[i].Target = this.element;
+            ele[i].target = this.element;
             this.items.push(ele[i]);
           } else if (ele[i] instanceof Object) {
             if (ele[i]?.style) this.style(ele[i]?.style);

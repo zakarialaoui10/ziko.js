@@ -1,11 +1,13 @@
 import { watchIntersection } from "./intersection.js";
 import { 
     watch,
-    watchAttr,
-    watchChildren
+    // watchAttr,
+    // watchChildren
  } from "./mutation.js";
 import { watchSize } from "./resize.js";
 import { watchScreen } from "./screen.js";
+import { watchAttr } from "./attributes.js";
+import { watchChildren } from "./children.js";
 const Observer={
     watch,
     watchAttr,
@@ -35,7 +37,8 @@ const Observer={
     }
 }
 export * from "./intersection";
-export * from "./mutation";
+export * from "./attributes.js";
+export * from "./children.js";
 export * from "./resize";
 export * from "./screen";
 export default Observer;

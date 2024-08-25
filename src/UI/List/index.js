@@ -25,7 +25,7 @@ class ZikoUIList extends ZikoUIContainerElement {
     }
     remove(...ele) {
       if(ele.length==0){
-        if(this.Target.children.length) this.Target.removeChild(this.element);
+        if(this.target.children.length) this.target.removeChild(this.element);
       }
       else {
         const remove = (ele) => {

@@ -7,9 +7,9 @@ function EVENT_CONTROLLER(e,EVENT,setter,push_object){
     return this;
 }
 class ZikoEvent{
-    constructor(Target){
+    constructor(target){
         this.target=null;
-        this.setTarget(Target);
+        this.setTarget(target);
         this.__dispose=this.dispose.bind(this);
         // this.EventIndex=Garbage.Pointer.data.length;
         // Garbage.Pointer.data.push({event:this,index:this.EventIndex});

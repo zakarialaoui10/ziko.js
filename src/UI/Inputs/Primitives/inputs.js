@@ -225,7 +225,7 @@ class ZikoUIInputRadio extends ZikoUIInput {
 class ZikoUIInputImage extends ZikoUIElement {
   constructor(text = "File") {
     super("inputImage");
-    this._aux_element = btn(text).setTarget(this.Target);
+    this._aux_element = btn(text).setTarget(this.target);
     this.element = document.createElement("input");
     this.element.setAttribute("type", "file");
     this.element.setAttribute("accept", "image");
@@ -246,12 +246,12 @@ class ZikoUIInputImage extends ZikoUIElement {
     return this.img;
   }
   render(bool = true) {
-    if (bool) this.Target.appendChild(this._aux_element.element);
+    if (bool) this.target.appendChild(this._aux_element.element);
     else this.remove();
     return this;
   }
   remove() {
-    if (this.Target.children.length) this.Target.removeChild(this._aux_element.element);
+    if (this.target.children.length) this.target.removeChild(this._aux_element.element);
     return this;
   }
 }

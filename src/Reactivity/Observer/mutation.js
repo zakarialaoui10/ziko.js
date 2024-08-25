@@ -1,22 +1,28 @@
 class ZikoMutationObserver {
     constructor(targetUIElement, options) {
       this.target = targetUIElement;
-      this.options = options || { attributes: true, childList: true, subtree: true };
       this.observer = null;
-      this.streamingEnabled = true;
-      this.mutationHistory = {
-        attributes: [],
-        childList: [],
-        subtree: [],
-      };
-  
+      this.cache = {
+        options : options || { attributes: true, childList: true, subtree: true },
+        streamingEnabled : true,
+        lastMutation : null,
+        mutationHistory : {
+          // attributes: [],
+          // childList: [],
+          // subtree: [],
+        },
+      }
+  // children to Items : a.items.filter(n=>n.element === a[0].element)
       this.observeCallback = (mutationsList, observer) => {
-        if (this.streamingEnabled) {
+        // if(this.cache.lastUpdatedAttr){
+        //   this.cache.lastUpdatedAttr = mutation.target.getAttribute(mutation.attributeName)
+        // }
+        if (this.cache.streamingEnabled) {
           for (const mutation of mutationsList) {
             switch(mutation.type){
-              case 'attributes':this.mutationHistory.attributes.push(mutation.target.getAttribute(mutation.attributeName));break;
-              case 'childList':this.mutationHistory.childList.push(mutation);break;
-              case 'subtree':this.mutationHistory.subtree.push(mutation);break;
+              case 'attributes':this.cache.mutationHistory.attributes.push(mutation.target.getAttribute(mutation.attributeName));break;
+              case 'childList':this.cache.mutationHistory.childList.push(mutation);break;
+              case 'subtree':this.cache.mutationHistory.subtree.push(mutation);break;
             }
           }
         }
@@ -28,11 +34,11 @@ class ZikoMutationObserver {
   
     observe(callback) {
       if(!this.observer) {
-        this.observer = new MutationObserver(this.observeCallback);
-        this.observer.observe(this.target.element, this.options);
+        this.observer = new MutationObserver(this.cache.observeCallback);
+        this.observer.observe(this.target.element, this.cache.options);
         // this.callback = ([e]) => callback.call(e,this.target);
         this.callback = ([e]) => callback.call(e, this);
-        this.streamingEnabled = true;
+        this.cache.streamingEnabled = true;
       }
     }
   
@@ -48,7 +54,7 @@ class ZikoMutationObserver {
     reset(options) {
       if (this.observer) {
         this.observer.disconnect();
-        this.observer.observe(this.target, options || this.options);
+        this.observer.observe(this.target, options || this.cache.options);
       }
     }
   
@@ -56,30 +62,32 @@ class ZikoMutationObserver {
       if (this.observer) {
         this.observer.disconnect();
         this.observer = null;
-        this.mutationHistory = {
+        this.cache.mutationHistory = {
           attributes: [],
           childList: [],
           subtree: [],
         };
       }
-      this.streamingEnabled = false;
+      this.cache.streamingEnabled = false;
       return this;
     }
   
     getMutationHistory() {
-      return this.mutationHistory;
+      return this.cache.mutationHistory;
     }
   
     enableStreaming() {
-      this.streamingEnabled = true;
+      this.cache.streamingEnabled = true;
       return this;
     }
   
     disableStreaming() {
-      this.streamingEnabled = false;
+      this.cache.streamingEnabled = false;
       return this;
     }
   }
+
+
 
 const watch=(targetUIElement,options={},callback=null)=>{
     const Observer= new ZikoMutationObserver(targetUIElement,options);
@@ -90,17 +98,12 @@ const watch=(targetUIElement,options={},callback=null)=>{
 //   const options = { attributes: true, childList: false, subtree: false };
 //   return watch(targetUIElement, options, ([e])=>callback.call(e,targetUIElement));
 // };
-const watchAttr = (targetUIElement, callback = null) => {
-  const options = { attributes: true, childList: false, subtree: false };
-  return watch(targetUIElement, options, callback);
-};
+// const watchAttr = (targetUIElement, callback = null) => {
+//   const options = { attributes: true, childList: false, subtree: false };
+//   return watch(targetUIElement, options, callback);
+// };
 
-const watchChildren = (targetUIElement, callback = null) => {
-  const options = { attributes: false, childList: true, subtree: false };
-  return watch(targetUIElement, options, callback);
-};
 export { 
+  ZikoMutationObserver,
   watch,
-  watchAttr,
-  watchChildren
  }; 

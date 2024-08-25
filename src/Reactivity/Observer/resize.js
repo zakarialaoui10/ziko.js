@@ -31,7 +31,7 @@ class ZikoResizeObserver{
         return this.BoundingRect.x;
     }
     get y(){
-        return this.boundingRect.y;
+        return this.BoundingRect.y;
     }
     start(){
         this.observer.observe(this.target.element);
