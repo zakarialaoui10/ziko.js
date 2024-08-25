@@ -1,85 +1,45 @@
-import { useTimeLoop } from "../../Time";
-import { 
-    map,
-    complex,
- } from "../../Math";
+import { map } from "../../Math/Utils/index.js"
 class ZikoScreenObserver {
     constructor(callback=e=>console.log({x:e.x,y:e.y})) {
+      this.cache={};
       this.previousX = globalThis?.screenX;
       this.previousY = globalThis?.screenY;
-      this.view=[-1,-1,1,1];
-      this.start(callback);
     }
-    get xMin(){
-        return this.view[0];
+    update(){
+        Object.assign(this.cache,{
+            screenXLeft : globalThis?.screenX, // CORRECT
+            screenXRight : globalThis?.screen.availWidth - globalThis?.screenX, // CORRECT
+            screenYTop : globalThis?.screenY, // CORRECT
+            screenYBottom : globalThis?.screen.availHeight - globalThis?.screenY - globalThis?.outerHeight, // TO TEST
+            screenCenterX : globalThis?.screen.availWidth/2, // CORRECT
+            screenCenterY : globalThis?.screen.availHeight/2,// CORRECT
+            windowCenterX : globalThis?.outerWidth/2+globalThis?.screenX, // CORRECT
+            windowCenterY : globalThis?.outerHeight/2+ globalThis?.screenY, // FALSE
+            deltaCenterX : globalThis?.screen.availWidth/2-globalThis?.outerWidth/2+globalThis?.screenX, // CORRECT
+            deltaCenterY : null //
+        })
     }
-    get yMin(){
-        return this.view[1];
+    get x0(){
+        return map(globalThis?.screenX, 0, globalThis.screen.availWidth, -1, 1);
     }
-    get xMax(){
-        return this.view[2];
+    get y0(){
+        return - map(globalThis?.screenY, 0, globalThis.screen.availHeight, -1, 1);
     }
-    get yMax(){
-        return this.view[3];
+    get x1(){
+        return map(globalThis?.screenX + globalThis?.outerWidth, 0, globalThis.screen.availWidth, -1, 1);
     }
-    get x(){
-        return globalThis?.screenX;
+    get y1(){
+        return - map(globalThis?.screenY + globalThis?.outerHeight, 0, globalThis.screen.availHeight, -1, 1);
     }
-    get y(){
-        return globalThis?.screenY;
+    get cx(){
+        return map(globalThis?.outerWidth/2+globalThis?.screenX, 0, globalThis.screen.availWidth, -1, 1);
     }
-    get scx(){
-        return screen.availWidth/2;
-    }
-    get scy(){
-        return screen.availHeight/2;
-    }
-    get wcx(){
-        return screenX+globalThis?.innerWidth/2;
-    }
-    get wcx_v(){
-        return map(this.wcx,0,screen.availWidth,this.view[0],this.view[2]);
-    }
-    get wcy(){
-        return screenY+globalThis?.innerHeight/2;
-    }
-    get wcy_v(){
-        return -map(this.wcy,0,screen.availHeight,this.view[1],this.view[3]);
-    }
-    get dx(){
-        return map(this.x,0,screen.availWidth,this.xMin,this.xMax); 
-    }
-    get dy(){
-        return map(this.y,0,screen.availHeight,this.yMin,this.yMax); 
-    }
-    start(callback){
-        this.loop = useTimeLoop(()=>{
-            let currentX = globalThis?.screenX;
-            let currentY = globalThis?.screenY;
-            if (this.previousX !== currentX || this.previousY !== currentY) {
-                callback(this)
-                this.previousX = currentX;
-                this.previousY = currentY;
-            }
-        },
-        {fps:10,t:[0,Infinity],start:true});
-        return this;
+    get cy(){
+        return - map(globalThis?.outerHeight/2+ globalThis?.screenY, 0, globalThis.screen.availHeight, -1, 1);
     }
 }
+
 const watchScreen=(callback)=>new ZikoScreenObserver(callback);
-globalThis.watchScreen=watchScreen;
 export{
     watchScreen
 }
-
-/*
-a=ul("x","y","dx","dy","wcx","wxy")
-watchScreen(e=>{
- a[0].setValue("x : "+e.x) 
- a[1].setValue("y : "+e.y) 
- a[2].setValue("dx : "+e.dx) 
- a[3].setValue("dy : "+e.dy) 
- a[4].setValue("wCx : "+e.wcx) 
- a[5].setValue("wCy : "+e.wcy) 
-})
- */
