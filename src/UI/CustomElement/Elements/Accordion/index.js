@@ -1,2 +1,2 @@
-export { Collapsible } from "./Collapsible.js"
-export { Accordion } from "./Accordion.js"
+export * from "./Collapsible.js"
+export * from "./Accordion.js"

@@ -61,6 +61,7 @@ import{
     CodeNote,
     Tabs,
     Collapsible,
+    Accordion,
 } from "./CustomElement"
 import{
     Header,
@@ -133,6 +134,7 @@ const UI={
     CodeNote,
     Tabs,
     Collapsible,
+    Accordion,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
