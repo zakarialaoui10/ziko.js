@@ -114,8 +114,11 @@ You can integrate it inside other frameworks/libraries like React , Vue , Svelte
 
 |Addon|Purpose|Dependecy|Links|
 |-|-|-|-|
-|zikogl|-|Threejs|[NPM](https://www.npmjs.com/package/zikogl) [GITHUB](https://github.com/zakarialaoui10/zikogl/)|
-|ziko-lottie|render Lottie file within zikojs app|Lottie-web|[NPM](https://www.npmjs.com/package/ziko-lottie) [GITHUB](https://github.com/zakarialaoui10/ziko-lottie/)|
+|ziko-gl|-|`Three.js`|[NPM](https://www.npmjs.com/package/zikogl) [GITHUB](https://github.com/zakarialaoui10/zikogl/)|
+|ziko-chart|-|`Chart.js`<br>`D3.js`|[NPM](https://www.npmjs.com/package/ziko-chart) [GITHUB](https://github.com/zakarialaoui10/ziko-chart/)|
+|ziko-xls|-|`Xls.js`<br>`Hansontable.js`<br>|[NPM](https://www.npmjs.com/package/ziko-xls) [GITHUB](https://github.com/zakarialaoui10/ziko-xls/)|
+|ziko-pdf|-|`jsPdf.js`<br>`Pdf.js`<br>|[NPM](https://www.npmjs.com/package/ziko-pdf) [GITHUB](https://github.com/zakarialaoui10/ziko-pdf/)|
+|ziko-lottie|render Lottie file within zikojs app|`Lottie-web`|[NPM](https://www.npmjs.com/package/ziko-lottie) [GITHUB](https://github.com/zakarialaoui10/ziko-lottie/)|
 ### 🔰 The capability to function in both browser-based and Node.js environments
 ### 🔰 Methodes Extracting
 

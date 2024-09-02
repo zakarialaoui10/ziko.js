@@ -62,6 +62,10 @@ import{
     Tabs,
     Collapsible,
     Accordion,
+    successAlert,
+    infoAlert,
+    warningAlert,
+    dangerAlert
 } from "./CustomElement"
 import{
     Header,
@@ -135,6 +139,10 @@ const UI={
     Tabs,
     Collapsible,
     Accordion,
+    successAlert,
+    infoAlert,
+    warningAlert,
+    dangerAlert,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {

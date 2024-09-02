@@ -36,7 +36,8 @@ data=[{
     "order": 1,
     "type": "js"
 }]
-a.import(data)
+// a.import(data)
+a.addNote()
 b=csv2arr(`
 Assa,Coconut,62.6
 Ksar_es_Seghir,Cherry,76.95

@@ -2,6 +2,7 @@ import { html } from "../../../Misc";
 import { Flex } from "../../Flex";
 import { text } from "../../../Text";
 import { ZikoUICodeNote } from "./CodeNote";
+
 const Input=(codeText="")=>html("code",codeText).style({
     width:"100%",
     height:"auto",
@@ -16,6 +17,7 @@ const Input=(codeText="")=>html("code",codeText).style({
     background:"#f6f8fa",
     color:"#0062C3"
 }).setAttr("contenteditable",true).setAttr("spellcheck",false);
+
 const Output=()=>html("output").style({
     width:"100%",
     height:"auto",

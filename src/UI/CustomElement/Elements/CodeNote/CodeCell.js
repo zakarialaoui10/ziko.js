@@ -40,45 +40,59 @@ class ZikoUICodeCell extends ZikoUIFlex{
             margin:"0 auto",
             border:"1px darkblue dotted"
         })
-        this.Input.onKeyDown(e=>{
-            if(e.kd==="Enter"){
-                if(e.event.shiftKey){
-                    e.event.preventDefault();
-                    this.execute(this.cache.order);
+        let cm_content = this.Input.element.getElementsByClassName("cm-content")[0];
+        if( cm_content ){
+            cm_content.addEventListener("keydown",e=>{
+                if(e.key === "Enter" && e.shiftKey){
+                    e.preventDefault();
+                    this.execute(this.cache.order);   
                 }
-                else {
-                    //console.log(this.Input.element.firstChild.firstChild.textContent.at(-1))
-                }
-            }
-            if(this.cache.parent instanceof ZikoUICodeNote){
-                if(e.kd==="ArrowDown" && e.event.shiftKey ){
-                    this.cache.parent.next();
-                }
-                if(e.kd==="ArrowUp" && e.event.shiftKey){
-                    this.cache.parent.previous();
-                }
-            }
+            })
         }
-        )
-        this.Input.onFocus(()=>{
-            if(this.cache.parent instanceof ZikoUICodeNote){
-                this.cache.parent.cache.currentNote=this;
-                this.cache.parent.setCurrentNote(this);
+        else{
+            this.Input.onKeyDown(e=>{
+                if(e.kd==="Enter"){
+                    if(e.event.shiftKey){
+                        e.event.preventDefault();
+                        this.execute(this.cache.order);
+                    }
+                    else {
+                        //console.log(this.Input.element.firstChild.firstChild.textContent.at(-1))
+                    }
+                }
+                if(this.cache.parent instanceof ZikoUICodeNote){
+                    if(e.kd==="ArrowDown" && e.event.shiftKey ){
+                        this.cache.parent.next();
+                    }
+                    if(e.kd==="ArrowUp" && e.event.shiftKey){
+                        this.cache.parent.previous();
+                    }
+                }
             }
-        })
-        this.Input.onPaste((e)=>{
-            //e.event.preventDefault();
-            //this.setValue(this.codeText.trim())
-        })
-        // this.Input.onKeyPress(e=>{
-        //     if(e.kp==="(")a.Input.element.textContent+=")";
-        //     if(e.kp==="[")a.Input.element.textContent+="]";
-        //     if(e.kp==="{")a.Input.element.textContent+="}";
-        // })    
-    }
+            )
+            this.Input.onFocus(()=>{
+                if(this.cache.parent instanceof ZikoUICodeNote){
+                    this.cache.parent.cache.currentNote=this;
+                    this.cache.parent.setCurrentNote(this);
+                }
+            })
+            this.Input.onPaste((e)=>{
+                //e.event.preventDefault();
+                //this.setValue(this.codeText.trim())
+            })
+            // this.Input.onKeyPress(e=>{
+            //     if(e.kp==="(")a.Input.element.textContent+=")";
+            //     if(e.kp==="[")a.Input.element.textContent+="]";
+            //     if(e.kp==="{")a.Input.element.textContent+="}";
+            // })    
+        }
+        }
     // space &nbsp
     get codeText() {
-        return this.Input.element.innerText.trim();
+        return (this.Input.element.getElementsByClassName("cm-content")[0])
+        ?this.Input.element.getElementsByClassName("cm-content")[0].innerText.trim()
+        :this.Input.element.innerText.trim()
+        // return this.Input.element.innerText.trim();
     }
     get codeHTML() {
         return this.Input.element.innerHTML;
@@ -108,7 +122,9 @@ class ZikoUICodeCell extends ZikoUIFlex{
         try{
             this.LeftControl[0].setValue("pending");
             this.cache.state="pending";  
-            globalThis.eval(this.Input.element.innerText);
+            // globalThis.eval(this.Input.element.innerText);
+            globalThis.eval(this.codeText);
+
         }
         catch(err){
             console.log(err)

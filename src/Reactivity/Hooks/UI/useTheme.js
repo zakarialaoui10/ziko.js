@@ -53,7 +53,7 @@ class ZikoUseTheme{
       return this;
     }
   }  
-  const useTheme=(id=0)=>(theme=0)=>new ZikoUseTheme(theme,id)
+  const useTheme=(theme, id=0)=>new ZikoUseTheme(theme,id)
   export {
       useTheme,
       // Themes,
