@@ -9,6 +9,9 @@ class ZikoUIFlex extends ZikoUIContainerElement {
     this.style({ display: "flex" });
     // this.render();
   }
+  get isFlex(){
+    return true;
+  }
   resp(px,wrap = true) {
     this.wrap(wrap);
     if (this.element.clientWidth < px) this.vertical();

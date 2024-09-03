@@ -4,6 +4,9 @@ class ZikoUILabel extends ZikoUIElement{
       super();
       this.element=document.createElement("label");
     }
+    get isLabel(){
+      return true;
+  }
   }
 class ZikoUIInputOption extends ZikoUIElement {
     constructor(value = "") {

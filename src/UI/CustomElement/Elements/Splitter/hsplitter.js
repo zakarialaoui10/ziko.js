@@ -29,6 +29,9 @@ class ZikoUIHorizontalSplitter extends __ZikoUISplitter__{
             this.rightPane.element.style.width = `${newRightPaneWidth}%`;
         })
     }
+    get isHorizontalSplitter(){
+        return true;
+      }
 }
 const hSplitter=(leftPane, rightPane)=>new ZikoUIHorizontalSplitter(leftPane, rightPane);
 export{

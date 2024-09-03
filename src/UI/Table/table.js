@@ -14,6 +14,9 @@ class ZikoUITable extends ZikoUIElement {
         if(body)this.fromMatrix(body);
         if(caption)this.setCaption(caption)
     }
+    get isTable(){
+        return true;
+      }
     get caption(){
         return this.structure.caption;
     }

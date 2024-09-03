@@ -9,6 +9,9 @@ class ZikoUITextArea extends ZikoUIElement {
     get value(){
       return this.element.textContent;
     }
+    get isTextArea(){
+      return true;
+    }
   }
 
   const textarea =()=> new ZikoUITextArea();

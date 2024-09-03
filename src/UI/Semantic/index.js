@@ -3,15 +3,24 @@ class ZikoUIMain extends ZikoUIContainerElement{
     constructor(){
       super("main","Main");
     }
+    get isMain(){
+      return true
+    }
   }
   class ZikoUIHeader extends ZikoUIContainerElement{
     constructor(){
       super("header","Header");
     }
+    get isHeader(){
+      return true
+    }
   }
   class ZikoUINav extends ZikoUIContainerElement{
     constructor(){
       super("nav","Nav");
+    }
+    get isNav(){
+      return true
     }
   }
   class ZikoUISection extends ZikoUIContainerElement{
@@ -19,21 +28,33 @@ class ZikoUIMain extends ZikoUIContainerElement{
       super("section","Section");
       this.style({position:"relative"})
     }
+    get isSection(){
+      return true
+    }
   }
   class ZikoUIArticle extends ZikoUIContainerElement{
     constructor(){
       super("article","Article");
+    }
+    get isArticle(){
+      return true
     }
   }
   class ZikoUIAside extends ZikoUIContainerElement{
     constructor(){
       super("aside","Aside");
     }
+    get isAside(){
+      return true
+    }
   }
   class ZikoUIFooter extends ZikoUIContainerElement{
     constructor(){
       super("footer","Footer");
       this.element=document.createElement("footer");
+    }
+    get isFooter(){
+      return true
     }
   }
 const Section = (...ZikoUIElement) => new ZikoUISection().append(...ZikoUIElement);

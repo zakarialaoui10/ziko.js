@@ -8,6 +8,9 @@ class ZikoUIFigure extends ZikoUIElement{
       this.element.append(this.img);
       this.element.append(this.caption);
     }
+    get isFigure(){
+      return true;
+    }
 }
 const figure =(image,caption) =>new ZikoUIFigure(image,caption);
 export{

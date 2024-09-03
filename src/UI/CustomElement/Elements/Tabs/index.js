@@ -49,6 +49,9 @@ class ZikoUITabs extends ZikoUIFlex{
         this.init()
         this.display(0);
     }
+    get isTabs(){
+        return true;
+    }
     init(){  
         // Remove old listener
         for(let i=0;i<this.Controller.length;i++){

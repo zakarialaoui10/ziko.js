@@ -16,6 +16,9 @@ class __ZikoUIText__ extends ZikoContainerElement {
         lineBreak,
       })
     }
+    get isText(){
+      return true;
+    }
     get value(){
       return this.element.textContent;
     }

@@ -42,6 +42,9 @@ class ZikoUICarousel extends ZikoUIFlex{
             // Handle outside up 
         });
     }
+    get isCarousel(){
+        return true;
+      }
 }
 const Carousel=(...ZikoUIElement)=>new ZikoUICarousel(...ZikoUIElement);
 export {Carousel}

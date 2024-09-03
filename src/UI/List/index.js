@@ -6,12 +6,18 @@ class ZikoUILI extends ZikoUIContainerElement{
     super("li","li");
     this.append(UI);
   }
+  get isLi(){
+    return true;
+  }
 }
 class ZikoUIList extends ZikoUIContainerElement {
     constructor(element,name) {
       super(element,name);
       delete this.append;
       this.style({ listStylePosition: "inside" });
+    }
+    get isList(){
+      return true;
     }
     append(...arr){
       for (let i = 0; i < arr.length; i++) {
@@ -105,6 +111,9 @@ class ZikoUIOList extends ZikoUIList{
     super("ol","ol");
     this.append(...arr);
   }
+  get isOl(){
+    return true;
+  }
   type(tp = 1) {
     this.element.setAttribute("type", tp);
     return this;
@@ -118,6 +127,9 @@ class ZikoUIUList extends ZikoUIList{
   constructor(...arr){
     super("ul","ul");
     this.append(...arr);
+  }
+  get isUl(){
+    return true;
   }
 }
 const li=UI=>new ZikoUILI(UI)

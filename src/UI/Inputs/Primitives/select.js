@@ -9,6 +9,9 @@ class ZikoUISelect extends ZikoUIElement {
       options.map(n => this.append(new ZikoUIInputOption(n)));
       return this;
     }
+    get isSelect(){
+      return true;
+    }
   }
 const select=()=>new ZikoUISelect()
 export{select,ZikoUISelect}

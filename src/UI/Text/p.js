@@ -3,11 +3,17 @@ class ZikoUIParagraphe extends __ZikoUIText__ {
     constructor(...value) {
       super("p", "p", true, ...value);
     }
+    get isPara(){
+      return true;
+    }
 }
 class ZikoUIBlockQuote extends __ZikoUIText__ {
     constructor(cite,quote) {
       super("blockquote", "blockquote", true, quote);
       this.setAttr("cite", cite);
+    }
+    get isBlockQuote(){
+      return true;
     }
 }
 const p = (...ZikoUIElement) => new ZikoUIParagraphe(...ZikoUIElement);

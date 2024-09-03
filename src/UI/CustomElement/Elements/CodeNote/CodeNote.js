@@ -10,6 +10,9 @@ class ZikoUICodeNote extends ZikoUIFlex{
         })
         this.vertical(0,0);
     }
+    get isCodeNote(){
+        return true;
+      }
     setCurrentNote(currentNote){
         this.cache.currentNote=currentNote;
         this.cache.currentNoteIndex=this.items.findIndex(n=>n===currentNote);

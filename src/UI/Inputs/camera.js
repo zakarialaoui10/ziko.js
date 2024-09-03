@@ -6,6 +6,9 @@ class ZikoUIWebcame extends ZikoUIVideo{
       this.constraints = { audio: true, video: { width: 1280, height: 720 } };
       //this.video=this.element
     }
+    get isInputCamera(){
+      return true;
+    }
     start(){
       navigator.mediaDevices.getUserMedia(this.constraints).then((mediaStream)=>{
         this.element.srcObject = mediaStream;

@@ -29,6 +29,9 @@ class ZikoUIVerticalSplitter extends __ZikoUISplitter__{
             this.bottomPane.element.style.height = `${newBottomPaneHeight}%`;
         })
     }
+    get isHorizontalSplitter(){
+        return true;
+    }
 }
 const vSplitter=(topPane, bottomPane)=>new ZikoUIVerticalSplitter(topPane, bottomPane);
 export{

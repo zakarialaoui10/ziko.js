@@ -13,6 +13,9 @@ class ZikoUIInput extends ZikoUIElement {
     this.setValue(value);
     if(datalist)this.linkDatalist(datalist)
   }
+  get isInput(){
+    return true;
+}
   onInput(...callbacks){
     if(!this.events.input)this.events.input = useInputEvent(this);
     this.events.input.onInput(...callbacks);
@@ -86,6 +89,9 @@ class ZikoUIInputSearch extends ZikoUIInput {
     this._setType("search");
     this.Length = 0;
   }
+  get isInputSearch(){
+    return true;
+  }
   onsearch(callback) {
     this.element.addEventListener("search", () => callback());
     return this;
@@ -123,6 +129,9 @@ class ZikoUIInputNumber extends ZikoUIInput {
     this._setType("number");
     this.setMin(min).setMax(max).setStep(step);
   }
+  get isInputNumber(){
+    return true;
+  }
   get value() {
     return +this.element.value;
   }
@@ -145,6 +154,9 @@ class ZikoUIInputSlider extends ZikoUIInputNumber {
     this._setType("range");
     this.setMin(min).setMax(max).setValue(val).setStep(step);
   }
+  get isInputSlider(){
+    return true;
+  }
 }
 class ZikoUIInputColor extends ZikoUIInput {
   constructor() {
@@ -153,11 +165,17 @@ class ZikoUIInputColor extends ZikoUIInput {
     this.background(this.value);
     this.onInput(() => this.background(this.value));
   }
+  get isInputColor(){
+    return true;
+  }
 }
 class ZikoUIInputPassword extends ZikoUIInput {
   constructor() {
     super("inputPassword");
     this._setType("password");
+  }
+  get isInputPassword(){
+    return true;
   }
 }
 class ZikoUIInputEmail extends ZikoUIInput {
@@ -165,11 +183,17 @@ class ZikoUIInputEmail extends ZikoUIInput {
     super("inputEmail");
     this._setType("email");
   }
+  get isInputEmail(){
+    return true;
+  }
 }
 class ZikoUIInputTime extends ZikoUIInput {
   constructor() {
     super("inputTime");
     this._setType("time");
+  }
+  get isInputTime(){
+    return true;
   }
 }
 class ZikoUIInputDate extends ZikoUIInput {
@@ -177,11 +201,17 @@ class ZikoUIInputDate extends ZikoUIInput {
     super("inputDate");
     this._setType("date");
   }
+  get isInputDate(){
+    return true;
+  }
 }
 class ZikoUIInputDateTime extends ZikoUIInput {
   constructor() {
     super("inputDateTime");
     this._setType("datetime-local");
+  }
+  get isInputDateTime(){
+    return true;
   }
 }
 class ZikoUIInputCheckbox extends ZikoUIInput {
@@ -189,6 +219,9 @@ class ZikoUIInputCheckbox extends ZikoUIInput {
     super("inputCheckbox");
     this._setType("checkbox");
     this.cursor("pointer");
+  }
+  get isInputCheckbox(){
+    return true;
   }
   get checked() {
     return this.element.checked;
@@ -207,6 +240,9 @@ class ZikoUIInputRadio extends ZikoUIInput {
     super("inputRadio");
     this._setType("radio");
     this.cursor("pointer");
+  }
+  get isInputRadio(){
+    return true;
   }
   get checked() {
     return this.element.checked;
@@ -231,6 +267,9 @@ class ZikoUIInputImage extends ZikoUIElement {
     this.element.setAttribute("accept", "image");
     this._aux_element.onClick(() => this.element.click());
     this.element.onChange = this.handleImage.bind(this);
+  }
+  get isInputImage(){
+    return true;
   }
   handleImage(e) {
     const reader = new FileReader();
@@ -261,6 +300,9 @@ class ZikoUIInputDatalist extends ZikoUIElement {
     super();
     this.element = document.createElement("datalist");
     this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
+  }
+  get isDatalist(){
+    return true;
   }
   addOptions(...options) {
     options.map((n) => this.append(new ZikoUIInputOption(n)));

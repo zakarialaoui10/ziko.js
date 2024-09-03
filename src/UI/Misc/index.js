@@ -13,6 +13,9 @@ class ZikoUIBtn extends ZikoUIElement {
     this.st.cursor("pointer");
     globalThis.__Ziko__.__Config__.default.render && this.render();
   }
+  get isBtn(){
+    return true
+  }
   setValue(value) {
     if (value instanceof ZikoUIElement) value.setTarget(this.element);
     else {
@@ -36,22 +39,42 @@ class ZikoUIBtn extends ZikoUIElement {
 class ZikoUIBr extends ZikoUIElement {
     constructor() {
       super("br","br");
-          // delete this.append
+    }
+    get isBr(){
+      return true
     }
   }
   class ZikoUIHr extends ZikoUIElement {
     constructor() {
       super("hr","hr");
-          // delete this.append
+    }
+    get isHr(){
+      return true
     }
   }
   class ZikoUILink extends ZikoUIContainerElement{
     constructor(href){
       super("a","link");
+      Object.assign(this.cache,{
+        defaultStyle:{
+          color:"#0275d8",
+          textDecoration: "none"
+        },
+        hoverStyle:{
+          color:"#01447e",
+          textDecoration: "underline"
+        },
+      })
       this.setHref(href);
+      this.style(this.cache.defaultStyle);
+      this.onPtrEnter(()=>this.style(this.cache.hoverStyle));
+      this.onPtrLeave(()=>this.style(this.cache.defaultStyle));
     }
     setHref(href){
       this.element.href=href;
+    }
+    get isLink(){
+      return true
     }
   }
   const br = () => new ZikoUIBr();

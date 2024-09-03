@@ -5,6 +5,9 @@ class ZikoUIAudio extends ZikoUIElement {
       this.element.setAttribute("src", src);
       this.useControls();
     }
+    get isAudio(){
+      return true;
+    }
     get t(){
       return this.element.currentTime;  
     }

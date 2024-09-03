@@ -11,31 +11,49 @@ class ZikoUIQuote extends __ZikoUIText__ {
       fontStyle: "italic"
     })
   }
+  get isQuote(){
+    return true
+  }
 }
 class ZikoUIDefintion extends __ZikoUIText__ {
   constructor(...value) {
     super("dfn", "dfnText", false, ...value);
+  }
+  get isDfnText(){
+    return true
   }
 }
 class ZikoUISupText extends __ZikoUIText__ {
   constructor(sup) {
     super("sup", "supText", false, sup);
   }
+  get isSupText(){
+    return true
+  }
 }
 class ZikoUISubText extends __ZikoUIText__ {
   constructor(...value) {
     super("sub", "subText", false, ...value);
+  }
+  get isSubText(){
+    return true
   }
 }
 class ZikoUICodeText extends __ZikoUIText__ {
   constructor(...value) {
     super("code", "codeText", false, ...value);
   }
+  get isCodeText(){
+    return true
+  }
 }
 class ZikoUIAbbrText extends __ZikoUIText__ {
   constructor(abbr, title) {
     super("abbr", "abbrText", false, abbr);
     this.setAttr("title", title);
+  }
+  get isAbbrText(){
+    return true
   }
 }
 const text = (...str) => new ZikoUIText(...str);

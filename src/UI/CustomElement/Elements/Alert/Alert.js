@@ -30,6 +30,9 @@ class ZikoUIAlert extends ZikoUIFlex{
         )
         this.useType(type);
     }
+    get isAlert(){
+      return true;
+    }
     useType(type){
       this.style({
         color:palette[type].color,

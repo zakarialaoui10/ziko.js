@@ -9,6 +9,9 @@ class ZikoUIGrid extends ZikoUIContainerElement {
       this.style({ display: "grid" });
     //   this.render();
     }
+    get isGird(){
+        return true;
+      }
     columns(n) {
         let temp = "";
         for (let i = 0; i < n; i++) temp = temp.concat(" auto");

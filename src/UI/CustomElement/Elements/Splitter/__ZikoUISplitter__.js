@@ -49,6 +49,9 @@ class __ZikoUISplitter__ extends ZikoUIElement{
             }
         })
     }
+    get isSplitter(){
+        return true;
+      }
     styleResizer(style={}){
         this.resizer.style(style);
         return this;

@@ -8,6 +8,9 @@ class ZikoUIVideo extends ZikoUIElement {
       if (typeof h == "number") h += "%";
       this.style({ width: w, height: h });
     }
+    get isVideo(){
+      return true;
+    }
     get t(){
       return this.element.currentTime;  
     }

@@ -9,6 +9,9 @@ class ZikoUIImage extends ZikoUIElement {
       if (typeof h == "number") h += "%";
       this.style({ border: "1px solid black", width: w, height: h });
     }
+    get isImg(){
+      return true;
+    }
      updateSrc(url){
       this.value=url;
       this.element.src=url;

@@ -87,6 +87,9 @@ class ZikoUICodeCell extends ZikoUIFlex{
             // })    
         }
         }
+    get isCodeCell(){
+        return true;
+    }
     // space &nbsp
     get codeText() {
         return (this.Input.element.getElementsByClassName("cm-content")[0])
