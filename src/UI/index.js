@@ -62,10 +62,13 @@ import{
     Tabs,
     Collapsible,
     Accordion,
+    hSplitter,
+    vSplitter,
+    Breadcrumbs,
     successAlert,
     infoAlert,
     warningAlert,
-    dangerAlert
+    dangerAlert,
 } from "./CustomElement"
 import{
     Header,
@@ -139,6 +142,9 @@ const UI={
     Tabs,
     Collapsible,
     Accordion,
+    hSplitter,
+    vSplitter,
+    Breadcrumbs,
     successAlert,
     infoAlert,
     warningAlert,

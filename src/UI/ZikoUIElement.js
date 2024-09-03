@@ -252,6 +252,11 @@ class ZikoUIElement {
     this.events.ptr.onOut(...callbacks);
     return this;
   }
+  onPtrCancel(...callbacks){
+    if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
+    this.events.ptr.onCancel(...callbacks);
+    return this;
+  }
   onMouseMove(...callbacks){
     if(!this.events.mouse)this.events.mouse = useMouseEvent(this);
     this.events.mouse.onMove(...callbacks);

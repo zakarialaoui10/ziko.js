@@ -91,6 +91,15 @@ function pointerout_controller(e){
         null    
     )
 }
+function pointercancel_controller(e){
+    EVENT_CONTROLLER.call(
+        this,
+        e,
+        "cancel",
+        null,
+        null    
+    )
+}
 class ZikoEventPointer extends ZikoEvent{
     constructor(target){
         super(target);
@@ -121,6 +130,7 @@ class ZikoEventPointer extends ZikoEvent{
                 enter:false,
                 out:false,
                 leave:false,
+                cancel:false
             },
             paused:{
                 down:false,
@@ -128,7 +138,8 @@ class ZikoEventPointer extends ZikoEvent{
                 up:false,
                 enter:false,
                 out:false,
-                leave:false,          
+                leave:false,
+                cancel:false          
             },
             stream:{
                 enabled:{
@@ -138,6 +149,7 @@ class ZikoEventPointer extends ZikoEvent{
                     enter:false,
                     out:false,
                     leave:false,
+                    cancel:false
                 },
                 clear:{
                     down:false,
@@ -145,7 +157,8 @@ class ZikoEventPointer extends ZikoEvent{
                     up:false,
                     enter:false,
                     out:false,
-                    leave:false,            
+                    leave:false,
+                    cancel:false            
                 },
                 history:{
                     down:[],
@@ -162,7 +175,8 @@ class ZikoEventPointer extends ZikoEvent{
                 up:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})],
                 enter:[(self)=>console.log({dx:self.dx,dy:self.dy,down:self.down,move:self.move,t:self.dt})],
                 out:[(self)=>console.log({mx:self.mx,my:self.my,down:self.down,move:self.move,t:self.dt})],
-                leave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
+                leave:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})],
+                cancel:[(self)=>console.log({ux:self.ux,uy:self.uy,down:self.down,move:self.move,t:self.dt})]
             }
         }
         this.__controller={
@@ -172,36 +186,42 @@ class ZikoEventPointer extends ZikoEvent{
             enter:pointerenter_controller.bind(this),
             out:pointerout_controller.bind(this),
             leave:pointerleave_controller.bind(this),
+            cancel:pointercancel_controller.bind(this),
         }
     }
     onDown(...callbacks){
         if(callbacks.length===0)callbacks=[()=>{}];
-        this.__onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false},...callbacks)
+        this.__onEvent("down",{down:true,move:false,up:false,enter:false,out:false,leave:false,cancel:false},...callbacks)
         return this;
     }
     onMove(...callbacks){
         if(callbacks.length===0)callbacks=[()=>{}];
-        this.__onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false},...callbacks)
+        this.__onEvent("move",{down:false,move:true,up:false,enter:false,out:false,leave:false,cancel:false},...callbacks)
         return this;
     }
     onUp(...callbacks){
         if(callbacks.length===0)callbacks=[()=>{}];
-        this.__onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false},...callbacks)
+        this.__onEvent("up",{down:false,move:false,up:true,enter:false,out:false,leave:false,cancel:false},...callbacks)
         return this;
     }
     onEnter(...callbacks){
         if(callbacks.length===0)callbacks=[()=>{}];
-        this.__onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false},...callbacks)
+        this.__onEvent("enter",{down:false,move:false,up:false,enter:true,out:false,leave:false,cancel:false},...callbacks)
         return this;
     }
     onOut(...callbacks){
         if(callbacks.length===0)callbacks=[()=>{}];
-        this.__onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false},...callbacks)
+        this.__onEvent("out",{down:false,move:false,up:false,enter:false,out:true,leave:false,cancel:false},...callbacks)
         return this;
     }
     onLeave(...callbacks){
         if(callbacks.length===0)callbacks=[()=>{}];
-        this.__onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true},...callbacks)
+        this.__onEvent("leave",{down:false,move:false,up:false,enter:false,out:false,leave:true,cancel:false},...callbacks)
+        return this;
+    }
+    onCancel(...callbacks){
+        if(callbacks.length===0)callbacks=[()=>{}];
+        this.__onEvent("cancel",{down:false,move:false,up:false,enter:false,out:false,leave:false,cancel:true},...callbacks)
         return this;
     }
     // handle({down=false,move=false,up=false}={}){

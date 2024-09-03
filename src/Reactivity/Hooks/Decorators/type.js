@@ -71,17 +71,17 @@ const checkTypeOrInstance = (type, arg) => {
     return (typeof arg !== 'object' || arg === null)? false : Object.keys(type).every(key => key in arg && checkTypeOrInstance(type[key], arg[key]))  
   return false;
 };
-globalThis.useType = useType
-globalThis.useNot = useNot
-globalThis.useOr = useOr
+// globalThis.useType = useType
+// globalThis.useNot = useNot
+// globalThis.useOr = useOr
 
-function add(a, b = 0){
-  return a+b
- }
+// function add(a, b = 0){
+//   return a+b
+//  }
  
-add = useType(add,"number",useNor("string","number"))
+// add = useType(add,"number",useNor("string","number"))
  
-console.log(add(1))
+// console.log(add(1))
 
 export{
   useType
