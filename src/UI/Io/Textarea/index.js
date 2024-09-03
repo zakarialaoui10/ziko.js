@@ -1,10 +1,8 @@
-import ZikoUIElement from "../../ZikoUIElement.js";
-
+import ZikoUIElement from "../../ZikoUIElement";
 class ZikoUITextArea extends ZikoUIElement {
     constructor() {
       super();
       this.element = document.createElement("textarea");
-      //Object.assign(this,inputComposer.call(this));
     }
     get value(){
       return this.element.textContent;
@@ -12,7 +10,9 @@ class ZikoUITextArea extends ZikoUIElement {
     get isTextArea(){
       return true;
     }
-  }
-
-  const textarea =()=> new ZikoUITextArea();
-  export {textarea}
+}
+const textarea =()=> new ZikoUITextArea();
+export {
+    ZikoUITextArea,
+    textarea
+}

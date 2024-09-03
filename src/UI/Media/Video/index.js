@@ -1,5 +1,5 @@
-import ZikoUIElement from "../../ZikoUIElement.js";
-class ZikoUIVideo extends ZikoUIElement {
+import { __ZikoUIDynamicMediaElement__ } from "../__ZikoUIDynamicMediaELement__.js";
+class ZikoUIVideo extends __ZikoUIDynamicMediaElement__ {
     constructor(src="", w = "100%", h = "50vh") {
       super("video","video");
       if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);
@@ -11,38 +11,13 @@ class ZikoUIVideo extends ZikoUIElement {
     get isVideo(){
       return true;
     }
-    get t(){
-      return this.element.currentTime;  
-    }
-    useControls(enabled = true) {
-      this.element.controls = enabled;
-      return this;
-    }
-    play() {
-      this.element.play();
-      return this;
-    }
-    pause() {
-      this.element.pause();
-      return this;
-    }
-    poster(src=""){
+    usePoster(src=""){
       this.element.poster=src;
       return this;
     }
     usePIP(e){
       this.element.requestPictureInPicture(e);
       return this;
-    }
-    seekTo(time) {
-      this.element.currentTime = time;
-      return this;
-    }
-    onPlay(){
-
-    }
-    onPause(){
-
     }
   }
 const video = (src, width, height) => new ZikoUIVideo(src, width, height);

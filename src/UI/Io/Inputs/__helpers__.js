@@ -1,4 +1,5 @@
-import ZikoUIElement from "../../ZikoUIElement.js";
+import ZikoUIElement from "../../ZikoUIElement";
+import { Random } from "../../../Math/Random/index.js";
 class ZikoUILabel extends ZikoUIElement{
     constructor(){
       super();
@@ -26,6 +27,26 @@ class ZikoUIInputOption extends ZikoUIElement {
       if(text)this.element.textContent=text;
       return this;
     }
+}
+class ZikoUIInputDatalist extends ZikoUIElement {
+  constructor(...options){
+    super();
+    this.element = document.createElement("datalist");
+    this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
   }
-  //const op=(n)=>new ZikoUIInputOption(n)
-export{ZikoUILabel,ZikoUIInputOption}
+  get isDatalist(){
+    return true;
+  }
+  addOptions(...options) {
+    options.map((n) => this.append(new ZikoUIInputOption(n)));
+    return this;
+  }
+}
+
+const datalist = (...options) => new ZikoUIInputDatalist(...options);
+export{
+  datalist,
+  ZikoUIInputDatalist,
+  ZikoUILabel,
+  ZikoUIInputOption
+}

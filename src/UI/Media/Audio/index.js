@@ -1,37 +1,13 @@
-import ZikoUIElement from "../../ZikoUIElement";
-class ZikoUIAudio extends ZikoUIElement {
+import { __ZikoUIDynamicMediaElement__ } from "../__ZikoUIDynamicMediaELement__.js";
+class ZikoUIAudio extends __ZikoUIDynamicMediaElement__ {
     constructor(src) {
       super("audio","audio");
       this.element.setAttribute("src", src);
-      this.useControls();
+      this.size("150px","30px")
+      // this.useControls();
     }
     get isAudio(){
       return true;
-    }
-    get t(){
-      return this.element.currentTime;  
-    }
-    useControls(enabled = true) {
-      this.element.controls = enabled;
-      return this;
-    }
-    play() {
-      this.element.play();
-      return this;
-    }
-    pause() {
-      this.element.pause();
-      return this;
-    }
-    seekTo(time) {
-      this.element.currentTime = time;
-      return this;
-    }
-    onPlay(){
-
-    }
-    onPause(){
-
     }
   }
 const audio = (src) => new ZikoUIAudio(src);

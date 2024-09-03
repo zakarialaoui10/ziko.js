@@ -1,0 +1,355 @@
+// import ZikoUIElement from "../../../ZikoUIElement";
+// import { useInputEvent } from "../../../../Reactivity/Events/index.js";
+//import { ZikoUIInputOption,ZikoUILabel } from "./elements.js";
+//import { btn } from "../../../Misc/index.js";
+//import { Random } from "../../../../Math/Random/index.js";
+//import { select } from "./select.js";
+//import { debounce,throttle} from "../../Data/decorators.js";
+
+// class ZikoUIInput extends ZikoUIElement {
+//   constructor(name , value = "",datalist) {
+//     super("input",name);
+//     Object.assign(this.events,{input:null})
+//     this.setValue(value);
+//     if(datalist)this.linkDatalist(datalist)
+//   }
+//   get isInput(){
+//     return true;
+// }
+//   onInput(...callbacks){
+//     if(!this.events.input)this.events.input = useInputEvent(this);
+//     this.events.input.onInput(...callbacks);
+//     return this;
+//   }
+//   onChange(...callbacks){
+//     if(!this.events.input)this.events.input = useInputEvent(this);
+//     this.events.input.onChange(...callbacks);
+//     return this;
+//   }
+//   linkDatalist(datalist) {
+//     let id;
+//     if(datalist instanceof ZikoUIInputDatalist)id=datalist.Id
+//     else if(datalist instanceof Array){
+//       const Datalist=new ZikoUIInputDatalist(...datalist);
+//       id=Datalist.Id;
+//       console.log(Datalist)
+//     }
+//     else id=datalist;
+//     this.element.setAttribute("list", id);
+//     return this;
+//   }
+//   get value() {
+//     return this.element.value;
+//   }
+//   _setType(type) {
+//     this.element.type = type;
+//     return this;
+//   }
+//   setValue(value="") {
+//     this.element.value = value;
+//     return this;
+//   }
+//   useState(state){
+//     this.setValue(state)
+//     return [{value:this.value},e=>this.setValue(e)]
+//   }
+//   setPlaceholder(value) {
+//     if(value)this.element.placeholder = value;
+//     return this;
+//   }
+//   get isValide() {
+//     return this.element.checkValidity();
+//   }
+//   setRequired(required = true) {
+//     this.element.required = required;
+//     return this;
+//   }
+//   select() {
+//     this.element.select();
+//     return this;
+//   }
+//   copy() {
+//     this.element.select();
+//     document.execCommand("copy");
+//     return this;
+//   }
+//   cut() {
+//     this.element.select();
+//     document.execCommand("cut");
+//     return this;
+//   }
+//   accept(value) {
+//     this.element.accept = value;
+//     return this;
+//   }
+// }
+// class ZikoUIInputSearch extends ZikoUIInput {
+//   constructor() {
+//     super("inputSearch");
+//     this._setType("search");
+//     this.Length = 0;
+//   }
+//   get isInputSearch(){
+//     return true;
+//   }
+//   onsearch(callback) {
+//     this.element.addEventListener("search", () => callback());
+//     return this;
+//   }
+//   connect(...UIElement) {
+// /* 
+//     let memory = new Array(UIElement.length).fill([]);
+//     UIElement.map((n, i) => {
+//       //console.log(n)
+//       n.items.map((m, j) => {
+//         memory[i][j] = m.element.style.display;
+//       });
+//     });
+//     UIElement.map((n, i) =>
+//       this.onInput(() => {
+//         n.filterByTextContent(this.value, memory[i]);
+//         this.Length = n.children.filter(
+//           (n) => n.style.display != "none"
+//         ).length;
+//       })
+//     );
+//     */
+//     return this;
+//   }
+//   displayLength(UIElement) {
+//     this.element.addEventListener("keyup", () =>
+//       UIElement.setValue(this.Length)
+//     );
+//     return this;
+//   }
+// }
+// class ZikoUIInputNumber extends ZikoUIInput {
+//   constructor(min, max ,step = 1) {
+//     super("inpuNumber");
+//     this._setType("number");
+//     this.setMin(min).setMax(max).setStep(step);
+//   }
+//   get isInputNumber(){
+//     return true;
+//   }
+//   get value() {
+//     return +this.element.value;
+//   }
+//   setMin(min) {
+//     this.element.min = min;
+//     return this;
+//   }
+//   setMax(max) {
+//     this.element.max = max;
+//     return this;
+//   }
+//   setStep(step) {
+//     this.element.step = step;
+//     return this;
+//   }
+// }
+// class ZikoUIInputSlider extends ZikoUIInputNumber {
+//   constructor(val = 0, min = 0, max = 10, step = 1) {
+//     super("inputSlider");
+//     this._setType("range");
+//     this.setMin(min).setMax(max).setValue(val).setStep(step);
+//   }
+//   get isInputSlider(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputColor extends ZikoUIInput {
+//   constructor() {
+//     super("inputColor");
+//     this._setType("color");
+//     this.background(this.value);
+//     this.onInput(() => this.background(this.value));
+//   }
+//   get isInputColor(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputPassword extends ZikoUIInput {
+//   constructor() {
+//     super("inputPassword");
+//     this._setType("password");
+//   }
+//   get isInputPassword(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputEmail extends ZikoUIInput {
+//   constructor() {
+//     super("inputEmail");
+//     this._setType("email");
+//   }
+//   get isInputEmail(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputTime extends ZikoUIInput {
+//   constructor() {
+//     super("inputTime");
+//     this._setType("time");
+//   }
+//   get isInputTime(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputDate extends ZikoUIInput {
+//   constructor() {
+//     super("inputDate");
+//     this._setType("date");
+//   }
+//   get isInputDate(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputDateTime extends ZikoUIInput {
+//   constructor() {
+//     super("inputDateTime");
+//     this._setType("datetime-local");
+//   }
+//   get isInputDateTime(){
+//     return true;
+//   }
+// }
+// class ZikoUIInputCheckbox extends ZikoUIInput {
+//   constructor() {
+//     super("inputCheckbox");
+//     this._setType("checkbox");
+//     this.cursor("pointer");
+//   }
+//   get isInputCheckbox(){
+//     return true;
+//   }
+//   get checked() {
+//     return this.element.checked;
+//   }
+//   check(checked = true) {
+//     this.element.checked = checked;
+//     return this;
+//   }
+//   color(color) {
+//     this.element.style.accentColor = color;
+//     return this;
+//   }
+// }
+// class ZikoUIInputRadio extends ZikoUIInput {
+//   constructor() {
+//     super("inputRadio");
+//     this._setType("radio");
+//     this.cursor("pointer");
+//   }
+//   get isInputRadio(){
+//     return true;
+//   }
+//   get checked() {
+//     return this.element.checked;
+//   }
+//   check(checked = true) {
+//     this.element.checked = checked;
+//     return this;
+//   }
+//   color(color) {
+//     this.element.style.accentColor = color;
+//     return this;
+//   }
+// }
+
+
+// class ZikoUIInputImage extends ZikoUIElement {
+//   constructor(text = "File") {
+//     super("inputImage");
+//     this._aux_element = btn(text).setTarget(this.target);
+//     this.element = document.createElement("input");
+//     this.element.setAttribute("type", "file");
+//     this.element.setAttribute("accept", "image");
+//     this._aux_element.onClick(() => this.element.click());
+//     this.element.onChange = this.handleImage.bind(this);
+//   }
+//   get isInputImage(){
+//     return true;
+//   }
+//   handleImage(e) {
+//     const reader = new FileReader();
+//     const img = new Image();
+//     reader.onload = function (event) {
+//       img.src = event.target.result;
+//       console.log(img.src);
+//     };
+//     reader.readAsDataURL(e.target.files[0]);
+//     this.img = img;
+//   }
+//   get value() {
+//     return this.img;
+//   }
+//   render(bool = true) {
+//     if (bool) this.target.appendChild(this._aux_element.element);
+//     else this.remove();
+//     return this;
+//   }
+//   remove() {
+//     if (this.target.children.length) this.target.removeChild(this._aux_element.element);
+//     return this;
+//   }
+// }
+
+// class ZikoUIInputDatalist extends ZikoUIElement {
+//   constructor(...options){
+//     super();
+//     this.element = document.createElement("datalist");
+//     this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
+//   }
+//   get isDatalist(){
+//     return true;
+//   }
+//   addOptions(...options) {
+//     options.map((n) => this.append(new ZikoUIInputOption(n)));
+//     return this;
+//   }
+// }
+
+// const datalist = (...options) => new ZikoUIInputDatalist(...options);
+// const slider = (value, min, max, step) =>{
+//   if(value instanceof Object){
+//     const {min=0,max=10,step=1}=value;
+//     value=value?.value??5;
+//     return new ZikoUIInputSlider(value, min, max, step);
+//   }
+//   return new ZikoUIInputSlider(value, min, max, step);
+// }
+// const inputNumber = (min,max,step) =>{
+//   if(min instanceof Object){
+//     const {value,max=10,step=1,placeholder=""}=min;
+//     min=min?.min??0;
+//     return new ZikoUIInputSlider(min, max, step).setValue(value).setPlaceholder(placeholder);
+//   }
+//   return new ZikoUIInputNumber(min,max,step);
+// }
+// const search = (...a) => new ZikoUIInputSearch().connect(...a);
+// const inputImage = (text) => new ZikoUIInputImage(text);
+// const inputPassword = () => new ZikoUIInputPassword();
+// const inputEmail = () => new ZikoUIInputEmail();
+// const inputColor = () => new ZikoUIInputColor();
+// const checkbox = () => new ZikoUIInputCheckbox();
+// const radio = () => new ZikoUIInputRadio();
+
+
+export {
+  // input,
+  // search,
+  // slider,
+  // checkbox,
+  // radio,
+  // datalist,
+  // inputNumber,
+  // inputColor,
+  // inputDate,
+  // inputDateTime,
+  // inputEmail,
+  // inputImage,
+  // inputPassword,
+  // inputTime,
+};
+export {textarea} from "./textarea.js";

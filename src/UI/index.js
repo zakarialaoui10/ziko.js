@@ -46,7 +46,7 @@ import {
     select,
     textarea,
     inputCamera
-} from "./Inputs";
+} from "./Io";
 import {
     image,
     video,
@@ -172,7 +172,7 @@ const UI={
 }
 export * from "./Text";
 export * from "./List";
-export * from "./Inputs";
+export * from "./Io";
 export * from "./Media";
 export * from "./Table";
 export * from "./Semantic";

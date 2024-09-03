@@ -1,5 +1,5 @@
-import ZikoUIElement from "../../ZikoUIElement.js";
-import { ZikoUIInputOption } from "./elements.js";
+import ZikoUIElement from "../../ZikoUIElement";
+import { ZikoUIInputOption } from "../Inputs/__helpers__";
 class ZikoUISelect extends ZikoUIElement {
     constructor(){
       super();
@@ -14,4 +14,7 @@ class ZikoUISelect extends ZikoUIElement {
     }
   }
 const select=()=>new ZikoUISelect()
-export{select,ZikoUISelect}
+export{
+    select,
+    ZikoUISelect
+}

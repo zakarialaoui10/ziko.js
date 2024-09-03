@@ -1,4 +1,4 @@
-import { ZikoUIVideo } from "../Media";
+import { ZikoUIVideo } from "../../../Media";
 class ZikoUIWebcame extends ZikoUIVideo{
     constructor(){
       super()
