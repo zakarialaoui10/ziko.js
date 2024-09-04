@@ -2,8 +2,8 @@ import { __ZikoUIDynamicMediaElement__ } from "../__ZikoUIDynamicMediaELement__.
 class ZikoUIVideo extends __ZikoUIDynamicMediaElement__ {
     constructor(src="", w = "100%", h = "50vh") {
       super("video","video");
-      if (src.nodeName === "VIDEO") this.element.setAttribute("src", src.src);
-      else this.element.setAttribute("src", src);
+      if (src.nodeName === "VIDEO") this.element?.setAttribute("src", src.src);
+      else this.element?.setAttribute("src", src);
       if (typeof w == "number") w += "%";
       if (typeof h == "number") h += "%";
       this.style({ width: w, height: h });

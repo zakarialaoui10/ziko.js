@@ -3,7 +3,7 @@ import { ZikoUIInputOption } from "../Inputs/__helpers__";
 class ZikoUISelect extends ZikoUIElement {
     constructor(){
       super();
-      this.element=document.createElement("select");
+      this.element=document?.createElement("select");
     }
     addOptions(...options) {
       options.map(n => this.append(new ZikoUIInputOption(n)));

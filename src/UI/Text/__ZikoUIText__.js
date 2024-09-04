@@ -29,23 +29,23 @@ class __ZikoUIText__ extends ZikoContainerElement {
     }
     addValue(...value) {
       value.forEach((item,i) => {
-        if (typeof item === "string" || typeof item === "number") this.element.appendChild(document.createTextNode(item))
-        else if (item instanceof ZikoUIElement) this.element.appendChild(item.element)
-        else if (item instanceof Complex || item instanceof Matrix) this.element.appendChild(new Text(item.toString()))
-        else if (item instanceof Array) this.element.appendChild(new Text(arr2str(item)))
-        else if (item instanceof Object) this.element.appendChild(new Text(obj2str(item)))
+        if (typeof item === "string" || typeof item === "number") this.element?.appendChild(globalThis?.document.createTextNode(item));
+        else if (item instanceof ZikoUIElement) this.element?.appendChild(item.element);
+        else if (item instanceof Complex || item instanceof Matrix) this.element?.appendChild(new Text(item.toString()));
+        else if (item instanceof Array) this.element?.appendChild(new Text(arr2str(item)));
+        else if (item instanceof Object) this.element?.appendChild(new Text(obj2str(item)));
         
         // if(
         //   (item !== value[value.length - 1]) 
         //   && !(value[i+1] instanceof ZikoUIElement)
         //   && !(value[i-1] instanceof ZikoUIElement)
-        // ) this.element.appendChild(new Text(" "))
+        // ) this.element?.appendChild(new Text(" "))
         
-        if(this.cache.lineBreak)this.element.appendChild(document.createElement("br"))
-      })
-      this.element.innerHTML = this.element.innerHTML
-        .replace(/\n/g, '<br>')
-        .replace(/(?<!<[^>]+) /g, '&nbsp;')
+        if(this.cache.lineBreak)this.element?.appendChild(globalThis.document?.createElement("br"));
+      });
+      if(this.element?.innerHTML){
+        this.element.innerHTML = this.element.innerHTML.replace(/\n/g, '<br>').replace(/(?<!<[^>]+) /g, '&nbsp;');
+      }
       return this
     }
     setValue(...value) {

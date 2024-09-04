@@ -11,7 +11,7 @@ const waitForUIElm=(UIElement)=>{
             }
         });
   
-        observer.observe(document.body, {
+        observer.observe(document?.body, {
             childList: true,
             subtree: true
         });

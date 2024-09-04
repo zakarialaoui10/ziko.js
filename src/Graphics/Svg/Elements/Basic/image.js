@@ -2,7 +2,7 @@ import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgImage extends ZikoSvgElement{
     constructor(src="",w="100%",h="100%",x=0,y=0){
       super()
-      this.element=document.createElementNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "image",
       );
@@ -17,15 +17,15 @@ class ZikoSvgImage extends ZikoSvgElement{
        return this;
     }
     width(w){
-       this.element.setAttribute("width",w);
+       this.element?.setAttribute("width",w);
        return this;
     }
     height(h){
-       this.element.setAttribute("height",h);
+       this.element?.setAttribute("height",h);
        return this;
     }
     setSrc(src=""){
-      this.element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', src)
+      this.element?.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', src)
       return this;
     }
   } 

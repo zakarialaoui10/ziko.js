@@ -9,7 +9,7 @@ class ZikoUseFavIcon{
         this.set(FavIcon);
     }
     #init(){     
-        this.__FavIcon__=document.querySelector("link[rel*='icon']") || document.createElement('link');   
+        this.__FavIcon__=document.querySelector("link[rel*='icon']") || document?.createElement('link');   
         this.__FavIcon__.type = 'image/x-icon';
         this.__FavIcon__.rel = 'shortcut icon';
         return this;

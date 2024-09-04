@@ -2,7 +2,7 @@ import { ZikoUIVideo } from "../../../Media";
 class ZikoUIWebcame extends ZikoUIVideo{
     constructor(){
       super()
-      this.element.setAttribute("src", "");
+      this.element?.setAttribute("src", "");
       this.constraints = { audio: true, video: { width: 1280, height: 720 } };
       //this.video=this.element
     }

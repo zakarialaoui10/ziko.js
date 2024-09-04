@@ -2,7 +2,7 @@ import ZikoUIElement from "../../ZikoUIElement";
 class ZikoUITextArea extends ZikoUIElement {
     constructor() {
       super();
-      this.element = document.createElement("textarea");
+      this.element = document?.createElement("textarea");
     }
     get value(){
       return this.element.textContent;

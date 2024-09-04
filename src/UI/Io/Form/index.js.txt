@@ -40,7 +40,7 @@ class ZikoUIForm extends ZikoUIFlex {
 
     // Sanitize input data to prevent XSS
     #sanitizeInput(input) {
-        const div = document.createElement('div');
+        const div = document?.createElement('div');
         div.textContent = input;
         return div.innerHTML;
     }
@@ -48,11 +48,11 @@ class ZikoUIForm extends ZikoUIFlex {
     // Include a CSRF token in the form
     addCSRFToken() {
         const token = this.getCSRFTokenFromServer();
-        const hiddenInput = document.createElement('input');
+        const hiddenInput = document?.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = 'csrf_token';
         hiddenInput.value = token;
-        this.element.append(hiddenInput);
+        this.element?.append(hiddenInput);
     }
 
     // Method to fetch CSRF token from the server (mocked here)

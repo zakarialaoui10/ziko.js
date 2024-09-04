@@ -2,7 +2,7 @@ import { __ZikoUIDynamicMediaElement__ } from "../__ZikoUIDynamicMediaELement__.
 class ZikoUIAudio extends __ZikoUIDynamicMediaElement__ {
     constructor(src) {
       super("audio","audio");
-      this.element.setAttribute("src", src);
+      this.element?.setAttribute("src", src);
       this.size("150px","30px")
       // this.useControls();
     }

@@ -593,8 +593,8 @@ class Matrix extends ZikoMath{
     }
     toTable() {
         var table = new DocumentFragment();
-        var Tr = new Array(this.rows).fill(null).map(() => document.createElement("tr"));
-        var Td = this.arr.map((n) => n.map(() => document.createElement("td")));
+        var Tr = new Array(this.rows).fill(null).map(() => document?.createElement("tr"));
+        var Td = this.arr.map((n) => n.map(() => document?.createElement("td")));
         for (let i = 0; i < Td.length; i++) {
             for (let j = 0; j < Td[0].length; j++) {
                 Td[i][j].innerHTML = this.arr[i][j];

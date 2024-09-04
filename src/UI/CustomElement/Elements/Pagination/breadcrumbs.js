@@ -28,9 +28,9 @@ class ZikoUIBreadcrumbs extends ZikoUIElement{
             const separator = text(this.cache.separatorTextContent).style({
                 padding: "0 4px"
             });
-            this.element.append(separator.element);
+            this.element?.append(separator.element);
         }
-        this.element.append(li.element);
+        this.element?.append(li.element);
     }
     append(...items){
         items.forEach(n=>this.#addItem(n));

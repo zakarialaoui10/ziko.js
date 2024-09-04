@@ -31,7 +31,7 @@ class ZikoUIElementStyle{
     //     return this;
     //   }
     style(styles){
-        Object.assign(this.target.element.style, styles);
+        if(this?.target?.element?.style)Object.assign(this?.target?.element?.style, styles);
         return this;
     }
     linkTo(target){

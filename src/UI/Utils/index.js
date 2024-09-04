@@ -17,12 +17,12 @@ const addSuffixeToNumber=(value,suffixe="px")=>{
 const style = (el, styles) => {if(el)Object.assign(el.style, styles)};
 
 function script(src) {
-  const Script = document.createElement("script");
+  const Script = document?.createElement("script");
   Script.setAttribute("src", src);
   document.head.appendChild(Script);
 }
 function linkStyle(href) {
-  const link = document.createElement("link");
+  const link = document?.createElement("link");
   link.setAttribute("rel", "stylesheet");
   link.setAttribute("href", href);
   document.head.appendChild(link);
@@ -50,7 +50,7 @@ const waitElm=(UIElement)=>{
                 observer.disconnect();
             }
         });
-        observer.observe(document.body, {
+        observer.observe(document?.body, {
             childList: true,
             subtree: true
         });

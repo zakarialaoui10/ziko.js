@@ -34,7 +34,7 @@ class ZikoUIInput extends ZikoUIElement {
       id = Datalist.Id;
       console.log(Datalist);
     } else id = datalist;
-    this.element.setAttribute("list", id);
+    this.element?.setAttribute("list", id);
     return this;
   }
   get value() {

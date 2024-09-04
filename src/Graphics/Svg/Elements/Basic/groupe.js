@@ -3,7 +3,7 @@ class ZikoSvgGroupe extends ZikoSvgElement{
     constructor(...svgElement){
       super();
       this.items=[];
-      this.element=document.createElementNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "g",
       );
@@ -11,7 +11,7 @@ class ZikoSvgGroupe extends ZikoSvgElement{
     }
     add(...svgElement){
       for(let i=0;i<svgElement.length;i++){
-        this.element.appendChild(svgElement[i].element);
+        this.element?.appendChild(svgElement[i].element);
         this.items.push(svgElement[i])
       }
       if(svgElement.length===1)return svgElement[0]
@@ -19,7 +19,7 @@ class ZikoSvgGroupe extends ZikoSvgElement{
     }
     remove(...svgElement){
       for(let i=0;i<svgElement.length;i++){
-        this.element.removeChild(svgElement[i].element);
+        this.element?.removeChild(svgElement[i].element);
         this.items=this.items.filter(n=>n!=svgElement)
       }
       return this;     

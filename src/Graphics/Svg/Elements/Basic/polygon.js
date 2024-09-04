@@ -4,11 +4,11 @@ class ZikoSvgPolygon extends ZikoSvgElement{
       super()
       this.X=X;
       this.Y=Y
-      this.element=document.createElementNS(
+      this.element=document?.createElementtNS(
         "http://www.w3.org/2000/svg",
         "polygon",
       );
-      this.element.setAttribute("points","");
+      this.element?.setAttribute("points","");
       this.addPoints(X,Y)
     }
     addPoint(x,y){
@@ -23,7 +23,7 @@ class ZikoSvgPolygon extends ZikoSvgElement{
         let p=this.element.parentElement.createSVGPoint();
         p.x=X[i];
         p.y=Y[i];
-        this.element.points.appendItem(p)
+        this.element.oints.appendItem(p)
       }
       return this;
     }

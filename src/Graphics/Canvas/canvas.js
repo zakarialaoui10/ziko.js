@@ -4,8 +4,8 @@ import { convolute } from "../../Math/Signal/conv.js";
 class ZikoUICanvas extends ZikoUIContainerElement{
     constructor(w,h){
         super("canvas","canvas");
-        //this.element=document.createElement("canvas");
-        this.ctx = this.element.getContext("2d");
+        //this.element=document?.createElement("canvas");
+        this.ctx = this.element?.getContext("2d");
         this.style({
             border:"1px red solid",
             //width:"300px",
@@ -25,10 +25,10 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         this.on("sizeupdated",()=>this.adjust())
     }
     get Width(){
-        return this.element.width;
+        return this.element?.width;
     }
     get Height(){
-        return this.element.height;
+        return this.element?.height;
     }
     get Xmin(){
         return this.axisMatrix[0][0];
@@ -83,8 +83,8 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         return this;
     }
     adjust(){
-        this.element.width=this.element.getBoundingClientRect().width;
-        this.element.height=this.element.getBoundingClientRect().height;
+        this.element.width =this.element?.getBoundingClientRect().width;
+        this.element.height =this.element?.getBoundingClientRect().height;
         this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
         return this;
     }
@@ -149,14 +149,14 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         return canvas;
     }
     toImage() {
-        this.img = document.createElement("img");
-        this.img.src = this.element.toDataURL("image/png");
+        this.img = document?.createElement("img");
+        this.img.src = this.element?.toDataURL("image/png");
         return this;
     }
     toBlob() {
         var canvas = this.element;
         canvas.toBlob(function (blob) {
-            var newImg = document.createElement("img"),
+            var newImg = document?.createElement("img"),
                 url = URL.createObjectURL(blob);
             newImg.onload = function () {
                 URL.revokeObjectURL(url);

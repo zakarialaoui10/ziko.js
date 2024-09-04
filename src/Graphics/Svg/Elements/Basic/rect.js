@@ -3,7 +3,7 @@ import ZikoSvgELement from "../ZikoSvgElement.js";
 class ZikoSvgRectangle extends ZikoSvgELement{
     constructor(x,y,w,h,center=true){
       super()
-      this.element=document.createElementNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "rect",
       );

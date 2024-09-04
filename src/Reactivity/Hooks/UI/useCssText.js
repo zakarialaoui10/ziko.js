@@ -4,7 +4,7 @@ class ZikoUseCssText{
         this.set(css);
     }
     #init(){     
-        // this.__FavIcon__=document.querySelector("link[rel*='icon']") || document.createElement('link');   
+        // this.__FavIcon__=document.querySelector("link[rel*='icon']") || document?.createElementt('link');   
         // this.__FavIcon__.type = 'image/x-icon';
         // this.__FavIcon__.rel = 'shortcut icon';
         return this;

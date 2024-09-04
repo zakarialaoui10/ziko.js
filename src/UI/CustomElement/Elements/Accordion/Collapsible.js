@@ -24,7 +24,7 @@ class ZikoUICollapbsible extends ZikoUIElement{
         this.content=content.style({
             margin:"0.7em",
         });
-        this.element.append(this.summary.element,this.content.element)
+        this.element?.append(this.summary.element,this.content.element)
         this.style({
             marginBottom:"0.7em",
         })

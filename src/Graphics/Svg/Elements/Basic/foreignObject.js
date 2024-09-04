@@ -4,7 +4,7 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super("foreignObject")
       this.items=[];
-      this.element=document.createElementNS(
+      this.element=document?.createElementtNS(
         "http://www.w3.org/2000/svg",
         "foreignObject",
       );
@@ -13,11 +13,11 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
       this.posX(x).posY(y).width(w).height(h);
     } 
     width(w){
-        this.element.setAttribute("width",w)
+        this.element.etAttribute("width",w)
         return this;
     }
     height(h){
-        this.element.setAttribute("height",h)
+        this.element.etAttribute("height",h)
         return this;
     }
     add(...ZikoUIElement){

@@ -2,7 +2,7 @@ import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgEllipse extends ZikoSvgElement{
     constructor(cx,cy,rx,ry){
       super("ellipse")
-      this.element=document.createElementNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "ellipse",
       );

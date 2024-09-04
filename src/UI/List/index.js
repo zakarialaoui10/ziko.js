@@ -36,7 +36,7 @@ class ZikoUIList extends ZikoUIContainerElement {
       else {
         const remove = (ele) => {
           if(typeof ele === "number") ele=this.items[ele];
-          if(ele instanceof ZikoUIElement)this.element.removeChild(ele.parent.element);
+          if(ele instanceof ZikoUIElement)this.element?.removeChild(ele.parent.element);
             this.items=this.items.filter(n=>n!==ele);
         };
         for (let i = 0; i < ele.length; i++) remove(ele[i]);
@@ -52,7 +52,7 @@ class ZikoUIList extends ZikoUIContainerElement {
           let li = null;
           if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
           if (ele[i] instanceof ZikoUIElement)li=new ZikoUILI(ele[i]);
-          this.element.insertBefore(li.element, this.items[index].parent.element);
+          this.element?.insertBefore(li.element, this.items[index].parent.element);
           this.items.splice(index, 0, ele[i][0]);
         }
       return this;
@@ -115,11 +115,11 @@ class ZikoUIOList extends ZikoUIList{
     return true;
   }
   type(tp = 1) {
-    this.element.setAttribute("type", tp);
+    this.element?.setAttribute("type", tp);
     return this;
   }
   start(st = 1) {
-    this.element.setAttribute("start", st);
+    this.element?.setAttribute("start", st);
     return this;
   }
 }

@@ -4,9 +4,9 @@ class ZikoUIInputImage extends ZikoUIElement {
     constructor(text = "File") {
       super("inputImage");
       this._aux_element = btn(text).setTarget(this.target);
-      this.element = document.createElement("input");
-      this.element.setAttribute("type", "file");
-      this.element.setAttribute("accept", "image");
+      this.element = document?.createElement("input");
+      this.element?.setAttribute("type", "file");
+      this.element?.setAttribute("accept", "image");
       this._aux_element.onClick(() => this.element.click());
       this.element.onChange = this.handleImage.bind(this);
     }

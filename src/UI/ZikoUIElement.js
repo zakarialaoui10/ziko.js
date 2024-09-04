@@ -20,10 +20,10 @@ import {
 } from "../Reactivity";
 import { Random } from "../Math/Random";
 class ZikoUIElement {
-  constructor(element,name="") {
-    this.target = globalThis.__Ziko__.__Config__.default.target||globalThis.document.body;
+  constructor(element ,name="") {
+    this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;
     if(typeof element === "string") {
-      element === "svg" ? element=document.createElementNS("http://www.w3.org/2000/svg", "svg"): element = globalThis.document.createElement(element);
+      element === "svg" ? element=globalThis?.document?.createElementNS("http://www.w3.org/2000/svg", "svg"): element = globalThis?.document?.createElement(element);
     }
     this.element = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
@@ -140,6 +140,8 @@ class ZikoUIElement {
     if(CalculedStyle.paddingLeft!=="0px")Object.assign(SwitchedStyle, {paddingRight: CalculedStyle.paddingLeft});
     if(CalculedStyle.left!=="0px")Object.assign(SwitchedStyle, {right: CalculedStyle.left});
     if(CalculedStyle.right!=="0px")Object.assign(SwitchedStyle, {left: CalculedStyle.right});
+    if(CalculedStyle.textAlign === "right")Object.assign(SwitchedStyle, {textAlign: "left"});
+    if(CalculedStyle.textAlign === "left")Object.assign(SwitchedStyle, {textAlign: "right"});
     if(CalculedStyle.float === "right")Object.assign(SwitchedStyle, {float: "left"});
     if(CalculedStyle.float === "left")Object.assign(SwitchedStyle, {float: "right"});
     if(CalculedStyle.borderRadiusLeft!=="0px")Object.assign(SwitchedStyle, {right: CalculedStyle.borderRadiusRight});
@@ -178,7 +180,7 @@ class ZikoUIElement {
   render(/*render = true , */target = this.target) {
     if(target instanceof ZikoUIElement)target=target.element;
     this.target=target;
-    this.target.appendChild(this.element);
+    this.target?.appendChild(this.element);
     // if(render) {
     //   this.target.appendChild(this.element);
     // }
@@ -187,7 +189,7 @@ class ZikoUIElement {
   }
   unrender(){
     if(this.cache.parent)this.cache.parent.remove(this);
-    else if(this.target.children.length && [...this.target.children].includes(this.element)) this.target.removeChild(this.element);
+    else if(this.target?.children?.length && [...this.target?.children].includes(this.element)) this.target.removeChild(this.element);
     return this;
   }
   renderAfter(t = 1) {
@@ -205,7 +207,7 @@ class ZikoUIElement {
       for(let i=0;i<names.length;i++){
         if(values[i] instanceof Array)value[i] = values[i].join(" ");
         if(this?.attr[name[i]]!==value[i]){
-          this.element.setAttribute(names[i], values[i]);
+          this.element?.setAttribute(names[i], values[i]);
           Object.assign(this.cache.attributes, Object.fromEntries([[names[i], values[i]]]));
         }
       }
@@ -213,14 +215,14 @@ class ZikoUIElement {
     else{
       if(value instanceof Array)value = value.join(" ");
       if(this?.attr[name]!==value){
-        this.element.setAttribute(name, value);
+        this.element?.setAttribute(name, value);
         Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
       }
     }
     return this;
   }
   removeAttr(...names) {
-    for(let i=0;i<names.length;i++)this.element.removeAttribute(names[i]);
+    for(let i=0;i<names.length;i++)this.element?.removeAttribute(names[i]);
     return this;
   }
   getAttr(name){

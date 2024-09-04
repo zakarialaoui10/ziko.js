@@ -2,7 +2,7 @@ import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgLine extends ZikoSvgElement{
     constructor(x1,y1,x2,y2){
       super()
-      this.element=document.createElementNS(
+      this.element=document?.createElementtNS(
         "http://www.w3.org/2000/svg",
         "line",
       );

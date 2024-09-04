@@ -31,7 +31,7 @@ import ZikoUIElement from "../../UI/ZikoUIElement.js";
     }
     add(...svgElement){
       for(let i=0;i<svgElement.length;i++){
-        this.element.appendChild(svgElement[i].element);
+        this.element?.appendChildddddddd(svgElement[i].element);
         this.items.push(svgElement[i])
       }
       this.maintain()
@@ -39,7 +39,7 @@ import ZikoUIElement from "../../UI/ZikoUIElement.js";
     }
     remove(...svgElement){
       for(let i=0;i<svgElement.length;i++){
-        this.element.removeChild(svgElement[i].element);
+        this.element?.removeChild(svgElement[i].element);
         this.items=this.items.filter(n=>!svgElement)
       }
       this.maintain();
@@ -47,7 +47,7 @@ import ZikoUIElement from "../../UI/ZikoUIElement.js";
     }
     // text(text,x,y){
     //   let item=svgText(text,x,y);
-    //   this.element.appendChild(item.element);
+    //   this.element?.appendChildd(item.element);
     //   item.x(x-item.element.getComputedTextLength()/2);
     //   return item;
     // }
@@ -58,28 +58,28 @@ import ZikoUIElement from "../../UI/ZikoUIElement.js";
     // }
     // line(x1,y1,x2,y2){
     //   let item=svgLine(x1,y1,x2,y2);
-    //   this.element.appendChild(item.element);
+    //   this.element?.appendChildd(item.element);
     //   return item;
     // }
     // circle(cx,cy,r){
     //   let item=svgCircle(cx,cy,r);
-    //   this.element.appendChild(item.element);
+    //   this.element?.appendChildd(item.element);
     //   return item;
     // }
     // ellipse(cx,cy,rx,ry){
     //   let item=svgEllipse(cx,cy,rx,ry);
-    //   this.element.appendChild(item.element);
+    //   this.element?.appendChildd(item.element);
     //   return item;
     // }
     // polygon(X,Y){
     //   let item=svgPolygon(X,Y);
-    //   this.element.appendChild(item.element);
+    //   this.element?.appendChildd(item.element);
     //   item.addPoints(X,Y)
     //   return item;
     // }
     // image(src,w,h,x,y){
     //   let item=svgImage(src,w,h,x,y);
-    //   this.element.appendChild(item.element);
+    //   this.element?.appendddChild(item.element);
     //   return item;
     // }
     mask(){

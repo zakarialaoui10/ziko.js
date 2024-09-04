@@ -12,7 +12,7 @@ class ZikoUIVerticalSplitter extends __ZikoUISplitter__{
             flexGrow: 1,
             overflow: "hidden"
         });
-        this.element.append(
+        this.element?.append(
             this.topPane.element,
             this.resizer.element,
             this.bottomPane.element

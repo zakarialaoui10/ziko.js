@@ -3,63 +3,63 @@ import { text } from "../Text/text.js";
 class ZikoUITh extends ZikoUIElement{
     constructor(...ZikoUIElement){
         super()
-        this.element=document.createElement("Th");
+        this.element=document?.createElement("Th");
         this.append(...ZikoUIElement)
     }
 }
 class ZikoUITr extends ZikoUIElement{
     constructor(...ZikoUIElement){
         super()
-        this.element=document.createElement("Tr");
+        this.element=document?.createElement("Tr");
         this.append(...ZikoUIElement)
     }
 }
 class ZikoUITd extends ZikoUIElement{
     constructor(...ZikoUIElement){
         super()
-        this.element=document.createElement("Td");
+        this.element=document?.createElement("Td");
         this.append(...ZikoUIElement)
     }
 }
 class ZikoUIThead extends ZikoUIElement{
     constructor(...ZikoUITr){
         super()
-        this.element=document.createElement("Thead");
+        this.element=document?.createElement("Thead");
         this.append(...ZikoUITr)
     }
 }
 class ZikoUITbody extends ZikoUIElement{
     constructor(...ZikoUITr){
         super()
-        this.element=document.createElement("Tbody");
+        this.element=document?.createElement("Tbody");
         this.append(...ZikoUITr)
     }
 }
 class ZikoUITfoot extends ZikoUIElement{
     constructor(...ZikoUITr){
         super()
-        this.element=document.createElement("Tfoot");
+        this.element=document?.createElement("Tfoot");
         this.append(...ZikoUITr)
     }
 }
 export class ZikoUICaption extends ZikoUIElement{
     constructor(ZikoUIElement){
         super()
-        this.element=document.createElement("Caption");
+        this.element=document?.createElement("Caption");
         this.append(ZikoUIElement)
     }
 }
 class ZikoUICol extends ZikoUIElement{
     constructor(...ZikoUIElement){
         super()
-        this.element=document.createElement("Col");
+        this.element=document?.createElement("Col");
         this.append(...ZikoUIElement)
     }
 }
 class ZikoUIColgroup extends ZikoUIElement{
     constructor(...ZikoUIElement){
         super()
-        this.element=document.createElement("Colgroup");
+        this.element=document?.createElement("Colgroup");
         this.append(...ZikoUIElement)
     }
 }

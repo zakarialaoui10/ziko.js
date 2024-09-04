@@ -3,7 +3,7 @@ import { Random } from "../../../Math/Random/index.js";
 class ZikoUILabel extends ZikoUIElement{
     constructor(){
       super();
-      this.element=document.createElement("label");
+      this.element=document?.createElement("label");
     }
     get isLabel(){
       return true;
@@ -12,7 +12,7 @@ class ZikoUILabel extends ZikoUIElement{
 class ZikoUIInputOption extends ZikoUIElement {
     constructor(value = "") {
       super();
-      this.element = document.createElement("option");
+      this.element = document?.createElement("option");
       if(value instanceof Object&&"value" in value){
         this.setValue(value.value);
         this.setText(value?.text??value.value)
@@ -31,7 +31,7 @@ class ZikoUIInputOption extends ZikoUIElement {
 class ZikoUIInputDatalist extends ZikoUIElement {
   constructor(...options){
     super();
-    this.element = document.createElement("datalist");
+    this.element = document?.createElement("datalist");
     this.addOptions(...options).setId("ziko-datalist-id"+Random.string(10));
   }
   get isDatalist(){

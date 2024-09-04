@@ -2,7 +2,7 @@ import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgPath extends ZikoSvgElement{
     constructor(){
     super()
-      this.element=document.createElementNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "path",
       );
@@ -10,7 +10,7 @@ class ZikoSvgPath extends ZikoSvgElement{
       
     }
     setPath(){
-        this.element.setAttribute("d",this.path);
+        this.element.etAttribute("d",this.path);
         return this;
     }
     clear(){

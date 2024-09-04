@@ -23,7 +23,7 @@ class ZikoUIContainerElement extends ZikoUIElement{
         if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
           if (ele[i] instanceof ZikoUIElement) {
             ele[i].cache.parent=this;
-            this.element.appendChild(ele[i].element);
+            this.element?.appendChild(ele[i].element);
             ele[i].target = this.element;
             this.items.push(ele[i]);
           } else if (ele[i] instanceof Object) {
@@ -43,7 +43,7 @@ class ZikoUIContainerElement extends ZikoUIElement{
         else
           for (let i = 0; i < ele.length; i++) {
             if(["number","string"].includes(typeof ele[i]))ele[i]=text(ele[i]);
-            this.element.insertBefore(ele[i].element, this.items[index].element);
+            this.element?.insertBefore(ele[i].element, this.items[index].element);
             this.items.splice(index, 0, ele[i]);
           }
         return this;
@@ -56,7 +56,7 @@ class ZikoUIContainerElement extends ZikoUIElement{
       //   else {
       //     const remove = (ele) => {
       //       if(typeof ele === "number") ele=this.items[ele];
-      //       if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
+      //       if(ele instanceof ZikoUIElement)this.element?.removeChild(ele.element);
       //         this.items=this.items.filter(n=>n!==ele);
       //     };
       //     for (let i = 0; i < ele.length; i++) remove(ele[i]);
@@ -68,7 +68,7 @@ class ZikoUIContainerElement extends ZikoUIElement{
       remove(...ele) {
           const remove = (ele) => {
             if(typeof ele === "number") ele=this.items[ele];
-            if(ele instanceof ZikoUIElement)this.element.removeChild(ele.element);
+            if(ele instanceof ZikoUIElement)this.element?.removeChild(ele.element);
               this.items=this.items.filter(n=>n!==ele);
           };
           for (let i = 0; i < ele.length; i++) remove(ele[i]);

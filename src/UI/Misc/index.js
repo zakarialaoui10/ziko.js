@@ -8,7 +8,7 @@ class ZikoUIHtmlTag extends ZikoUIContainerElement {
 class ZikoUIBtn extends ZikoUIElement {
   constructor(value = "button") {
     super("button","btn");
-    this.element = document.createElement("button");
+    this.element = document?.createElement("button");
     this.setValue(value);
     this.st.cursor("pointer");
     globalThis.__Ziko__.__Config__.default.render && this.render();
@@ -19,7 +19,7 @@ class ZikoUIBtn extends ZikoUIElement {
   setValue(value) {
     if (value instanceof ZikoUIElement) value.setTarget(this.element);
     else {
-      this.element.appendChild(document.createTextNode(""));
+      this.element?.appendChild(document.createTextNode(""));
       this.element.childNodes[0].data = value;
     }
     return this;

@@ -3,8 +3,8 @@ class ZikoUIImage extends ZikoUIElement {
     constructor(src, w, h) {
       super("img","image");
       this.value=src;
-      if (src.nodeName === "IMG")this.element.setAttribute("src", src.src);
-      else this.element.setAttribute("src", src);
+      if (src.nodeName === "IMG")this.element?.setAttribute("src", src.src);
+      else this.element?.setAttribute("src", src);
       if (typeof w == "number") w += "%";
       if (typeof h == "number") h += "%";
       this.style({ border: "1px solid black", width: w, height: h });

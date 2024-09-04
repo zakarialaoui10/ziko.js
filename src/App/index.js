@@ -1,4 +1,4 @@
-export { ZikoUIComponent } from "./Component/index.js";
+// export { ZikoUIComponent } from "./Component/index.js";
 export{
     App,
 } from "./app.js"

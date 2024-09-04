@@ -51,7 +51,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
   class ZikoUIFooter extends ZikoUIContainerElement{
     constructor(){
       super("footer","Footer");
-      this.element=document.createElement("footer");
+      this.element=document?.createElement("footer");
     }
     get isFooter(){
       return true

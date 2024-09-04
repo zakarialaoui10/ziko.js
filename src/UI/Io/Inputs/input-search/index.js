@@ -8,7 +8,7 @@ class ZikoUIInputSearch extends ZikoUIInput {
     return true;
   }
   onsearch(callback) {
-    this.element.addEventListener("search", () => callback());
+    this.element?.addEventListener("search", () => callback());
     return this;
   }
   connect(...UIElement) {
@@ -32,7 +32,7 @@ class ZikoUIInputSearch extends ZikoUIInput {
     return this;
   }
   displayLength(UIElement) {
-    this.element.addEventListener("keyup", () =>
+    this.element?.addEventListener("keyup", () =>
       UIElement.setValue(this.Length),
     );
     return this;
