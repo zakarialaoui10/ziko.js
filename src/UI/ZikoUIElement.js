@@ -131,6 +131,39 @@ class ZikoUIElement {
     this.st.size(width,height);
     return this; 
   }
+  get #SwitchedStyleRTL_LTR(){
+    const CalculedStyle = globalThis.getComputedStyle(this.element); 
+    const SwitchedStyle = {}
+    if(CalculedStyle.marginRight!=="0px")Object.assign(SwitchedStyle, {marginLeft: CalculedStyle.marginRight});
+    if(CalculedStyle.marginLeft!=="0px")Object.assign(SwitchedStyle, {marginRight: CalculedStyle.marginLeft});
+    if(CalculedStyle.paddingRight!=="0px")Object.assign(SwitchedStyle, {paddingLeft: CalculedStyle.paddingRight});
+    if(CalculedStyle.paddingLeft!=="0px")Object.assign(SwitchedStyle, {paddingRight: CalculedStyle.paddingLeft});
+    if(CalculedStyle.left!=="0px")Object.assign(SwitchedStyle, {right: CalculedStyle.left});
+    if(CalculedStyle.right!=="0px")Object.assign(SwitchedStyle, {left: CalculedStyle.right});
+    if(CalculedStyle.float === "right")Object.assign(SwitchedStyle, {float: "left"});
+    if(CalculedStyle.float === "left")Object.assign(SwitchedStyle, {float: "right"});
+    if(CalculedStyle.borderRadiusLeft!=="0px")Object.assign(SwitchedStyle, {right: CalculedStyle.borderRadiusRight});
+    if(CalculedStyle.borderRadiusRight!=="0px")Object.assign(SwitchedStyle, {right: CalculedStyle.borderRadiusLeft});
+    if(["flex","inline-flex"].includes(CalculedStyle.display)){
+      if(CalculedStyle.justifyContent === "flex-end")Object.assign(SwitchedStyle, {justifyContent: "flex-start"});
+      if(CalculedStyle.justifyContent === "flex-start")Object.assign(SwitchedStyle, {justifyContent: "flex-end"});
+    }
+    return SwitchedStyle;
+  }
+  useRtl(switchAll = false){
+    switchAll ? this.style({
+      ...this.#SwitchedStyleRTL_LTR,
+      direction : "rtl"
+    }) : this.style({direction : "rtl"}); 
+    return this;
+  }
+  useLtr(switchAll = false){
+    switchAll ? this.style({
+      ...this.#SwitchedStyleRTL_LTR,
+      direction : "ltr"
+    }) : this.style({direction : "ltr"}); 
+    return this;
+  }
   freeze(freeze){
     this.cache.isFrozzen=freeze;
     return this;

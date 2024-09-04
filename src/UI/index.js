@@ -28,7 +28,8 @@ import {
     ol,
     ul
 } from "./List"
-import {
+import{
+    Form,
     input,
     search,
     slider,
@@ -105,6 +106,7 @@ const UI={
     link,
     ol,
     ul,
+    Form,
     input,
     search,
     slider,
