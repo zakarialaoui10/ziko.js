@@ -11,6 +11,7 @@ import {
   useClipboardEvent ,
   useFocusEvent,
   useCustomEvent,
+  useSwipeEvent,
 } from "../Reactivity/Events"
 import { 
   watchIntersection, 
@@ -49,6 +50,7 @@ class ZikoUIElement {
       click:null,
       clipboard:null,
       focus:null,
+      swipe:null,
       custom:null,
     }
     this.observer={
@@ -290,6 +292,11 @@ class ZikoUIElement {
   onPtrCancel(...callbacks){
     if(!this.events.ptr)this.events.ptr = usePointerEvent(this);
     this.events.ptr.onCancel(...callbacks);
+    return this;
+  }
+  onSwipe(width_threshold, height_threshold,...callbacks){
+    if(!this.events.swipe)this.events.swipe = useSwipeEvent(this, width_threshold, height_threshold);
+    this.events.swipe.onSwipe(...callbacks);
     return this;
   }
   onMouseMove(...callbacks){

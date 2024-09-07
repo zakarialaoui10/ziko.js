@@ -31,7 +31,7 @@ class ZikoUICollapbsible extends ZikoUIElement{
         watchAttr(this, e=>{
             if(e.target.isOpen){
                 e.target.emit("open");
-                if(this.parent.isAccordion){
+                if(this.parent?.isAccordion){
                     if(this.parent.cache.autoClose)this.parent.closeExcept(this);
                 }
                 this.summary.style({

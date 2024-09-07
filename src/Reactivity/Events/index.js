@@ -9,6 +9,7 @@ import useFocusEvent from "./Global/Focus.js";
 import useInputEvent from "./Partiel/Input.js";
 import useHashEvent from "./Partiel/Hash.js";
 import useCustomEvent from "./Global/CustomEvent.js";
+import useSwipeEvent from "./Global/Swipe.js"
 const Events={
     usePointerEvent,
     useMouseEvent,
@@ -22,6 +23,7 @@ const Events={
     useInputEvent,
     useHashEvent,
     useCustomEvent,
+    useSwipeEvent,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {
@@ -55,6 +57,7 @@ export {
     useFocusEvent,
     useInputEvent,
     useHashEvent,
-    useCustomEvent
+    useCustomEvent,
+    useSwipeEvent
 }
 export default Events

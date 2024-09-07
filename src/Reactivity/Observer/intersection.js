@@ -5,6 +5,10 @@ class ZikoIntersectionObserver{
             threshold,
             margin
         }
+        if(!globalThis.IntersectionObserver){
+            console.log("IntersectionObserver Nor Supported")
+            return;
+        }
         this.observer=new IntersectionObserver((entries)=>{
             this.entrie=entries[0];
             callback(this)

@@ -26,18 +26,25 @@ const Ziko={
     SPA,
 }
 
-if ( globalThis.__Ziko__ ) {
-    console.warn( 'WARNING: Multiple instances of Ziko.js being imported.' );
-	} else {
-		globalThis.__Ziko__={
-            ...Ziko,
-            __UI__,
-            __Config__,
-            ExtractAll,
-            RemoveAll
-        };
-	}
-if(globalThis.document){
+// if ( globalThis.__Ziko__ ) {
+//     console.warn( 'WARNING: Multiple instances of Ziko.js being imported.' );
+// 	} else {
+// 		globalThis.__Ziko__={
+//             ...Ziko,
+//             __UI__,
+//             __Config__,
+//             ExtractAll,
+//             RemoveAll
+//         };
+// 	}
+globalThis.__Ziko__={
+    ...Ziko,
+    __UI__,
+    __Config__,
+    ExtractAll,
+    RemoveAll
+};
+if(globalThis?.document){
     document.addEventListener("DOMContentLoaded", __Ziko__.__Config__.init());
 }
 function ExtractAll(){

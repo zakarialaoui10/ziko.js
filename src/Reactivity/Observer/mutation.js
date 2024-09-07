@@ -34,6 +34,10 @@ class ZikoMutationObserver {
   
     observe(callback) {
       if(!this.observer) {
+        if(!globalThis.MutationObserver) {
+          console.log("MutationObserver Nor Supported")
+          return;
+        }
         this.observer = new MutationObserver(this.cache.observeCallback);
         this.observer.observe(this.target.element, this.cache.options);
         // this.callback = ([e]) => callback.call(e,this.target);
