@@ -1,5 +1,5 @@
-import { Complex } from "../../Complex";
-import { Matrix } from "../../Matrix";
+import { Complex } from "../../Complex/index.js";
+import { Matrix } from "../../Matrix/Matrix.js";
 const Logic={
     _mode:Number,
     _map:function(func,a,b){

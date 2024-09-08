@@ -40,7 +40,7 @@
     "create-ziko-app": "starter/bin/index.js"
   },
   "scripts": {
-    "test": "node --watch test/index.js",
+    "test": "npx jasmine --config=jasmine.json",
     "test-link": "node _link/index.js",
     "lint": "eslint src/*/*/*",
     "dev": "rollup -c rollup.config.js -w",
@@ -61,8 +61,8 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "dir2tree": "^0.3.2",
     "eslint": "^8.52.0",
+    "jasmine": "^5.3.0",
     "rollup": "^4.1.5",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.1"

@@ -1,8 +1,8 @@
-import { Complex , complex } from "../Complex";
-import { abs , pow , sqrtn , max , min} from "../Functions";
-import { mul } from "../Utils";
-import { E } from "../const";
-import { Matrix  } from "../Matrix";
+import { Complex , complex } from "../Complex/index.js";
+import { abs , pow , sqrtn , max , min} from "../Functions/index.js";
+import { mul } from "../Utils/index.js";
+import { E } from "../const.js";
+import { Matrix  } from "../Matrix/Matrix.js";
 const zeros=(n)=>new Array(n).fill(0);
 const ones=(n)=>new Array(n).fill(1);
 const nums=(num,n)=>new Array(n).fill(num);

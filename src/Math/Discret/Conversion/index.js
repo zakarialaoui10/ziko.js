@@ -1,5 +1,5 @@
-import { Complex } from "../../Complex";
-import { Matrix } from "../../Matrix";
+import { Complex } from "../../Complex/index.js";
+import { Matrix } from "../../Matrix/Matrix.js";
 const Base={
     _mode:Number,
     _map:function(func,number,toBase){

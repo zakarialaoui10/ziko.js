@@ -1,5 +1,5 @@
 /** @module Math */
-import { floor } from "../Functions";
+import { floor } from "../Functions/index.js";
 
 /**
  * Computes the cartesian product of two arrays.

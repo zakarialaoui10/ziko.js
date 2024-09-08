@@ -1,4 +1,4 @@
-import { image } from "../../UI/Media"
+import { image } from "../../UI/Media/Image/image.js"
 const svg2str=svg=>(new XMLSerializer()).serializeToString(svg);
 const svg2ascii=svg=>btoa(svg2str(svg));
 const svg2imgUrl=svg=>'data:image/svg+xml;base64,'+svg2ascii(svg);

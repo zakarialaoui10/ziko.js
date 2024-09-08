@@ -1,4 +1,4 @@
-import { mapfun } from "../../Utils";
+import { mapfun } from "../../Utils/mapfun.js";
 const _gamma=x=>{
     // Coefficients for the Lanczos approximation
     const g = 7;

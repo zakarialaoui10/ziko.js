@@ -1,13 +1,13 @@
-import { powerSet , subSet } from "./Set";
-import { Base } from "./Conversion";
-import { Logic } from "./Logic";
+import { powerSet , subSet } from "./Set/index.js";
+import { Base } from "./Conversion/index.js";
+import { Logic } from "./Logic/index.js";
 import {
     Permutation,
-} from "./Permutation"
+} from "./Permutation/index.js"
 import {
     Combinaison,
     combinaison,
-} from "./Combinaison"
+} from "./Combinaison/index.js"
 
 
 const Discret={

@@ -1,16 +1,16 @@
 export { 
     markdown2html
- } from "./markdown";
+ } from "./markdown.js";
 export { 
   adoc2html
-} from "./adoc";
+} from "./adoc.js";
  export { 
     csv2arr,
     csv2matrix,
     csv2object,
     csv2json,
     csv2sql
- } from "./csv";
+ } from "./csv.js";
  export {
    json2arr,
    json2csv,
@@ -19,13 +19,13 @@ export {
    json2ymlFile,
    json2xml,
    json2xmlFile
- } from "./json";
+ } from "./json.js";
  export { 
    svg2str,
    svg2ascii,
    svg2imgUrl,
    svg2img
- } from "./svg";
+ } from "./svg.js";
  export{
   obj2str
  } from "./object.js"

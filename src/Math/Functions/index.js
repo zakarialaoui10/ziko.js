@@ -3,12 +3,12 @@ import { mapfun } from "../Utils/mapfun.js";
 import { 
     min,
     max 
-}from "../Statistics";
+}from "../Statistics/index.js";
 import { 
     gamma,
     bessel,
     beta 
-} from "../Calculus";
+} from "../Calculus/index.js";
 export const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),

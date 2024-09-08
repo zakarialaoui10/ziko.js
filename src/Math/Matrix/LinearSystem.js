@@ -1,4 +1,4 @@
-import { Matrix } from "./Matrix";
+import { Matrix } from "./Matrix.js";
 class LinearSystem {
     static resolve(A, B) {
         return A.inv

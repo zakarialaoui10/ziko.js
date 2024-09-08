@@ -1,2 +1,2 @@
-export * from "./powerSet";
-export * from "./subSet";
+export * from "./power-set.js";
+export * from "./sub-set.js";

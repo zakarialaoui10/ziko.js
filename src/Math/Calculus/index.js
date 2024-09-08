@@ -1,1 +1,1 @@
-export * from "./Special Functions"
+export * from "./special-functions/index.js"

@@ -1,4 +1,4 @@
-import { Matrix } from "./Matrix";
+import { Matrix } from "./Matrix.js";
 const luDecomposition=matrix=>{
     if(matrix instanceof Matrix)matrix=matrix.arr;
     const n = matrix.length;
