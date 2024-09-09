@@ -18,7 +18,7 @@ import {
     svg2str,
     svg2ascii,
     svg2imgUrl,
-    svg2img
+    svg2img,
  } from "./Converter/index.js";
 import parseXML from "./Parser/xml.js";
 import { preload } from "./Api/preload.js";
@@ -71,4 +71,5 @@ const Data={
 }
 export * from "./Converter/index.js";
 export * from "./String/index.js"
+export * from "./runtime/jsx-runtime.js"
 export default Data
