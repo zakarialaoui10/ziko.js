@@ -14,7 +14,7 @@ import {
     h4,
     h5,
     h6,   
-} from "./Text";
+} from "./Text/index.js";
 import {
     btn,
     br,
@@ -23,11 +23,11 @@ import {
     hrs,
     link,
     html
-} from "./Misc";
+} from "./Misc/index.js";
 import {
     ol,
     ul
-} from "./List"
+} from "./List/index.js"
 import{
     Form,
     input,
@@ -47,13 +47,13 @@ import{
     select,
     textarea,
     inputCamera
-} from "./Io";
+} from "./Io/index.js";
 import {
     image,
     video,
     audio,
     figure
-} from "./Media"
+} from "./Media/index.js"
 import{
     Flex,
     Grid,
@@ -70,7 +70,7 @@ import{
     infoAlert,
     warningAlert,
     dangerAlert,
-} from "./CustomElement"
+} from "./custom-elements/index.js"
 import{
     Header,
     Main,
@@ -79,8 +79,8 @@ import{
     Aside,
     Nav,
     Footer,
-    } from "./Semantic";
-import { Table } from "./Table";
+    } from "./Semantic/index.js";
+import { Table } from "./Table/index.js";
 const UI={
     html,
     text,
@@ -172,14 +172,14 @@ const UI={
         return this;
     }
 }
-export * from "./Text";
-export * from "./List";
-export * from "./Io";
-export * from "./Media";
-export * from "./Table";
-export * from "./Semantic";
-export * from "./Misc";
-export * from "./CustomElement";
+export * from "./Text/index.js";
+export * from "./List/index.js";
+export * from "./Io/index.js";
+export * from "./Media/index.js";
+export * from "./Table/index.js";
+export * from "./Semantic/index.js";
+export * from "./Misc/index.js";
+export * from "./custom-elements/index.js";
 export {
     html,
 }

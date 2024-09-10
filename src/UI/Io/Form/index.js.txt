@@ -1,4 +1,4 @@
-import { ZikoUIFlex } from "../../CustomElement/Flex";
+import { ZikoUIFlex } from "../../custom-elements/Flex";
 
 class ZikoUIForm extends ZikoUIFlex {
     constructor(...items) {

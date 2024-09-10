@@ -71,5 +71,4 @@ const Data={
 }
 export * from "./Converter/index.js";
 export * from "./String/index.js"
-export * from "./runtime/jsx-runtime.js"
 export default Data

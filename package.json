@@ -29,8 +29,35 @@
       "import": "./dist/ziko.mjs",
       "require": "./dist/ziko.cjs"
     },
-    "./A": {
-      "import": "./src/A/index.js"
+    "./math": {
+      "import": "./src/math/index.js"
+    },
+    "./math/functions": {
+      "import": "./src/math/functions/index.js"
+    },
+    "./math/matrix": {
+      "import": "./src/math/matrix/index.js"
+    },
+    "./math/complex": {
+      "import": "./src/math/complex/index.js"
+    },
+    "./math/signal": {
+      "import": "./src/math/signal/index.js"
+    },
+    "./ui": {
+      "import": "./src/ui/index.js"
+    },
+    "./time": {
+      "import": "./src/time/index.js"
+    },
+    "./reactivity": {
+      "import": "./src/reactivity/index.js"
+    },
+    "./data": {
+      "import": "./src/data/index.js"
+    },
+    "./graphics": {
+      "import": "./src/data/graphics.js"
     },
     "./jsx-runtime":{
       "import": "./src/runtime/jsx-runtime/index.js"
