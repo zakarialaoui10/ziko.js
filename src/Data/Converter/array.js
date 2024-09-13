@@ -1,5 +1,5 @@
 import { obj2str } from "./object.js";
-import { Complex } from "../../Math/Complex/index.js";
+import { Complex } from "../../math/complex/index.js";
 const getMaxDepth = arr=> {
   if (!Array.isArray(arr)) return 0;
   let maxDepth = 1;

@@ -1,6 +1,6 @@
-import { mapfun } from "../Utils";
-import { abs , sinc , sign , sin } from "../Functions/index.js"
-import { Random } from "../Random/index.js";
+import { mapfun } from "../utils/index.js";
+import { abs , sinc , sign , sin } from "../functions/index.js"
+import { Random } from "../random/index.js";
 import { 
     zeros,
     ones,

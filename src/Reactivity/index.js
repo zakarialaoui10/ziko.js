@@ -1,6 +1,6 @@
-import Events from "./Events";
-import Observer from "./Observer"
-import Hooks from "./Hooks"
+import Events from "./events";
+import Observer from "./observer"
+import Hooks from "./hooks"
 const Reactivity={
     Events,
     Observer,
@@ -16,7 +16,7 @@ const Reactivity={
         this.Hooks.RemoveAll();
     }
 }
-export * from "./Events";
-export * from "./Observer";
-export * from "./Hooks";
+export * from "./events";
+export * from "./observer";
+export * from "./hooks";
 export default Reactivity;

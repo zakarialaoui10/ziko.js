@@ -1,4 +1,4 @@
-import { Random } from "../../../Math/Random";
+import { Random } from "../../../math/random";
 class ZikoUseChannel{
     constructor(name=""){
         this.channel=new BroadcastChannel(name);

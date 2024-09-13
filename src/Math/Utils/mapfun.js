@@ -1,8 +1,8 @@
 /** @module Math */
-import { Matrix } from "../Matrix/index.js";
-import { Complex , complex } from "../Complex/index.js";
-import {ln,e,cos,sin,sqrt,cosh,sinh} from "../Functions/index.js";
-import { Fixed } from "../Functions/index.js";
+import { Matrix } from "../matrix/index.js";
+import { Complex , complex } from "../complex/index.js";
+import {ln,e,cos,sin,sqrt,cosh,sinh} from "../functions/index.js";
+import { Fixed } from "../functions/index.js";
  /**
  * map a function to ...X
  * @param {function} fun

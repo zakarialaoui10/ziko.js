@@ -1,4 +1,4 @@
-import { mapfun } from "../../Utils/index.js";
+import { mapfun } from "../../utils/index.js";
 const _beta=(x, y)=>{
     const lowerLimit = 0;
     const upperLimit = 1;

@@ -1,5 +1,5 @@
-import { mapfun } from "../../Utils/index.js";
-import { fact } from "../../Functions/index.js";
+import { mapfun } from "../../utils/index.js";
+import { fact } from "../../functions/index.js";
 const _bessel=(n, x)=>{
     const maxTerms = 100;
     let result = 0;

@@ -3,16 +3,16 @@ import{
     pow,
     min,
     max,
-  } from "../Functions/index.js"
-import {Utils} from "../Utils/index.js";
-import {Complex } from "../Complex/index.js";
-import {Random} from "../Random/index.js"
+  } from "../functions/index.js"
+import {Utils} from "../utils/index.js";
+import {Complex } from "../complex/index.js";
+import {Random} from "../random/index.js"
 import { 
     luDecomposition,
     qrDecomposition,
     choleskyDecomposition
  } from "./Decomposition.js";
-import { arr2str } from "../../Data/index.js";
+import { arr2str } from "../../data/index.js";
 class Matrix extends ZikoMath{
     constructor(rows, cols, element = [] ) {
         super()

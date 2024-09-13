@@ -1,20 +1,18 @@
-import Math from "./Math";
-import UI from "./UI";
-import Time from "./Time";
-import Data from "./Data";
-import Reactivity from "./Reactivity";
-//import Events from "./Reactivity/Events";
-//import Hooks from "./Reactivity/Hooks";
-import Graphics from "./Graphics";
-import {SPA} from "./App/Router";
+import Math from "./math/index.js";
+import UI from "./user-interface/index.js";
+import Time from "./time/index.js";
+import Data from "./data/index.js";
+import Reactivity from "./reactivity/index.js";
+import Graphics from "./graphics/index.js";
+import {SPA} from "./app/router/index.js";
 import { 
     __UI__,
     __Config__
- } from "./App/Globals";
-import ZikoUIElement from "./UI/ZikoUIElement.js";
+ } from "./app/globals/index.js";
+import ZikoUIElement from "./user-interface/ZikoUIElement.js";
 import { 
     App,
- } from "./App";
+ } from "./app";
 const Ziko={
     App,
     Math,
@@ -45,7 +43,7 @@ globalThis.__Ziko__={
     RemoveAll
 };
 if(globalThis?.document){
-    document.addEventListener("DOMContentLoaded", __Ziko__.__Config__.init());
+    document?.addEventListener("DOMContentLoaded", __Ziko__.__Config__.init());
 }
 function ExtractAll(){
     UI.ExtractAll();
@@ -64,13 +62,13 @@ function RemoveAll(){
     Graphics.RemoveAll();
     Data.RemoveAll()
 }
-export * from "./Math";
-export * from "./UI";
-export * from "./Graphics";
-export * from "./Time";
-export * from "./Data";
-export * from "./App";
-export * from "./Reactivity"
+export * from "./math/index.js";
+export * from "./user-interface/index.js";
+export * from "./graphics/index.js";
+export * from "./time/index.js";
+export * from "./data/index.js";
+export * from "./app";
+export * from "./reactivity/index.js"
 export {
     App,
     Math,

@@ -19,10 +19,10 @@ import {
     svg2ascii,
     svg2imgUrl,
     svg2img,
- } from "./Converter/index.js";
-import parseXML from "./Parser/xml.js";
-import { preload } from "./Api/preload.js";
-import {str,Str} from "./String/index.js"
+ } from "./converter/index.js";
+import parseXML from "./parser/xml.js";
+import { preload } from "./api/preload.js";
+import {str,Str} from "./string/index.js"
 const Data={
     str,
     Str,
@@ -69,6 +69,6 @@ const Data={
         return this;
     }
 }
-export * from "./Converter/index.js";
-export * from "./String/index.js"
+export * from "./converter/index.js";
+export * from "./string/index.js"
 export default Data

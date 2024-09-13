@@ -1,4 +1,3 @@
-// export { ZikoUIComponent } from "./Component/index.js";
 export{
     App,
 } from "./app.js"
@@ -6,7 +5,8 @@ export {
     Themes,
     LightThemes,
     DarkThemes
-} from "./Themes";
+} from "./themes/index.js";
 export {
     __Config__
-} from "./Globals"
+} from "./globals/index.js"
+export * from "./globals/index.js"

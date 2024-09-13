@@ -1,6 +1,6 @@
-import { Complex , complex } from "../Complex";
+import { Complex , complex } from "../complex";
 import { PI } from "../const";
-import { cos , sin  } from "../Functions";
+import { cos , sin  } from "../functions";
 const fft=x=>{
     const output = [];
     const N = x.length;

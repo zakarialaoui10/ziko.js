@@ -1,5 +1,5 @@
 import {PI,E,EPSILON} from "./const.js"
-import { Signal } from "./Signal/index.js";
+import { Signal } from "./signal/index.js";
 import{
     cos,
     sin,
@@ -35,13 +35,13 @@ import{
     hypot,
     sig,
     atan2,
-  } from "./Functions/index.js";
-import {Random} from "./Random/index.js";
+  } from "./functions/index.js";
+import {Random} from "./random/index.js";
 //import { Derivation } from "./Numeric";
-import {complex,Complex} from "./Complex/index.js";
-import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./Matrix/index.js"
-import Discret from "./Discret/index.js";
-import {Logic,Base,Permutation,Combinaison,powerSet,subSet} from "./Discret/index.js";
+import {complex,Complex} from "./complex/index.js";
+import{Matrix,LinearSystem,matrix,matrix2,matrix3,matrix4}from "./matrix/index.js"
+import Discret from "./discret/index.js";
+import {Logic,Base,Permutation,Combinaison,powerSet,subSet} from "./discret/index.js";
 import {
     Utils,
     zeros,
@@ -70,7 +70,7 @@ import {
     inRange,
     cartesianProduct,
     mapfun
-  }from "./Utils/index.js"
+  }from "./utils/index.js"
 const Math={
     PI,
     E,
@@ -176,14 +176,14 @@ const Math={
     }
 }
 export * from "./const.js"
-export * from "./Functions/index.js"
-export * from "./Complex/index.js"
-export * from "./Matrix/index.js"
-export * from "./Discret/index.js"
-export * from "./Numeric/index.js"
-export * from "./Random/index.js"
-export * from "./Signal/index.js"
-export * from "./Utils/index.js"
-export * from "./Statistics/index.js"
+export * from "./functions/index.js"
+export * from "./complex/index.js"
+export * from "./matrix/index.js"
+export * from "./discret/index.js"
+export * from "./numeric/index.js"
+export * from "./random/index.js"
+export * from "./signal/index.js"
+export * from "./utils/index.js"
+export * from "./statistics/index.js"
 export default Math;
 

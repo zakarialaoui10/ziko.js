@@ -36,9 +36,9 @@ const Observer={
         return this;
     }
 }
-export * from "./intersection";
+export * from "./intersection.js";
 export * from "./attributes.js";
 export * from "./children.js";
-export * from "./resize";
-export * from "./screen";
+export * from "./resize.js";
+export * from "./screen.js";
 export default Observer;

@@ -1,4 +1,4 @@
-import { complex } from "../Complex/index.js";
+import { complex } from "../complex/index.js";
 import {fft,ifft} from "./fft.js";
 // should be processed in other thread
 class Filter{

@@ -24,11 +24,11 @@ class ZikoUseBattery{
         }
     }
     onChargingChange(callback){
-        this.__Battery__.addEventListener("chargingchange",callback);
+        this.__Battery__?.addEventListener("chargingchange",callback);
         return this;
     }
     onLevelChange(callback){
-        this.__Battery__.addEventListener("levelchange",callback);
+        this.__Battery__?.addEventListener("levelchange",callback);
         return this;
     }
 }

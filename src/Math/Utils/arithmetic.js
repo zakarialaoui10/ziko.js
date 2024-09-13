@@ -1,5 +1,5 @@
-import { Complex,complex} from "../Complex/index.js";
-import { Matrix  } from "../Matrix/index.js";
+import { Complex,complex} from "../complex/index.js";
+import { Matrix  } from "../matrix/index.js";
 const _add=(a,b)=>{
     if(typeof(a)==="number"){
         if (typeof b == "number") return a + b;

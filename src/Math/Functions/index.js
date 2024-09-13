@@ -1,14 +1,14 @@
-import { Complex } from "../Complex/index.js";
-import { mapfun } from "../Utils/mapfun.js";
+import { Complex } from "../complex/index.js";
+import { mapfun } from "../utils/mapfun.js";
 import { 
     min,
     max 
-}from "../Statistics/index.js";
+}from "../statistics/index.js";
 import { 
     gamma,
     bessel,
     beta 
-} from "../Calculus/index.js";
+} from "../calculus/index.js";
 export const Fixed={
     cos:x=>+Math.cos(x).toFixed(15),
     sin:x=>+Math.sin(x).toFixed(15),

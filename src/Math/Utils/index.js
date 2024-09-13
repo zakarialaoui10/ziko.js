@@ -18,7 +18,7 @@ import {
     linspace,
     logspace,
     geomspace
-} from "../Signal/functions.js"
+} from "../signal/functions.js"
 import {
     deg2rad,
     rad2deg
@@ -27,7 +27,7 @@ import{
     sum,
     prod,
     accum
-} from "../Statistics/index.js"
+} from "../statistics/index.js"
 import{
     inRange,
     isApproximatlyEqual

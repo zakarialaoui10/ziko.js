@@ -12,9 +12,9 @@ import{
     atan2,
     sqrt,
     ln
-  }from "../Functions/index.js"
-import { Matrix } from "../Matrix/index.js";
-import {sum,prod,deg2rad} from "../Utils/index.js";
+  }from "../functions/index.js"
+import { Matrix } from "../matrix/index.js";
+import {sum,prod,deg2rad} from "../utils/index.js";
 class Complex extends ZikoMath{
     constructor(a = 0, b = 0) {
         super()

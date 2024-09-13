@@ -24,7 +24,7 @@ class ZikoEvent{
     __handle(event,handler,dispose){
         const EVENT=(event==="drag")?event:`${this.cache.prefixe}${event}`
         this.dispose(dispose);
-        this.targetElement.addEventListener(EVENT,handler);
+        this.targetElement?.addEventListener(EVENT,handler);
         return this;   
     }
     __onEvent(event,dispose,...callbacks){
@@ -49,7 +49,7 @@ class ZikoEvent{
         config={...all,...config}
         for(let key in config){
             if(config[key]){
-                this.targetElement.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                this.targetElement?.removeEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                 this.cache.paused[`${this.cache.prefixe}${key}`]=true;
             }
         }
@@ -60,7 +60,7 @@ class ZikoEvent{
         config={...all,...config}
         for(let key in config){
             if(config[key]){
-                this.targetElement.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
+                this.targetElement?.addEventListener(`${this.cache.prefixe}${key}`,this.__controller[`${this.cache.prefixe}${key}`]);
                 this.cache.paused[`${this.cache.prefixe}${key}`]=false;
             }
         }

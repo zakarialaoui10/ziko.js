@@ -1,4 +1,4 @@
-import { arange } from "../../Utils/index.js";
+import { arange } from "../../utils/index.js";
 
 // const subSet = (...arr) => {
 //     let list = arange(0, 2 ** arr.length, 1);

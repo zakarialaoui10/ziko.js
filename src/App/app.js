@@ -1,6 +1,6 @@
-import { ZikoUIFlex } from "../UI/custom-elements/Flex.js";
-import { Seo } from "./Seo/index.js";
-import { useHashEvent } from "../Reactivity/index.js";
+import { ZikoUIFlex } from "../user-interface/custom-elements/Flex.js";
+import { Seo } from "./seo/index.js";
+import { useHashEvent } from "../reactivity/index.js";
 class ZikoUIApp extends ZikoUIFlex{
     constructor(){
         super("main");
