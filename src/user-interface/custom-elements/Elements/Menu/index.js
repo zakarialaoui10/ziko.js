@@ -1,1 +1,1 @@
-export * from "./menu3d"
+export * from "./menu3d.js"

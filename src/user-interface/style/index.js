@@ -306,7 +306,7 @@ class ZikoUIElementStyle{
     // Transfromations
     fadeOut(transitionTimming = 1) {
         this.style({ 
-          transition: transitionTimming/1000 + "s", 
+          transition:`opacity ${transitionTimming/1000}s`, 
           opacity: 0 
         });
         this.cache.isFaddedOut=true;
@@ -314,7 +314,7 @@ class ZikoUIElementStyle{
     }
     fadeIn(transitionTimming = 1) {
         this.style({ 
-          transition: transitionTimming/1000 + "s", 
+          transition: `opacity ${transitionTimming/1000}s`, 
           opacity: 1 
         });
         this.cache.isFaddedOut=false;
@@ -333,7 +333,7 @@ class ZikoUIElementStyle{
             "-ms-transform": `matrix3d(${transformMatrix})`, 
             "-o-transform": `matrix3d(${transformMatrix})` 
         });
-        if (t != 0) this.style({ transition: `transform ${transitionTimming/1000}s ease` });
+        if (transitionTimming != 0) this.style({ transition: `transform ${transitionTimming/1000}s ease` });
     }
     translate(dx, dy = dx ,dz = 0, transitionTimming = 0) {
         this.cache.transformation.matrix.set(3,0,dx);

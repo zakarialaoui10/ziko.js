@@ -1,7 +1,7 @@
 import { html } from "../../../misc";
 import { Flex } from "../../Flex";
 import { text } from "../../../text";
-import { ZikoUICodeNote } from "./CodeNote";
+import { ZikoUICodeNote } from "./code-note";
 
 const Input=(codeText="")=>html("code",codeText).style({
     width:"100%",

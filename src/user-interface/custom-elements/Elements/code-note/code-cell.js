@@ -1,11 +1,11 @@
 import { Flex, ZikoUIFlex } from "../../Flex";
-import { ZikoUICodeNote } from "./CodeNote";
+import { ZikoUICodeNote } from "./code-note";
 import { 
     Input,
     Output,
     Right,
     Left
- } from "./SubElements";
+ } from "./sub-elements";
 class ZikoUICodeCell extends ZikoUIFlex{
     constructor(code="",{type="js",order=null}={}){
         super("section")
