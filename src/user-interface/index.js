@@ -14,7 +14,7 @@ import {
     h4,
     h5,
     h6,   
-} from "./text/index.js";
+} from "./elements/primitives/text/index.js";
 import {
     btn,
     br,
@@ -23,11 +23,11 @@ import {
     hrs,
     link,
     html
-} from "./misc/index.js";
+} from "./elements/primitives/misc/index.js";
 import {
     ol,
     ul
-} from "./list/index.js"
+} from "./elements/primitives/list/index.js"
 import{
     Form,
     input,
@@ -47,13 +47,13 @@ import{
     select,
     textarea,
     inputCamera
-} from "./io/index.js";
+} from "./elements/primitives/io/index.js";
 import {
     image,
     video,
     audio,
     figure
-} from "./media/index.js"
+} from "./elements/primitives/media/index.js"
 import{
     Flex,
     Grid,
@@ -71,7 +71,7 @@ import{
     infoAlert,
     warningAlert,
     dangerAlert,
-} from "./custom-elements/index.js"
+} from "./elements/derived/index.js"
 import{
     Header,
     Main,
@@ -80,8 +80,8 @@ import{
     Aside,
     Nav,
     Footer,
-    } from "./semantic/index.js";
-import { Table } from "./table/index.js";
+    } from "./elements/primitives/semantic/index.js";
+import { Table } from "./elements/primitives/table/index.js";
 const UI={
     html,
     text,
@@ -174,14 +174,14 @@ const UI={
         return this;
     }
 }
-export * from "./text/index.js";
-export * from "./list/index.js";
-export * from "./io/index.js";
-export * from "./media/index.js";
-export * from "./table/index.js";
-export * from "./semantic/index.js";
-export * from "./misc/index.js";
-export * from "./custom-elements/index.js";
+export * from "./elements/primitives/text/index.js";
+export * from "./elements/primitives/list/index.js";
+export * from "./elements/primitives/io/index.js";
+export * from "./elements/primitives/media/index.js";
+export * from "./elements/primitives/table/index.js";
+export * from "./elements/primitives/semantic/index.js";
+export * from "./elements/primitives/misc/index.js";
+export * from "./elements/derived/index.js";
 export {
     html,
 }

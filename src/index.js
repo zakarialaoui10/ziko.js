@@ -9,7 +9,7 @@ import {
     __UI__,
     __Config__
  } from "./app/globals/index.js";
-import ZikoUIElement from "./user-interface/ZikoUIElement.js";
+import ZikoUIElement from "./user-interface/elements/primitives/ZikoUIElement.js";
 import { 
     App,
  } from "./app";

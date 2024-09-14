@@ -324,6 +324,13 @@ class ZikoUIElementStyle{
         this.cache.isFaddedOut?this.fadeIn(t_in):this.fadeOut(t_out);
         return this;
     }
+    morphBorderRadius(newValue, transitionTimming){
+        this.style({ 
+            borderRadius: newValue,
+            transition: `borderRadius ${transitionTimming/1000}s`, 
+        });
+        return this;
+    }
     #applyTransformMatrix(transitionTimming){
         const transformMatrix = this.cache.transformation.matrix.arr.join(",");
         this.style({

@@ -1,5 +1,5 @@
 import ZikoSvgElement from "../ZikoSvgElement.js";
-import { Flex } from "../../../../user-interface/custom-elements/Flex.js"
+import { Flex } from "../../../../user-interface/elements/derived/Flex.js"
 class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super("foreignObject")
