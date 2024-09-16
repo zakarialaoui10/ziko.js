@@ -59,7 +59,7 @@
     "./graphics": {
       "import": "./src/data/graphics.js"
     },
-    "./jsx-runtime":{
+    "./jsx-runtime": {
       "import": "./src/runtime/jsx-runtime/index.js"
     }
   },
@@ -70,8 +70,9 @@
     "test": "npx jasmine --config=jasmine.json",
     "test-link": "node _link/index.js",
     "lint": "eslint src/*/*/*",
-    "dev": "rollup -c rollup.config.js -w",
-    "build": "rollup -c rollup.config.js"
+    "dev": "cross-env NODE_ENV=development rollup --config rollup.config.js",
+    "watch": "cross-env NODE_ENV=development rollup --config rollup.config.js -w",
+    "build": "cross-env NODE_ENV=production rollup --config rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -84,10 +85,10 @@
   },
   "homepage": "https://github.com/zakarialaoui10/ziko.js#readme",
   "devDependencies": {
-    "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
+    "cross-env": "^7.0.3",
     "eslint": "^8.52.0",
     "jasmine": "^5.3.0",
     "rollup": "^4.1.5",

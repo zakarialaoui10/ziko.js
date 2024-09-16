@@ -2,7 +2,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import babel from '@rollup/plugin-babel';
 
 const banner= `
 /*
@@ -14,15 +13,9 @@ const banner= `
   Released under MIT License
 */
 `
-export default {
-  input: 'src/index.js',
-  output: [
-    {
-    file: 'dist/ziko.cjs',
-    format: 'cjs',
-    banner,
-    exports: "named"
-  },
+const isProduction = process.env.NODE_ENV === 'production';
+
+const output = [
   {
     file: 'dist/ziko.mjs',
     format: 'es',
@@ -33,6 +26,14 @@ export default {
     file: 'dist/ziko.js',
     format: 'umd',
     name:"Ziko",
+    banner,
+    exports: "named"
+  },
+]
+isProduction && output.push(
+  {
+    file: 'dist/ziko.cjs',
+    format: 'cjs',
     banner,
     exports: "named"
   },
@@ -48,13 +49,13 @@ export default {
       },
     })]
   }
-],
-  plugins: [
+)
+
+export default {
+  input: 'src/index.js',
+  output,
+   plugins: [
     resolve(), 
     //commonjs(),
-    // babel({
-    //   babelHelpers: 'bundled', // or 'runtime'
-    //   //exclude: 'node_modules/**',
-    // }), 
   ],
-};
+}

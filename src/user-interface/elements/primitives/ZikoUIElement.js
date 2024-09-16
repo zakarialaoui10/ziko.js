@@ -200,6 +200,20 @@ class ZikoUIElement {
     setTimeout(() => this.unrender(), t);
     return this;
   }
+  after(ui){
+    if(ui instanceof ZikoUIElement) ui=ui.element;
+    this.element?.after(ui)
+    return this;
+  }
+  before(ui){
+    if(ui instanceof ZikoUIElement) ui=ui.element;
+    this.element?.before(ui)
+    return this;
+  }
+  animate(keyframe, {duration=1000, iterations=1, easing="ease"}={}){
+    this.element?.animate(keyframe,{duration, iterations, easing});
+    return this;
+  }
   // Attributes
   setAttr(name, value) {
     if(name instanceof Object){
@@ -440,23 +454,6 @@ class ZikoUIElement {
     this.observer.intersection.start();
     return this;
   }
-  // get VisibleArea() {
-  //   let coords = this.element.getBoundingClientRect();
-  //   let windowHeight = globalThis.document.documentElement.clientHeight;
-  //   let windowWidth = globalThis.document.documentElement.clientWidth;
-  //   let topVisible = coords.top > 0 && coords.top < windowHeight;
-  //   let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
-  //   let leftVisible = coords.left > 0 && coords.left < windowWidth;
-  //   let rightVisible = coords.right > 0 && coords.right < windowWidth;
-  //   return {
-  //     top: topVisible,
-  //     bottom: bottomVisible,
-  //     left: leftVisible,
-  //     right: rightVisible,
-  //     heightRatio: (coords.height + coords.y) / coords.height,
-  //     isVisible: topVisible || bottomVisible || rightVisible || leftVisible,
-  //   };
-  // }
   setFullScreen(set = true, e) {
     if(!this.element.requestFullscreen){
       console.error("Fullscreen API is not supported in this browser.");
