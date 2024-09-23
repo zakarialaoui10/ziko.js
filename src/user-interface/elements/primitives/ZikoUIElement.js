@@ -59,7 +59,7 @@ class ZikoUIElement {
     this.style({ 
       position: "relative",
       boxSizing:"border-box",
-      fontFamily:"verdana",
+      // fontFamily:"verdana",
       margin:0,
       padding:0,
      });
