@@ -2,7 +2,7 @@ import ZikoSvgElement from "../ZikoSvgElement.js";
 class ZikoSvgCircle extends ZikoSvgElement{
     constructor(cx,cy,r){
       super("circle")
-      this.element=document?.createElementttNS(
+      this.element=document.createElementNS(
         "http://www.w3.org/2000/svg",
         "circle",
       );

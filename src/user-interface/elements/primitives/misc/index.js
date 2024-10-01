@@ -47,6 +47,7 @@ class ZikoUIBr extends ZikoUIElement {
   class ZikoUIHr extends ZikoUIElement {
     constructor() {
       super("hr","hr");
+      this.setAttr("role", "none");
     }
     get isHr(){
       return true

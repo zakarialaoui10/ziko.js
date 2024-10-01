@@ -18,6 +18,7 @@ import {
   watchChildren
 } from "../../../reactivity/index.js"
 import { Random } from "../../../math/index.js";
+import { Str } from "../../../data/index.js";
 class ZikoUIElement {
   constructor(element ,name="") {
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;
@@ -214,24 +215,24 @@ class ZikoUIElement {
     this.element?.animate(keyframe,{duration, iterations, easing});
     return this;
   }
-  // Attributes
+    // Attributes
+  #setAttr(name, value){
+    name = Str.isCamelCase(name) ? Str.camel2hyphencase(name) : name;
+    if(this?.attr[name] && this?.attr[name]===value) return;
+    this.element.setAttribute(name, value)
+    Object.assign(this.cache.attributes, {[name]:value});
+  }
   setAttr(name, value) {
     if(name instanceof Object){
       const [names,values]=[Object.keys(name),Object.values(name)];
       for(let i=0;i<names.length;i++){
         if(values[i] instanceof Array)value[i] = values[i].join(" ");
-        if(this?.attr[name[i]]!==value[i]){
-          this.element?.setAttribute(names[i], values[i]);
-          Object.assign(this.cache.attributes, Object.fromEntries([[names[i], values[i]]]));
-        }
+        this.#setAttr(names[i], values[i])
       }
     }
     else{
       if(value instanceof Array)value = value.join(" ");
-      if(this?.attr[name]!==value){
-        this.element?.setAttribute(name, value);
-        Object.assign(this.cache.attributes, Object.fromEntries([[name, value]]));
-      }
+      this.#setAttr(name, value)
     }
     return this;
   }
@@ -240,6 +241,7 @@ class ZikoUIElement {
     return this;
   }
   getAttr(name){
+    name = Str.isCamelCase(name) ? Str.camel2hyphencase(name) : name;
     return this.element.attributes[name].value;
   }
   setContentEditable(bool = true) {

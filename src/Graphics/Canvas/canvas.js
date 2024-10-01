@@ -124,7 +124,7 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         this.ctx.lineWidth=w/this.transformMatrix[0][0];;
         return this
     }
-    ImageData(x=0,y=0,w=this.Width,h=this.Height){
+    getImageData(x=0,y=0,w=this.Width,h=this.Height){
         return this.ctx.getImageData(x,y,w,h);
     }
     clear(){

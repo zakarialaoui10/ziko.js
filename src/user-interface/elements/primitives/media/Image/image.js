@@ -1,12 +1,13 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
 class ZikoUIImage extends ZikoUIElement {
-    constructor(src, w, h) {
+    constructor(src,alt, w, h) {
       super("img","image");
       this.value=src;
-      if (src.nodeName === "IMG")this.element?.setAttribute("src", src.src);
+      if (src.nodeName === "IMG")this.element.setAttribute("src", src.src);
       else this.element?.setAttribute("src", src);
       if (typeof w == "number") w += "%";
       if (typeof h == "number") h += "%";
+      this.setAttr("alt", alt)
       this.style({ border: "1px solid black", width: w, height: h });
     }
     get isImg(){
@@ -29,7 +30,7 @@ class ZikoUIImage extends ZikoUIElement {
       return this;
     }
   }
-const image = (src, width, height) => new ZikoUIImage(src, width, height);
+const image = (src,alt, width, height) => new ZikoUIImage(src,alt, width, height);
 export{
     image,
     ZikoUIImage

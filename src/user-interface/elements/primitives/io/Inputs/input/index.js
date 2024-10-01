@@ -7,6 +7,7 @@ class ZikoUIInput extends ZikoUIElement {
     this.setValue(value);
     this.setAttr("type", type);
     this.setAttr("name", name);
+    // this.setAttr("tab-index","0")
     if (datalist) this.linkDatalist(datalist);
   }
   get isInput() {
