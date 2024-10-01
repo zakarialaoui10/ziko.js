@@ -82,7 +82,10 @@ import{
     Footer,
     } from "./elements/primitives/semantic/index.js";
 import { Table } from "./elements/primitives/table/index.js";
-import { PDFViewer } from "./elements/primitives/embaded/index.js";
+import { 
+    PDFViewer,
+    HTMLViewer
+ } from "./elements/primitives/embaded/index.js";
 const UI={
     html,
     text,
@@ -155,6 +158,7 @@ const UI={
     warningAlert,
     dangerAlert,
     PDFViewer,
+    HTMLViewer,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {

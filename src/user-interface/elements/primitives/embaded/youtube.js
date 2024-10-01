@@ -18,8 +18,6 @@ function getYouTubeVideoId(url) {
     return match ? match[1] : null;
   }
 const YoutubePlayer = (id, title) => new ZikoUIYoutubePlayer(id, title);
-window.YoutubePlayer = YoutubePlayer
-window.YB = YoutubePlayer
 export{
     YoutubePlayer,
     ZikoUIYoutubePlayer

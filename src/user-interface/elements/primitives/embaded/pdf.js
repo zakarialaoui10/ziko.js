@@ -11,7 +11,6 @@ class ZikoUIPdf extends ZikoUIElement{
     }
 }
 const PDFViewer=(src, title)=>new ZikoUIPdf(src, title);
-window.PDFViewer = PDFViewer
 export{
     ZikoUIPdf,
     PDFViewer

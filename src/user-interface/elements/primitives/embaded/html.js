@@ -14,8 +14,7 @@ class ZikoUIHtmlViewer extends ZikoUIElement{
 }
 
 const HTMLViewer = (src, title) => new ZikoUIHtmlViewer(src, title);
-window.HTMLViewer = HTMLViewer
 export{
-    YoutubePlayer,
+    HTMLViewer,
     ZikoUIHtmlViewer
 }
