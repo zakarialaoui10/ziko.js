@@ -1,7 +1,71 @@
 import ZikoUIElement from "./user-interface/elements/primitives/ZikoUIElement";
 import ZikoUIContainerElement from "./user-interface/elements/primitives/ZikoUIContainerElement";
 
-export default {
+export {
     ZikoUIElement,
     ZikoUIContainerElement
 }
+export {
+    ZikoUIAbbrText,
+    ZikoUIAccordion,
+    ZikoUIArticle,
+    ZikoUIAside,
+    ZikoUIAudio,
+    ZikoUIBlockQuote,
+    ZikoUIBr,
+    ZikoUIBreadcrumbs,
+    ZikoUICodeNote,
+    ZikoUICodeText,
+    ZikoUIDefintion,
+    ZikoUIFigure,
+    ZikoUIFlex,
+    ZikoUIFooter,
+    ZikoUIForm,
+    ZikoUIGrid,
+    ZikoUIHeader,
+    ZikoUIHeading,
+    ZikoUIHorizontalSplitter,
+    ZikoUIHr,
+    ZikoUIHtmlTag,
+    ZikoUIImage,
+    ZikoUIInput,
+    ZikoUIInputCheckbox,
+    ZikoUIInputColor,
+    ZikoUIInputDatalist,
+    ZikoUIInputDate,
+    ZikoUIInputDateTime,
+    ZikoUIInputEmail,
+    ZikoUIInputImage,
+    ZikoUIInputNumber,
+    ZikoUIInputOption,
+    ZikoUIInputPassword,
+    ZikoUIInputRadio,
+    ZikoUIInputSearch,
+    ZikoUIInputSlider,
+    ZikoUIInputTime,
+    ZikoUILabel,
+    ZikoUILink,
+    ZikoUIMain,
+    ZikoUIMenu3d,
+    ZikoUIModal,
+    ZikoUINav,
+    ZikoUIParagraphe,
+    ZikoUIQuote,
+    ZikoUISection,
+    ZikoUISelect,
+    ZikoUISubText,
+    ZikoUISupText,
+    ZikoUIText,
+    ZikoUITextArea,
+    ZikoUIVerticalSplitter,
+    ZikoUIVideo,
+} from "./user-interface/index.js"
+
+export{
+    Matrix,
+    LinearSystem,
+    Complex,
+    Random,
+} from "./math/index.js"
+
+

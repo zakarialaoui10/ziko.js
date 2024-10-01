@@ -28,6 +28,9 @@
       "import": "./dist/ziko.mjs",
       "require": "./dist/ziko.cjs"
     },
+    "./type": {
+      "import": "./src/type.js"
+    },
     "./math": {
       "import": "./src/math/index.js"
     },
@@ -57,9 +60,6 @@
     },
     "./graphics": {
       "import": "./src/data/graphics.js"
-    },
-    "./jsx-runtime": {
-      "import": "./src/runtime/jsx-runtime/index.js"
     }
   },
   "bin": {
