@@ -1,5 +1,5 @@
 import { ZikoUseStyle } from "../../../reactivity/hooks/UI/useStyle.js";
-import { ZikoStyle } from "../../style/index.js";
+import { ZikoUIElementStyle } from "../../style/index.js";
 import { 
   usePointerEvent,
   useMouseEvent, 
@@ -34,7 +34,7 @@ class ZikoUIElement {
       isHidden: false,
       isFrozzen:false,
       legacyParent : null,
-      style: ZikoStyle({}),
+      style: new ZikoUIElementStyle({}),
       attributes: {},
       filters: {},
       temp:{}

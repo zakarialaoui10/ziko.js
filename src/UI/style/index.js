@@ -511,8 +511,6 @@ class ZikoUIElementStyle{
     }
       
 }
-
-const ZikoStyle=(defaultStyle)=>new ZikoUIElementStyle(defaultStyle);
 export{
-    ZikoStyle
+    ZikoUIElementStyle
 }

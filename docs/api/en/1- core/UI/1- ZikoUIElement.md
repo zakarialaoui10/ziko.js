@@ -41,7 +41,7 @@ In general, ZikoUIElement supports:
    - `📦 .size(width,height)` : Set the size of the UI element by specifying its width and height.
    - `📦 .st.show()` : Make the UI element visible.
    - `📦 .st.hide()` : Hide the UI elemnt.
-   - `🧩 .st` : Returns an instance of ZikoStyle, a class that provides a comprehensive set of methods for manipulating and querying the styles of the UI element.
+   - `🧩 .st` : Returns an instance of ZikoUIElementStyle, a class that provides a comprehensive set of methods for manipulating and querying the styles of the UI element.
       - `🧩🧩 .st.styles` 
       - `🧩📦 .st.add`
       - `🧩📦 .st.delete`
