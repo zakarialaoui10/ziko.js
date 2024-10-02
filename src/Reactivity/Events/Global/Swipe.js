@@ -1,5 +1,5 @@
 import { ZikoEvent, EVENT_CONTROLLER } from "../ZikoEvent.js";
-import { norm, lerp, abs, sign } from "../../../math/index.js";
+import { norm, lerp, abs, sign } from "../../../Math/index.js";
 class ZikoEventSwipe extends ZikoEvent {
   constructor(target, width_threshold = 0.3, height_threshold = 0.3) {
     super(target);

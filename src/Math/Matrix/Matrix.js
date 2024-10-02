@@ -12,7 +12,7 @@ import {
     qrDecomposition,
     choleskyDecomposition
  } from "./Decomposition.js";
-import { arr2str } from "../../data/index.js";
+import { arr2str } from "../../Data/index.js";
 class Matrix extends ZikoMath{
     constructor(rows, cols, element = [] ) {
         super()

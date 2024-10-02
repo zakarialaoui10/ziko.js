@@ -1,5 +1,5 @@
-import ZikoUIElement from "./user-interface/elements/primitives/ZikoUIElement";
-import ZikoUIContainerElement from "./user-interface/elements/primitives/ZikoUIContainerElement";
+import ZikoUIElement from "./UI/elements/primitives/ZikoUIElement";
+import ZikoUIContainerElement from "./UI/elements/primitives/ZikoUIContainerElement";
 
 export {
     ZikoUIElement,
@@ -59,13 +59,13 @@ export {
     ZikoUITextArea,
     ZikoUIVerticalSplitter,
     ZikoUIVideo,
-} from "./user-interface/index.js"
+} from "./UI/index.js"
 
 export{
     Matrix,
     LinearSystem,
     Complex,
     Random,
-} from "./math/index.js"
+} from "./Math/index.js"
 
 

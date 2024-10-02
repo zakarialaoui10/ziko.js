@@ -7,11 +7,11 @@ import {
 import { 
   Complex,
   Matrix
- } from "../../../../math/index.js";
+ } from "../../../../Math/index.js";
 import { 
   arr2str,
   obj2str
-} from "../../../../data/index.js";
+} from "../../../../Data/index.js";
 class __ZikoUIText__ extends ZikoContainerElement {
     constructor(tag, name, lineBreak,...value) {
       super(tag, name);

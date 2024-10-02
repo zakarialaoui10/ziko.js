@@ -1,4 +1,4 @@
-import { Themes } from "../../../app/themes";
+import { Themes } from "../../../App/themes";
 class ZikoUseTheme{
     constructor(theme,id=0){
       this.id="Ziko-Theme-"+id;

@@ -1,5 +1,5 @@
 import ZikoUIElement from "../../ZikoUIElement.js";
-import { Random } from "../../../../../math/index.js";
+import { Random } from "../../../../../Math/index.js";
 class ZikoUILabel extends ZikoUIElement{
     constructor(){
       super();

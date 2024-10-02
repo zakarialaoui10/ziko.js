@@ -1,4 +1,4 @@
-import { text } from "../../user-interface/elements/primitives/text/index.js";
+import { text } from "../../UI/elements/primitives/text/index.js";
 class ZikoSPA{
     constructor(root_UI,routes){
         this.root_UI=root_UI;

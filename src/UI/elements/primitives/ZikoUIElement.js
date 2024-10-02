@@ -17,8 +17,8 @@ import {
   watchAttr,
   watchChildren
 } from "../../../reactivity/index.js"
-import { Random } from "../../../math/index.js";
-import { Str } from "../../../data/index.js";
+import { Random } from "../../../Math/index.js";
+import { Str } from "../../../Data/index.js";
 class ZikoUIElement {
   constructor(element ,name="") {
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;

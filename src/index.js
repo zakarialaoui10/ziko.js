@@ -1,15 +1,15 @@
-import Math from "./math/index.js";
-import UI from "./user-interface/index.js";
-import Time from "./time/index.js";
-import Data from "./data/index.js";
-import Reactivity from "./reactivity/index.js";
-import Graphics from "./graphics/index.js";
+import Math from "./Math/index.js";
+import UI from "./UI/index.js";
+import Time from "./Time/index.js";
+import Data from "./Data/index.js";
+import Reactivity from "./Reactivity/index.js";
+import Graphics from "./Graphics/index.js";
 import {SPA} from "./app/router/index.js";
 import { 
     __UI__,
     __Config__
  } from "./app/globals/index.js";
-import ZikoUIElement from "./user-interface/elements/primitives/ZikoUIElement.js";
+import ZikoUIElement from "./UI/elements/primitives/ZikoUIElement.js";
 import { 
     App,
  } from "./app";
@@ -62,13 +62,13 @@ function RemoveAll(){
     Graphics.RemoveAll();
     Data.RemoveAll()
 }
-export * from "./math/index.js";
-export * from "./user-interface/index.js";
-export * from "./graphics/index.js";
-export * from "./time/index.js";
-export * from "./data/index.js";
-export * from "./app";
-export * from "./reactivity/index.js"
+export * from "./Math/index.js";
+export * from "./UI/index.js";
+export * from "./Graphics/index.js";
+export * from "./Time/index.js";
+export * from "./Data/index.js";
+export * from "./App";
+export * from "./Reactivity/index.js"
 export {
     App,
     Math,

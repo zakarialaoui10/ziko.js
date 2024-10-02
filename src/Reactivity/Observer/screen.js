@@ -1,4 +1,4 @@
-import { map } from "../../math/utils/index.js"
+import { map } from "../../Math/utils/index.js"
 class ZikoScreenObserver {
     constructor(callback=e=>console.log({x:e.x,y:e.y})) {
       this.cache={};
