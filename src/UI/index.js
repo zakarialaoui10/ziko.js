@@ -86,6 +86,7 @@ import {
     PDFViewer,
     HTMLViewer
  } from "./elements/primitives/embaded/index.js";
+import { jsonStyleSheet } from "./style/jsonStyleSheet.js"
 const UI={
     html,
     text,
@@ -159,6 +160,7 @@ const UI={
     dangerAlert,
     PDFViewer,
     HTMLViewer,
+    jsonStyleSheet,
     ExtractAll: function () {
         const keys = Object.keys(this);
         for (let i = 0; i < keys.length; i++) {

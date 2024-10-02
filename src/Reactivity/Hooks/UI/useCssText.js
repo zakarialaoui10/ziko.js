@@ -17,5 +17,5 @@ class ZikoUseCssText{
         return this;
     }
 }
-const useFavIcon=(FavIcon,useEventEmitter)=>new ZikoUseFavIcon(FavIcon,useEventEmitter);
-export{ useFavIcon }
+const useCss=(FavIcon,useEventEmitter)=>new ZikoUseCssText(FavIcon,useEventEmitter);
+export{ useCss }

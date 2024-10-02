@@ -32,3 +32,6 @@ export {
  export{
   arr2str
  } from "./array.js"
+ export{
+  json2css
+ } from "./css.js"
