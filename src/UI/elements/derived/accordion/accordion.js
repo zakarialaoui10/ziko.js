@@ -1,5 +1,4 @@
-import ZikoUIContainerElement from "../../../primitives/ZikoUIContainerElement.js";
-// import { Collapsible } from "./Collapsible";
+import ZikoUIContainerElement from "../../primitives/ZikoUIContainerElement.js";
 class ZikoUIAccordion extends ZikoUIContainerElement{
     constructor(...Collapsible){
         super("div", "Accordion")
@@ -37,8 +36,6 @@ class ZikoUIAccordion extends ZikoUIContainerElement{
     }
 }
 const Accordion = (... Collapsible) => new ZikoUIAccordion(...Collapsible);
-// window.Accordion = Accordion
-
 export{
     Accordion,
     ZikoUIAccordion

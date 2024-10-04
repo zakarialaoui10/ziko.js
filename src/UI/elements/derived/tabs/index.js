@@ -2,7 +2,7 @@
 // Previous
 // Vertical 
 // Horizontal
-import { Flex, ZikoUIFlex } from "../../Flex";
+import { Flex, ZikoUIFlex } from "../Flex";
 class ZikoUITabs extends ZikoUIFlex{
     #ACTIVE_ELEMENT_INDEX=0;
     constructor(Controllers,Contents){

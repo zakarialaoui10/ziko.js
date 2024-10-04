@@ -1,4 +1,4 @@
-import { ZikoUIFlex } from "../../Flex";
+import { ZikoUIFlex } from "../Flex";
 import { CodeCell } from "./code-cell";
 class ZikoUICodeNote extends ZikoUIFlex{
     constructor(){

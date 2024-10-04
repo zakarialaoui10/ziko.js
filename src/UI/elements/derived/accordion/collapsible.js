@@ -1,6 +1,6 @@
-import ZikoUIElement from "../../../primitives/ZikoUIElement";
-import { html } from "../../../primitives/misc/index.js";
-import { watchAttr } from "../../../../../reactivity/index.js";
+import ZikoUIElement from "../../primitives/ZikoUIElement";
+import { html } from "../../primitives/misc/index.js";
+import { watchAttr } from "../../../../reactivity/index.js";
 class ZikoUICollapbsible extends ZikoUIElement{
     constructor(summary,content,openIcon="😁", closeIcon=openIcon){
         super("details","Collapsible")

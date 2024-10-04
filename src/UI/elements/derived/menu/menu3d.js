@@ -1,5 +1,5 @@
-import ZikoUIElement from "../../../primitives/ZikoUIElement.js";
-import { ZikoUIFlex } from "../../Flex.js"
+import ZikoUIElement from "../../primitives/ZikoUIElement.js";
+import { ZikoUIFlex } from "../Flex.js"
 class ZikoUIMenu3d extends ZikoUIFlex{
     constructor(controller, content){
         super("div", "menu3d")

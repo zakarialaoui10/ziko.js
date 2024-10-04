@@ -1,6 +1,6 @@
-import { html } from "../../../primitives/misc/index.js";
-import { Flex } from "../../Flex";
-import { text } from "../../../primitives/text/index.js";
+import { html } from "../../primitives/misc/index.js";
+import { Flex } from "../Flex";
+import { text } from "../../primitives/text/index.js";
 import { ZikoUICodeNote } from "./code-note";
 
 

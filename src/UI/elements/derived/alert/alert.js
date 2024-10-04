@@ -1,6 +1,6 @@
-import { Flex,ZikoUIFlex } from "../../Flex.js";
+import { Flex,ZikoUIFlex } from "../Flex.js";
 import { palette } from "./palette.js";
-import { text, h3 } from "../../../primitives/text/index";
+import { text, h3 } from "../../primitives/text/index";
 class ZikoUIAlert extends ZikoUIFlex{
     constructor(type, title, content){
         super()

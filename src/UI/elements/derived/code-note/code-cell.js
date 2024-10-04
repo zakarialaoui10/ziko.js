@@ -1,4 +1,4 @@
-import { Flex, ZikoUIFlex } from "../../Flex";
+import { Flex, ZikoUIFlex } from "../Flex";
 import { ZikoUICodeNote } from "./code-note";
 import { 
     Input,

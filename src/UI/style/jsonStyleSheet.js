@@ -54,3 +54,11 @@ export {
     jsonStyleSheet,
     ZikoJsonStyleSheet
 }
+
+
+//  p().style({color:"red"})
+//  jsonStyleSheet({
+//    p:{
+//     color : "green !important"
+//    }
+//  })
