@@ -178,6 +178,9 @@ class ZikoUIElement {
     this.render();
     return this;
   }
+  describe(label){
+    if(label)this.setAttr("aria-label",label)
+  }
   render(/*render = true , */target = this.target) {
     if(target instanceof ZikoUIElement)target=target.element;
     this.target=target;
