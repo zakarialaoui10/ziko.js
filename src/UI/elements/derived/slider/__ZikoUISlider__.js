@@ -1,15 +1,16 @@
 import ZikoUIContainerElement from "../../primitives/ZikoUIContainerElement";
 import { Section } from "../../primitives/semantic";
 import { text } from "../../primitives/text";
-class __ZikoUISlider__ extends ZikoUIContainerElement{
+import { ZikoUIFlex } from "../Flex";
+class __ZikoUISlider__ extends ZikoUIFlex{
     constructor(){
         super("section","");
         Object.assign(this.cache,{
             currentIndex : 0,
-            slideBuilder : null
+            slideBuilder : null,
         })
         this.style({
-            width:"100%",
+            // width:"100%",
             overflow:"hidden"
         });
         this.setAttr({
@@ -18,25 +19,18 @@ class __ZikoUISlider__ extends ZikoUIContainerElement{
             ariaLabel : "Content Slider"
         })
         this.track = Section().size("100%","100%").style({
-            transition : "transform 0.3s ease-in-out"
+            transition : "transform 0.3s ease-in-out",
         });
         this.bullets = Flex().style({
-            position : "absolute",
-            top : 0,
+            // position : "absolute",
+            // top : 0,
             gap : "10px",
             padding:"10px",
         })
-    }
-    init(){
-        this.NextBtn.onClick(()=>this.next());
-        this.PreviousBtn.onClick(()=>this.previous());
-        this.element.append(
-            this.track.element,
-            // this.controls.element,
-            this.bullets.element,
+        this.append(
+            this.track,
+            this.bullets
         )
-        this.controls.unrender()
-        // this.controls.st.hide()
     }
     #updateAriaHidden(){
         for(let i=0;i<this.track.items.length;i++){
@@ -83,16 +77,19 @@ class __ZikoUISlider__ extends ZikoUIContainerElement{
             role : "group",
             ariaLabel : "" // link to update
         }));
-        this.bullets.append(
-         text().size("15px","15px").style({
+        const bullet = text().size("15px","15px").style({
             borderRadius:"50%",
             cursor : "pointer",
-            border : "2px solid white",
-            background : "red"
+            border : "3px solid blue",
+            background : "white"
          }).setAttr({
             role : "button",
             tabIndex : 0
          })
+         .onPtrEnter(e=>e.target.st.background("gold").scale(1.2,1.2))
+         .onPtrLeave(e=>e.target.st.background("white").scale(1,1))
+        this.bullets.append(
+         bullet
         )
         return this;
     }
