@@ -1,19 +1,24 @@
 import ZikoUIContainerElement from "../../primitives/ZikoUIContainerElement";
 import { Section } from "../../primitives/semantic";
 import { text } from "../../primitives/text";
-import { ZikoUIFlex } from "../Flex";
-class __ZikoUISlider__ extends ZikoUIFlex{
+import { ZikoUIFlex,Flex } from "../Flex";
+import { ZikoUISection } from "../../primitives/semantic";
+class __ZikoUISlider__ extends ZikoUISection{
     constructor(){
         super("section","");
         Object.assign(this.cache,{
             currentIndex : 0,
             slideBuilder : null,
         })
-        this.style({
+        this.container = Flex().size("100%","100%").vertical(0,0).style({
             // width:"100%",
             overflow:"hidden"
         });
-        this.setAttr({
+        // this.style({
+        //     // width:"100%",
+        //     overflow:"hidden"
+        // });
+        this.container.setAttr({
             ariaRoledescription : "carousel",
             ariaLive: "polite",
             ariaLabel : "Content Slider"
@@ -27,10 +32,11 @@ class __ZikoUISlider__ extends ZikoUIFlex{
             gap : "10px",
             padding:"10px",
         })
-        this.append(
+        this.container.append(
             this.track,
             this.bullets
         )
+        this.append(this.container)
     }
     #updateAriaHidden(){
         for(let i=0;i<this.track.items.length;i++){

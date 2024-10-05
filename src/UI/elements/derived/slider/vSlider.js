@@ -7,7 +7,7 @@ class ZikoUIVerticalSlider extends __ZikoUISlider__{
             slideBuilder : (UIElement) => Flex(UIElement).size("100%","100%").vertical(0, 0)
         })
         this.addSlides(...slides);
-        this.horizontal(0,0)
+        this.container.horizontal(0,0)
         this.track.size("90%","100%")
         this.bullets.vertical(0,0).style({
             height : "100%",
@@ -15,7 +15,7 @@ class ZikoUIVerticalSlider extends __ZikoUISlider__{
         })
     }
     __updatePos(){
-        const height = this.height;
+        const height = this.container.height;
         this.track.st.translateY(-this.cache.currentIndex * height);
     }    
 }

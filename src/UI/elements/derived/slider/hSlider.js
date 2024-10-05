@@ -3,7 +3,7 @@ import { Flex } from "../Flex";
 class ZikoUIHorizontalSlider extends __ZikoUISlider__{
     constructor(...slides){
         super("section","hSlider")
-        this.vertical(0,0)
+        this.container.vertical(0,0)
         Object.assign(this.cache,{
             slideBuilder : (UIElement) => Flex(UIElement).style({
                 minWidth : "100%",
@@ -21,7 +21,7 @@ class ZikoUIHorizontalSlider extends __ZikoUISlider__{
         })
     }
     __updatePos(){
-        const width = this.width;
+        const width = this.container.width;
         this.track.st.translateX(-this.cache.currentIndex * width);
     }
     
