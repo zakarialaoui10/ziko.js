@@ -25,6 +25,7 @@ export {
     ZikoUIHeader,
     ZikoUIHeading,
     ZikoUIHorizontalSplitter,
+    ZikoUIHorizontalSlider,
     ZikoUIHr,
     ZikoUIHtmlTag,
     ZikoUIImage,
@@ -58,6 +59,7 @@ export {
     ZikoUIText,
     ZikoUITextArea,
     ZikoUIVerticalSplitter,
+    ZikoUIVerticalSlider,
     ZikoUIVideo,
 } from "./UI/index.js"
 

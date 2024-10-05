@@ -1,33 +1,47 @@
 import { __ZikoUISlider__ } from "./__ZikoUISlider__";
+import { Section } from "../../primitives/semantic";
 class ZikoUIVerticalSlider extends __ZikoUISlider__{
     constructor(...slides){
         super("section","vSlider");
-        this.track.size("100%","auto")
+        Object.assign(this.cache,{
+            slideBuilder : (UIElement) => Section(UIElement).size("100%","100%")
+        })
+        this.NextBtn = btn("⮟")
+        this.PreviousBtn = btn("⮝")
+        this.controls = Flex(
+            this.NextBtn,
+            this.PreviousBtn
+        ).style({
+            position : "absolute",
+            width : "100%",
+            pointerEvent : "none"
+        }).forEach(n=>n.style({
+            background:"transparent",
+            width : "50px",
+            height : "25px",
+            display : "grid",
+            placeItems: "center",
+            alignContent: "center",
+            fontSize:"1.5rem"
+        }))
+        this.init()
         this.addSlides(...slides);
+        this.controls.style({
+            left : "50%",
+            top : 0,
+            height : "100%",
+            transform : "translateX(-50%)",
+        }).vertical(0,"space-between");
+        this.bullets.vertical(1,0)
     }
-    #updatePos(){
+    __updatePos(){
         const height = this.height;
         this.track.st.translateY(-this.cache.currentIndex * height);
-    }
-    goto(n = 0){
-        this.cache.currentIndex = 0;
-        this.#updatePos()
-    }
-    next(n = 1){
-        this.cache.currentIndex += n;
-        this.#updatePos();
-        return this;
-    }
-    previous(n = 2){
-        this.cache.currentIndex -= n;
-        this.#updatePos();
-        return this;
-    }
-    
+    }    
 }
 
 const vSlider=(...slides)=>new ZikoUIVerticalSlider(...slides);
-window.vSlider = vSlider
 export{
-    vSlider
+    vSlider,
+    ZikoUIVerticalSlider
 }
