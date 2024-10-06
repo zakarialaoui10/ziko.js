@@ -1,8 +1,12 @@
+import {
+    useTitle,
+    useFavIcon,
+    useMeta,
+    useHead
+} from "./Head"
 import { 
     useStyle,
     useTheme,
-    useTitle,
-    useFavIcon,
     useMediaQuery
  } from "./UI";
 import { 
@@ -38,6 +42,8 @@ const Hooks={
     useBluetooth,
     useTitle,
     useFavIcon,
+    useMeta,
+    useHead,
     useThrottle,
     useDebounce,
     useLocaleStorage,

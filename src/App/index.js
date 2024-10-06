@@ -1,11 +1,11 @@
 export{
     App,
-} from "./app.js"
-export { 
-    Themes,
-    LightThemes,
-    DarkThemes
-} from "./themes/index.js";
+} from "./app/index.js"
+// export { 
+//     Themes,
+//     LightThemes,
+//     DarkThemes
+// } from "./themes/index.js";
 export {
     __Config__
 } from "./globals/index.js"
