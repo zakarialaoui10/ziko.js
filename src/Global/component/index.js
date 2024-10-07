@@ -3,7 +3,7 @@
 //     constructor(){
 //         super();
 //         this.shadowDOM = this.attachShadow({ mode: 'open' });
-//         this.wrapper=document?.createElementt("div");
+//         this.wrapper=document?.createElement("div");
 //     }
 //     connectedCallback() {
 //         this.setAttribute('role', 'region');

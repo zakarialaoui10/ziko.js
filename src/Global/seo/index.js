@@ -14,7 +14,7 @@ class ZikoSeo{
     }
     charset(charset="utf-8"){
         const meta=document.querySelector("meta[charset]");
-        this.meta=meta?meta:document?.createElementt("meta");
+        this.meta=meta?meta:document?.createElement("meta");
         this.meta.setAttribute("charset",charset);
         if(!meta)this.app.head.append(this.meta);
         return this;

@@ -20,10 +20,10 @@ class ZikoUIApp extends ZikoUIFlex{
     #init(){
         this.root.setAttribute("data-engine","zikojs");
         const head=this.root.getElementsByTagName("head")[0];
-        this.head=head?head:this.head=document?.createElementtt("head");
+        this.head=head?head:this.head=document?.createElement("head");
         if(!head)this.root.insertBefore(this.head,document?.body);
         const title=this.head.getElementsByTagName("title")[0];
-        this.Title=title?title:document?.createElementt("title");
+        this.Title=title?title:document?.createElement("title");
         if(!title)this.head.append(this.Title);
     }
     title(title=this.title.textContent){

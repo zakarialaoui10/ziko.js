@@ -30,6 +30,7 @@ class ZikoUIElement {
     this.cache = {
       name,
       parent:null,
+      isBody:false,
       isRoot:false,
       isHidden: false,
       isFrozzen:false,
@@ -66,7 +67,6 @@ class ZikoUIElement {
      });
     this.size("auto", "auto");
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
-    // this.render(globalThis.__Ziko__.__Config__.default.render);
     globalThis.__Ziko__.__Config__.default.render && this.render()
   }
   get st(){
@@ -83,6 +83,9 @@ class ZikoUIElement {
   }
   get text(){
     return this.element.textContent;
+  }
+  get isBody(){
+    return this.element === globalThis?.document.body;
   }
   get __app__(){
     if(this.cache.isRoot)return this;
@@ -172,6 +175,7 @@ class ZikoUIElement {
     return this;
   }
   setTarget(tg) {
+    if(this.isBody) return ;
     if (tg instanceof ZikoUIElement) tg = tg.element;
     this.unrender();
     this.target = tg;
@@ -181,14 +185,11 @@ class ZikoUIElement {
   describe(label){
     if(label)this.setAttr("aria-label",label)
   }
-  render(/*render = true , */target = this.target) {
+  render(target = this.target) {
+    if(this.isBody)return ;
     if(target instanceof ZikoUIElement)target=target.element;
     this.target=target;
     this.target?.appendChild(this.element);
-    // if(render) {
-    //   this.target.appendChild(this.element);
-    // }
-    // else this.remove();
     return this;
   }
   unrender(){
@@ -480,4 +481,5 @@ class ZikoUIElement {
     return this;
   }
 }
+globalThis.ZikoUIElement = ZikoUIElement
 export default ZikoUIElement;

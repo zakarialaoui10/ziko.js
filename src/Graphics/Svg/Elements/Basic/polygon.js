@@ -4,7 +4,7 @@ class ZikoSvgPolygon extends ZikoSvgElement{
       super()
       this.X=X;
       this.Y=Y
-      this.element=document?.createElementtNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "polygon",
       );

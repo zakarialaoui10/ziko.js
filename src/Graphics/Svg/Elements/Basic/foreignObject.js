@@ -4,7 +4,7 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super("foreignObject")
       this.items=[];
-      this.element=document?.createElementtNS(
+      this.element=document?.createElementNS(
         "http://www.w3.org/2000/svg",
         "foreignObject",
       );

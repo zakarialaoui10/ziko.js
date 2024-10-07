@@ -2,19 +2,19 @@ import Math from "./Math/index.js";
 import UI from "./UI/index.js";
 import Time from "./Time/index.js";
 import Data from "./Data/index.js";
-import Reactivity from "./Reactivity/index.js";
+import Reactivity from "./Reactivity";
 import Graphics from "./Graphics/index.js";
-import {SPA} from "./app/router/index.js";
+import {SPA} from "./Global/router/index.js";
 import { 
     __UI__,
     __Config__
- } from "./app/globals/index.js";
+ } from "./Global/globals/index.js";
 import ZikoUIElement from "./UI/elements/primitives/ZikoUIElement.js";
-import { 
-    App,
- } from "./app";
+// import { 
+//     App,
+//  } from "./Global";
 const Ziko={
-    App,
+    // App,
     Math,
     UI,
     Time,
@@ -67,10 +67,10 @@ export * from "./UI/index.js";
 export * from "./Graphics/index.js";
 export * from "./Time/index.js";
 export * from "./Data/index.js";
-export * from "./App";
+export * from ".//Global";
 export * from "./Reactivity/index.js"
 export {
-    App,
+    // App,
     Math,
     UI,
     Time,
