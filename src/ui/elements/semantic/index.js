@@ -1,4 +1,4 @@
-import {ZikoUIContainerElement} from "../ZikoUIContainerElement.js";
+import {ZikoUIContainerElement} from "../ZikoUIElement.js";
 class ZikoUIMain extends ZikoUIContainerElement{
     constructor(){
       super("main","Main");

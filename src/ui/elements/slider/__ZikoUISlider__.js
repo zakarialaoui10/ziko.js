@@ -1,5 +1,5 @@
-import { Section, ZikoUISection } from "../semantic";
-import { text } from "../text";
+import { Section, ZikoUISection } from "../../semantic";
+import { text } from "../../text";
 import { Flex } from "../flex";
 class __ZikoUISlider__ extends ZikoUISection{
     constructor(){

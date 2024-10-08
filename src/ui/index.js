@@ -14,7 +14,7 @@ import {
     h4,
     h5,
     h6,   
-} from "./elements/text";
+} from "./elements/primitives/text/index.js";
 import {
     btn,
     br,
@@ -23,11 +23,11 @@ import {
     hrs,
     link,
     html
-} from "./elements/misc";
+} from "./elements/primitives/misc/index.js";
 import {
     ol,
     ul
-} from "./elements/list"
+} from "./elements/primitives/list/index.js"
 import{
     Form,
     input,
@@ -47,13 +47,13 @@ import{
     select,
     textarea,
     inputCamera
-} from "./elements/io";
+} from "./elements/primitives/io/index.js";
 import {
     image,
     video,
     audio,
     figure
-} from "./elements/media"
+} from "./elements/primitives/media/index.js"
 import{
     Flex,
     Grid,
@@ -75,7 +75,7 @@ import{
     infoAlert,
     warningAlert,
     dangerAlert,
-} from "./elements"
+} from "./elements/derived/index.js"
 import{
     Header,
     Main,
@@ -84,12 +84,12 @@ import{
     Aside,
     Nav,
     Footer,
-    } from "./elements/semantic";
-import { Table } from "./elements/table";
+    } from "./elements/primitives/semantic/index.js";
+import { Table } from "./elements/primitives/table/index.js";
 import { 
     PDFViewer,
     HTMLViewer
- } from "./elements/embaded";
+ } from "./elements/primitives/embaded/index.js";
 const UI={
     html,
     text,
@@ -188,15 +188,14 @@ const UI={
         return this;
     }
 }
-// export * from "./elements/text";
-// export * from "./elements/list";
-// export * from "./elements/io";
-// export * from "./elements/media";
-// export * from "./elements/table";
-// export * from "./elements/semantic";
-// export * from "./elements/misc";
-// export * from "./elements/derived";
-export * from "./elements"
+export * from "./elements/primitives/text/index.js";
+export * from "./elements/primitives/list/index.js";
+export * from "./elements/primitives/io/index.js";
+export * from "./elements/primitives/media/index.js";
+export * from "./elements/primitives/table/index.js";
+export * from "./elements/primitives/semantic/index.js";
+export * from "./elements/primitives/misc/index.js";
+export * from "./elements/derived/index.js";
 export {
     html,
 }

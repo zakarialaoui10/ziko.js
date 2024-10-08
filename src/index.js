@@ -1,15 +1,15 @@
-import Math from "./math";
-import UI from "./ui";
-import Time from "./time";
-import Data from "./data";
-import Reactivity from "./reactivity";
-import Graphics from "./graphics";
-import {SPA} from "./global/router";
+import Math from "./math/index.js";
+import UI from "./ui/index.js";
+import Time from "./time/index.js";
+import Data from "./data/index.js";
+import Reactivity from "./reactivity/index.js";
+import Graphics from "./graphics/index.js";
+import {SPA} from "./global/router/index.js";
 import { 
     __UI__,
     __Config__
  } from "./global/globals/index.js";
-// import ZikoUIElement from "./ui/elements/primitives/ZikoUIElement.js";
+import ZikoUIElement from "./ui/elements/primitives/ZikoUIElement.js";
 // import { 
 //     App,
 //  } from "./Global";
@@ -77,7 +77,7 @@ export {
     Graphics,
     Reactivity,
     Data,
-    // ZikoUIElement,
+    ZikoUIElement,
     SPA,
     ExtractAll,
     RemoveAll

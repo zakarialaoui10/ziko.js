@@ -1,6 +1,6 @@
-import { ZikoUIElement } from "../ZikoUIElement.js";
-import { html } from "../misc";
-import { text } from "../text";
+import { ZikoUIElement } from "../../ZikoUIElement.js";
+import { html } from "../../misc/index.js";
+import { text } from "../../text/index.js";
 class ZikoUIBreadcrumbs extends ZikoUIElement{
     constructor(...items){
         super("ul", "Breadcrumbs")

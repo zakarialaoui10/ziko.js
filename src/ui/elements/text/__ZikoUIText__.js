@@ -1,5 +1,4 @@
-import {ZikoUIElement} from "../ZikoUIElement.js";
-import { ZikoUIContainerElement } from "../ZikoUIContainerElement.js";
+import {ZikoUIElement, ZikoUIContainerElement} from "../ZikoUIElement.js";
 import { 
   ZikoUISubText,
   ZikoUISupText

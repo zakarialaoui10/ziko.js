@@ -1,5 +1,5 @@
-import { ZikoUIFlex } from "../flex";
-import { Section } from "../semantic";
+import { ZikoUIFlex } from "../../flex";
+import { Section } from "../../semantic";
 class ZikoUICarousel extends ZikoUIFlex{
     constructor(...ZikoUIElement){
         super()

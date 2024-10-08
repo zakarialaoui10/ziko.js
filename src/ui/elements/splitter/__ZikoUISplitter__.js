@@ -1,4 +1,4 @@
-import { ZikoUIElement } from "../ZikoUIElement.js";
+import { ZikoUIElement } from "../../ZikoUIElement.js";
 class __ZikoUISplitter__ extends ZikoUIElement{
     constructor(flexDirection, resizerCursor, resizerProp){
         super("div", "Splitter")
