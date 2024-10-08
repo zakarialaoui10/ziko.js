@@ -121,7 +121,7 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         this.draw();
     }
     lineWidth(w){
-        this.ctx.lineWidth=w/this.transformMatrix[0][0];;
+        this.ctx.lineWidth=w/this.transformMatrix[0][0];
         return this
     }
     getImageData(x=0,y=0,w=this.Width,h=this.Height){
@@ -142,7 +142,7 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         Object.assign(canvas.cache,{...this.cache});
         //waitForUIElm(this)
         //console.log(element)
-        this.size(element.style.width,element.style.width);
+        this.size(this.element.style.width,this.element.style.width);
         this.applyTransformMatrix();
         this.draw();
         this.adjust();

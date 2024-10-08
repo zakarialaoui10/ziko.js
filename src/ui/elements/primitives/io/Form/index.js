@@ -1,4 +1,4 @@
-import { ZikoUIFlex } from "../../../derived/Flex.js";
+import { ZikoUIFlex } from "../../../derived/flex";
 class ZikoUIForm extends ZikoUIFlex{
     constructor(...items){
         super("form", "Form");
