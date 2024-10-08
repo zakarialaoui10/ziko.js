@@ -14,7 +14,7 @@ import {
     h4,
     h5,
     h6,   
-} from "./elements/primitives/text/index.js";
+} from "./elements/primitives/text";
 import {
     btn,
     br,
@@ -23,11 +23,11 @@ import {
     hrs,
     link,
     html
-} from "./elements/primitives/misc/index.js";
+} from "./elements/primitives/misc";
 import {
     ol,
     ul
-} from "./elements/primitives/list/index.js"
+} from "./elements/primitives/list"
 import{
     Form,
     input,
@@ -47,13 +47,13 @@ import{
     select,
     textarea,
     inputCamera
-} from "./elements/primitives/io/index.js";
+} from "./elements/primitives/io";
 import {
     image,
     video,
     audio,
     figure
-} from "./elements/primitives/media/index.js"
+} from "./elements/primitives/media"
 import{
     Flex,
     Grid,
@@ -75,7 +75,7 @@ import{
     infoAlert,
     warningAlert,
     dangerAlert,
-} from "./elements/derived/index.js"
+} from "./elements/derived"
 import{
     Header,
     Main,
@@ -84,12 +84,12 @@ import{
     Aside,
     Nav,
     Footer,
-    } from "./elements/primitives/semantic/index.js";
-import { Table } from "./elements/primitives/table/index.js";
+    } from "./elements/primitives/semantic";
+import { Table } from "./elements/primitives/table";
 import { 
     PDFViewer,
     HTMLViewer
- } from "./elements/primitives/embaded/index.js";
+ } from "./elements/primitives/embaded";
 const UI={
     html,
     text,
@@ -167,35 +167,15 @@ const UI={
     dangerAlert,
     PDFViewer,
     HTMLViewer,
-    ExtractAll: function () {
-        const keys = Object.keys(this);
-        for (let i = 0; i < keys.length; i++) {
-            const key = keys[i];
-            if (key !== 'ExtractAll' && key !== 'RemoveAll') {
-                globalThis[key] = this[key];
-            }
-        }
-        return this;
-    },
-    RemoveAll: function () {
-        const keys = Object.keys(this);
-        for (let i = 0; i < keys.length; i++) {
-            const key = keys[i];
-            if (key !== 'RemoveAll') {
-                delete globalThis[key];
-            }
-        }
-        return this;
-    }
 }
-export * from "./elements/primitives/text/index.js";
-export * from "./elements/primitives/list/index.js";
-export * from "./elements/primitives/io/index.js";
-export * from "./elements/primitives/media/index.js";
-export * from "./elements/primitives/table/index.js";
-export * from "./elements/primitives/semantic/index.js";
-export * from "./elements/primitives/misc/index.js";
-export * from "./elements/derived/index.js";
+export * from "./elements/primitives/text";
+export * from "./elements/primitives/list";
+export * from "./elements/primitives/io";
+export * from "./elements/primitives/media";
+export * from "./elements/primitives/table";
+export * from "./elements/primitives/semantic";
+export * from "./elements/primitives/misc";
+export * from "./elements/derived";
 export {
     html,
 }

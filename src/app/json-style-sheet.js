@@ -1,4 +1,4 @@
-import { json2css } from "../Data";
+import { json2css } from "../data";
 class ZikoJsonStyleSheet{
     constructor(JsonStyle={}){
         this.cache={

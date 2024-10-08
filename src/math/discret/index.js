@@ -9,15 +9,4 @@ import {
     combinaison,
 } from "./Combinaison/index.js"
 
-
-const Discret={
-    Logic,
-    Base,
-    Permutation,
-    Combinaison,
-    combinaison,
-    powerSet,
-    subSet
-}
-export default Discret;
-export{Logic,Base,Permutation,Combinaison,powerSet,subSet}
+export{Logic,Base,Permutation,Combinaison,combinaison,powerSet,subSet}

@@ -1,3 +1,4 @@
+import { __ExtractAll__,__RemoveAll__ } from "./__helpers__/index.js";
 import Math from "./math/index.js";
 import UI from "./ui/index.js";
 import Time from "./time/index.js";
@@ -10,9 +11,17 @@ import {
     __Config__
  } from "./global/globals/index.js";
 import ZikoUIElement from "./ui/elements/primitives/ZikoUIElement.js";
-// import { 
-//     App,
-//  } from "./Global";
+[
+    Math,
+    UI,
+    Time,
+    Data,
+    // Reactivity
+].forEach(n=>Object.assign(n,{
+    ExtractAll:()=>__ExtractAll__(n),
+    RemoveAll:()=>__RemoveAll__(n)
+}))
+
 const Ziko={
     // App,
     Math,
@@ -67,7 +76,7 @@ export * from "./ui/index.js";
 export * from "./graphics/index.js";
 export * from "./time/index.js";
 export * from "./data/index.js";
-export * from "./global/index.js";
+// export * from "./global/index.js";
 export * from "./reactivity/index.js"
 export {
     // App,
@@ -79,8 +88,8 @@ export {
     Data,
     ZikoUIElement,
     SPA,
-    ExtractAll,
-    RemoveAll
+    // ExtractAll,
+    // RemoveAll
 };
 export default Ziko;
 
