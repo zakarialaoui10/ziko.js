@@ -1,10 +1,7 @@
-import ZikoUIElement from "./UI/elements/primitives/ZikoUIElement";
-import ZikoUIContainerElement from "./UI/elements/primitives/ZikoUIContainerElement";
-
 export {
     ZikoUIElement,
     ZikoUIContainerElement
-}
+} from "./ui/elements"
 export {
     ZikoUIAbbrText,
     ZikoUIAccordion,
@@ -61,13 +58,13 @@ export {
     ZikoUIVerticalSplitter,
     ZikoUIVerticalSlider,
     ZikoUIVideo,
-} from "./UI/index.js"
+} from "./ui"
 
 export{
     Matrix,
     LinearSystem,
     Complex,
     Random,
-} from "./Math/index.js"
+} from "./math"
 
 

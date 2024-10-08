@@ -1,4 +1,4 @@
-import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
+import { ZikoUIElement } from "../../ui/elements";
 // import svgRect from "./Elements/rect.js";
 // import svgCircle from "./Elements/circle.js";
 // import svgEllipse from "./Elements/ellipse.js";

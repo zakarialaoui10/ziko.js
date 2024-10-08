@@ -14,7 +14,7 @@ import {
     h4,
     h5,
     h6,   
-} from "./elements/primitives/text/index.js";
+} from "./elements/text";
 import {
     btn,
     br,
@@ -23,11 +23,11 @@ import {
     hrs,
     link,
     html
-} from "./elements/primitives/misc/index.js";
+} from "./elements/misc";
 import {
     ol,
     ul
-} from "./elements/primitives/list/index.js"
+} from "./elements/list"
 import{
     Form,
     input,
@@ -47,13 +47,13 @@ import{
     select,
     textarea,
     inputCamera
-} from "./elements/primitives/io/index.js";
+} from "./elements/io";
 import {
     image,
     video,
     audio,
     figure
-} from "./elements/primitives/media/index.js"
+} from "./elements/media"
 import{
     Flex,
     Grid,
@@ -75,7 +75,7 @@ import{
     infoAlert,
     warningAlert,
     dangerAlert,
-} from "./elements/derived/index.js"
+} from "./elements"
 import{
     Header,
     Main,
@@ -84,12 +84,12 @@ import{
     Aside,
     Nav,
     Footer,
-    } from "./elements/primitives/semantic/index.js";
-import { Table } from "./elements/primitives/table/index.js";
+    } from "./elements/semantic";
+import { Table } from "./elements/table";
 import { 
     PDFViewer,
     HTMLViewer
- } from "./elements/primitives/embaded/index.js";
+ } from "./elements/embaded";
 const UI={
     html,
     text,
@@ -188,14 +188,15 @@ const UI={
         return this;
     }
 }
-export * from "./elements/primitives/text/index.js";
-export * from "./elements/primitives/list/index.js";
-export * from "./elements/primitives/io/index.js";
-export * from "./elements/primitives/media/index.js";
-export * from "./elements/primitives/table/index.js";
-export * from "./elements/primitives/semantic/index.js";
-export * from "./elements/primitives/misc/index.js";
-export * from "./elements/derived/index.js";
+// export * from "./elements/text";
+// export * from "./elements/list";
+// export * from "./elements/io";
+// export * from "./elements/media";
+// export * from "./elements/table";
+// export * from "./elements/semantic";
+// export * from "./elements/misc";
+// export * from "./elements/derived";
+export * from "./elements"
 export {
     html,
 }

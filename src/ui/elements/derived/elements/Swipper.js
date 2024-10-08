@@ -1,4 +1,0 @@
-// Next 
-// Previous
-// Vertical 
-// Horizontal
