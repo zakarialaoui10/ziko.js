@@ -1,4 +1,4 @@
-import { ZikoUseStyle } from "../../../reactivity/hooks/ui/useStyle.js";
+import { ZikoUseStyle } from "../../../reactivity/hooks/UI/useStyle.js";
 import { ZikoUIElementStyle } from "../../style/index.js";
 import { 
   usePointerEvent,
@@ -481,5 +481,4 @@ class ZikoUIElement {
     return this;
   }
 }
-globalThis.ZikoUIElement = ZikoUIElement
 export default ZikoUIElement;

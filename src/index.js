@@ -10,7 +10,7 @@ import {
     __UI__,
     __Config__
  } from "./global/globals/index.js";
-import ZikoUIElement from "./ui/elements/primitives/ZikoUIElement.js";
+// import ZikoUIElement from "./ui/elements/primitives/ZikoUIElement.js";
 [
     Math,
     UI,
@@ -86,7 +86,7 @@ export {
     Graphics,
     Reactivity,
     Data,
-    ZikoUIElement,
+    // ZikoUIElement,
     SPA,
     // ExtractAll,
     // RemoveAll

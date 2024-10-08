@@ -1,173 +1,3 @@
-import {
-    text,
-    quote,
-    dfnText,
-    supText,
-    subText,
-    codeText,
-    abbrText,
-    p,
-    blockQuote,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,   
-} from "./elements/primitives/text";
-import {
-    btn,
-    br,
-    hr,
-    brs,
-    hrs,
-    link,
-    html
-} from "./elements/primitives/misc";
-import {
-    ol,
-    ul
-} from "./elements/primitives/list"
-import{
-    Form,
-    input,
-    search,
-    slider,
-    checkbox,
-    radio,
-    datalist,
-    inputNumber,
-    inputColor,
-    inputDate,
-    inputDateTime,
-    inputEmail,
-    inputImage,
-    inputPassword,
-    inputTime,
-    select,
-    textarea,
-    inputCamera
-} from "./elements/primitives/io";
-import {
-    image,
-    video,
-    audio,
-    figure
-} from "./elements/primitives/media"
-import{
-    Flex,
-    Grid,
-    Carousel,
-    CodeCell,
-    CodeNote,
-    Tabs,
-    Collapsible,
-    Accordion,
-    Modal,
-    hSplitter,
-    vSplitter,
-    Splitter,
-    hSlider,
-    vSlider,
-    Slider,
-    Breadcrumbs,
-    successAlert,
-    infoAlert,
-    warningAlert,
-    dangerAlert,
-} from "./elements/derived"
-import{
-    Header,
-    Main,
-    Section,
-    Article,
-    Aside,
-    Nav,
-    Footer,
-    } from "./elements/primitives/semantic";
-import { Table } from "./elements/primitives/table";
-import { 
-    PDFViewer,
-    HTMLViewer
- } from "./elements/primitives/embaded";
-const UI={
-    html,
-    text,
-    quote,
-    dfnText,
-    supText,
-    subText,
-    codeText,
-    abbrText,
-    p,
-    blockQuote,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    btn,
-    br,
-    hr,
-    brs,
-    hrs,
-    link,
-    ol,
-    ul,
-    Form,
-    input,
-    search,
-    slider,
-    checkbox,
-    radio,
-    datalist,
-    inputNumber,
-    inputColor,
-    inputDate,
-    inputDateTime,
-    inputEmail,
-    inputImage,
-    inputPassword,
-    inputTime,
-    select,
-    textarea,
-    inputCamera,
-    image,
-    video,
-    audio,
-    figure,
-    Flex,
-    Carousel,
-    Grid,
-    Header,
-    Main,
-    Section,
-    Article,
-    Aside,
-    Nav,
-    Footer,
-    Table,
-    CodeCell,
-    CodeNote,
-    Tabs,
-    Collapsible,
-    Accordion,
-    Modal,
-    hSplitter,
-    vSplitter,
-    Splitter,
-    hSlider,
-    vSlider,
-    Slider,
-    Breadcrumbs,
-    successAlert,
-    infoAlert,
-    warningAlert,
-    dangerAlert,
-    PDFViewer,
-    HTMLViewer,
-}
 export * from "./elements/primitives/text";
 export * from "./elements/primitives/list";
 export * from "./elements/primitives/io";
@@ -176,7 +6,24 @@ export * from "./elements/primitives/table";
 export * from "./elements/primitives/semantic";
 export * from "./elements/primitives/misc";
 export * from "./elements/derived";
-export {
-    html,
+
+import * as Text from "./elements/primitives/text";
+import * as List from "./elements/primitives/list";
+import * as Io from "./elements/primitives/io";
+import * as Media from "./elements/primitives/media";
+import * as Table from "./elements/primitives/table";
+import * as Semantic from "./elements/primitives/semantic";
+import * as Misc from "./elements/primitives/misc";
+import * as Derived from "./elements/derived";
+
+const UI = {
+    ...Text,
+    ...List,
+    ...Io,
+    ...Media,
+    ...Table,
+    ...Semantic,
+    ...Misc,
+    ...Derived
 }
 export default UI;

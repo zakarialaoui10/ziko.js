@@ -1,5 +1,5 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import ZikoUIContainerElement from "../ZikoUIContainerElement.js";
+import ZikoContainerElement from "../ZikoUIContainerElement.js";
 import { 
   ZikoUISubText,
   ZikoUISupText
@@ -12,7 +12,7 @@ import {
   arr2str,
   obj2str
 } from "../../../../data/index.js";
-class __ZikoUIText__ extends ZikoUIContainerElement {
+class __ZikoUIText__ extends ZikoContainerElement {
     constructor(tag, name, lineBreak,...value) {
       super(tag, name);
       this.addValue(...value);
