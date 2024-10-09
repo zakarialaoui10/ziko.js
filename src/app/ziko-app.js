@@ -1,9 +1,4 @@
 import ZikoUIElement from "../ui/elements/primitives/ZikoUIElement.js";
-// import { 
-//     useHead,
-//     ZikoHead
-//  } from "../reactivity/hooks/head/index.js";
-// import { useTitle } from "../reactivity/hooks/head/index.js";
 class ZikoApp {
     constructor({head, layout, target}){
 

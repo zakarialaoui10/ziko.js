@@ -1,10 +1,20 @@
 export * from "./ziko-app";
 export * from "./json-style-sheet";
+export * from "./spa"
+export * from "./params"
+export * from "./globals"
 
 import * as __App__ from "./ziko-app"
-import * as __JSS__ from "./json-style-sheet"
+import * as JsonStyleSheet from "./json-style-sheet"
+import * as Spa from "./spa"
+import * as Global from "./globals"
+import * as Params from "./params"
 
-export default {
+const App={
     ...__App__,
-    ...__JSS__
+    ...JsonStyleSheet,
+    ...Spa,
+    ...Global,
+    ...Params
 }
+export default App

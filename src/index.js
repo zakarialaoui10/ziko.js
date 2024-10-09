@@ -5,12 +5,18 @@ import Time from "./time";
 import Data from "./data";
 import Reactivity from "./reactivity";
 import Graphics from "./graphics";
-import {SPA} from "./global/router";
-import { 
-    __UI__,
-    __Config__
- } from "./global/globals";
+import App,{__UI__, __Config__} from "./app";
+
+export * from "./math";
+export * from "./ui";
+export * from "./time";
+export * from "./data";
+export * from "./reactivity"
+export * from "./graphics";
+export * from "./app";
+
 [
+    App,
     Math,
     UI,
     Time,
@@ -22,34 +28,34 @@ import {
 }))
 
 const Ziko={
-    // App,
+    App,
     Math,
     UI,
     Time,
-    Graphics,
-    Reactivity,
     Data,
-    SPA,
+    Reactivity,
+    Graphics,
+
 }
 
-// if ( globalThis.__Ziko__ ) {
-//     console.warn( 'WARNING: Multiple instances of Ziko.js being imported.' );
-// 	} else {
-// 		globalThis.__Ziko__={
-//             ...Ziko,
-//             __UI__,
-//             __Config__,
-//             ExtractAll,
-//             RemoveAll
-//         };
-// 	}
-globalThis.__Ziko__={
-    ...Ziko,
-    __UI__,
-    __Config__,
-    ExtractAll,
-    RemoveAll
-};
+if ( globalThis.__Ziko__ ) {
+    console.warn( 'WARNING: Multiple instances of Ziko.js being imported.' );
+	} else {
+		globalThis.__Ziko__={
+            ...Ziko,
+            __UI__,
+            __Config__,
+            ExtractAll,
+            RemoveAll
+        };
+	}
+// globalThis.__Ziko__={
+//     ...Ziko,
+//     __UI__,
+//     __Config__,
+//     ExtractAll,
+//     RemoveAll
+// };
 if(globalThis?.document){
     document?.addEventListener("DOMContentLoaded", __Ziko__.__Config__.init());
 }
@@ -70,23 +76,7 @@ function RemoveAll(){
     Graphics.RemoveAll();
     Data.RemoveAll()
 }
-export * from "./math";
-export * from "./ui";
-export * from "./graphics";
-export * from "./time";
-export * from "./data";
-// export * from "./global";
-export * from "./reactivity"
-export {
-    // App,
-    Math,
-    UI,
-    Time,
-    Graphics,
-    Reactivity,
-    Data,
-    SPA,
-};
+
 export default Ziko;
 
 
