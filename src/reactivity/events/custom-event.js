@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 const custom_event_controller=event_name=>function(e){
     EVENT_CONTROLLER.call(this,e,event_name,null,null)
 }
@@ -50,4 +50,8 @@ class ZikoCustomEvent extends ZikoEvent{
     }
 }
 const useCustomEvent=target=>new ZikoCustomEvent(target);
-export default useCustomEvent;
+
+export{
+    useCustomEvent,
+    ZikoCustomEvent
+}

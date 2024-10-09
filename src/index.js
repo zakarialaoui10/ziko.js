@@ -1,22 +1,21 @@
-import { __ExtractAll__,__RemoveAll__ } from "./__helpers__/index.js";
-import Math from "./math/index.js";
-import UI from "./ui/index.js";
-import Time from "./time/index.js";
-import Data from "./data/index.js";
-import Reactivity from "./reactivity/index.js";
-import Graphics from "./graphics/index.js";
-import {SPA} from "./global/router/index.js";
+import { __ExtractAll__,__RemoveAll__ } from "./__helpers__";
+import Math from "./math";
+import UI from "./ui";
+import Time from "./time";
+import Data from "./data";
+import Reactivity from "./reactivity";
+import Graphics from "./graphics";
+import {SPA} from "./global/router";
 import { 
     __UI__,
     __Config__
- } from "./global/globals/index.js";
-// import ZikoUIElement from "./ui/elements/primitives/ZikoUIElement.js";
+ } from "./global/globals";
 [
     Math,
     UI,
     Time,
     Data,
-    // Reactivity
+    Reactivity
 ].forEach(n=>Object.assign(n,{
     ExtractAll:()=>__ExtractAll__(n),
     RemoveAll:()=>__RemoveAll__(n)
@@ -71,13 +70,13 @@ function RemoveAll(){
     Graphics.RemoveAll();
     Data.RemoveAll()
 }
-export * from "./math/index.js";
-export * from "./ui/index.js";
-export * from "./graphics/index.js";
-export * from "./time/index.js";
-export * from "./data/index.js";
-// export * from "./global/index.js";
-export * from "./reactivity/index.js"
+export * from "./math";
+export * from "./ui";
+export * from "./graphics";
+export * from "./time";
+export * from "./data";
+// export * from "./global";
+export * from "./reactivity"
 export {
     // App,
     Math,
@@ -86,10 +85,7 @@ export {
     Graphics,
     Reactivity,
     Data,
-    // ZikoUIElement,
     SPA,
-    // ExtractAll,
-    // RemoveAll
 };
 export default Ziko;
 

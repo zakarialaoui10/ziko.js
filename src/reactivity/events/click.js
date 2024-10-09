@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 function click_controller(e){
     EVENT_CONTROLLER.call(this,e,"click",null,null)
 }
@@ -54,3 +54,7 @@ class ZikoEventClick extends ZikoEvent{
 }
 const useClickEvent=target=>new ZikoEventClick(target);
 export default useClickEvent;
+export {
+    useClickEvent,
+    ZikoEventClick
+}

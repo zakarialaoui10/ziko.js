@@ -1,4 +1,4 @@
-import {ZikoEvent,EVENT_CONTROLLER} from "../ZikoEvent.js";
+import {ZikoEvent,EVENT_CONTROLLER} from "./ZikoEvent.js";
 function pointerdown_controller(e){
     EVENT_CONTROLLER.call(
         this,
@@ -224,11 +224,9 @@ class ZikoEventPointer extends ZikoEvent{
         this.__onEvent("cancel",{down:false,move:false,up:false,enter:false,out:false,leave:false,cancel:true},...callbacks)
         return this;
     }
-    // handle({down=false,move=false,up=false}={}){
-    //     if(down)this.handleDown();
-    //     if(move)this.handleMove();
-    //     if(up)this.handleUp()
-    // }
 }
 var usePointerEvent=target=>new ZikoEventPointer(target)
-export default usePointerEvent;
+export{
+    usePointerEvent,
+    ZikoEventPointer
+}

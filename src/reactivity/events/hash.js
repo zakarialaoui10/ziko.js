@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 function hashchange_controller(e){
     EVENT_CONTROLLER.call(this,e,"hashchange",null,null)
 }
@@ -41,4 +41,7 @@ class ZikoEventHash extends ZikoEvent{
      }    
 }
 const useHashEvent=target=>new ZikoEventHash(target);
-export default useHashEvent
+export{
+    useHashEvent,
+    ZikoEventHash
+}

@@ -1,15 +1,15 @@
-import usePointerEvent from "./Global/Pointer.js";
-import useMouseEvent from "./Global/Mouse.js";
-import useWheelEvent from "./Global/Wheel.js";
-import useKeyEvent from "./Global/Key.js";
-import {useDragEvent,useDropEvent} from "./Global/Drag.js";
-import useClickEvent from "./Global/Click.js";
-import useClipboardEvent from "./Global/Clipboard.js";
-import useFocusEvent from "./Global/Focus.js";
-import useInputEvent from "./Partiel/Input.js";
-import useHashEvent from "./Partiel/Hash.js";
-import useCustomEvent from "./Global/CustomEvent.js";
-import useSwipeEvent from "./Global/Swipe.js"
+import { useClickEvent } from "./click.js";
+import {usePointerEvent} from "./pointer.js";
+import {useMouseEvent} from "./mouse.js";
+import {useWheelEvent} from "./wheel.js";
+import {useKeyEvent} from "./key.js";
+import {useDragEvent,useDropEvent} from "./drag.js";
+import {useClipboardEvent} from "./clipboard.js";
+import {useFocusEvent} from "./focus.js";
+import {useInputEvent} from "./Input.js";
+import {useHashEvent} from "./hash.js";
+import {useCustomEvent} from "./custom-event.js";
+import {useSwipeEvent} from "./swipe.js"
 const Events={
     usePointerEvent,
     useMouseEvent,

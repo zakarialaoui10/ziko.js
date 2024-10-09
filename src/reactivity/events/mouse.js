@@ -1,4 +1,4 @@
-import {ZikoEvent,EVENT_CONTROLLER} from "../ZikoEvent.js";
+import {ZikoEvent,EVENT_CONTROLLER} from "./ZikoEvent.js";
 class ZikoEventMouse extends ZikoEvent{
     constructor(target){
         super(target);
@@ -227,4 +227,7 @@ function mouseover_controller(e){
     )
 }
 const useMouseEvent=target=>new ZikoEventMouse(target);
-export default useMouseEvent;
+export{
+    useMouseEvent,
+    ZikoEventMouse
+}

@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 function input_controller(e){
     EVENT_CONTROLLER.call(this,e,"input",null,null)
 }
@@ -56,4 +56,7 @@ class ZikoEventInput extends ZikoEvent{
      }     
 }
 const useInputEvent=target=>new ZikoEventInput(target);
-export default useInputEvent
+export{
+    useInputEvent,
+    ZikoEventInput
+}

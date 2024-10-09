@@ -1,4 +1,4 @@
-import {ZikoEvent,EVENT_CONTROLLER} from "../ZikoEvent.js";
+import {ZikoEvent,EVENT_CONTROLLER} from "./ZikoEvent.js";
 function keydown_controller(e){
     EVENT_CONTROLLER.call(
         this,
@@ -94,11 +94,9 @@ class ZikoEventKey extends ZikoEvent{
 
 }
 
-var useKeyEvenent=target=>new ZikoEventKey(target)
+var useKeyEvent=target=>new ZikoEventKey(target)
 
-// handleDown(){
-//     this.dispose({down:true,press:false,up:false})
-//     this.target.addEventListener("keydown",this.#downController);
-//     return this;
-//  }
-export default useKeyEvenent
+export{
+    useKeyEvent,
+    ZikoEventKey
+}

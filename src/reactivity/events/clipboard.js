@@ -1,4 +1,4 @@
-import { ZikoEvent , EVENT_CONTROLLER } from "../ZikoEvent.js";
+import { ZikoEvent , EVENT_CONTROLLER } from "./ZikoEvent.js";
 function copy_controller(e){
     EVENT_CONTROLLER.call(this,e,"copy",null,null)
 }
@@ -81,4 +81,8 @@ class ZikoEventClipboard extends ZikoEvent{
      }   
 }
 const useClipboardEvent=target=>new ZikoEventClipboard(target);
-export default useClipboardEvent
+// export default useClipboardEvent
+export{
+    useClipboardEvent,
+    ZikoEventClipboard
+}
