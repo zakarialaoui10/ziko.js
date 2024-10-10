@@ -1,8 +1,11 @@
 import { text } from "../ui";
-import { dynamicRoutesParser,routesMatcher } from "./routes";
-class ZikoSPA{
-    constructor({wrapper,routes}){
-        this.wrapper=wrapper;
+import { dynamicRoutesParser,routesMatcher,isDynamic } from "./routes";
+import { ZikoApp } from "./ziko-app";
+class ZikoSPA extends ZikoApp{
+    constructor({head, wrapper, target, routes}){
+        super({head, wrapper, target})
+        // this.wrapper=wrapper;
+        console.log(target)
         this.routes=new Map([
             ["404",text("Error 404")],
             ...Object.entries(routes)
@@ -10,20 +13,11 @@ class ZikoSPA{
         this.clear();
         globalThis.onpopstate = this.render(location.pathname);
     }
-    // get(path, callback) {
-    //     this.clear()
-    //     const {type, params} = routesParser(path);
-    //     if(type === "dynamic") {
-    //       let element = callback.call(this,params);
-    //       (element?.isZikoUIElement) && element.render(this.wrapper);
-    //     }
-    //     return this;
-    // }
     clear(){
         [...this.routes].forEach(n=>{
-            !isDynamic(n[0]) && n[1].unrender()
+            !isDynamic(n[0]) && n[1]?.isZikoUIElement && n[1].unrender()
         })   
-        this.wrapper.clear();
+        // this.wrapper.clear();
         return this;
     }
     render(path){
@@ -38,21 +32,21 @@ class ZikoSPA{
             if(typeof callback === "function") element = callback();  
         }
         if(element?.isZikoUIElement) element.render(this.wrapper);
+        if(element instanceof Promise){
+            element.then(e=>e.render(this.wrapper))
+        }
         globalThis.history.pushState({}, "", path);
         return this;
     }
 }
-const SPA=({wrapper,routes,patterns})=>new ZikoSPA({wrapper,routes,patterns});
+const SPA=({head, wrapper, target, routes})=>new ZikoSPA({head, wrapper, target, routes});
 
 export {
     ZikoSPA,
     SPA
 }
 
-function isDynamic(path) {
-    const DynamicPattern = /:\w+/;    
-    return DynamicPattern.test(path);
-  }
+
 /*
  // Static 
   S.get("/url",wrapper)

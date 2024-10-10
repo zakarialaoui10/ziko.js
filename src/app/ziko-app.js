@@ -1,20 +1,27 @@
-import ZikoUIElement from "../ui/elements/primitives/ZikoUIElement.js";
 class ZikoApp {
-    constructor({head, layout, target}){
-
+    constructor({head = null, wrapper = null, target = null}){
+        this.head = head;
+        this.wrapper = wrapper;
+        this.target = target;
+        this.init()        
     }
-    init({head,layout,target}){
-        
-        
+    get isZikoApp(){
+        return true;
+    }
+    init(){
+        this.head && this.setHead(this.head);
+        this.wrapper && this.setWrapper(this.wrapper);
+        this.target && this.setTarget(this.target);
+        this.wrapper.render(this.target);
     }
     setTarget(target){
         if(target instanceof HTMLElement) this.target = target;
         else if (typeof target === "string") this.target = globalThis?.document?.querySelector(target);
         return this;
     }
-    setLayout(ui){
-        if(ui instanceof ZikoUIElement) this.ui = ui;
-        else if(typeof ui === "function") this.ui = ui();
+    setWrapper(wrapper){
+        if(wrapper?.isZikoUIElement) this.wrapper = wrapper;
+        else if(typeof wrapper === "function") this.wrapper = wrapper();
         return this;
     }
     setHead(head){
@@ -24,7 +31,7 @@ class ZikoApp {
     }
     
 }
-const App = ({head, layout, target}) => new ZikoApp({head, layout, target})
+const App = ({head, wrapper, target}) => new ZikoApp({head, wrapper, target})
 export{
     ZikoApp,
     App

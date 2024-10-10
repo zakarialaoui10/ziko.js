@@ -36,7 +36,10 @@ function dynamicRoutesParser(mask, route) {
     return params;
 }
 
-globalThis.routesMatcher = routesMatcher
+function isDynamic(path) {
+    const DynamicPattern = /:\w+/;    
+    return DynamicPattern.test(path);
+  }
 
 // // Example usage:
 // const mask = "/:id/id/:lang/lang";
@@ -45,7 +48,8 @@ globalThis.routesMatcher = routesMatcher
 
 export {
     routesMatcher,
-    dynamicRoutesParser
+    dynamicRoutesParser,
+    isDynamic
 }
 
 // // Example usage:
