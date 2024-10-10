@@ -18,7 +18,6 @@ const Math = {
     ...__Signal__,
     ...__Calculus__,
 }
-console.log(Math)
 export * from "./const.js"
 export * from "./functions"
 export * from "./complex"

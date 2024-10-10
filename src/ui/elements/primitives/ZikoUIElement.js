@@ -69,6 +69,9 @@ class ZikoUIElement {
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     globalThis.__Ziko__.__Config__.default.render && this.render()
   }
+  get isZikoUIElement(){
+    return true
+  }
   get st(){
     return this.cache.style;
   }
@@ -184,6 +187,11 @@ class ZikoUIElement {
   }
   describe(label){
     if(label)this.setAttr("aria-label",label)
+  }
+  clear(){
+    this?.items?.forEach(n=>n.unrender());
+    this.element.innerHTML = "";
+    return this;
   }
   render(target = this.target) {
     if(this.isBody)return ;
