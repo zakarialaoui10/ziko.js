@@ -11,13 +11,6 @@ class ZikoSPA{
         window.onpopstate = this.render(location.pathname);
 
     }
-    // get(path,wrapper){
-    //     (path instanceof RegExp)
-    //     ? this.patterns.set(path,wrapper)
-    //     : this.routes.set(path,wrapper);
-    //     this.maintain();
-    //     return this;
-    // }
     get(path, wrapper) {
         if (typeof path === 'string' && path.includes(':')) {
             const params = [];
@@ -39,16 +32,17 @@ class ZikoSPA{
     }
     maintain(){
         this.root_UI.append(...this.routes.values());
-        [...this.routes.values()].map(n=>n.render(false));
+        // [...this.routes.values()].map(n=>n.render(false));
+        [...this.routes.values()].forEach(n=>n.unrender());
         this.render(location.pathname)
         return this;
     }
     render(path){
-        if(this.routes.get(path))this.routes.get(path).render(true);
+        if(this.routes.get(path))this.routes.get(path).render(this.root_UI);
         else{   
             const key=[...this.patterns.keys()].find(pattern=>pattern.test(path))
             if(key)this.patterns.get(key)(path);
-            else this.routes.get(404).render(true)
+            else this.routes.get(404).render(this.root_UI)
         }
         window.history.pushState({}, "", path);
         return this;
