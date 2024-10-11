@@ -5,7 +5,7 @@ class ZikoSPA extends ZikoApp{
     constructor({head, wrapper, target, routes}){
         super({head, wrapper, target})
         // this.wrapper=wrapper;
-        console.log(target)
+        // console.log(target)
         this.routes=new Map([
             ["404",text("Error 404")],
             ...Object.entries(routes)
