@@ -4,8 +4,6 @@ import { ZikoApp } from "./ziko-app";
 class ZikoSPA extends ZikoApp{
     constructor({head, wrapper, target, routes}){
         super({head, wrapper, target})
-        // this.wrapper=wrapper;
-        // console.log(target)
         this.routes=new Map([
             ["404",text("Error 404")],
             ...Object.entries(routes)
@@ -32,6 +30,7 @@ class ZikoSPA extends ZikoApp{
             if(typeof callback === "function") element = callback();  
         }
         if(element?.isZikoUIElement) element.render(this.wrapper);
+        // if(element?.isZikoApp) element.render(this.wrapper);
         if(element instanceof Promise){
             element.then(e=>e.render(this.wrapper))
         }

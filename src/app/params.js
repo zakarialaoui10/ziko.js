@@ -1,4 +1,4 @@
-function parseParams(queryString) {
+function parseQueryParams(queryString) {
     const params = {};
     queryString.replace(/[A-Z0-9]+?=([\w|:|\/\.]*)/gi, (match) => {
         const [key, value] = match.split('=');
@@ -7,19 +7,19 @@ function parseParams(queryString) {
     return params;
 }
 
-function defineParamsGetter(target = globalThis){
+function defineParamsGetter(target ){
     Object.defineProperties(target, {
         'QueryParams': {
             get: function() {
-                return parseParams(location.search.substring(1));
+                return parseQueryParams(globalThis.location.search.substring(1));
             },
             configurable: false,
             enumerable: true 
         },
         'HashParams': {
             get: function() {
-                const hash = window.location.hash.substring(1);
-                return parseParams(hash);
+                const hash = globalThis.location.hash.substring(1);
+                return hash.split("#");
             },
             configurable: false,
             enumerable: true 

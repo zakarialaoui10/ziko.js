@@ -3,11 +3,13 @@ import { Section } from "../ui";
 // import.meta.glob('./src/pages/**/*.js')
 async function FileBasedRouting(pages /* use import.meta.glob */){
    const routes = Object.keys(pages)
+   const root = findCommonPath(routes)
+   // console.log({root})
    const pairs = {}
    for(let i=0; i<routes.length; i++){
       const module = await pages[routes[i]]()
       const component = await module.default
-      Object.assign(pairs,{[customPath(routes[i])]:component})
+      Object.assign(pairs,{[customPath(routes[i], root)]:component})
    }
    return SPA({
       target : document.body,
@@ -19,6 +21,7 @@ async function FileBasedRouting(pages /* use import.meta.glob */){
    })   
 }
 function customPath(inputPath, root = './src/pages', extensions = ['js', 'ts']) {
+   if(root.at(-1)==="/") root = root.slice(0, -1)
    const normalizedPath = inputPath.replace(/\\/g, '/').replace(/\[(\w+)\]/g, '$1/:$1');
    const parts = normalizedPath.split('/');
    const rootParts = root.split('/');
@@ -37,6 +40,35 @@ function customPath(inputPath, root = './src/pages', extensions = ['js', 'ts']) 
    }
    return '';
 }
+function findCommonPath(paths) {
+   if (paths.length === 0) return '';
+   const splitPaths = paths.map(path => path.split('/'));
+   const minLength = Math.min(...splitPaths.map(parts => parts.length));
+   let commonParts = [];
+   for (let i = 0; i < minLength; i++) {
+       const part = splitPaths[0][i]; 
+       if (splitPaths.every(parts => parts[i] === part || parts[i].startsWith('['))) {
+           commonParts.push(part);
+       } else {
+           break; 
+       }
+   }
+   const commonPath = commonParts.join('/') + (commonParts.length ? '/' : '');
+   return commonPath;
+}
+
+// // Example usage
+// const inputPaths = [
+//    './src/pages/[blog]/[lang]/index.js',
+//    './src/pages/[blog]/index.js',
+//    './src/pages/about.js',
+//    './src/pages/articles/[data]/[color]/index.js',
+//    './src/pages/articles/a1.js',
+//    './src/pages/index.js',
+//    './src/pages/me.js'
+// ];
+
+// console.log(findCommonPath(inputPaths)); // Output: './src/pages/'
 export{
-    FileBasedRouting
+    FileBasedRouting,
 }

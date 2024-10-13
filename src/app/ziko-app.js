@@ -1,4 +1,4 @@
-import { ZikoHead } from "../reactivity/hooks/Head";
+import { ZikoHead , useHead} from "../reactivity/hooks/Head";
 class ZikoApp {
     constructor({head = null, wrapper = null, target = null}){
         this.head = head;
@@ -13,7 +13,7 @@ class ZikoApp {
         this.head && this.setHead(this.head);
         this.wrapper && this.setWrapper(this.wrapper);
         this.target && this.setTarget(this.target);
-        this.wrapper.render(this.target);
+        if(this.wrapper && this.target)this.wrapper.render(this.target);
     }
     setTarget(target){
         if(target instanceof HTMLElement) this.target = target;
