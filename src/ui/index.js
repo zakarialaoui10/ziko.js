@@ -16,6 +16,13 @@ import * as Semantic from "./elements/primitives/semantic";
 import * as Misc from "./elements/primitives/misc";
 import * as Derived from "./elements/derived";
 
+import ZikoUIElement from "./elements/primitives/ZikoUIElement";
+import ZikoUIContainerElement from "./elements/primitives/ZikoUIContainerElement";
+
+export{
+    ZikoUIContainerElement,
+    ZikoUIElement
+}
 const UI = {
     ...Text,
     ...List,
@@ -24,6 +31,8 @@ const UI = {
     ...Table,
     ...Semantic,
     ...Misc,
-    ...Derived
+    ...Derived,
+    ZikoUIElement,
+    ZikoUIContainerElement
 }
 export default UI;

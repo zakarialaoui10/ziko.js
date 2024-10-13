@@ -1,6 +1,6 @@
 {
   "name": "ziko",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities",
   "keywords": [
     "Zikojs",
@@ -25,7 +25,7 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/ziko.mjs",
+      "import": "./src/index.js",
       "require": "./dist/ziko.cjs"
     },
     "./type": {
