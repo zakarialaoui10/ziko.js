@@ -1,18 +1,6 @@
-import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
-// import svgRect from "./Elements/rect.js";
-// import svgCircle from "./Elements/circle.js";
-// import svgEllipse from "./Elements/ellipse.js";
-// import svgLine from "./Elements/line.js";
-// //import svgPath from "./Elements/path.js";
-// import svgPolygon from "./Elements/polygon.js";
-// import svgImage from "./Elements/image.js";
-// import svgText from "./Elements/text.js";
-// import svgGroupe from "./Elements/groupe.js";
-// import svgLink from "./Elements/link.js";
-// //import svgObject from "./Elements/foreignObject.js";
-// //import svgGrid from "./Elements/grid.js";
-
-  class ZikoUISvg extends ZikoUIElement {
+// import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
+import { ZikoUIContainerElement } from "../../ui/index.js";
+class ZikoUISvg extends ZikoUIContainerElement {
     constructor(w=360,h=300) {
       super("svg","svg");
       //this.cache={};
@@ -31,7 +19,7 @@ import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
     }
     add(...svgElement){
       for(let i=0;i<svgElement.length;i++){
-        this.element?.appendChildddddddd(svgElement[i].element);
+        this.element.append(svgElement[i].element);
         this.items.push(svgElement[i])
       }
       this.maintain()
@@ -45,43 +33,6 @@ import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
       this.maintain();
       return this;     
     }
-    // text(text,x,y){
-    //   let item=svgText(text,x,y);
-    //   this.element?.appendChildd(item.element);
-    //   item.x(x-item.element.getComputedTextLength()/2);
-    //   return item;
-    // }
-    // rect(x,y,w,h){
-    //   let item=svgRect(x,y,w,h);
-    //   this.add(item);
-    //   return item;
-    // }
-    // line(x1,y1,x2,y2){
-    //   let item=svgLine(x1,y1,x2,y2);
-    //   this.element?.appendChildd(item.element);
-    //   return item;
-    // }
-    // circle(cx,cy,r){
-    //   let item=svgCircle(cx,cy,r);
-    //   this.element?.appendChildd(item.element);
-    //   return item;
-    // }
-    // ellipse(cx,cy,rx,ry){
-    //   let item=svgEllipse(cx,cy,rx,ry);
-    //   this.element?.appendChildd(item.element);
-    //   return item;
-    // }
-    // polygon(X,Y){
-    //   let item=svgPolygon(X,Y);
-    //   this.element?.appendChildd(item.element);
-    //   item.addPoints(X,Y)
-    //   return item;
-    // }
-    // image(src,w,h,x,y){
-    //   let item=svgImage(src,w,h,x,y);
-    //   this.element?.appendddChild(item.element);
-    //   return item;
-    // }
     mask(){
   
     }
@@ -103,13 +54,4 @@ import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
   export{
     Svg,
     ZikoUISvg,
-    // svgLink,
-    // svgCircle,
-    // svgEllipse,
-    // svgImage,
-    // svgLine,
-    // svgPolygon,
-    // svgRect,
-    // svgText,
-    // svgGroupe
 }
