@@ -229,7 +229,7 @@ class ZikoUIElement {
   }
     // Attributes
   #setAttr(name, value){
-    name = Str.isCamelCase(name) ? Str.camel2hyphencase(name) : name;
+    if(this.element.tagName !== "svg") name = Str.isCamelCase(name) ? Str.camel2hyphencase(name) : name;
     if(this?.attr[name] && this?.attr[name]===value) return;
     this.element.setAttribute(name, value)
     Object.assign(this.cache.attributes, {[name]:value});

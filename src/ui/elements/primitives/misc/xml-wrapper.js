@@ -12,7 +12,7 @@ function html2dom(htmlString) {
   }
 function svg2dom(svgString) {
     const parser = new DOMParser();
-    const doc = parser.parseFromString(svgString, 'image/svg+xml');
+    const doc = parser.parseFromString(svgString.replace(/\s+/g, ' ').trim(), 'image/svg+xml');
     return doc.documentElement; // SVG elements are usually at the root
 }
 class ZikoUIHTMLWrapper extends ZikoUIXMLWrapper{
@@ -26,7 +26,7 @@ class ZikoUISVGWrapper extends ZikoUIXMLWrapper{
     }
 }
 const HTMLWrapper = (HTMLContent) => new ZikoUIHTMLWrapper(HTMLContent);
-const SVGWrapper = (SVGContent) => new ZikoUIHTMLWrapper(SVGContent);
+const SVGWrapper = (SVGContent) => new ZikoUISVGWrapper(SVGContent);
 
 export{
     ZikoUIXMLWrapper,
