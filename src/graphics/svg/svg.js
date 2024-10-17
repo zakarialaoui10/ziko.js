@@ -1,4 +1,3 @@
-// import ZikoUIElement from "../../UI/elements/primitives/ZikoUIElement.js";
 import { ZikoUIContainerElement } from "../../ui/index.js";
 class ZikoUISvg extends ZikoUIContainerElement {
     constructor(w=360,h=300) {

@@ -1,5 +1,5 @@
 
-import ZikoSvgELement from "../ZikoSvgElement.js";
+import ZikoSvgELement from "../ziko-svg-element.js";
 class ZikoSvgRectangle extends ZikoSvgELement{
     constructor(x,y,w,h,center=true){
       super()
@@ -40,4 +40,7 @@ class ZikoSvgRectangle extends ZikoSvgELement{
     } 
   } 
   const svgRect=(x,y,w,h,center)=>new ZikoSvgRectangle(x,y,w,h,center);
-  export{ svgRect }
+  export{ 
+   svgRect,
+   ZikoSvgRectangle
+ }

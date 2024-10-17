@@ -25,7 +25,7 @@
   ],
   "exports": {
     ".": {
-      "import": "./src/index.js",
+      "import": "./dist/ziko.mjs",
       "require": "./dist/ziko.cjs"
     },
     "./type": {

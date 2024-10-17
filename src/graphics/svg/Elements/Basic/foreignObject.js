@@ -1,5 +1,5 @@
-import ZikoSvgElement from "../ZikoSvgElement.js";
-import { Flex } from "../../../../ui/elements/derived/flex"
+import ZikoSvgElement from "../ziko-svg-element.js";
+import { Flex } from "../../../../ui"
 class ZikoSvgForeignObject extends ZikoSvgElement{
     constructor(x=0,y=0,w="100%",h="100%",...ZikoUIElement){
       super("foreignObject")
@@ -29,5 +29,8 @@ class ZikoSvgForeignObject extends ZikoSvgElement{
       return this;   
       }
   } 
-const svgObject=(x,y,r)=>new ZikoSvgForeignObject(x,y,r);
-export { svgObject }
+const svgObject=(x, y, w, h)=>new ZikoSvgForeignObject(x, y, w, h);
+export { 
+  svgObject,
+  ZikoSvgForeignObject
+}

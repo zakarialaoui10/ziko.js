@@ -1,4 +1,4 @@
-import ZikoSvgElement from "../ZikoSvgElement.js";
+import ZikoSvgElement from "../ziko-svg-element.js";
 class ZikoSvgPolygon extends ZikoSvgElement{
     constructor(X=[],Y=[]){
       super()

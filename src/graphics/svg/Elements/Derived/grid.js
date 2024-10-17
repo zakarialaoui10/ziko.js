@@ -1,4 +1,4 @@
-import { svgPath } from "../Basic/path"
+import { svgPath } from "../basic/path"
 const svgGrid=(w,h,r=10,c=10)=>{
     let path=svgPath().fill("none").stroke("coral").strokeWidth(0.6)
     console.log({x:w/r,y:h/c})

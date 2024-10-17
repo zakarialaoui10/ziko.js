@@ -1,4 +1,4 @@
-import ZikoSvgElement from "../ZikoSvgElement.js";
+import ZikoSvgElement from "../ziko-svg-element.js";
 class ZikoSvgGroupe extends ZikoSvgElement{
     constructor(...svgElement){
       super();
@@ -26,4 +26,7 @@ class ZikoSvgGroupe extends ZikoSvgElement{
     }
 }
 const svgGroupe=(...svgElement)=>new ZikoSvgGroupe(...svgElement)
-export { svgGroupe }
+export { 
+  svgGroupe,
+  ZikoSvgGroupe
+ }

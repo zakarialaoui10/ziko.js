@@ -21,7 +21,8 @@ export * from "./app";
     UI,
     Time,
     Data,
-    Reactivity
+    Reactivity,
+    Graphics
 ].forEach(n=>Object.assign(n,{
     ExtractAll:()=>__ExtractAll__(n),
     RemoveAll:()=>__RemoveAll__(n)
