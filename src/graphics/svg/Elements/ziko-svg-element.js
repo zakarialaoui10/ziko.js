@@ -1,8 +1,10 @@
-class ZikoSvgElement {
+import { ZikoUIElement } from "../../../ui";
+class ZikoSvgElement extends ZikoUIElement{
   constructor(type) {
-    this.cache = {
+    super()
+    Object.assign(this.cache,{
       type
-    };
+    })
   }
   pos(x,y){
     return this.posX(x).posY(y);

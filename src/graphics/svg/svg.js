@@ -3,11 +3,23 @@ class ZikoUISvg extends ZikoUIContainerElement {
     constructor(w=360,h=300) {
       super("svg","svg");
       //this.cache={};
-      this.setAttr("width",w);
-      this.setAttr("height",h);
+      // this.setAttr("width",w);
+      // this.setAttr("height",h);
+      // this.setAttr({
+      //   width : w,
+      //   height : h
+      // })
       this.style({border:"1px black solid"});
-      //this.view(-w/2,-h/2,w/2,h/2)
+      //this.view(-w/2,-h/2,w/2,h/2);
+      this.size(w, h)
       this.view(-10,-10,10,10);
+    }
+    size(w, h){
+      this.setAttr({
+        width : w,
+        height : h
+      });
+      return this
     }
     view(x1,y1,x2,y2){
       let width=Math.abs(x2-x1);
@@ -47,6 +59,7 @@ class ZikoUISvg extends ZikoUIContainerElement {
     toImg2(){
       return "data:image/svg+xml;charset=utf8,"+this.toString().replaceAll("<","%3C").replaceAll(">","%3E").replaceAll("#","%23").replaceAll('"',"'");
     }
+    
   }
 
   const Svg =(w,h)=>new ZikoUISvg(w,h);

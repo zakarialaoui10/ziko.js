@@ -1,6 +1,6 @@
 export * from "./circle.js";
 export * from "./ellipse.js";
-export * from "./foreignObject.js";
+export * from "./foreign-object.js";
 export * from "./groupe.js";
 export * from "./image.js";
 export * from "./line.js";
