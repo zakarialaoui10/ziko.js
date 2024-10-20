@@ -1,4 +1,4 @@
-import ZikoCanvasElement from "../Element.js";
+import ZikoCanvasElement from "../element.js";
 class CanvasArc extends ZikoCanvasElement{
     constructor(x,y,r,angle){
         super(x,y);

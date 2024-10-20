@@ -1,13 +1,13 @@
 export {
     canvasArc,
     canvasCircle
-} from "./Basic/arc.js";
+} from "./basic/arc.js";
 export {
     canvasPoints
-} from "./Basic/points.js";
+} from "./basic/points.js";
 export {
     canvasLine
-}from "./Basic/line.js"
+}from "./basic/line.js"
 export {
     canvasRect
-} from "./Basic/rect.js"
+} from "./basic/rect.js"

@@ -1,15 +1,12 @@
 import ZikoUIContainerElement from "../../ui/elements/primitives/ZikoUIContainerElement.js";
 import {Matrix} from "../../math/matrix/index.js"
-import { convolute } from "../../math/signal/conv.js";
+// import { convolute } from "../../math/signal/conv.js";
 class ZikoUICanvas extends ZikoUIContainerElement{
     constructor(w,h){
         super("canvas","canvas");
-        //this.element=document?.createElement("canvas");
         this.ctx = this.element?.getContext("2d");
         this.style({
             border:"1px red solid",
-            //width:"300px",
-            //height:"300px"
         })
         this.transformMatrix=new Matrix([
             [1,0,0],
@@ -20,15 +17,9 @@ class ZikoUICanvas extends ZikoUIContainerElement{
             [-10,-10],
             [10,10]
         ])
-        // this.render(globalThis.__Ziko__.__Config__.default.render);
-        setTimeout(()=>this.resize(w,h),0);
+        // setTimeout(()=>this.resize(w,h),0);
+        requestAnimationFrame(()=>this.resize(w,h),0);
         this.on("sizeupdated",()=>this.adjust())
-    }
-    get Width(){
-        return this.element?.width;
-    }
-    get Height(){
-        return this.element?.height;
     }
     get Xmin(){
         return this.axisMatrix[0][0];
@@ -72,10 +63,6 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         return this;
     }
     resize(w,h){
-        // this.style({
-        //     width:w,
-        //     height:h
-        // })
         this.size(w,h)
         this.lineWidth();
         this.view(this.axisMatrix[0][0], this.axisMatrix[0][1], this.axisMatrix[1][0], this.axisMatrix[1][1]);
@@ -89,10 +76,10 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         return this;
     }
     view(xMin,yMin,xMax,yMax){
-        this.transformMatrix[0][0]=this.Width/(xMax-xMin); // scaleX
-        this.transformMatrix[1][1]=-this.Height/(yMax-yMin); // scaleY
-        this.transformMatrix[0][2]=this.Width/2;
-        this.transformMatrix[1][2]=this.Height/2;
+        this.transformMatrix[0][0]=this.width/(xMax-xMin); // scaleX
+        this.transformMatrix[1][1]=-this.height/(yMax-yMin); // scaleY
+        this.transformMatrix[0][2]=this.width/2;
+        this.transformMatrix[1][2]=this.height/2;
         this.axisMatrix=new Matrix([
             [xMin,yMin],
             [xMax,yMax]
@@ -116,7 +103,7 @@ class ZikoUICanvas extends ZikoUIContainerElement{
     background(color){
         this.ctx.fillStyle = color;
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.ctx.fillRect(0, 0, this.Width, this.Height);
+        this.ctx.fillRect(0, 0, this.width, this.height);
         this.applyTransformMatrix();
         this.draw();
     }
@@ -124,17 +111,17 @@ class ZikoUICanvas extends ZikoUIContainerElement{
         this.ctx.lineWidth=w/this.transformMatrix[0][0];
         return this
     }
-    getImageData(x=0,y=0,w=this.Width,h=this.Height){
+    getImageData(x=0,y=0,w=this.width,h=this.height){
         return this.ctx.getImageData(x,y,w,h);
     }
     clear(){
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.ctx.clearRect(0, 0, this.Width, this.Height);
+        this.ctx.clearRect(0, 0, this.width, this.height);
         this.applyTransformMatrix(); 
         return this;
     }
     clone(){
-        console.log(this.Width)
+        console.log(this.width)
         const canvas=new ZikoUICanvas();
         canvas.items=this.items;
         canvas.transformMatrix=this.transformMatrix;
@@ -184,6 +171,6 @@ class ZikoUICanvas extends ZikoUIContainerElement{
 
 const Canvas=(w,h)=>new ZikoUICanvas(w,h);
 export{
-    ZikoUICanvas
+    ZikoUICanvas,
+    Canvas
 }
-export default Canvas;
