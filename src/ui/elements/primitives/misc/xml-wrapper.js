@@ -8,6 +8,7 @@ class ZikoUIXMLWrapper extends ZikoUIElement{
 function html2dom(htmlString) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(`<div>${htmlString}</div>`, 'text/html');
+    doc.body.firstChild.style.display = "contents"
     return doc.body.firstChild;
   }
 function svg2dom(svgString) {
