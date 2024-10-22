@@ -1,6 +1,6 @@
-import Events from "./events";
+import * as Events from "./events";
 import * as Observer from "./observer"
-import Hooks from "./hooks"
+import * as Hooks from "./hooks"
 const Reactivity={
     ...Events,
     ...Observer,
