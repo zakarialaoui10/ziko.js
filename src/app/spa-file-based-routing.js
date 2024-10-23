@@ -4,7 +4,6 @@ import { Section } from "../ui";
 async function FileBasedRouting(pages /* use import.meta.glob */){
    const routes = Object.keys(pages)
    const root = findCommonPath(routes)
-   // console.log({root})
    const pairs = {}
    for(let i=0; i<routes.length; i++){
       const module = await pages[routes[i]]()

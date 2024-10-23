@@ -2,7 +2,67 @@
 
 *💡 **Zikojs** a versatile JavaScript library offering a rich set of UI components, advanced mathematical utilities,Reactivity,animations,client side routing and graphics capabilities* 
 
+## Install 
+```bash
+npm install ziko
+```
+## 🎬 Demos 
+- ### [  Windows entanglement using zikojs and ziko-three ](https://www.linkedin.com/feed/update/urn:li:activity:7144023650394918913/) 
+
 ## Features :
+
+### 🔰 Seamlessly operates in both browser and Node.js environments
+
+### 🔰 Mathematical Utilities & Tips
+
+- ***Flexible Math Functions*** : 
+
+ZikoJS offers flexible math utilities, such as the `mapfun` function, which allows mapping standard mathematical operations to complex and nested data structures. 
+For example, the `cos` function in ZikoJS is built on top of mapfun, enabling it to handle multiple arguments with diverse types (numbers, arrays, objects).
+
+```js
+import { cos, PI } from "ziko";
+const result = cos(PI, PI / 2, PI / 4, [PI / 6, PI / 3], {
+  x: PI / 2,
+  y: PI / 4,
+  z: [0, PI / 12],
+}
+);
+/*
+result =>
+[
+  -1,
+  0,
+  0.707106781186548,
+  [0.866025403784439, 0.5],
+  {
+    x: 0,
+    y: 0.707106781186548,
+    z: [1, 0.965925826289068],
+  },
+];
+*/
+// console.log(result)
+
+```
+You can also built your own flexible Math function using this mapfun util : 
+```js
+import { mapfun } from "ziko";
+const parabolic_func = (a, b, c, x) => a * x ** 2 + b * x + c;
+const map_parabolic_func =
+  (a, b, c) =>
+  (...X) =>
+    mapfun((n) => parabolic_func(a, b, c, n), ...X);
+const a = -1.5,
+  b = 2,
+  c = 3;
+const X = [0, 1, 2, 3];
+console.log(parabolic_func(a, b, c)(X));
+// [3,3,1,3]
+
+```
+
+- Built in Matrix, Complex, Random ... classes 
 
 ### 🔰 No Template Engines :
 zikojs UI module adopts a distinctive approach to building and updating user interfaces. It doesn't rely on predefined markup templates. Instead, it leverages a hyperscript-like syntax to dynamically create and update user interfaces.
@@ -60,3 +120,18 @@ Currently supported frameworks:
 |ziko-icons||`fontawesome`|
 |ziko-tippy||`tippy.js`|
 
+
+### 🔰 Rich UI elements
+
+### 🔰 Reactivity 
+
+### 🔰 Time loop and animations support
+
+## ⭐️ Show your support <a name="support"></a>
+
+If you appreciate the library, kindly demonstrate your support by giving it a star!<br>
+[![Star](https://img.shields.io/github/stars/zakarialaoui10/ziko.js?style=social)](https://github.com/zakarialaoui10/ziko.js)
+<!--## Financial support-->
+# License 
+This projet is licensed under the terms of MIT License 
+<img src="https://img.shields.io/github/license/zakarialaoui10/zikojs?color=rgb%2820%2C21%2C169%29" width="100" align="right">
