@@ -1,6 +1,5 @@
 import { addSuffixeToNumber } from "../utils/index.js";
 import { Matrix,cos,sin} from "../../math/index.js";
-import { mapfun } from "../../math/index.js";
 import { Str } from "../../data/index.js";
 class ZikoUIElementStyle{
     constructor(defaultStyle={}){
@@ -22,16 +21,6 @@ class ZikoUIElementStyle{
             }
         }
     }
-    // style(styles ,{target = "parent", maskVector = null } = {}){
-    //     if (target === "parent" || target === 0)style(this.target.element, styles);
-    //     else if(target === "parent" || target === 0){
-    //       if (maskVector) {
-    //         this.items.map((n, i) => maskVector[i] == 1 && n.style(styles));
-    //       } 
-    //       else this.items.map((n) => n.style(styles));      
-    //     }
-    //     return this;
-    //   }
     style(styles){
         for(const [key, value] of Object.entries(styles)){
             if(Str.isCamelCase(key)){
@@ -89,14 +78,14 @@ class ZikoUIElementStyle{
         return !(this.isInline());
     }
     // Size
-    size(width,height,{ target, maskVector } = {}){
+    size(width,height){
         this.style({
             width,
             height
-        },{ target, maskVector })
+        })
         return this;
     }
-    width(w,{ target, maskVector } = {}){
+    width(w){
         if(w instanceof Object){
           if(w instanceof Array)w={min:w[0],max:w[1]}
           if("min" in w || "max" in w){
@@ -109,11 +98,11 @@ class ZikoUIElementStyle{
         }
         else {
           w=addSuffixeToNumber(w,"px");
-          this.style({width:w},{ target, maskVector });
+          this.style({width:w});
         }
         return this
     }
-    height(h,{ target, maskVector } = {}){
+    height(h){
         if(h instanceof Object){
           if(h instanceof Array)h={min:h[0],max:h[1]}
           if("min" in h || "max" in h){
@@ -126,18 +115,18 @@ class ZikoUIElementStyle{
         }
         else {
           h=addSuffixeToNumber(h,"px");
-          this.style({height:h},{ target, maskVector });
+          this.style({height:h});
         }
         return this
     } 
-    enableResize(h=false,v=false,{ target, maskVector } = {}){
+    enableResize(h=false,v=false){
         let resize="none";
         if(h)v?resize="both":resize="horizontal";
         else v?resize="vertical":resize="none";
         this.style({
             resize,
             overflow:"hidden"
-        },{ target, maskVector });
+        });
         if(this.isInline()){
             console.group("Ziko Issue : Temporarily Incompatible Method");
             console.warn(".enableResize has no effect on inline elements!");
@@ -171,16 +160,16 @@ class ZikoUIElementStyle{
         }
         return this;
     }
-    color(color,{ target, maskVector } = {}){
-        this.style({color},{ target, maskVector });
+    color(color){
+        this.style({color});
         return this;
     }
-    background(background,{ target, maskVector } = {}){
-        this.style({background},{ target, maskVector });
+    background(background){
+        this.style({background});
         return this;
     }
-    backgroundColor(backgroundColor,{ target, maskVector } = {}){
-        this.style({backgroundColor},{ target, maskVector });
+    backgroundColor(backgroundColor){
+        this.style({backgroundColor});
         return this;
     }
     opacity(opacity, { target, maskVector } = {}) {
@@ -188,16 +177,16 @@ class ZikoUIElementStyle{
         return this;
     }
     // Placement
-    position(position,{ target, maskVector } = {}){
-        this.style({position},{ target, maskVector });
+    position(position){
+        this.style({position});
         return this
     }
     display(disp, { target, maskVector } = {}) {
         this.style({ display: disp }, { target, maskVector });
         return this;
     }
-    zIndex(z,{ target, maskVector } = {}){
-        this.style({zIndex:z},{ target, maskVector });
+    zIndex(z){
+        this.style({zIndex:z});
         return this;
     }
     float(float, { target, maskVector } = {}) {
@@ -225,72 +214,72 @@ class ZikoUIElementStyle{
         this.style({borderLeft}, { target, maskVector });
         return this;
     }
-    borderRadius(radius,{ target, maskVector } = {}){
+    borderRadius(radius){
         radius=addSuffixeToNumber(radius,"px");
         this.style({ borderRadius: radius }, { target, maskVector });
         return this;
     }
-    margin(margin,{ target, maskVector } = {}){
+    margin(margin){
         margin=addSuffixeToNumber(margin,"px");
         this.style({ margin }, { target, maskVector });
         return this;
     }
-    marginTop(marginTop,{ target, maskVector } = {}){
+    marginTop(marginTop){
         marginTop=addSuffixeToNumber(marginTop,"px");
-        this.style({marginTop},{ target, maskVector });
+        this.style({marginTop});
         return this;
     }
-    marginRight(marginRight,{ target, maskVector } = {}){
+    marginRight(marginRight){
         marginRight=addSuffixeToNumber(marginRight,"px");
-        this.style({marginRight},{ target, maskVector });
+        this.style({marginRight});
         return this;
     }
-    marginBootom(marginBootom,{ target, maskVector } = {}){
+    marginBootom(marginBootom){
         marginBootom=addSuffixeToNumber(marginBootom,"px");
-        this.style({marginBootom},{ target, maskVector });
+        this.style({marginBootom});
         return this;
     }
-    marginLeft(marginLeft,{ target, maskVector } = {}){
+    marginLeft(marginLeft){
         marginLeft=addSuffixeToNumber(marginLeft,"px");
-        this.style({marginLeft},{ target, maskVector });
+        this.style({marginLeft});
         return this;
     }
-    padding(padding,{ target, maskVector } = {}){
+    padding(padding){
         padding=addSuffixeToNumber(padding,"px");
-        this.style({padding},{ target, maskVector });
+        this.style({padding});
         return this;
     }
-    paddingTop(paddingTop,{ target, maskVector } = {}){
+    paddingTop(paddingTop){
         paddingTop=addSuffixeToNumber(paddingTop,"px");
-        this.style({paddingTop},{ target, maskVector });
+        this.style({paddingTop});
         return this;
     }
-    paddingRight(paddingRight,{ target, maskVector } = {}){
+    paddingRight(paddingRight){
         paddingRight=addSuffixeToNumber(paddingRight,"px");
-        this.style({paddingRight},{ target, maskVector });
+        this.style({paddingRight});
         return this;
     }
-    paddingBootom(paddingBootom,{ target, maskVector } = {}){
+    paddingBootom(paddingBootom){
         paddingBootom=addSuffixeToNumber(paddingBootom,"px");
-        this.style({paddingBootom},{ target, maskVector });
+        this.style({paddingBootom});
         return this;
     }
-    paddingLeft(paddingLeft,{ target, maskVector } = {}){
+    paddingLeft(paddingLeft){
         paddingLeft=addSuffixeToNumber(paddingLeft,"px");
-        this.style({paddingLeft},{ target, maskVector });
+        this.style({paddingLeft});
         return this;
     }
     // Typographie
-    font(font,{ target, maskVector } = {}){
-        this.style({font},{ target, maskVector });
+    font(font){
+        this.style({font});
         return this;
     }
-    fontFamily(fontFamily="",{ target, maskVector } = {}){
-        this.style({fontFamily},{ target, maskVector });
+    fontFamily(fontFamily=""){
+        this.style({fontFamily});
         return this;
     }
-    fontSize(fontSize,{ target, maskVector } = {}){
-        this.style({fontSize},{ target, maskVector });
+    fontSize(fontSize){
+        this.style({fontSize});
         return this;
     }
     // Misc
@@ -298,7 +287,7 @@ class ZikoUIElementStyle{
         this.style({ cursor: type });
         return this;
     }  
-    overflow(x,y,{ target, maskVector } = {}){
+    overflow(x,y){
         const values=["hidden","auto"];
         this.style({
           overflowX:typeof x==="number"?values[x]:x,

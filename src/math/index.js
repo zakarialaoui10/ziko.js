@@ -1,6 +1,6 @@
 import * as __Const__ from "./const.js"
 import * as __Functions__ from "./functions"
-import * as __Signal__ from "./const.js"
+// import * as __Signal__ from "./const.js"
 import * as __Random__ from "./random"
 //import { Derivation } from "./Numeric";
 import * as __Complex__ from "./complex"
@@ -15,7 +15,7 @@ const Math = {
     ...__Matrix__,
     ...__Utils__,
     ...__Discrect__,
-    ...__Signal__,
+    // ...__Signal__,
     ...__Calculus__,
 }
 export * from "./const.js"
@@ -25,7 +25,7 @@ export * from "./matrix"
 export * from "./discret"
 export * from "./numeric"
 export * from "./random"
-export * from "./signal"
+// export * from "./signal"
 export * from "./utils"
 export * from "./statistics"
 export default Math;

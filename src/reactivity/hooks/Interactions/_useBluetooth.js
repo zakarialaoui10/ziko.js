@@ -1,4 +1,4 @@
-import { useEventEmitter } from "./useEventEmmiter";
+import { useEventEmitter } from "./useEventEmmiter.js";
 class ZikoUseBluetooth{
     constructor(options={acceptAllDevices:true}){
         this.options=options;
