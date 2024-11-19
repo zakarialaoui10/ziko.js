@@ -1,5 +1,5 @@
 import * as __Const__ from "./const.js"
-import * as __Functions__ from "./functions"
+import * as __Functions__ from "./functions/index.js"
 // import * as __Signal__ from "./const.js"
 import * as __Random__ from "./random"
 //import { Derivation } from "./Numeric";
@@ -19,7 +19,7 @@ const Math = {
     ...__Calculus__,
 }
 export * from "./const.js"
-export * from "./functions"
+export * from "./functions/index.js"
 export * from "./complex"
 export * from "./matrix"
 export * from "./discret"

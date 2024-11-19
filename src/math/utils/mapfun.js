@@ -42,8 +42,9 @@ const mapfun=(fun,...X)=>{
                 default : return fun(x)
             }
         }
-        else if(x instanceof Object)return Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
-
+        else if(x instanceof Object){
+            return fun(Object) || Object.fromEntries(Object.entries(x).map(n=>n=[n[0],mapfun(fun,n[1])]))
+        }
     });
    return Y.length==1?Y[0]:Y; 
 }

@@ -1,20 +1,30 @@
-export const Fixed={
-    cos:x=>+Math.cos(x).toFixed(15),
-    sin:x=>+Math.sin(x).toFixed(15),
-    tan:x=>+Math.tan(x).toFixed(31),
-    sinc:x=>+Math.sin(Math.PI*x)/(Math.PI*x),
-    sec:x=>+1/Math.cos(x).toFixed(15),
-    csc:x=>+1/Math.sin(x).toFixed(15),
-    cot:x=>+1/Math.tan(x).toFixed(15),
-    acos:x=>+Math.acos(x).toFixed(15),
-    asin:x=>+Math.asin(x).toFixed(15),
-    atan:x=>+Math.atan(x).toFixed(15),
-    acot:x=>+Math.PI/2-Math.atan(x).toFixed(15),
-    cosh:x=>+Math.cosh(x).toFixed(15),
-    sinh:x=>+Math.sinh(x).toFixed(15),
-    tanh:x=>+Math.tanh(x).toFixed(15),
-    coth:n=>+(1/2*Math.log((1+n)/(1-n))).toFixed(15),
-    acosh:x=>+Math.acosh(x).toFixed(15),
-    asinh:x=>+Math.asinh(x).toFixed(15),
-    atanh:x=>+Math.atanh(x).toFixed(15),
+const {PI, cos, sin, tan, acos, asin, atan, cosh, sinh, tanh, acosh, asinh, atanh, log} = Math
+export let Fixed={
+    cos,
+    sin,
+    tan,
+    sinc: x => sin(PI*x)/(PI*x),
+    sec: x => 1/cos(x),
+    csc: x => 1/sin(x),
+    cot: x => 1/tan(x),
+    acos,
+    asin,
+    atan,
+    acot: x => PI/2-atan(x),
+    cosh,
+    sinh,
+    tanh,
+    coth: n => (1/2*log((1+n)/(1-n))),
+    acosh,
+    asinh,
+    atanh,
 }
+
+Fixed = new Proxy(Fixed, {
+    get(target, prop) {
+        if(prop in target){
+            return x => + target[prop](x).toFixed(15);
+        }
+        return undefined;
+    }
+})
