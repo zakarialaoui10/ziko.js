@@ -25,7 +25,7 @@ class ZikoUIElement {
     if(typeof element === "string") {
       element === "svg" ? element=globalThis?.document?.createElementNS("http://www.w3.org/2000/svg", "svg"): element = globalThis?.document?.createElement(element);
     }
-    if(element)this.element = element;
+    if(element)this.__ele__ = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
       name,
@@ -68,6 +68,9 @@ class ZikoUIElement {
     this.size("auto", "auto");
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     element && globalThis.__Ziko__.__Config__.default.render && this.render()
+  }
+  get element(){
+    return this.__ele__
   }
   get isZikoUIElement(){
     return true
