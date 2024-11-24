@@ -61,10 +61,10 @@ class ZikoUIElement {
     this.style({ 
       position: "relative",
       boxSizing:"border-box",
-      // fontFamily:"verdana",
       margin:0,
       padding:0,
      });
+    this.items = [];
     this.size("auto", "auto");
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     element && globalThis.__Ziko__.__Config__.default.render && this.render()
@@ -93,15 +93,15 @@ class ZikoUIElement {
   get isBody(){
     return this.element === globalThis?.document.body;
   }
-  get __app__(){
-    if(this.cache.isRoot)return this;
-    let root=this.cache.parent;
-    while(1){
-      if(!root)return null;
-      if(root.cache.isRoot)return root;
-      root=root.parent;
-    }
-  }
+  // get __app__(){
+  //   if(this.cache.isRoot)return this;
+  //   let root=this.cache.parent;
+  //   while(1){
+  //     if(!root)return null;
+  //     if(root.cache.isRoot)return root;
+  //     root=root.parent;
+  //   }
+  // }
   get parent(){
     return this.cache.parent;
   }
