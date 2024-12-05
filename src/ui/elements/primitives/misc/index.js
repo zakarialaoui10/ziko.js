@@ -85,7 +85,8 @@ class ZikoUIBr extends ZikoUIElement {
   const link=(href,...UIElement)=>new ZikoUILink(href).append(...UIElement);
   const html=(tag,...UIElement)=>new ZikoUIHtmlTag(tag).append(...UIElement);
   const btn = (value) => new ZikoUIBtn(value);
-export * from "./xml-wrapper.js"
+export * from "./xml-wrapper.js";
+export * from "./suspense.js"
 export{
   html,
   btn,
