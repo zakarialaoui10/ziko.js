@@ -96,10 +96,10 @@ Currently supported frameworks:
 
 ```md
 ---
- module : 
-  - import InteractiveBlock from "./InteractiveBlock"
  title : Article 1
 ---
+
+import InteractiveBlock from "./InteractiveBlock";
 
 # Hello World this is markdown heading 
 

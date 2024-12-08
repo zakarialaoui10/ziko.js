@@ -24,7 +24,11 @@ class ZikoUIElement {
   constructor(element ,name="", el_type="html") {
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;
     if(typeof element === "string") {
-      (el_type === "svg") ? element=globalThis?.document?.createElementNS("http://www.w3.org/2000/svg", element): element = globalThis?.document?.createElement(element);
+      switch(el_type){
+        case "html" : element = globalThis?.document?.createElement(element); break;
+        case "svg" : element = globalThis?.document?.createElementNS("http://www.w3.org/2000/svg", element);
+        default : throw Error("Not supported")
+      }
     }
     if(element)this.__ele__ = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
