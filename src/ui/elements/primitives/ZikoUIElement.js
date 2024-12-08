@@ -19,11 +19,12 @@ import {
 } from "../../../reactivity/index.js"
 import { Random } from "../../../math/index.js";
 import { Str } from "../../../data/index.js";
+import { text } from "./text/text.js";
 class ZikoUIElement {
-  constructor(element ,name="") {
+  constructor(element ,name="", el_type="html") {
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;
     if(typeof element === "string") {
-      element === "svg" ? element=globalThis?.document?.createElementNS("http://www.w3.org/2000/svg", "svg"): element = globalThis?.document?.createElement(element);
+      (el_type === "svg") ? element=globalThis?.document?.createElementNS("http://www.w3.org/2000/svg", element): element = globalThis?.document?.createElement(element);
     }
     if(element)this.__ele__ = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
