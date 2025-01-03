@@ -21,7 +21,8 @@ import { Random } from "../../../math/index.js";
 import { Str } from "../../../data/index.js";
 import { text } from "./text/text.js";
 class ZikoUIElement {
-  constructor(element ,name="", el_type="html") {
+  // constructor(element ,name="", el_type="html") {
+  constructor(element, name="", {el_type="html", useDefaultStyle=false}={}){
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;
     if(typeof element === "string") {
       switch(el_type){
@@ -63,14 +64,15 @@ class ZikoUIElement {
       intersection:null
     }
     this.cache.style.linkTo(this);
-    this.style({ 
+    useDefaultStyle && this.style({ 
       position: "relative",
       boxSizing:"border-box",
       margin:0,
       padding:0,
+      width : "auto",
+      height : "auto"
      });
     this.items = [];
-    this.size("auto", "auto");
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     element && globalThis.__Ziko__.__Config__.default.render && this.render()
   }
