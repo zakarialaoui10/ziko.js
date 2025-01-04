@@ -31,6 +31,10 @@ class ZikoUIElement {
         default : throw Error("Not supported")
       }
     }
+    else{
+      this.target = element.parentElement;
+      console.log({element, parent : element.parentElement})
+    }
     if(element)this.__ele__ = element;
     this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
@@ -89,7 +93,7 @@ class ZikoUIElement {
     return this.cache.attributes;
   }
   get evt(){
-    return this.cache.events;
+    return this.events;
   }
   get html(){
     return this.element.innerHTML;
