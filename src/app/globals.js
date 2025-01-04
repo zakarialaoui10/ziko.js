@@ -1,4 +1,5 @@
 const __UI__={}
+const __HYDRATION_MAP__ = []
 const __Config__={
     default:{
         target:null,
@@ -16,5 +17,6 @@ const __Config__={
 }
 export {
     __UI__,
+    __HYDRATION_MAP__,
     __Config__
 }

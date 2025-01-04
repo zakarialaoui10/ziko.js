@@ -21,7 +21,6 @@ import { Random } from "../../../math/index.js";
 import { Str } from "../../../data/index.js";
 import { text } from "./text/text.js";
 class ZikoUIElement {
-  // constructor(element ,name="", el_type="html") {
   constructor(element, name="", {el_type="html", useDefaultStyle=false}={}){
     this.target = globalThis.__Ziko__.__Config__.default.target||globalThis?.document?.body;
     if(typeof element === "string") {
@@ -33,10 +32,8 @@ class ZikoUIElement {
     }
     else{
       this.target = element.parentElement;
-      console.log({element, parent : element.parentElement})
     }
     if(element)this.__ele__ = element;
-    this.uuid=this.constructor.name+"-"+Random.string(10);
     this.cache = {
       name,
       parent:null,
@@ -67,6 +64,7 @@ class ZikoUIElement {
       resize:null,
       intersection:null
     }
+    this.uuid = `${this.cache.name}-${Random.string(16)}`
     this.cache.style.linkTo(this);
     useDefaultStyle && this.style({ 
       position: "relative",
@@ -79,12 +77,17 @@ class ZikoUIElement {
     this.items = [];
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     element && globalThis.__Ziko__.__Config__.default.render && this.render()
+    this.setAttr("data-ref", this.uuid);
+    globalThis.__Ziko__.__HYDRATION_MAP__.push({
+      ref : this.uuid,
+      comp : ()=>this
+    })
   }
   get element(){
-    return this.__ele__
+    return this.__ele__;
   }
   get isZikoUIElement(){
-    return true
+    return true;
   }
   get st(){
     return this.cache.style;
