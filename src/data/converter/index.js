@@ -1,9 +1,5 @@
-export { 
-    markdown2html
- } from "./markdown.js";
-export { 
-  adoc2html
-} from "./adoc.js";
+// export { markdown2html } from "./markdown.js";
+// export { adoc2html } from "./adoc.js";
  export { 
     csv2arr,
     csv2matrix,

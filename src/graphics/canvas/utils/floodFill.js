@@ -4,7 +4,6 @@ const floodFill=(parent, imageData, newColor, x, y)=>{
     const baseColor = parent.getColorAtPixel(imageData, x, y);
     let operator = { x, y };
 
-    // Check if base color and new color are the same
     if (parent.colorMatch(baseColor, newColor)) {
         return;
     }
