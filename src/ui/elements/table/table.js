@@ -1,6 +1,6 @@
 import ZikoUIElement from "../ZikoUIElement.js"
 import { tbody,caption,ZikoUICaption,thead} from "./elements.js";
-import { matrix } from "../../../../math/matrix/index.js";
+import { matrix } from "../../../math/matrix/index.js";
 import { MatrixToTableUI } from "./utils.js";
 class ZikoUITable extends ZikoUIElement {
     constructor(body,{caption=null,head=null,foot=null}={}){

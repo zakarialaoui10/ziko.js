@@ -1,5 +1,5 @@
 import ZikoUIElement from "../../../ZikoUIElement.js";
-import { useInputEvent } from "../../../../../../reactivity/index.js";
+import { useInputEvent } from "../../../../../reactivity/index.js";
 class ZikoUIInput extends ZikoUIElement {
   constructor(type, name , value = "", datalist) {
     super("input", "input");

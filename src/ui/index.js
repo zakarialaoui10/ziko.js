@@ -1,23 +1,23 @@
-export * from "./elements/primitives/text";
-export * from "./elements/primitives/list";
-export * from "./elements/primitives/io";
-export * from "./elements/primitives/media";
-export * from "./elements/primitives/table";
-export * from "./elements/primitives/semantic";
-export * from "./elements/primitives/misc";
+export * from "./elements/text";
+export * from "./elements/list";
+export * from "./elements/io";
+export * from "./elements/media";
+export * from "./elements/table";
+export * from "./elements/semantic";
+export * from "./elements/misc";
 export * from "./elements/derived";
 
-import * as Text from "./elements/primitives/text";
-import * as List from "./elements/primitives/list";
-import * as Io from "./elements/primitives/io";
-import * as Media from "./elements/primitives/media";
-import * as Table from "./elements/primitives/table";
-import * as Semantic from "./elements/primitives/semantic";
-import * as Misc from "./elements/primitives/misc";
+import * as Text from "./elements/text";
+import * as List from "./elements/list";
+import * as Io from "./elements/io";
+import * as Media from "./elements/media";
+import * as Table from "./elements/table";
+import * as Semantic from "./elements/semantic";
+import * as Misc from "./elements/misc";
 import * as Derived from "./elements/derived";
 
-import ZikoUIElement from "./elements/primitives/ZikoUIElement";
-import ZikoUIContainerElement from "./elements/primitives/ZikoUIContainerElement";
+import ZikoUIElement from "./elements/ZikoUIElement";
+import ZikoUIContainerElement from "./elements/ZikoUIContainerElement";
 
 export{
     ZikoUIContainerElement,

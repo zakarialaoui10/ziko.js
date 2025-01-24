@@ -1,4 +1,4 @@
-import ZikoUIContainerElement from "../../primitives/ZikoUIContainerElement"
+import ZikoUIContainerElement from "../../ZikoUIContainerElement"
 class ZikoUIGrid extends ZikoUIContainerElement {
     constructor(tag ="div", w = "50vw", h = "50vh") {
       super(tag,"Grid");

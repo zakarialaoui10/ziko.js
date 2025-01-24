@@ -1,5 +1,5 @@
-import { ZikoUseStyle } from "../../../reactivity/hooks/UI/useStyle.js";
-import { ZikoUIElementStyle } from "../../style/index.js";
+import { ZikoUseStyle } from "../../reactivity/hooks/UI/useStyle.js";
+import { ZikoUIElementStyle } from "../style/index.js";
 import { 
   usePointerEvent,
   useMouseEvent, 
@@ -16,9 +16,9 @@ import {
   watchSize,
   watchAttr,
   watchChildren
-} from "../../../reactivity/index.js"
-import { Random } from "../../../math/index.js";
-import { Str } from "../../../data/index.js";
+} from "../../reactivity/index.js"
+import { Random } from "../../math/index.js";
+import { Str } from "../../data/index.js";
 import { text } from "./text/text.js";
 class ZikoUIElement {
   constructor(element, name="", {el_type="html", useDefaultStyle=false}={}){
