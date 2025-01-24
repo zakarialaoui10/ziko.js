@@ -1,5 +1,5 @@
-import ZikoUIContainerElement from "../../ZikoUIContainerElement"
-class ZikoUIGrid extends ZikoUIContainerElement {
+import ZikoUIElement from "../ZikoUIElement"
+class ZikoUIGrid extends ZikoUIElement {
     constructor(tag ="div", w = "50vw", h = "50vh") {
       super(tag,"Grid");
       this.direction = "cols";

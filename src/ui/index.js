@@ -5,7 +5,7 @@ export * from "./elements/media";
 export * from "./elements/table";
 export * from "./elements/semantic";
 export * from "./elements/misc";
-export * from "./elements/derived";
+// export * from "./elements/derived";
 
 import * as Text from "./elements/text";
 import * as List from "./elements/list";
@@ -14,7 +14,7 @@ import * as Media from "./elements/media";
 import * as Table from "./elements/table";
 import * as Semantic from "./elements/semantic";
 import * as Misc from "./elements/misc";
-import * as Derived from "./elements/derived";
+// import * as Derived from "./elements/derived";
 
 import ZikoUIElement from "./elements/ZikoUIElement";
 import ZikoUIContainerElement from "./elements/ZikoUIContainerElement";
@@ -31,7 +31,7 @@ const UI = {
     ...Table,
     ...Semantic,
     ...Misc,
-    ...Derived,
+    // ...Derived,
     ZikoUIElement,
     ZikoUIContainerElement
 }

@@ -1,5 +1,5 @@
-import ZikoUIContainerElement from "../../ZikoUIContainerElement.js";
-class ZikoUIFlex extends ZikoUIContainerElement {
+import ZikoUIElement from "../ZikoUIElement.js";
+class ZikoUIFlex extends ZikoUIElement {
   constructor(tag = "div", w = "100%", h = "100%") {
     super(tag ,"Flex");
     this.direction = "cols";
