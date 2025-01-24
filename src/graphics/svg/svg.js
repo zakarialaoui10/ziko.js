@@ -1,5 +1,5 @@
-import { ZikoUIContainerElement } from "../../ui/index.js";
-class ZikoUISvg extends ZikoUIContainerElement {
+import { ZikoUIElement } from "../../ui/index.js";
+class ZikoUISvg extends ZikoUIElement {
     constructor(w=360,h=300) {
       super("svg","svg");
       //this.cache={};

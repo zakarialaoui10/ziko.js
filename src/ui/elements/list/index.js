@@ -1,7 +1,6 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import ZikoUIContainerElement from "../ZikoUIContainerElement.js";
 import {text} from "../text/index.js";
-class ZikoUILI extends ZikoUIContainerElement{
+class ZikoUILI extends ZikoUIElement{
   constructor(UI){
     super("li","li");
     this.append(UI);
@@ -10,7 +9,7 @@ class ZikoUILI extends ZikoUIContainerElement{
     return true;
   }
 }
-class ZikoUIList extends ZikoUIContainerElement {
+class ZikoUIList extends ZikoUIElement {
     constructor(element,name) {
       super(element,name);
       delete this.append;

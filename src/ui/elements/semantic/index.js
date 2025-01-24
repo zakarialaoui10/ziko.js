@@ -1,5 +1,5 @@
-import ZikoUIContainerElement from "../ZikoUIContainerElement.js";
-class ZikoUIMain extends ZikoUIContainerElement{
+import ZikoUIElement from "../ZikoUIElement";
+class ZikoUIMain extends ZikoUIElement{
     constructor(){
       super("main","Main");
     }
@@ -7,7 +7,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
       return true
     }
   }
-  class ZikoUIHeader extends ZikoUIContainerElement{
+  class ZikoUIHeader extends ZikoUIElement{
     constructor(){
       super("header","Header");
     }
@@ -15,7 +15,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
       return true
     }
   }
-  class ZikoUINav extends ZikoUIContainerElement{
+  class ZikoUINav extends ZikoUIElement{
     constructor(){
       super("nav","Nav");
     }
@@ -23,7 +23,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
       return true
     }
   }
-  class ZikoUISection extends ZikoUIContainerElement{
+  class ZikoUISection extends ZikoUIElement{
     constructor(){
       super("section","Section");
       this.style({position:"relative"})
@@ -32,7 +32,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
       return true
     }
   }
-  class ZikoUIArticle extends ZikoUIContainerElement{
+  class ZikoUIArticle extends ZikoUIElement{
     constructor(){
       super("article","Article");
     }
@@ -40,7 +40,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
       return true
     }
   }
-  class ZikoUIAside extends ZikoUIContainerElement{
+  class ZikoUIAside extends ZikoUIElement{
     constructor(){
       super("aside","Aside");
     }
@@ -48,7 +48,7 @@ class ZikoUIMain extends ZikoUIContainerElement{
       return true
     }
   }
-  class ZikoUIFooter extends ZikoUIContainerElement{
+  class ZikoUIFooter extends ZikoUIElement{
     constructor(){
       super("footer","Footer");
       this.element=document?.createElement("footer");

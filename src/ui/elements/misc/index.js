@@ -1,6 +1,5 @@
 import ZikoUIElement from "../ZikoUIElement.js";
-import ZikoUIContainerElement from "../ZikoUIContainerElement.js";
-class ZikoUIHtmlTag extends ZikoUIContainerElement {
+class ZikoUIHtmlTag extends ZikoUIElement {
   constructor(element) {
     super(element,"html");
   }
@@ -53,7 +52,7 @@ class ZikoUIBr extends ZikoUIElement {
       return true
     }
   }
-  class ZikoUILink extends ZikoUIContainerElement{
+  class ZikoUILink extends ZikoUIElement{
     constructor(href){
       super("a","link");
       Object.assign(this.cache,{
