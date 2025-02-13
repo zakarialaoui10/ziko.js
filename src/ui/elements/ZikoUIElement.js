@@ -161,7 +161,7 @@ class ZikoUIElement {
     }
     for (let i = 0; i < ele.length; i++) {
       if (["number", "string"].includes(typeof ele[i])) ele[i] = text(ele[i]);
-      if (ele[i] instanceof ZikoUIElement) {
+      if (ele[i]?.isZikoUIElement) {
         ele[i].cache.parent = this;
         this.element[adder](ele[i].element);
         ele[i].target = this.element;
@@ -199,7 +199,7 @@ class ZikoUIElement {
   remove(...ele) {
     const remove = (ele) => {
       if (typeof ele === "number") ele = this.items[ele];
-      if (ele instanceof ZikoUIElement) this.element?.removeChild(ele.element);
+      if (ele?.isZikoUIElement) this.element?.removeChild(ele.element);
       this.items = this.items.filter((n) => n !== ele);
     };
     for (let i = 0; i < ele.length; i++) remove(ele[i]);
@@ -300,7 +300,7 @@ class ZikoUIElement {
   }
   setTarget(tg) {
     if(this.isBody) return ;
-    if (tg instanceof ZikoUIElement) tg = tg.element;
+    if (tg?.isZikoUIElement) tg = tg.element;
     this.unrender();
     this.target = tg;
     this.render();
@@ -316,7 +316,7 @@ class ZikoUIElement {
   }
   render(target = this.target) {
     if(this.isBody)return ;
-    if(target instanceof ZikoUIElement)target=target.element;
+    if(target?.isZikoUIElement)target=target.element;
     this.target=target;
     this.target?.appendChild(this.element);
     return this;
@@ -335,12 +335,12 @@ class ZikoUIElement {
     return this;
   }
   after(ui){
-    if(ui instanceof ZikoUIElement) ui=ui.element;
+    if(ui?.isZikoUIElement) ui=ui.element;
     this.element?.after(ui)
     return this;
   }
   before(ui){
-    if(ui instanceof ZikoUIElement) ui=ui.element;
+    if(ui?.isZikoUIElement) ui=ui.element;
     this.element?.before(ui)
     return this;
   }
