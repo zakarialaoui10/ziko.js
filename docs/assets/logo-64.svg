@@ -1,0 +1,23 @@
+<svg viewBox="-5.5 -5.5 11 11" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad">
+      <stop offset="0%" style="stop-color:#091057;stop-opacity:1"/>
+      <stop offset="90%" style="stop-color:#4335a7;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#22177a;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text{font:italic 7px cursive;text-anchor:middle;dominant-baseline:middle}
+  </style>
+  <circle r="5" fill="url(#grad)" stroke="#323330" stroke-width=".3" stroke-dasharray="4.8" stroke-dashoffset="19" stroke-linecap="round"/>
+  <circle r="5" fill="url(#grad)" stroke="#f0db4f" stroke-width=".3" stroke-dasharray="5" stroke-dashoffset="20" stroke-linecap="round"/>
+  
+  <circle r="4.5" stroke="#323330" fill="none" stroke-width=".3" stroke-dasharray="4" stroke-dashoffset="6.1" stroke-linecap="round"/>
+  <circle r="4.5" stroke="#f0db4f" fill="none" stroke-width=".3" stroke-dasharray="4" stroke-dashoffset="6.7" stroke-linecap="round"/>
+
+  <circle r="4" stroke="#323330" fill="none" stroke-width=".3" stroke-dasharray="3.7" stroke-dashoffset="-17" stroke-linecap="round"/>
+  <circle r="4" stroke="#f0db4f" fill="none" stroke-width=".3" stroke-dasharray="3.5" stroke-dashoffset="-17" stroke-linecap="round"/>
+  
+  <text x="-.2" y=".5" fill="#323330">Z</text>
+  <text x="-.2" y=".1" fill="#f0db4f">Z</text>
+</svg>
