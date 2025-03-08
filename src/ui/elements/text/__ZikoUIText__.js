@@ -47,9 +47,9 @@ class __ZikoUIText__ extends ZikoUIElement {
         
         if(this.cache.lineBreak)this.element?.appendChild(globalThis.document?.createElement("br"));
       });
-      if(this.element?.innerHTML){
-        this.element.innerHTML = this.element.innerHTML.replace(/\n/g, '<br>').replace(/(?<!<[^>]+) /g, '&nbsp;');
-      }
+      // if(this.element?.innerHTML){
+      //   this.element.innerHTML = this.element.innerHTML.replace(/\n/g, '<br>').replace(/(?<!<[^>]+) /g, '&nbsp;');
+      // }
       return this
     }
     setValue(...value) {
