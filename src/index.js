@@ -5,7 +5,7 @@ import Time from "./time";
 import Data from "./data";
 import Reactivity from "./reactivity";
 import Graphics from "./graphics";
-import App,{__UI__,__HYDRATION_MAP__, __Config__, defineParamsGetter} from "./app";
+import App,{__UI__,__HYDRATION_MAP__, __Config__, __CACHE__, defineParamsGetter} from "./app";
 
 export * from "./math";
 export * from "./ui";
@@ -47,6 +47,7 @@ if ( globalThis.__Ziko__ ) {
             __UI__,
             __HYDRATION_MAP__,
             __Config__,
+            __CACHE__,
             ExtractAll,
             RemoveAll
         };

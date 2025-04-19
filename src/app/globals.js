@@ -1,4 +1,16 @@
-const __UI__={}
+const __UI__={
+    __all__(){
+        return Object.values(this)
+          .filter(Array.isArray)
+          .flat();
+    },
+    getElementByIndex(index){
+        return this.__all__().find(n=>n.ui_index===index);
+    },
+    getElementById(id){
+        return null;
+    }
+}
 const __HYDRATION_MAP__ = new Map()
 const __Config__={
     default:{
@@ -17,8 +29,15 @@ const __Config__={
     renderingMode :"spa",
     isSSC : false,
 }
+const __CACHE__ = {
+    ui_index : 0,
+    get_ui_index:function(){
+        return this.ui_index ++
+    }
+}
 export {
     __UI__,
     __HYDRATION_MAP__,
-    __Config__
+    __Config__,
+    __CACHE__
 }

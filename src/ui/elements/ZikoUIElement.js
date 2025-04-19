@@ -65,6 +65,7 @@ class ZikoUIElement {
       intersection:null
     }
     this.uuid = `${this.cache.name}-${Random.string(16)}`
+    this.ui_index = globalThis.__Ziko__.__CACHE__.get_ui_index() 
     this.cache.style.linkTo(this);
     useDefaultStyle && this.style({ 
       position: "relative",
