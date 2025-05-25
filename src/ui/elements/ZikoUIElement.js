@@ -78,7 +78,7 @@ class ZikoUIElement {
     this.items = [];
     globalThis.__Ziko__.__UI__[this.cache.name]?globalThis.__Ziko__.__UI__[this.cache.name]?.push(this):globalThis.__Ziko__.__UI__[this.cache.name]=[this];
     element && globalThis.__Ziko__.__Config__.default.render && this.render()
-    this.setAttr("data-ref", this.uuid);
+    this.setAttr("data-ui-index", this.ui_index);
     if(globalThis.__Ziko__.__Config__.renderingMode !== "spa" && !globalThis.__Ziko__.__Config__.isSSC) {
       globalThis.__Ziko__.__HYDRATION_MAP__.set(this.uuid, ()=>this)
   }

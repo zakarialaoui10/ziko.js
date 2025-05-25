@@ -1,6 +1,7 @@
 function EVENT_CONTROLLER(e,EVENT,setter,push_object){
     this.event=e
     if(this.cache.preventDefault[EVENT])e.preventDefault();
+    console.log({setter})
     if(setter)setter();
     if(this.cache.stream.enabled[EVENT]&&push_object)this.cache.stream.history[EVENT].push(push_object);
     this.cache.callbacks[EVENT].map(n=>n(this));
