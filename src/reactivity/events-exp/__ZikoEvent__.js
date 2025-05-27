@@ -1,6 +1,7 @@
 import { getEvent } from "./utils.js"
 function event_controller(e, event_name, custom_details_setter, push_object){
     this.cache.currentEvent = event_name;
+    this.cache.event = e;
     custom_details_setter?.call(this);
     if(this.cache.preventDefault[event_name]) e.preventDefault();
     if(this.cache.stopPropagation[event_name]) e.stopPropagation();
@@ -8,7 +9,7 @@ function event_controller(e, event_name, custom_details_setter, push_object){
     
     if(this.cache.stream.enabled[event_name]&&push_object)this.cache.stream.history[event_name].push(push_object);
     this.cache.callbacks[event_name]?.map(n=>n(this));
-    this.cache.event = e;
+    
 }
 class __ZikoEvent__ {
     constructor(target = null, Events = [], custom_details_setter){
@@ -79,34 +80,38 @@ class __ZikoEvent__ {
         this.__handle(event, this.cache.__controllers__[event],options, dispose)
         return this;  
     }
-    #override(methode, defaultValue, overrides){
-        if(defaultValue === "default") Object.assign(this.cache[methode], {...this.cache[methode], ...overrides})
-        const all=Object.fromEntries(Object.keys(this.cache.preventDefault).map(n=>[n,defaultValue]))
+    #override(methode, overrides, defaultValue){
+        if(defaultValue === "default") Object.assign(this.cache[methode], {...this.cache[methode], ...overrides});
+        const all = defaultValue === "default" 
+        ? this.cache[methode]
+        : Object.fromEntries(Object.keys(this.cache.preventDefault).map(n=>[n,defaultValue]))
         Object.assign(this.cache[methode], {...all,...overrides});
         return this       
     }
-    preventDefault(defaultValue = true, overrides = {}){
-        this.#override("preventDefault", defaultValue, overrides);
+    preventDefault(overrides = {}, defaultValue = "default"){
+        this.#override("preventDefault", overrides, defaultValue);
         // const all=Object.fromEntries(Object.keys(this.cache.preventDefault).map(n=>[n,defaultValue]))
         // Object.assign(this.cache.preventDefault, {...all,...overrides});
         return this;
     }
-    stopPropagation(defaultValue = true, overrides = {}){
-        this.#override("stopPropagation", defaultValue, overrides);
+    stopPropagation(overrides = {}, defaultValue = "default"){
+        this.#override("stopPropagation", overrides, defaultValue);
         return this;
     }
-    stopImmediatePropagation(defaultValue = true, overrides = {}){
-        this.#override("stopImmediatePropagation", defaultValue, overrides);
+    stopImmediatePropagation(overrides = {}, defaultValue = "default"){
+        this.#override("stopImmediatePropagation", overrides, defaultValue);
         return this;
     }
     setEventOptions(event, options){
-        this.pause("default", {[event] : true})
+        this.pause({[event] : true, }, "default");
         Object.assign(this.cache.options[getEvent(event)], options);
-        this.resume("default", {[event] : true})
+        this.resume({[event] : true, }, "default");
         return this;
     }
-    pause(defaultValue = true, overrides = {}){
-        const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,defaultValue]));
+    pause(overrides = {}, defaultValue = "default"){
+        const all = defaultValue === "default" 
+          ? this.cache.stream.enabled
+          : Object.entries(Object.keys(this.cache.stream.enabled).map(n=>[n,defaultValue]));
         overrides={...all,...overrides};
         for(let key in overrides){
             if(overrides[key]){
@@ -116,8 +121,10 @@ class __ZikoEvent__ {
         }
         return this;
     }
-    resume(defaultValue = true, overrides = {}){
-        const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,defaultValue]));
+    resume(overrides = {}, defaultValue = "default"){
+        const all = defaultValue === "default" 
+          ? this.cache.stream.enabled
+          : Object.entries(Object.keys(this.cache.stream.enabled).map(n=>[n,defaultValue]));
         overrides={...all,...overrides};
         for(let key in overrides){
             if(overrides[key]){
@@ -127,7 +134,7 @@ class __ZikoEvent__ {
         }
         return this;
      }
-    stream(defaultValue = true, overrides = {}){
+    stream(overrides = {}, defaultValue = "default"){
         this.cache.stream.t0=Date.now();
         const all=Object.fromEntries(Object.keys(this.cache.stream.enabled).map(n=>[n,defaultValue]))
         overrides={...all,...overrides}
@@ -137,8 +144,8 @@ class __ZikoEvent__ {
     clear(){
 
     }
-    dispose(defaultValue = true, overrides = {}){
-        this.pause(defaultValue, overrides);
+    dispose(overrides = {}, defaultValue = "default"){
+        this.pause(overrides, defaultValue);
 
         return this;
     }

@@ -7,7 +7,6 @@ class ZikoUIHtmlTag extends ZikoUIElement {
 class ZikoUIBtn extends ZikoUIElement {
   constructor(value = "button") {
     super("button","btn");
-    this.element = document?.createElement("button");
     this.setValue(value);
     this.st.cursor("pointer");
     globalThis.__Ziko__.__Config__.default.render && this.render();
