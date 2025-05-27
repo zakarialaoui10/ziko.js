@@ -1,8 +1,10 @@
 import { getEvent } from "./utils.js"
-function event_controller(e, event_name, custom_details_setter, push_object){
+function event_controller(e, event_name, details_setter, customizer, push_object){
     this.cache.currentEvent = event_name;
     this.cache.event = e;
-    custom_details_setter?.call(this);
+    details_setter?.call(this);
+    if(customizer.hasOwnProperty("prototype"))customizer?.call(this)
+    else customizer.call(null, this)
     if(this.cache.preventDefault[event_name]) e.preventDefault();
     if(this.cache.stopPropagation[event_name]) e.stopPropagation();
     if(this.cache.stopImmediatePropagation[event_name]) e.stopImmediatePropagation();
@@ -12,7 +14,7 @@ function event_controller(e, event_name, custom_details_setter, push_object){
     
 }
 class __ZikoEvent__ {
-    constructor(target = null, Events = [], custom_details_setter){
+    constructor(target = null, Events = [], details_setter){
         this.target = target;
         this.cache = {
             currentEvent : null,
@@ -43,7 +45,7 @@ class __ZikoEvent__ {
             Object.assign(this.cache.stream.enabled, {[event] : false});
             Object.assign(this.cache.stream.clear, {[event] : false});
             Object.assign(this.cache.stream.history, {[event] : []});
-            Object.assign(this.cache.__controllers__, {[event] : e=>event_controller.call(this, e, event, custom_details_setter)});
+            Object.assign(this.cache.__controllers__, {[event] : e=>event_controller.call(this, e, event, details_setter)});
             Object.assign(this, { [`on${Events[i]}`] : (...callbacks)=> this.__onEvent(event, this.cache.options[event], {}, ...callbacks)})
         })
     }

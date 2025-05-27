@@ -1,8 +1,8 @@
 import { __ZikoEvent__ } from "./__ZikoEvent__.js";
 import { Events } from "./__Events__.js";
 class ZikoEventPointer extends __ZikoEvent__{
-    constructor(target){
-        super(target, Events.Pointer, details_setter);
+    constructor(target, customizer){
+        super(target, Events.Pointer, details_setter, customizer);
         this.isDown = false;
     }
 }
@@ -39,7 +39,7 @@ function details_setter(){
     // else this.dx = 1
     // console.log(this.currentEvent)
 }
-const __usePointerEvent=target=>new ZikoEventPointer(target)
+const __usePointerEvent = (target, customizer) => new ZikoEventPointer(target, customizer)
 
 globalThis.expPointer = __usePointerEvent
 export{
