@@ -3,8 +3,9 @@ function event_controller(e, event_name, details_setter, customizer, push_object
     this.cache.currentEvent = event_name;
     this.cache.event = e;
     details_setter?.call(this);
-    if(customizer.hasOwnProperty("prototype"))customizer?.call(this)
-    else customizer.call(null, this)
+    console.log(customizer)
+    if(customizer?.hasOwnProperty("prototype"))customizer?.call(this)
+    else customizer?.call(null, this)
     if(this.cache.preventDefault[event_name]) e.preventDefault();
     if(this.cache.stopPropagation[event_name]) e.stopPropagation();
     if(this.cache.stopImmediatePropagation[event_name]) e.stopImmediatePropagation();
@@ -14,7 +15,7 @@ function event_controller(e, event_name, details_setter, customizer, push_object
     
 }
 class __ZikoEvent__ {
-    constructor(target = null, Events = [], details_setter){
+    constructor(target = null, Events = [], details_setter, customizer){
         this.target = target;
         this.cache = {
             currentEvent : null,
@@ -30,12 +31,8 @@ class __ZikoEvent__ {
                 clear : {},
                 history : {}
             },
-            callbacks : {
-
-            },
-            __controllers__:{
-
-            }
+            callbacks : {},
+            __controllers__:{}
         }
         const events = Events.map(n=>getEvent(n))
         events.forEach((event,i)=>{
@@ -45,12 +42,18 @@ class __ZikoEvent__ {
             Object.assign(this.cache.stream.enabled, {[event] : false});
             Object.assign(this.cache.stream.clear, {[event] : false});
             Object.assign(this.cache.stream.history, {[event] : []});
-            Object.assign(this.cache.__controllers__, {[event] : e=>event_controller.call(this, e, event, details_setter)});
+            Object.assign(this.cache.__controllers__, {[event] : e=>event_controller.call(this, e, event, details_setter, customizer)});
             Object.assign(this, { [`on${Events[i]}`] : (...callbacks)=> this.__onEvent(event, this.cache.options[event], {}, ...callbacks)})
         })
     }
     get targetElement(){
         return this.target?.element;
+    }
+    get isParent(){
+        return this.target?.element === this.event.srcElement;
+    }
+    get item(){
+        return this.target.find(n=>n.element == this.event?.srcElement)?.[0];
     }
     get currentEvent(){
         return this.cache.currentEvent;
