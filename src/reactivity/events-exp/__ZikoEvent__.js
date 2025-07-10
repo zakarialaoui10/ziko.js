@@ -3,7 +3,6 @@ function event_controller(e, event_name, details_setter, customizer, push_object
     this.cache.currentEvent = event_name;
     this.cache.event = e;
     details_setter?.call(this);
-    console.log(customizer)
     if(customizer?.hasOwnProperty("prototype"))customizer?.call(this)
     else customizer?.call(null, this)
     if(this.cache.preventDefault[event_name]) e.preventDefault();
@@ -12,7 +11,6 @@ function event_controller(e, event_name, details_setter, customizer, push_object
     
     if(this.cache.stream.enabled[event_name]&&push_object)this.cache.stream.history[event_name].push(push_object);
     this.cache.callbacks[event_name]?.map(n=>n(this));
-    
 }
 class __ZikoEvent__ {
     constructor(target = null, Events = [], details_setter, customizer){

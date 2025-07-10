@@ -13,6 +13,7 @@ const Math = {
     ...__Functions__,
     ...__Complex__,
     ...__Matrix__,
+    ...__Random__,
     ...__Utils__,
     ...__Discrect__,
     // ...__Signal__,

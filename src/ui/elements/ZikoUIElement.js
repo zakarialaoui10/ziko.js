@@ -162,12 +162,14 @@ class ZikoUIElement {
     }
     for (let i = 0; i < ele.length; i++) {
       if (["number", "string"].includes(typeof ele[i])) ele[i] = text(ele[i]);
+      if(ele[i] instanceof Node) ele[i] = new ZikoUIElement(ele[i]);
       if (ele[i]?.isZikoUIElement) {
         ele[i].cache.parent = this;
         this.element[adder](ele[i].element);
         ele[i].target = this.element;
         this.items[pusher](ele[i]);
-      } else if (ele[i] instanceof Object) {
+      } 
+      else if (ele[i] instanceof Object) {
         if (ele[i]?.style) this.style(ele[i]?.style);
         if (ele[i]?.attr) {
           Object.entries(ele[i].attr).forEach((n) =>
